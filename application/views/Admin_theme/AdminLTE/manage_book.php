@@ -12,7 +12,7 @@
             <small>manage all book information</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="<?php=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Book Management</li>
           </ol>
         </section>
