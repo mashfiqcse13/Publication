@@ -16,14 +16,104 @@
             <li class="active">Book Management</li>
           </ol>
         </section>
-
+        
         <!-- Main content -->
         <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="box">
+                
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add new books</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                
+                <form role="form-inline">
+                  <div class="box-body">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="bookname">Book Name:</label>
+                                <input type="text" placeholder="Enter email" id="bookname" class="form-control">
+                              </div>
+                              
+                              <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                  <option selected="selected">Alabama</option>
+                                  <option>Alaska</option>
+                                  <option>California</option>
+                                  <option>Delaware</option>
+                                  <option>Tennessee</option>
+                                  <option>Texas</option>
+                                  <option>Washington</option>
+                                </select>
+                                </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="text" id="price" class="form-control">
+
+                              </div>
+                              
+                                <div class="form-group">
+                                <label>Storing Place</label>
+                                <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                  <option selected="selected">Alabama</option>
+                                  <option>Alaska</option>
+                                  <option>California</option>
+                                  <option>Delaware</option>
+                                  <option>Tennessee</option>
+                                  <option>Texas</option>
+                                  <option>Washington</option>
+                                </select>
+                                </div>
+                          </div>
+                          <div class="col-md-4">
+                             <div class="form-group">
+                                <label for="price">Quantity</label>
+                                <input type="text" id="price" class="form-control">
+
+                              </div>
+                              
+                               <div class="form-group">
+                                <label>Company</label>
+                                <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                  <option selected="selected">Alabama</option>
+                                  <option>Alaska</option>
+                                  <option>California</option>
+                                  <option>Delaware</option>
+                                  <option>Tennessee</option>
+                                  <option>Texas</option>
+                                  <option>Washington</option>
+                                </select>
+                                </div>
+                          </div>
+                      </div>
+                    
+                      
+                    
+                    
+                     
+              
+                  </div><!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                  </div>
+                </form>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
           <div class="row">
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Bordered Table</h3>
+                  <h3 class="box-title">Book Details</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-bordered">
