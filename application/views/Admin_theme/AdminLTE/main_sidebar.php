@@ -7,7 +7,7 @@
               <img src="<?php echo $theme_asset_url ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>Jamuna Pub Management</p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -29,8 +29,21 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                
+                <li><a href="<?=base_url()?>"><i class="fa fa-circle-o"></i> Go Dashboard </a></li>
+              </ul>
+            </li>
+             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Management Area</span>
+                <span class="label label-primary pull-right">4</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="<?=base_url().BOOK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i>Book Management</a></li>
+                <li><a href="<?=base_url().CONTACT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Contact Management</a></li>
+                <li><a href="<?=base_url().STOCK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Stock Management</a></li>
+                <li><a href="<?=base_url().PAYMENT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Payment Management</a></li>
               </ul>
             </li>
             <li class="treeview">
