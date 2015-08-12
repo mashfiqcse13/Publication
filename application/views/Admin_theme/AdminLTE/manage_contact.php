@@ -8,12 +8,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            BOOK MANAGEMENT
-            <small>manage all book information</small>
+            Simple Tables
+            <small>preview of simple tables</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="<?php=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Book Management</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Tables</a></li>
+            <li class="active">Simple</li>
           </ol>
         </section>
 

@@ -30,7 +30,7 @@
               </a>
               <ul class="treeview-menu">
                 
-                <li><a href="<?=base_url()?>"><i class="fa fa-circle-o"></i> Go Dashboard </a></li>
+                <li><a href="<?=$base_url ?>"><i class="fa fa-circle-o"></i> Go Dashboard </a></li>
               </ul>
             </li>
              <li class="treeview">
@@ -40,10 +40,10 @@
                 <span class="label label-primary pull-right">4</span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="<?=base_url().BOOK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i>Book Management</a></li>
-                <li><a href="<?=base_url().CONTACT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Contact Management</a></li>
-                <li><a href="<?=base_url().STOCK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Stock Management</a></li>
-                <li><a href="<?=base_url().PAYMENT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Payment Management</a></li>
+                  <li><a href="<?=$base_url.BOOK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i>Book Management</a></li>
+                <li><a href="<?=$base_url.CONTACT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Contact Management</a></li>
+                <li><a href="<?=$base_url.STOCK_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Stock Management</a></li>
+                <li><a href="<?=$base_url.PAYMENT_MANAGEMENT ?>"><i class="fa fa-circle-o"></i> Payment Management</a></li>
               </ul>
             </li>
             <li class="treeview">
