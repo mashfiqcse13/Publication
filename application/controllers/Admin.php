@@ -24,34 +24,30 @@ class Admin extends CI_Controller{
         $data['theme_asset_url'] = base_url(). $this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
         $data['Title']='Dashboard';
-        $this->load->view('Admin_theme/AdminLTE/dashboard',$data);
+        $this->load->view($this->config->item('ADMIN_THEME').'dashboard',$data);
     }
     
     function manage_book(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
-        $data['Title']='Dashboard';
-        $this->load->view('Admin_theme/AdminLTE/manage_book',$data);
+        $data['Title']='Manage Book';
+        $this->load->view($this->config->item('ADMIN_THEME').'manage_book',$data);
     }
     
         function manage_contact(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
-        $data['Title']='Dashboard';
+        $data['Title']='Manage Contact';
         
         
-        $this->load->view('Admin_theme/AdminLTE/manage_contact',$data);
+        $this->load->view($this->config->item('ADMIN_THEME').'manage_contact',$data);
     }
     
         function manage_stock(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
-        $data['Title']='Dashboard';
+        $data['Title']='Manage Stock';
         
         
-        $this->load->view('Admin_theme/AdminLTE/manage_stock',$data);
-    }
-            
-    function memo(){
-        echo "memo";
+        $this->load->view($this->config->item('ADMIN_THEME').'manage_stock',$data);
     }
     
 }
