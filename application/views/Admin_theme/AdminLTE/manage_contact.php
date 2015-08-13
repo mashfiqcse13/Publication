@@ -124,7 +124,7 @@
                       <th style="width: 10px">#</th>
                       <th>Name</th>
                       
-                      <th>phone</th>
+                      <th>Phone</th>
                   
                       <th class="text-center">Modify</th>
                     </tr>
