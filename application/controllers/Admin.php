@@ -37,7 +37,7 @@ class Admin extends CI_Controller{
         function manage_contact(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Manage Contact';
-        
+        $data['base_url']=base_url();
         
         $this->load->view($this->config->item('ADMIN_THEME').'manage_contact',$data);
     }
@@ -45,7 +45,7 @@ class Admin extends CI_Controller{
         function manage_stock(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Manage Stock';
-        
+        $data['base_url']=base_url();
         
         $this->load->view($this->config->item('ADMIN_THEME').'manage_stock',$data);
     }
