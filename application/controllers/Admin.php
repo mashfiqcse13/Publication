@@ -36,6 +36,7 @@ class Admin extends CI_Controller{
     
         function manage_contact(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
+        $data['base_url']=base_url();
         $data['Title']='Manage Contact';
         
         
