@@ -120,46 +120,46 @@
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Book Name</th>
-                      
-                      <th>Quantity</th>
+                      <th>Category</th>
+                      <th style="width: 40px">Quantity</th>
                       <th>Price</th>
                       <th class="text-center">Modify</th>
                     </tr>
                     <tr>
                       <td>1.</td>
                       <td>English for today</td>
-                     
+                      <td>Science</td>
                       <td><span class="badge bg-red">55</span></td>
                       <td>500tk</td>
                       <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
+                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> | <a href="#" class="btn btn-info btn-xs" >view</a></td>
                     </tr>
                      <tr>
                       <td>2.</td>
                       <td>English for today</td>
-                      
+                      <td>Science</td>
                       <td><span class="badge bg-red">55</span></td>
                       <td>500tk</td>
                       <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
+                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> | <a href="#" class="btn btn-info btn-xs" >view</a></td>
                     </tr>
                      <tr>
                       <td>3.</td>
                       <td>English for today</td>
-                     
+                      <td>Science</td>
                       <td><span class="badge bg-red">55</span></td>
                       <td>500tk</td>
                       <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
+                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> | <a href="#" class="btn btn-info btn-xs" >view</a></td>
                     </tr>
                      <tr>
                       <td>4.</td>
                       <td>English for today</td>
-                     
+                      <td>Science</td>
                       <td><span class="badge bg-red">55</span></td>
                       <td>500tk</td>
                       <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
+                          <a class="btn btn-primary btn-xs" href="#" >edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> | <a href="#" class="btn btn-info btn-xs" >view</a></td>
                     </tr>
                       
                   </table>
