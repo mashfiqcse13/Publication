@@ -9,7 +9,7 @@
         <section class="content-header">
           <h1>
             STOCK MANAGEMENT
-            <small>manage all Stock information</small>
+            <small>Manage all Stock information</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -72,7 +72,7 @@
                           <tr>
                             <th>#</th>
                             <th>book Name</th>
-                            <th>Press</th>
+                            <th>Store Name</th>
                             <th>Amount</th>
                             <th>Action</th>
                           </tr>
@@ -105,7 +105,7 @@
                           <tr>
                             <th>#</th>
                             <th>book Name</th>
-                            <th>Press</th>
+                            <th>Sales Name</th>
                             <th>Amount</th>
                             <th>Action</th>
                           </tr>
