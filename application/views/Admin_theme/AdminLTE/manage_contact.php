@@ -35,7 +35,7 @@
                           <div class="col-md-4">
                               <div class="form-group">
                                 <label for="bookname">Full Name:</label>
-                                <input type="text" placeholder="Enter email" id="bookname" class="form-control">
+                                <input type="text" placeholder="Full Name" id="bookname" class="form-control">
                               </div>
 
                               <div class="form-group">
@@ -77,6 +77,12 @@
                           <div class="col-md-4">
                              <div class="form-group">
                                 <label for="phone">Phone Number:</label>
+                                <input type="text" id="phone" class="form-control">
+
+                              </div>
+
+                              <div class="form-group">
+                                <label for="phone">Email:</label>
                                 <input type="text" id="phone" class="form-control">
 
                               </div>

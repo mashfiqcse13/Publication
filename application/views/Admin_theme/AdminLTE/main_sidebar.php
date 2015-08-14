@@ -33,19 +33,53 @@
                 <li><a href="<?=site_url('admin') ?>"><i class="fa fa-circle-o"></i> Go Dashboard </a></li>
               </ul>
             </li>
-             <li class="treeview">
+             <li class="active treeview">
               <a href="#">
-                <i class="fa fa-files-o"></i>
+                <i class="fa fa-cubes"></i>
                 <span>Management Area</span>
                 <span class="label label-primary pull-right">4</span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="<?=site_url('admin/manage_book') ?>"><i class="fa fa-circle-o"></i>Book Management</a></li>
-                <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-circle-o"></i> Contact Management</a></li>
-                <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-circle-o"></i> Stock Management</a></li>
-                <li><a href="<?=site_url('admin/manage_payment') ?>"><i class="fa fa-circle-o"></i> Payment Management</a></li>
+                <li><a href="<?=site_url('admin/manage_book') ?>"><i class="fa fa-book"></i>Book Management</a></li>
+                <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
+                <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
+                <li><a href="<?=site_url('admin/manage_payment') ?>"><i class="fa fa-cc-mastercard"></i> Payment Management</a></li>
               </ul>
             </li>
+
+             <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span>Memo Generation</span>
+                
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
+                </ul>
+            </li>
+
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-cart-plus"></i>
+                <span>Account Information</span>
+                
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-sign-out"></i>
+                <span>Log Out</span>
+               
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
+                </ul>
+            </li>
+<!--
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-files-o"></i>
@@ -168,6 +202,8 @@
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+          
+-->
           </ul>
         </section>
         <!-- /.sidebar -->

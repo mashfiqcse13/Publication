@@ -35,7 +35,7 @@
                           <div class="col-md-4">
                               <div class="form-group">
                                 <label for="bookname">Book Name:</label>
-                                <input type="text" placeholder="Enter email" id="bookname" class="form-control">
+                                <input type="text" placeholder="Book Name" id="bookname" class="form-control">
                               </div>
                               
                               <div class="form-group">

@@ -34,7 +34,7 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'manage_book',$data);
     }
     
-        function manage_contact(){
+    function manage_contact(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
         $data['Title']='Manage Contact';
@@ -43,12 +43,21 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'manage_contact',$data);
     }
     
-        function manage_stock(){
+    function manage_stock(){
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Manage Stock';
         $data['base_url']=base_url();
         
         $this->load->view($this->config->item('ADMIN_THEME').'manage_stock',$data);
+    }
+
+
+    function memo_generation(){
+        $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
+        $data['Title']='Memo Generation';
+        $data['base_url']=base_url();
+        
+        $this->load->view($this->config->item('ADMIN_THEME').'memo_generation',$data);
     }
     
 }
