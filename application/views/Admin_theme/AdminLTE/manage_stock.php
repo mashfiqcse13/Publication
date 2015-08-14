@@ -49,7 +49,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
 
                            <tr>
@@ -57,8 +57,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
-                          
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
                         </table>
                       </div>
@@ -82,7 +81,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
 
                            <tr>
@@ -90,8 +89,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
-                          
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
                         </table>
                       </div>
@@ -115,7 +113,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
 
                            <tr>
@@ -123,8 +121,7 @@
                             <td>Book 1</td>
                             <td></td>
                             <td>500</td>
-                            <td><a href=""><span class="glyphicon glyphicon-transfer"></span></a></i></td>
-                          
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
                           </tr>
                         </table>
                       </div>
@@ -137,6 +134,70 @@
             </div>
 <!-- /.row -->
           
+
+          <!-- modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Transfer Book Amount</h4>
+      </div>
+      <div class="modal-body">
+         <form role="form-inline">
+                  <div class="box-body">
+                      <div class="row">
+                       
+                          <div class="col-xs-6">
+                                <div class="form-group">
+                                <label>To:</label>
+                                <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                  <option selected="selected">Select</option>
+                                  <option>Printing Press</option>
+                                  <option>Binding</option>
+                                  <option>Sales</option>
+                                  
+                                </select>
+                                </div>
+
+                              <div class="form-group">
+                                <label for="amount">Amount:</label>
+                                <input type="text" id="amount" class="form-control">
+
+                              </div>
+                              
+                          
+                          </div>
+                          <div class="col-xs-6">
+                             <div class="form-group">
+                                <label for="address">Comment</label>
+                                <textarea name="" id="address" cols="30" rows="4" class="form-control"></textarea>
+                               
+
+                              </div>
+       
+                          </div>
+                      </div>
+                    
+                      
+                    
+                    
+                     
+              
+                  </div><!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <button class="btn btn-primary pull-right" type="submit">Transfer</button>
+                  </div>
+                </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
