@@ -40,9 +40,17 @@
                       <form role="form-inline">
                                 
                                         <div class="form-group">
-                                          <label for="party_name">Party Name:</label>
-                                          <input type="text" placeholder="Party name" id="party_name" class="form-control">
-                                        </div>
+                                          <label>Party Name:</label>
+                                          <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Select party name</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                          </select>
+                                          </div>
 
                                           <div class="form-group" >
                                             
@@ -191,8 +199,8 @@
                     <img src="http://www.aosware.net/images/dfs/full/2591.jpg" alt="" class="img-responsive">
                   </div>
                   <div class="col-md-4 text-center">
-                    <a href="" class="btn btn-info">Print</a><br><br>
-                    <a href="" class="btn btn-info">Download as pdf</a>
+                    <a href="" class="btn btn-info btn-block">Print</a><br><br>
+                    <a href="" class="btn btn-info btn-block">Download as pdf</a>
                   </div>
                 </div>
               </div>

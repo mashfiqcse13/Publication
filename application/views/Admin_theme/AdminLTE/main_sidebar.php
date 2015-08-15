@@ -55,6 +55,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
+                 <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
                 </ul>
             </li>
 

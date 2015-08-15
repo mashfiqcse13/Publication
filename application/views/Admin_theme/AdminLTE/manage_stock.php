@@ -19,6 +19,74 @@
         
         <!-- Main content -->
         <section class="content">
+             <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="box">
+                      
+                    
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Search Stock By</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                
+                <form role="form-inline">
+                  <div class="box-body">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="book_id">Book id</label>
+                                <input type="text" id="book_id" class="form-control">
+
+                              </div>
+
+                                                                        
+                           
+                          </div>
+                          <div class="col-md-4">
+                                
+                              
+                                <div class="form-group">
+                                <label>Storing Place</label>
+                                <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                  <option selected="selected">Alabama</option>
+                                  <option>Alaska</option>
+                                  <option>California</option>
+                                  <option>Delaware</option>
+                                  <option>Tennessee</option>
+                                  <option>Texas</option>
+                                  <option>Washington</option>
+                                </select>
+                                </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="phone">Book Name</label>
+                                <input type="text" id="book_name" class="form-control">
+
+                              </div>
+                              
+                               
+                          </div>
+                      </div>
+                    
+                      
+                    
+                    
+                     
+              
+                  </div><!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <button class="btn btn-primary pull-right" type="submit">Search</button>
+                  </div>
+                </form>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     
