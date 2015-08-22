@@ -7,8 +7,8 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'Your project';
-$config['webmaster_email'] = 'webmaster@your-site.com';
+$config['website_name'] = 'Jomuna Publication';
+$config['webmaster_email'] = 'mashfiqnahid@gmail.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ $config['login_by_email'] = TRUE;
 $config['login_record_ip'] = TRUE;
 $config['login_record_time'] = TRUE;
 $config['login_count_attempts'] = TRUE;
-$config['login_max_attempts'] = 5;
+$config['login_max_attempts'] = 50;
 $config['login_attempt_expire'] = 60*60*24;
 
 /*

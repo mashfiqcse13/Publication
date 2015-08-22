@@ -19,8 +19,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller{
     //put your code here
+    function __construct() {
+        parent::__construct();
+        $this->load->library('tank_auth');
+    }
     
     function index(){
+        if (!$this->tank_auth->is_logged_in()) {         //not logged in
+            redirect('login');
+            return 0;
+        }
         $data['theme_asset_url'] = base_url(). $this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
         $data['Title']='Dashboard';

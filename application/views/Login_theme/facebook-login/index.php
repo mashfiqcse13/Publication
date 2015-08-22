@@ -26,9 +26,12 @@ if ($login_by_username AND $login_by_email) {
 } else {
 	$login_label = 'Email';
 }
+
 $password = array(
 	'name'	=> 'password',
 	'id'	=> 'password',
+	'class'	=> 'login-input',
+        'placeholder'=>"Password",
 	'size'	=> 30,
 );
 $remember = array(
@@ -67,17 +70,63 @@ $captcha = array(
         <body>
                 <?php echo form_open($this->uri->uri_string(),$form_attribute);?>
                         <h1><?= $this->config->item('SITE_NAME') ?></h1>
-                        <!--<input type="email" name="email" class="login-input" placeholder="Email Address" autofocus>-->
                         <?php echo form_input($login); ?>
-                        <input type="password" name="password" class="login-input" placeholder="Password">
-                        <!--<input type="submit" value="Login" class="login-submit">-->
+                        <?php echo form_password($password); ?>
+                <table>        
+                        <?php if ($show_captcha) {
+                                    if ($use_recaptcha) { ?>
+                            <tr>
+                                    <td colspan="2">
+                                            <div id="recaptcha_image"></div>
+                                    </td>
+                                    <td>
+                                            <a href="javascript:Recaptcha.reload()">Get another CAPTCHA</a>
+                                            <div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">Get an audio CAPTCHA</a></div>
+                                            <div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>
+                                            <div class="recaptcha_only_if_image">Enter the words above</div>
+                                            <div class="recaptcha_only_if_audio">Enter the numbers you hear</div>
+                                    </td>
+                                    <td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
+                                    <td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
+                                    <?php echo $recaptcha_html; ?>
+                            </tr>
+                            <?php } else { ?>
+                            <tr>
+                                    <td colspan="3">
+                                            <p>Enter the code exactly as it appears:</p>
+                                            <?php echo $captcha_html; ?>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td colspan="2"><?php echo form_label('Confirmation Code', $captcha['id']); ?></td>
+                                    <td><?php echo form_input($captcha); ?></td>
+                                    
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="color: red;"><?php echo form_error($captcha['name']); ?></td>
+                            </tr>
+                            <?php }
+                            } ?>
+
+                            <tr>
+                                    <td colspan="3">
+                                            <?php echo form_checkbox($remember); ?>
+                                            <?php echo form_label('Remember me', $remember['id']); ?>
+                                    </td>
+                            </tr>
+                    </table>
+                        
                         <?php echo form_submit('submit', 'Let me in',$submit_attr); ?>
-                        <p class="login-help"><a href="index.html">Forgot password?</a></p>
+                        <p class="login-help"><?php echo anchor('/auth/forgot_password/', 'Forgot password'); ?></p>
                 <?php echo form_close(); ?>
                 <section class="about">
                         <p class="about-links">
                                 <a href="#" target="_parent">Main Site</a>
-                                <a href="#" target="_parent">Register</a>
+                                <?php if ($this->config->item('allow_registration', 'tank_auth')) echo anchor('#', 'Register'); ?>
                         </p>
                         <p class="about-author">
                                 &copy; <?=  date("Y")?> <a href="<?= base_url() ?>" target="_blank"><?= $site_name ?></a><br>
