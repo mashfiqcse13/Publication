@@ -40,6 +40,7 @@
 // echo "<pre>";
 // print_r($asset);
 // echo "</pre>";
+if(isset($glosary))
 foreach($glosary->css_files as $file): ?>
     <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
  
