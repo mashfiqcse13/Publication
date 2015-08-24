@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2015 at 10:20 PM
+-- Generation Time: Aug 24, 2015 at 11:02 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -76,6 +76,39 @@ CREATE TABLE IF NOT EXISTS `pub_contacts` (
   `contact_type` int(11) NOT NULL COMMENT '1 = Printing Press , 2 = Binding Store , 3 = Sales Store',
   `address` text NOT NULL,
   `phone` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pub_memos`
+--
+
+CREATE TABLE IF NOT EXISTS `pub_memos` (
+`memo_ID` int(11) NOT NULL COMMENT 'Memo ID',
+  `memo_serial` varchar(50) NOT NULL COMMENT 'unique id auto genetated',
+  `contact_ID` int(11) NOT NULL COMMENT 'Memo Issued to',
+  `issue_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Memo auto generated timestamp',
+  `sub_total` int(11) NOT NULL COMMENT 'Total book Price',
+  `discount` int(11) NOT NULL COMMENT 'Discount made',
+  `previous_due` int(11) NOT NULL COMMENT 'Prevous Due',
+  `cash` int(11) NOT NULL COMMENT 'Paid by cash',
+  `bank_due` int(11) NOT NULL COMMENT 'Paid by band check',
+  `due` int(11) NOT NULL COMMENT 'Due'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pub_memos_selected_books`
+--
+
+CREATE TABLE IF NOT EXISTS `pub_memos_selected_books` (
+`selection_ID` int(11) NOT NULL,
+  `book_ID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price_per_book` int(11) NOT NULL,
+  `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -172,6 +205,18 @@ ALTER TABLE `pub_contacts`
  ADD PRIMARY KEY (`contact_ID`);
 
 --
+-- Indexes for table `pub_memos`
+--
+ALTER TABLE `pub_memos`
+ ADD PRIMARY KEY (`memo_ID`);
+
+--
+-- Indexes for table `pub_memos_selected_books`
+--
+ALTER TABLE `pub_memos_selected_books`
+ ADD PRIMARY KEY (`selection_ID`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -208,6 +253,16 @@ MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `pub_contacts`
 MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pub_memos`
+--
+ALTER TABLE `pub_memos`
+MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID';
+--
+-- AUTO_INCREMENT for table `pub_memos_selected_books`
+--
+ALTER TABLE `pub_memos_selected_books`
+MODIFY `selection_ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
