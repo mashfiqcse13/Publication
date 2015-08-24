@@ -123,12 +123,25 @@
                     </div>
                 </div>
             </div>
+
+       <div>
+         <?php  
+
+
+         echo $glosary->output;
+          ?>
+       </div>
+
+      <!--  hide --> 
+
           <div class="row">
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title">Contact List</h3>
                 </div><!-- /.box-header -->
+
+               
                 <div class="box-body">
                   <table class="table table-bordered">
                     <tr>
@@ -139,37 +152,25 @@
                   
                       <th class="text-center">Modify</th>
                     </tr>
+
+                    
                     <tr>
                       <td>1.</td>
-                      <td>Hasan</td>
+                      <td></td>
                      
                       <td>01912572747</td>
                  
                       <td class="text-center">
                           <a class="btn btn-primary btn-xs" href="#"  data-toggle="modal" data-target="#updatecontact">edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
                     </tr>
-                     <tr>
-                      <td>2.</td>
-                      <td>khan</td>
-                      
-                      <td>10213646654</td>
-                  
-                      <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#"  data-toggle="modal" data-target="#updatecontact">edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
-                    </tr>
-                     <tr>
-                      <td>3.</td>
-                      <td>alam</td>
-                     
-                      <td>14125498379</td>
-              
-                      <td class="text-center">
-                          <a class="btn btn-primary btn-xs" href="#"  data-toggle="modal" data-target="#updatecontact">edit</a> | <a href="#" class="btn btn-danger btn-xs" >delete</a> </td>
-                    </tr>
-            
+                 
+
                       
                   </table>
                 </div><!-- /.box-body -->
+
+                
+
                 <div class="box-footer clearfix">
                   <ul class="pagination pagination-sm no-margin pull-right">
                     <li><a href="#">&laquo;</a></li>

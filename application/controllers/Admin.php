@@ -22,6 +22,8 @@ class Admin extends CI_Controller{
     function __construct() {
         parent::__construct();
         $this->load->library('tank_auth');
+
+        $this->load->library('grocery_CRUD');
     }
     
     function index(){
@@ -43,6 +45,16 @@ class Admin extends CI_Controller{
     }
     
     function manage_contact(){
+
+        //$crud = new grocery_CRUD();
+        //$this->grocery_crud->set_theme('twitter-bootstrap');
+
+        $this->grocery_crud->set_table('contact');
+        $output =  $this->grocery_crud->render();
+        $data['glosary'] = $output;
+
+
+
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
         $data['Title']='Manage Contact';
@@ -74,6 +86,15 @@ class Admin extends CI_Controller{
         $data['base_url']=base_url();
         
         $this->load->view($this->config->item('ADMIN_THEME').'memo_management',$data);
+    }
+
+    function test(){
+
+           $this->grocery_crud->set_table('contact');
+        $output['some'] =  $this->grocery_crud->render();
+        
+
+        $this->load->view('Admin_theme/AdminLTE/test',$output);
     }
     
 }

@@ -35,6 +35,37 @@
         <script src="<?php echo $theme_asset_url ?>https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="<?php echo $theme_asset_url ?>https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+  
+<?php 
+// echo "<pre>";
+// print_r($asset);
+// echo "</pre>";
+foreach($glosary->css_files as $file): ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+ 
+<?php endforeach; ?>
+<?php foreach($glosary->js_files as $file): ?>
+ 
+    <script src="<?php echo $file; ?>"></script>
+<?php endforeach; ?>
+ 
+<style type='text/css'>
+body
+{
+    font-family: Arial;
+    font-size: 14px;
+}
+a {
+    color: blue;
+    text-decoration: none;
+    font-size: 14px;
+}
+a:hover
+{
+    text-decoration: underline;
+}
+</style>
+
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
