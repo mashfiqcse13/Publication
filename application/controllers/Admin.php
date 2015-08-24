@@ -38,6 +38,11 @@ class Admin extends CI_Controller{
     }
     
     function manage_book(){
+
+        $this->grocery_crud->set_table('pub_books');
+        $output =  $this->grocery_crud->render();
+        $data['glosary'] = $output;
+
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
         $data['Title']='Manage Book';
@@ -49,7 +54,7 @@ class Admin extends CI_Controller{
         //$crud = new grocery_CRUD();
         //$this->grocery_crud->set_theme('twitter-bootstrap');
 
-        $this->grocery_crud->set_table('contact');
+        $this->grocery_crud->set_table('pub_contacts');
         $output =  $this->grocery_crud->render();
         $data['glosary'] = $output;
 
@@ -90,7 +95,7 @@ class Admin extends CI_Controller{
 
     function test(){
 
-           $this->grocery_crud->set_table('contact');
+           $this->grocery_crud->set_table('pub_contacts');
         $output['some'] =  $this->grocery_crud->render();
         
 
