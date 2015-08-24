@@ -86,6 +86,10 @@ class Admin extends CI_Controller{
     }
 
      function memo_management(){
+        $this->grocery_crud->set_table('pub_memos');
+        $output =  $this->grocery_crud->render();
+        $data['glosary'] = $output;
+
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Memo Management';
         $data['base_url']=base_url();
