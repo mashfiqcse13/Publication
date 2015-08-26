@@ -8,7 +8,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            CONTACT MANAGEMENT
+            <?= $Title ?>
             <small>manage all Contact information</small>
           </h1>
           <ol class="breadcrumb">

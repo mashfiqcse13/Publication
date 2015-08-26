@@ -38,9 +38,16 @@ class Admin extends CI_Controller{
     }
     
     function manage_book(){
-
-        $this->grocery_crud->set_table('pub_books');
-        $output =  $this->grocery_crud->render();
+        
+        $crud = new grocery_CRUD();
+        $crud->set_table('pub_books')->set_subject('Book');
+        $crud->callback_add_field('catagory', function () {
+            return form_dropdown('catagory', $this->config->item('book_categories'),'0');
+        });
+        $crud->callback_add_field('storing_place', function () {
+            return form_dropdown('storing_place', $this->config->item('storing_place'));
+        });
+        $output =  $crud->render();
         $data['glosary'] = $output;
 
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
@@ -51,11 +58,15 @@ class Admin extends CI_Controller{
     
     function manage_contact(){
 
-        //$crud = new grocery_CRUD();
-        //$this->grocery_crud->set_theme('twitter-bootstrap');
-
-        $this->grocery_crud->set_table('pub_contacts');
-        $output =  $this->grocery_crud->render();
+        $crud = new grocery_CRUD();
+        $crud->set_table('pub_contacts')->set_subject('Contact');
+        $crud->callback_add_field('contact_type', function () {
+            return form_dropdown('contact_type', $this->config->item('contact_type'));
+        });
+        $crud->callback_edit_field('contact_type', function ($value, $primary_key) {
+            return form_dropdown('contact_type', $this->config->item('contact_type'),$value);
+        });
+        $output =  $crud->render();
         $data['glosary'] = $output;
 
 
@@ -86,8 +97,44 @@ class Admin extends CI_Controller{
     }
 
      function memo_management(){
-        $this->grocery_crud->set_table('pub_memos');
-        $output =  $this->grocery_crud->render();
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('pub_memos')
+                ->set_subject('Memo')
+                ->display_as('contact_ID','Party Name');
+        $crud->set_relation('contact_ID','pub_contacts','name');
+        $crud->callback_add_field('memo_serial', function () {
+            return '<input type="text" maxlength="50" value="'.uniqid().'" name="memo_serial" disabled>';
+        });
+        $crud->callback_add_field('sub_total', function () {
+            $quantity_input='<input style="width: 100px;" class="numeric form-control" type="number">';
+            $this->load->library('table');
+            // Getting Data
+            $query = $this->db->query("SELECT * FROM `pub_books`");
+            $data=array();
+            foreach ($query->result_array() as $row ){
+                array_push($data, array($row['name'],$row['price'],$quantity_input));
+            }
+            $this->table->set_heading('Book Name', 'Price', 'Quantity');
+            
+            //Setting table template
+            $tmpl = array (
+                'table_open'  => '<table class="table table-bordered table-striped">',
+                'heading_cell_start'=>'<th class="success">'
+            );
+            $this->table->set_template($tmpl);
+            $output ='<label>Select Book Quantity:</label>
+                    <div style="overflow-y:scroll;max-height:200px;">
+                    '.$this->table->generate($data).'
+                    </div>
+                   <label>Sub Total:</label> <input type="text" maxlength="50" value="" name="sub_total" disabled>';
+            return $output;
+        });
+
+        $output = $crud->render();
+        
+//        $this->grocery_crud->set_table('pub_memos')->set_subject('Memo');
+//        $output =  $this->grocery_crud->render();
         $data['glosary'] = $output;
 
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
