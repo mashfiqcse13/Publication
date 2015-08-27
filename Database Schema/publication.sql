@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2015 at 11:02 PM
+-- Generation Time: Aug 27, 2015 at 04:35 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   `ip_address` varchar(40) COLLATE utf8_bin NOT NULL,
   `login` varchar(50) COLLATE utf8_bin NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -57,11 +57,18 @@ CREATE TABLE IF NOT EXISTS `pub_books` (
 `book_ID` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `catagory` int(11) NOT NULL,
-  `storing_place` int(11) NOT NULL,
-  `company` int(11) NOT NULL COMMENT 'Contact ID'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `total_quantity` int(11) NOT NULL,
+  `catagory` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pub_books`
+--
+
+INSERT INTO `pub_books` (`book_ID`, `name`, `price`, `total_quantity`, `catagory`) VALUES
+(5, 'Bangla First Paper', 120, 70, 'Bangla'),
+(6, 'English 1st Paper', 130, 50, 'English'),
+(7, 'ICT 1st paper', 140, 23, 'ICT');
 
 -- --------------------------------------------------------
 
@@ -73,10 +80,18 @@ CREATE TABLE IF NOT EXISTS `pub_contacts` (
 `contact_ID` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `district` varchar(20) NOT NULL,
-  `contact_type` int(11) NOT NULL COMMENT '1 = Printing Press , 2 = Binding Store , 3 = Sales Store',
+  `contact_type` varchar(20) NOT NULL COMMENT '1 = Printing Press , 2 = Binding Store , 3 = Sales Store',
   `address` text NOT NULL,
   `phone` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pub_contacts`
+--
+
+INSERT INTO `pub_contacts` (`contact_ID`, `name`, `district`, `contact_type`, `address`, `phone`) VALUES
+(1, 'TNT Books', 'Borishal', 'Binding Store', '', '01523232343'),
+(2, 'Friends IT', 'Dhaka', 'Buyer', '', '01712121243');
 
 -- --------------------------------------------------------
 
@@ -95,7 +110,14 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
   `cash` int(11) NOT NULL COMMENT 'Paid by cash',
   `bank_due` int(11) NOT NULL COMMENT 'Paid by band check',
   `due` int(11) NOT NULL COMMENT 'Due'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pub_memos`
+--
+
+INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `sub_total`, `discount`, `previous_due`, `cash`, `bank_due`, `due`) VALUES
+(1, '1234', 2, '2015-11-07 18:00:00', 0, 123123, 1231, 23123, 123123, 123123);
 
 -- --------------------------------------------------------
 
@@ -140,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`) VALUES
-(1, 'mashfiqcse13', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-08-24 20:53:30', '2015-08-14 17:35:42', '2015-08-24 18:53:30');
+(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-08-27 02:59:10', '2015-08-14 17:35:42', '2015-08-27 02:35:24');
 
 -- --------------------------------------------------------
 
@@ -161,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
 --
 
 INSERT INTO `user_autologin` (`key_id`, `user_id`, `user_agent`, `last_ip`, `last_login`) VALUES
-('f7592b0995fc07c856cf4f340ba8a5d2', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36', '::1', '2015-08-24 18:53:30');
+('960618e390b6200d11f095c8e829ebc5', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-08-26 23:38:19');
 
 -- --------------------------------------------------------
 
@@ -242,22 +264,22 @@ ALTER TABLE `user_profiles`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pub_books`
 --
 ALTER TABLE `pub_books`
-MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `pub_contacts`
 --
 ALTER TABLE `pub_contacts`
-MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `pub_memos`
 --
 ALTER TABLE `pub_memos`
-MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID';
+MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `pub_memos_selected_books`
 --
