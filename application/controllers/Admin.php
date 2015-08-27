@@ -109,7 +109,8 @@ class Admin extends CI_Controller{
             return '<input type="text" maxlength="50" value="'.uniqid().'" name="memo_serial" disabled>';
         });
         $crud->callback_add_field('sub_total', array($this,'add_book_selector_table'));
-
+        $crud->callback_after_insert(array($this, 'after_adding_memo'));
+        
         $output = $crud->render();
         
 //        $this->grocery_crud->set_table('pub_memos')->set_subject('Memo');
@@ -138,25 +139,33 @@ class Admin extends CI_Controller{
             $query = $this->db->query("SELECT * FROM `pub_books`");
             $data=array();
             foreach ($query->result_array() as $index => $row ){
-                array_push($data, array(
-                            $row['name'],
+                array_push($data, [$row['name'],
                             $row['price'],
                             '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" value="0" class="numeric form-control" type="number">'
-                        ));
+                            ]);
             }
             $this->table->set_heading('Book Name', 'Price', 'Quantity');
-            
             //Setting table template
             $tmpl = array (
                 'table_open'  => '<table class="table table-bordered table-striped">',
                 'heading_cell_start'=>'<th class="success">'
             );
             $this->table->set_template($tmpl);
-            $output ='<label>Select Book Quantity:</label>
-                    <div style="overflow-y:scroll;max-height:200px;">
-                    '.$this->table->generate($data).'
-                    </div>
-                   <label>Sub Total:</label> <input type="text" maxlength="50" value="" name="sub_total" disabled>';
+            $output ='<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
+                    '.$this->table->generate($data).'</div>
+                   <label>Sub Total:</label> <input type="text" maxlength="50" name="sub_total" disabled>';
             return $output;
+        }
+        
+        function after_adding_memo($post_array,$primary_key)
+{
+//            $user_logs_insert = array(
+//                "user_id" => $primary_key,
+//                "created" => date('Y-m-d H:i:s'),
+//                "last_update" => date('Y-m-d H:i:s')
+//            );
+//
+//            $this->db->insert('user_logs',$user_logs_insert);
+                print_r($post_array);
         }
 }
