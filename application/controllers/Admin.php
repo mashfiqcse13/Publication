@@ -106,30 +106,7 @@ class Admin extends CI_Controller{
         $crud->callback_add_field('memo_serial', function () {
             return '<input type="text" maxlength="50" value="'.uniqid().'" name="memo_serial" disabled>';
         });
-        $crud->callback_add_field('sub_total', function () {
-            $quantity_input='<input style="width: 100px;" class="numeric form-control" type="number">';
-            $this->load->library('table');
-            // Getting Data
-            $query = $this->db->query("SELECT * FROM `pub_books`");
-            $data=array();
-            foreach ($query->result_array() as $row ){
-                array_push($data, array($row['name'],$row['price'],$quantity_input));
-            }
-            $this->table->set_heading('Book Name', 'Price', 'Quantity');
-            
-            //Setting table template
-            $tmpl = array (
-                'table_open'  => '<table class="table table-bordered table-striped">',
-                'heading_cell_start'=>'<th class="success">'
-            );
-            $this->table->set_template($tmpl);
-            $output ='<label>Select Book Quantity:</label>
-                    <div style="overflow-y:scroll;max-height:200px;">
-                    '.$this->table->generate($data).'
-                    </div>
-                   <label>Sub Total:</label> <input type="text" maxlength="50" value="" name="sub_total" disabled>';
-            return $output;
-        });
+        $crud->callback_add_field('sub_total', array($this,'add_book_selector_table'));
 
         $output = $crud->render();
         
@@ -153,4 +130,31 @@ class Admin extends CI_Controller{
         $this->load->view('Admin_theme/AdminLTE/test',$output);
     }
     
+    function add_book_selector_table() {
+            $this->load->library('table');
+            // Getting Data
+            $query = $this->db->query("SELECT * FROM `pub_books`");
+            $data=array();
+            foreach ($query->result_array() as $index => $row ){
+                array_push($data, array(
+                            $row['name'],
+                            $row['price'],
+                            '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" value="0" class="numeric form-control" type="number">'
+                        ));
+            }
+            $this->table->set_heading('Book Name', 'Price', 'Quantity');
+            
+            //Setting table template
+            $tmpl = array (
+                'table_open'  => '<table class="table table-bordered table-striped">',
+                'heading_cell_start'=>'<th class="success">'
+            );
+            $this->table->set_template($tmpl);
+            $output ='<label>Select Book Quantity:</label>
+                    <div style="overflow-y:scroll;max-height:200px;">
+                    '.$this->table->generate($data).'
+                    </div>
+                   <label>Sub Total:</label> <input type="text" maxlength="50" value="" name="sub_total" disabled>';
+            return $output;
+        }
 }
