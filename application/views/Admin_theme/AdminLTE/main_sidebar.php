@@ -44,6 +44,7 @@
                 <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
                 <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
                 <li><a href="<?=site_url('admin/manage_payment') ?>"><i class="fa fa-cc-mastercard"></i> Payment Management</a></li>
+                <li><a href="<?=site_url('admin/stock_manage') ?>"><i class="fa fa-cc-mastercard"></i> Manage Stock</a></li>
               </ul>
             </li>
 
