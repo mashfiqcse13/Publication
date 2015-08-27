@@ -27,4 +27,5 @@ var total = 0;
       total += parseInt(quantity)*parseInt(price);
     });
     $('[name="sub_total"]').val(total);
+    $('#sub_total').html(total);
 });
