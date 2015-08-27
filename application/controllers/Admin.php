@@ -58,6 +58,7 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'manage_book',$data);
     }
     
+    
     function manage_contact(){
 
         $crud = new grocery_CRUD();
@@ -131,7 +132,8 @@ class Admin extends CI_Controller{
                 ->display_as('contact_ID','Party Name');
         $crud->set_relation('contact_ID','pub_contacts','name');
         $crud->callback_add_field('memo_serial', function () {
-            return '<input type="text" maxlength="50" value="'.uniqid().'" name="memo_serial" disabled>';
+            $unique_id=uniqid();
+            return '<label>'.$unique_id.'</label><input type="hidden" maxlength="50" value="'.$unique_id.'" name="memo_serial" >';
         });
         $crud->callback_add_field('sub_total', array($this,'add_book_selector_table'));
 <<<<<<< HEAD
@@ -180,7 +182,8 @@ class Admin extends CI_Controller{
 =======
                 array_push($data, [$row['name'],
                             $row['price'],
-                            '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" value="0" class="numeric form-control" type="number">'
+                            '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" name="quantity[\''.$row['book_ID'].'\']" value="0" class="numeric form-control" type="number">'
+                    . '     <input name="price['.$row['book_ID'].']" type="hidden">'
                             ]);
             }
             $this->table->set_heading('Book Name', 'Price', 'Quantity');
@@ -202,20 +205,27 @@ class Admin extends CI_Controller{
 =======
             $output ='<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
                     '.$this->table->generate($data).'</div>
-                   <label>Sub Total:</label> <input type="text" maxlength="50" name="sub_total" disabled>';
+                   <label>Sub Total :</label><span id="sub_total">0</span> <input type="hidden" maxlength="50" name="sub_total">';
             return $output;
         }
         
         function after_adding_memo($post_array,$primary_key)
-{
-//            $user_logs_insert = array(
-//                "user_id" => $primary_key,
-//                "created" => date('Y-m-d H:i:s'),
-//                "last_update" => date('Y-m-d H:i:s')
-//            );
-//
-//            $this->db->insert('user_logs',$user_logs_insert);
-                print_r($post_array);
+        {
+//            foreach ($post_array['quantity'] as $index => $value){
+                $book_ordered_quantity_insert = array(
+                    "memo_ID" => $primary_key,
+                    "testing" => 'print_r($post_array)',
+//                    "book_ID" => $index,
+//                    "quantity" => $value,
+//                    "book_ID" => $index,
+//                    "price_per_book" => $post_array['price'][$index],
+//                    "total" => $value + $post_array['price'][$index]
+                );
+    //
+                $this->db->insert('pub_memos_selected_books',$book_ordered_quantity_insert);
+//            }
+                //print_r($post_array);
+              
         }
 >>>>>>> 42783e69bca2f056904f7db685fa8536d6829588
 }
