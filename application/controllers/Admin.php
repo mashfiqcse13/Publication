@@ -82,10 +82,15 @@ class Admin extends CI_Controller{
     }
 
 
-    function stock_manage(){
+    function manage_stock(){
         
         $crud = new grocery_CRUD();
         $crud->set_table('pub_stock')->set_subject('Stock');
+        
+        $crud->set_relation('book_ID','pub_books','name');
+        $crud->set_relation('printing_press_ID','pub_contacts','name');
+        $crud->set_relation('binding_store_ID','pub_contacts','name');
+        $crud->set_relation('sales_store_ID','pub_contacts','name');
         $crud->callback_add_field('catagory', function () {
             return form_dropdown('catagory', $this->config->item('book_categories'),'0');
         });
@@ -101,8 +106,8 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'stock_manage',$data);
     }
     
-    function manage_stock(){
-        $this->load->model('custom/stock_manage');
+    function stock_manage(){
+//        $this->load->model('custom/stock_manage');
 
     
 
