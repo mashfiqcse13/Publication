@@ -139,6 +139,7 @@ class Admin extends CI_Controller{
             return '<label>'.$unique_id.'</label><input type="hidden" maxlength="50" value="'.$unique_id.'" name="memo_serial" >';
         });
         $crud->callback_add_field('sub_total', array($this,'add_book_selector_table'));
+        $crud->callback_edit_field('sub_total', array($this,'edit_book_selector_table'));
 
 
 
@@ -190,7 +191,44 @@ class Admin extends CI_Controller{
 
             $output ='<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
                     '.$this->table->generate($data).'</div>
-                   <label>Sub Total:</label> :</label><span id="sub_total">0</span> <input type="hidden" maxlength="50" name="sub_total">';
+                   <label>Sub Total :</label><span id="sub_total">0</span><span>Tk</span> <input type="hidden" maxlength="50  " name="sub_total">';
+            return $output;
+        }
+        
+    function edit_book_selector_table($value, $primary_key) {
+            $this->load->library('table');
+            // Getting Data
+            $where = array('memo_ID' => $primary_key);
+            $book_selection_query = $this->db->get_where('pub_memos_selected_books',$where );
+            $book_selection = $book_selection_query->result_array();
+            
+            foreach ($book_selection as $index => $row ){
+                $book_ID = $row['book_ID'];
+                $quantity = $row['quantity'];
+                $book_quantity_by_id[$book_ID] = $quantity ;
+            }
+            
+            $query = $this->db->query("SELECT * FROM `pub_books`");
+            $data=array();
+            foreach ($query->result_array() as $index => $row ){
+                array_push($data, [$row['name'],
+                            $row['price'],
+                             '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" name="quantity['.$row['book_ID'].']" value="'.$book_quantity_by_id[$row['book_ID']].'" class="numeric form-control" type="number">'
+                    . '     <input name="price['.$row['book_ID'].']" value="'.$row['price'].'" type="hidden">'
+                            ]);
+            }
+            $this->table->set_heading('Book Name', 'Price', 'Quantity');
+
+            //Setting table template
+            $tmpl = array (
+                'table_open'  => '<table class="table table-bordered table-striped">',
+                'heading_cell_start'=>'<th class="success">'
+            );
+            $this->table->set_template($tmpl);
+
+            $output ='<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
+                    '.$this->table->generate($data).'</div>
+                   <label>Sub Total :</label><span id="sub_total">'.$value.'</span><span>Tk</span> <input type="hidden" maxlength="50  " name="sub_total">';
             return $output;
         }
         
