@@ -175,7 +175,8 @@ class Admin extends CI_Controller{
             foreach ($query->result_array() as $index => $row ){
                 array_push($data, [$row['name'],
                             $row['price'],
-                            '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" value="0" class="numeric form-control" type="number">'
+                             '<input style="width: 100px;" data-index="'.$index.'" data-price="'.$row['price'].'" name="quantity['.$row['book_ID'].']" value="0" class="numeric form-control" type="number">'
+                    . '     <input name="price['.$row['book_ID'].']" value="'.$row['price'].'" type="hidden">'
                             ]);
             }
             $this->table->set_heading('Book Name', 'Price', 'Quantity');
@@ -194,22 +195,18 @@ class Admin extends CI_Controller{
         }
         
         function after_adding_memo($post_array,$primary_key){
-            return 0;
-//            foreach ($post_array['quantity'] as $index => $value){
+            foreach ($post_array['quantity'] as $index => $value){
                 $book_ordered_quantity_insert = array(
                     "memo_ID" => $primary_key,
-                    "testing" => 'print_r($post_array)',
-//                    "book_ID" => $index,
-//                    "quantity" => $value,
-//                    "book_ID" => $index,
-//                    "price_per_book" => $post_array['price'][$index],
-//                    "total" => $value + $post_array['price'][$index]
+                    "book_ID" => $index,
+                    "quantity" => $value,
+                    "price_per_book" => $post_array['price'][$index],
+                    "total" => $value * $post_array['price'][$index]
                 );
-    //
+    
                 $this->db->insert('pub_memos_selected_books',$book_ordered_quantity_insert);
-//            }
-                //print_r($post_array);
-              
+            }
+            return TRUE;
         }
 
 }

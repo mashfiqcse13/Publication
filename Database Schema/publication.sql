@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2015 at 11:57 AM
+-- Generation Time: Aug 28, 2015 at 01:08 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -123,6 +123,7 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
 
 CREATE TABLE IF NOT EXISTS `pub_memos_selected_books` (
 `selection_ID` int(11) NOT NULL,
+  `memo_ID` int(11) NOT NULL,
   `book_ID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price_per_book` int(11) NOT NULL,
@@ -182,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`) VALUES
-(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-08-28 11:37:17', '2015-08-14 17:35:42', '2015-08-28 09:37:17');
+(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-08-28 13:03:04', '2015-08-14 17:35:42', '2015-08-28 11:03:04');
 
 -- --------------------------------------------------------
 
@@ -203,8 +204,7 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
 --
 
 INSERT INTO `user_autologin` (`key_id`, `user_id`, `user_agent`, `last_ip`, `last_login`) VALUES
-('960618e390b6200d11f095c8e829ebc5', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-08-26 23:38:19'),
-('9fdf3bbdadb8fa07aaaa1dd8314fd88a', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36', '::1', '2015-08-27 22:24:41');
+('960618e390b6200d11f095c8e829ebc5', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-08-26 23:38:19');
 
 -- --------------------------------------------------------
 
