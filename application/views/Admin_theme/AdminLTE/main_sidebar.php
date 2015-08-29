@@ -44,7 +44,7 @@
                 <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
                 <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
                 <li><a href="<?=site_url('admin/manage_payment') ?>"><i class="fa fa-cc-mastercard"></i> Payment Management</a></li>
-                <li><a href="<?=site_url('admin/stock_manage') ?>"><i class="fa fa-cc-mastercard"></i> Manage Stock</a></li>
+                
               </ul>
             </li>
 
@@ -55,7 +55,8 @@
                 
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
+               <!--  <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
+                -->
                  <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
                 </ul>
             </li>
@@ -67,7 +68,7 @@
                 
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
+                <li><a href="<?=site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
                 </ul>
             </li>
 

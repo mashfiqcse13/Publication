@@ -106,16 +106,16 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'stock_manage',$data);
     }
     
-    function stock_manage(){
+    function account(){
 //        $this->load->model('custom/stock_manage');
 
     
 
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
-        $data['Title']='Manage Stock';
+        $data['Title']='Account Information';
         $data['base_url']=base_url();
         
-        $this->load->view($this->config->item('ADMIN_THEME').'manage_stock',$data);
+        $this->load->view($this->config->item('ADMIN_THEME').'account',$data);
     }
 
 

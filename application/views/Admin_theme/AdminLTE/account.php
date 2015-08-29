@@ -13,35 +13,32 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Contact Management</li>
+            <li class="active"><?=$Title?></li>
           </ol>
         </section>
         
         <!-- Main content -->
         <section class="content">
             <div class="row">
-            <div class="col-md-12">
-              <div class="box">
-                <?php  
+                <div class="col-md-12">
 
-                     echo $glosary->output;
-                ?>
-              </div>
-              </div>
+                    <div class="box">
+                    
+           
+               
+                    </div>
+                    
+                </div>
             </div>
- 
-
-          
-     
-
+         
 
 
           
-       
-
-
-
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+
+      <!-- insert book -->
+
+
 
 <?php include_once 'footer.php'; ?>
