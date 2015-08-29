@@ -100,7 +100,7 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'stock_manage',$data);
     }
     
-<<<<<<< HEAD
+
     function account(){
 //        $this->load->model('custom/stock_manage');
 
@@ -112,8 +112,8 @@ class Admin extends CI_Controller{
         
         $this->load->view($this->config->item('ADMIN_THEME').'account',$data);
     }
-=======
->>>>>>> 220cf753007c2081d1ecf0bce4f21a9d3b79cb1d
+
+
 
 
     function memo_generation(){
