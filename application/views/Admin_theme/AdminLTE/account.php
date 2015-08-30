@@ -1,5 +1,6 @@
 <!--add header -->
-<?php include_once 'header.php'; ?>
+
+ <?php include_once 'header.php'; ?>
 
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
@@ -23,9 +24,10 @@
                 <div class="col-md-12">
 
                     <div class="box">
-                    
-           
-               
+                    <div class="thumbnail">
+                    <h2><strong>Today sell : </strong> <?=$todaysell ?></h2><br>
+                    <h2><strong>Monthly sell : </strong><?=$monthly_sell ?></h2>
+                    </div>
                     </div>
                     
                 </div>
