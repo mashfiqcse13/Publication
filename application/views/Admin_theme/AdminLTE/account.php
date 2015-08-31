@@ -25,15 +25,75 @@
 
                     <div class="box">
                     <div class="thumbnail">
-                    <h2><strong>Today sell : </strong> <?=$todaysell ?></h2><br>
-                    <h2><strong>Monthly sell : </strong><?=$monthly_sell ?></h2>
+                    <div class="row">
+                    
+                        <div class="col-md-6">
+                       <h2 class="alert alert-success"><strong>Today sell :  <?=$todaysell ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
+                       
                     </div>
+                    <div class="col-md-6">
+                       <h2 class="alert alert-info"><strong>Monthly sell : <?=$monthly_sell ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
+                       
+                    </div>  
+                    </div>
+
+                     <div class="row">
+                    
+                        <div class="col-md-6">
+                       <h2 class="alert alert-danger"><strong>Today due :  <?=$today_due ?></strong></h2><br>
+                    </div>
+                    <div class="col-md-6">
+                       <h2 class="alert alert-danger"><strong>Monthly due : <?=$monthly_due ?></strong></h2>
+                    </div>  
+                    </div>
+                  </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="box">
+                    <div class="row">
+                      <br>
+                      <div class="col-md-offset-4 col-md-6">
+                        <div class="alert alert-info" style="opacity:.8;">
+                          <h2 class="content-header"><strong>Payment Information</strong></h2>
+                          
+                          <table class="table">
+                            <tr>
+                              <td>Total Cash Paid:</td>
+                              <td><?=$total['total_cash_paid'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Total Bank Due:</td>
+                              <td><?=$total['total_bank_due'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Total Due:</td>
+                              <td><?=$total['total_due'] ?></td>
+                            </tr>
+                            <tr>
+                              <td><strong>Total Sale:<strong></td>
+                              <td><?=$total['total_sell'] ?></td>
+                            </tr>
+                          </table>
+                          
+                        </div>
+                      </div>
+
+                    </div>
+
+                      
+                    
                     </div>
                     
                 </div>
             </div>
          
-
+    
 
           
         </section><!-- /.content -->
