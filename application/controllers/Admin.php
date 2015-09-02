@@ -105,14 +105,16 @@ class Admin extends CI_Controller{
 //        $this->load->model('custom/stock_manage');
 
         $this->load->model('account/account');
-        $data['todaysell']=$this->account->todaysell();
-        $data['monthly_sell']=$this->account->monthlysell();
-        $data['today_due']=$this->account->today_due();
-        $data['monthly_due']=$this->account->monthly_due();
+        // $data['todaysell']=$this->account->todaysell();
+        // $data['monthly_sell']=$this->account->monthlysell();
+        // $data['today_due']=$this->account->today_due();
+        // $data['monthly_due']=$this->account->monthly_due();
         // $data['total_cash_paid']=$this->account->total_cash_paid();
         // $data['total_bank_due']=$this->account->total_bank_due();
         // $data['total_due']=$this->account->total_due();
         // $data['total_sell']=$this->account->totalsell();
+        $data['account_today']=$this->account->today();
+        $data['account_monthly']=$this->account->monthly();
         $data['total']=$this->account->total();
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Account Information';

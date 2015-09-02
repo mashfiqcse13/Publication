@@ -28,11 +28,11 @@
                     <div class="row">
                     
                         <div class="col-md-6">
-                       <h2 class="alert alert-success"><strong>Today sell :  <?=$todaysell ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
+                       <h2 class="alert alert-success"><strong>Today sell :  <?=$account_today['todaysell'] ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
                        
                     </div>
                     <div class="col-md-6">
-                       <h2 class="alert alert-info"><strong>Monthly sell : <?=$monthly_sell ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
+                       <h2 class="alert alert-info"><strong>Monthly sell : <?=$account_monthly['monthlysell'] ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
                        
                     </div>  
                     </div>
@@ -40,10 +40,10 @@
                      <div class="row">
                     
                         <div class="col-md-6">
-                       <h2 class="alert alert-danger"><strong>Today due :  <?=$today_due ?></strong></h2><br>
+                       <h2 class="alert alert-danger"><strong>Today due :  <?=$account_today['today_due'] ?></strong></h2><br>
                     </div>
                     <div class="col-md-6">
-                       <h2 class="alert alert-danger"><strong>Monthly due : <?=$monthly_due ?></strong></h2>
+                       <h2 class="alert alert-danger"><strong>Monthly due : <?=$account_monthly['monthly_due'] ?></strong></h2>
                     </div>  
                     </div>
                   </div>
