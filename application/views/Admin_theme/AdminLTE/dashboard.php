@@ -6,4 +6,6 @@
       <!-- Content Wrapper. Contains page content -->
 <?php include_once 'content.php'; ?>
 
+<?php //include_once 'account.php' ?>
+
 <?php include_once 'footer.php'; ?>

@@ -32,6 +32,11 @@ class Admin extends CI_Controller{
     }
     
     function index(){
+
+        $this->load->model('account/account');
+        $data['account_today']=$this->account->today();
+        $data['account_monthly']=$this->account->monthly();
+        $data['total']=$this->account->total();
         
         $data['theme_asset_url'] = base_url(). $this->config->item('THEME_ASSET');
         $data['base_url']=base_url();
