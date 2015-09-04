@@ -127,8 +127,6 @@ class Admin extends CI_Controller{
         
         $this->load->view($this->config->item('ADMIN_THEME').'account',$data);
 
-      
- 
     }
 
 
@@ -243,7 +241,7 @@ class Admin extends CI_Controller{
 
             $output ='<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
                     '.$this->table->generate($data).'</div>
-                   <label>Sub Total :</label><span id="sub_total">'.$value.'</span><span>Tk</span> <input type="hidden" maxlength="50  " name="sub_total">';
+                   <label>Sub Total :</label><span id="sub_total">'.$value.'</span><span>Tk</span> <input type="hidden" maxlength="50" value="'.$value.'" name="sub_total">';
             return $output;
         }
         
