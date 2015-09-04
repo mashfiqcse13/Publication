@@ -72,15 +72,9 @@
                 </ul>
             </li>
 
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-sign-out"></i>
-                <span>Log Out</span>
-               
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
-                </ul>
+            <li><?php echo anchor('login/logout',
+                    '<i class="fa fa-sign-out"></i><span>Log Out</span>');?>
+              
             </li>
 <!--
             <li class="treeview">
@@ -205,8 +199,8 @@
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-          
--->
+          -->
+
           </ul>
         </section>
         <!-- /.sidebar -->
