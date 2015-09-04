@@ -1,98 +1,4 @@
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            <?=$Title ?>
-            <small>manage <?=$Title ?></small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><?=$Title?></li>
-          </ol>
-        </section>
-        
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="box">
-                    <div class="thumbnail">
-                    <div class="row">
-                    
-                        <div class="col-md-6">
-                       <h2 class="alert alert-success"><strong>Today sell :  <?=$account_today['todaysell'] ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
-                       
-                    </div>
-                    <div class="col-md-6">
-                       <h2 class="alert alert-info"><strong>Monthly sell : <?=$account_monthly['monthlysell'] ?></strong> <span style="font-size:11px;">after subtract discount</span></h2>
-                       
-                    </div>  
-                    </div>
-
-                     <div class="row">
-                    
-                        <div class="col-md-6">
-                       <h2 class="alert alert-danger"><strong>Today due :  <?=$account_today['today_due'] ?></strong></h2><br>
-                    </div>
-                    <div class="col-md-6">
-                       <h2 class="alert alert-danger"><strong>Monthly due : <?=$account_monthly['monthly_due'] ?></strong></h2>
-                    </div>  
-                    </div>
-                  </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="box">
-                    <div class="row">
-                      <br>
-                      <div class="col-md-6">
-                        <div class="" style="opacity:.8;">
-                          <h2 class="content-header"><strong>Payment Information</strong></h2>
-                          
-                          <table class="table table-borderd">
-                            <tr>
-                              <td>Total Cash Paid:</td>
-                              <td><?=$total['total_cash_paid'] ?></td>
-                            </tr>
-                            <tr>
-                              <td>Total Bank Due:</td>
-                              <td><?=$total['total_bank_due'] ?></td>
-                            </tr>
-                            <tr>
-                              <td>Total Due:</td>
-                              <td><?=$total['total_due'] ?></td>
-                            </tr>
-                            <tr>
-                              <td><strong>Total Sale:<strong></td>
-                              <td><?=$total['total_sell'] ?></td>
-                            </tr>
-                          </table>
-                          
-                        </div>
-                      </div>
-
-                    </div>
-
-                      
-                    
-                    </div>
-                    
-                </div>
-            </div>
-         
-    
-
-          
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-
-      <noscript>
+     
 
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -128,8 +34,8 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
-                  <p>Bounce Rate</p>
+                  <h3><strong>Monthly sell : <?=$account_monthly['monthlysell'] ?></strong> </h3>
+                  <p>after subtract discount</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -141,8 +47,8 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>44</h3>
-                  <p>User Registrations</p>
+                  <h3><strong>Today due :  <?=$account_today['today_due'] ?></strong></h3>
+                  
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
@@ -154,8 +60,8 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>65</h3>
-                  <p>Unique Visitors</p>
+                  <h3><strong>Monthly due : <?=$account_monthly['monthly_due'] ?></strong></h3>
+                 
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
@@ -165,6 +71,56 @@
             </div><!-- ./col -->
           </div><!-- /.row -->
           <!-- Main row -->
+          
+    <div class="row">
+                <div class="col-md-12">
+
+                    <div class="box">
+                    <div class="row">
+                      <br>
+                      <div class="col-md-8">
+                        <div class="" >
+                          <h2 class="content-header"><strong>Payment Information</strong></h2>
+                          
+                          <table class="table table-striped">
+                            <tr>
+                              <td>Total Cash Paid:</td>
+                              <td><?=$total['total_cash_paid'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Total Bank Due:</td>
+                              <td><?=$total['total_bank_due'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Total Due:</td>
+                              <td><?=$total['total_due'] ?></td>
+                            </tr>
+                            <tr>
+                              <td><strong>Total Sale:<strong></td>
+                              <td><?=$total['total_sell'] ?></td>
+                            </tr>
+                          </table>
+                          
+                        </div>
+                      </div>
+
+                    </div>
+
+                      
+                    
+                    </div>
+                    
+                </div>
+            </div>
+
+          <!-- hide this section -->
+
+
+
+
+<noscript>
+
+
           <div class="row">
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
@@ -529,8 +485,8 @@
 
             </section><!-- right col -->
           </div><!-- /.row (main row) -->
-
+</noscript>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
-      </noscript>
+      

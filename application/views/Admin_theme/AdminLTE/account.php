@@ -58,11 +58,11 @@
                     <div class="box">
                     <div class="row">
                       <br>
-                      <div class="col-md-offset-4 col-md-6">
-                        <div class="alert alert-info" style="opacity:.8;">
+                      <div class="col-md-8">
+                        <div class="" style="opacity:.8;">
                           <h2 class="content-header"><strong>Payment Information</strong></h2>
                           
-                          <table class="table">
+                          <table class="table table-striped">
                             <tr>
                               <td>Total Cash Paid:</td>
                               <td><?=$total['total_cash_paid'] ?></td>

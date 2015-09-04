@@ -43,8 +43,7 @@
                 <li><a href="<?=site_url('admin/manage_book') ?>"><i class="fa fa-book"></i>Book Management</a></li>
                 <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
                 <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
-                <li><a href="<?=site_url('admin/manage_payment') ?>"><i class="fa fa-cc-mastercard"></i> Payment Management</a></li>
-                
+                  
               </ul>
             </li>
 
