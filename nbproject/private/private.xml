@@ -6,8 +6,12 @@
             <file>file:/G:/xampp/htdocs/Publication/application/config/common/site.php</file>
             <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/footer.php</file>
             <file>file:/G:/xampp/htdocs/Publication/application/controllers/Admin.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/account.php</file>
             <file>file:/G:/xampp/htdocs/Publication/testing.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/header.php</file>
             <file>file:/G:/xampp/htdocs/Publication/asset/js/memo-validation.js</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/models/account/account.php</file>
         </group>
     </open-files>
 </project-private>

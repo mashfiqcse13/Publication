@@ -21,8 +21,8 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3><strong>Today sell :  <?=$account_today['todaysell'] ?></strong> </h3>
-                  <p>after subtract discount</p>
+                  <h3><?=$account_today['todaysell'] ?> Tk</h3>
+                  <p><strong>Today sell </strong><br>after subtract discount</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -34,8 +34,8 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><strong>Monthly sell : <?=$account_monthly['monthlysell'] ?></strong> </h3>
-                  <p>after subtract discount</p>
+                  <h3><strong><?=$account_monthly['monthlysell'] ?> Tk</strong> </h3>
+                  <p><strong>Monthly sell </strong><br>after subtract discount</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -47,7 +47,8 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3><strong>Today due :  <?=$account_today['today_due'] ?></strong></h3>
+                  <h3><strong><?=$account_today['today_due'] ?> Tk</strong></h3>
+                  <p><strong>Today due</strong><br></p>
                   
                 </div>
                 <div class="icon">
@@ -60,7 +61,8 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3><strong>Monthly due : <?=$account_monthly['monthly_due'] ?></strong></h3>
+                  <h3><strong><?=$account_monthly['monthly_due'] ?> Tk</strong></h3>
+                  <p><strong>Monthly due</strong><br></p>
                  
                 </div>
                 <div class="icon">
