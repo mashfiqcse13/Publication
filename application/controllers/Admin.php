@@ -153,8 +153,10 @@ class Admin extends CI_Controller{
         });
         $crud->callback_add_field('sub_total', array($this,'add_book_selector_table'));
         $crud->callback_edit_field('sub_total', array($this,'edit_book_selector_table'));
+        
 
-
+        $this->grocery_crud->callback_add_field('issue_date',array($this,'_date_fill_now'));
+   
 
         $crud->callback_after_insert(array($this, 'after_adding_memo'));
         
@@ -172,15 +174,11 @@ class Admin extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'memo_management',$data);
     }
 
-    function test(){
+protected function _date_fill_now()
+{
+        return '<input name="date" type="text" value="'. current_time() . '" maxlength="19" class="datetime-input">';
+}
 
-           $this->grocery_crud->set_table('pub_contacts');
-        $output['some'] =  $this->grocery_crud->render();
-        
-
-        $this->load->view('Admin_theme/AdminLTE/test',$output);
-    }
-    
     function add_book_selector_table() {
             $this->load->library('table');
             // Getting Data
@@ -207,6 +205,8 @@ class Admin extends CI_Controller{
                    <label>Sub Total :</label><span id="sub_total">0</span><span>Tk</span> <input type="hidden" maxlength="50  " name="sub_total">';
             return $output;
         }
+
+
         
     function edit_book_selector_table($value, $primary_key) {
             $this->load->library('table');

@@ -3,7 +3,7 @@
 	$config['grocery_crud_default_language']	= 'english';
 
 	// There are only three choices: "uk-date" (dd/mm/yyyy), "us-date" (mm/dd/yyyy) or "sql-date" (yyyy-mm-dd)
-	$config['grocery_crud_date_format']			= 'uk-date';
+	$config['grocery_crud_date_format']			= 'us-date';
 
 	// The default per page when a user firstly see a list page
 	$config['grocery_crud_default_per_page']	= 10;
@@ -33,3 +33,6 @@
 
     //The environment is important so we can have specific configurations for specific environments
     $config['grocery_crud_environment'] = 'production';
+
+    $config['grocery_crud_default_date_format']	 = 'd M Y';
+	$config['grocery_crud_default_datetime_format'] = 'd M Y - H:i';

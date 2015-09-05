@@ -17,7 +17,7 @@ function today(){
 	$query = $this->db->query("SELECT sub_total,discount,due FROM pub_memos WHERE issue_date=DATE(NOW())");
 
 	foreach ($query->result() as $value) {
-		$this->todaysell+=$value->sub_total-$value->discount;
+		$this->todaysell+=$value->sub_total - $value->discount;
 		$this->today_due+=$value->due;
 	}
 	$data['todaysell']=$this->todaysell;

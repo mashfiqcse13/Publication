@@ -62,6 +62,8 @@
     <script src="<?php echo $theme_asset_url ?>dist/js/demo.js" type="text/javascript"></script>
     <!-- For Add memo form validation -->
     <script src="<?=base_url().$this->config->item('ASSET_FOLDER')?>js/memo-validation.js" type="text/javascript"></script>
+
+    
         
 
   </body>

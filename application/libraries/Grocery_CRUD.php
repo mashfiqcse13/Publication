@@ -358,7 +358,9 @@ class grocery_CRUD_Field_Types
 				}
 			break;
 
-			default:
+		
+
+				default:
 				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;
 		}
