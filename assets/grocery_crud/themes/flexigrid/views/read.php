@@ -9,6 +9,9 @@
 ?>
 <div class="flexigrid crud-form" style='width: 100%;' data-unique-hash="<?php echo $unique_hash; ?>">
 	<div class="mDiv">
+		<div class="center-block" >
+			<img src="http://thejamunapub.com/wp-content/uploads/2015/09/logo.png" alt="">
+		</div>
 		<div class="ftitle">
 			<div class='ftitle-left'>
 				<?php echo $this->l('list_record'); ?> <?php echo $subject?>
@@ -55,6 +58,7 @@
 	<div class="pDiv">
 		<div class='form-button-box'>
 			<input type='button' value='<?php echo $this->l('form_back_to_list'); ?>' class="btn btn-large back-to-list" id="cancel-button" />
+			<input type='button' onclick = "window.print()" value='Print' class="btn btn-large" id="cancel-button" />
 		</div>
 		<div class='form-button-box'>
 			<div class='small-loading' id='FormLoading'><?php echo $this->l('form_update_loading'); ?></div>
