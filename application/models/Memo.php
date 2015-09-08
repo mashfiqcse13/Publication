@@ -6,8 +6,7 @@ class Memo extends CI_Model{
 	private $discount;
 	private $total;
 
-	function memogenerat($id=''){
-		$id=22;
+	function memogenerat($id){
 		$this->load->library('table');
 		$query = $this->db->query("SELECT name,quantity,price,total,discount FROM `pub_memos_selected_books` 
 			LEFT JOIN pub_books on pub_memos_selected_books.book_ID=pub_books.book_ID 
@@ -53,7 +52,7 @@ class Memo extends CI_Model{
 		$this->table->add_row('','','Subtotal',$this->subtotal);
 		$this->table->add_row('','','Discount',$this->discount);
 		$this->table->add_row('','','Total',$this->subtotal-$this->discount);
-		echo $this->table->generate();
+		return $this->table->generate();
 		
 	}
 
