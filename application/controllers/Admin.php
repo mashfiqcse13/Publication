@@ -132,12 +132,18 @@ class Admin extends CI_Controller{
 
 
 
-    function memo_generation(){
+    function memo(){
+        $this->load->model('Memo');
+        
         $data['theme_asset_url'] = base_url().$this->config->item('THEME_ASSET');
         $data['Title']='Memo Generation';
         $data['base_url']=base_url();
+
+        //$data['memo']=$this->Memo->memogenerat();
+        //var_dump($data['memo']);
+        //$this->Memo->memogenerat();
         
-        $this->load->view($this->config->item('ADMIN_THEME').'memo_generation',$data);
+        $this->load->view($this->config->item('ADMIN_THEME').'memo',$data);
     }
 
      function memo_management(){

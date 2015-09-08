@@ -57,6 +57,7 @@
                <!--  <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
                 -->
                  <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
+                  <li><a href="<?=site_url('admin/memo') ?>"><i class="fa fa-cog"></i>Memo</a></li>
                 </ul>
             </li>
 
