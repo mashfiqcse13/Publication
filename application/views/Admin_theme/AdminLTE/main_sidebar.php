@@ -4,14 +4,14 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="<?php echo $theme_asset_url ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img src="http://friendsitltd.com/wp-content/uploads/2015/09/small-3512-7607823.png" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p>Jamuna Pub Management</p>
+              <p>The Jamuna <br>Publishers MGMT</p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
-          <!-- search form -->
+          <!-- search form 
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q" class="form-control" placeholder="Search..." />
@@ -19,7 +19,7 @@
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
-          </form>
+          </form> -->
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
@@ -37,7 +37,7 @@
               <a href="#">
                 <i class="fa fa-cubes"></i>
                 <span>Management Area</span>
-                <span class="label label-primary pull-right">4</span>
+                <span class="label label-primary pull-right">3</span>
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?=site_url('admin/manage_book') ?>"><i class="fa fa-book"></i>Book Management</a></li>
@@ -57,7 +57,8 @@
                <!--  <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
                 -->
                  <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
-                  <li><a href="<?=site_url('admin/memo') ?>"><i class="fa fa-cog"></i>Memo</a></li>
+                  <li><a href="<?=site_url('admin/memo_management/add')?>"><i class="fa fa-cog"></i>Add memo</a></li>
+                <li><a href="<?=site_url('admin/memo')?>"><i class="fa fa-cog"></i>memo</a></li>
                 </ul>
             </li>
 
