@@ -24,6 +24,35 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+
+             <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
+                  <li><a href="<?=site_url('admin/memo_management/add')?>"><i class="fa fa-cog"></i>Add memo</a></li>
+                <li><a href="<?=site_url('admin/memo')?>"><i class="fa fa-cog"></i>memo</a></li>
+
+                <li><a href="<?=site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
+                <li><a href="<?=site_url('admin/manage_book') ?>"><i class="fa fa-book"></i>Book Management</a></li>
+                <li><a href="<?=site_url('admin/manage_book/add') ?>"><i class="fa fa-book"></i>Add New Book</a></li>
+                <li><a href="<?=site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
+                   <li><a href="<?=site_url('admin/manage_contact/add') ?>"><i class="fa fa-group"></i>Add New Contact</a></li>
+
+                 <li><a href="<?=site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
+            <!--
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span>Memo Generation</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+               <!--  <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
+                -->
+                <!--
+                 <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
+                  <li><a href="<?=site_url('admin/memo_management/add')?>"><i class="fa fa-cog"></i>Add memo</a></li>
+                <li><a href="<?=site_url('admin/memo')?>"><i class="fa fa-cog"></i>memo</a></li>
+                </ul>
+            </li>
+
             <li class="active treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
@@ -47,20 +76,7 @@
               </ul>
             </li>
 
-             <li class="active treeview">
-              <a href="#">
-                <i class="fa fa-cogs"></i>
-                <span>Memo Generation</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-               <!--  <li><a href="<?=site_url('admin/memo_generation') ?>"><i class="fa fa-cog"></i>Memo Generation</a></li>
-                -->
-                 <li><a href="<?=site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
-                  <li><a href="<?=site_url('admin/memo_management/add')?>"><i class="fa fa-cog"></i>Add memo</a></li>
-                <li><a href="<?=site_url('admin/memo')?>"><i class="fa fa-cog"></i>memo</a></li>
-                </ul>
-            </li>
+             
 
             <li class="active treeview">
               <a href="#">
@@ -72,9 +88,8 @@
                 <li><a href="<?=site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
                 </ul>
             </li>
-
-            <li><?php echo anchor('login/logout',
-                    '<i class="fa fa-sign-out"></i><span>Log Out</span>');?>
+-->
+            <li><?php echo anchor('login/logout','<i class="fa fa-sign-out"></i><span>Log Out</span>');?>
               
             </li>
 <!--
