@@ -161,6 +161,10 @@ class Admin extends CI_Controller {
         $crud->callback_after_update(array($this, 'after_editing_memo'));
         $crud->callback_before_insert(array($this, 'before_adding_or_updating_memo'));
         $crud->callback_before_update(array($this, 'before_adding_or_updating_memo'));
+        
+        $crud->add_action('Print', '', site_url('admin/memo/1'),'fa fa-print',function ($primary_key , $row){
+            return site_url('admin/memo/'.$row->memo_ID) ;
+        });
 
         $addContactButtonContent = anchor('admin/manage_contact/add', '<i class="fa fa-plus-circle"></i> Add New Contact', 'class="btn btn-default" style="margin-left: 15px;"');
         $data['scriptInline'] = ""

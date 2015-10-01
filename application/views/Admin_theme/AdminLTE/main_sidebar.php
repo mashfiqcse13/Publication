@@ -20,7 +20,6 @@
                 <ul class="treeview-menu">
                     <li><a href="<?= site_url('admin/memo_management/add') ?>"><i class="fa fa-plus-circle"></i>Add memo</a></li>
                     <li><a href="<?= site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
-                    <li><a href="<?= site_url('admin/memo/1') ?>"><i class="fa fa-print"></i>memo</a></li>
                 </ul>
             </li>
 
