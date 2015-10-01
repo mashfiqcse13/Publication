@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2015 at 08:29 PM
+-- Generation Time: Oct 01, 2015 at 05:35 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -106,25 +106,27 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
 `memo_ID` int(11) NOT NULL COMMENT 'Memo ID',
   `memo_serial` varchar(50) NOT NULL COMMENT 'unique id auto genetated',
   `contact_ID` int(11) NOT NULL COMMENT 'Memo Issued to',
-  `issue_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT 'Memo auto generated timestamp',
+  `issue_date` datetime NOT NULL COMMENT 'Memo auto generated timestamp',
   `sub_total` int(11) NOT NULL COMMENT 'Total book Price',
   `discount` int(11) NOT NULL COMMENT 'Discount made',
-  `previous_due` int(11) NOT NULL COMMENT 'Prevous Due',
+  `dues_unpaid` int(11) NOT NULL COMMENT 'Prevous Due',
+  `total` int(11) NOT NULL,
   `cash` int(11) NOT NULL COMMENT 'Paid by cash',
-  `bank_due` int(11) NOT NULL COMMENT 'Paid by band check',
+  `bank_pay` int(11) NOT NULL COMMENT 'Paid by band check',
   `due` int(11) NOT NULL COMMENT 'Due'
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_memos`
 --
 
-INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `sub_total`, `discount`, `previous_due`, `cash`, `bank_due`, `due`) VALUES
-(1, '55e0465aebb13', 5, '2015-02-09 08:00:00', 930, 1, 2, 3, 4, 5),
-(2, '55e0517776b69', 2, '2015-09-09 07:00:00', 920, 7, 13, 13, 14, 17),
-(4, '55e05fdfb1543', 2, '2015-04-09 07:00:00', 920, 1, 2, 2, 2, 2),
-(5, '55e50b3bc7cd0', 5, '2015-01-09 08:00:00', 640, 18, 14, 16, 13, 20),
-(6, '55e9c7e602c7c', 3, '2015-04-09 07:00:00', 800, 10, 15, 12, 14, 13);
+INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `sub_total`, `discount`, `dues_unpaid`, `total`, `cash`, `bank_pay`, `due`) VALUES
+(1, '55ef0c7984272', 2, '2015-01-10 00:00:00', 1170, 20, 0, 1150, 0, 0, 1150),
+(2, '55f03560cf684', 2, '2015-01-10 00:00:00', 120, 0, 1150, 1550, 0, 0, 1550),
+(3, '55f53e76c0f56', 2, '2015-01-10 00:00:00', 120, 60, 0, 9020, 0, 0, 0),
+(5, '560d106822521', 2, '2015-01-10 00:00:00', 120, 0, 0, 2720, 0, 0, 0),
+(6, '560d1edbad9de', 2, '2015-01-10 00:00:00', 120, 0, 0, 5440, 0, 0, 0),
+(7, '560d2e96e97b5', 2, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -146,24 +148,24 @@ CREATE TABLE IF NOT EXISTS `pub_memos_selected_books` (
 --
 
 INSERT INTO `pub_memos_selected_books` (`selection_ID`, `memo_ID`, `book_ID`, `quantity`, `price_per_book`, `total`) VALUES
-(1, 1, 5, 1, 120, 120),
+(1, 1, 5, 4, 120, 480),
 (2, 1, 6, 2, 130, 260),
-(3, 1, 7, 3, 140, 420),
-(4, 2, 5, 2, 120, 240),
-(5, 2, 6, 2, 130, 260),
+(3, 1, 7, 4, 140, 560),
+(4, 2, 5, 1, 120, 120),
+(5, 2, 6, 3, 130, 390),
 (6, 2, 7, 2, 140, 280),
 (7, 3, 5, 2, 120, 240),
 (8, 3, 6, 2, 130, 260),
-(9, 3, 7, 2, 140, 280),
-(10, 4, 5, 2, 120, 240),
-(11, 4, 6, 2, 130, 260),
-(12, 4, 7, 2, 140, 280),
-(13, 5, 5, 2, 120, 240),
-(14, 5, 6, 2, 130, 260),
-(15, 5, 7, 0, 140, 0),
-(16, 6, 5, 1, 120, 120),
-(17, 6, 6, 2, 130, 260),
-(18, 6, 7, 3, 140, 420);
+(9, 3, 7, 4, 140, 560),
+(10, 5, 5, 1, 120, 120),
+(11, 5, 6, 0, 130, 0),
+(12, 5, 7, 0, 140, 0),
+(13, 6, 5, 0, 120, 0),
+(14, 6, 6, 0, 130, 0),
+(15, 6, 7, 0, 140, 0),
+(16, 7, 5, 1, 120, 120),
+(17, 7, 6, 0, 130, 0),
+(18, 7, 7, 0, 140, 0);
 
 -- --------------------------------------------------------
 
@@ -218,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`) VALUES
-(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-09-04 18:22:51', '2015-08-14 17:35:42', '2015-09-04 16:22:51');
+(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-10-01 11:09:36', '2015-08-14 17:35:42', '2015-10-01 09:09:36');
 
 -- --------------------------------------------------------
 
@@ -239,8 +241,9 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
 --
 
 INSERT INTO `user_autologin` (`key_id`, `user_id`, `user_agent`, `last_ip`, `last_login`) VALUES
+('0c4a62def3836eda17fb78ad7747109f', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-10-01 09:09:36'),
 ('34c6d5a1beb4003137abe89d23605324', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36', '::1', '2015-09-04 16:22:51'),
-('960618e390b6200d11f095c8e829ebc5', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-08-26 23:38:19');
+('b9ab15faccf44f729ab59b260783f1fa', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36', '::1', '2015-09-30 10:32:29');
 
 -- --------------------------------------------------------
 
@@ -342,7 +345,7 @@ MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `pub_memos`
 --
 ALTER TABLE `pub_memos`
-MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=7;
+MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `pub_memos_selected_books`
 --

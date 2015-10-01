@@ -8,7 +8,7 @@ private $monthlysell=0;
 private $today_due=0;
 private $monthly_due=0;
 private $total_cash_paid=0;
-private $total_bank_due=0;
+private $total_bank_pay=0;
 private $total_due=0;
 private $total_sell=0;
 
@@ -65,30 +65,30 @@ function monthly(){
 // }
 
 function total(){
- $query=$this->db->query("SELECT cash,bank_due,due FROM pub_memos");
+ $query=$this->db->query("SELECT cash,bank_pay,due FROM pub_memos");
 
  foreach ($query->result() as $value) {
  	$this->total_cash_paid+=$value->cash;
- 	$this->total_bank_due+=$value->bank_due;
+ 	$this->total_bank_pay+=$value->bank_pay;
  	$this->total_due+=$value->due;
 
 
  }
  $data['total_cash_paid']=$this->total_cash_paid;
- $data['total_bank_due']=$this->total_bank_due;
+ $data['total_bank_pay']=$this->total_bank_pay;
  $data['total_due']=$this->total_due;
- $data['total_sell']=$this->total_cash_paid+$this->total_bank_due+$this->total_due;
+ $data['total_sell']=$this->total_cash_paid+$this->total_bank_pay+$this->total_due;
  return $data;
 }
 
-// function total_bank_due(){
-// 	$query=$this->db->query("SELECT bank_due FROM pub_memos");
+// function total_bank_pay(){
+// 	$query=$this->db->query("SELECT bank_pay FROM pub_memos");
 
 //  foreach ($query->result() as $value) {
-//  	$this->total_bank_due+=$value->bank_due;
+//  	$this->total_bank_pay+=$value->bank_pay;
 //  }
 
-//  return $this->total_bank_due;
+//  return $this->total_bank_pay;
 
 // }
 
@@ -104,7 +104,7 @@ function total(){
 // }
 
 // function totalsell(){
-// 	$bankdue=$this->total_bank_due;
+// 	$bankdue=$this->total_bank_pay;
 // 	$cashpaid=$this->total_cash_paid;
 // 	$totaldue=$this->total_due;
 	

@@ -114,7 +114,7 @@ class Admin extends CI_Controller {
         // $data['today_due']=$this->account->today_due();
         // $data['monthly_due']=$this->account->monthly_due();
         // $data['total_cash_paid']=$this->account->total_cash_paid();
-        // $data['total_bank_due']=$this->account->total_bank_due();
+        // $data['total_bank_pay']=$this->account->total_bank_pay();
         // $data['total_due']=$this->account->total_due();
         // $data['total_sell']=$this->account->totalsell();
         $data['account_today'] = $this->account->today();
@@ -127,7 +127,7 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'account', $data);
     }
 
-    function memo($momo_id = 1) {
+    function memo($momo_id) {
         $this->load->model('Memo');
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -157,17 +157,25 @@ class Admin extends CI_Controller {
         $crud->callback_add_field('sub_total', array($this, 'add_book_selector_table'));
         $crud->callback_edit_field('sub_total', array($this, 'edit_book_selector_table'));
 
-
-        $this->grocery_crud->callback_add_field('issue_date', array($this, '_date_fill_now'));
-
-
         $crud->callback_after_insert(array($this, 'after_adding_memo'));
+        $crud->callback_after_update(array($this, 'after_editing_memo'));
+        $crud->callback_before_insert(array($this, 'before_adding_or_updating_memo'));
+        $crud->callback_before_update(array($this, 'before_adding_or_updating_memo'));
 
+        $addContactButtonContent = anchor('admin/manage_contact/add', '<i class="fa fa-plus-circle"></i> Add New Contact', 'class="btn btn-default" style="margin-left: 15px;"');
+        $data['scriptInline'] = ""
+                . "<script>"
+                . "var addContactButtonContent = '$addContactButtonContent';\n "
+                . "var CurrentDate = '" . date("d/m/Y") . "';"
+                . "var previousDueFinderUrl = '" . site_url("admin/previousDue/") . "';"
+                . "</script>\n"
+                . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
 
         $output = $crud->render();
 
 //        $this->grocery_crud->set_table('pub_memos')->set_subject('Memo');
 //        $output =  $this->grocery_crud->render();
+        
         $data['glosary'] = $output;
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -175,10 +183,6 @@ class Admin extends CI_Controller {
         $data['base_url'] = base_url();
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'memo_management', $data);
-    }
-
-    protected function _date_fill_now() {
-        return '<input name="date" type="text" value="' . current_time() . '" maxlength="19" class="datetime-input">';
     }
 
     function add_book_selector_table() {
@@ -242,6 +246,10 @@ class Admin extends CI_Controller {
         $output = '<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:200px;">
                     ' . $this->table->generate($data) . '</div>
                    <label>Sub Total :</label><span id="sub_total">' . $value . '</span><span>Tk</span> <input type="hidden" maxlength="50" value="' . $value . '" name="sub_total">';
+        $output.=""
+                . "<script>"
+                . "var memo_ID='".$primary_key."';"
+                . "</script>\n";
         return $output;
     }
 
@@ -258,6 +266,43 @@ class Admin extends CI_Controller {
             $this->db->insert('pub_memos_selected_books', $book_ordered_quantity_insert);
         }
         return TRUE;
+    }
+
+    function before_adding_or_updating_memo($post_array, $primary_key=false) {
+        $data = array(
+            'dues_unpaid'=>0
+        );
+
+        $this->db->where('contact_ID', $post_array['contact_ID']);
+        $this->db->update($this->config->item('db_tables')['pub_memos'], $data);
+    }
+
+    //    Getting the previous due and make other row's due 0
+    function previousDue($contact_ID = 2,$memo_ID=1) {
+//        echo site_url("admin/previousDue/$id");
+        $this->db->select_sum('due');
+        $where_conditions = array(
+            'contact_ID'=>$contact_ID,
+            'memo_ID !='=>$memo_ID
+        );
+        $this->db->where($where_conditions);
+        $query = $this->db->get($this->config->item('db_tables')['pub_memos']);
+        echo $query->result_array()[0]['due'];
+    }
+    //    Getting the previous due and make other row's due 0
+    function previousDue1($contact_ID = 2,$memo_ID=1) {
+        $this->load->library('table');
+//        echo site_url("admin/previousDue/$id");
+//        $this->db->select_sum('due');
+        $where_conditions = array(
+            'contact_ID'=>$contact_ID,
+            'memo_ID !='=>$memo_ID
+        );
+        $this->db->where($where_conditions);
+        $query = $this->db->get($this->config->item('db_tables')['pub_memos']);
+        print_r($query->result_array());
+        echo "<br>";
+        echo $this->table->generate($query->result_array());
     }
 
 }

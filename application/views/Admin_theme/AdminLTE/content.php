@@ -91,7 +91,7 @@
                             </tr>
                             <tr>
                               <td>Total Bank Due:</td>
-                              <td><?=$total['total_bank_due'] ?></td>
+                              <td><?=$total['total_bank_pay'] ?></td>
                             </tr>
                             <tr>
                               <td>Total Due:</td>
