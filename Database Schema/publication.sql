@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2015 at 05:35 PM
+-- Generation Time: Oct 01, 2015 at 06:45 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `pub_books` (
 `book_ID` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
-  `total_quantity` int(11) NOT NULL,
   `catagory` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
@@ -65,10 +64,10 @@ CREATE TABLE IF NOT EXISTS `pub_books` (
 -- Dumping data for table `pub_books`
 --
 
-INSERT INTO `pub_books` (`book_ID`, `name`, `price`, `total_quantity`, `catagory`) VALUES
-(5, 'Bangla First Paper', 120, 70, 'Bangla'),
-(6, 'English 1st Paper', 130, 50, 'English'),
-(7, 'ICT 1st paper', 140, 23, 'ICT');
+INSERT INTO `pub_books` (`book_ID`, `name`, `price`, `catagory`) VALUES
+(5, 'Bangla First Paper', 120, 'Bangla'),
+(6, 'English 1st Paper', 130, 'English'),
+(7, 'ICT 1st paper', 140, 'ICT');
 
 -- --------------------------------------------------------
 
@@ -121,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
 --
 
 INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `sub_total`, `discount`, `dues_unpaid`, `total`, `cash`, `bank_pay`, `due`) VALUES
-(1, '55ef0c7984272', 2, '2015-01-10 00:00:00', 1170, 20, 0, 1150, 0, 0, 1150),
-(2, '55f03560cf684', 2, '2015-01-10 00:00:00', 120, 0, 1150, 1550, 0, 0, 1550),
+(1, '55ef0c7984272', 2, '2015-01-10 00:00:00', 1170, 20, 1270, 2420, 0, 0, 2420),
+(2, '55f03560cf684', 2, '2015-01-10 00:00:00', 120, 0, 0, 1270, 0, 0, 1270),
 (3, '55f53e76c0f56', 2, '2015-01-10 00:00:00', 120, 60, 0, 9020, 0, 0, 0),
 (5, '560d106822521', 2, '2015-01-10 00:00:00', 120, 0, 0, 2720, 0, 0, 0),
 (6, '560d1edbad9de', 2, '2015-01-10 00:00:00', 120, 0, 0, 5440, 0, 0, 0),
@@ -220,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`) VALUES
-(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-10-01 11:09:36', '2015-08-14 17:35:42', '2015-10-01 09:09:36');
+(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-10-01 17:41:42', '2015-08-14 17:35:42', '2015-10-01 15:41:42');
 
 -- --------------------------------------------------------
 
