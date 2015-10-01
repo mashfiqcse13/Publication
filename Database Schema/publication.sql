@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2015 at 06:45 PM
+-- Generation Time: Oct 01, 2015 at 07:47 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
   `cash` int(11) NOT NULL COMMENT 'Paid by cash',
   `bank_pay` int(11) NOT NULL COMMENT 'Paid by band check',
   `due` int(11) NOT NULL COMMENT 'Due'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_memos`
@@ -125,7 +125,11 @@ INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `
 (3, '55f53e76c0f56', 2, '2015-01-10 00:00:00', 120, 60, 0, 9020, 0, 0, 0),
 (5, '560d106822521', 2, '2015-01-10 00:00:00', 120, 0, 0, 2720, 0, 0, 0),
 (6, '560d1edbad9de', 2, '2015-01-10 00:00:00', 120, 0, 0, 5440, 0, 0, 0),
-(7, '560d2e96e97b5', 2, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 0);
+(7, '560d2e96e97b5', 2, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 0),
+(9, '560d67101ac12', 3, '2015-01-10 00:00:00', 120, 0, 0, 120, 120, 0, 0),
+(10, '560d6852e4fa9', 3, '2015-01-10 00:00:00', 130, 0, 0, 130, 0, 0, 130),
+(11, '560d68afe5211', 1, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 120),
+(12, '560d691ec124f', 1, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 120);
 
 -- --------------------------------------------------------
 
@@ -140,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `pub_memos_selected_books` (
   `quantity` int(11) NOT NULL,
   `price_per_book` int(11) NOT NULL,
   `total` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_memos_selected_books`
@@ -164,7 +168,22 @@ INSERT INTO `pub_memos_selected_books` (`selection_ID`, `memo_ID`, `book_ID`, `q
 (15, 6, 7, 0, 140, 0),
 (16, 7, 5, 1, 120, 120),
 (17, 7, 6, 0, 130, 0),
-(18, 7, 7, 0, 140, 0);
+(18, 7, 7, 0, 140, 0),
+(19, 8, 5, 1, 120, 120),
+(20, 8, 6, 0, 130, 0),
+(21, 8, 7, 0, 140, 0),
+(22, 9, 5, 1, 120, 120),
+(23, 9, 6, 0, 130, 0),
+(24, 9, 7, 0, 140, 0),
+(25, 10, 5, 0, 120, 0),
+(26, 10, 6, 1, 130, 130),
+(27, 10, 7, 0, 140, 0),
+(28, 11, 5, 1, 120, 120),
+(29, 11, 6, 0, 130, 0),
+(30, 11, 7, 0, 140, 0),
+(31, 12, 5, 1, 120, 120),
+(32, 12, 6, 0, 130, 0),
+(33, 12, 7, 0, 140, 0);
 
 -- --------------------------------------------------------
 
@@ -344,12 +363,12 @@ MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `pub_memos`
 --
 ALTER TABLE `pub_memos`
-MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=8;
+MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `pub_memos_selected_books`
 --
 ALTER TABLE `pub_memos_selected_books`
-MODIFY `selection_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `selection_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `pub_stock`
 --

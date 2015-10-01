@@ -174,7 +174,7 @@ class Admin extends CI_Controller {
                 . "<script>"
                 . "$AutoPrintPageOpenCommandJS"
                 . "var addContactButtonContent = '$addContactButtonContent';\n "
-                . "var CurrentDate = '" . date("d/m/Y") . "';"
+                . "var CurrentDate = '" . date("m/d/Y") . "';"
                 . "var previousDueFinderUrl = '" . site_url("admin/previousDue/") . "';"
                 . "</script>\n"
                 . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
