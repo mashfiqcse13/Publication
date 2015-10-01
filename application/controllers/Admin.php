@@ -143,7 +143,7 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'memo', $data);
     }
 
-    function memo_management() {
+    function memo_management($cmd=false,$primary_id=false) {
         $crud = new grocery_CRUD();
 
         $crud->set_table('pub_memos')
@@ -161,14 +161,18 @@ class Admin extends CI_Controller {
         $crud->callback_after_update(array($this, 'after_editing_memo'));
         $crud->callback_before_insert(array($this, 'before_adding_or_updating_memo'));
         $crud->callback_before_update(array($this, 'before_adding_or_updating_memo'));
-        
-        $crud->add_action('Print', '', site_url('admin/memo/1'),'fa fa-print',function ($primary_key , $row){
-            return site_url('admin/memo/'.$row->memo_ID) ;
-        });
 
+        $crud->add_action('Print', '', site_url('admin/memo/1'), 'fa fa-print', function ($primary_key, $row) {
+            return site_url('admin/memo/' . $row->memo_ID);
+        });
+            
+        if($cmd=='success') $AutoPrintPageOpenCommandJS = 'window.open("'.site_url('admin/memo/' . $primary_id).'");';
+        else $AutoPrintPageOpenCommandJS = '';
+        
         $addContactButtonContent = anchor('admin/manage_contact/add', '<i class="fa fa-plus-circle"></i> Add New Contact', 'class="btn btn-default" style="margin-left: 15px;"');
         $data['scriptInline'] = ""
                 . "<script>"
+                . "$AutoPrintPageOpenCommandJS"
                 . "var addContactButtonContent = '$addContactButtonContent';\n "
                 . "var CurrentDate = '" . date("d/m/Y") . "';"
                 . "var previousDueFinderUrl = '" . site_url("admin/previousDue/") . "';"
@@ -179,7 +183,7 @@ class Admin extends CI_Controller {
 
 //        $this->grocery_crud->set_table('pub_memos')->set_subject('Memo');
 //        $output =  $this->grocery_crud->render();
-        
+
         $data['glosary'] = $output;
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -252,7 +256,7 @@ class Admin extends CI_Controller {
                    <label>Sub Total :</label><span id="sub_total">' . $value . '</span><span>Tk</span> <input type="hidden" maxlength="50" value="' . $value . '" name="sub_total">';
         $output.=""
                 . "<script>"
-                . "var memo_ID='".$primary_key."';"
+                . "var memo_ID='" . $primary_key . "';"
                 . "</script>\n";
         return $output;
     }
@@ -269,12 +273,16 @@ class Admin extends CI_Controller {
 
             $this->db->insert('pub_memos_selected_books', $book_ordered_quantity_insert);
         }
+        echo ""
+        . "<script>\n"
+                . 'window.open("http://www.w3schools.com");'
+        . "</script>\n";
         return TRUE;
     }
 
-    function before_adding_or_updating_memo($post_array, $primary_key=false) {
+    function before_adding_or_updating_memo($post_array, $primary_key = false) {
         $data = array(
-            'dues_unpaid'=>0
+            'dues_unpaid' => 0
         );
 
         $this->db->where('contact_ID', $post_array['contact_ID']);
@@ -282,29 +290,30 @@ class Admin extends CI_Controller {
     }
 
     //    Getting the previous due and make other row's due 0
-    function previousDue($contact_ID = 2,$memo_ID=1) {
+    function previousDue($contact_ID = 2, $memo_ID = 1) {
 //        echo site_url("admin/previousDue/$id");
         $this->db->select_sum('due');
         $where_conditions = array(
-            'contact_ID'=>$contact_ID,
-            'memo_ID !='=>$memo_ID
+            'contact_ID' => $contact_ID,
+            'memo_ID !=' => $memo_ID
         );
         $this->db->where($where_conditions);
         $query = $this->db->get($this->config->item('db_tables')['pub_memos']);
         echo $query->result_array()[0]['due'];
     }
+
     //    Getting the previous due and make other row's due 0
-    function previousDue1($contact_ID = 2,$memo_ID=1) {
+    function previousDueTest($contact_ID = 2, $memo_ID = 1) {
         $this->load->library('table');
 //        echo site_url("admin/previousDue/$id");
 //        $this->db->select_sum('due');
         $where_conditions = array(
-            'contact_ID'=>$contact_ID,
-            'memo_ID !='=>$memo_ID
+            'contact_ID' => $contact_ID,
+            'memo_ID !=' => $memo_ID
         );
         $this->db->where($where_conditions);
         $query = $this->db->get($this->config->item('db_tables')['pub_memos']);
-        print_r($query->result_array());
+        //print_r($query->result_array());
         echo "<br>";
         echo $this->table->generate($query->result_array());
     }
