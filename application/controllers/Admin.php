@@ -295,7 +295,7 @@ class Admin extends CI_Controller {
         $this->db->select_sum('due');
         $where_conditions = array(
             'contact_ID' => $contact_ID,
-            'memo_ID !=' => $memo_ID
+            'memo_ID <' => $memo_ID
         );
         $this->db->where($where_conditions);
         $query = $this->db->get($this->config->item('db_tables')['pub_memos']);

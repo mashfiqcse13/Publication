@@ -11,40 +11,52 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
+        <!--        <ul class="sidebar-menu">
+                    <li class="header">MAIN NAVIGATION</li>
+                    <li class="treeview active">
+                        <a href="#">
+                            <i class="fa fa-envelope"></i> <span>Memo Management</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?= site_url('admin/memo_management/add') ?>"><i class="fa fa-plus-circle"></i>Add memo</a></li>
+                            <li><a href="<?= site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
+                        </ul>
+                    </li>
+        
+        
+                    <li class="treeview active">
+                        <a href="#">
+                            <i class="fa fa-book"></i> <span>Book Management</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?= site_url('admin/manage_book/add') ?>"><i class="fa fa-plus-circle"></i>Add New Book</a></li>
+                            <li><a href="<?= site_url('admin/manage_book') ?>"><i class="fa fa-cogs"></i>Book Management</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview active">
+                        <a href="#">
+                            <i class="fa fa-phone-square"></i> <span>Contact Management</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?= site_url('admin/manage_contact/add') ?>"><i class="fa fa-plus-circle"></i>Add New Contact</a></li>
+                            <li><a href="<?= site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?= site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
+                    <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i><span>Log Out</span>'); ?></li>
+        
+                </ul>-->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="treeview active">
-                <a href="#">
-                    <i class="fa fa-envelope"></i> <span>Memo Management</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="<?= site_url('admin/memo_management/add') ?>"><i class="fa fa-plus-circle"></i>Add memo</a></li>
-                    <li><a href="<?= site_url('admin/memo_management') ?>"><i class="fa fa-cog"></i>Memo Management</a></li>
-                </ul>
-            </li>
+            <li><?php echo anchor('admin/memo_management/add',  '<i class="fa fa-plus-circle"></i>  <span>Add memo</span>'); ?></li>
+            <li><?php echo anchor('admin/memo_management',      '<i class="fa fa-cog"></i>          <span>Memo Management</span>'); ?></li>
+            <li><?php echo anchor('admin/manage_stock',         '<i class="fa fa-file"></i>         <span>Stock Management</span>'); ?></li>
+            <li><?php echo anchor('admin/manage_book',          '<i class="fa fa-book"></i>         <span>Book Management</span>'); ?></li>
+            <li><?php echo anchor('admin/manage_contact',       '<i class="fa fa-group"></i>        <span>Contact Management</span>'); ?></li>
+            <li><?php echo anchor('#',                          '<i class="fa fa-cog"></i>          <span>Dues Management</span>'); ?></li>
+            <li><?php echo anchor('admin/account',              '<i class="fa fa-calculator"></i>   <span>Account Information</span>'); ?></li>
+            <li><?php echo anchor('login/logout',               '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
 
-
-            <li><a href="<?= site_url('admin/manage_stock') ?>"><i class="fa fa-file"></i> Stock Management</a></li>
-            <li class="treeview active">
-                <a href="#">
-                    <i class="fa fa-book"></i> <span>Book Management</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="<?= site_url('admin/manage_book/add') ?>"><i class="fa fa-plus-circle"></i>Add New Book</a></li>
-                    <li><a href="<?= site_url('admin/manage_book') ?>"><i class="fa fa-cogs"></i>Book Management</a></li>
-                </ul>
-            </li>
-            <li class="treeview active">
-                <a href="#">
-                    <i class="fa fa-phone-square"></i> <span>Contact Management</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="<?= site_url('admin/manage_contact/add') ?>"><i class="fa fa-plus-circle"></i>Add New Contact</a></li>
-                    <li><a href="<?= site_url('admin/manage_contact') ?>"><i class="fa fa-group"></i> Contact Management</a></li>
-                </ul>
-            </li>
-            <li><a href="<?= site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
-            <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i><span>Log Out</span>'); ?></li>
 
         </ul>
     </section>
