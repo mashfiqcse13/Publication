@@ -16,7 +16,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //define('DASHBOARD', "$baseurl");
 
 
-
 class Admin extends CI_Controller {
 
     //put your code here
