@@ -20,7 +20,6 @@
  * For details please refer to: http://www.datatables.net
  */
 (function(window, document, undefined) {
-
 /**
  * Switch the key value pairing of an index array to be value key (i.e. the old value is now the
  * key). For example consider [ 2, 0, 1 ] this would be returned as [ 1, 2, 0 ].
@@ -37,7 +36,6 @@ function fnInvertKeyValues( aIn )
 	}
 	return aRet;
 }
-
 /**
  * Modify an array by switching the position of two elements
  *  @method  fnArraySwitch
@@ -51,7 +49,6 @@ function fnArraySwitch( aArray, iFrom, iTo )
 	var mStore = aArray.splice( iFrom, 1 )[0];
 	aArray.splice( iTo, 0, mStore );
 }
-
 /**
  * Switch the positions of nodes in a parent node (note this is specifically designed for
  * table rows). Note this function considers all element nodes under the parent!
@@ -81,7 +78,6 @@ function fnDomSwitch( nParent, iFrom, iTo )
 		nParent.appendChild( nStore );
 	}
 }
-
 var factory = function( $, DataTable ) {
 "use strict";
 /**
@@ -134,7 +130,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 	}
 	fnArraySwitch( aiMapping, iFrom, iTo );
 	var aiInvertMapping = fnInvertKeyValues( aiMapping );
-
 	/*
 	 * Convert all internal indexing to the new column order indexes
 	 */
@@ -189,7 +184,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 			oSettings.oApi._fnColumnOptions( oSettings, i, {} );
 		}
 	}
-
 	/*
 	 * Move the DOM elements
 	 */
@@ -288,7 +282,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 		$(oSettings.aoColumns[i].nTh).off('click.DT');
 		this.oApi._fnSortAttachListener( oSettings, oSettings.aoColumns[i].nTh, i );
 	}
-
 	/* Fire an event so other plug-ins can update */
 	$(oSettings.oInstance).trigger( 'column-reorder', [ oSettings, {
 		"iFrom": iFrom,
@@ -296,7 +289,6 @@ $.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
 		"aiInvertMapping": aiInvertMapping
 	} ] );
 };
-
 /**
  * ColReorder provides column visibility control for DataTables
  * @class ColReorder
@@ -347,7 +339,6 @@ var ColReorder = function( dt, opts )
 		camelToHungarian( ColReorder.defaults, ColReorder.defaults, true );
 		camelToHungarian( ColReorder.defaults, opts || {} );
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public class variables
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -413,7 +404,6 @@ var ColReorder = function( dt, opts )
 		 */
 		"aoTargets": []
 	};
-
 	/**
 	 * @namespace Common and useful DOM elements for the class instance
 	 */
@@ -433,7 +423,6 @@ var ColReorder = function( dt, opts )
 		 */
 		"pointer": null
 	};
-
 	/* Constructor logic */
 	this.s.dt = oDTSettings;
 	this.s.dt._colReorder = this;
@@ -442,7 +431,6 @@ var ColReorder = function( dt, opts )
 	oDTSettings.oApi._fnCallbackReg(oDTSettings, 'aoDestroyCallback', $.proxy(this._fnDestroy, this), 'ColReorder');
 	return this;
 };
-
 ColReorder.prototype = {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -534,7 +522,6 @@ ColReorder.prototype = {
 		this._fnOrderColumns( fnInvertKeyValues( set ) );
 		return this;
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -620,7 +607,6 @@ ColReorder.prototype = {
 			this._fnSetColumnIndexes();
 		}
 	},
-
 	/**
 	 * Set the column order from an array
 	 *  @method  _fnOrderColumns
@@ -660,7 +646,6 @@ ColReorder.prototype = {
 			this.s.reorderCallback.call( this );
 		}
 	},
-
 	/**
 	 * Because we change the indexes of columns in the table, relative to their starting point
 	 * we need to reorder the state columns to what they are at the starting point so we can
@@ -710,7 +695,6 @@ ColReorder.prototype = {
 			}
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Mouse drop and drag
 	 */
@@ -730,7 +714,6 @@ ColReorder.prototype = {
 			that._fnMouseDown.call( that, e, nTh );
 		} );
 	},
-
 	/**
 	 * Mouse down on a TH element in the table header
 	 *  @method  _fnMouseDown
@@ -766,7 +749,6 @@ ColReorder.prototype = {
 				that._fnMouseUp.call( that, e );
 			} );
 	},
-
 	/**
 	 * Deal with a mouse move event while dragging a node
 	 *  @method  _fnMouseMove
@@ -823,7 +805,6 @@ ColReorder.prototype = {
 			this._fnRegions();
 		}
 	},
-
 	/**
 	 * Finish off the mouse drag and insert the column where needed
 	 *  @method  _fnMouseUp
@@ -858,7 +839,6 @@ ColReorder.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Calculate a cached array with the points of the column inserts, and the
 	 * 'to' points
@@ -904,7 +884,6 @@ ColReorder.prototype = {
 			this.s.aoTargets.splice( 0, this.s.fixed );
 		}
 	},
-
 	/**
 	 * Copy the TH element that is being drags so the user has the idea that they are actually
 	 * moving it around the page.
@@ -977,7 +956,6 @@ ColReorder.prototype = {
 		this.s.dt._colReorder = null;
 		this.s = null;
 	},
-
 	/**
 	 * Add a data attribute to the column headers, so we know the index of
 	 * the row to be reordered. This allows fast detection of the index, and
@@ -991,12 +969,9 @@ ColReorder.prototype = {
 		} );
 	}
 };
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static parameters
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /**
  * ColReorder default settings for initialisation
  *  @namespace
@@ -1130,7 +1105,6 @@ ColReorder.defaults = {
 	 */
 	fnReorderCallback: null
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1141,14 +1115,12 @@ ColReorder.defaults = {
  *  @default   As code
  */
 ColReorder.version = "1.1.3";
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables interfaces
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 // Expose
 $.fn.dataTable.ColReorder = ColReorder;
 $.fn.DataTable.ColReorder = ColReorder;
-
 // Register a new feature with DataTables
 if ( typeof $.fn.dataTable == "function" &&
      typeof $.fn.dataTableExt.fnVersionCheck == "function" &&
@@ -1174,7 +1146,6 @@ if ( typeof $.fn.dataTable == "function" &&
 else {
 	alert( "Warning: ColReorder requires DataTables 1.9.3 or greater - www.datatables.net/download");
 }
-
 // API augmentation
 if ( $.fn.dataTable.Api ) {
 	$.fn.dataTable.Api.register( 'colReorder.reset()', function () {
@@ -1195,7 +1166,6 @@ if ( $.fn.dataTable.Api ) {
 }
 return ColReorder;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -1208,5 +1178,4 @@ else if ( jQuery && !jQuery.fn.dataTable.ColReorder ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

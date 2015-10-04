@@ -2,12 +2,10 @@ function show_upload_button(unique_id, uploader_element)
 {
 	$('#upload-state-message-'+unique_id).html('');
 	$("#loading-"+unique_id).hide();
-
 	$('#upload-button-'+unique_id).slideDown('fast');
 	$("input[rel="+uploader_element.attr('name')+"]").val('');
 	$('#success_'+unique_id).slideUp('fast');	
 }
-
 function load_fancybox(elem)
 {
 	elem.fancybox({
@@ -18,7 +16,6 @@ function load_fancybox(elem)
 		'overlayShow'	:	false
 	});		
 }
-
 $(function(){
 	$('.gc-file-upload').each(function(){
 		var unique_id 	= $(this).attr('id');
@@ -93,7 +90,6 @@ $(function(){
 		            	
 						$('#file_'+unique_id).attr('href',file.url);
 						$('#hidden_'+unique_id).val(file_name);
-
 						$('#success_'+unique_id).fadeIn('slow');
 						$('#delete_url_'+unique_id).attr('rel',file_name);
 						$('#upload-button-'+unique_id).slideUp('fast');

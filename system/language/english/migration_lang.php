@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 $lang['migration_none_found'] = 'No migrations were found.';
 $lang['migration_not_found'] = 'No migration could be found with the version number: %s.';
 $lang['migration_sequence_gap'] = 'There is a gap in the migration sequence near version number: %s.';

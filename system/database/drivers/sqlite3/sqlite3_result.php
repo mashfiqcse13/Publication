@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * SQLite3 Result Class
  *
@@ -47,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlite3_result extends CI_DB_result {
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -57,9 +55,7 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 	{
 		return $this->result_id->numColumns();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -74,12 +70,9 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 		{
 			$field_names[] = $this->result_id->columnName($i);
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -96,24 +89,18 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 			SQLITE3_BLOB	=> 'blob',
 			SQLITE3_NULL	=> 'null'
 		);
-
 		$retval = array();
 		for ($i = 0, $c = $this->num_fields(); $i < $c; $i++)
 		{
 			$retval[$i]			= new stdClass();
 			$retval[$i]->name		= $this->result_id->columnName($i);
-
 			$type = $this->result_id->columnType($i);
 			$retval[$i]->type		= isset($data_types[$type]) ? $data_types[$type] : $type;
-
 			$retval[$i]->max_length		= NULL;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -127,9 +114,7 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 			$this->result_id = NULL;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -141,9 +126,7 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 	{
 		return $this->result_id->fetchArray(SQLITE3_ASSOC);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -163,18 +146,14 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 		{
 			return (object) $row;
 		}
-
 		$class_name = new $class_name();
 		foreach (array_keys($row) as $key)
 		{
 			$class_name->$key = $row[$key];
 		}
-
 		return $class_name;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -190,5 +169,4 @@ class CI_DB_sqlite3_result extends CI_DB_result {
 		// Only resetting to the start of the result set is supported
 		return ($n > 0) ? FALSE : $this->result_id->reset();
 	}
-
 }

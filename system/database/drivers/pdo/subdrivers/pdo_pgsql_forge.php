@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO PostgreSQL Forge Class
  *
@@ -45,14 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
-
 	/**
 	 * DROP TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_drop_table_if	= 'DROP TABLE IF EXISTS';
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -69,16 +66,13 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 		'REAL'		=> 'DOUBLE PRECISION',
 		'FLOAT'		=> 'DOUBLE PRECISION'
 	);
-
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var	string
 	 */
 	protected $_null = 'NULL';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -88,15 +82,12 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 	public function __construct(&$db)
 	{
 		parent::__construct($db);
-
 		if (version_compare($this->db->version(), '9.0', '>'))
 		{
 			$this->create_table_if = 'CREATE TABLE IF NOT EXISTS';
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -111,7 +102,6 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 		{
 			return parent::_alter_table($alter_type, $table, $field);
 		}
-
 		$sql = 'ALTER TABLE '.$this->db->escape_identifiers($table);
 		$sqls = array();
 		for ($i = 0, $c = count($field); $i < $c; $i++)
@@ -120,31 +110,26 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 			{
 				return FALSE;
 			}
-
 			if (version_compare($this->db->version(), '8', '>=') && isset($field[$i]['type']))
 			{
 				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
 					.' TYPE '.$field[$i]['type'].$field[$i]['length'];
 			}
-
 			if ( ! empty($field[$i]['default']))
 			{
 				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
 					.' SET DEFAULT '.$field[$i]['default'];
 			}
-
 			if (isset($field[$i]['null']))
 			{
 				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
 					.($field[$i]['null'] === TRUE ? ' DROP NOT NULL' : ' SET NOT NULL');
 			}
-
 			if ( ! empty($field[$i]['new_name']))
 			{
 				$sqls[] = $sql.' RENAME COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
 					.' TO '.$this->db->escape_identifiers($field[$i]['new_name']);
 			}
-
 			if ( ! empty($field[$i]['comment']))
 			{
 				$sqls[] = 'COMMENT ON COLUMN '
@@ -152,12 +137,9 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 					.' IS '.$field[$i]['comment'];
 			}
 		}
-
 		return $sqls;
  	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -173,7 +155,6 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 		{
 			$attributes['CONSTRAINT'] = NULL;
 		}
-
 		switch (strtoupper($attributes['TYPE']))
 		{
 			case 'TINYINT':
@@ -187,9 +168,7 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -206,5 +185,4 @@ class CI_DB_pdo_pgsql_forge extends CI_DB_pdo_forge {
 				: 'SERIAL';
 		}
 	}
-
 }

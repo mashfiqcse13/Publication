@@ -14,12 +14,9 @@
  *   http://datatables.net/license_gpl2
  *   http://datatables.net/license_bsd
  */
-
 /* Global scope for TableTools */
 var TableTools;
-
 (function($, window, document) {
-
 /** 
  * TableTools provides flexible buttons and other tools for a DataTables enhanced table
  * @class TableTools
@@ -248,7 +245,6 @@ TableTools = function( oDT, oOpts )
 			"background": null
 		}
 	};
-
 	/**
 	 * @namespace Name space for the classes that this TableTools instance will use
 	 * @extends TableTools.classes
@@ -277,9 +273,6 @@ TableTools = function( oDT, oOpts )
 	this._fnConstruct( oOpts );
 	return this;
 };
-
-
-
 TableTools.prototype = {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -293,7 +286,6 @@ TableTools.prototype = {
 		var out=[];
 		var data=this.s.dt.aoData;
 		var i, iLen;
-
 		for ( i=0, iLen=data.length ; i<iLen ; i++ )
 		{
 			if ( data[i]._DTTT_selected )
@@ -301,11 +293,8 @@ TableTools.prototype = {
 				out.push( data[i].nTr );
 			}
 		}
-
 		return out;
 	},
-
-
 	/**
 	 * Get the data source objects/arrays from DataTables for the selected rows (same as
 	 * fnGetSelected followed by fnGetData on each row from the table)
@@ -316,7 +305,6 @@ TableTools.prototype = {
 		var out = [];
 		var data=this.s.dt.aoData;
 		var i, iLen;
-
 		for ( i=0, iLen=data.length ; i<iLen ; i++ )
 		{
 			if ( data[i]._DTTT_selected )
@@ -324,7 +312,6 @@ TableTools.prototype = {
 				out.push( this.s.dt.oInstance.fnGetData(i) );
 			}
 		}
-
 		return out;
 	},
 	/**
@@ -337,7 +324,6 @@ TableTools.prototype = {
 		var pos = this.s.dt.oInstance.fnGetPosition( n );
 		return (this.s.dt.aoData[pos]._DTTT_selected===true) ? true : false;
 	},
-
 	/**
 	 * Select all rows in the table
 	 */
@@ -346,7 +332,6 @@ TableTools.prototype = {
 		var s = this._fnGetMasterSettings();
 		this._fnRowSelect( s.dt.aoData );
 	},
-
 	/**
 	 * Deselect all rows in the table
 	 */
@@ -355,7 +340,6 @@ TableTools.prototype = {
 		var s = this._fnGetMasterSettings();
 		this._fnRowDeselect( s.dt.aoData );
 	},
-
 	/**
 	 * Select row(s)
 	 *  @param {node|object|array} n The row(s) to select. Can be a single DOM
@@ -373,7 +357,6 @@ TableTools.prototype = {
 			this._fnRowSelect( n );
 		}
 	},
-
 	/**
 	 * Deselect row(s)
 	 *  @param {node|object|array} n The row(s) to deselect. Can be a single DOM
@@ -518,7 +501,6 @@ TableTools.prototype = {
 		{
 			oConfig = {};
 		}
-
 		if ( bView === undefined || bView )
 		{
 			this._fnPrintStart( oConfig );
@@ -537,7 +519,6 @@ TableTools.prototype = {
 		var nInfo = document.createElement( "div" );
 		nInfo.className = this.classes.print.info;
 		nInfo.innerHTML = message;
-
 		document.body.appendChild( nInfo );
 		setTimeout( function() {
 			$(nInfo).fadeOut( "normal", function() {
@@ -607,15 +588,12 @@ TableTools.prototype = {
 		this.s.select.preRowSelect = this.s.custom.fnPreRowSelect;
 		this.s.select.postSelected = this.s.custom.fnRowSelected;
 		this.s.select.postDeselected = this.s.custom.fnRowDeselected;
-
 		// Backwards compatibility - allow the user to specify a custom class in the initialiser
 		if ( this.s.custom.sSelectedClass )
 		{
 			this.classes.select.row = this.s.custom.sSelectedClass;
 		}
-
 		this.s.tags = this.s.custom.oTags;
-
 		/* Button set */
 		this.s.buttonSet = this.s.custom.aButtons;
 	},
@@ -697,7 +675,6 @@ TableTools.prototype = {
 	"_fnButtonBase": function ( o, bCollectionButton )
 	{
 		var sTag, sLiner, sClass;
-
 		if ( bCollectionButton )
 		{
 			sTag = o.sTag !== "default" ? o.sTag : this.s.tags.collection.button;
@@ -710,7 +687,6 @@ TableTools.prototype = {
 			sLiner = o.sLinerTag !== "default" ? o.sLiner : this.s.tags.liner;
 			sClass = this.classes.buttons.normal;
 		}
-
 		var
 		  nButton = document.createElement( sTag ),
 		  nSpan = document.createElement( sLiner ),
@@ -820,7 +796,6 @@ TableTools.prototype = {
 			$(nHidden).animate({"opacity": 1}, 500);
 			$(nBackground).animate({"opacity": 0.25}, 500);
 		}, 10 );
-
 		/* Resize the buttons to the Flash contents fit */
 		this.fnResizeButtons();
 		/* Event handler to remove the collection display */
@@ -888,7 +863,6 @@ TableTools.prototype = {
 				{
 					return;
 				}
-
 				if ( that.fnIsSelected( this ) )
 				{
 					that._fnRowDeselect( this );
@@ -903,7 +877,6 @@ TableTools.prototype = {
 					that._fnRowSelect( this );
 				}
 			} );
-
 			// Bind a listener to the DataTable for when new rows are created.
 			// This allows rows to be visually selected when they should be and
 			// deferred rendering is used.
@@ -914,7 +887,6 @@ TableTools.prototype = {
 			}, 'TableTools-SelectAll' );
 		}
 	},
-
 	/**
 	 * Select rows
 	 *  @param   {*} src Rows to select - see _fnSelectData for a description of valid inputs
@@ -924,25 +896,20 @@ TableTools.prototype = {
 	{
 		var data = this._fnSelectData( src );
 		var firstTr = data.length===0 ? null : data[0].nTr;
-
 		for ( var i=0, iLen=data.length ; i<iLen ; i++ )
 		{
 			data[i]._DTTT_selected = true;
-
 			if ( data[i].nTr )
 			{
 				$(data[i].nTr).addClass( this.classes.select.row );
 			}
 		}
-
 		if ( this.s.select.postSelected !== null )
 		{
 			this.s.select.postSelected.call( this, firstTr );
 		}
-
 		TableTools._fnEventDispatch( this, 'select', firstTr );
 	},
-
 	/**
 	 * Deselect rows
 	 *  @param   {*} src Rows to deselect - see _fnSelectData for a description of valid inputs
@@ -952,22 +919,18 @@ TableTools.prototype = {
 	{
 		var data = this._fnSelectData( src );
 		var firstTr = data.length===0 ? null : data[0].nTr;
-
 		for ( var i=0, iLen=data.length ; i<iLen ; i++ )
 		{
 			if ( data[i].nTr && data[i]._DTTT_selected )
 			{
 				$(data[i].nTr).removeClass( this.classes.select.row );
 			}
-
 			data[i]._DTTT_selected = false;
 		}
-
 		if ( this.s.select.postDeselected !== null )
 		{
 			this.s.select.postDeselected.call( this, firstTr );
 		}
-
 		TableTools._fnEventDispatch( this, 'select', firstTr );
 	},
 	/**
@@ -980,7 +943,6 @@ TableTools.prototype = {
 	"_fnSelectData": function ( src )
 	{
 		var out = [], pos, i, iLen;
-
 		if ( src.nodeName )
 		{
 			// Single node
@@ -1002,7 +964,6 @@ TableTools.prototype = {
 					out.push( src[i] );
 				}
 			}
-
 			return out;
 		}
 		else
@@ -1010,7 +971,6 @@ TableTools.prototype = {
 			// A single aoData point
 			out.push( src );
 		}
-
 		return out;
 	},
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -1290,7 +1250,6 @@ TableTools.prototype = {
 					aRow.push( this._fnBoundData( sLoopData, oConfig.sFieldBoundary, regex ) );
 				}
 			}
-
 			aData.push( aRow.join(oConfig.sFieldSeperator) );
 		}
 		/*
@@ -1478,7 +1437,6 @@ TableTools.prototype = {
 		/* Show the whole table */
 		this.s.print.saveStart = oSetDT._iDisplayStart;
 		this.s.print.saveLength = oSetDT._iDisplayLength;
-
 		if ( oConfig.bShowAll )
 		{
 			oSetDT._iDisplayStart = 0;
@@ -1509,13 +1467,11 @@ TableTools.prototype = {
 		}
 		/* Print class can be used for styling */
 		$(document.body).addClass( this.classes.print.body );
-
 		/* Show information message to let the user know what is happening */
 		if ( oConfig.sInfo !== "" )
 		{
 			this.fnInfo( oConfig.sInfo, 3000 );
 		}
-
 		/* Add a message at the top of the page */
 		if ( oConfig.sMessage )
 		{
@@ -1527,7 +1483,6 @@ TableTools.prototype = {
 		/* Cache the scrolling and the jump to the top of the t=page */
 		this.s.print.saveScroll = $(window).scrollTop();
 		window.scrollTo( 0, 0 );
-
 		/* Bind a key event listener to the document for the escape key -
 		 * it is removed in the callback
 		 */
@@ -1589,7 +1544,6 @@ TableTools.prototype = {
 			nScrollHeadInner = oSetDT.nScrollHead.getElementsByTagName('div')[0],
 			nScrollHeadTable = nScrollHeadInner.getElementsByTagName('table')[0],
 			nScrollBody = oSetDT.nTable.parentNode;
-
 		/* Copy the header in the thead in the body table, this way we show one single table when
 		 * in print view. Note that this section of code is more or less verbatim from DT 1.7.0
 		 */
@@ -1701,13 +1655,9 @@ TableTools.prototype = {
 		}
 	}
 };
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static variables
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /**
  * Store of all instances that have been created of TableTools, so one can look up other (when
  * there is need of a master)
@@ -1717,8 +1667,6 @@ TableTools.prototype = {
  *  @private
  */
 TableTools._aInstances = [];
-
-
 /**
  * Store of all listeners and their callback functions
  *  @property _aListeners
@@ -1726,13 +1674,9 @@ TableTools._aInstances = [];
  *  @default  []
  */
 TableTools._aListeners = [];
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static methods
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /**
  * Get an array of all the master instances
  *  @method  fnGetMasters
@@ -1751,7 +1695,6 @@ TableTools.fnGetMasters = function ()
 	}
 	return a;
 };
-
 /**
  * Get the master instance for a table node (or id if a string is given)
  *  @method  fnGetInstance
@@ -1773,8 +1716,6 @@ TableTools.fnGetInstance = function ( node )
 	}
 	return null;
 };
-
-
 /**
  * Add a listener for a specific event
  *  @method  _fnEventListen
@@ -1793,7 +1734,6 @@ TableTools._fnEventListen = function ( that, type, fn )
 		"fn": fn
 	} );
 };
-
 /**
  * An event has occured - look up every listener and fire it off. We check that the event we are
  * going to fire is attached to the same table (using the table node as reference) before firing
@@ -1817,17 +1757,9 @@ TableTools._fnEventDispatch = function ( that, type, node )
 	}
 };
 
-
-
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-
 TableTools.buttonBase = {
 	// Button base
 	"sAction": "text",
@@ -1837,7 +1769,6 @@ TableTools.buttonBase = {
 	"sButtonText": "Button text",
 	"sTitle": "",
 	"sToolTip": "",
-
 	// Common button specific options
 	"sCharSet": "utf8",
 	"bBomInc": false,
@@ -1850,7 +1781,6 @@ TableTools.buttonBase = {
 	"bFooter": true,
 	"bOpenRows": false,
 	"bSelectedOnly": false,
-
 	// Callbacks
 	"fnMouseover": null,
 	"fnMouseout": null,
@@ -1860,8 +1790,6 @@ TableTools.buttonBase = {
 	"fnInit": null,
 	"fnCellRender": null
 };
-
-
 /**
  * @namespace Default button configurations
  */
@@ -1876,7 +1804,6 @@ TableTools.BUTTONS = {
 			this.fnSetText( flash, this.fnGetTableData(oConfig) );
 		}
 	} ),
-
 	"xls": $.extend( {}, TableTools.buttonBase, {
 		"sAction": "flash_save",
 		"sCharSet": "utf16le",
@@ -1887,7 +1814,6 @@ TableTools.BUTTONS = {
 			this.fnSetText( flash, this.fnGetTableData(oConfig) );
 		}
 	} ),
-
 	"copy": $.extend( {}, TableTools.buttonBase, {
 		"sAction": "flash_copy",
 		"sButtonClass": "DTTT_button_copy",
@@ -1906,7 +1832,6 @@ TableTools.BUTTONS = {
 			);
 		}
 	} ),
-
 	"pdf": $.extend( {}, TableTools.buttonBase, {
 		"sAction": "flash_pdf",
 		"sNewLine": "\n",
@@ -1928,7 +1853,6 @@ TableTools.BUTTONS = {
 			);
 		}
 	} ),
-
 	"print": $.extend( {}, TableTools.buttonBase, {
 		"sInfo": "<h6>Print view</h6><p>Please use your browser's print function to "+
 		  "print this table. Press escape when finished.",
@@ -1941,9 +1865,7 @@ TableTools.BUTTONS = {
 			this.fnPrint( true, oConfig );
 		}
 	} ),
-
 	"text": $.extend( {}, TableTools.buttonBase ),
-
 	"select": $.extend( {}, TableTools.buttonBase, {
 		"sButtonText": "Select button",
 		"fnSelect": function( nButton, oConfig ) {
@@ -1957,7 +1879,6 @@ TableTools.BUTTONS = {
 			$(nButton).addClass( this.classes.buttons.disabled );
 		}
 	} ),
-
 	"select_single": $.extend( {}, TableTools.buttonBase, {
 		"sButtonText": "Select button",
 		"fnSelect": function( nButton, oConfig ) {
@@ -1972,7 +1893,6 @@ TableTools.BUTTONS = {
 			$(nButton).addClass( this.classes.buttons.disabled );
 		}
 	} ),
-
 	"select_all": $.extend( {}, TableTools.buttonBase, {
 		"sButtonText": "Select all",
 		"fnClick": function( nButton, oConfig ) {
@@ -1986,7 +1906,6 @@ TableTools.BUTTONS = {
 			}
 		}
 	} ),
-
 	"select_none": $.extend( {}, TableTools.buttonBase, {
 		"sButtonText": "Deselect all",
 		"fnClick": function( nButton, oConfig ) {
@@ -2003,7 +1922,6 @@ TableTools.BUTTONS = {
 			$(nButton).addClass( this.classes.buttons.disabled );
 		}
 	} ),
-
 	"ajax": $.extend( {}, TableTools.buttonBase, {
 		"sAjaxUrl": "/xhr.php",
 		"sButtonText": "Ajax button",
@@ -2027,14 +1945,12 @@ TableTools.BUTTONS = {
 			alert( 'Ajax complete' );
 		}
 	} ),
-
 	"div": $.extend( {}, TableTools.buttonBase, {
 		"sAction": "div",
 		"sTag": "div",
 		"sButtonClass": "DTTT_nonbutton",
 		"sButtonText": "Text button"
 	} ),
-
 	"collection": $.extend( {}, TableTools.buttonBase, {
 		"sAction": "collection",
 		"sButtonClass": "DTTT_button_collection",
@@ -2051,9 +1967,6 @@ TableTools.BUTTONS = {
  *  	3. object - ZeroClipboard reference (flash button only)
  *  	4. string - Returned string from Flash (flash button only - and only on 'complete')
  */
-
-
-
 /**
  * @namespace Classes used by TableTools - allows the styles to be overriden easily.
  *   Note that when TableTools initialises it will take a copy of the classes object
@@ -2083,8 +1996,6 @@ TableTools.classes = {
 		"message": "DTTT_PrintMessage"
 	}
 };
-
-
 /**
  * @namespace ThemeRoller classes - built in for compability with DataTables' 
  *   bJQueryUI option.
@@ -2098,8 +2009,6 @@ TableTools.classes_themeroller = {
 		"container": "DTTT_collection ui-buttonset ui-buttonset-multi"
 	}
 };
-
-
 /**
  * @namespace TableTools default settings for initialisation
  */
@@ -2123,8 +2032,6 @@ TableTools.DEFAULTS = {
 		}
 	}
 };
-
-
 /**
  * Name of this class
  *  @constant CLASS
@@ -2132,8 +2039,6 @@ TableTools.DEFAULTS = {
  *  @default  TableTools
  */
 TableTools.prototype.CLASS = "TableTools";
-
-
 /**
  * TableTools version
  *  @constant  VERSION
@@ -2143,13 +2048,9 @@ TableTools.prototype.CLASS = "TableTools";
 TableTools.VERSION = "2.1.2";
 TableTools.prototype.VERSION = TableTools.VERSION;
 
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Initialisation
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /*
  * Register a new feature with DataTables
  */
@@ -2173,7 +2074,5 @@ else
 {
 	alert( "Warning: TableTools 2 requires DataTables 1.9.0 or newer - www.datatables.net/download");
 }
-
 $.fn.DataTable.TableTools = TableTools;
-
 })(jQuery, window, document);

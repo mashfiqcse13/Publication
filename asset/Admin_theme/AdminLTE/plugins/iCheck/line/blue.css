@@ -59,7 +59,6 @@
         .iradio_line-blue.checked.disabled .icheck_line-icon {
             background-position: -45px 0;
         }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),

@@ -1,5 +1,4 @@
 <?php
-
 // Errors
 $lang['auth_incorrect_password'] = 'Mot de passe incorrect';
 $lang['auth_incorrect_login'] = 'Authentification incorrect';
@@ -9,7 +8,6 @@ $lang['auth_username_in_use'] = 'Ce nom est déjà utilisé, s.v.p. choisissez u
 $lang['auth_current_email'] = 'Ceci est votre courriel actuel';
 $lang['auth_incorrect_captcha'] = 'Votre code de confirmation ne correspond pas à celui de l\'image.';
 $lang['auth_captcha_expired'] = 'Votre code de confirmation est expiré. S.v.p. essayez de nouveau.';
-
 // Notifications
 $lang['auth_message_logged_out'] = 'Déconnexion réussie.';
 $lang['auth_message_registration_disabled'] = 'Inscription désactivée.';
@@ -27,14 +25,11 @@ $lang['auth_message_new_email_activated'] = 'Votre adresse courriel a été chan
 $lang['auth_message_new_email_failed'] = 'Votre clef d\'activation est incorrecte ou expirée. Vérifiez votre courriel à nouveau.';
 $lang['auth_message_banned'] = 'Vous êtes banni.';
 $lang['auth_message_unregistered'] = 'Votre compte a été détruit...';
-
 // Email subjects
 $lang['auth_subject_welcome'] = 'Bienvenue à %s!';
 $lang['auth_subject_activate'] = 'Bienvenue à %s!';
 $lang['auth_subject_forgot_password'] = 'Vous avez oublié votre mot de passe sur %s?';
 $lang['auth_subject_reset_password'] = 'Votre nouveau mot de passe sur %s';
 $lang['auth_subject_change_email'] = 'Votre nouvelle adresse courriel sur %s';
-
-
 /* End of file tank_auth_lang.php */
 /* Location: ./application/language/french/tank_auth_lang.php */

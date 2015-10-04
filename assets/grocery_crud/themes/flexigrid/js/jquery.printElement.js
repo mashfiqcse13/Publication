@@ -33,7 +33,6 @@
         }
         //Remove previously printed iframe if exists
         $("[id^='printElement_']").remove();
-
         return this.each(function () {
             //Support Metadata Plug-in if available
             var opts = $.meta ? $.extend({}, mainOptions, $(this).data()) : mainOptions;
@@ -66,7 +65,6 @@
     function _printElement(element, opts) {
         //Create markup to be printed
         var html = _getMarkup(element, opts);
-
         var popupOrIframe = null;
         var documentToWriteTo = null;
         if (opts["printMode"].toLowerCase() == 'popup') {
@@ -99,7 +97,6 @@
         documentToWriteTo.close();
         _callPrint(popupOrIframe);
     };
-
     function _callPrint(element) {
         if (element && element["printPage"])
             element["printPage"]();
@@ -108,7 +105,6 @@
                 _callPrint(element);
             }, 50);
     }
-
     function _getElementHTMLIncludingFormElements(element) {
         var $element = $(element);
         //Radiobuttons and checkboxes
@@ -139,16 +135,13 @@
         var elementHtml = $('<div></div>').append($element.clone()).html();
         return elementHtml;
     }
-
     function _getBaseHref() {
         var port = (window.location.port) ? ':' + window.location.port : '';
         return window.location.protocol + '//' + window.location.hostname + port + window.location.pathname;
     }
-
     function _getMarkup(element, opts) {
         var $element = $(element);
         var elementHtml = _getElementHTMLIncludingFormElements(element);
-
         var html = new Array();
         html.push('<html><head><title>' + opts["pageTitle"] + '</title>');
         if (opts["overrideElementCSS"]) {
@@ -175,7 +168,6 @@
         html.push('<div class="' + $element.attr('class') + '">' + elementHtml + '</div>');
         html.push('<script type="text/javascript">function printPage(){focus();print();' + ((!$.browser.opera && !opts["leaveOpen"] && opts["printMode"].toLowerCase() == 'popup') ? 'close();' : '') + '}</script>');
         html.push('</body></html>');
-
         return html.join('');
     };
 })(window);

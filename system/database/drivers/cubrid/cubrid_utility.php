@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CUBRID Utility Class
  *
@@ -45,7 +44,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_cubrid_utility extends CI_DB_utility {
-
 	/**
 	 * List databases
 	 *
@@ -57,12 +55,9 @@ class CI_DB_cubrid_utility extends CI_DB_utility {
 		{
 			return $this->db->data_cache['db_names'];
 		}
-
 		return $this->db->data_cache['db_names'] = cubrid_list_dbs($this->db->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * CUBRID Export
 	 *

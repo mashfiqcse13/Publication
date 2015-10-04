@@ -1,9 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
-
 class Stock_manages extends CI_Model{
     
-
     function book_details_by_id($id){
         $query=$this->db->query("SELECT * FROM pub_books WHERE book_ID='$id'");
         

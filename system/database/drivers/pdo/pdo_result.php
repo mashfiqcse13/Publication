@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO Result Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -73,12 +71,9 @@ class CI_DB_pdo_result extends CI_DB_result {
 		{
 			return $this->num_rows = $num_rows;
 		}
-
 		return $this->num_rows = count($this->result_array());
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -88,9 +83,7 @@ class CI_DB_pdo_result extends CI_DB_result {
 	{
 		return $this->result_id->columnCount();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -108,12 +101,9 @@ class CI_DB_pdo_result extends CI_DB_result {
 			$field_names[$i] = @$this->result_id->getColumnMeta($i);
 			$field_names[$i] = $field_names[$i]['name'];
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -126,18 +116,15 @@ class CI_DB_pdo_result extends CI_DB_result {
 		try
 		{
 			$retval = array();
-
 			for ($i = 0, $c = $this->num_fields(); $i < $c; $i++)
 			{
 				$field = $this->result_id->getColumnMeta($i);
-
 				$retval[$i]			= new stdClass();
 				$retval[$i]->name		= $field['name'];
 				$retval[$i]->type		= $field['native_type'];
 				$retval[$i]->max_length		= ($field['len'] > 0) ? $field['len'] : NULL;
 				$retval[$i]->primary_key	= (int) ( ! empty($field['flags']) && in_array('primary_key', $field['flags'], TRUE));
 			}
-
 			return $retval;
 		}
 		catch (Exception $e)
@@ -146,13 +133,10 @@ class CI_DB_pdo_result extends CI_DB_result {
 			{
 				return $this->db->display_error('db_unsupported_feature');
 			}
-
 			return FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -165,9 +149,7 @@ class CI_DB_pdo_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -179,9 +161,7 @@ class CI_DB_pdo_result extends CI_DB_result {
 	{
 		return $this->result_id->fetch(PDO::FETCH_ASSOC);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -194,5 +174,4 @@ class CI_DB_pdo_result extends CI_DB_result {
 	{
 		return $this->result_id->fetchObject($class_name);
 	}
-
 }

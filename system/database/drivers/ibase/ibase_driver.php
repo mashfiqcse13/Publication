@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Firebird/Interbase Database Adapter Class
  *
@@ -51,32 +50,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_ibase_driver extends CI_DB {
-
 	/**
 	 * Database driver
 	 *
 	 * @var	string
 	 */
 	public $dbdriver = 'ibase';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var	array
 	 */
 	protected $_random_keyword = array('RAND()', 'RAND()');
-
 	/**
 	 * IBase Transaction status flag
 	 *
 	 * @var	resource
 	 */
 	protected $_ibase_trans;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Non-persistent database connection
 	 *
@@ -89,9 +82,7 @@ class CI_DB_ibase_driver extends CI_DB {
 			? ibase_pconnect($this->hostname.':'.$this->database, $this->username, $this->password, $this->char_set)
 			: ibase_connect($this->hostname.':'.$this->database, $this->username, $this->password, $this->char_set);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database version number
 	 *
@@ -103,21 +94,16 @@ class CI_DB_ibase_driver extends CI_DB {
 		{
 			return $this->data_cache['version'];
 		}
-
 		if (($service = ibase_service_attach($this->hostname, $this->username, $this->password)))
 		{
 			$this->data_cache['version'] = ibase_server_info($service, IBASE_SVC_SERVER_VERSION);
-
 			// Don't keep the service open
 			ibase_service_detach($service);
 			return $this->data_cache['version'];
 		}
-
 		return FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Execute the query
 	 *
@@ -128,9 +114,7 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		return ibase_query($this->conn_id, $sql);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
@@ -144,19 +128,14 @@ class CI_DB_ibase_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
 		$this->_trans_failure = ($test_mode === TRUE);
-
 		$this->_ibase_trans = ibase_trans($this->conn_id);
-
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
@@ -169,12 +148,9 @@ class CI_DB_ibase_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		return ibase_commit($this->_ibase_trans);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
@@ -187,12 +163,9 @@ class CI_DB_ibase_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		return ibase_rollback($this->_ibase_trans);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Affected Rows
 	 *
@@ -202,9 +175,7 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		return ibase_affected_rows($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
@@ -217,9 +188,7 @@ class CI_DB_ibase_driver extends CI_DB {
 		//If a generator hasn't been used before it will return 0
 		return ibase_gen_id('"'.$generator_name.'"', $inc_by);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * List table query
 	 *
@@ -231,18 +200,14 @@ class CI_DB_ibase_driver extends CI_DB {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = 'SELECT TRIM("RDB$RELATION_NAME") AS TABLE_NAME FROM "RDB$RELATIONS" WHERE "RDB$RELATION_NAME" NOT LIKE \'RDB$%\' AND "RDB$RELATION_NAME" NOT LIKE \'MON$%\'';
-
 		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
 		{
 			return $sql.' AND TRIM("RDB$RELATION_NAME") AS TABLE_NAME LIKE \''.$this->escape_like_str($this->dbprefix)."%' "
 				.sprintf($this->_like_escape_str, $this->_like_escape_chr);
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -255,9 +220,7 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		return 'SELECT TRIM("RDB$FIELD_NAME") AS COLUMN_NAME FROM "RDB$RELATION_FIELDS" WHERE "RDB$RELATION_NAME" = '.$this->escape($table);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
@@ -290,14 +253,11 @@ class CI_DB_ibase_driver extends CI_DB {
 				JOIN "RDB$FIELDS" "fields" ON "rfields"."RDB$FIELD_SOURCE" = "fields"."RDB$FIELD_NAME"
 			WHERE "rfields"."RDB$RELATION_NAME" = '.$this->escape($table).'
 			ORDER BY "rfields"."RDB$FIELD_POSITION"';
-
 		return (($query = $this->query($sql)) !== FALSE)
 			? $query->result_object()
 			: FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Error
 	 *
@@ -310,9 +270,7 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		return array('code' => ibase_errcode(), 'message' => ibase_errmsg());
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Update statement
 	 *
@@ -327,9 +285,7 @@ class CI_DB_ibase_driver extends CI_DB {
 		$this->qb_limit = FALSE;
 		return parent::_update($table, $values);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -345,9 +301,7 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		return 'DELETE FROM '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Delete statement
 	 *
@@ -361,9 +315,7 @@ class CI_DB_ibase_driver extends CI_DB {
 		$this->qb_limit = FALSE;
 		return parent::_delete($table);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * LIMIT
 	 *
@@ -385,12 +337,9 @@ class CI_DB_ibase_driver extends CI_DB {
 			$select = 'ROWS '
 				.($this->qb_offset ? $this->qb_offset.' TO '.($this->qb_limit + $this->qb_offset) : $this->qb_limit);
 		}
-
 		return preg_replace('`SELECT`i', 'SELECT '.$select, $sql, 1);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -400,5 +349,4 @@ class CI_DB_ibase_driver extends CI_DB {
 	{
 		ibase_close($this->conn_id);
 	}
-
 }

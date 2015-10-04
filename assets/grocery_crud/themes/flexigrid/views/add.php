@@ -1,10 +1,8 @@
 <?php
-
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
 	$this->set_js_lib($this->default_theme_path.'/flexigrid/js/jquery.form.js');
     $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
 	$this->set_js_config($this->default_theme_path.'/flexigrid/js/flexigrid-add.js');
-
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 ?>
@@ -48,7 +46,6 @@
 				?>
 			<!-- End of hidden inputs -->
 			<?php if ($is_ajax) { ?><input type="hidden" name="is_ajax" value="true" /><?php }?>
-
 			<div id='report-error' class='report-div error'></div>
 			<div id='report-success' class='report-div success'></div>
 		</div>
@@ -75,7 +72,6 @@
 <script>
 	var validation_url = '<?php echo $validation_url?>';
 	var list_url = '<?php echo $list_url?>';
-
 	var message_alert_add_form = "<?php echo $this->l('alert_add_form')?>";
 	var message_insert_error = "<?php echo $this->l('insert_error')?>";
 </script>

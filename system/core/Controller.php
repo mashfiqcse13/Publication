@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Application Controller Class
  *
@@ -50,14 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/general/controllers.html
  */
 class CI_Controller {
-
 	/**
 	 * Reference to the CI singleton
 	 *
 	 * @var	object
 	 */
 	private static $instance;
-
 	/**
 	 * Class constructor
 	 *
@@ -66,7 +63,6 @@ class CI_Controller {
 	public function __construct()
 	{
 		self::$instance =& $this;
-
 		// Assign all the class objects that were instantiated by the
 		// bootstrap file (CodeIgniter.php) to local class variables
 		// so that CI can run as one big super object.
@@ -74,14 +70,11 @@ class CI_Controller {
 		{
 			$this->$var =& load_class($class);
 		}
-
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get the CI singleton
 	 *
@@ -92,5 +85,4 @@ class CI_Controller {
 	{
 		return self::$instance;
 	}
-
 }

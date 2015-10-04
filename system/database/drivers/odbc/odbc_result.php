@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * ODBC Result Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_odbc_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -65,7 +63,6 @@ class CI_DB_odbc_result extends CI_DB_result {
 		{
 			return $this->num_rows;
 		}
-
 		// Work-around for ODBC subdrivers that don't support num_rows()
 		if (count($this->result_array) > 0)
 		{
@@ -75,12 +72,9 @@ class CI_DB_odbc_result extends CI_DB_result {
 		{
 			return $this->num_rows = count($this->result_object);
 		}
-
 		return $this->num_rows = count($this->result_array());
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -90,9 +84,7 @@ class CI_DB_odbc_result extends CI_DB_result {
 	{
 		return odbc_num_fields($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -104,7 +96,6 @@ class CI_DB_odbc_result extends CI_DB_result {
 	{
 		$field_names = array();
 		$num_fields = $this->num_fields();
-
 		if ($num_fields > 0)
 		{
 			for ($i = 1; $i <= $num_fields; $i++)
@@ -112,12 +103,9 @@ class CI_DB_odbc_result extends CI_DB_result {
 				$field_names[] = odbc_field_name($this->result_id, $i);
 			}
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -137,12 +125,9 @@ class CI_DB_odbc_result extends CI_DB_result {
 			$retval[$i]->primary_key	= 0;
 			$retval[$i]->default		= '';
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -156,9 +141,7 @@ class CI_DB_odbc_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -170,9 +153,7 @@ class CI_DB_odbc_result extends CI_DB_result {
 	{
 		return odbc_fetch_array($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -184,25 +165,19 @@ class CI_DB_odbc_result extends CI_DB_result {
 	protected function _fetch_object($class_name = 'stdClass')
 	{
 		$row = odbc_fetch_object($this->result_id);
-
 		if ($class_name === 'stdClass' OR ! $row)
 		{
 			return $row;
 		}
-
 		$class_name = new $class_name();
 		foreach ($row as $key => $value)
 		{
 			$class_name->$key = $value;
 		}
-
 		return $class_name;
 	}
-
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('odbc_fetch_array'))
 {
 	/**
@@ -222,20 +197,16 @@ if ( ! function_exists('odbc_fetch_array'))
 		{
 			return FALSE;
 		}
-
 		$rs_assoc = array();
 		foreach ($rs as $k => $v)
 		{
 			$field_name = odbc_field_name($result, $k+1);
 			$rs_assoc[$field_name] = $v;
 		}
-
 		return $rs_assoc;
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('odbc_fetch_object'))
 {
 	/**
@@ -255,14 +226,12 @@ if ( ! function_exists('odbc_fetch_object'))
 		{
 			return FALSE;
 		}
-
 		$rs_object = new stdClass();
 		foreach ($rs as $k => $v)
 		{
 			$field_name = odbc_field_name($result, $k+1);
 			$rs_object->$field_name = $v;
 		}
-
 		return $rs_object;
 	}
 }

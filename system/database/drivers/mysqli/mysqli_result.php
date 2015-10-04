@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * MySQLi Result Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_mysqli_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -61,9 +59,7 @@ class CI_DB_mysqli_result extends CI_DB_result {
 			? $this->num_rows
 			: $this->num_rows = $this->result_id->num_rows;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -73,9 +69,7 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	{
 		return $this->result_id->field_count;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -91,12 +85,9 @@ class CI_DB_mysqli_result extends CI_DB_result {
 		{
 			$field_names[] = $field->name;
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -117,12 +108,9 @@ class CI_DB_mysqli_result extends CI_DB_result {
 			$retval[$i]->primary_key	= (int) ($field_data[$i]->flags & 2);
 			$retval[$i]->default		= $field_data[$i]->def;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -136,9 +124,7 @@ class CI_DB_mysqli_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -153,9 +139,7 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	{
 		return $this->result_id->data_seek($n);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -167,9 +151,7 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	{
 		return $this->result_id->fetch_assoc();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -182,5 +164,4 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	{
 		return $this->result_id->fetch_object($class_name);
 	}
-
 }

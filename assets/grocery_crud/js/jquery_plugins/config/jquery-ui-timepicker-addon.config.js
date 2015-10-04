@@ -12,5 +12,4 @@ $(function(){
 		$(this).parent().find('.datetime-input').val("");
 		return false;
 	});	
-
 });

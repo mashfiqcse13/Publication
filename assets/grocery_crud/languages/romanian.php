@@ -19,7 +19,6 @@
 	$lang['list_paging_next'] 		= 'Inainte';
 	$lang['list_paging_last'] 		= 'Ultima';
 	$lang['list_loading'] 			= 'In asteptare...';	
-
 	$lang['form_edit'] 				= 'Editeaza';
 	$lang['form_back_to_list'] 		= 'Inapoi la lista';
 	$lang['form_update_changes'] 	= 'Salveaza modificarile';
@@ -51,7 +50,6 @@
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Salveaza si intoarce-te la lista';
 	$lang['form_update_and_go_back']= 'Actualizeaza si intoarce-te la lista';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Fisierul se sterge";
 	$lang['string_progress'] 		= "Progres: ";
@@ -61,16 +59,12 @@
 	$lang['error_accept_file_types'] 	= "Acest tip de fisier nu este permis.";
 	$lang['error_max_file_size'] 		= "Dimensiunea fisierului depaseste dimensiunea maxima de: {max_file_size}.";
 	$lang['error_min_file_size'] 		= "Nu poti uploada un fisier gol.";
-
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Printare";
 	$lang['minimize_maximize'] = 'Minimizare/Maximizare';
-
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
-
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 $lang['imglib_source_image_required'] = 'You must specify a source image in your preferences.';
 $lang['imglib_gd_required'] = 'The GD image library is required for this feature.';
 $lang['imglib_gd_required_for_props'] = 'Your server must support the GD image library in order to determine the image properties.';

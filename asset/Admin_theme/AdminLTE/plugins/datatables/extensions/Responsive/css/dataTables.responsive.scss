@@ -21,7 +21,6 @@
 	content: '-';
 	background-color: #d33333;
 }
-
 //
 // Table styles
 //
@@ -70,7 +69,6 @@ table.dataTable {
 			}
 		}
 	}
-
 	// Styling for the `column` type
 	&.dtr-column > tbody {
 		> tr > td.control,
@@ -95,7 +93,6 @@ table.dataTable {
 			}
 		}
 	}
-
 	// Child row styling
 	> tbody > tr.child {
 		padding: 0.5em 1em;

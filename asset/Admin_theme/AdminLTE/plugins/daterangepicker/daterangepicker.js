@@ -734,7 +734,6 @@
                     year = this.maxDate.year();
                 }
             }
-
             this[leftOrRight+'Calendar'].month.month(month).year(year);
             this.updateCalendars();
         },

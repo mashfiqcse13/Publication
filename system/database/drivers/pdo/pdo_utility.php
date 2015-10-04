@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO Utility Class
  *
@@ -47,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/database/
  */
 class CI_DB_pdo_utility extends CI_DB_utility {
-
 	/**
 	 * Export
 	 *
@@ -59,5 +57,4 @@ class CI_DB_pdo_utility extends CI_DB_utility {
 		// Currently unsupported
 		return $this->db->display_error('db_unsupported_feature');
 	}
-
 }

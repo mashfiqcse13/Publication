@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter HTML Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/html_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('heading'))
 {
 	/**
@@ -66,9 +63,7 @@ if ( ! function_exists('heading'))
 		return '<h'.$h._stringify_attributes($attributes).'>'.$data.'</h'.$h.'>';
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('ul'))
 {
 	/**
@@ -85,9 +80,7 @@ if ( ! function_exists('ul'))
 		return _list('ul', $list, $attributes);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('ol'))
 {
 	/**
@@ -104,9 +97,7 @@ if ( ! function_exists('ol'))
 		return _list('ol', $list, $attributes);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('_list'))
 {
 	/**
@@ -127,23 +118,18 @@ if ( ! function_exists('_list'))
 		{
 			return $list;
 		}
-
 		// Set the indentation based on the depth
 		$out = str_repeat(' ', $depth)
 			// Write the opening list tag
 			.'<'.$type._stringify_attributes($attributes).">\n";
 
-
 		// Cycle through the list elements.  If an array is
 		// encountered we will recursively call _list()
-
 		static $_last_list_item = '';
 		foreach ($list as $key => $val)
 		{
 			$_last_list_item = $key;
-
 			$out .= str_repeat(' ', $depth + 2).'<li>';
-
 			if ( ! is_array($val))
 			{
 				$out .= $val;
@@ -152,17 +138,13 @@ if ( ! function_exists('_list'))
 			{
 				$out .= $_last_list_item."\n"._list($type, $val, '', $depth + 4).str_repeat(' ', $depth + 2);
 			}
-
 			$out .= "</li>\n";
 		}
-
 		// Set the indentation for the closing tag and apply it
 		return $out.str_repeat(' ', $depth).'</'.$type.">\n";
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('img'))
 {
 	/**
@@ -181,15 +163,12 @@ if ( ! function_exists('img'))
 		{
 			$src = array('src' => $src);
 		}
-
 		// If there is no alt attribute defined, set it to an empty string
 		if ( ! isset($src['alt']))
 		{
 			$src['alt'] = '';
 		}
-
 		$img = '<img';
-
 		foreach ($src as $k => $v)
 		{
 			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
@@ -208,13 +187,10 @@ if ( ! function_exists('img'))
 				$img .= ' '.$k.'="'.$v.'"';
 			}
 		}
-
 		return $img._stringify_attributes($attributes).' />';
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('doctype'))
 {
 	/**
@@ -232,34 +208,27 @@ if ( ! function_exists('doctype'))
 	function doctype($type = 'xhtml1-strict')
 	{
 		static $doctypes;
-
 		if ( ! is_array($doctypes))
 		{
 			if (file_exists(APPPATH.'config/doctypes.php'))
 			{
 				include(APPPATH.'config/doctypes.php');
 			}
-
 			if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/doctypes.php'))
 			{
 				include(APPPATH.'config/'.ENVIRONMENT.'/doctypes.php');
 			}
-
 			if (empty($_doctypes) OR ! is_array($_doctypes))
 			{
 				$doctypes = array();
 				return FALSE;
 			}
-
 			$doctypes = $_doctypes;
 		}
-
 		return isset($doctypes[$type]) ? $doctypes[$type] : FALSE;
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('link_tag'))
 {
 	/**
@@ -279,7 +248,6 @@ if ( ! function_exists('link_tag'))
 	{
 		$CI =& get_instance();
 		$link = '<link ';
-
 		if (is_array($href))
 		{
 			foreach ($href as $k => $v)
@@ -315,26 +283,20 @@ if ( ! function_exists('link_tag'))
 			{
 				$link .= 'href="'.$CI->config->slash_item('base_url').$href.'" ';
 			}
-
 			$link .= 'rel="'.$rel.'" type="'.$type.'" ';
-
 			if ($media !== '')
 			{
 				$link .= 'media="'.$media.'" ';
 			}
-
 			if ($title !== '')
 			{
 				$link .= 'title="'.$title.'" ';
 			}
 		}
-
 		return $link."/>\n";
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('meta'))
 {
 	/**
@@ -359,7 +321,6 @@ if ( ! function_exists('meta'))
 			// Turn single array into multidimensional
 			$name = array($name);
 		}
-
 		$str = '';
 		foreach ($name as $meta)
 		{
@@ -367,16 +328,12 @@ if ( ! function_exists('meta'))
 			$name		= isset($meta['name'])					? $meta['name'] : '';
 			$content	= isset($meta['content'])				? $meta['content'] : '';
 			$newline	= isset($meta['newline'])				? $meta['newline'] : "\n";
-
 			$str .= '<meta '.$type.'="'.$name.'" content="'.$content.'" />'.$newline;
 		}
-
 		return $str;
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('br'))
 {
 	/**
@@ -391,9 +348,7 @@ if ( ! function_exists('br'))
 		return str_repeat('<br />', $count);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('nbs'))
 {
 	/**

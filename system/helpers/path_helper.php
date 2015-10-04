@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Path Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/path_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('set_realpath'))
 {
 	/**
@@ -65,7 +62,6 @@ if ( ! function_exists('set_realpath'))
 		{
 			show_error('The path you submitted must be a local server path, not a URL');
 		}
-
 		// Resolve the path
 		if (realpath($path) !== FALSE)
 		{
@@ -75,7 +71,6 @@ if ( ! function_exists('set_realpath'))
 		{
 			show_error('Not a valid path: '.$path);
 		}
-
 		// Add a trailing slash, if this is a directory
 		return is_dir($path) ? rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR : $path;
 	}

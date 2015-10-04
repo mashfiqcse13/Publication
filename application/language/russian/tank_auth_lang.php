@@ -1,5 +1,4 @@
 <?php
-
 // Errors
 $lang['auth_incorrect_password'] = 'Неправильный пароль';
 $lang['auth_incorrect_login'] = 'Неправильный логин';
@@ -9,7 +8,6 @@ $lang['auth_username_in_use'] = 'Этот логин уже занят. Пожа
 $lang['auth_current_email'] = 'Это ваш текущий email';
 $lang['auth_incorrect_captcha'] = 'Введенные вами символы не соответствуют символам на картинке.';
 $lang['auth_captcha_expired'] = 'Ваш код подтверждения устарел. Пожалуйста, повторите попытку.';
-
 // Notifications
 $lang['auth_message_logged_out'] = 'Вы успешно вышли.';
 $lang['auth_message_registration_disabled'] = 'Регистрация новых пользователей временно отключена.';
@@ -27,14 +25,11 @@ $lang['auth_message_new_email_activated'] = 'Вы успешно изменил�
 $lang['auth_message_new_email_failed'] = 'Неправильный код активации. Возможно, он устарел. Пожалуйста, следуйте инструкциям в высланном вам письме.';
 $lang['auth_message_banned'] = 'Ваша учетная запись заблокирована.';
 $lang['auth_message_unregistered'] = 'Ваша учетная запись удалена...';
-
 // Email subjects
 $lang['auth_subject_welcome'] = 'Добро пожаловать на сайт %s!';
 $lang['auth_subject_activate'] = 'Добро пожаловать на сайт %s!';
 $lang['auth_subject_forgot_password'] = 'Забыли свой пароль на сайте %s?';
 $lang['auth_subject_reset_password'] = 'Ваш новый пароль на сайте %s';
 $lang['auth_subject_change_email'] = 'Ваш новый email на сайте %s';
-
-
 /* End of file tank_auth_lang.php */
 /* Location: ./application/language/russian/tank_auth_lang.php */

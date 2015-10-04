@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Redis Caching Class
  *
@@ -61,23 +60,19 @@ class CI_Cache_redis extends CI_Driver
 		'port' => 6379,
 		'timeout' => 0
 	);
-
 	/**
 	 * Redis connection
 	 *
 	 * @var	Redis
 	 */
 	protected $_redis;
-
 	/**
 	 * An internal cache for storing keys of serialized values.
 	 *
 	 * @var	array
 	 */
 	protected $_serialized = array();
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get cache
 	 *
@@ -87,17 +82,13 @@ class CI_Cache_redis extends CI_Driver
 	public function get($key)
 	{
 		$value = $this->_redis->get($key);
-
 		if ($value !== FALSE && isset($this->_serialized[$key]))
 		{
 			return unserialize($value);
 		}
-
 		return $value;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Save cache
 	 *
@@ -115,7 +106,6 @@ class CI_Cache_redis extends CI_Driver
 			{
 				return FALSE;
 			}
-
 			isset($this->_serialized[$id]) OR $this->_serialized[$id] = TRUE;
 			$data = serialize($data);
 		}
@@ -124,14 +114,11 @@ class CI_Cache_redis extends CI_Driver
 			$this->_serialized[$id] = NULL;
 			$this->_redis->sRemove('_ci_redis_serialized', $id);
 		}
-
 		return ($ttl)
 			? $this->_redis->setex($id, $ttl, $data)
 			: $this->_redis->set($id, $data);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Delete from cache
 	 *
@@ -144,18 +131,14 @@ class CI_Cache_redis extends CI_Driver
 		{
 			return FALSE;
 		}
-
 		if (isset($this->_serialized[$key]))
 		{
 			$this->_serialized[$key] = NULL;
 			$this->_redis->sRemove('_ci_redis_serialized', $key);
 		}
-
 		return TRUE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Increment a raw value
 	 *
@@ -167,9 +150,7 @@ class CI_Cache_redis extends CI_Driver
 	{
 		return $this->_redis->incr($id, $offset);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Decrement a raw value
 	 *
@@ -181,9 +162,7 @@ class CI_Cache_redis extends CI_Driver
 	{
 		return $this->_redis->decr($id, $offset);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Clean cache
 	 *
@@ -194,9 +173,7 @@ class CI_Cache_redis extends CI_Driver
 	{
 		return $this->_redis->flushDB();
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get cache driver info
 	 *
@@ -210,9 +187,7 @@ class CI_Cache_redis extends CI_Driver
 	{
 		return $this->_redis->info();
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get cache metadata
 	 *
@@ -222,7 +197,6 @@ class CI_Cache_redis extends CI_Driver
 	public function get_metadata($key)
 	{
 		$value = $this->get($key);
-
 		if ($value)
 		{
 			return array(
@@ -230,12 +204,9 @@ class CI_Cache_redis extends CI_Driver
 				'data' => $value
 			);
 		}
-
 		return FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Check if Redis driver is supported
 	 *
@@ -248,12 +219,9 @@ class CI_Cache_redis extends CI_Driver
 			log_message('debug', 'The Redis extension must be loaded to use Redis cache.');
 			return FALSE;
 		}
-
 		return $this->_setup_redis();
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Setup Redis config and connection
 	 *
@@ -267,16 +235,12 @@ class CI_Cache_redis extends CI_Driver
 	{
 		$config = array();
 		$CI =& get_instance();
-
 		if ($CI->config->load('redis', TRUE, TRUE))
 		{
 			$config += $CI->config->item('redis');
 		}
-
 		$config = array_merge(self::$_default_config, $config);
-
 		$this->_redis = new Redis();
-
 		try
 		{
 			if ($config['socket_type'] === 'unix')
@@ -287,7 +251,6 @@ class CI_Cache_redis extends CI_Driver
 			{
 				$success = $this->_redis->connect($config['host'], $config['port'], $config['timeout']);
 			}
-
 			if ( ! $success)
 			{
 				log_message('debug', 'Cache: Redis connection refused. Check the config.');
@@ -299,24 +262,19 @@ class CI_Cache_redis extends CI_Driver
 			log_message('debug', 'Cache: Redis connection refused ('.$e->getMessage().')');
 			return FALSE;
 		}
-
 		if (isset($config['password']))
 		{
 			$this->_redis->auth($config['password']);
 		}
-
 		// Initialize the index of serialized values.
 		$serialized = $this->_redis->sMembers('_ci_redis_serialized');
 		if ( ! empty($serialized))
 		{
 			$this->_serialized = array_flip($serialized);
 		}
-
 		return TRUE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Class destructor
 	 *
@@ -331,5 +289,4 @@ class CI_Cache_redis extends CI_Driver
 			$this->_redis->close();
 		}
 	}
-
 }

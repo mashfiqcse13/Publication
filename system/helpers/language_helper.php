@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Language Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/language_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('lang'))
 {
 	/**
@@ -64,12 +61,10 @@ if ( ! function_exists('lang'))
 	function lang($line, $for = '', $attributes = array())
 	{
 		$line = get_instance()->lang->line($line);
-
 		if ($for !== '')
 		{
 			$line = '<label for="'.$for.'"'._stringify_attributes($attributes).'>'.$line.'</label>';
 		}
-
 		return $line;
 	}
 }

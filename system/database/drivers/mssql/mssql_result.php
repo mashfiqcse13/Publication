@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * MSSQL Result Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_mssql_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -61,9 +59,7 @@ class CI_DB_mssql_result extends CI_DB_result {
 			? $this->num_rows
 			: $this->num_rows = mssql_num_rows($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -73,9 +69,7 @@ class CI_DB_mssql_result extends CI_DB_result {
 	{
 		return mssql_num_fields($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -91,12 +85,9 @@ class CI_DB_mssql_result extends CI_DB_result {
 		{
 			$field_names[] = $field->name;
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -110,18 +101,14 @@ class CI_DB_mssql_result extends CI_DB_result {
 		for ($i = 0, $c = $this->num_fields(); $i < $c; $i++)
 		{
 			$field = mssql_fetch_field($this->result_id, $i);
-
 			$retval[$i]		= new stdClass();
 			$retval[$i]->name	= $field->name;
 			$retval[$i]->type	= $field->type;
 			$retval[$i]->max_length	= $field->max_length;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -135,9 +122,7 @@ class CI_DB_mssql_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -152,9 +137,7 @@ class CI_DB_mssql_result extends CI_DB_result {
 	{
 		return mssql_data_seek($this->result_id, $n);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -166,9 +149,7 @@ class CI_DB_mssql_result extends CI_DB_result {
 	{
 		return mssql_fetch_assoc($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -180,19 +161,15 @@ class CI_DB_mssql_result extends CI_DB_result {
 	protected function _fetch_object($class_name = 'stdClass')
 	{
 		$row = mssql_fetch_object($this->result_id);
-
 		if ($class_name === 'stdClass' OR ! $row)
 		{
 			return $row;
 		}
-
 		$class_name = new $class_name();
 		foreach ($row as $key => $value)
 		{
 			$class_name->$key = $value;
 		}
-
 		return $class_name;
 	}
-
 }

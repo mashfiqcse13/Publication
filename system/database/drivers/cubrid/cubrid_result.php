@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CUBRID Result Class
  *
@@ -47,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_cubrid_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -59,9 +57,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 			? $this->num_rows
 			: $this->num_rows = cubrid_num_rows($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -71,9 +67,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	{
 		return cubrid_num_fields($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -85,9 +79,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	{
 		return cubrid_column_names($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -98,7 +90,6 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	public function field_data()
 	{
 		$retval = array();
-
 		for ($i = 0, $c = $this->num_fields(); $i < $c; $i++)
 		{
 			$retval[$i]			= new stdClass();
@@ -107,12 +98,9 @@ class CI_DB_cubrid_result extends CI_DB_result {
 			$retval[$i]->max_length		= cubrid_field_len($this->result_id, $i);
 			$retval[$i]->primary_key	= (int) (strpos(cubrid_field_flags($this->result_id, $i), 'primary_key') !== FALSE);
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -127,9 +115,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -144,9 +130,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	{
 		return cubrid_data_seek($this->result_id, $n);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -158,9 +142,7 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	{
 		return cubrid_fetch_assoc($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -173,5 +155,4 @@ class CI_DB_cubrid_result extends CI_DB_result {
 	{
 		return cubrid_fetch_object($this->result_id, $class_name);
 	}
-
 }

@@ -20,7 +20,6 @@
  * For details please refer to: http://www.datatables.net
  */
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
 /**
@@ -147,7 +146,6 @@ Responsive.prototype = {
 		// First pass - draw the table for the current viewport size
 		this._resize();
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
@@ -247,7 +245,6 @@ Responsive.prototype = {
 		}
 		return display;
 	},
-
 	/**
 	 * Create the internal `columns` array with information about the columns
 	 * for the table. This includes determining which breakpoints the column
@@ -364,7 +361,6 @@ Responsive.prototype = {
 		} );
 		this.s.columns = columns;
 	},
-
 	/**
 	 * Initialisation for the details handler
 	 *
@@ -416,7 +412,6 @@ Responsive.prototype = {
 			}
 		} );
 	},
-
 	/**
 	 * Update the child rows in the table whenever the column visibility changes
 	 *
@@ -462,7 +457,6 @@ Responsive.prototype = {
 			} );
 		}
 	},
-
 	/**
 	 * Find a breakpoint object from a name
 	 * @param  {string} name Breakpoint name to find
@@ -477,7 +471,6 @@ Responsive.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Alter the table display for a resized viewport. This involves first
 	 * determining what breakpoint the window currently is in, getting the
@@ -517,7 +510,6 @@ Responsive.prototype = {
 			dt.column( colIdx ).visible( columnsVis[i] );
 		} );
 	},
-
 	/**
 	 * Determine the width of each column in the table so the auto column hiding
 	 * has that information to work with. This method is never going to be 100%
@@ -582,7 +574,6 @@ Responsive.prototype = {
 		inserted.remove();
 	}
 };
-
 /**
  * List of default breakpoints. Each item in the array is an object with two
  * properties:
@@ -600,7 +591,6 @@ Responsive.breakpoints = [
 	{ name: 'mobile-l', width: 480 },
 	{ name: 'mobile-p', width: 320 }
 ];
-
 /**
  * Responsive default settings for initialisation
  *
@@ -679,7 +669,6 @@ Responsive.defaults = {
 		type: 'inline'
 	}
 };
-
 /*
  * API
  */
@@ -710,7 +699,6 @@ Api.register( 'responsive.recalc()', function () {
 		}
 	} );
 } );
-
 /**
  * Version information
  *
@@ -718,7 +706,6 @@ Api.register( 'responsive.recalc()', function () {
  * @static
  */
 Responsive.version = '1.0.6';
-
 $.fn.dataTable.Responsive = Responsive;
 $.fn.DataTable.Responsive = Responsive;
 // Attach a listener to the document which listens for DataTables initialisation
@@ -740,7 +727,6 @@ $(document).on( 'init.dt.dtr', function (e, settings, json) {
 } );
 return Responsive;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -753,5 +739,4 @@ else if ( jQuery && !jQuery.fn.dataTable.Responsive ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

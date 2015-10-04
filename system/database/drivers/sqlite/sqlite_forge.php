@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * SQLite Forge Class
  *
@@ -45,30 +44,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlite_forge extends CI_DB_forge {
-
 	/**
 	 * CREATE TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_table_if	= FALSE;
-
 	/**
 	 * UNSIGNED support
 	 *
 	 * @var	bool|array
 	 */
 	protected $_unsigned		= FALSE;
-
 	/**
 	 * NULL value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var	string
 	 */
 	protected $_null		= 'NULL';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Create database
 	 *
@@ -81,9 +75,7 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 		// We'll return TRUE so that an error isn't generated
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Drop database
 	 *
@@ -104,12 +96,9 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 				unset($this->db->data_cache['db_names'][$key]);
 			}
 		}
-
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -132,15 +121,11 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 			//	INSERT INTO t1 SELECT a,b FROM t1_backup;
 			//	DROP TABLE t1_backup;
 			//	COMMIT;
-
 			return FALSE;
 		}
-
 		return parent::_alter_table($alter_type, $table, $field);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Process column
 	 *
@@ -156,9 +141,7 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 			.$field['unique']
 			.$field['default'];
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -178,9 +161,7 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -197,9 +178,7 @@ class CI_DB_sqlite_forge extends CI_DB_forge {
 			$field['null'] = '';
 			$field['unique'] = '';
 			$field['auto_increment'] = ' AUTOINCREMENT';
-
 			$this->primary_keys = array();
 		}
 	}
-
 }

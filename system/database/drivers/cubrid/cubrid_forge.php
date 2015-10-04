@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CUBRID Forge Class
  *
@@ -45,14 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_cubrid_forge extends CI_DB_forge {
-
 	/**
 	 * CREATE DATABASE statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_database	= FALSE;
-
 	/**
 	 * CREATE TABLE keys flag
 	 *
@@ -62,21 +59,18 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 	 * @var	bool
 	 */
 	protected $_create_table_keys	= TRUE;
-
 	/**
 	 * DROP DATABASE statement
 	 *
 	 * @var	string
 	 */
 	protected $_drop_database	= FALSE;
-
 	/**
 	 * CREATE TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_table_if	= FALSE;
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -91,9 +85,7 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 		'FLOAT'		=> 'DOUBLE',
 		'REAL'		=> 'DOUBLE'
 	);
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -108,7 +100,6 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 		{
 			return parent::_alter_table($alter_type, $table, $field);
 		}
-
 		$sql = 'ALTER TABLE '.$this->db->escape_identifiers($table);
 		$sqls = array();
 		for ($i = 0, $c = count($field); $i < $c; $i++)
@@ -123,12 +114,9 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 				$sqls[] = $sql.$alter_type.$this->_process_column($field[$i]);
 			}
 		}
-
 		return $sqls;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Process column
 	 *
@@ -139,12 +127,10 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 	{
 		$extra_clause = isset($field['after'])
 			? ' AFTER '.$this->db->escape_identifiers($field['after']) : '';
-
 		if (empty($extra_clause) && isset($field['first']) && $field['first'] === TRUE)
 		{
 			$extra_clause = ' FIRST';
 		}
-
 		return $this->db->escape_identifiers($field['name'])
 			.(empty($field['new_name']) ? '' : ' '.$this->db->escape_identifiers($field['new_name']))
 			.' '.$field['type'].$field['length']
@@ -155,9 +141,7 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 			.$field['unique']
 			.$extra_clause;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -181,9 +165,7 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Process indexes
 	 *
@@ -193,7 +175,6 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 	protected function _process_indexes($table)
 	{
 		$sql = '';
-
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
 			if (is_array($this->keys[$i]))
@@ -212,16 +193,11 @@ class CI_DB_cubrid_forge extends CI_DB_forge {
 				unset($this->keys[$i]);
 				continue;
 			}
-
 			is_array($this->keys[$i]) OR $this->keys[$i] = array($this->keys[$i]);
-
 			$sql .= ",\n\tKEY ".$this->db->escape_identifiers(implode('_', $this->keys[$i]))
 				.' ('.implode(', ', $this->db->escape_identifiers($this->keys[$i])).')';
 		}
-
 		$this->keys = array();
-
 		return $sql;
 	}
-
 }

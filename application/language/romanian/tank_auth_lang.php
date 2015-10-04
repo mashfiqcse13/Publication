@@ -1,5 +1,4 @@
 <?php
-
 // Errors
 $lang['auth_incorrect_password'] = 'Parolă greșită';
 $lang['auth_incorrect_login'] = 'Nume utilizator greșit';
@@ -9,7 +8,6 @@ $lang['auth_username_in_use'] = 'Numele utilizator deja există. Va trebui să a
 $lang['auth_current_email'] = 'Aceasta este adresa e-mail atașată contului tău';
 $lang['auth_incorrect_captcha'] = 'Codul de confirmare nu este identic cu cel din imagine.';
 $lang['auth_captcha_expired'] = 'Codul de confirmare a expirat. Mai încearcă.';
-
 // Notifications
 $lang['auth_message_logged_out'] = 'Deconectarea s-a efectuat cu succes.';
 $lang['auth_message_registration_disabled'] = 'Înregistrările nu sunt permise pentru moment.';
@@ -27,14 +25,11 @@ $lang['auth_message_new_email_activated'] = 'Adresa e-mai a fost schimbată cu b
 $lang['auth_message_new_email_failed'] = 'Cheia de activare este incorectă sau a expirat. Verifică din nou căsuța ta de poștă electronică și urmează instrucțiunile din mesajul pe care tocmai ți l-am trimis.';
 $lang['auth_message_banned'] = 'Accesul tău nu mai este permis.';
 $lang['auth_message_unregistered'] = 'Contul tău a fost șters...';
-
 // Email subjects
 $lang['auth_subject_welcome'] = 'Bine ai venit pe %s!';
 $lang['auth_subject_activate'] = 'Bine ai venit pe %s!';
 $lang['auth_subject_forgot_password'] = 'Schimbare parolă pe %s?';
 $lang['auth_subject_reset_password'] = 'Noua ta parolă pe %s';
 $lang['auth_subject_change_email'] = 'Noua ta adresă e-mail pe %s';
-
-
 /* End of file tank_auth_lang.php */
 /* Location: ./application/language/romanian/tank_auth_lang.php */

@@ -1,5 +1,4 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 /**
  * User_Autologin
  *
@@ -13,16 +12,13 @@ class User_Autologin extends CI_Model
 {
 	private $table_name			= 'user_autologin';
 	private $users_table_name	= 'users';
-
 	function __construct()
 	{
 		parent::__construct();
-
 		$ci =& get_instance();
 		$this->table_name		= $ci->config->item('db_table_prefix', 'tank_auth').$this->table_name;
 		$this->users_table_name	= $ci->config->item('db_table_prefix', 'tank_auth').$this->users_table_name;
 	}
-
 	/**
 	 * Get user data for auto-logged in user.
 	 * Return NULL if given key or user ID is invalid.
@@ -43,7 +39,6 @@ class User_Autologin extends CI_Model
 		if ($query->num_rows() == 1) return $query->row();
 		return NULL;
 	}
-
 	/**
 	 * Save data for user's autologin
 	 *
@@ -60,7 +55,6 @@ class User_Autologin extends CI_Model
 			'last_ip' 		=> $this->input->ip_address(),
 		));
 	}
-
 	/**
 	 * Delete user's autologin data
 	 *
@@ -74,7 +68,6 @@ class User_Autologin extends CI_Model
 		$this->db->where('key_id', $key);
 		$this->db->delete($this->table_name);
 	}
-
 	/**
 	 * Delete all autologin data for given user
 	 *
@@ -86,7 +79,6 @@ class User_Autologin extends CI_Model
 		$this->db->where('user_id', $user_id);
 		$this->db->delete($this->table_name);
 	}
-
 	/**
 	 * Purge autologin data for given user and login conditions
 	 *
@@ -101,6 +93,5 @@ class User_Autologin extends CI_Model
 		$this->db->delete($this->table_name);
 	}
 }
-
 /* End of file user_autologin.php */
 /* Location: ./application/models/auth/user_autologin.php */

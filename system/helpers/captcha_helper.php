@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter CAPTCHA Helper
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/captcha_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('create_captcha'))
 {
 	/**
@@ -81,7 +78,6 @@ if ( ! function_exists('create_captcha'))
 				'grid'		=> array(255,182,182)
 			)
 		);
-
 		foreach ($defaults as $key => $val)
 		{
 			if ( ! is_array($data) && empty($$key))
@@ -93,20 +89,16 @@ if ( ! function_exists('create_captcha'))
 				$$key = isset($data[$key]) ? $data[$key] : $val;
 			}
 		}
-
 		if ($img_path === '' OR $img_url === ''
 			OR ! is_dir($img_path) OR ! is_really_writable($img_path)
 			OR ! extension_loaded('gd'))
 		{
 			return FALSE;
 		}
-
 		// -----------------------------------
 		// Remove old images
 		// -----------------------------------
-
 		$now = microtime(TRUE);
-
 		$current_dir = @opendir($img_path);
 		while ($filename = @readdir($current_dir))
 		{
@@ -115,13 +107,10 @@ if ( ! function_exists('create_captcha'))
 				@unlink($img_path.$filename);
 			}
 		}
-
 		@closedir($current_dir);
-
 		// -----------------------------------
 		// Do we have a "word" yet?
 		// -----------------------------------
-
 		if (empty($word))
 		{
 			$word = '';
@@ -134,7 +123,6 @@ if ( ! function_exists('create_captcha'))
 		{
 			$word = (string) $word;
 		}
-
 		// -----------------------------------
 		// Determine angle and position
 		// -----------------------------------
@@ -142,29 +130,23 @@ if ( ! function_exists('create_captcha'))
 		$angle	= ($length >= 6) ? mt_rand(-($length-6), ($length-6)) : 0;
 		$x_axis	= mt_rand(6, (360/$length)-16);
 		$y_axis = ($angle >= 0) ? mt_rand($img_height, $img_width) : mt_rand(6, $img_height);
-
 		// Create image
 		// PHP.net recommends imagecreatetruecolor(), but it isn't always available
 		$im = function_exists('imagecreatetruecolor')
 			? imagecreatetruecolor($img_width, $img_height)
 			: imagecreate($img_width, $img_height);
-
 		// -----------------------------------
 		//  Assign colors
 		// ----------------------------------
-
 		is_array($colors) OR $colors = $defaults['colors'];
-
 		foreach (array_keys($defaults['colors']) as $key)
 		{
 			// Check for a possible missing value
 			is_array($colors[$key]) OR $colors[$key] = $defaults['colors'][$key];
 			$colors[$key] = imagecolorallocate($im, $colors[$key][0], $colors[$key][1], $colors[$key][2]);
 		}
-
 		// Create the rectangle
 		ImageFilledRectangle($im, 0, 0, $img_width, $img_height, $colors['background']);
-
 		// -----------------------------------
 		//  Create the spiral pattern
 		// -----------------------------------
@@ -173,7 +155,6 @@ if ( ! function_exists('create_captcha'))
 		$radius		= 16;
 		$circles	= 20;
 		$points		= 32;
-
 		for ($i = 0, $cp = ($circles * $points) - 1; $i < $cp; $i++)
 		{
 			$theta += $thetac;
@@ -187,11 +168,9 @@ if ( ! function_exists('create_captcha'))
 			imageline($im, $x, $y, $x1, $y1, $colors['grid']);
 			$theta -= $thetac;
 		}
-
 		// -----------------------------------
 		//  Write the text
 		// -----------------------------------
-
 		$use_font = ($font_path !== '' && file_exists($font_path) && function_exists('imagettftext'));
 		if ($use_font === FALSE)
 		{
@@ -205,7 +184,6 @@ if ( ! function_exists('create_captcha'))
 			$x = mt_rand(0, $img_width / ($length / 1.5));
 			$y = $font_size + 2;
 		}
-
 		for ($i = 0; $i < $length; $i++)
 		{
 			if ($use_font === FALSE)
@@ -221,15 +199,12 @@ if ( ! function_exists('create_captcha'))
 				$x += $font_size;
 			}
 		}
-
 		// Create the border
 		imagerectangle($im, 0, 0, $img_width - 1, $img_height - 1, $colors['border']);
-
 		// -----------------------------------
 		//  Generate the image
 		// -----------------------------------
 		$img_url = rtrim($img_url, '/').'/';
-
 		if (function_exists('imagejpeg'))
 		{
 			$img_filename = $now.'.jpg';
@@ -244,10 +219,8 @@ if ( ! function_exists('create_captcha'))
 		{
 			return FALSE;
 		}
-
 		$img = '<img '.($img_id === '' ? '' : 'id="'.$img_id.'"').' src="'.$img_url.$img_filename.'" style="width: '.$img_width.'; height: '.$img_height .'; border: 0;" alt=" " />';
 		ImageDestroy($im);
-
 		return array('word' => $word, 'time' => $now, 'image' => $img, 'filename' => $img_filename);
 	}
 }

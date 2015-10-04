@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Database Utility Class
  *
@@ -45,39 +44,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 abstract class CI_DB_utility {
-
 	/**
 	 * Database object
 	 *
 	 * @var	object
 	 */
 	protected $db;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * List databases statement
 	 *
 	 * @var	string
 	 */
 	protected $_list_databases		= FALSE;
-
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var	string
 	 */
 	protected $_optimize_table	= FALSE;
-
 	/**
 	 * REPAIR TABLE statement
 	 *
 	 * @var	string
 	 */
 	protected $_repair_table	= FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -89,9 +81,7 @@ abstract class CI_DB_utility {
 		$this->db =& $db;
 		log_message('info', 'Database Utility Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * List databases
 	 *
@@ -108,25 +98,19 @@ abstract class CI_DB_utility {
 		{
 			return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 		}
-
 		$this->db->data_cache['db_names'] = array();
-
 		$query = $this->db->query($this->_list_databases);
 		if ($query === FALSE)
 		{
 			return $this->db->data_cache['db_names'];
 		}
-
 		for ($i = 0, $query = $query->result_array(), $c = count($query); $i < $c; $i++)
 		{
 			$this->db->data_cache['db_names'][] = current($query[$i]);
 		}
-
 		return $this->db->data_cache['db_names'];
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Determine if a particular database exists
 	 *
@@ -137,9 +121,7 @@ abstract class CI_DB_utility {
 	{
 		return in_array($database_name, $this->list_databases());
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Optimize Table
 	 *
@@ -152,19 +134,15 @@ abstract class CI_DB_utility {
 		{
 			return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 		}
-
 		$query = $this->db->query(sprintf($this->_optimize_table, $this->db->escape_identifiers($table_name)));
 		if ($query !== FALSE)
 		{
 			$query = $query->result_array();
 			return current($query);
 		}
-
 		return FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Optimize Database
 	 *
@@ -176,7 +154,6 @@ abstract class CI_DB_utility {
 		{
 			return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 		}
-
 		$result = array();
 		foreach ($this->db->list_tables() as $table_name)
 		{
@@ -185,22 +162,17 @@ abstract class CI_DB_utility {
 			{
 				return $res;
 			}
-
 			// Build the result array...
 			$res = $res->result_array();
 			$res = current($res);
 			$key = str_replace($this->db->database.'.', '', current($res));
 			$keys = array_keys($res);
 			unset($res[$keys[0]]);
-
 			$result[$key] = $res;
 		}
-
 		return $result;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Repair Table
 	 *
@@ -213,19 +185,15 @@ abstract class CI_DB_utility {
 		{
 			return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 		}
-
 		$query = $this->db->query(sprintf($this->_repair_table, $this->db->escape_identifiers($table_name)));
 		if (is_bool($query))
 		{
 			return $query;
 		}
-
 		$query = $query->result_array();
 		return current($query);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Generate CSV from a query result object
 	 *
@@ -241,16 +209,13 @@ abstract class CI_DB_utility {
 		{
 			show_error('You must submit a valid result object');
 		}
-
 		$out = '';
 		// First generate the headings from the table column names
 		foreach ($query->list_fields() as $name)
 		{
 			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
 		}
-
 		$out = substr(rtrim($out), 0, -strlen($delim)).$newline;
-
 		// Next blast through the result array and build out the rows
 		while ($row = $query->unbuffered_row('array'))
 		{
@@ -260,12 +225,9 @@ abstract class CI_DB_utility {
 			}
 			$out = substr(rtrim($out), 0, -strlen($delim)).$newline;
 		}
-
 		return $out;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Generate XML data from a query result object
 	 *
@@ -279,7 +241,6 @@ abstract class CI_DB_utility {
 		{
 			show_error('You must submit a valid result object');
 		}
-
 		// Set our default values
 		foreach (array('root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t") as $key => $val)
 		{
@@ -288,13 +249,10 @@ abstract class CI_DB_utility {
 				$params[$key] = $val;
 			}
 		}
-
 		// Create variables for convenience
 		extract($params);
-
 		// Load the xml helper
 		get_instance()->load->helper('xml');
-
 		// Generate the result
 		$xml = '<'.$root.'>'.$newline;
 		while ($row = $query->unbuffered_row())
@@ -306,12 +264,9 @@ abstract class CI_DB_utility {
 			}
 			$xml .= $tab.'</'.$element.'>'.$newline;
 		}
-
 		return $xml.'</'.$root.'>'.$newline;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database Backup
 	 *
@@ -327,7 +282,6 @@ abstract class CI_DB_utility {
 		{
 			$params = array('tables' => $params);
 		}
-
 		// Set up our default preferences
 		$prefs = array(
 			'tables'		=> array(),
@@ -339,7 +293,6 @@ abstract class CI_DB_utility {
 			'newline'		=> "\n",
 			'foreign_key_checks'	=> TRUE
 		);
-
 		// Did the user submit any preferences? If so set them....
 		if (count($params) > 0)
 		{
@@ -351,20 +304,17 @@ abstract class CI_DB_utility {
 				}
 			}
 		}
-
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
 		if (count($prefs['tables']) === 0)
 		{
 			$prefs['tables'] = $this->db->list_tables();
 		}
-
 		// Validate the format
 		if ( ! in_array($prefs['format'], array('gzip', 'zip', 'txt'), TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}
-
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
@@ -374,10 +324,8 @@ abstract class CI_DB_utility {
 			{
 				return $this->db->display_error('db_unsupported_compression');
 			}
-
 			$prefs['format'] = 'txt';
 		}
-
 		// Was a Zip file requested?
 		if ($prefs['format'] === 'zip')
 		{
@@ -394,14 +342,12 @@ abstract class CI_DB_utility {
 				{
 					$prefs['filename'] = str_replace('.zip', '', $prefs['filename']);
 				}
-
 				// Tack on the ".sql" file extension if needed
 				if ( ! preg_match('|.+?\.sql$|', $prefs['filename']))
 				{
 					$prefs['filename'] .= '.sql';
 				}
 			}
-
 			// Load the Zip class and output it
 			$CI =& get_instance();
 			$CI->load->library('zip');
@@ -416,8 +362,6 @@ abstract class CI_DB_utility {
 		{
 			return gzencode($this->_backup($prefs));
 		}
-
 		return;
 	}
-
 }

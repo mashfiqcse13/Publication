@@ -1,6 +1,5 @@
 // Simple Set Clipboard System
 // Author: Joseph Huckaby
-
 var ZeroClipboard_TableTools = {
 	version: "1.0.4-TableTools2",
 	clients: {}, // registered upload clients on page, indexed by id
@@ -50,13 +49,11 @@ var ZeroClipboard_TableTools = {
 			info.width = obj.style.width.replace("px","");
 		if ( obj.style.height != "" )
 			info.height = obj.style.height.replace("px","");
-
 		while (obj) {
 			info.left += obj.offsetLeft;
 			info.top += obj.offsetTop;
 			obj = obj.offsetParent;
 		}
-
 		return info;
 	},
 	Client: function(elem) {
@@ -71,7 +68,6 @@ var ZeroClipboard_TableTools = {
 		if (elem) this.glue(elem);
 	}
 };
-
 ZeroClipboard_TableTools.Client.prototype = {
 	id: 0, // unique ID for us
 	ready: false, // whether movie is ready to receive events or not

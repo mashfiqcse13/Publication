@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PHP ext/hash compatibility package
  *
@@ -47,16 +46,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/
  * @link		http://php.net/hash
  */
-
 // ------------------------------------------------------------------------
-
 if (is_php('5.6'))
 {
 	return;
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('hash_equals'))
 {
 	/**
@@ -83,26 +78,20 @@ if ( ! function_exists('hash_equals'))
 		{
 			return FALSE;
 		}
-
 		$diff = 0;
 		for ($i = 0; $i < $length; $i++)
 		{
 			$diff |= ord($known_string[$i]) ^ ord($user_string[$i]);
 		}
-
 		return ($diff === 0);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if (is_php('5.5'))
 {
 	return;
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('hash_pbkdf2'))
 {
 	/**
@@ -124,14 +113,12 @@ if ( ! function_exists('hash_pbkdf2'))
 			trigger_error('hash_pbkdf2(): Unknown hashing algorithm: '.$algo, E_USER_WARNING);
 			return FALSE;
 		}
-
 		if (($type = gettype($iterations)) !== 'integer')
 		{
 			if ($type === 'object' && method_exists($iterations, '__toString'))
 			{
 				$iterations = (string) $iterations;
 			}
-
 			if (is_string($iterations) && is_numeric($iterations))
 			{
 				$iterations = (int) $iterations;
@@ -142,20 +129,17 @@ if ( ! function_exists('hash_pbkdf2'))
 				return NULL;
 			}
 		}
-
 		if ($iterations < 1)
 		{
 			trigger_error('hash_pbkdf2(): Iterations must be a positive integer: '.$iterations, E_USER_WARNING);
 			return FALSE;
 		}
-
 		if (($type = gettype($length)) !== 'integer')
 		{
 			if ($type === 'object' && method_exists($length, '__toString'))
 			{
 				$length = (string) $length;
 			}
-
 			if (is_string($length) && is_numeric($length))
 			{
 				$length = (int) $length;
@@ -166,19 +150,16 @@ if ( ! function_exists('hash_pbkdf2'))
 				return NULL;
 			}
 		}
-
 		if ($length < 0)
 		{
 			trigger_error('hash_pbkdf2(): Length must be greater than or equal to 0: '.$length, E_USER_WARNING);
 			return FALSE;
 		}
-
 		$hash_length = strlen(hash($algo, NULL, TRUE));
 		if (empty($length))
 		{
 			$length = $hash_length;
 		}
-
 		$hash = '';
 		// Note: Blocks are NOT 0-indexed
 		for ($bc = ceil($length / $hash_length), $bi = 1; $bi <= $bc; $bi++)
@@ -188,10 +169,8 @@ if ( ! function_exists('hash_pbkdf2'))
 			{
 				$derived_key ^= $key = hash_hmac($algo, $key, $password, TRUE);
 			}
-
 			$hash .= $derived_key;
 		}
-
 		// This is not RFC-compatible, but we're aiming for natural PHP compatibility
 		return substr($raw_output ? $hash : bin2hex($hash), 0, $length);
 	}

@@ -74,7 +74,6 @@
 			return a;
 		};
 	})();
-
 	// Picker object
 	var Datepicker = function(element, options){
 		this.dates = new DateArray();
@@ -1537,14 +1536,12 @@
 							'</div>'+
 						'</div>';
 	$.fn.datepicker.DPGlobal = DPGlobal;
-
 	/* DATEPICKER NO CONFLICT
 	* =================== */
 	$.fn.datepicker.noConflict = function(){
 		$.fn.datepicker = old;
 		return this;
 	};
-
 	/* DATEPICKER DATA-API
 	* ================== */
 	$(document).on(

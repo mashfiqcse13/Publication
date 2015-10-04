@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Utf8 Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/libraries/utf8.html
  */
 class CI_Utf8 {
-
 	/**
 	 * Class constructor
 	 *
@@ -73,12 +71,9 @@ class CI_Utf8 {
 			define('UTF8_ENABLED', FALSE);
 			log_message('debug', 'UTF-8 Support Disabled');
 		}
-
 		log_message('info', 'Utf8 Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Clean UTF-8 strings
 	 *
@@ -100,12 +95,9 @@ class CI_Utf8 {
 				$str = @iconv('UTF-8', 'UTF-8//IGNORE', $str);
 			}
 		}
-
 		return $str;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Remove ASCII control characters
 	 *
@@ -120,9 +112,7 @@ class CI_Utf8 {
 	{
 		return remove_invisible_characters($str, FALSE);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Convert to UTF-8
 	 *
@@ -142,12 +132,9 @@ class CI_Utf8 {
 		{
 			return @iconv($encoding, 'UTF-8', $str);
 		}
-
 		return FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Is ASCII?
 	 *
@@ -160,5 +147,4 @@ class CI_Utf8 {
 	{
 		return (preg_match('/[^\x00-\x7F]/S', $str) === 0);
 	}
-
 }

@@ -3,7 +3,6 @@
  *
  * @locale uk, uk-UK
  */
-
 $.extend($.ui.multiselect.locale, {
 	addAll:'Додати все',
 	removeAll:'Видалити все',

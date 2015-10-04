@@ -65,7 +65,6 @@ button.ColVis_Button::-moz-focus-inner {
 button.ColVis_Button:active { 
 	outline: none;
 }
-
 div.ColVis_collectionBackground {
 	position: fixed;
 	top: 0;
@@ -124,7 +123,6 @@ ul.ColVis_collection li span {
 	padding-left: 0.5em;
 	cursor: pointer;
 }
-
 ul.ColVis_collection li.ColVis_Special {
 	border-color: #555;
 	background: rgb(237,237,237); /* Old browsers */
@@ -144,7 +142,6 @@ ul.ColVis_collection li.ColVis_Special:hover {
 	background:         linear-gradient(top, #d0d0d0 0%,#d5d5d5 89%,#e2e2e2 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#e2e2e2',GradientType=0 ); /* IE6-9 */
 }
-
 span.ColVis_radio {
 	display: inline-block;
 	width: 20px;
@@ -156,4 +153,3 @@ div.ColVis_catcher {
 .disabled {
 	color: #999;
 }
-

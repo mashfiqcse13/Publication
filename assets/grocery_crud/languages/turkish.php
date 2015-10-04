@@ -19,7 +19,6 @@
 	$lang['list_paging_next'] 			= 'Sonraki';
 	$lang['list_paging_last'] 			= 'Son';
 	$lang['list_loading'] 				= 'Yükleniyor...';	
-
 	$lang['form_edit'] 				= 'Düzenle';
 	$lang['form_back_to_list'] 			= 'Listeye geri dön';
 	$lang['form_update_changes'] 			= 'Değişiklikleri uygula';
@@ -43,7 +42,6 @@
 	$lang['alert_delete']				= 'Bu kaydı silmek istediğinizden emin misiniz?';
 	$lang['insert_error']				= 'Ekleme esnasında bir hata oluştu.';
 	$lang['update_error']				= 'Kaydetme esnasında bir hata oluştu.';
-
 	/* Translated by Murat Akdeniz - www.webfikirleri.com */
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']			= 'Seç: {field_display_as}';	
@@ -53,7 +51,6 @@
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']			= 'Kaydet ve Listeye Geri Dön';
 	$lang['form_update_and_go_back']		= 'Güncelle ve Listeye Geri Dön';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 			= "Dosya Siliniyor";
 	$lang['string_progress'] 			= "İlerleme: ";
@@ -63,16 +60,12 @@
 	$lang['error_accept_file_types']		= "Bu uzantıda dosya yüklemeye yetkiniz yoktur.";
 	$lang['error_max_file_size']			= "Yüklemeye çalıştığınız dosya maksimum dosya boyutu olan {max_file_size} üzerindedir.";
 	$lang['error_min_file_size']			= "Boş bir dosya yükleyemezsiniz.";
-
 	/* Added in version 1.3.1 */
 	$lang['list_export']				= "Dışarı Aktar";
 	$lang['list_print']				= "Yazdır";
 	$lang['minimize_maximize']			= 'Küçült/Büyüt';
-
-
 	/* Added in version 1.4 */
 	$lang['list_view']				= 'Görüntüle';
-
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';

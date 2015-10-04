@@ -26,7 +26,6 @@
 /* Global scope for FixedColumns */
 var FixedHeader;
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
 /*
@@ -120,7 +119,6 @@ FixedHeader = function ( mTable, oInit ) {
 	this.fnPosition = function () {
 		this._fnUpdatePositions();
 	};
-
 	var dt = $.fn.dataTable.Api ?
 		new $.fn.dataTable.Api( mTable ).settings()[0] :
 		mTable.fnSettings();
@@ -128,7 +126,6 @@ FixedHeader = function ( mTable, oInit ) {
 	/* Let's do it */
 	this.fnInit( dt, oInit );
 };
-
 /*
  * Variable: FixedHeader
  * Purpose:  Prototype for FixedHeader
@@ -208,7 +205,6 @@ FixedHeader.prototype = {
 		that._fnUpdatePositions();
 		s.bInitComplete = true;
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Support functions
 	 */
@@ -425,7 +421,6 @@ FixedHeader.prototype = {
 			s.bInitComplete = true;
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Scrolling functions
 	 */
@@ -598,7 +593,6 @@ FixedHeader.prototype = {
 			oCache[sCache] = sSet;
 		}
 	},
-
 	/**
 	 * Copy the classes of all child nodes from one element to another. This implies
 	 * that the two have identical structure - no error checking is performed to that
@@ -618,7 +612,6 @@ FixedHeader.prototype = {
 			that._fnClassUpdate( $(source).children()[i], $(dest).children()[i] );
 		} );
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Cloning functions
 	 */
@@ -785,7 +778,6 @@ FixedHeader.prototype = {
 		nTable.style.width = iWidth+"px";
 		oCache.nWrapper.style.width = iWidth+"px";
 	},
-
 	/**
 	 * Equalise the heights of the rows in a given table node in a cross browser way. Note that this
 	 * is more or less lifted as is from FixedColumns
@@ -818,7 +810,6 @@ FixedHeader.prototype = {
 		} );
 	}
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static properties and methods
  *   We use these for speed! This information is common to all instances of FixedHeader, so no
@@ -874,9 +865,7 @@ FixedHeader.fnMeasure = function ()
 	oWin.iScrollRight = oDoc.iWidth - oWin.iScrollLeft - oWin.iWidth;
 	oWin.iScrollBottom = oDoc.iHeight - oWin.iScrollTop - oWin.iHeight;
 };
-
 FixedHeader.version = "2.1.2";
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Global processing
  */
@@ -890,13 +879,10 @@ $(window).scroll( function () {
 		FixedHeader.afnScroll[i]();
 	}
 } );
-
 $.fn.dataTable.FixedHeader = FixedHeader;
 $.fn.DataTable.FixedHeader = FixedHeader;
-
 return FixedHeader;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -909,5 +895,4 @@ else if ( jQuery && !jQuery.fn.dataTable.FixedHeader ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

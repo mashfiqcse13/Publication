@@ -20,7 +20,6 @@
  * For details please refer to: http://www.datatables.net
  */
 (function(window, document, undefined){
-
 var factory = function( $, DataTable ) {
 "use strict";
 /**
@@ -194,7 +193,6 @@ var Scroller = function ( oDTSettings, oOpts ) {
 	/* Let's do it */
 	this._fnConstruct();
 };
-
 Scroller.prototype = /** @lends Scroller.prototype */{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -232,7 +230,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			parseInt( pixels, 10 ) :
 			pixels;
 	},
-
 	/**
 	 * Calculate the row number that will be found at the given pixel position
 	 * (y-scroll).
@@ -269,7 +266,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			parseInt( row, 10 ) :
 			row;
 	},
-
 	/**
 	 * Calculate the row number that will be found at the given pixel position (y-scroll)
 	 *  @param {int} iRow Row index to scroll to
@@ -330,7 +326,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			$(this.dom.scroller).scrollTop( px );
 		}
 	},
-
 	/**
 	 * Calculate and store information about how many rows are to be displayed
 	 * in the scrolling viewport, based on current dimensions in the browser's
@@ -375,7 +370,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			this.s.dt.oInstance.fnDraw();
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -487,7 +481,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			}
 		} );
 	},
-
 	/**
 	 * Scrolling function - fired whenever the scrolling position is changed.
 	 * This method needs to use the stored values to see if the table should be
@@ -590,7 +583,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 		this.s.lastScrollTop = iScrollTop;
 		this.s.stateSaveThrottle();
 	},
-
 	/**
 	 * Convert from one domain to another. The physical domain is the actual
 	 * pixel count on the screen, while the virtual is if we had browsers which
@@ -649,7 +641,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			}
 		}
 	},
-
 	/**
 	 * Draw callback function which is fired when the DataTable is redrawn. The main function of
 	 * this method is to position the drawn table correctly the scrolling container for the rows
@@ -749,7 +740,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 			this.s.loaderVisible = false;
 		}
 	},
-
 	/**
 	 * Force the scrolling container to have height beyond that of just the
 	 * table that has been drawn so the user can scroll the whole data set.
@@ -772,7 +762,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 		}
 		this.dom.force.style.height = heights.scroll+"px";
 	},
-
 	/**
 	 * Automatic calculation of table row height. This is just a little tricky here as using
 	 * initialisation DataTables has tale the table out of the document, so we need to create
@@ -814,7 +803,6 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 		this.s.heights.row = $('tr', tbody).eq(1).outerHeight();
 		container.remove();
 	},
-
 	/**
 	 * Update any information elements that are controlled by the DataTable based on the scrolling
 	 * viewport and what rows are visible in it. This function basically acts in the same way as
@@ -895,11 +883,9 @@ Scroller.prototype = /** @lends Scroller.prototype */{
 		}
 	}
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Statics
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /**
  * Scroller default settings for initialisation
  *  @namespace
@@ -1024,7 +1010,6 @@ Scroller.defaults = /** @lends Scroller.defaults */{
 	"loadingIndicator": false
 };
 Scroller.oDefaults = Scroller.defaults;
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1036,7 +1021,6 @@ Scroller.oDefaults = Scroller.defaults;
  *  @static
  */
 Scroller.version = "1.2.2";
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Initialisation
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1062,11 +1046,9 @@ else
 {
 	alert( "Warning: Scroller requires DataTables 1.9.0 or greater - www.datatables.net/download");
 }
-
 // Attach Scroller to DataTables so it can be accessed as an 'extra'
 $.fn.dataTable.Scroller = Scroller;
 $.fn.DataTable.Scroller = Scroller;
-
 // DataTables 1.10 API method aliases
 if ( $.fn.dataTable.Api ) {
 	var Api = $.fn.dataTable.Api;
@@ -1104,10 +1086,8 @@ if ( $.fn.dataTable.Api ) {
 		return this;
 	} );
 }
-
 return Scroller;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -1120,5 +1100,4 @@ else if ( jQuery && !jQuery.fn.dataTable.Scroller ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

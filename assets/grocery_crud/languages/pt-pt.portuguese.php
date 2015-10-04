@@ -19,7 +19,6 @@
 	$lang['list_paging_next'] 		= 'Próximo';
 	$lang['list_paging_last'] 		= 'Último';
 	$lang['list_loading'] 			= 'A carregar...';	
-
 	$lang['form_edit'] 				= 'Alterar';
 	$lang['form_back_to_list'] 		= 'Voltar para a listagem';
 	$lang['form_update_changes'] 	= 'Gravar alterações';
@@ -45,14 +44,12 @@
 	$lang['update_error']			= 'Ocorreu um erro ao tentar atualizar o registo.';
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Select {field_display_as}';	
-
 	$lang['list_record']			= 'Record';
 	$lang['form_inactive']			= 'inactive';
 	$lang['form_active']			= 'active';
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Save and go back to list';
 	$lang['form_update_and_go_back']= 'Update and go back to list';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Deleting file";
 	$lang['string_progress'] 		= "Progress: ";
@@ -62,15 +59,12 @@
 	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
 	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
 	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
-
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Print";
 	$lang['minimize_maximize'] = 'Minimize/Maximize';
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
-
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';

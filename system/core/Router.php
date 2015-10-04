@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Router Class
  *
@@ -49,49 +48,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/general/routing.html
  */
 class CI_Router {
-
 	/**
 	 * CI_Config class object
 	 *
 	 * @var	object
 	 */
 	public $config;
-
 	/**
 	 * List of routes
 	 *
 	 * @var	array
 	 */
 	public $routes =	array();
-
 	/**
 	 * Current class name
 	 *
 	 * @var	string
 	 */
 	public $class =		'';
-
 	/**
 	 * Current method name
 	 *
 	 * @var	string
 	 */
 	public $method =	'index';
-
 	/**
 	 * Sub-directory that contains the requested controller class
 	 *
 	 * @var	string
 	 */
 	public $directory =	'';
-
 	/**
 	 * Default controller (and method if specific)
 	 *
 	 * @var	string
 	 */
 	public $default_controller;
-
 	/**
 	 * Translate URI dashes
 	 *
@@ -101,7 +93,6 @@ class CI_Router {
 	 * @var	bool
 	 */
 	public $translate_uri_dashes = FALSE;
-
 	/**
 	 * Enable query strings flag
 	 *
@@ -110,9 +101,7 @@ class CI_Router {
 	 * @var	bool
 	 */
 	public $enable_query_strings = FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -124,10 +113,8 @@ class CI_Router {
 	{
 		$this->config =& load_class('Config', 'core');
 		$this->uri =& load_class('URI', 'core');
-
 		$this->enable_query_strings = ( ! is_cli() && $this->config->item('enable_query_strings') === TRUE);
 		$this->_set_routing();
-
 		// Set any routing overrides that may exist in the main index file
 		if (is_array($routing))
 		{
@@ -135,23 +122,18 @@ class CI_Router {
 			{
 				$this->set_directory($routing['directory']);
 			}
-
 			if ( ! empty($routing['controller']))
 			{
 				$this->set_class($routing['controller']);
 			}
-
 			if ( ! empty($routing['function']))
 			{
 				$this->set_method($routing['function']);
 			}
 		}
-
 		log_message('info', 'Router Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set route mapping
 	 *
@@ -174,20 +156,17 @@ class CI_Router {
 				$this->uri->filter_uri($_d);
 				$this->set_directory($_d);
 			}
-
 			$_c = trim($this->config->item('controller_trigger'));
 			if ( ! empty($_GET[$_c]))
 			{
 				$this->uri->filter_uri($_GET[$_c]);
 				$this->set_class($_GET[$_c]);
-
 				$_f = trim($this->config->item('function_trigger'));
 				if ( ! empty($_GET[$_f]))
 				{
 					$this->uri->filter_uri($_GET[$_f]);
 					$this->set_method($_GET[$_f]);
 				}
-
 				$this->uri->rsegments = array(
 					1 => $this->class,
 					2 => $this->method
@@ -197,23 +176,19 @@ class CI_Router {
 			{
 				$this->_set_default_controller();
 			}
-
 			// Routing rules don't apply to query strings and we don't need to detect
 			// directories, so we're done here
 			return;
 		}
-
 		// Load the routes.php file.
 		if (file_exists(APPPATH.'config/routes.php'))
 		{
 			include(APPPATH.'config/routes.php');
 		}
-
 		if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/routes.php'))
 		{
 			include(APPPATH.'config/'.ENVIRONMENT.'/routes.php');
 		}
-
 		// Validate & get reserved routes
 		if (isset($route) && is_array($route))
 		{
@@ -222,7 +197,6 @@ class CI_Router {
 			unset($route['default_controller'], $route['translate_uri_dashes']);
 			$this->routes = $route;
 		}
-
 		// Is there anything to parse?
 		if ($this->uri->uri_string !== '')
 		{
@@ -233,9 +207,7 @@ class CI_Router {
 			$this->_set_default_controller();
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set request route
 	 *
@@ -256,7 +228,6 @@ class CI_Router {
 			$this->_set_default_controller();
 			return;
 		}
-
 		if ($this->translate_uri_dashes === TRUE)
 		{
 			$segments[0] = str_replace('-', '_', $segments[0]);
@@ -265,7 +236,6 @@ class CI_Router {
 				$segments[1] = str_replace('-', '_', $segments[1]);
 			}
 		}
-
 		$this->set_class($segments[0]);
 		if (isset($segments[1]))
 		{
@@ -275,14 +245,11 @@ class CI_Router {
 		{
 			$segments[1] = 'index';
 		}
-
 		array_unshift($segments, NULL);
 		unset($segments[0]);
 		$this->uri->rsegments = $segments;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set default controller
 	 *
@@ -294,33 +261,26 @@ class CI_Router {
 		{
 			show_error('Unable to determine what should be displayed. A default route has not been specified in the routing file.');
 		}
-
 		// Is the method being specified?
 		if (sscanf($this->default_controller, '%[^/]/%s', $class, $method) !== 2)
 		{
 			$method = 'index';
 		}
-
 		if ( ! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
 		{
 			// This will trigger 404 later
 			return;
 		}
-
 		$this->set_class($class);
 		$this->set_method($method);
-
 		// Assign routed segments, index starting from 1
 		$this->uri->rsegments = array(
 			1 => $class,
 			2 => $method
 		);
-
 		log_message('debug', 'No URI present. Default controller set.');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Validate request
 	 *
@@ -339,22 +299,17 @@ class CI_Router {
 		{
 			$test = $this->directory
 				.ucfirst($this->translate_uri_dashes === TRUE ? str_replace('-', '_', $segments[0]) : $segments[0]);
-
 			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php') && is_dir(APPPATH.'controllers/'.$this->directory.$segments[0]))
 			{
 				$this->set_directory(array_shift($segments), TRUE);
 				continue;
 			}
-
 			return $segments;
 		}
-
 		// This means that all segments were actually directories
 		return $segments;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Parse Routes
 	 *
@@ -367,10 +322,8 @@ class CI_Router {
 	{
 		// Turn the segment array into a URI string
 		$uri = implode('/', $this->uri->segments);
-
 		// Get HTTP verb
 		$http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
-
 		// Is there a literal match?  If so we're done
 		if (isset($this->routes[$uri]))
 		{
@@ -387,7 +340,6 @@ class CI_Router {
 				return;
 			}
 		}
-
 		// Loop through the route array looking for wildcards
 		foreach ($this->routes as $key => $val)
 		{
@@ -403,10 +355,8 @@ class CI_Router {
 					continue;
 				}
 			}
-
 			// Convert wildcards to RegEx
 			$key = str_replace(array(':any', ':num'), array('[^/]+', '[0-9]+'), $key);
-
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
 			{
@@ -415,7 +365,6 @@ class CI_Router {
 				{
 					// Remove the original string from the matches array.
 					array_shift($matches);
-
 					// Execute the callback using the values in matches as its parameters.
 					$val = call_user_func_array($val, $matches);
 				}
@@ -424,19 +373,15 @@ class CI_Router {
 				{
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);
 				}
-
 				$this->_set_request(explode('/', $val));
 				return;
 			}
 		}
-
 		// If we got this far it means we didn't encounter a
 		// matching route so we'll set the site default route
 		$this->_set_request(array_values($this->uri->segments));
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set class name
 	 *
@@ -447,9 +392,7 @@ class CI_Router {
 	{
 		$this->class = str_replace(array('/', '.'), '', $class);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch the current class
 	 *
@@ -460,9 +403,7 @@ class CI_Router {
 	{
 		return $this->class;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set method name
 	 *
@@ -473,9 +414,7 @@ class CI_Router {
 	{
 		$this->method = $method;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch the current method
 	 *
@@ -486,9 +425,7 @@ class CI_Router {
 	{
 		return $this->method;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set directory name
 	 *
@@ -507,9 +444,7 @@ class CI_Router {
 			$this->directory .= str_replace('.', '', trim($dir, '/')).'/';
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch directory
 	 *
@@ -523,5 +458,4 @@ class CI_Router {
 	{
 		return $this->directory;
 	}
-
 }

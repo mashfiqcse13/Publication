@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * oci8 Database Adapter Class
  *
@@ -50,7 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
-
 /**
  * oci8 Database Adapter Class
  *
@@ -60,35 +58,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author	  Kelly McArdle
  */
 class CI_DB_oci8_driver extends CI_DB {
-
 	/**
 	 * Database driver
 	 *
 	 * @var	string
 	 */
 	public $dbdriver = 'oci8';
-
 	/**
 	 * Statement ID
 	 *
 	 * @var	resource
 	 */
 	public $stmt_id;
-
 	/**
 	 * Cursor ID
 	 *
 	 * @var	resource
 	 */
 	public $curs_id;
-
 	/**
 	 * Commit mode flag
 	 *
 	 * @var	int
 	 */
 	public $commit_mode = OCI_COMMIT_ON_SUCCESS;
-
 	/**
 	 * Limit used flag
 	 *
@@ -98,9 +91,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 * @var	bool
 	 */
 	public $limit_used;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * List of reserved identifiers
 	 *
@@ -109,14 +100,12 @@ class CI_DB_oci8_driver extends CI_DB {
 	 * @var	string[]
 	 */
 	protected $_reserved_identifiers = array('*', 'rownum');
-
 	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var	array
 	 */
 	protected $_random_keyword = array('ASC', 'ASC'); // not currently supported
-
 	/**
 	 * COUNT string
 	 *
@@ -126,9 +115,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 * @var	string
 	 */
 	protected $_count_string = 'SELECT COUNT(1) AS ';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -138,19 +125,16 @@ class CI_DB_oci8_driver extends CI_DB {
 	public function __construct($params)
 	{
 		parent::__construct($params);
-
 		$valid_dsns = array(
 			'tns'	=> '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
 			// Easy Connect string (Oracle 10g+)
 			'ec'	=> '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
 			'in'	=> '/^[a-z0-9$_]+$/i' // Instance name (defined in tnsnames.ora)
 		);
-
 		/* Space characters don't have any effect when actually
 		 * connecting, but can be a hassle while validating the DSN.
 		 */
 		$this->dsn = str_replace(array("\n", "\r", "\t", ' '), '', $this->dsn);
-
 		if ($this->dsn !== '')
 		{
 			foreach ($valid_dsns as $regexp)
@@ -161,7 +145,6 @@ class CI_DB_oci8_driver extends CI_DB {
 				}
 			}
 		}
-
 		// Legacy support for TNS in the hostname configuration field
 		$this->hostname = str_replace(array("\n", "\r", "\t", ' '), '', $this->hostname);
 		if (preg_match($valid_dsns['tns'], $this->hostname))
@@ -182,13 +165,11 @@ class CI_DB_oci8_driver extends CI_DB {
 			$this->dsn = $this->hostname
 				.(( ! empty($this->port) && ctype_digit($this->port)) ? ':'.$this->port : '')
 				.($this->database !== '' ? '/'.ltrim($this->database, '/') : '');
-
 			if (preg_match($valid_dsns['ec'], $this->dsn))
 			{
 				return;
 			}
 		}
-
 		/* At this point, we can only try and validate the hostname and
 		 * database fields separately as DSNs.
 		 */
@@ -197,7 +178,6 @@ class CI_DB_oci8_driver extends CI_DB {
 			$this->dsn = $this->hostname;
 			return;
 		}
-
 		$this->database = str_replace(array("\n", "\r", "\t", ' '), '', $this->database);
 		foreach ($valid_dsns as $regexp)
 		{
@@ -206,16 +186,13 @@ class CI_DB_oci8_driver extends CI_DB {
 				return;
 			}
 		}
-
 		/* Well - OK, an empty string should work as well.
 		 * PHP will try to use environment variables to
 		 * determine which Oracle instance to connect to.
 		 */
 		$this->dsn = '';
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Non-persistent database connection
 	 *
@@ -229,9 +206,7 @@ class CI_DB_oci8_driver extends CI_DB {
 			? $func($this->username, $this->password, $this->dsn)
 			: $func($this->username, $this->password, $this->dsn, $this->char_set);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database version number
 	 *
@@ -243,17 +218,13 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return $this->data_cache['version'];
 		}
-
 		if ( ! $this->conn_id OR ($version = oci_server_version($this->conn_id)) === FALSE)
 		{
 			return FALSE;
 		}
-
 		return $this->data_cache['version'] = $version;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Execute the query
 	 *
@@ -270,9 +241,7 @@ class CI_DB_oci8_driver extends CI_DB {
 		oci_set_prefetch($this->stmt_id, 1000);
 		return oci_execute($this->stmt_id, $this->commit_mode);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Generate a statement ID
 	 *
@@ -286,9 +255,7 @@ class CI_DB_oci8_driver extends CI_DB {
 			$this->stmt_id = oci_parse($this->conn_id, $sql);
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get cursor. Returns a cursor from the database
 	 *
@@ -298,9 +265,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		return $this->curs_id = oci_new_cursor($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Stored Procedure.  Executes a stored procedure
 	 *
@@ -325,30 +290,24 @@ class CI_DB_oci8_driver extends CI_DB {
 			log_message('error', 'Invalid query: '.$package.'.'.$procedure);
 			return ($this->db_debug) ? $this->display_error('db_invalid_query') : FALSE;
 		}
-
 		// build the query string
 		$sql = 'BEGIN '.$package.'.'.$procedure.'(';
-
 		$have_cursor = FALSE;
 		foreach ($params as $param)
 		{
 			$sql .= $param['name'].',';
-
 			if (isset($param['type']) && $param['type'] === OCI_B_CURSOR)
 			{
 				$have_cursor = TRUE;
 			}
 		}
 		$sql = trim($sql, ',').'); END;';
-
 		$this->stmt_id = FALSE;
 		$this->_set_stmt_id($sql);
 		$this->_bind_params($params);
 		return $this->query($sql, FALSE, $have_cursor);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Bind parameters
 	 *
@@ -361,7 +320,6 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return;
 		}
-
 		foreach ($params as $param)
 		{
 			foreach (array('name', 'value', 'type', 'length') as $val)
@@ -371,13 +329,10 @@ class CI_DB_oci8_driver extends CI_DB {
 					$param[$val] = '';
 				}
 			}
-
 			oci_bind_by_name($this->stmt_id, $param['name'], $param['value'], $param['length'], $param['type']);
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
@@ -390,24 +345,19 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
 		{
 			return TRUE;
 		}
-
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
 		$this->_trans_failure = ($test_mode === TRUE);
-
 		$this->commit_mode = is_php('5.3.2') ? OCI_NO_AUTO_COMMIT : OCI_DEFAULT;
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
@@ -419,19 +369,15 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
 		{
 			return TRUE;
 		}
-
 		$this->commit_mode = OCI_COMMIT_ON_SUCCESS;
 		return oci_commit($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
@@ -444,13 +390,10 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		$this->commit_mode = OCI_COMMIT_ON_SUCCESS;
 		return oci_rollback($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Affected Rows
 	 *
@@ -460,9 +403,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		return oci_num_rows($this->stmt_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
@@ -473,9 +414,7 @@ class CI_DB_oci8_driver extends CI_DB {
 		// not supported in oracle
 		return $this->display_error('db_unsupported_function');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show table query
 	 *
@@ -487,18 +426,14 @@ class CI_DB_oci8_driver extends CI_DB {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = 'SELECT "TABLE_NAME" FROM "ALL_TABLES"';
-
 		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
 		{
 			return $sql.' WHERE "TABLE_NAME" LIKE \''.$this->escape_like_str($this->dbprefix)."%' "
 				.sprintf($this->_like_escape_str, $this->_like_escape_chr);
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -517,14 +452,11 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			$owner = $this->username;
 		}
-
 		return 'SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS
 			WHERE UPPER(OWNER) = '.$this->escape(strtoupper($owner)).'
 				AND UPPER(TABLE_NAME) = '.$this->escape(strtoupper($table));
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
@@ -541,25 +473,21 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			$owner = $this->username;
 		}
-
 		$sql = 'SELECT COLUMN_NAME, DATA_TYPE, CHAR_LENGTH, DATA_PRECISION, DATA_LENGTH, DATA_DEFAULT, NULLABLE
 			FROM ALL_TAB_COLUMNS
 			WHERE UPPER(OWNER) = '.$this->escape(strtoupper($owner)).'
 				AND UPPER(TABLE_NAME) = '.$this->escape(strtoupper($table));
-
 		if (($query = $this->query($sql)) === FALSE)
 		{
 			return FALSE;
 		}
 		$query = $query->result_object();
-
 		$retval = array();
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
 			$retval[$i]			= new stdClass();
 			$retval[$i]->name		= $query[$i]->COLUMN_NAME;
 			$retval[$i]->type		= $query[$i]->DATA_TYPE;
-
 			$length = ($query[$i]->CHAR_LENGTH > 0)
 				? $query[$i]->CHAR_LENGTH : $query[$i]->DATA_PRECISION;
 			if ($length === NULL)
@@ -567,7 +495,6 @@ class CI_DB_oci8_driver extends CI_DB {
 				$length = $query[$i]->DATA_LENGTH;
 			}
 			$retval[$i]->max_length		= $length;
-
 			$default = $query[$i]->DATA_DEFAULT;
 			if ($default === NULL && $query[$i]->NULLABLE === 'N')
 			{
@@ -575,12 +502,9 @@ class CI_DB_oci8_driver extends CI_DB {
 			}
 			$retval[$i]->default		= $query[$i]->COLUMN_DEFAULT;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Error
 	 *
@@ -606,12 +530,9 @@ class CI_DB_oci8_driver extends CI_DB {
 		{
 			return oci_error($this->conn_id);
 		}
-
 		return oci_error();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Insert batch statement
 	 *
@@ -626,17 +547,13 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		$keys = implode(', ', $keys);
 		$sql = "INSERT ALL\n";
-
 		for ($i = 0, $c = count($values); $i < $c; $i++)
 		{
 			$sql .= '	INTO '.$table.' ('.$keys.') VALUES '.$values[$i]."\n";
 		}
-
 		return $sql.'SELECT * FROM dual';
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -652,9 +569,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		return 'TRUNCATE TABLE '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Delete statement
 	 *
@@ -670,12 +585,9 @@ class CI_DB_oci8_driver extends CI_DB {
 			$this->where('rownum <= ',$this->qb_limit, FALSE);
 			$this->qb_limit = FALSE;
 		}
-
 		return parent::_delete($table);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * LIMIT
 	 *
@@ -690,9 +602,7 @@ class CI_DB_oci8_driver extends CI_DB {
 		return 'SELECT * FROM (SELECT inner_query.*, rownum rnum FROM ('.$sql.') inner_query WHERE rownum < '.($this->qb_offset + $this->qb_limit + 1).')'
 			.($this->qb_offset ? ' WHERE rnum >= '.($this->qb_offset + 1) : '');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -702,5 +612,4 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		oci_close($this->conn_id);
 	}
-
 }

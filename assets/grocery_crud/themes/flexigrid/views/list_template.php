@@ -1,41 +1,30 @@
 <?php
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
 	$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
-
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 	$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
-
 	if (!$this->is_IE7()) {
 		$this->set_js_lib($this->default_javascript_path.'/common/list.js');
 	}
-
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
-
     $this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
-
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.printElement.min.js');
-
 	/** Fancybox */
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
-
 	/** Jquery UI */
 	$this->load_js_jqueryui();
-
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
-
 	var subject = '<?php echo addslashes($subject); ?>';
 	var ajax_list_info_url = '<?php echo $ajax_list_info_url; ?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
-
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
-
 </script>
 <div id='list-report-error' class='report-div error'></div>
 <div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
@@ -54,7 +43,6 @@ if($success_message !== null){?>
 		</div>
 	</div>
 	<div id='main-table-box' class="main-table-box">
-
 	<?php if(!$unset_add || !$unset_export || !$unset_print){?>
 	<div class="tDiv">
 		<?php if(!$unset_add){?>
@@ -95,7 +83,6 @@ if($success_message !== null){?>
 		<div class='clear'></div>
 	</div>
 	<?php }?>
-
 	<div id='ajax_list' class="ajax_list">
 		<?php echo $list_view?>
 	</div>

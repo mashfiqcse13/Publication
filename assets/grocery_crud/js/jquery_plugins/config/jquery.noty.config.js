@@ -7,7 +7,6 @@ function success_message(success_message)
 		  layout: 'top',
 		  callback: {
 		    afterShow: function() {
-
 		        setTimeout(function(){
 		        	$.noty.closeAll();
 		        },7000);
@@ -15,7 +14,6 @@ function success_message(success_message)
 		  }
 	});
 }
-
 function error_message(error_message)
 {
 	noty({
@@ -25,25 +23,19 @@ function error_message(error_message)
 		  dismissQueue: true
 	});
 }
-
 function form_success_message(success_message)
 {
 	$('#report-success').slideUp('fast');
 	$('#report-success').html(success_message);
-
 	if ($('#report-success').closest('.ui-dialog').length !== 0) {
 		$('.go-to-edit-form').click(function(){
-
 			fnOpenEditForm($(this));
-
 			return false;
 		});
 	}
-
 	$('#report-success').slideDown('normal');
 	$('#report-error').slideUp('fast').html('');
 }
-
 function form_error_message(error_message)
 {
 	$('#report-error').slideUp('fast');

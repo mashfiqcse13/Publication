@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO MySQL Database Adapter Class
  *
@@ -51,21 +50,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
-
 	/**
 	 * Sub-driver
 	 *
 	 * @var	string
 	 */
 	public $subdriver = 'mysql';
-
 	/**
 	 * Compression flag
 	 *
 	 * @var	bool
 	 */
 	public $compress = FALSE;
-
 	/**
 	 * Strict ON flag
 	 *
@@ -74,18 +70,14 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	 * @var	bool
 	 */
 	public $stricton = FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Identifier escape character
 	 *
 	 * @var	string
 	 */
 	protected $_escape_char = '`';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -97,11 +89,9 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	public function __construct($params)
 	{
 		parent::__construct($params);
-
 		if (empty($this->dsn))
 		{
 			$this->dsn = 'mysql:host='.(empty($this->hostname) ? '127.0.0.1' : $this->hostname);
-
 			empty($this->port) OR $this->dsn .= ';port='.$this->port;
 			empty($this->database) OR $this->dsn .= ';dbname='.$this->database;
 			empty($this->char_set) OR $this->dsn .= ';charset='.$this->char_set;
@@ -111,9 +101,7 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 			$this->dsn .= ';charset='.$this->char_set;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database connection
 	 *
@@ -133,7 +121,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 			$this->options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES '.$this->char_set
 				.(empty($this->dbcollat) ? '' : ' COLLATE '.$this->dbcollat);
 		}
-
 		if ($this->stricton)
 		{
 			if (empty($this->options[PDO::MYSQL_ATTR_INIT_COMMAND]))
@@ -145,17 +132,13 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 				$this->options[PDO::MYSQL_ATTR_INIT_COMMAND] .= ', @@session.sql_mode = "STRICT_ALL_TABLES"';
 			}
 		}
-
 		if ($this->compress === TRUE)
 		{
 			$this->options[PDO::MYSQL_ATTR_COMPRESS] = TRUE;
 		}
-
 		return parent::db_connect($persistent);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show table query
 	 *
@@ -167,17 +150,13 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = 'SHOW TABLES';
-
 		if ($prefix_limit === TRUE && $this->dbprefix !== '')
 		{
 			return $sql." LIKE '".$this->escape_like_str($this->dbprefix)."%'";
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -190,9 +169,7 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	{
 		return 'SHOW COLUMNS FROM '.$this->protect_identifiers($table, TRUE, NULL, FALSE);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
@@ -206,27 +183,21 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 			return FALSE;
 		}
 		$query = $query->result_object();
-
 		$retval = array();
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
 			$retval[$i]			= new stdClass();
 			$retval[$i]->name		= $query[$i]->Field;
-
 			sscanf($query[$i]->Type, '%[a-z](%d)',
 				$retval[$i]->type,
 				$retval[$i]->max_length
 			);
-
 			$retval[$i]->default		= $query[$i]->Default;
 			$retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -242,9 +213,7 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	{
 		return 'TRUNCATE '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * FROM tables
 	 *
@@ -259,8 +228,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 		{
 			return '('.implode(', ', $this->qb_from).')';
 		}
-
 		return implode(', ', $this->qb_from);
 	}
-
 }
