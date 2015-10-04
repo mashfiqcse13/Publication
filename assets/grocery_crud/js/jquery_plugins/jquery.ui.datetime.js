@@ -33,7 +33,6 @@ jQuery.fn.datetime = function() {
 							showButtonPanel: true, 
 							onSelect: writeDate						
 				};			
-		
 				var lang = {};
 
 				lang['en'] = {
@@ -42,23 +41,18 @@ jQuery.fn.datetime = function() {
 								minute:	'Minute',
 								close:	'Close'			
 							};
-							
 				lang['de'] = {
 								time: 	'Zeit',
 								hour:	'Stunde',
 								minute:	'Minute',
 								close:	'Schließen'			
 							};				
-				
 				$(this).data('sets',datepicker_def);
 				$(this).data('userLang',userLang);
 				$(this).data('b24Hour',b24Hour);
-				
 				function renderPickerPlug(b24Hour_,lang_) {
 					var loadedLang = lang[lang_] || lang['en'];
-					
 					if (!$('#pickerplug').length) {
-					
 						var htmlins = '<ul id="pickerplug">';
 						htmlins += '<li>';
 						htmlins += '<div id="datepicker"></div>';
@@ -87,7 +81,6 @@ jQuery.fn.datetime = function() {
 						htmlins += '</li>';				
 						htmlins += '</ul>';
 						$('body').append(htmlins);	
-						
 						$('#datepicker').datepicker();
 						$(document).mousedown(closePickPlug);			
 						$('#pickerplug .ui-datepicker-close').click(closePickPlug);							
@@ -101,7 +94,6 @@ jQuery.fn.datetime = function() {
 							step: 1,
 							slide: function(event, ui) {
 								writeDate(writeTime(ui.value,'hour'),'time');
-								
 							},
 							change: function(event, ui) {
 								$('#tpSelectedTime .selHrs').effect('highlight', 1000);
@@ -121,7 +113,6 @@ jQuery.fn.datetime = function() {
 								$('#tpSelectedTime .selMins').effect('highlight', 1000);
 							}
 						});
-					
 		//Inline editor bind
 						$('#tpSelectedTime .selHrs').keyup(function(e){
 							if((e.which <= 57 && e.which >= 48) && ($(this).text() >=1 && $(this).text() <=12 ) ){
@@ -135,7 +126,6 @@ jQuery.fn.datetime = function() {
 							//    $(this).val(1);
 							//}
 						});
-						
 		//Inline editor bind
 						$('#tpSelectedTime .selMins').keyup(function(e){
 							if((e.which <= 57 && e.which >= 48) && ($(this).text() >=0 && $(this).text() <=59 ) ){
@@ -156,26 +146,20 @@ jQuery.fn.datetime = function() {
 					$('#text_hour').text(loadedLang['hour']);
 					$('#text_minute').text(loadedLang['minute']);
 					$('#text_close').text(loadedLang['close']);
-					
 					$('#pickerplug').data('userLang',lang_);
 					$('#pickerplug').data('b24Hour',b24Hour_);	
 				}
-				
 				$(this).bind('focus',function(){ 
-					
 					var top 	= $(this).offset().top+$(this).outerHeight(); 
 					var left 	= $(this).offset().left;
-					
 					if ($(this).data('userLang') 	!= $('#pickerplug').data('userLang') || 
 						$(this).data('b24Hour') 	!= $('#pickerplug').data('userLang') ) {
 						renderPickerPlug($(this).data('b24Hour'),$(this).data('userLang'));
 					}
-					
 					$('#pickerplug').css({
 										left: left+'px',
 										top: top+'px'
 										}).show('normal');						
-					
 					if ($(this).data('userLang')!='en' && lang[$(this).data('userLang')]) {
 						$('#datepicker').datepicker('option', $.extend({},
 												$.datepicker.regional[$(this).data('userLang')]));	
@@ -187,11 +171,9 @@ jQuery.fn.datetime = function() {
 					}					
 
 					parseTime(this);
-										
 					if ($('#pickerplug').css('display') == 'none') { 											
 						$('#pickerplug').show('normal');
 					}
-					
 					$(this).bind('keyup',parseTime);
 					//$(this).bind('slider',writeTime);
 
@@ -205,30 +187,23 @@ jQuery.fn.datetime = function() {
 						var time = ($(obj).val() || $(this).val()).split(" ");
 					else
 						var time = ['00-00-00','00:00:00'];
-					
 					if (time.length < 2) {
 						time = ['00-00-00','00:00:00'];
 					}
-					
 					$('#pickerplug').data('lastdate',time[0]);	//lastdate = time[0];
 					$('#pickerplug').data('lasttime',time[1]);  //lasttime = time[1];					
 					time = time[1].split(":");					
-					
 					if (time.length < 2) {
 						time = ['00','00','00'];
 					}
-					
 					var hour	= time[0] || '00';
 					var minute 	= time[1] || '00';
-					
 					writeTime(hour,'hour');
 					writeTime(minute,'minute');
 
 					$('#hourSlider').slider('option', 'value', hour);
 					$('#minuteSlider').slider('option', 'value', minute);	
-						
 					var zero_string = "0";
-					
 					if( $('#pickerplug').data('lastdate').charAt(0) != zero_string.charAt(0) )
 					{
 						$('#datepicker').datepicker( 'setDate', 
@@ -248,14 +223,11 @@ jQuery.fn.datetime = function() {
 							);
 					}
 				}
-				
 				function writeTime(fragment,type) {
 					var time = '';
-					
 					switch (type) {
 						case 'hour':
 	                    	var hours = parseInt(fragment,10);
-								
 	                    	if (!$('#pickerplug').data('b24Hour') && hours > 11) {                    		
 	                    		hours -= 12;
 	                    		$('.dayPeriod').text('pm');
@@ -284,7 +256,6 @@ jQuery.fn.datetime = function() {
 					}
 					return time;
 				}				
-				
 				function writeDate (text,type) {
 
 					switch (type) {
@@ -298,7 +269,6 @@ jQuery.fn.datetime = function() {
 								$('#pickerplug').data('lastdate')+' '+$('#pickerplug').data('lasttime')
 					);
 				}
-				
 				function closePickPlug (event) {
 
 					if (($(event.target).parents('#pickerplug').length ||
@@ -306,13 +276,11 @@ jQuery.fn.datetime = function() {
 						!$(event.target).hasClass('ui-datepicker-close')) {					
 						return;
 					}
-					
 					$('#pickerplug').hide('normal');		
 					$(this).unbind('click',closePickPlug);
 					$(this).unbind('keyup',parseTime);
 					$(this).removeClass(markerClass);
 				}
-								
             });
             
            }

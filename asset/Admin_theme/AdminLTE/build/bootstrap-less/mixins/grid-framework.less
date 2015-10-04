@@ -2,7 +2,6 @@
 //
 // Used only by Bootstrap to generate the correct number of grid classes given
 // any value of `@grid-columns`.
-
 .make-grid-columns() {
   // Common styles for all sizes of grid columns, widths 1-12
   .col(@index) { // initial
@@ -25,7 +24,6 @@
   }
   .col(1); // kickstart it
 }
-
 .float-grid-columns(@class) {
   .col(@index) { // initial
     @item: ~".col-@{class}-@{index}";
@@ -42,7 +40,6 @@
   }
   .col(1); // kickstart it
 }
-
 .calc-grid-column(@index, @class, @type) when (@type = width) and (@index > 0) {
   .col-@{class}-@{index} {
     width: percentage((@index / @grid-columns));
@@ -73,14 +70,12 @@
     margin-left: percentage((@index / @grid-columns));
   }
 }
-
 // Basic looping in LESS
 .loop-grid-columns(@index, @class, @type) when (@index >= 0) {
   .calc-grid-column(@index, @class, @type);
   // next iteration
   .loop-grid-columns((@index - 1), @class, @type);
 }
-
 // Create grid for specific class
 .make-grid(@class) {
   .float-grid-columns(@class);

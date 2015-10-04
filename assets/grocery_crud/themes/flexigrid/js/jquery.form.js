@@ -187,7 +187,6 @@ $.fn.ajaxSubmit = function(options) {
 			alert('Error: Form elements must not have name or id of "submit".');
 			return;
 		}
-		
 		var s = $.extend(true, {}, $.ajaxSettings, options);
 		s.context = s.context || s;
 		var id = 'jqFormIO' + (new Date().getTime()), fn = '_'+id;
@@ -313,7 +312,6 @@ $.fn.ajaxSubmit = function(options) {
 		else {
 			setTimeout(doSubmit, 10); // this lets dom updates render
 		}
-	
 		var data, doc, domCheckCount = 50, callbackProcessed;
 
 		function cb(e) {
@@ -324,7 +322,6 @@ $.fn.ajaxSubmit = function(options) {
 				xhr.abort('timeout');
 				return;
 			}
-			
 			var doc = io.contentWindow ? io.contentWindow.document : io.contentDocument ? io.contentDocument : io.document;
 			if (!doc || doc.location.href == s.iframeSrc) {
 				// response not received yet
@@ -386,7 +383,6 @@ $.fn.ajaxSubmit = function(options) {
 				else if (s.dataType == 'xml' && !xhr.responseXML && xhr.responseText != null) {
 					xhr.responseXML = toXml(xhr.responseText);
 				}
-				
 				data = httpData(xhr, s.dataType, s);
 			}
 			catch(e){
@@ -396,7 +392,6 @@ $.fn.ajaxSubmit = function(options) {
 				s.error && s.error.call(s.context, xhr, 'error', e);
 				g && $.event.trigger("ajaxError", [xhr, s, e]);
 			}
-			
 			if (xhr.aborted) {
 				log('upload aborted');
 				ok = false;
@@ -407,13 +402,11 @@ $.fn.ajaxSubmit = function(options) {
 				s.success && s.success.call(s.context, data, 'success', xhr);
 				g && $.event.trigger("ajaxSuccess", [xhr, s]);
 			}
-			
 			g && $.event.trigger("ajaxComplete", [xhr, s]);
 
 			if (g && ! --$.active) {
 				$.event.trigger("ajaxStop");
 			}
-			
 			s.complete && s.complete.call(s.context, xhr, ok ? 'success' : 'error');
 
 			callbackProcessed = true;
@@ -442,7 +435,6 @@ $.fn.ajaxSubmit = function(options) {
 		var parseJSON = $.parseJSON || function(s) {
 			return window['eval']('(' + s + ')');
 		};
-		
 		var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4
 			var ct = xhr.getResponseHeader('content-type') || '',
 				xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
@@ -496,7 +488,6 @@ $.fn.ajaxForm = function(options) {
 		log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
 		return this;
 	}
-	
 	return this.ajaxFormUnbind().bind('submit.form-plugin', function(e) {
 		if (!e.isDefaultPrevented()) { // if event has been canceled, don't proceed
 			e.preventDefault();
@@ -560,7 +551,6 @@ $.fn.formToArray = function(semantic) {
 	if (!els) {
 		return a;
 	}
-	
 	var i,j,n,v,el,max,jmax;
 	for(i=0, max=els.length; i < max; i++) {
 		el = els[i];

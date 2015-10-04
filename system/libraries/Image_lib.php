@@ -1327,7 +1327,6 @@ class CI_Image_lib {
 		{
 			$y_axis += $this->orig_height - $fontheight - $this->wm_shadow_distance - ($fontheight / 2);
 		}
-		
 		// Set horizontal alignment
 		if ($this->wm_hor_alignment === 'R')
 		{
@@ -1337,13 +1336,11 @@ class CI_Image_lib {
 		{
 			$x_axis += floor(($this->orig_width - ($fontwidth * strlen($this->wm_text))) / 2);
 		}
-		
 		if ($this->wm_use_drop_shadow)
 		{
 			// Offset from text
 			$x_shad = $x_axis + $this->wm_shadow_distance;
 			$y_shad = $y_axis + $this->wm_shadow_distance;
-				
 			/* Set RGB values for shadow
 			 *
 			 * First character is #, so we don't really need it.
@@ -1352,7 +1349,6 @@ class CI_Image_lib {
 			 */
 			$drp_color = str_split(substr($this->wm_shadow_color, 1, 6), 2);
 			$drp_color = imagecolorclosest($src_img, hexdec($drp_color[0]), hexdec($drp_color[1]), hexdec($drp_color[2]));
-			
 			// Add the shadow to the source image
 			if ($this->wm_use_truetype)
 			{
@@ -1363,7 +1359,6 @@ class CI_Image_lib {
 				imagestring($src_img, $this->wm_font_size, $x_shad, $y_shad, $this->wm_text, $drp_color);
 			}
 		}
-		
 		/* Set RGB values for text
 		 *
 		 * First character is #, so we don't really need it.
@@ -1382,7 +1377,6 @@ class CI_Image_lib {
 		{
 			imagestring($src_img, $this->wm_font_size, $x_axis, $y_axis, $this->wm_text, $txt_color);
 		}
-		
 		// We can preserve transparency for PNG images
 		if ($this->image_type === 3)
 		{

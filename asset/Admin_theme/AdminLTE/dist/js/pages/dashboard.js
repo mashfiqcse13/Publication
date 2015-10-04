@@ -5,9 +5,7 @@
  *      This is a demo file used only for the main dashboard (index.html)
  **/
 "use strict";
-
 $(function () {
-
   //Make the dashboard widgets sortable Using jquery UI
   $(".connectedSortable").sortable({
     placeholder: "sort-highlight",
@@ -25,10 +23,8 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex: 999999
   });
-
   //bootstrap WYSIHTML5 - text editor
   $(".textarea").wysihtml5();
-
   $('.daterange').daterangepicker(
           {
             ranges: {
@@ -45,10 +41,8 @@ $(function () {
   function (start, end) {
     alert("You chose: " + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
   });
-
   /* jQueryKnob */
   $(".knob").knob();
-
   //jvectormap data
   var visitorsData = {
     "US": 398, //USA
@@ -88,7 +82,6 @@ $(function () {
         el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
     }
   });
-
   //Sparkline charts
   var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
   $('#sparkline-1').sparkline(myvalues, {
@@ -114,15 +107,12 @@ $(function () {
     height: '50',
     width: '80'
   });
-
   //The Calender
   $("#calendar").datepicker();
-
   //SLIMSCROLL FOR CHAT WIDGET
   $('#chat-box').slimScroll({
     height: '250px'
   });
-
   /* Morris.js Charts */
   // Sales chart
   var area = new Morris.Area({
@@ -175,7 +165,6 @@ $(function () {
     gridTextFamily: "Open Sans",
     gridTextSize: 10
   });
-
   //Donut Chart
   var donut = new Morris.Donut({
     element: 'sales-chart',
@@ -188,14 +177,11 @@ $(function () {
     ],
     hideHover: 'auto'
   });
-
   //Fix for charts under tabs
   $('.box ul.nav a').on('shown.bs.tab', function (e) {
     area.redraw();
     donut.redraw();
   });
-
-
   /* BOX REFRESH PLUGIN EXAMPLE (usage with morris charts) */
   $("#loading-example").boxRefresh({
     source: "ajax/dashboard-boxrefresh-demo.php",
@@ -220,7 +206,6 @@ $(function () {
       });
     }
   });
-
   /* The todo list plugin */
   $(".todo-list").todolist({
     onCheck: function (ele) {
@@ -230,5 +215,4 @@ $(function () {
       console.log("The element has been unchecked")
     }
   });
-
 });

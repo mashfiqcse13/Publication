@@ -549,12 +549,10 @@ function noty(options) {
 			}
 		},
 		style: function() {
-				
 			this.$bar.css({
 				overflow: 'hidden',
 				background: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAoCAYAAAAPOoFWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPZJREFUeNq81tsOgjAMANB2ov7/7ypaN7IlIwi9rGuT8QSc9EIDAsAznxvY4pXPKr05RUE5MEVB+TyWfCEl9LZApYopCmo9C4FKSMtYoI8Bwv79aQJU4l6hXXCZrQbokJEksxHo9KMOgc6w1atHXM8K9DVC7FQnJ0i8iK3QooGgbnyKgMDygBWyYFZoqx4qS27KqLZJjA1D0jK6QJcYEQEiWv9PGkTsbqxQ8oT+ZtZB6AkdsJnQDnMoHXHLGKOgDYuCWmYhEERCI5gaamW0bnHdA3k2ltlIN+2qKRyCND0bhqSYCyTB3CAOc4WusBEIpkeBuPgJMAAX8Hs1NfqHRgAAAABJRU5ErkJggg==') repeat-x scroll left top #fff"
 			});
-			
 			this.$message.css({
 				fontSize: '13px',
 				lineHeight: '16px',
@@ -563,7 +561,6 @@ function noty(options) {
 				width: 'auto',
 				position: 'relative'
 			});
-			
 			this.$closeButton.css({
 				position: 'absolute',
 				top: 4, right: 4,
@@ -572,27 +569,22 @@ function noty(options) {
 				display: 'none',
 				cursor: 'pointer',
 			});
-			
 			this.$buttons.css({
 				padding: 5,
 				textAlign: 'right',
 				borderTop: '1px solid #ccc',
 				backgroundColor: '#fff',
 			});
-			
 			this.$buttons.find('button').css({
 				marginLeft: 5
 			});
-			
 			this.$buttons.find('button:first').css({
 				marginLeft: 0
 			});
-			
 			this.$bar.bind({
 				mouseenter: function() { $(this).find('.noty_close').fadeIn(); },
 				mouseleave: function() { $(this).find('.noty_close').fadeOut(); }
 			});
-			
 			switch (this.options.layout.name) {
 				case 'top':
 					this.$bar.css({
@@ -637,7 +629,6 @@ function noty(options) {
 					});
 				break;
 			}
-			
 			switch (this.options.type) {
 				case 'alert': case 'notification':
 					this.$bar.css({backgroundColor: '#FFF', borderColor: '#CCC', color: '#444'}); break;

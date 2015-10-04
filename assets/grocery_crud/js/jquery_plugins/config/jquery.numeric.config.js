@@ -1,7 +1,6 @@
 $(function(){
 	$('.numeric').numeric();
 	$('.numeric').keydown(function(e){
-		
 		if(e.keyCode == 38)
 		{
 			if(IsNumeric($(this).val()))
@@ -26,8 +25,6 @@ $(function(){
 				$(this).val(new_number);
 			}
 		}
-		
-		
 	});
 });
 function IsNumeric(input)

@@ -596,7 +596,6 @@
 			}
 
 			_set_navigation();
-	
 			if (currentOpts.hideOnContentClick)	{
 				content.bind('click', $.fancybox.close);
 			}

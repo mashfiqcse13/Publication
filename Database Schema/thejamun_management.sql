@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.8
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 01, 2015 at 07:47 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Host: localhost
+-- Generation Time: Oct 04, 2015 at 09:18 AM
+-- Server version: 5.5.42-37.1
+-- PHP Version: 5.4.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `publication`
+-- Database: `thejamun_management`
 --
 
 -- --------------------------------------------------------
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 CREATE TABLE IF NOT EXISTS `login_attempts` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `ip_address` varchar(40) COLLATE utf8_bin NOT NULL,
   `login` varchar(50) COLLATE utf8_bin NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -54,20 +54,21 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 --
 
 CREATE TABLE IF NOT EXISTS `pub_books` (
-`book_ID` int(11) NOT NULL,
+  `book_ID` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `price` int(11) NOT NULL,
-  `catagory` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  `catagory` varchar(20) NOT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_books`
 --
 
-INSERT INTO `pub_books` (`book_ID`, `name`, `price`, `catagory`) VALUES
-(5, 'Bangla First Paper', 120, 'Bangla'),
-(6, 'English 1st Paper', 130, 'English'),
-(7, 'ICT 1st paper', 140, 'ICT');
+INSERT INTO `pub_books` (`book_ID`, `name`, `catagory`, `price`) VALUES
+(1, 'Bangla 2nd Paper', 'Bangla', 120),
+(2, 'English 2nd Paper', 'English', 140),
+(3, 'ICT', 'ICT', 150),
+(4, 'Bangla 2nd paper', 'Bangla', 120);
 
 -- --------------------------------------------------------
 
@@ -76,24 +77,22 @@ INSERT INTO `pub_books` (`book_ID`, `name`, `price`, `catagory`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `pub_contacts` (
-`contact_ID` int(11) NOT NULL,
+  `contact_ID` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `district` varchar(20) NOT NULL,
   `contact_type` varchar(20) NOT NULL COMMENT '1 = Printing Press , 2 = Binding Store , 3 = Sales Store',
   `address` text NOT NULL,
   `phone` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_contacts`
 --
 
 INSERT INTO `pub_contacts` (`contact_ID`, `name`, `district`, `contact_type`, `address`, `phone`) VALUES
-(1, 'TNT Books', 'Borishal', 'Binding Store', '', '01523232343'),
-(2, 'Friends IT', 'Dhaka', 'Buyer', '', '01712121243'),
-(3, 'AB Printers', 'Dhaka', 'Printing Press', '', '01212121212'),
-(4, 'AB Binders', 'Dhaka', 'Binding Store', '', '01313131313'),
-(5, 'AB Book Store', 'Dhaka', 'Sales Store', '', '014141414');
+(1, 'AB Printes', 'Dhaka', 'Printing Press', '<p>\r\n	119/34 BanglaBazer</p>\r\n', '01712122323'),
+(2, 'Book paradise', '', 'Sales Store', '', '01134567889'),
+(3, 'Haq''s Library', 'Savar', 'Buyer', '', '');
 
 -- --------------------------------------------------------
 
@@ -102,7 +101,7 @@ INSERT INTO `pub_contacts` (`contact_ID`, `name`, `district`, `contact_type`, `a
 --
 
 CREATE TABLE IF NOT EXISTS `pub_memos` (
-`memo_ID` int(11) NOT NULL COMMENT 'Memo ID',
+  `memo_ID` int(11) NOT NULL COMMENT 'Memo ID',
   `memo_serial` varchar(50) NOT NULL COMMENT 'unique id auto genetated',
   `contact_ID` int(11) NOT NULL COMMENT 'Memo Issued to',
   `issue_date` datetime NOT NULL COMMENT 'Memo auto generated timestamp',
@@ -113,23 +112,14 @@ CREATE TABLE IF NOT EXISTS `pub_memos` (
   `cash` int(11) NOT NULL COMMENT 'Paid by cash',
   `bank_pay` int(11) NOT NULL COMMENT 'Paid by band check',
   `due` int(11) NOT NULL COMMENT 'Due'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_memos`
 --
 
 INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `sub_total`, `discount`, `dues_unpaid`, `total`, `cash`, `bank_pay`, `due`) VALUES
-(1, '55ef0c7984272', 2, '2015-01-10 00:00:00', 1170, 20, 1270, 2420, 0, 0, 2420),
-(2, '55f03560cf684', 2, '2015-01-10 00:00:00', 120, 0, 0, 1270, 0, 0, 1270),
-(3, '55f53e76c0f56', 2, '2015-01-10 00:00:00', 120, 60, 0, 9020, 0, 0, 0),
-(5, '560d106822521', 2, '2015-01-10 00:00:00', 120, 0, 0, 2720, 0, 0, 0),
-(6, '560d1edbad9de', 2, '2015-01-10 00:00:00', 120, 0, 0, 5440, 0, 0, 0),
-(7, '560d2e96e97b5', 2, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 0),
-(9, '560d67101ac12', 3, '2015-01-10 00:00:00', 120, 0, 0, 120, 120, 0, 0),
-(10, '560d6852e4fa9', 3, '2015-01-10 00:00:00', 130, 0, 0, 130, 0, 0, 130),
-(11, '560d68afe5211', 1, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 120),
-(12, '560d691ec124f', 1, '2015-01-10 00:00:00', 120, 0, 0, 120, 0, 0, 120);
+(1, '56112b7d15f34', 3, '2015-10-04 00:00:00', 6600, 600, 0, 6000, 4000, 1000, 1000);
 
 -- --------------------------------------------------------
 
@@ -138,52 +128,23 @@ INSERT INTO `pub_memos` (`memo_ID`, `memo_serial`, `contact_ID`, `issue_date`, `
 --
 
 CREATE TABLE IF NOT EXISTS `pub_memos_selected_books` (
-`selection_ID` int(11) NOT NULL,
+  `selection_ID` int(11) NOT NULL,
   `memo_ID` int(11) NOT NULL,
   `book_ID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price_per_book` int(11) NOT NULL,
   `total` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pub_memos_selected_books`
 --
 
 INSERT INTO `pub_memos_selected_books` (`selection_ID`, `memo_ID`, `book_ID`, `quantity`, `price_per_book`, `total`) VALUES
-(1, 1, 5, 4, 120, 480),
-(2, 1, 6, 2, 130, 260),
-(3, 1, 7, 4, 140, 560),
-(4, 2, 5, 1, 120, 120),
-(5, 2, 6, 3, 130, 390),
-(6, 2, 7, 2, 140, 280),
-(7, 3, 5, 2, 120, 240),
-(8, 3, 6, 2, 130, 260),
-(9, 3, 7, 4, 140, 560),
-(10, 5, 5, 1, 120, 120),
-(11, 5, 6, 0, 130, 0),
-(12, 5, 7, 0, 140, 0),
-(13, 6, 5, 0, 120, 0),
-(14, 6, 6, 0, 130, 0),
-(15, 6, 7, 0, 140, 0),
-(16, 7, 5, 1, 120, 120),
-(17, 7, 6, 0, 130, 0),
-(18, 7, 7, 0, 140, 0),
-(19, 8, 5, 1, 120, 120),
-(20, 8, 6, 0, 130, 0),
-(21, 8, 7, 0, 140, 0),
-(22, 9, 5, 1, 120, 120),
-(23, 9, 6, 0, 130, 0),
-(24, 9, 7, 0, 140, 0),
-(25, 10, 5, 0, 120, 0),
-(26, 10, 6, 1, 130, 130),
-(27, 10, 7, 0, 140, 0),
-(28, 11, 5, 1, 120, 120),
-(29, 11, 6, 0, 130, 0),
-(30, 11, 7, 0, 140, 0),
-(31, 12, 5, 1, 120, 120),
-(32, 12, 6, 0, 130, 0),
-(33, 12, 7, 0, 140, 0);
+(1, 1, 1, 20, 120, 2400),
+(2, 1, 2, 30, 140, 4200),
+(3, 1, 3, 0, 150, 0),
+(4, 1, 4, 0, 120, 0);
 
 -- --------------------------------------------------------
 
@@ -192,22 +153,25 @@ INSERT INTO `pub_memos_selected_books` (`selection_ID`, `memo_ID`, `book_ID`, `q
 --
 
 CREATE TABLE IF NOT EXISTS `pub_stock` (
-`stock_id` int(10) NOT NULL,
+  `stock_id` int(10) NOT NULL,
   `book_ID` varchar(100) NOT NULL,
   `printing_press_ID` int(11) NOT NULL,
-  `printing_press_Quantity` int(11) NOT NULL,
-  `binding_store_ID` int(11) NOT NULL,
-  `binding_store_Quantity` int(11) NOT NULL,
-  `sales_store_ID` int(11) NOT NULL,
-  `sales_store_Quantity` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `printing_press_Quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `pub_stock`
+-- Table structure for table `pub_stock_m`
 --
 
-INSERT INTO `pub_stock` (`stock_id`, `book_ID`, `printing_press_ID`, `printing_press_Quantity`, `binding_store_ID`, `binding_store_Quantity`, `sales_store_ID`, `sales_store_Quantity`) VALUES
-(2, '5', 3, 56, 4, 4, 5, 130);
+CREATE TABLE IF NOT EXISTS `pub_stock_m` (
+  `id` int(11) NOT NULL,
+  `stock_ID` int(10) NOT NULL,
+  `book_ID` int(10) NOT NULL,
+  `contact_ID` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `amount` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -216,7 +180,7 @@ INSERT INTO `pub_stock` (`stock_id`, `book_ID`, `printing_press_ID`, `printing_p
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_bin NOT NULL,
   `password` varchar(255) COLLATE utf8_bin NOT NULL,
   `email` varchar(100) COLLATE utf8_bin NOT NULL,
@@ -238,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`) VALUES
-(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '::1', '2015-10-01 17:41:42', '2015-08-14 17:35:42', '2015-10-01 15:41:42');
+(1, 'admin', '$2a$08$NmXFqDOBe/c2E.xj8gMnvOwj8TRvUswb0NZUDdan1alvYsTlgGUHa', 'mashfiqnahid@gmail.com', 1, 0, NULL, NULL, NULL, NULL, 'ee715b40d32a11e440be813a06f4be13', '103.62.140.2', '2015-10-04 09:14:14', '2015-08-14 17:35:42', '2015-10-04 14:14:14');
 
 -- --------------------------------------------------------
 
@@ -261,7 +225,11 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
 INSERT INTO `user_autologin` (`key_id`, `user_id`, `user_agent`, `last_ip`, `last_login`) VALUES
 ('0c4a62def3836eda17fb78ad7747109f', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '::1', '2015-10-01 09:09:36'),
 ('34c6d5a1beb4003137abe89d23605324', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36', '::1', '2015-09-04 16:22:51'),
-('b9ab15faccf44f729ab59b260783f1fa', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36', '::1', '2015-09-30 10:32:29');
+('858e146d6f4b192e93d9ca220b05c7a4', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', '103.62.140.2', '2015-10-01 18:09:55'),
+('9f5cd72351f7461035e249fd7d1afcef', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36', '103.62.140.2', '2015-10-01 18:08:13'),
+('b9ab15faccf44f729ab59b260783f1fa', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36', '::1', '2015-09-30 10:32:29'),
+('c2618c055763c049cfe782d6c79b1601', 1, 'Mozilla/5.0 (Linux; Android 4.4.2; Primo_X3 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.94 Mobile Safari/537.36', '103.25.248.235', '2015-10-04 06:21:18'),
+('c63fe11f54c6f79bdc99b26a4d57e608', 1, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0', '103.62.140.2', '2015-10-04 05:05:20');
 
 -- --------------------------------------------------------
 
@@ -270,7 +238,7 @@ INSERT INTO `user_autologin` (`key_id`, `user_id`, `user_agent`, `last_ip`, `las
 --
 
 CREATE TABLE IF NOT EXISTS `user_profiles` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `country` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `website` varchar(255) COLLATE utf8_bin DEFAULT NULL
@@ -284,61 +252,67 @@ CREATE TABLE IF NOT EXISTS `user_profiles` (
 -- Indexes for table `ci_sessions`
 --
 ALTER TABLE `ci_sessions`
- ADD PRIMARY KEY (`session_id`);
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pub_books`
 --
 ALTER TABLE `pub_books`
- ADD PRIMARY KEY (`book_ID`);
+  ADD PRIMARY KEY (`book_ID`);
 
 --
 -- Indexes for table `pub_contacts`
 --
 ALTER TABLE `pub_contacts`
- ADD PRIMARY KEY (`contact_ID`);
+  ADD PRIMARY KEY (`contact_ID`);
 
 --
 -- Indexes for table `pub_memos`
 --
 ALTER TABLE `pub_memos`
- ADD PRIMARY KEY (`memo_ID`);
+  ADD PRIMARY KEY (`memo_ID`);
 
 --
 -- Indexes for table `pub_memos_selected_books`
 --
 ALTER TABLE `pub_memos_selected_books`
- ADD PRIMARY KEY (`selection_ID`);
+  ADD PRIMARY KEY (`selection_ID`);
 
 --
 -- Indexes for table `pub_stock`
 --
 ALTER TABLE `pub_stock`
- ADD PRIMARY KEY (`stock_id`);
+  ADD PRIMARY KEY (`stock_id`);
+
+--
+-- Indexes for table `pub_stock_m`
+--
+ALTER TABLE `pub_stock_m`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_autologin`
 --
 ALTER TABLE `user_autologin`
- ADD PRIMARY KEY (`key_id`,`user_id`);
+  ADD PRIMARY KEY (`key_id`,`user_id`);
 
 --
 -- Indexes for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -348,42 +322,47 @@ ALTER TABLE `user_profiles`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `pub_books`
 --
 ALTER TABLE `pub_books`
-MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pub_contacts`
 --
 ALTER TABLE `pub_contacts`
-MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pub_memos`
 --
 ALTER TABLE `pub_memos`
-MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=13;
+  MODIFY `memo_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Memo ID',AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `pub_memos_selected_books`
 --
 ALTER TABLE `pub_memos_selected_books`
-MODIFY `selection_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `selection_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pub_stock`
 --
 ALTER TABLE `pub_stock`
-MODIFY `stock_id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `stock_id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pub_stock_m`
+--
+ALTER TABLE `pub_stock_m`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

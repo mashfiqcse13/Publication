@@ -27,36 +27,29 @@
 	$lang['form_update_loading'] 			= 'Yükleniyor, değişliklikler uygulanıyor.';
 	$lang['update_success_message'] 		= 'Veri başarıyla güncellendi.';	
 	$lang['form_go_back_to_list'] 			= 'Listeye geri dön';
-	
 	$lang['form_add'] 				= 'Ekle';
 	$lang['insert_success_message'] 		= 'Veri başarıyla veritabanına kaydedildi.';
 	$lang['form_or']				= 'veya';
 	$lang['form_save'] 				= 'Kaydet';
 	$lang['form_insert_loading'] 			= 'Yükleniyor, veri kaydediliyor...';
-	
 	$lang['form_upload_a_file'] 			= 'Dosya yükle';
 	$lang['form_upload_delete'] 			= 'sil';
 	$lang['form_button_clear'] 			= 'Temizle';	
-	
 	$lang['delete_success_message'] 		= 'Kayıt başarıyla veritabanından kaldırıldı.';
 	$lang['delete_error_message'] 			= 'Kayıt veritabanından kaldırılamadı.';
-	
 	/* Javascript messages */
 	$lang['alert_add_form']				= 'Girmiş olduğunuz veri eklenemedi veya kaydedilemedi.\\nListeye geri dönmek istediğinizden emin misiniz?';
 	$lang['alert_edit_form']			= 'Yapmış olduğunuz değişliklikler eklenemedi veya kaydedilemedi.\\nListeye geri dönmek istediğinizden emin misiniz?';
 	$lang['alert_delete']				= 'Bu kaydı silmek istediğinizden emin misiniz?';
-	
 	$lang['insert_error']				= 'Ekleme esnasında bir hata oluştu.';
 	$lang['update_error']				= 'Kaydetme esnasında bir hata oluştu.';
 
 	/* Translated by Murat Akdeniz - www.webfikirleri.com */
-	
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']			= 'Seç: {field_display_as}';	
 	$lang['list_record']				= 'Kayıt';
 	$lang['form_inactive']				= 'Pasif';
 	$lang['form_active']				= 'Aktif';
-	
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']			= 'Kaydet ve Listeye Geri Dön';
 	$lang['form_update_and_go_back']		= 'Güncelle ve Listeye Geri Dön';
@@ -66,7 +59,6 @@
 	$lang['string_progress'] 			= "İlerleme: ";
 	$lang['error_on_uploading'] 			= "Dosya yüklenirken bir hata oluştu.";
 	$lang['message_prompt_delete_file'] 		= "Bu dosyayı silmek istediğinize emin misiniz?";
-	
 	$lang['error_max_number_of_files']		= "Her seferinde sadece bir dosya yükleyebilirsiniz.";
 	$lang['error_accept_file_types']		= "Bu uzantıda dosya yüklemeye yetkiniz yoktur.";
 	$lang['error_max_file_size']			= "Yüklemeye çalıştığınız dosya maksimum dosya boyutu olan {max_file_size} üzerindedir.";

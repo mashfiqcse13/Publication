@@ -10,7 +10,6 @@
  */
 (function($) {
     'use strict';
-
     // Color object
     var Color = function(val) {
         this.value = {
@@ -28,7 +27,6 @@
             }
         }
     };
-
     Color.prototype = {
         constructor: Color,
         _sanitizeNumber: function(val) {
@@ -91,7 +89,6 @@
             s = s || this.value.s;
             v = v || this.value.b;
             a = a || this.value.a;
-
             var r, g, b, i, f, p, q, t;
             if (h && s === undefined && v === undefined) {
                 s = h.s, v = h.v, h = h.h;
@@ -137,7 +134,6 @@
             s = s || this.value.s;
             b = b || this.value.b;
             a = a || this.value.a;
-
             var H = h,
                 L = (2 - s) * b,
                 S = s * b;
@@ -161,7 +157,6 @@
             r /= 255;
             g /= 255;
             b /= 255;
-
             var H, S, V, C;
             V = Math.max(r, g, b);
             C = V - Math.min(r, g, b);
@@ -205,13 +200,10 @@
             } else {
                 q = l + s - (l * s);
             }
-
             var p = 2 * l - q;
-
             var tr = h + (1 / 3);
             var tg = h;
             var tb = h - (1 / 3);
-
             var r = Math.round(this.HueToRGB(p, q, tr) * 255);
             var g = Math.round(this.HueToRGB(p, q, tg) * 255);
             var b = Math.round(this.HueToRGB(p, q, tb) * 255);
@@ -502,15 +494,12 @@
                 "yellow": "#ffff00",
                 "yellowgreen": "#9acd32"
             };
-
             if (typeof colors[name.toLowerCase()] !== 'undefined') {
                 return colors[name.toLowerCase()];
             }
             return false;
         }
     };
-
-
     var defaults = {
         horizontal: false, // horizontal mode layout ?
         inline: false, //forces to show the colorpicker as an inline element
@@ -566,7 +555,6 @@
             '<div class="colorpicker-color"><div /></div>' +
             '</div>'
     };
-
     var Colorpicker = function(element, options) {
         this.element = $(element).addClass('colorpicker-element');
         this.options = $.extend({}, defaults, this.element.data(), options);
@@ -577,7 +565,6 @@
         }
         this.container = (this.options.container === true) ? this.element : this.options.container;
         this.container = (this.container !== false) ? $(this.container) : false;
-
         // Is the element an input? Should we search inside for any input?
         this.input = this.element.is('input') ? this.element : (this.options.input ?
             this.element.find(this.options.input) : false);
@@ -587,7 +574,6 @@
         // Set HSB color
         this.color = new Color(this.options.color !== false ? this.options.color : this.getValue());
         this.format = this.options.format !== false ? this.options.format : this.color.origFormat;
-
         // Setup picker
         this.picker = $(this.options.template);
         if (this.options.inline) {
@@ -603,7 +589,6 @@
         }
         this.picker.on('mousedown.colorpicker', $.proxy(this.mousedown, this));
         this.picker.appendTo(this.container ? this.container : $('body'));
-
         // Bind events
         if (this.input !== false) {
             this.input.on({
@@ -620,29 +605,23 @@
                 });
             }
         }
-
         if (this.component !== false) {
             this.component.on({
                 'click.colorpicker': $.proxy(this.show, this)
             });
         }
-
         if ((this.input === false) && (this.component === false)) {
             this.element.on({
                 'click.colorpicker': $.proxy(this.show, this)
             });
         }
         this.update();
-
         $($.proxy(function() {
             this.element.trigger('create');
         }, this));
     };
-
     Colorpicker.version = '2.0.0-beta';
-
     Colorpicker.Color = Color;
-
     Colorpicker.prototype = {
         constructor: Colorpicker,
         destroy: function() {
@@ -768,7 +747,6 @@
             }
             this.updatePicker();
             return val;
-
         },
         setValue: function(val) { // set color manually
             this.color = new Color(val);
@@ -824,9 +802,7 @@
         mousedown: function(e) {
             e.stopPropagation();
             e.preventDefault();
-
             var target = $(e.target);
-
             //detect the slider and set the limits and callbacks
             var zone = target.closest('div');
             var sl = this.options.horizontal ? this.options.slidersHorz : this.options.sliders;
@@ -883,7 +859,6 @@
                 this.color[this.currentSlider.callTop].call(this.color, top / 100);
             }
             this.update(true);
-
             this.element.trigger({
                 type: 'changeColor',
                 color: this.color
@@ -926,9 +901,7 @@
             });
         }
     };
-
     $.colorpicker = Colorpicker;
-
     $.fn.colorpicker = function(option) {
         return this.each(function() {
             var $this = $(this),
@@ -943,7 +916,5 @@
             }
         });
     };
-
     $.fn.colorpicker.constructor = Colorpicker;
-
 })(window.jQuery);

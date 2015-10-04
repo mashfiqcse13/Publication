@@ -1,7 +1,5 @@
 //AdminLTE mixins
 //===============
-
-
 //Changes the color and the hovering properties of the navbar
 .navbar-variant(@color; @font-color: rgba(255, 255, 255, 0.8); @hover-color: #f6f6f6; @hover-bg: rgba(0, 0, 0, 0.1)) {
   background-color: @color;
@@ -9,7 +7,6 @@
   .nav > li > a {
     color: @font-color;
   }
-
   .nav > li > a:hover,
     .nav > li > a:active,
     .nav > li > a:focus,
@@ -19,7 +16,6 @@
     background: @hover-bg;
     color: @hover-color;
   }
-
   //Add color to the sidebar toggle button
   .sidebar-toggle {
     color: @font-color;
@@ -29,18 +25,15 @@
     }
   }
 }
-
 //Logo color variation
 .logo-variant(@bg-color; @color: #fff; @border-bottom-color: transparent; @border-bottom-width: 0px) {
   background-color: @bg-color;
   color: @color;
   border-bottom: @border-bottom-width solid @border-bottom-color;
-
   &:hover {
     background-color: darken(@bg-color, 1%);
   }
 }
-
 //Box solid color variantion creator
 .box-solid-variant(@color; @text-color: #fff) {
   border: 1px solid @color;
@@ -54,7 +47,6 @@
     }
   }
 }
-
 //Direct Chat Variant
 .direct-chat-variant(@bg-color; @color: #fff) {
   .right > .direct-chat-text {
@@ -67,7 +59,6 @@
     }
   }
 }
-
 //border radius creator
 .border-radius(@radius) {
   border-radius: @radius;
@@ -79,7 +70,6 @@
   border-bottom-right-radius: @bottom-right;
   border-bottom-left-radius: @bottom-left;
 }
-
 //Gradient background
 .gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
   background: @color;
@@ -98,10 +88,8 @@
     @start);
   filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
 }
-
 //Added 2.1.0
 //Skins Mixins
-
 //Dark Sidebar Mixin
 .skin-dark-sidebar(@link-hover-border-color) {
   // Sidebar background color (Both .wrapper and .left-side are responsible for sidebar bg color)
@@ -186,7 +174,6 @@
     }
   }
 }
-
 //Light Sidebar Mixin
 .skin-light-sidebar(@icon-active-color) {
   // Sidebar background color (Both .wrapper and .left-side are responsible for sidebar bg color)
@@ -226,7 +213,6 @@
       background: @sidebar-light-hover-bg;      
     }
     &:hover > a {
-
     }
     &.active {      
       border-left-color: @icon-active-color;

@@ -3,14 +3,11 @@ v2.2.0:
 - Bug fixes
 - Added support for [Select2](https://select2.github.io/)
 - Updated ChartJS
-
 v2.1.2:
 - Added explicit BoxWidget activation function issue #450
 - Crushed some bugs
-
 v2.1.1:
 - Fix version error
-
 v2.1.0:
 - Update Ion Icons
 - Added right sidebar ```.control-sidebar```
@@ -23,13 +20,10 @@ v2.1.0:
 - Added light control sidebar skin
 - Added expand on hover option for sidebar mini
 - Added fixed control sidebar layout
-
 v2.0.5:
 - Fixed issue #288
-
 v2.0.4:
 - Fixed bower.json to pick up newest release.
-
 v2.0.3:
 - Bug fixes
 - Fixed extra page when printing issue #264
@@ -37,16 +31,13 @@ v2.0.3:
 - Created print.less file (this makes it easier if you want to create a seperate CSS file for printing)
 - Fixed sidebar stretching issue #275
 - Fixed checkbox out of bounds issue in WYSIHTML5 editor.
-
 v2.0.2:
 - Solved issue with hidden arrow in select inputs.
-
 v2.0.1:
 - Updated README.md
 - Fixed versioning issue in CSS, LESS, and JS
 - Updated box-shadow for boxes
 - Updated docs
-
 v2.0.0
 - Major layout bug fixes
 - Change in layout mark up

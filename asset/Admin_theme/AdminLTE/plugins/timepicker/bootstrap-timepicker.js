@@ -52,7 +52,6 @@
 			  'click.timepicker': $.proxy(this.showWidget, this)
 			});		
 		}
-		
         this.$element.on({
           'focus.timepicker': $.proxy(this.highlightUnit, this),
           'click.timepicker': $.proxy(this.highlightUnit, this),

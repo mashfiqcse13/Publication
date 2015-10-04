@@ -1,20 +1,16 @@
 'use strict';
 $(function () {
-
   /* ChartJS
    * -------
    * Here we will create a few charts using ChartJS
    */
-
   //-----------------------
   //- MONTHLY SALES CHART -
   //-----------------------
-
   // Get context with jQuery - using jQuery's .get() method.
   var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
   // This will get the first returned node in the jQuery collection.
   var salesChart = new Chart(salesChartCanvas);
-
   var salesChartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -40,7 +36,6 @@ $(function () {
       }
     ]
   };
-
   var salesChartOptions = {
     //Boolean - If we should show the scale at all
     showScale: true,
@@ -79,14 +74,11 @@ $(function () {
     //Boolean - whether to make the chart responsive to window resizing
     responsive: true
   };
-
   //Create the line chart
   salesChart.Line(salesChartData, salesChartOptions);
-
   //---------------------------
   //- END MONTHLY SALES CHART -
   //---------------------------
-
   //-------------
   //- PIE CHART -
   //-------------
@@ -163,7 +155,6 @@ $(function () {
   //-----------------
   //- END PIE CHART -
   //-----------------
-
   /* jVector Maps
    * ------------
    * Create a world map with markers
@@ -227,12 +218,10 @@ $(function () {
       {latLng: [0.33, 6.73], name: 'São Tomé and Príncipe'}
     ]
   });
-
   /* SPARKLINE CHARTS
    * ----------------
    * Create a inline charts with spark line
    */
-
   //-----------------
   //- SPARKLINE BAR -
   //-----------------
@@ -244,7 +233,6 @@ $(function () {
       barColor: $this.data('color')
     });
   });
-
   //-----------------
   //- SPARKLINE PIE -
   //-----------------
@@ -256,7 +244,6 @@ $(function () {
       sliceColors: $this.data('color')
     });
   });
-
   //------------------
   //- SPARKLINE LINE -
   //------------------

@@ -2,12 +2,10 @@
 //
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
-
 .button-variant(@color; @background; @border) {
   color: @color;
   background-color: @background;
   border-color: @border;
-
   &:hover,
   &:focus,
   &.focus,
@@ -36,13 +34,11 @@
           border-color: @border;
     }
   }
-
   .badge {
     color: @background;
     background-color: @color;
   }
 }
-
 // Button sizes
 .button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
   padding: @padding-vertical @padding-horizontal;

@@ -5,7 +5,6 @@
  * This file is for demo purposes only.
  */
 (function ($, AdminLTE) {
-
   /**
    * List of all the available skins
    * 
@@ -25,27 +24,22 @@
     "skin-purple-light",
     "skin-green-light"
   ];
-
   //Create the new tab
   var tab_pane = $("<div />", {
     "id": "control-sidebar-theme-demo-options-tab",
     "class": "tab-pane active"
   });
-
   //Create the tab button
   var tab_button = $("<li />", {"class": "active"})
           .html("<a href='#control-sidebar-theme-demo-options-tab' data-toggle='tab'>"
                   + "<i class='fa fa-wrench'></i>"
                   + "</a>");
-
   //Add the tab button to the right sidebar tabs
   $("[href='#control-sidebar-home-tab']")
           .parent()
           .before(tab_button);
-
   //Create the menu
   var demo_settings = $("<div />");
-
   //Layout options
   demo_settings.append(
           "<h4 class='control-sidebar-heading'>"
@@ -101,7 +95,6 @@
           + "</div>"
           );
   var skins_list = $("<ul />", {"class": 'list-unstyled clearfix'});
-
   //Dark sidebar skins
   var skin_blue =
           $("<li />", {style: "float:left; width: 33.33333%; padding: 5px;"})
@@ -151,7 +144,6 @@
                   + "</a>"
                   + "<p class='text-center no-margin'>Yellow</p>");
   skins_list.append(skin_yellow);
-
   //Light sidebar skins
   var skin_blue_light =
           $("<li />", {style: "float:left; width: 33.33333%; padding: 5px;"})
@@ -201,15 +193,11 @@
                   + "</a>"
                   + "<p class='text-center no-margin' style='font-size: 12px;'>Yellow Light</p>");
   skins_list.append(skin_yellow_light);
-
   demo_settings.append("<h4 class='control-sidebar-heading'>Skins</h4>");
   demo_settings.append(skins_list);
-
   tab_pane.append(demo_settings);
   $("#control-sidebar-home-tab").after(tab_pane);
-
   setup();
-
   /**
    * Toggles layout classes
    * 
@@ -228,7 +216,6 @@
       AdminLTE.layout.activate();
     }
   }
-
   /**
    * Replaces the old skin with the new skin
    * @param String cls the new skin class
@@ -238,12 +225,10 @@
     $.each(my_skins, function (i) {
       $("body").removeClass(my_skins[i]);
     });
-
     $("body").addClass(cls);
     store('skin', cls);
     return false;
   }
-
   /**
    * Store a new settings in the browser
    * 
@@ -258,7 +243,6 @@
       alert('Please use a modern browser to properly view this template!');
     }
   }
-
   /**
    * Get a prestored setting
    * 
@@ -272,7 +256,6 @@
       alert('Please use a modern browser to properly view this template!');
     }
   }
-
   /**
    * Retrieve default settings and apply them to the template
    * 
@@ -282,18 +265,15 @@
     var tmp = get('skin');
     if (tmp && $.inArray(tmp, my_skins))
       change_skin(tmp);
-
     //Add the change skin listener
     $("[data-skin]").on('click', function (e) {
       e.preventDefault();
       change_skin($(this).data('skin'));
     });
-
     //Add the layout manager
     $("[data-layout]").on('click', function () {
       change_layout($(this).data('layout'));
     });
-
     $("[data-controlsidebar]").on('click', function () {
       change_layout($(this).data('controlsidebar'));
       var slide = !AdminLTE.options.controlSidebarOptions.slide;
@@ -301,7 +281,6 @@
       if (!slide)
         $('.control-sidebar').removeClass('control-sidebar-open');
     });
-
     $("[data-sidebarskin='toggle']").on('click', function () {
       var sidebar = $(".control-sidebar");
       if (sidebar.hasClass("control-sidebar-dark")) {

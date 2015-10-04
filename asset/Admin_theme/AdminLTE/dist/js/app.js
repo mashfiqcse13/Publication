@@ -10,14 +10,11 @@
  * @version 2.1.2
  * @license MIT <http://opensource.org/licenses/MIT>
  */
-
 'use strict';
-
 //Make sure jQuery has been loaded before app.js
 if (typeof jQuery === "undefined") {
   throw new Error("AdminLTE requires jQuery");
 }
-
 /* AdminLTE
  *
  * @type Object
@@ -28,7 +25,6 @@ if (typeof jQuery === "undefined") {
  *              way to organize our code.
  */
 $.AdminLTE = {};
-
 /* --------------------
  * - AdminLTE Options -
  * --------------------
@@ -131,7 +127,6 @@ $.AdminLTE.options = {
     lg: 1200
   }
 };
-
 /* ------------------
  * - Implementation -
  * ------------------
@@ -146,24 +141,18 @@ $(function () {
             $.AdminLTE.options,
             AdminLTEOptions);
   }
-
   //Easy access to options
   var o = $.AdminLTE.options;
-
   //Set up the object
   _init();
-
   //Activate the layout maker
   $.AdminLTE.layout.activate();
-
   //Enable sidebar tree view controls
   $.AdminLTE.tree('.sidebar');
-
   //Enable control sidebar
   if (o.enableControlSidebar) {
     $.AdminLTE.controlSidebar.activate();
   }
-
   //Add slimscroll to navbar dropdown
   if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
     $(".navbar .menu").slimscroll({
@@ -172,29 +161,24 @@ $(function () {
       size: o.navbarMenuSlimscrollWidth
     }).css("width", "100%");
   }
-
   //Activate sidebar push menu
   if (o.sidebarPushMenu) {
     $.AdminLTE.pushMenu.activate(o.sidebarToggleSelector);
   }
-
   //Activate Bootstrap tooltip
   if (o.enableBSToppltip) {
     $('body').tooltip({
       selector: o.BSTooltipSelector
     });
   }
-
   //Activate box widget
   if (o.enableBoxWidget) {
     $.AdminLTE.boxWidget.activate();
   }
-
   //Activate fast click
   if (o.enableFastclick && typeof FastClick != 'undefined') {
     FastClick.attach(document.body);
   }
-
   //Activate direct chat widget
   if (o.directChat.enable) {
     $(o.directChat.contactToggleSelector).on('click', function () {
@@ -202,7 +186,6 @@ $(function () {
       box.toggleClass('direct-chat-contacts-open');
     });
   }
-
   /*
    * INITIALIZE BUTTON TOGGLE
    * ------------------------
@@ -214,17 +197,14 @@ $(function () {
       $(this).addClass("active");
       e.preventDefault();
     });
-
   });
 });
-
 /* ----------------------------------
  * - Initialize the AdminLTE Object -
  * ----------------------------------
  * All AdminLTE functions are implemented below.
  */
 function _init() {
-
   /* Layout
    * ======
    * Fixes the layout height in case min-height fails.
@@ -262,14 +242,12 @@ function _init() {
           $(".content-wrapper, .right-side").css('min-height', sidebar_height);
           postSetWidth = sidebar_height;
         }
-
         //Fix for the control sidebar height
         var controlSidebar = $($.AdminLTE.options.controlSidebarOptions.selector);
         if (typeof controlSidebar !== "undefined") {
           if (controlSidebar.height() > postSetWidth)
             $(".content-wrapper, .right-side").css('min-height', controlSidebar.height());
         }
-
       }
     },
     fixSidebar: function () {
@@ -297,7 +275,6 @@ function _init() {
       }
     }
   };
-
   /* PushMenu()
    * ==========
    * Adds the push menu functionality to the sidebar.
@@ -309,11 +286,9 @@ function _init() {
     activate: function (toggleBtn) {
       //Get the screen sizes
       var screenSizes = $.AdminLTE.options.screenSizes;
-
       //Enable sidebar toggle
       $(toggleBtn).on('click', function (e) {
         e.preventDefault();
-
         //Enable sidebar push menu
         if ($(window).width() > (screenSizes.sm - 1)) {
           if ($("body").hasClass('sidebar-collapse')) {
@@ -331,14 +306,12 @@ function _init() {
           }
         }
       });
-
       $(".content-wrapper").click(function () {
         //Enable hide menu when clicking on the content-wrapper on small screens
         if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
           $("body").removeClass('sidebar-open');
         }
       });
-
       //Enable expand on hover for sidebar mini
       if ($.AdminLTE.options.sidebarExpandOnHover
               || ($('body').hasClass('fixed')
@@ -373,7 +346,6 @@ function _init() {
       }
     }
   };
-
   /* Tree()
    * ======
    * Converts the sidebar into a multilevel
@@ -389,7 +361,6 @@ function _init() {
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();
-
       //Check if the next element is a menu and is visible
       if ((checkElement.is('.treeview-menu')) && (checkElement.is(':visible'))) {
         //Close the menu
@@ -410,7 +381,6 @@ function _init() {
         ul.removeClass('menu-open');
         //Get the parent li
         var parent_li = $this.parent("li");
-
         //Open the target menu and add the menu-open class
         checkElement.slideDown(animationSpeed, function () {
           //Add the class active to the parent li
@@ -427,7 +397,6 @@ function _init() {
       }
     });
   };
-
   /* ControlSidebar
    * ==============
    * Adds functionality to the right sidebar
@@ -446,7 +415,6 @@ function _init() {
       var sidebar = $(o.selector);
       //The toggle button
       var btn = $(o.toggleBtnSelector);
-
       //Listen to the click event
       btn.on('click', function (e) {
         e.preventDefault();
@@ -459,11 +427,9 @@ function _init() {
           _this.close(sidebar, o.slide);
         }
       });
-
       //If the body has a boxed layout, fix the sidebar bg position
       var bg = $(".control-sidebar-bg");
       _this._fix(bg);
-
       //If the body has a fixed layout, make the control sidebar fixed      
       if ($('body').hasClass('fixed')) {
         _this._fixForFixed(sidebar);
@@ -521,7 +487,6 @@ function _init() {
       $(".content-wrapper, .right-side").css('min-height', sidebar.height());
     }
   };
-
   /* BoxWidget
    * =========
    * BoxWidget is a plugin to handle collapsing and
@@ -545,7 +510,6 @@ function _init() {
         e.preventDefault();
         _this.collapse($(this));
       });
-
       //Listen for remove event triggers
       $(_box).find(_this.selectors.remove).on('click', function (e) {
         e.preventDefault();
@@ -585,13 +549,11 @@ function _init() {
     }
   };
 }
-
 /* ------------------
  * - Custom Plugins -
  * ------------------
  * All custom plugins are defined below.
  */
-
 /*
  * BOX REFRESH BUTTON
  * ------------------
@@ -602,9 +564,7 @@ function _init() {
  * @usage $("#box-widget").boxRefresh( options );
  */
 (function ($) {
-
   $.fn.boxRefresh = function (options) {
-
     // Render options
     var settings = $.extend({
       //Refresh button selector
@@ -616,12 +576,9 @@ function _init() {
       }, //Right after the button has been clicked
       onLoadDone: function (box) {
       } //When the source has been loaded
-
     }, options);
-
     //The overlay
     var overlay = $('<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>');
-
     return this.each(function () {
       //if a source is specified
       if (settings.source === "") {
@@ -634,38 +591,29 @@ function _init() {
       var box = $(this);
       //the button
       var rBtn = box.find(settings.trigger).first();
-
       //On trigger click
       rBtn.on('click', function (e) {
         e.preventDefault();
         //Add loading overlay
         start(box);
-
         //Perform ajax call
         box.find(".box-body").load(settings.source, function () {
           done(box);
         });
       });
     });
-
     function start(box) {
       //Add overlay and loading img
       box.append(overlay);
-
       settings.onLoadStart.call(box);
     }
-
     function done(box) {
       //Remove overlay and loading img
       box.find(overlay).remove();
-
       settings.onLoadDone.call(box);
     }
-
   };
-
 })(jQuery);
-
 /*
  * EXPLICIT BOX ACTIVATION
  * -----------------------
@@ -676,13 +624,10 @@ function _init() {
  * @usage $("#box-widget").activateBox();
  */
 (function ($) {
-
   $.fn.activateBox = function () {
     $.AdminLTE.boxWidget.activate(this);
   };
-
 })(jQuery);
-
 /*
  * TODO LIST CUSTOM PLUGIN
  * -----------------------
@@ -692,7 +637,6 @@ function _init() {
  * @usage $("#todo-widget").todolist( options );
  */
 (function ($) {
-
   $.fn.todolist = function (options) {
     // Render options
     var settings = $.extend({
@@ -703,16 +647,13 @@ function _init() {
       onUncheck: function (ele) {
       }
     }, options);
-
     return this.each(function () {
-
       if (typeof $.fn.iCheck != 'undefined') {
         $('input', this).on('ifChecked', function (event) {
           var ele = $(this).parents("li").first();
           ele.toggleClass("done");
           settings.onCheck.call(ele);
         });
-
         $('input', this).on('ifUnchecked', function (event) {
           var ele = $(this).parents("li").first();
           ele.toggleClass("done");

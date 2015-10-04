@@ -1,11 +1,9 @@
 	$(function() {
 		var tinymce_path = default_texteditor_path+'/tiny_mce/';
-	
 		var tinymce_options = {
 
 				// Location of TinyMCE script
 				script_url : tinymce_path +"tiny_mce.js",
-				
 				// General options
 				theme : "advanced",
 				plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
@@ -36,12 +34,8 @@
 					staffid : "991234"
 				}
 			};
-		
 		$('textarea.texteditor').tinymce(tinymce_options);
-		
 		var minimal_tinymce_options = $.extend({}, tinymce_options);
 		minimal_tinymce_options.theme = "simple";
-		
 		$('textarea.mini-texteditor').tinymce(minimal_tinymce_options);
-		
 	});

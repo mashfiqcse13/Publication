@@ -287,7 +287,6 @@ table.dataTable tbody th.dt-body-nowrap,
 table.dataTable tbody td.dt-body-nowrap {
   white-space: nowrap;
 }
-
 table.dataTable,
 table.dataTable th,
 table.dataTable td {
@@ -295,7 +294,6 @@ table.dataTable td {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
-
 /*
  * Control feature layout
  */
@@ -400,7 +398,6 @@ table.dataTable td {
   clear: both;
   height: 0;
 }
-
 @media screen and (max-width: 767px) {
   .dataTables_wrapper .dataTables_length,
   .dataTables_wrapper .dataTables_filter,

@@ -2,7 +2,6 @@
  * Component: Progress Bar
  * -----------------------
  */
-
 //General CSS
 .progress, 
 .progress > .progress-bar {
@@ -11,7 +10,6 @@
     .border-radius(@progress-bar-border-radius);
   }
 }
-
 /* size variation */
 .progress.sm,
 .progress-sm {
@@ -46,13 +44,11 @@
     position: absolute;
     bottom: 0;
   }
-
   //Sizes
   &.sm,
   &.progress-sm{
     width: 20px;
   }
-
   &.xs,
   &.progress-xs{
     width: 10px;
@@ -62,7 +58,6 @@
     width: 3px;
   }
 }
-
 //Progress Groups
 .progress-group {
   .progress-text {
@@ -72,14 +67,12 @@
     float: right;
   }
 }
-
 /* Remove margins from progress bars when put in a table */
 .table {
   tr > td .progress {
     margin: 0;
   }
 }
-
 // Variations
 // -------------------------
 .progress-bar-light-blue,
@@ -90,17 +83,14 @@
 .progress-bar-success {
   .progress-bar-variant(@green);
 }
-
 .progress-bar-aqua,
 .progress-bar-info {
   .progress-bar-variant(@aqua);
 }
-
 .progress-bar-yellow,
 .progress-bar-warning {
   .progress-bar-variant(@yellow);
 }
-
 .progress-bar-red,
 .progress-bar-danger {
   .progress-bar-variant(@red);

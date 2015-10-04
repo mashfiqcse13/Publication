@@ -2,7 +2,6 @@
  * Component: Small Box
  * --------------------
  */
-
 .small-box {
   .border-radius(2px);
   position: relative;
@@ -13,7 +12,6 @@
   > .inner {
     padding: 10px;
   }
-
   > .small-box-footer {
     position: relative;
     text-align: center;
@@ -29,16 +27,13 @@
       background: rgba(0,0,0,0.15);
     }
   }
-
   h3 {
     font-size: 38px;
     font-weight: bold;
     margin: 0 0 10px 0;
     white-space: nowrap;
     padding: 0;
-
   }
-
   p {
     font-size: 15px;
     > small {
@@ -48,11 +43,9 @@
       margin-top: 5px;
     }
   }
-
   h3, p {
     z-index: 5px;
   }
-
   // the icon
   .icon {
     .transition(all @transition-speed linear);
@@ -63,7 +56,6 @@
     font-size: 90px;
     color: rgba(0, 0, 0, 0.15);
   }
-
   // Small box hover state
   &:hover {
     text-decoration: none;
@@ -74,7 +66,6 @@
     }
   }
 }
-
 @media (max-width: @screen-xs-max) {
   // No need for icons on very small devices
   .small-box {

@@ -222,9 +222,9 @@ class Admin extends CI_Controller {
 
         $crud->set_relation('printing_press_ID', 'pub_contacts', 'name');
 
-        $crud->set_relation('binding_store_ID', 'pub_contacts', 'name');
-
-        $crud->set_relation('sales_store_ID', 'pub_contacts', 'name');
+//        $crud->set_relation('binding_store_ID', 'pub_contacts', 'name');
+//
+//        $crud->set_relation('sales_store_ID', 'pub_contacts', 'name');
 
         $output = $crud->render();
 
@@ -241,6 +241,27 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_stock', $data);
 
     }
+    
+        function manage_stocks_test() {
+            
+            $this->load->model('Stock_manages');
+//
+//       
+//
+//       
+        $data['test']= $this->Stock_manages->book_details_by_id();
+ 
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+
+        $data['base_url'] = base_url();
+
+        $data['Title'] = 'Manage Book';
+ 
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_stock_add', $data);
+
+    }
+
     
 
 

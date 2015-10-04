@@ -26,7 +26,6 @@ $(function(){
 		var uploader_element = $(this);
 		var delete_url 	= $('#delete_url_'+unique_id).attr('href');
 		eval("var file_upload_info = upload_info_"+unique_id+"");
-		
 	    $(this).fileupload({
 	        dataType: 'json',
 	        url: uploader_url,
@@ -41,13 +40,10 @@ $(function(){
 	        limitMultiFileUploads: 1,
 	        maxFileSize: file_upload_info.max_file_size,			
 			send: function (e, data) {						
-				
 				var errors = '';
-				
 			    if (data.files.length > 1) {
 			    	errors += error_max_number_of_files + "\n" ;
 			    }
-				
 	            $.each(data.files,function(index, file){
 		            if (!(data.acceptFileTypes.test(file.type) || data.acceptFileTypes.test(file.name))) {
 		            	errors += error_accept_file_types + "\n";
@@ -65,7 +61,6 @@ $(function(){
 	            	alert(errors);
 	            	return false;
 	            }
-				
 			    return true;
 			},
 	        done: function (e, data) {
@@ -77,7 +72,6 @@ $(function(){
 		            	$('#upload-state-message-'+unique_id).html('');
 		            	$("input[rel="+uploader_element.attr('name')+"]").val(file.name);
 		            	var file_name = file.name;
-						
 		            	var is_image = (file_name.substr(-4) == '.jpg'  
 		            						|| file_name.substr(-4) == '.png' 
 		            						|| file_name.substr(-5) == '.jpeg' 
@@ -152,7 +146,6 @@ $(function(){
 					}
 				});
 			}
-			
 			return false;
 		});		    
 	    

@@ -16,7 +16,6 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="../../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,7 +25,6 @@
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
-
       <header class="main-header">
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
@@ -334,7 +332,6 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -349,7 +346,6 @@
             <li class="active">ChartJS</li>
           </ol>
         </section>
-
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -369,7 +365,6 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
               <!-- DONUT CHART -->
               <div class="box box-danger">
                 <div class="box-header with-border">
@@ -383,7 +378,6 @@
                     <canvas id="pieChart" height="250"></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
             </div><!-- /.col (LEFT) -->
             <div class="col-md-6">
               <!-- LINE CHART -->
@@ -401,7 +395,6 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
               <!-- BAR CHART -->
               <div class="box box-success">
                 <div class="box-header with-border">
@@ -417,10 +410,8 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
             </div><!-- /.col (RIGHT) -->
           </div><!-- /.row -->
-
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
@@ -429,7 +420,6 @@
         </div>
         <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
       </footer>
-
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -480,7 +470,6 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
-
             <h3 class="control-sidebar-heading">Tasks Progress</h3>
             <ul class="control-sidebar-menu">
               <li>
@@ -528,7 +517,6 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
-
           </div><!-- /.tab-pane -->
           <!-- Stats tab content -->
           <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
@@ -545,7 +533,6 @@
                   Some information about this general settings option
                 </p>
               </div><!-- /.form-group -->
-
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Allow mail redirect
@@ -555,7 +542,6 @@
                   Other sets of options are available
                 </p>
               </div><!-- /.form-group -->
-
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Expose author name in posts
@@ -565,23 +551,19 @@
                   Allow the user to show his name in blog posts
                 </p>
               </div><!-- /.form-group -->
-
               <h3 class="control-sidebar-heading">Chat Settings</h3>
-
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Show me as online
                   <input type="checkbox" class="pull-right" checked />
                 </label>
               </div><!-- /.form-group -->
-
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Turn off notifications
                   <input type="checkbox" class="pull-right" />
                 </label>
               </div><!-- /.form-group -->
-
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Delete chat history
@@ -596,7 +578,6 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-
     <!-- jQuery 2.1.4 -->
     <script src="../../plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
     <!-- Bootstrap 3.3.2 JS -->
@@ -616,16 +597,13 @@
          * -------
          * Here we will create a few charts using ChartJS
          */
-
         //--------------
         //- AREA CHART -
         //--------------
-
         // Get context with jQuery - using jQuery's .get() method.
         var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
         var areaChart = new Chart(areaChartCanvas);
-
         var areaChartData = {
           labels: ["January", "February", "March", "April", "May", "June", "July"],
           datasets: [
@@ -651,7 +629,6 @@
             }
           ]
         };
-
         var areaChartOptions = {
           //Boolean - If we should show the scale at all
           showScale: true,
@@ -690,10 +667,8 @@
           //Boolean - whether to make the chart responsive to window resizing
           responsive: true
         };
-
         //Create the line chart
         areaChart.Line(areaChartData, areaChartOptions);
-
         //-------------
         //- LINE CHART -
         //--------------
@@ -702,7 +677,6 @@
         var lineChartOptions = areaChartOptions;
         lineChartOptions.datasetFill = false;
         lineChart.Line(areaChartData, lineChartOptions);
-
         //-------------
         //- PIE CHART -
         //-------------
@@ -774,7 +748,6 @@
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
         pieChart.Doughnut(PieData, pieOptions);
-
         //-------------
         //- BAR CHART -
         //-------------
@@ -811,7 +784,6 @@
           responsive: true,
           maintainAspectRatio: false
         };
-
         barChartOptions.datasetFill = false;
         barChart.Bar(barChartData, barChartOptions);
       });

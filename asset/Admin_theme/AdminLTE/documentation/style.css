@@ -18,12 +18,10 @@
   font-size: 16px;
   z-index: 500;
 }
-
 #components > h3 {
   font-size: 25px;  
   color: #000;
 }
-
 #components > h4 {
   font-size: 20px;
   color: #000;
@@ -61,7 +59,6 @@ ul {
   visibility: hidden; 
   z-index: -10;
 }
-
 .lead {
   font-size: 18px;
   font-weight: 400;
@@ -95,7 +92,6 @@ ul {
 pre {
   border: none;
 }
-
 .sidebar {
   margin-top: 0;
   padding-top: 0!important;
@@ -128,64 +124,49 @@ pre.prettyprint > code {
   width: auto;
   overflow: auto!important;
 }
-
 .pln {
   color: #111111;
 }
-
 @media screen {
   .str {
     color: #739200;
   }
-
   .kwd {
     color: #739200;
   }
-
   .com {
     color: #999999;
   }
-
   .typ {
     color: #ff0055;
   }
-
   .lit {
     color: #538192;
   }
-
   .pun {
     color: #111111;
   }
-
   .opn {
     color: #111111;
   }
-
   .clo {
     color: #111111;
   }
-
   .tag {
     color: #111111;
   }
-
   .atn {
     color: #739200;
   }
-
   .atv {
     color: #ff0055;
   }
-
   .dec {
     color: #111111;
   }
-
   .var {
     color: #111111;
   }
-
   .fun {
     color: #538192;
   }
@@ -194,39 +175,31 @@ pre.prettyprint > code {
   .str {
     color: #006600;
   }
-
   .kwd {
     color: #006;
     font-weight: bold;
   }
-
   .com {
     color: #600;
     font-style: italic;
   }
-
   .typ {
     color: #404;
     font-weight: bold;
   }
-
   .lit {
     color: #004444;
   }
-
   .pun, .opn, .clo {
     color: #444400;
   }
-
   .tag {
     color: #006;
     font-weight: bold;
   }
-
   .atn {
     color: #440044;
   }
-
   .atv {
     color: #006600;
   }
@@ -236,7 +209,6 @@ ol.linenums {
   margin-top: 0;
   margin-bottom: 0;
 }
-
 /* IE indents via margin-left */
 li.L0,
 li.L1,
@@ -250,7 +222,6 @@ li.L8,
 li.L9 {
   /* */
 }
-
 /* Alternate shading for lines */
 li.L1,
 li.L3,

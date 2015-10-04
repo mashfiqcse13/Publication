@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>iframe</title>
-
 		<style>
 			html,body{
 				margin: 0;
@@ -37,7 +36,6 @@
 		<script>
 		(function(window) {
 			// Constructor Manager PostMessage
-
 			var ManagerPostMessage = function() {
 				var _init = function(handler) {
 					if (document.addEventListener) {
@@ -53,7 +51,6 @@
 						id = o.id || '',
 						target = o.target || window,
 						message = o.message || { 'id': id };
-
 					if (type.call(o.message) == "[object Object]") {
 						(o.message['id']) ? o.message['id'] : o.message['id'] = id;
 						message = o.message;
@@ -61,22 +58,17 @@
                     str = JSON.stringify(message, fn);
 					target.postMessage(str, '*');
 				};
-
 				return {
 					init: _init,
 					send: _sendCmd
 				};
 			};
-
 			var manageMessageTmp = new ManagerPostMessage;
-
-
 				var appString = (function(){
 					var spell = parent.CKEDITOR.config.wsc.DefaultParams.scriptPath;
 					var serverUrl = parent.CKEDITOR.config.wsc.DefaultParams.serviceHost;
 					return serverUrl + spell;
 				})();
-
 				function loadScript(src, callback) {
 				    var scriptTag = document.createElement("script");
 				   		scriptTag.type = "text/javascript";

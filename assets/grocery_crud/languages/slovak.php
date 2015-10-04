@@ -26,34 +26,27 @@
 	$lang['form_update_loading'] 	= 'Nahrávanie, aktualizácia zmien...';
 	$lang['update_success_message'] = 'Vaše dáta boli úspešne aktualizované.';	
 	$lang['form_go_back_to_list'] 	= 'Vrátiť sa na zoznam';
-	
 	$lang['form_add'] 				= 'Pridať';
 	$lang['insert_success_message'] = 'Vaše dáta boli úspešne uložené do databázy.';
 	$lang['form_or']				= 'alebo';
 	$lang['form_save'] 				= 'Uložiť';
 	$lang['form_insert_loading'] 	= 'nahrávanie, ukladanie dát...';
-	
 	$lang['form_upload_a_file'] 	= 'Nahrať súbor';
 	$lang['form_upload_delete'] 	= 'vymazať';
 	$lang['form_button_clear'] 		= 'Vyčistiť';	
-	
 	$lang['delete_success_message'] = 'Vaše dáta boli úspešne zmazané z databázy.';
 	$lang['delete_error_message'] 	= 'Vaše dáta neboli zmazané z databázy.';
-	
 	/* Javascript messages */
 	$lang['alert_add_form']			= 'Vložené dáta nemusia byť uložené.\\nUrčite sa chcete vrátiť na zoznam?';
 	$lang['alert_edit_form']		= 'Zmeny nemusia byť uložené.\\nUrčite sa chcete vrátiť na zoznam?';
 	$lang['alert_delete']			= 'Určite chcete zmazať tento záznam?';
-	
 	$lang['insert_error']			= 'Chyba pri vkladaní.';
 	$lang['update_error']			= 'Chyba pri ukladaní.';
-	
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Vybrať {field_display_as}';
 	$lang['list_record']			= 'Záznam';
 	$lang['form_inactive']			= 'neaktívny';
 	$lang['form_active']			= 'aktívny';
-	
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Uložiť a vrátiť sa na zoznam';
 	$lang['form_update_and_go_back']= 'Upraviť a vrátiť sa na zoznam';
@@ -63,12 +56,10 @@
 	$lang['string_progress'] 		= "Stav: ";
 	$lang['error_on_uploading'] 	= "Pri nahrávaní súboru nastala chyba.";
 	$lang['message_prompt_delete_file'] 	= "Ste si istý/á, že chcete vymazať tento súbor?";
-	
 	$lang['error_max_number_of_files'] 	= "Naraz môžete nahrať iba 1 súbor.";
 	$lang['error_accept_file_types'] 	= "Tento typ súboru nie je povolený.";
 	$lang['error_max_file_size'] 		= "Nahrávaný súbor prekročil povolenú veľkosť ({max_file_size})";
 	$lang['error_min_file_size'] 		= "Nie je možné nahrať prázdny súbor.";
-	
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= 'Exportovať';
 	$lang['list_print'] 	= 'Tlačiť';

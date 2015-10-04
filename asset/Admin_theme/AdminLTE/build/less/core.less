@@ -9,7 +9,6 @@ body {
     height: 100%;
   }
 }
-
 body {  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,7 +17,6 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
-
 /* Layout */
 .wrapper {
   .clearfix();
@@ -33,11 +31,9 @@ body {
     position: relative;
   }
 }
-
 .layout-boxed {
   background: url('@{boxed-layout-bg-image-path}') repeat fixed;
 }
-
 /*
  * Content Wrapper - contains the main content
  * ```.right-side has been deprecated as of v2.0.0 in favor of .content-wrapper  ```
@@ -71,7 +67,6 @@ body {
     }
   }
 }
-
 .content-wrapper, 
 .right-side {
   min-height: 100%;
@@ -84,7 +79,6 @@ body {
   color: #444;
   border-top: 1px solid @gray;
 }
-
 /* Fixed layout */
 .fixed {
   .main-header,
@@ -110,14 +104,12 @@ body {
     }
   }
 }
-
 /* Content */
 .content {
   min-height: 250px;
   padding: 15px;
   .container-fixed(@grid-gutter-width);
 }
-
 /* H1 - H6 font */
 h1,
 h2,
@@ -144,12 +136,10 @@ a:focus {
   text-decoration: none;
   color: @link-hover-color;
 }
-
 /* Page Header */
 .page-header {
   margin: 10px 0 20px 0;
   font-size: 22px;
-
   > small {
     color: #666;
     display: block;

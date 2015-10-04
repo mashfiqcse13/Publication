@@ -1,6 +1,5 @@
 'use strict';
 module.exports = function (grunt) {
-
   grunt.initConfig({
     watch: {
       // If any .less file changes in directory "build/less/" run the "less"-task.
@@ -97,9 +96,7 @@ module.exports = function (grunt) {
       }
     }
   });
-
   // Load all grunt tasks
-
   // LESS Compiler
   grunt.loadNpmTasks('grunt-contrib-less');
   // Watch File Changes
@@ -110,7 +107,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-includes');
   // Convert CSS to RTL
   grunt.loadNpmTasks('grunt-cssjanus');
-
   // The default task (running "grunt" in console) is "watch"
   grunt.registerTask('default', ['watch']);
 };
