@@ -48,17 +48,17 @@ class Stock_manages extends CI_Model {
 
 //        setting table settings
 
-        $this->table->set_heading('#', 'Book Name', 'Press', 'Quantity', 'Action');
+        $this->table->set_heading('#', 'Book Name', 'Store Name', 'Quantity', 'Action');
         //Setting table template
         $tmpl = array(
             'table_open' => '<table class="table table-bordered">',
-            'heading_cell_start' => '<th class="success">'
+            'heading_cell_start' => '<th class="bg-primary" style="vertical-align: top;">'
         );
         $this->table->set_template($tmpl);
         $table_rows = $db_rows;
         foreach ($db_rows as $index => $row) {
             $table_rows[$index]['stock_id'] = $index + 1;
-            $table_rows[$index]['action'] = '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-stock-id="' . $index . '" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button>';
+            $table_rows[$index]['action'] = '<button id="buttonTransfer" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-StockId="' . $db_rows[$index]['stock_id'] . '" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button>';
         }
 
         return $this->table->generate($table_rows);

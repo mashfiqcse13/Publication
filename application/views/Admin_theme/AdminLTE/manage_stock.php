@@ -29,32 +29,14 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-4">
+
                                 <table class="table table-bordered">
                                     <tr>
                                         <th colspan="5" class="text-center info">Printing press</th>
                                     </tr>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>book Name</th>
-                                        <th>Press</th>
-                                        <th>Amount</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
                                 </table>
+
+                                <?= $printing_table ?>
                             </div>
                             <div class="col-md-4">
                                 <table class="table table-bordered">
@@ -62,28 +44,9 @@
 
                                         <th colspan="5" class="text-center warning">Binding Store</th>
                                     </tr>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>book Name</th>
-                                        <th>Store Name</th>
-                                        <th>Amount</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
                                 </table>
+
+                                <?= $binding_table ?>
                             </div>
                             <div class="col-md-4">
                                 <table class="table table-bordered">
@@ -91,28 +54,9 @@
 
                                         <th colspan="5" class="text-center success">Sales Store</th>
                                     </tr>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>book Name</th>
-                                        <th>Sales Name</th>
-                                        <th>Amount</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Book 1</td>
-                                        <td></td>
-                                        <td>500</td>
-                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span></button></td>
-                                    </tr>
                                 </table>
+
+                                <?= $store_table ?>
                             </div>
                         </div>
 
@@ -133,6 +77,7 @@
                     </div>
                     <div class="modal-body">
                         <form role="form-inline">
+                            <input type="hidden" name="stock_id_from" />
                             <div class="box-body">
                                 <div class="row">
 
@@ -182,6 +127,15 @@
                 </div>
             </div>
         </div>
+        <script>
+            jQuery('[data-StockId]').click(function () {
+                var stock_id = $(this).attr('data-StockId');
+                //console.log(stock_id);
+                jQuery('[name="stock_id_from"]').val(stock_id);
+            });
+        </script>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+
 <?php include_once 'footer.php'; ?>
