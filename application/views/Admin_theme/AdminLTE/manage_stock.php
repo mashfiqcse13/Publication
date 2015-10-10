@@ -76,7 +76,7 @@
                         <h4 class="modal-title" id="myModalLabel">Transfer Book Amount</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form-inline">
+                        <form role="form-inline" action="<?= site_url('admin/test'); ?>" method="post">
                             <input type="hidden" name="stock_id_from" />
                             <div class="box-body">
                                 <div class="row">
@@ -84,17 +84,18 @@
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>To:</label>
-                                            <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+<!--                                            <select class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                                 <option selected="selected">Select</option>
                                                 <option>Printing Press</option>
                                                 <option>Binding</option>
                                                 <option>Sales</option>
 
-                                            </select>
+                                            </select>-->
+                                            <?= $transfer_from_contact_dropdown ?>
                                         </div>
                                         <div class="form-group">
                                             <label for="amount">Amount:</label>
-                                            <input type="text" id="amount" class="form-control">
+                                            <input type="number" id="amount" min='1' max="10" name='Quantity' class="form-control">
                                         </div>
 
 
