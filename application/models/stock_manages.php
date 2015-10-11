@@ -143,11 +143,12 @@ class Stock_manages extends CI_Model {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');
         $this->db->from($db_tables['pub_contacts']);
+        $this->db->where_in('contact_type', array('Printing Press', 'Binding Store', 'Sales Store'));
         $this->db->order_by('contact_type', "desc");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         foreach ($db_rows as $index => $row) {
-            $options[$row['contact_ID']] = $row['name'] . "('{$row['contact_type']}')";
+            $options[$row['contact_ID']] = $row['name'] . " &nbsp; &nbsp; ({$row['contact_type']})";
         }
 
         return form_dropdown('to_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
