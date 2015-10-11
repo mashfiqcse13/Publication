@@ -4,7 +4,6 @@ http://github.com/RobinHerbots/jquery.inputmask
 Copyright (c) 2010 - 2014 Robin Herbots
 Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
 Version: 0.0.0
-
 Optional extensions on the jquery.inputmask base
 */
 (function ($) {
@@ -71,7 +70,6 @@ Optional extensions on the jquery.inputmask base
                     var maxxYear = maxYearPrefix + maxYearPostfix;
                     return minyear > maxxYear ? minyear : maxxYear;
                 }
-
                 return currentyear;
             },
             onKeyUp: function (e, buffer, opts) {
@@ -171,14 +169,12 @@ Optional extensions on the jquery.inputmask base
                         var isValid = opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
                         if (!strict && !isValid) {
                             var yearPrefix = opts.determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs + "0").toString().slice(0, 1);
-
                             isValid = opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
                             if (isValid) {
                                 buffer[pos++] = yearPrefix[0];
                                 return { "pos": pos };
                             }
                             yearPrefix = opts.determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs + "0").toString().slice(0, 2);
-
                             isValid = opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
                             if (isValid) {
                                 buffer[pos++] = yearPrefix[0];
@@ -195,13 +191,11 @@ Optional extensions on the jquery.inputmask base
                         var isValid = opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
                         if (!strict && !isValid) {
                             var yearPrefix = opts.determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs).toString().slice(0, 2);
-
                             isValid = opts.isInYearRange(chrs[0] + yearPrefix[1] + chrs[1], opts.yearrange.minyear, opts.yearrange.maxyear);
                             if (isValid) {
                                 buffer[pos++] = yearPrefix[1];
                                 return { "pos": pos };
                             }
-
                             yearPrefix = opts.determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs).toString().slice(0, 2);
                             if (opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear)) {
                                 var dayMonthValue = buffer.join('').substr(0, 6);
@@ -284,7 +278,6 @@ Optional extensions on the jquery.inputmask base
                                 }
                             }
                         }
-
                         //check leap yeap
                         if (isValid) {
                             var dayMonthValue = buffer.join('').substr(4, 4) + chrs;
@@ -301,7 +294,6 @@ Optional extensions on the jquery.inputmask base
                                 else return false;
                             }
                         }
-
                         return isValid;
                     },
                     cardinality: 2,
@@ -393,11 +385,8 @@ Optional extensions on the jquery.inputmask base
                                 }
                             }
                         }
-
                         if (isValid && opts.hourFormat !== "24" && opts.regex.hrs24.test(chrs)) {
-
                             var tmp = parseInt(chrs, 10);
-
                             if (tmp == 24) {
                                 buffer[pos + 5] = "a";
                                 buffer[pos + 6] = "m";
@@ -405,9 +394,7 @@ Optional extensions on the jquery.inputmask base
                                 buffer[pos + 5] = "p";
                                 buffer[pos + 6] = "m";
                             }
-
                             tmp = tmp - 12;
-
                             if (tmp < 10) {
                                 buffer[pos] = tmp.toString();
                                 buffer[pos - 1] = "0";
@@ -415,10 +402,8 @@ Optional extensions on the jquery.inputmask base
                                 buffer[pos] = tmp.toString().charAt(1);
                                 buffer[pos - 1] = tmp.toString().charAt(0);
                             }
-
                             return { "pos": pos, "c": buffer[pos] };
                         }
-
                         return isValid;
                     },
                     cardinality: 2,

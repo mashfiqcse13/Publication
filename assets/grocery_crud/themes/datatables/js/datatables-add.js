@@ -11,18 +11,14 @@ $(function(){
 				$('#main-table-box').slideUp("slow");
 			}
 		});
-
 		var save_and_close = false;
 		var reload_datagrid = function () {
 			$('.refresh-data').trigger('click');
 		};
-
 		$('#save-and-go-back-button').click(function(){
 			save_and_close = true;
-
 			$('#crudForm').trigger('submit');
 		});
-
 		$('#crudForm').submit(function(){
 			$(this).ajaxSubmit({
 				url: validation_url,
@@ -54,15 +50,11 @@ $(function(){
 											success_message(data.success_message);
 											reload_datagrid();
 										}
-
 										return true;
 									}
-
 									$('.field_error').removeClass('field_error');
-
 									form_success_message(data.success_message);
 									reload_datagrid();
-
 									clearForm();
 								}
 								else
@@ -79,34 +71,27 @@ $(function(){
 						$.each(data.error_fields, function(index,value){
 							$('#crudForm input[name='+index+']').addClass('field_error');
 						});
-
 					}
 				}
 			});
 			return false;
 		});
-
 		$('.ui-input-button').button();
 		$('.gotoListButton').button({
             icons: {
             	primary: "ui-icon-triangle-1-w"
         	}
 		});
-
 		if( $('#cancel-button').closest('.ui-dialog').length === 0 ) {
-
 			$('#cancel-button').click(function(){
 				if( confirm( message_alert_add_form ) )
 				{
 					window.location = list_url;
 				}
-
 				return false;
 			});
-
 		}
 	});
-
 	function clearForm()
 	{
 		$('#crudForm').find(':input').each(function() {
@@ -123,20 +108,16 @@ $(function(){
 	                this.checked = false;
 	        }
 	    });
-
 		/* Clear upload inputs  */
 		$('.open-file,.gc-file-upload,.hidden-upload-input').each(function(){
 			$(this).val('');
 		});
-
 		$('.upload-success-url').hide();
 		$('.fileinput-button').fadeIn("normal");
 		/* -------------------- */
-
 		$('.remove-all').each(function(){
 			$(this).trigger('click');
 		});
-
 		$('.chosen-multiple-select, .chosen-select, .ajax-chosen-select').each(function(){
 			$(this).trigger("liszt:updated");
 		});

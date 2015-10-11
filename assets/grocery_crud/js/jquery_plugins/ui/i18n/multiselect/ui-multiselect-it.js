@@ -3,7 +3,6 @@
  *
  * @locale it, it-IT
  */
-
 $.extend($.ui.multiselect, {
 	locale: {
 		addAll:'Aggiungi tutti',

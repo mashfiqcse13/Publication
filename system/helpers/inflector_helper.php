@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Inflector Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/inflector_helper.html
  */
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('singular'))
 {
 	/**
@@ -62,12 +59,10 @@ if ( ! function_exists('singular'))
 	function singular($str)
 	{
 		$result = strval($str);
-
 		if ( ! is_countable($result))
 		{
 			return $result;
 		}
-
 		$singular_rules = array(
 			'/(matr)ices$/'		=> '\1ix',
 			'/(vert|ind)ices$/'	=> '\1ex',
@@ -97,7 +92,6 @@ if ( ! function_exists('singular'))
 			'/(n)ews$/'		=> '\1\2ews',
 			'/([^us])s$/'		=> '\1'
 		);
-
 		foreach ($singular_rules as $rule => $replacement)
 		{
 			if (preg_match($rule, $result))
@@ -106,13 +100,10 @@ if ( ! function_exists('singular'))
 				break;
 			}
 		}
-
 		return $result;
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('plural'))
 {
 	/**
@@ -126,12 +117,10 @@ if ( ! function_exists('plural'))
 	function plural($str)
 	{
 		$result = strval($str);
-
 		if ( ! is_countable($result))
 		{
 			return $result;
 		}
-
 		$plural_rules = array(
 			'/^(ox)$/'                 => '\1\2en',     // ox
 			'/([m|l])ouse$/'           => '\1ice',      // mouse, louse
@@ -153,7 +142,6 @@ if ( ! function_exists('plural'))
 			'/s$/'                     => 's',          // no change (compatibility)
 			'/$/'                      => 's',
 		);
-
 		foreach ($plural_rules as $rule => $replacement)
 		{
 			if (preg_match($rule, $result))
@@ -162,13 +150,10 @@ if ( ! function_exists('plural'))
 				break;
 			}
 		}
-
 		return $result;
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('camelize'))
 {
 	/**
@@ -184,9 +169,7 @@ if ( ! function_exists('camelize'))
 		return strtolower($str[0]).substr(str_replace(' ', '', ucwords(preg_replace('/[\s_]+/', ' ', $str))), 1);
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('underscore'))
 {
 	/**
@@ -202,9 +185,7 @@ if ( ! function_exists('underscore'))
 		return preg_replace('/[\s]+/', '_', trim(MB_ENABLED ? mb_strtolower($str) : strtolower($str)));
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('humanize'))
 {
 	/**
@@ -221,9 +202,7 @@ if ( ! function_exists('humanize'))
 		return ucwords(preg_replace('/['.$separator.']+/', ' ', trim(MB_ENABLED ? mb_strtolower($str) : strtolower($str))));
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('is_countable'))
 {
 	/**

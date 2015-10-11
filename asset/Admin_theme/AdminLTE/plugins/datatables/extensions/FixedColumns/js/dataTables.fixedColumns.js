@@ -19,9 +19,7 @@
  *
  * For details please refer to: http://www.datatables.net
  */
-
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
 /**
@@ -111,7 +109,6 @@ var FixedColumns = function ( dt, init ) {
 		 */
 		"aiInnerWidths": []
 	};
-
 	/**
 	 * DOM elements used by the class instance
 	 * @namespace
@@ -252,7 +249,6 @@ var FixedColumns = function ( dt, init ) {
 		this._fnConstruct( init );
 	}
 };
-
 FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -274,7 +270,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 	{
 		this._fnDraw( true );
 	},
-
 	/**
 	 * Recalculate the resizes of the 3x3 grid that FixedColumns uses for display of the table.
 	 * This is useful if you update the width of the table container. Note that FixedColumns will
@@ -296,7 +291,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		this._fnGridLayout();
 		this.fnUpdate();
 	},
-
 	/**
 	 * Mark a row such that it's height should be recalculated when using 'semiauto' row
 	 * height matching. This function will have no effect when 'none' or 'auto' row height
@@ -320,7 +314,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		delete nTr._DTTC_iHeight;
 		nTr.style.height = 'auto';
 	},
-
 	/**
 	 * Set the height of a given row - provides cross browser compatibility
 	 *  @param   {Node} nTarget TR element that should have it's height recalculated
@@ -339,7 +332,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 	{
 		nTarget.style.height = iHeight+"px";
 	},
-
 	/**
 	 * Get data index information about a row or cell in the table body.
 	 * This function is functionally identical to fnGetPosition in DataTables,
@@ -382,7 +374,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 			}
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -518,7 +509,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		this._fnGridLayout();
 		this.s.dt.oInstance.fnDraw(false);
 	},
-
 	/**
 	 * Calculate the column widths for the grid layout
 	 *  @returns {void}
@@ -570,7 +560,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		this.s.iLeftWidth = iLeftWidth;
 		this.s.iRightWidth = iRightWidth;
 	},
-
 	/**
 	 * Set up the DOM for the fixed column. The way the layout works is to create a 1x3 grid
 	 * for the left column, the DataTable (for which we just reuse the scrolling element DataTable
@@ -651,7 +640,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 			}
 		}
 	},
-
 	/**
 	 * Style and position the grid used for the FixedColumns layout
 	 *  @returns {void}
@@ -717,7 +705,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 			oGrid.right.footBlock.style.display = oOverflow.y ? 'block' : 'none';
 		}
 	},
-
 	/**
 	 * Get information about the DataTable's scrolling state - specifically if the table is scrolling
 	 * on either the x or y axis, and also the scrollbar width.
@@ -744,7 +731,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 		return out;
 	},
-
 	/**
 	 * Clone and position the fixed columns
 	 *  @returns {void}
@@ -767,7 +753,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 			"rightClone": this.dom.clone.right
 		} );
 	},
-
 	/**
 	 * Clone the right columns
 	 *  @returns {void}
@@ -789,7 +774,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 		this._fnClone( this.dom.clone.right, this.dom.grid.right, aiColumns, bAll );
 	},
-
 	/**
 	 * Clone the left columns
 	 *  @returns {void}
@@ -811,7 +795,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 		this._fnClone( this.dom.clone.left, this.dom.grid.left, aiColumns, bAll );
 	},
-
 	/**
 	 * Make a copy of the layout object for a header or footer element from DataTables. Note that
 	 * this method will clone the nodes in the layout object.
@@ -858,7 +841,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 		return aReturn;
 	},
-
 	/**
 	 * Clone the DataTable nodes and place them in the DOM (sized correctly)
 	 *  @returns {void}
@@ -1072,7 +1054,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 			} );
 		}
 	},
-
 	/**
 	 * From a given table node (THEAD etc), get a list of TR direct child elements
 	 *  @param   {Node} nIn Table element to search for TR elements (THEAD, TBODY or TFOOT element)
@@ -1091,7 +1072,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 		return aOut;
 	},
-
 	/**
 	 * Equalise the heights of the rows in a given table node in a cross browser way
 	 *  @returns {void}
@@ -1133,7 +1113,6 @@ FixedColumns.prototype = /** @lends FixedColumns.prototype */{
 		}
 	}
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Statics
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1207,8 +1186,6 @@ FixedColumns.defaults = /** @lends FixedColumns.defaults */{
 	 */
 	"sHeightMatch": "semiauto"
 };
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1220,11 +1197,9 @@ FixedColumns.defaults = /** @lends FixedColumns.defaults */{
  *  @static
  */
 FixedColumns.version = "3.0.4";
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Fired events (for documentation)
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 /**
  * Event fired whenever FixedColumns redraws the fixed columns (i.e. clones the table elements from the main DataTable). This will occur whenever the DataTable that the FixedColumns instance is attached does its own draw.
  * @name FixedColumns#draw.dtfc
@@ -1234,14 +1209,11 @@ FixedColumns.version = "3.0.4";
  * @param {object} o.leftClone Instance's object dom.clone.left for easy reference. This object contains references to the left fixed clumn column's nodes
  * @param {object} o.rightClone Instance's object dom.clone.right for easy reference. This object contains references to the right fixed clumn column's nodes
  */
-
 // Make FixedColumns accessible from the DataTables instance
 $.fn.dataTable.FixedColumns = FixedColumns;
 $.fn.DataTable.FixedColumns = FixedColumns;
-
 return FixedColumns;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -1254,5 +1226,4 @@ else if ( jQuery && !jQuery.fn.dataTable.FixedColumns ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

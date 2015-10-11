@@ -18,7 +18,6 @@
 	$lang['list_paging_next'] 		= 'Ďalší';
 	$lang['list_paging_last'] 		= 'Posledný';
 	$lang['list_loading'] 			= 'Načítavanie...';	
-
 	$lang['form_edit'] 				= 'Upraviť';
 	$lang['form_back_to_list'] 		= 'Späť na zoznam';
 	$lang['form_update_changes'] 	= 'Potvrdiť zmeny';
@@ -50,7 +49,6 @@
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Uložiť a vrátiť sa na zoznam';
 	$lang['form_update_and_go_back']= 'Upraviť a vrátiť sa na zoznam';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Vymazávanie súboru";
 	$lang['string_progress'] 		= "Stav: ";
@@ -64,10 +62,8 @@
 	$lang['list_export'] 	= 'Exportovať';
 	$lang['list_print'] 	= 'Tlačiť';
 	$lang['minimize_maximize'] = 'Minimalizovať/Maximalizovať';	
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
-
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';

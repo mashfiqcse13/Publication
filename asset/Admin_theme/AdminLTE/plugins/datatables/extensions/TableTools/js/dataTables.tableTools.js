@@ -22,16 +22,13 @@
  *
  * For details please refer to: http://www.datatables.net
  */
-
 /* Global scope for TableTools for backwards compatibility.
  * Will be removed in 2.3
  */
 var TableTools;
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
-
 //include ZeroClipboard.js
 /* ZeroClipboard 1.0.4
  * Author: Joseph Huckaby
@@ -373,7 +370,6 @@ window.ZeroClipboard_TableTools = ZeroClipboard_TableTools;
  * 2009-2015 SpryMedia Ltd - datatables.net/license
  */
 /*globals TableTools,ZeroClipboard_TableTools*/
-
 (function($, window, document) {
 /** 
  * TableTools provides flexible buttons and other tools for a DataTables enhanced table
@@ -402,7 +398,6 @@ TableTools = function( oDT, oOpts )
 	var dtSettings = $.fn.dataTable.Api ?
 		new $.fn.dataTable.Api( oDT ).settings()[0] :
 		oDT.fnSettings();
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public class variables
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -554,7 +549,6 @@ TableTools = function( oDT, oOpts )
 		 */
 		"tags": {}
 	};
-
 	/**
 	 * @namespace Common and useful DOM elements for the class instance
 	 */
@@ -621,7 +615,6 @@ TableTools = function( oDT, oOpts )
 	{
 		$.extend( true, this.classes, TableTools.classes_themeroller );
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public class methods
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -633,18 +626,15 @@ TableTools = function( oDT, oOpts )
 	this.fnSettings = function () {
 		return this.s;
 	};
-
 	/* Constructor logic */
 	if ( typeof oOpts == 'undefined' )
 	{
 		oOpts = {};
 	}
-
 	TableTools._aInstances.push( this );
 	this._fnConstruct( oOpts );
 	return this;
 };
-
 TableTools.prototype = {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -688,7 +678,6 @@ TableTools.prototype = {
 		}
 		return out;
 	},
-
 	/**
 	 * Get the data source objects/arrays from DataTables for the selected rows (same as
 	 * fnGetSelected followed by fnGetData on each row from the table)
@@ -708,7 +697,6 @@ TableTools.prototype = {
 		}
 		return out;
 	},
-
 	/**
 	 * Get the indexes of the selected rows
 	 *  @returns {array} List of row indexes
@@ -748,7 +736,6 @@ TableTools.prototype = {
 		}
 		return out;
 	},
-
 	/**
 	 * Check to see if a current row is selected or not
 	 *  @param {Node} n TR node to check if it is currently selected or not
@@ -759,7 +746,6 @@ TableTools.prototype = {
 		var pos = this.s.dt.oInstance.fnGetPosition( n );
 		return (this.s.dt.aoData[pos]._DTTT_selected===true) ? true : false;
 	},
-
 	/**
 	 * Select all rows in the table
 	 *  @param {boolean} [filtered=false] Select only rows which are available 
@@ -773,7 +759,6 @@ TableTools.prototype = {
 			this.s.dt.aoData
 		);
 	},
-
 	/**
 	 * Deselect all rows in the table
 	 *  @param {boolean} [filtered=false] Deselect only rows which are available 
@@ -784,7 +769,6 @@ TableTools.prototype = {
 	{
 		this._fnRowDeselect( this.fnGetSelectedIndexes(filtered) );
 	},
-
 	/**
 	 * Select row(s)
 	 *  @param {node|object|array} n The row(s) to select. Can be a single DOM
@@ -802,7 +786,6 @@ TableTools.prototype = {
 			this._fnRowSelect( n );
 		}
 	},
-
 	/**
 	 * Deselect row(s)
 	 *  @param {node|object|array} n The row(s) to deselect. Can be a single DOM
@@ -812,7 +795,6 @@ TableTools.prototype = {
 	{
 		this._fnRowDeselect( n );
 	},
-
 	/**
 	 * Get the title of the document - useful for file names. The title is retrieved from either
 	 * the configuration object's 'title' parameter, or the HTML document title
@@ -840,7 +822,6 @@ TableTools.prototype = {
 			return sTitle.replace(/[^a-zA-Z0-9_\.,\-_ !\(\)]/g, "");
 		}
 	},
-
 	/**
 	 * Calculate a unity array with the column width by proportion for a set of columns to be
 	 * included for a button. This is particularly useful for PDF creation, where we can use the
@@ -870,7 +851,6 @@ TableTools.prototype = {
 		}
 		return aColWidths.join('\t');
 	},
-
 	/**
 	 * Get the information contained in a table as a string
 	 *  @param   {Object} oConfig Button configuration object
@@ -884,7 +864,6 @@ TableTools.prototype = {
 			return this._fnGetDataTablesData( oConfig );
 		}
 	},
-
 	/**
 	 * Pass text to a flash button instance, which will be used on the button's click handler
 	 *  @param   {Object} clip Flash button object
@@ -894,7 +873,6 @@ TableTools.prototype = {
 	{
 		this._fnFlashSetText( clip, text );
 	},
-
 	/**
 	 * Resize the flash elements of the buttons attached to this TableTools instance - this is
 	 * useful for when initialising TableTools when it is hidden (display:none) since sizes can't
@@ -915,7 +893,6 @@ TableTools.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Check to see if any of the ZeroClipboard client's attached need to be resized
 	 */
@@ -936,7 +913,6 @@ TableTools.prototype = {
 		}
 		return false;
 	},
-
 	/**
 	 * Programmatically enable or disable the print view
 	 *  @param {boolean} [bView=true] Show the print view if true or not given. If false, then
@@ -963,7 +939,6 @@ TableTools.prototype = {
 			this._fnPrintEnd();
 		}
 	},
-
 	/**
 	 * Show a message to the end user which is nicely styled
 	 *  @param {string} message The HTML string to show to the user
@@ -980,7 +955,6 @@ TableTools.prototype = {
 			} );
 		}, time );
 	},
-
 	/**
 	 * Get the container element of the instance for attaching to the DOM
 	 *   @returns {node} DOM node
@@ -988,7 +962,6 @@ TableTools.prototype = {
 	"fnContainer": function () {
 		return this.dom.container;
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1030,7 +1003,6 @@ TableTools.prototype = {
 			}
 		} );
 	},
-
 	/**
 	 * Take the user defined settings and the default settings and combine them.
 	 *  @method  _fnCustomiseSettings
@@ -1070,7 +1042,6 @@ TableTools.prototype = {
 		/* Button set */
 		this.s.buttonSet = this.s.custom.aButtons;
 	},
-
 	/**
 	 * Take the user input arrays and expand them to be fully defined, and then add them to a given
 	 * DOM element
@@ -1113,7 +1084,6 @@ TableTools.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Create and configure a TableTools button
 	 *  @method  _fnCreateButton
@@ -1171,7 +1141,6 @@ TableTools.prototype = {
 		}
 		return nButton;
 	},
-
 	/**
 	 * Create the DOM needed for the button and apply some base properties. All buttons start here
 	 *  @method  _fnButtonBase
@@ -1205,7 +1174,6 @@ TableTools.prototype = {
 		masterS.buttonCounter++;
 		return nButton;
 	},
-
 	/**
 	 * Get the settings object for the master instance. When more than one TableTools instance is
 	 * assigned to a DataTable, only one of them can be the 'master' (for the select rows). As such,
@@ -1233,7 +1201,6 @@ TableTools.prototype = {
 			}
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Button collection functions
 	 */
@@ -1253,7 +1220,6 @@ TableTools.prototype = {
 		document.body.appendChild( nHidden );
 		this._fnButtonDefinations( oConfig.aButtons, nHidden );
 	},
-
 	/**
 	 * Show a button collection
 	 *  @param   {Node} nButton Button to use for the collection
@@ -1313,7 +1279,6 @@ TableTools.prototype = {
 			that._fnCollectionHide.call( that, null, null );
 		} );
 	},
-
 	/**
 	 * Hide a button collection
 	 *  @param   {Node} nButton Button to use for the collection
@@ -1339,7 +1304,6 @@ TableTools.prototype = {
 			this.dom.collection.background = null;
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Row selection functions
 	 */
@@ -1600,7 +1564,6 @@ TableTools.prototype = {
 		}
 		return out;
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Text button functions
 	 */
@@ -1654,7 +1617,6 @@ TableTools.prototype = {
 			that._fnCollectionHide( nButton, oConfig );
 		} );
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Flash button functions
 	 */
@@ -1683,7 +1645,6 @@ TableTools.prototype = {
 		}
 		return false;
 	},
-
 	/**
 	 * Configure a flash based button for interaction events
 	 *  @method  _fnFlashConfig
@@ -1750,7 +1711,6 @@ TableTools.prototype = {
 		}
 		this._fnFlashGlue( flash, nButton, oConfig.sToolTip );
 	},
-
 	/**
 	 * Wait until the id is in the DOM before we "glue" the swf. Note that this function will call
 	 * itself (using setTimeout) until it completes successfully
@@ -1776,7 +1736,6 @@ TableTools.prototype = {
 			}, 100 );
 		}
 	},
-
 	/**
 	 * Set the text for the flash clip to deal with
 	 * 
@@ -1800,7 +1759,6 @@ TableTools.prototype = {
 			clip.appendText( asData[i] );
 		}
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Data retrieval functions
 	 */
@@ -1871,7 +1829,6 @@ TableTools.prototype = {
 		}
 		return aColumns;
 	},
-
 	/**
 	 * New line character(s) depend on the platforms
 	 *  @method  method
@@ -1889,7 +1846,6 @@ TableTools.prototype = {
 			return oConfig.sNewLine;
 		}
 	},
-
 	/**
 	 * Get data from DataTables' internals and format it for output
 	 *  @method  _fnGetDataTablesData
@@ -2024,7 +1980,6 @@ TableTools.prototype = {
 		var _sLastData = aData.join( this._fnNewline(oConfig) );
 		return _sLastData;
 	},
-
 	/**
 	 * Wrap data up with a boundary string
 	 *  @method  _fnBoundData
@@ -2046,7 +2001,6 @@ TableTools.prototype = {
 			return sBoundary + sData.replace(regex, sBoundary+sBoundary) + sBoundary;
 		}
 	},
-
 	/**
 	 * Break a string up into an array of smaller strings
 	 *  @method  _fnChunkData
@@ -2072,7 +2026,6 @@ TableTools.prototype = {
 		}
 		return asReturn;
 	},
-
 	/**
 	 * Decode HTML entities
 	 *  @method  _fnHtmlDecode
@@ -2099,7 +2052,6 @@ TableTools.prototype = {
 			}
 		} );
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Printing functions
 	 */
@@ -2185,7 +2137,6 @@ TableTools.prototype = {
 			}
 		} );
 	},
-
 	/**
 	 * Printing is finished, resume normal display
 	 *  @method  _fnPrintEnd
@@ -2222,7 +2173,6 @@ TableTools.prototype = {
 		oSetDT.oApi._fnDraw( oSetDT );
 		$(document).unbind( "keydown.DTTT" );
 	},
-
 	/**
 	 * Take account of scrolling in DataTables by showing the full table
 	 *  @returns void
@@ -2272,7 +2222,6 @@ TableTools.prototype = {
 			nScrollBody.style.overflow = "visible";
 		}
 	},
-
 	/**
 	 * Take account of scrolling in DataTables by showing the full table. Note that the redraw of
 	 * the DataTable that we do will actually deal with the majority of the hard work here
@@ -2295,7 +2244,6 @@ TableTools.prototype = {
 			nScrollBody.style.overflow = "auto";
 		}
 	},
-
 	/**
 	 * Resume the display of all TableTools hidden nodes
 	 *  @method  _fnPrintShowNodes
@@ -2311,7 +2259,6 @@ TableTools.prototype = {
 		}
 		anHidden.splice( 0, anHidden.length );
 	},
-
 	/**
 	 * Hide nodes which are not needed in order to display the table. Note that this function is
 	 * recursive
@@ -2348,7 +2295,6 @@ TableTools.prototype = {
 		}
 	}
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static variables
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -2361,7 +2307,6 @@ TableTools.prototype = {
  *  @private
  */
 TableTools._aInstances = [];
-
 /**
  * Store of all listeners and their callback functions
  *  @property _aListeners
@@ -2369,7 +2314,6 @@ TableTools._aInstances = [];
  *  @default  []
  */
 TableTools._aListeners = [];
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static methods
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -2412,7 +2356,6 @@ TableTools.fnGetInstance = function ( node )
 	}
 	return null;
 };
-
 /**
  * Add a listener for a specific event
  *  @method  _fnEventListen
@@ -2431,7 +2374,6 @@ TableTools._fnEventListen = function ( that, type, fn )
 		"fn": fn
 	} );
 };
-
 /**
  * An event has occurred - look up every listener and fire it off. We check that the event we are
  * going to fire is attached to the same table (using the table node as reference) before firing
@@ -2455,13 +2397,9 @@ TableTools._fnEventDispatch = function ( that, type, node, selected )
 		}
 	}
 };
-
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 TableTools.buttonBase = {
 	// Button base
 	"sAction": "text",
@@ -2493,7 +2431,6 @@ TableTools.buttonBase = {
 	"fnInit": null,
 	"fnCellRender": null
 };
-
 /**
  * @namespace Default button configurations
  */
@@ -2673,7 +2610,6 @@ TableTools.BUTTONS = {
  */
 // Alias to match the other plug-ins styling
 TableTools.buttons = TableTools.BUTTONS;
-
 /**
  * @namespace Classes used by TableTools - allows the styles to be override easily.
  *   Note that when TableTools initialises it will take a copy of the classes object
@@ -2703,7 +2639,6 @@ TableTools.classes = {
 		"message": "DTTT_PrintMessage"
 	}
 };
-
 /**
  * @namespace ThemeRoller classes - built in for compatibility with DataTables' 
  *   bJQueryUI option.
@@ -2717,7 +2652,6 @@ TableTools.classes_themeroller = {
 		"container": "DTTT_collection ui-buttonset ui-buttonset-multi"
 	}
 };
-
 /**
  * @namespace TableTools default settings for initialisation
  */
@@ -2744,7 +2678,6 @@ TableTools.DEFAULTS = {
 };
 // Alias to match the other plug-ins
 TableTools.defaults = TableTools.DEFAULTS;
-
 /**
  * Name of this class
  *  @constant CLASS
@@ -2752,7 +2685,6 @@ TableTools.defaults = TableTools.DEFAULTS;
  *  @default  TableTools
  */
 TableTools.prototype.CLASS = "TableTools";
-
 /**
  * TableTools version
  *  @constant  VERSION
@@ -2760,7 +2692,6 @@ TableTools.prototype.CLASS = "TableTools";
  *  @default   See code
  */
 TableTools.version = "2.2.4";
-
 // DataTables 1.10 API
 // 
 // This will be extended in a big way in in TableTools 3 to provide API methods
@@ -2775,8 +2706,6 @@ if ( $.fn.dataTable.Api ) {
 		return tt;
 	} );
 }
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Initialisation
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -2828,13 +2757,10 @@ else
 {
 	alert( "Warning: TableTools 2 requires DataTables 1.9.0 or newer - www.datatables.net/download");
 }
-
 $.fn.dataTable.TableTools = TableTools;
 $.fn.DataTable.TableTools = TableTools;
-
 return TableTools;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -2847,5 +2773,4 @@ else if ( jQuery && !jQuery.fn.dataTable.TableTools ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * MS SQL Utility Class
  *
@@ -47,21 +46,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_mssql_utility extends CI_DB_utility {
-
 	/**
 	 * List databases statement
 	 *
 	 * @var	string
 	 */
 	protected $_list_databases	= 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
-
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var	string
 	 */
 	protected $_optimize_table	= 'ALTER INDEX all ON %s REORGANIZE';
-
 	/**
 	 * Export
 	 *
@@ -73,5 +69,4 @@ class CI_DB_mssql_utility extends CI_DB_utility {
 		// Currently unsupported
 		return $this->db->display_error('db_unsupported_feature');
 	}
-
 }

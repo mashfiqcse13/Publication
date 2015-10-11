@@ -13,7 +13,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat {
     background-position: 0 0;
 }
@@ -27,7 +26,6 @@
     .icheckbox_flat.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat {
     background-position: -88px 0;
 }
@@ -41,7 +39,6 @@
     .iradio_flat.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -54,7 +51,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* red */
 .icheckbox_flat-red,
 .iradio_flat-red {
@@ -69,7 +65,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-red {
     background-position: 0 0;
 }
@@ -83,7 +78,6 @@
     .icheckbox_flat-red.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-red {
     background-position: -88px 0;
 }
@@ -97,7 +91,6 @@
     .iradio_flat-red.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -110,7 +103,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* green */
 .icheckbox_flat-green,
 .iradio_flat-green {
@@ -125,7 +117,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-green {
     background-position: 0 0;
 }
@@ -139,7 +130,6 @@
     .icheckbox_flat-green.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-green {
     background-position: -88px 0;
 }
@@ -153,7 +143,6 @@
     .iradio_flat-green.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -166,7 +155,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* blue */
 .icheckbox_flat-blue,
 .iradio_flat-blue {
@@ -181,7 +169,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-blue {
     background-position: 0 0;
 }
@@ -195,7 +182,6 @@
     .icheckbox_flat-blue.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-blue {
     background-position: -88px 0;
 }
@@ -209,7 +195,6 @@
     .iradio_flat-blue.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -222,7 +207,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* aero */
 .icheckbox_flat-aero,
 .iradio_flat-aero {
@@ -237,7 +221,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-aero {
     background-position: 0 0;
 }
@@ -251,7 +234,6 @@
     .icheckbox_flat-aero.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-aero {
     background-position: -88px 0;
 }
@@ -265,7 +247,6 @@
     .iradio_flat-aero.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -278,7 +259,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* grey */
 .icheckbox_flat-grey,
 .iradio_flat-grey {
@@ -293,7 +273,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-grey {
     background-position: 0 0;
 }
@@ -307,7 +286,6 @@
     .icheckbox_flat-grey.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-grey {
     background-position: -88px 0;
 }
@@ -321,7 +299,6 @@
     .iradio_flat-grey.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -334,7 +311,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* orange */
 .icheckbox_flat-orange,
 .iradio_flat-orange {
@@ -349,7 +325,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-orange {
     background-position: 0 0;
 }
@@ -363,7 +338,6 @@
     .icheckbox_flat-orange.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-orange {
     background-position: -88px 0;
 }
@@ -377,7 +351,6 @@
     .iradio_flat-orange.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -390,7 +363,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* yellow */
 .icheckbox_flat-yellow,
 .iradio_flat-yellow {
@@ -405,7 +377,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-yellow {
     background-position: 0 0;
 }
@@ -419,7 +390,6 @@
     .icheckbox_flat-yellow.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-yellow {
     background-position: -88px 0;
 }
@@ -433,7 +403,6 @@
     .iradio_flat-yellow.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -446,7 +415,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* pink */
 .icheckbox_flat-pink,
 .iradio_flat-pink {
@@ -461,7 +429,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-pink {
     background-position: 0 0;
 }
@@ -475,7 +442,6 @@
     .icheckbox_flat-pink.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-pink {
     background-position: -88px 0;
 }
@@ -489,7 +455,6 @@
     .iradio_flat-pink.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -502,7 +467,6 @@
         background-size: 176px 22px;
     }
 }
-
 /* purple */
 .icheckbox_flat-purple,
 .iradio_flat-purple {
@@ -517,7 +481,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_flat-purple {
     background-position: 0 0;
 }
@@ -531,7 +494,6 @@
     .icheckbox_flat-purple.checked.disabled {
         background-position: -66px 0;
     }
-
 .iradio_flat-purple {
     background-position: -88px 0;
 }
@@ -545,7 +507,6 @@
     .iradio_flat-purple.checked.disabled {
         background-position: -154px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),

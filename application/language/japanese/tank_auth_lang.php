@@ -1,5 +1,4 @@
 <?php
-
 // Errors
 $lang['auth_incorrect_password'] = 'パスワードが正しくありません';
 $lang['auth_incorrect_login'] = '不正なログインです';
@@ -9,7 +8,6 @@ $lang['auth_username_in_use'] = 'ユーザー名はすでに使われていま�
 $lang['auth_current_email'] = 'これが現在お使いのメールアドレスです';
 $lang['auth_incorrect_captcha'] = '確認コードが提示したイメージと異なっています。';
 $lang['auth_captcha_expired'] = '確認コードの有効時間が過ぎました。もう一度、お願いします。';
-
 // Notifications
 $lang['auth_message_logged_out'] = 'ログアウトしました。';
 $lang['auth_message_registration_disabled'] = '登録はできません。';
@@ -27,14 +25,11 @@ $lang['auth_message_new_email_activated'] = 'メールアドレスを変更し�
 $lang['auth_message_new_email_failed'] = 'アクティベーション・キーが正しくないか有効な時間を過ぎています。メールの内容をもう一度ご確認ください。';
 $lang['auth_message_banned'] = '非アクティベートしました。';
 $lang['auth_message_unregistered'] = 'アカウントを削除しました...';
-
 // Email subjects
 $lang['auth_subject_welcome'] = 'ようこそ %s さん!';
 $lang['auth_subject_activate'] = 'ようこそ %s さん!';
 $lang['auth_subject_forgot_password'] = ' %s のパスワードをお忘れですか?';
 $lang['auth_subject_reset_password'] = '%s の新らしいパスワード';
 $lang['auth_subject_change_email'] = '%s の新しいメールアドレス';
-
-
 /* End of file tank_auth_lang.php */
 /* Location: ./application/language/japanese/tank_auth_lang.php */

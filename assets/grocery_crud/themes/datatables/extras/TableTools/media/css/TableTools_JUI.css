@@ -30,8 +30,6 @@
  *   PRINTING              Print display styles
  *   MISC                  Minor misc styles
  */
-
-
 /*
  * CONTAINER
  * TableTools container element and styles applying to all components
@@ -40,7 +38,6 @@ div.DTTT_container {
 	position: relative;
 	float: left;
 }
-
 .DTTT_button {
 	position: relative;
 	float: left;
@@ -52,14 +49,10 @@ div.DTTT_container {
 	cursor: pointer;
 	*cursor: hand;
 }
-
 .DTTT_button::-moz-focus-inner { 
 	border: none !important;
 	padding: 0;
 }
-
-
-
 /*
  * SELECTING
  * Row selection styles
@@ -68,46 +61,34 @@ table.DTTT_selectable tbody tr {
 	cursor: pointer;
 	*cursor: hand;
 }
-
 table.dataTable tr.DTTT_selected.odd {
 	background-color: #9FAFD1;
 }
-
 table.dataTable tr.DTTT_selected.odd td.sorting_1 {
 	background-color: #9FAFD1;
 }
-
 table.dataTable tr.DTTT_selected.odd td.sorting_2 {
 	background-color: #9FAFD1;
 }
-
 table.dataTable tr.DTTT_selected.odd td.sorting_3 {
 	background-color: #9FAFD1;
 }
-
-
 table.dataTable tr.DTTT_selected.even {
 	background-color: #B0BED9;
 }
-
 table.dataTable tr.DTTT_selected.even td.sorting_1 {
 	background-color: #B0BED9;
 }
-
 table.dataTable tr.DTTT_selected.even td.sorting_2 {
 	background-color: #B0BED9;
 }
-
 table.dataTable tr.DTTT_selected.even td.sorting_3 {
 	background-color: #B0BED9;
 }
-
-
 /*
  * COLLECTIONS
  * Drop down list (collection) styles
  */
-
 div.DTTT_collection {
 	width: 150px;
 	background-color: #f3f3f3;
@@ -117,24 +98,19 @@ div.DTTT_collection {
 	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
-
 div.DTTT_collection_background {
 	background: url(../images/background.png) repeat top left;
 	z-index: 2001;
 }
-
 div.DTTT_collection button.DTTT_button {
 	float: none;
 	width: 100%;
 	margin-bottom: -0.1em;
 }
-
-
 /*
  * PRINTING
  * Print display styles
  */
-
 .DTTT_print_info {
 	position: absolute;
 	top: 50%;
@@ -155,25 +131,20 @@ div.DTTT_collection button.DTTT_button {
 	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
-
 .DTTT_print_info h6 {
 	font-weight: normal;
 	font-size: 28px;
 	line-height: 28px;
 	margin: 1em;
 }
-
 .DTTT_print_info p {
 	font-size: 14px;
 	line-height: 20px;
 }
-
-
 /*
  * MISC
  * Minor misc styles
  */
-
 .DTTT_disabled {
 	color: #999;
 }

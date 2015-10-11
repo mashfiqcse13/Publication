@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO IBM DB2 Forge Class
  *
@@ -45,14 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
-
 	/**
 	 * RENAME TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_rename_table	= 'RENAME TABLE %s TO %s';
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -63,16 +60,13 @@ class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
 		'INT'		=> 'BIGINT',
 		'INTEGER'	=> 'BIGINT'
 	);
-
 	/**
 	 * DEFAULT value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var	string
 	 */
 	protected $_default		= FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -87,12 +81,9 @@ class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
 		{
 			$alter_type = 'MODIFY';
 		}
-
 		return parent::_alter_table($alter_type, $table, $field);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -116,9 +107,7 @@ class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute UNIQUE
 	 *
@@ -131,14 +120,11 @@ class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
 		if ( ! empty($attributes['UNIQUE']) && $attributes['UNIQUE'] === TRUE)
 		{
 			$field['unique'] = ' UNIQUE';
-
 			// UNIQUE must be used with NOT NULL
 			$field['null'] = ' NOT NULL';
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -150,5 +136,4 @@ class CI_DB_pdo_ibm_forge extends CI_DB_pdo_forge {
 	{
 		// Not supported
 	}
-
 }

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO ODBC Forge Class
  *
@@ -45,16 +44,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/database/
  */
 class CI_DB_pdo_odbc_forge extends CI_DB_pdo_forge {
-
 	/**
 	 * UNSIGNED support
 	 *
 	 * @var	bool|array
 	 */
 	protected $_unsigned		= FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -66,5 +62,4 @@ class CI_DB_pdo_odbc_forge extends CI_DB_pdo_forge {
 	{
 		// Not supported (in most databases at least)
 	}
-
 }

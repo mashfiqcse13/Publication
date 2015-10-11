@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Benchmark Class
  *
@@ -50,14 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/libraries/benchmark.html
  */
 class CI_Benchmark {
-
 	/**
 	 * List of all benchmark markers
 	 *
 	 * @var	array
 	 */
 	public $marker = array();
-
 	/**
 	 * Set a benchmark marker
 	 *
@@ -71,9 +68,7 @@ class CI_Benchmark {
 	{
 		$this->marker[$name] = microtime(TRUE);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Elapsed time
 	 *
@@ -98,22 +93,17 @@ class CI_Benchmark {
 		{
 			return '{elapsed_time}';
 		}
-
 		if ( ! isset($this->marker[$point1]))
 		{
 			return '';
 		}
-
 		if ( ! isset($this->marker[$point2]))
 		{
 			$this->marker[$point2] = microtime(TRUE);
 		}
-
 		return number_format($this->marker[$point2] - $this->marker[$point1], $decimals);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Memory Usage
 	 *
@@ -129,5 +119,4 @@ class CI_Benchmark {
 	{
 		return '{memory_usage}';
 	}
-
 }

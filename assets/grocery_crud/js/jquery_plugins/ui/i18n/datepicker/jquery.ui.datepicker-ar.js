@@ -1,6 +1,5 @@
 /* Arabic Translation for jQuery UI date picker plugin. */
 /* Ashraf Kaabi -- mail@kaabi.info */
-
 jQuery(function($){
 	$.datepicker.regional['ar'] = {
 		closeText: 'إغلاق',

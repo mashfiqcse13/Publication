@@ -19,7 +19,6 @@
 	$lang['list_paging_next'] 		= 'Próximo';
 	$lang['list_paging_last'] 		= 'Último';
 	$lang['list_loading'] 			= 'Carregando...';	
-
 	$lang['form_edit'] 			= 'Alterar';
 	$lang['form_back_to_list'] 		= 'Voltar para a Listagem';
 	$lang['form_update_changes'] 		= 'Aplicar alterações';
@@ -51,7 +50,6 @@
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']		= 'Salvar e voltar para a listagem';
 	$lang['form_update_and_go_back']	= 'Aplicar alterações e voltar para a listagem';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 		= "Excluindo arquivo";
 	$lang['string_progress'] 		= "Progresso: ";
@@ -61,15 +59,12 @@
 	$lang['error_accept_file_types'] 	= "Você não tem permissão para enviar esse tipo de arquivo";
 	$lang['error_max_file_size'] 		= "O arquivo enviado excedeu o tamamnho máximo de {max_file_size}, especificado";
 	$lang['error_min_file_size'] 		= "Você não pode enviar um arquivo vazio";
-
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 			= "Exportar";
 	$lang['list_print'] 			= "Imprimir";
 	$lang['minimize_maximize'] 		= 'Minimizar/Maximizar';
-
 	/* Added in version 1.4 */
 	$lang['list_view'] 			= 'Visualizar';
-
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';

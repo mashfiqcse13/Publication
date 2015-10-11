@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Model Class
  *
@@ -47,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/libraries/config.html
  */
 class CI_Model {
-
 	/**
 	 * Class constructor
 	 *
@@ -57,9 +55,7 @@ class CI_Model {
 	{
 		log_message('info', 'Model Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * __get magic
 	 *
@@ -76,5 +72,4 @@ class CI_Model {
 		//	most likely a typo in your model code.
 		return get_instance()->$key;
 	}
-
 }

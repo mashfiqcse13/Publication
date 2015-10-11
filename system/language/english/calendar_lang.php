@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 $lang['cal_su'] = 'Su';
 $lang['cal_mo'] = 'Mo';
 $lang['cal_tu'] = 'Tu';

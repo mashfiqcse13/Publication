@@ -21,9 +21,7 @@
  */
 // Global scope for KeyTable for backwards compatibility. Will be removed in 1.3
 var KeyTable;
-
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
 KeyTable = function ( oInit )
@@ -47,7 +45,6 @@ KeyTable = function ( oInit )
 	this.event = {
 		"remove": {}
 	};
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * API methods
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -61,7 +58,6 @@ KeyTable = function ( oInit )
 	{
 		return [ _iOldX, _iOldY ];
 	};
-
 	/*
 	 * Function: fnGetCurrentData
 	 * Purpose:  Get the currently focused cell's data (innerHTML)
@@ -72,7 +68,6 @@ KeyTable = function ( oInit )
 	{
 		return _nOldFocus.innerHTML;
 	};
-
 	/*
 	 * Function: fnGetCurrentTD
 	 * Purpose:  Get the currently focused cell
@@ -83,7 +78,6 @@ KeyTable = function ( oInit )
 	{
 		return _nOldFocus;
 	};
-
 	/*
 	 * Function: fnSetPosition
 	 * Purpose:  Set the position of the focused cell
@@ -103,7 +97,6 @@ KeyTable = function ( oInit )
 			_fnSetFocus( _fnCellFromCoords(x, y) );
 		}
 	};
-
 	/*
 	 * Function: fnBlur
 	 * Purpose:  Blur the current focus
@@ -114,7 +107,6 @@ KeyTable = function ( oInit )
 	{
 		_fnBlur();
 	};
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -176,7 +168,6 @@ KeyTable = function ( oInit )
 	var _bForm;
 	var _nInput;
 	var _bInputFocused = false;
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -222,7 +213,6 @@ KeyTable = function ( oInit )
 			}
 		};
 	}
-
 	/*
 	 * Function: _fnEventRemoveTemplate
 	 * Purpose:  Create a function (with closure for sKey) event removal API
@@ -285,7 +275,6 @@ KeyTable = function ( oInit )
 			this.event.remove[sKey] = _fnEventRemoveTemplate( sKey );
 		}
 	}
-
 	/*
 	 * Function: _fnEventAdd
 	 * Purpose:  Add an event to the internal cache
@@ -303,7 +292,6 @@ KeyTable = function ( oInit )
 			"fn": fn
 		} );
 	}
-
 	/*
 	 * Function: _fnEventRemove
 	 * Purpose:  Remove an event from the event cache
@@ -340,7 +328,6 @@ KeyTable = function ( oInit )
 		}
 		return iCorrector;
 	}
-
 	/*
 	 * Function: _fnEventFire
 	 * Purpose:  Look thought the events cache and fire off the event of interest
@@ -370,7 +357,6 @@ KeyTable = function ( oInit )
 		}
 		return iFired;
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Focus functions
 	 */
@@ -524,7 +510,6 @@ KeyTable = function ( oInit )
 		/* Fire of the focus event if there is one */
 		_fnEventFire( "focus", _iOldX, _iOldY );
 	}
-
 	/*
 	 * Function: _fnBlur
 	 * Purpose:  Blur focus from the whole table
@@ -539,7 +524,6 @@ KeyTable = function ( oInit )
 		_nOldFocus = null;
 		_fnReleaseKeys();
 	}
-
 	/*
 	 * Function: _fnRemoveFocus
 	 * Purpose:  Remove focus from a cell and fire any blur events which are attached
@@ -552,7 +536,6 @@ KeyTable = function ( oInit )
 		$(nTarget).parent().removeClass( _sFocusClass );
 		_fnEventFire( "blur", _iOldX, _iOldY );
 	}
-
 	/*
 	 * Function: _fnClick
 	 * Purpose:  Focus on the element that has been clicked on by the user
@@ -569,7 +552,6 @@ KeyTable = function ( oInit )
 		_fnSetFocus( nTarget );
 		_fnCaptureKeys();
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Key events
 	 */
@@ -742,7 +724,6 @@ KeyTable = function ( oInit )
 		_fnSetFocus( _fnCellFromCoords(x, y) );
 		return false;
 	}
-
 	/*
 	 * Function: _fnCaptureKeys
 	 * Purpose:  Start capturing key events for this table
@@ -756,7 +737,6 @@ KeyTable = function ( oInit )
 			_bKeyCapture = true;
 		}
 	}
-
 	/*
 	 * Function: _fnReleaseKeys
 	 * Purpose:  Stop capturing key events for this table
@@ -767,7 +747,6 @@ KeyTable = function ( oInit )
 	{
 		_bKeyCapture = false;
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Support functions
 	 */
@@ -796,7 +775,6 @@ KeyTable = function ( oInit )
 			return $('tr:eq('+y+')>td:eq('+x+')', _nBody )[0];
 		}
 	}
-
 	/*
 	 * Function: _fnCoordsFromCell
 	 * Purpose:  Calculate the x and y position in a table from a TD cell
@@ -821,7 +799,6 @@ KeyTable = function ( oInit )
 			];
 		}
 	}
-
 	/*
 	 * Function: _fnSetScrollTop
 	 * Purpose:  Set the vertical scrolling position
@@ -836,7 +813,6 @@ KeyTable = function ( oInit )
 		document.documentElement.scrollTop = iPos;
 		document.body.scrollTop = iPos;
 	}
-
 	/*
 	 * Function: _fnSetScrollLeft
 	 * Purpose:  Set the horizontal scrolling position
@@ -848,7 +824,6 @@ KeyTable = function ( oInit )
 		document.documentElement.scrollLeft = iPos;
 		document.body.scrollLeft = iPos;
 	}
-
 	/*
 	 * Function: _fnGetPos
 	 * Purpose:  Get the position of an object on the rendered page
@@ -873,7 +848,6 @@ KeyTable = function ( oInit )
 		}
 		return [iLeft,iTop];
 	}
-
 	/*
 	 * Function: _fnFindDtCell
 	 * Purpose:  Get the coords. of a cell from the DataTables internal information
@@ -896,7 +870,6 @@ KeyTable = function ( oInit )
 		}
 		return null;
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Initialisation
 	 */
@@ -1036,15 +1009,11 @@ KeyTable = function ( oInit )
 	/* Initialise our new object */
 	_fnInit( table, datatable, oInit, this );
 };
-
 KeyTable.version = "1.2.1";
-
 $.fn.dataTable.KeyTable = KeyTable;
 $.fn.DataTable.KeyTable = KeyTable;
-
 return KeyTable;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -1057,5 +1026,4 @@ else if ( jQuery && !jQuery.fn.dataTable.KeyTable ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

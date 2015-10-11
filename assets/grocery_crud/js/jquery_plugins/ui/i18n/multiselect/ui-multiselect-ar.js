@@ -4,7 +4,6 @@
  * @locale ar, ar-eg
  */
 /* Ashraf Kaabi -- mail@kaabi.info */
-
 $.extend($.ui.multiselect.locale, {
   addAll:'اضافة الكل',
 	removeAll:'حذف الكل',

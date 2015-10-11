@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PHP ext/standard compatibility package
  *
@@ -46,16 +45,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		Andrey Andreev
  * @link		http://codeigniter.com/user_guide/
  */
-
 // ------------------------------------------------------------------------
-
 if (is_php('5.5'))
 {
 	return;
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('array_column'))
 {
 	/**
@@ -85,7 +80,6 @@ if ( ! function_exists('array_column'))
 				return FALSE;
 			}
 		}
-
 		if ( ! in_array($type = gettype($index_key), array('integer', 'string', 'NULL'), TRUE))
 		{
 			if ($type === 'double')
@@ -102,7 +96,6 @@ if ( ! function_exists('array_column'))
 				return FALSE;
 			}
 		}
-
 		$result = array();
 		foreach ($array as &$a)
 		{
@@ -118,7 +111,6 @@ if ( ! function_exists('array_column'))
 			{
 				continue;
 			}
-
 			if ($index_key === NULL OR ! array_key_exists($index_key, $a))
 			{
 				$result[] = $value;
@@ -128,20 +120,15 @@ if ( ! function_exists('array_column'))
 				$result[$a[$index_key]] = $value;
 			}
 		}
-
 		return $result;
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if (is_php('5.4'))
 {
 	return;
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('hex2bin'))
 {
 	/**
@@ -165,7 +152,6 @@ if ( ! function_exists('hex2bin'))
 				return NULL;
 			}
 		}
-
 		if (strlen($data) % 2 !== 0)
 		{
 			trigger_error('Hexadecimal input string must have an even length', E_USER_WARNING);
@@ -176,20 +162,15 @@ if ( ! function_exists('hex2bin'))
 			trigger_error('Input string must be hexadecimal string', E_USER_WARNING);
 			return FALSE;
 		}
-
 		return pack('H*', $data);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if (is_php('5.3'))
 {
 	return;
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('array_replace'))
 {
 	/**
@@ -201,7 +182,6 @@ if ( ! function_exists('array_replace'))
 	function array_replace()
 	{
 		$arrays = func_get_args();
-
 		if (($c = count($arrays)) === 0)
 		{
 			trigger_error('array_replace() expects at least 1 parameter, 0 given', E_USER_WARNING);
@@ -214,13 +194,10 @@ if ( ! function_exists('array_replace'))
 				trigger_error('array_replace(): Argument #1 is not an array', E_USER_WARNING);
 				return NULL;
 			}
-
 			return $arrays[0];
 		}
-
 		$array = array_shift($arrays);
 		$c--;
-
 		for ($i = 0; $i < $c; $i++)
 		{
 			if ( ! is_array($arrays[$i]))
@@ -232,19 +209,15 @@ if ( ! function_exists('array_replace'))
 			{
 				continue;
 			}
-
 			foreach (array_keys($arrays[$i]) as $key)
 			{
 				$array[$key] = $arrays[$i][$key];
 			}
 		}
-
 		return $array;
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('array_replace_recursive'))
 {
 	/**
@@ -256,7 +229,6 @@ if ( ! function_exists('array_replace_recursive'))
 	function array_replace_recursive()
 	{
 		$arrays = func_get_args();
-
 		if (($c = count($arrays)) === 0)
 		{
 			trigger_error('array_replace_recursive() expects at least 1 parameter, 0 given', E_USER_WARNING);
@@ -269,13 +241,10 @@ if ( ! function_exists('array_replace_recursive'))
 				trigger_error('array_replace_recursive(): Argument #1 is not an array', E_USER_WARNING);
 				return NULL;
 			}
-
 			return $arrays[0];
 		}
-
 		$array = array_shift($arrays);
 		$c--;
-
 		for ($i = 0; $i < $c; $i++)
 		{
 			if ( ! is_array($arrays[$i]))
@@ -287,7 +256,6 @@ if ( ! function_exists('array_replace_recursive'))
 			{
 				continue;
 			}
-
 			foreach (array_keys($arrays[$i]) as $key)
 			{
 				$array[$key] = (is_array($arrays[$i][$key]) && isset($array[$key]) && is_array($array[$key]))
@@ -295,13 +263,10 @@ if ( ! function_exists('array_replace_recursive'))
 					: $arrays[$i][$key];
 			}
 		}
-
 		return $array;
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('quoted_printable_encode'))
 {
 	/**
@@ -329,19 +294,16 @@ if ( ! function_exists('quoted_printable_encode'))
 				return NULL;
 			}
 		}
-
 		if (function_exists('imap_8bit'))
 		{
 			return imap_8bit($str);
 		}
-
 		$i = $lp = 0;
 		$output = '';
 		$hex = '0123456789ABCDEF';
 		$length = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'))
 			? mb_strlen($str, '8bit')
 			: strlen($str);
-
 		while ($length--)
 		{
 			if ((($c = $str[$i++]) === "\015") && isset($str[$i]) && ($str[$i] === "\012") && $length > 0)
@@ -351,7 +313,6 @@ if ( ! function_exists('quoted_printable_encode'))
 				$lp = 0;
 				continue;
 			}
-
 			if (
 				ctype_cntrl($c)
 				OR (ord($c) === 0x7f)
@@ -370,20 +331,16 @@ if ( ! function_exists('quoted_printable_encode'))
 					$output .= "=\015\012";
 					$lp = 3;
 				}
-
 				$output .= '='.$hex[ord($c) >> 4].$hex[ord($c) & 0xf];
 				continue;
 			}
-
 			if ((++$lp) > 75)
 			{
 				$output .= "=\015\012";
 				$lp = 1;
 			}
-
 			$output .= $c;
 		}
-
 		return $output;
 	}
 }

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Number Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/number_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('byte_format'))
 {
 	/**
@@ -62,7 +59,6 @@ if ( ! function_exists('byte_format'))
 	{
 		$CI =& get_instance();
 		$CI->lang->load('number');
-
 		if ($num >= 1000000000000)
 		{
 			$num = round($num / 1099511627776, $precision);
@@ -88,7 +84,6 @@ if ( ! function_exists('byte_format'))
 			$unit = $CI->lang->line('bytes');
 			return number_format($num).' '.$unit;
 		}
-
 		return number_format($num, $precision).' '.$unit;
 	}
 }

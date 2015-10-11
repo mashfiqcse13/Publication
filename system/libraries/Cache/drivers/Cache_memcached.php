@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Memcached Caching Class
  *
@@ -47,14 +46,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link
  */
 class CI_Cache_memcached extends CI_Driver {
-
 	/**
 	 * Holds the memcached object
 	 *
 	 * @var object
 	 */
 	protected $_memcached;
-
 	/**
 	 * Memcached configuration
 	 *
@@ -67,7 +64,6 @@ class CI_Cache_memcached extends CI_Driver {
 			'weight'	=> 1
 		)
 	);
-
 	/**
 	 * Fetch from cache
 	 *
@@ -77,12 +73,9 @@ class CI_Cache_memcached extends CI_Driver {
 	public function get($id)
 	{
 		$data = $this->_memcached->get($id);
-
 		return is_array($data) ? $data[0] : $data;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Save
 	 *
@@ -98,7 +91,6 @@ class CI_Cache_memcached extends CI_Driver {
 		{
 			$data = array($data, time(), $ttl);
 		}
-
 		if (get_class($this->_memcached) === 'Memcached')
 		{
 			return $this->_memcached->set($id, $data, $ttl);
@@ -107,12 +99,9 @@ class CI_Cache_memcached extends CI_Driver {
 		{
 			return $this->_memcached->set($id, $data, 0, $ttl);
 		}
-
 		return FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Delete from Cache
 	 *
@@ -123,9 +112,7 @@ class CI_Cache_memcached extends CI_Driver {
 	{
 		return $this->_memcached->delete($id);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Increment a raw value
 	 *
@@ -137,9 +124,7 @@ class CI_Cache_memcached extends CI_Driver {
 	{
 		return $this->_memcached->increment($id, $offset);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Decrement a raw value
 	 *
@@ -151,9 +136,7 @@ class CI_Cache_memcached extends CI_Driver {
 	{
 		return $this->_memcached->decrement($id, $offset);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Clean the Cache
 	 *
@@ -163,9 +146,7 @@ class CI_Cache_memcached extends CI_Driver {
 	{
 		return $this->_memcached->flush();
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Cache Info
 	 *
@@ -175,9 +156,7 @@ class CI_Cache_memcached extends CI_Driver {
 	{
 		return $this->_memcached->getStats();
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get Cache Metadata
 	 *
@@ -187,23 +166,18 @@ class CI_Cache_memcached extends CI_Driver {
 	public function get_metadata($id)
 	{
 		$stored = $this->_memcached->get($id);
-
 		if (count($stored) !== 3)
 		{
 			return FALSE;
 		}
-
 		list($data, $time, $ttl) = $stored;
-
 		return array(
 			'expire'	=> $time + $ttl,
 			'mtime'		=> $time,
 			'data'		=> $data
 		);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Setup memcached.
 	 *
@@ -214,20 +188,17 @@ class CI_Cache_memcached extends CI_Driver {
 		// Try to load memcached server info from the config file.
 		$CI =& get_instance();
 		$defaults = $this->_memcache_conf['default'];
-
 		if ($CI->config->load('memcached', TRUE, TRUE))
 		{
 			if (is_array($CI->config->config['memcached']))
 			{
 				$this->_memcache_conf = array();
-
 				foreach ($CI->config->config['memcached'] as $name => $conf)
 				{
 					$this->_memcache_conf[$name] = $conf;
 				}
 			}
 		}
-
 		if (class_exists('Memcached', FALSE))
 		{
 			$this->_memcached = new Memcached();
@@ -241,13 +212,11 @@ class CI_Cache_memcached extends CI_Driver {
 			log_message('error', 'Failed to create object for Memcached Cache; extension not loaded?');
 			return FALSE;
 		}
-
 		foreach ($this->_memcache_conf as $cache_server)
 		{
 			isset($cache_server['hostname']) OR $cache_server['hostname'] = $defaults['host'];
 			isset($cache_server['port']) OR $cache_server['port'] = $defaults['port'];
 			isset($cache_server['weight']) OR $cache_server['weight'] = $defaults['weight'];
-
 			if (get_class($this->_memcached) === 'Memcache')
 			{
 				// Third parameter is persistance and defaults to TRUE.
@@ -267,12 +236,9 @@ class CI_Cache_memcached extends CI_Driver {
 				);
 			}
 		}
-
 		return TRUE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Is supported
 	 *
@@ -288,8 +254,6 @@ class CI_Cache_memcached extends CI_Driver {
 			log_message('debug', 'The Memcached Extension must be loaded to use Memcached Cache.');
 			return FALSE;
 		}
-
 		return $this->_setup_memcached();
 	}
-
 }

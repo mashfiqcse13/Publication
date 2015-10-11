@@ -1,5 +1,4 @@
 <?php
-
 $language_alias = array(
     'afrikaans'         => 'af',
     'arabic'            => 'ar',

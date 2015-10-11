@@ -20,7 +20,6 @@
  * For details please refer to: http://www.datatables.net
  */
 (function(window, document, undefined) {
-
 var factory = function( $, DataTable ) {
 "use strict";
 /**
@@ -48,7 +47,6 @@ var ColVis = function( oDTSettings, oInit )
 		camelToHungarian( ColVis.defaults, ColVis.defaults, true );
 		camelToHungarian( ColVis.defaults, oInit );
 	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public class variables
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -86,7 +84,6 @@ var ColVis = function( oDTSettings, oInit )
 		 */
 		"abOriginal": []
 	};
-
 	/**
 	 * @namespace Common and useful DOM elements for the class instance
 	 */
@@ -157,7 +154,6 @@ var ColVis = function( oDTSettings, oInit )
 	this._fnConstruct( oInit );
 	return this;
 };
-
 ColVis.prototype = {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -202,7 +198,6 @@ ColVis.prototype = {
 		/* Update the checkboxes */
 		this._fnDrawCallback();
 	},
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods (they are of course public in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -264,7 +259,6 @@ ColVis.prototype = {
 		// Set the initial state
 		this._fnDrawCallback();
 	},
-
 	/**
 	 * Apply any customisation to the settings from the DataTables initialisation
 	 *  @method  _fnApplyCustomisation
@@ -295,7 +289,6 @@ ColVis.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * On each table draw, check the visibility checkboxes as needed. This allows any process to
 	 * update the table's column visibility and ColVis will still be accurate.
@@ -347,7 +340,6 @@ ColVis.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Loop through the groups (provided in the settings) and create a button for each.
 	 *  @method  _fnAddgroups
@@ -368,7 +360,6 @@ ColVis.prototype = {
 			}
 		}
 	},
-
 	/**
 	 * Loop through the columns in the table and as a new button for each one.
 	 *  @method  _fnAddButtons
@@ -422,7 +413,6 @@ ColVis.prototype = {
 		}
 		$(this.dom.collection).append( this.dom.buttons );
 	},
-
 	/**
 	 * Create a button which allows a "restore" action
 	 *  @method  _fnDomRestoreButton
@@ -449,7 +439,6 @@ ColVis.prototype = {
 				that.s.dt.oInstance.fnDraw( false );
 			} )[0];
 	},
-
 	/**
 	 * Create a button which allows show all and show node actions
 	 *  @method  _fnDomShowXButton
@@ -479,7 +468,6 @@ ColVis.prototype = {
 				that.s.dt.oInstance.fnDraw( false );
 			} )[0];
 	},
-
 	/**
 	 * Create the DOM for a show / hide group button
 	 *  @method  _fnDomGroupButton
@@ -513,7 +501,6 @@ ColVis.prototype = {
 				}
 			} )[0];
 	},
-
 	/**
 	 * Create the DOM for a show / hide button
 	 *  @method  _fnDomColumnButton
@@ -578,7 +565,6 @@ ColVis.prototype = {
 				}
 			} )[0];
 	},
-
 	/**
 	 * Get the position in the DataTables instance array of the table for this
 	 * instance of ColVis
@@ -597,7 +583,6 @@ ColVis.prototype = {
 		}
 		return 0;
 	},
-
 	/**
 	 * Create the element used to contain list the columns (it is shown and
 	 * hidden as needed)
@@ -620,7 +605,6 @@ ColVis.prototype = {
 				''
 		} )[0];
 	},
-
 	/**
 	 * An element to be placed on top of the activate button to catch events
 	 *  @method  _fnDomCatcher
@@ -638,7 +622,6 @@ ColVis.prototype = {
 		} );
 		return nCatcher;
 	},
-
 	/**
 	 * Create the element used to shade the background, and capture hide events (it is shown and
 	 * hidden as needed)
@@ -668,7 +651,6 @@ ColVis.prototype = {
 		}
 		return background[0];
 	},
-
 	/**
 	 * Show the show / hide list and the background
 	 *  @method  _fnCollectionShow
@@ -732,7 +714,6 @@ ColVis.prototype = {
 		}
 		this.s.hidden = false;
 	},
-
 	/**
 	 * Hide the show / hide list and the background
 	 *  @method  _fnCollectionHide
@@ -754,7 +735,6 @@ ColVis.prototype = {
 			} );
 		}
 	},
-
 	/**
 	 * Alter the colspan on any fnOpen rows
 	 */
@@ -767,8 +747,6 @@ ColVis.prototype = {
 		}
 	}
 };
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static object methods
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -796,7 +774,6 @@ ColVis.fnRebuild = function ( oTable )
 		}
 	}
 };
-
 ColVis.defaults = {
 	/**
 	 * Mode of activation. Can be 'click' or 'mouseover'
@@ -901,7 +878,6 @@ ColVis.defaults = {
 	 */
 	order: 'column'
 };
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Static object properties
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -913,8 +889,6 @@ ColVis.defaults = {
  *  @default  []
  */
 ColVis.aInstances = [];
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Constants
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -925,7 +899,6 @@ ColVis.aInstances = [];
  *  @default  ColVis
  */
 ColVis.prototype.CLASS = "ColVis";
-
 /**
  * ColVis version
  *  @constant  VERSION
@@ -934,8 +907,6 @@ ColVis.prototype.CLASS = "ColVis";
  */
 ColVis.VERSION = "1.1.2";
 ColVis.prototype.VERSION = ColVis.VERSION;
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Initialisation
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -960,14 +931,11 @@ else
 {
 	alert( "Warning: ColVis requires DataTables 1.7 or greater - www.datatables.net/download");
 }
-
 // Make ColVis accessible from the DataTables instance
 $.fn.dataTable.ColVis = ColVis;
 $.fn.DataTable.ColVis = ColVis;
-
 return ColVis;
 }; // /factory
-
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
 	define( ['jquery', 'datatables'], factory );
@@ -980,5 +948,4 @@ else if ( jQuery && !jQuery.fn.dataTable.ColVis ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
-
 })(window, document);

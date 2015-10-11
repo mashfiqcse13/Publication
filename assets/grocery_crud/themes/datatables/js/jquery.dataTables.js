@@ -19,10 +19,8 @@
  * 
  * For details please refer to: http://www.datatables.net
  */
-
 /*jslint evil: true, undef: true, browser: true */
 /*globals $, jQuery,_fnExternApiFunc,_fnInitialise,_fnInitComplete,_fnLanguageCompat,_fnAddColumn,_fnColumnOptions,_fnAddData,_fnCreateTr,_fnGatherData,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnServerParams,_fnAddOptionsHtml,_fnFeatureHtmlTable,_fnScrollDraw,_fnAdjustColumnSizing,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnBuildSearchArray,_fnBuildSearchRow,_fnFilterCreateSearch,_fnDataToSearch,_fnSort,_fnSortAttachListener,_fnSortingClasses,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnFeatureHtmlLength,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnNodeToDataIndex,_fnVisbleColumns,_fnCalculateEnd,_fnConvertToWidth,_fnCalculateColumnWidths,_fnScrollingWidthAdjust,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnDetectType,_fnSettingsFromNode,_fnGetDataMaster,_fnGetTrNodes,_fnGetTdNodes,_fnEscapeRegex,_fnDeleteIndex,_fnReOrderIndex,_fnColumnOrdering,_fnLog,_fnClearTable,_fnSaveState,_fnLoadState,_fnCreateCookie,_fnReadCookie,_fnDetectHeader,_fnGetUniqueThs,_fnScrollBarWidth,_fnApplyToChildren,_fnMap,_fnGetRowData,_fnGetCellData,_fnSetCellData,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnApplyColumnDefs,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnJsonString,_fnRender,_fnNodeToColumnIndex,_fnInfoMacros*/
-
 (/** @lends <global> */function($, window, document, undefined) {
 	/** 
 	 * DataTables is a plug-in for the jQuery Javascript library. It is a 
@@ -4218,7 +4216,6 @@
 			}
 			return (bArr ? "[" : "{") + json + (bArr ? "]" : "}");
 		};
-
 		/**
 		 * Perform a jQuery selector action on the table's TR elements (from the tbody) and
 		 * return the resulting jQuery object.
@@ -5882,7 +5879,6 @@
 			}
 		} );
 	};
-
 	/**
 	 * Provide a common method for plug-ins to check the version of DataTables being used, in order
 	 * to ensure compatibility.
@@ -5968,7 +5964,6 @@
 		} );
 		return out;
 	};
-
 	/**
 	 * Version string for plug-ins to check compatibility. Allowed format is
 	 * a.b.c.d.e where: a:int, b:int, c:int, d:string(dev|beta), e:int. d and
@@ -5978,7 +5973,6 @@
 	 *  @default Version number
 	 */
 	DataTable.version = "1.9.2";
-
 	/**
 	 * Private data store, containing all of the settings objects that are created for the
 	 * tables on a given page.
@@ -5991,7 +5985,6 @@
 	 *  @private
 	 */
 	DataTable.settings = [];
-
 	/**
 	 * Object models container, for the various models that DataTables has available
 	 * to it. These models define the objects that are used to hold the active state 
@@ -10065,7 +10058,6 @@
 		 */
 		"nScrollFoot": null
 	};
-
 	/**
 	 * Extension object for DataTables that is used to provide all extension options.
 	 * 
@@ -10551,14 +10543,11 @@
 			return null;
 		}
 	] );
-
 	// jQuery aliases
 	$.fn.DataTable = DataTable;
 	$.fn.dataTable = DataTable;
 	$.fn.dataTableSettings = DataTable.settings;
 	$.fn.dataTableExt = DataTable.ext;
-
-
 	// Information about events fired by DataTables - for documentation.
 	/**
 	 * Draw event, fired whenever the table is redrawn on the page, at the same point as
@@ -10569,7 +10558,6 @@
 	 *  @param {event} e jQuery event object
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
-
 	/**
 	 * Filter event, fired when the filtering applied to the table (using the build in global
 	 * global filter, or column filters) is altered.
@@ -10578,7 +10566,6 @@
 	 *  @param {event} e jQuery event object
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
-
 	/**
 	 * Page change event, fired when the paging of the table is altered.
 	 *  @name DataTable#page
@@ -10586,7 +10573,6 @@
 	 *  @param {event} e jQuery event object
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
-
 	/**
 	 * Sort event, fired when the sorting applied to the table is altered.
 	 *  @name DataTable#sort
@@ -10594,7 +10580,6 @@
 	 *  @param {event} e jQuery event object
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
-
 	/**
 	 * DataTables initialisation complete event, fired when the table is fully drawn,
 	 * including Ajax data loaded, if Ajax data is required.
@@ -10605,7 +10590,6 @@
 	 *  @param {object} json The JSON object request from the server - only
 	 *    present if client-side Ajax sourced data is used</li></ol>
 	 */
-
 	/**
 	 * State save event, fired when the table has changed state a new state save is required.
 	 * This method allows modification of the state saving object prior to actually doing the
@@ -10617,7 +10601,6 @@
 	 *  @param {object} oSettings DataTables settings object
 	 *  @param {object} json The state information to be saved
 	 */
-
 	/**
 	 * State load event, fired when the table is loading state from the stored data, but
 	 * prior to the settings object being modified by the saved state - allowing modification
@@ -10628,7 +10611,6 @@
 	 *  @param {object} oSettings DataTables settings object
 	 *  @param {object} json The saved state information
 	 */
-
 	/**
 	 * State loaded event, fired when state has been loaded from stored data and the settings
 	 * object has been modified by the loaded data.
@@ -10638,7 +10620,6 @@
 	 *  @param {object} oSettings DataTables settings object
 	 *  @param {object} json The saved state information
 	 */
-
 	/**
 	 * Processing event, fired when DataTables is doing some kind of processing (be it,
 	 * sort, filter or anything else). Can be used to indicate to the end user that
@@ -10649,7 +10630,6 @@
 	 *  @param {object} oSettings DataTables settings object
 	 *  @param {boolean} bShow Flag for if DataTables is doing processing or not
 	 */
-
 	/**
 	 * Ajax (XHR) event, fired whenever an Ajax request is completed from a request to 
 	 * made to the server for new data (note that this trigger is called in fnServerData,
@@ -10660,7 +10640,6 @@
 	 *  @param {event} e jQuery event object
 	 *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
 	 */
-
 	/**
 	 * Destroy event, fired when the DataTable is destroyed by calling fnDestroy or passing
 	 * the bDestroy:true parameter in the initialisation object. This can be used to remove

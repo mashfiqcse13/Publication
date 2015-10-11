@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Loader Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/libraries/loader.html
  */
 class CI_Loader {
-
 	// All these are set automatically. Don't mess with them.
 	/**
 	 * Nesting level of the output buffering mechanism
@@ -57,63 +55,54 @@ class CI_Loader {
 	 * @var	int
 	 */
 	protected $_ci_ob_level;
-
 	/**
 	 * List of paths to load views from
 	 *
 	 * @var	array
 	 */
 	protected $_ci_view_paths =	array(VIEWPATH	=> TRUE);
-
 	/**
 	 * List of paths to load libraries from
 	 *
 	 * @var	array
 	 */
 	protected $_ci_library_paths =	array(APPPATH, BASEPATH);
-
 	/**
 	 * List of paths to load models from
 	 *
 	 * @var	array
 	 */
 	protected $_ci_model_paths =	array(APPPATH);
-
 	/**
 	 * List of paths to load helpers from
 	 *
 	 * @var	array
 	 */
 	protected $_ci_helper_paths =	array(APPPATH, BASEPATH);
-
 	/**
 	 * List of cached variables
 	 *
 	 * @var	array
 	 */
 	protected $_ci_cached_vars =	array();
-
 	/**
 	 * List of loaded classes
 	 *
 	 * @var	array
 	 */
 	protected $_ci_classes =	array();
-
 	/**
 	 * List of loaded models
 	 *
 	 * @var	array
 	 */
 	protected $_ci_models =	array();
-
 	/**
 	 * List of loaded helpers
 	 *
 	 * @var	array
 	 */
 	protected $_ci_helpers =	array();
-
 	/**
 	 * List of class name mappings
 	 *
@@ -123,9 +112,7 @@ class CI_Loader {
 		'unit_test' => 'unit',
 		'user_agent' => 'agent'
 	);
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -137,12 +124,9 @@ class CI_Loader {
 	{
 		$this->_ci_ob_level = ob_get_level();
 		$this->_ci_classes =& is_loaded();
-
 		log_message('info', 'Loader Class Initialized');
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Initializer
 	 *
@@ -156,9 +140,7 @@ class CI_Loader {
 	{
 		$this->_ci_autoloader();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Is Loaded
 	 *
@@ -173,9 +155,7 @@ class CI_Loader {
 	{
 		return array_search(ucfirst($class), $this->_ci_classes, TRUE);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Library Loader
 	 *
@@ -206,21 +186,16 @@ class CI_Loader {
 					$this->library($key, $params, $value);
 				}
 			}
-
 			return $this;
 		}
-
 		if ($params !== NULL && ! is_array($params))
 		{
 			$params = NULL;
 		}
-
 		$this->_ci_load_library($library, $params, $object_name);
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Model Loader
 	 *
@@ -243,75 +218,58 @@ class CI_Loader {
 			{
 				is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
 			}
-
 			return $this;
 		}
-
 		$path = '';
-
 		// Is the model in a sub-folder? If so, parse out the filename and path.
 		if (($last_slash = strrpos($model, '/')) !== FALSE)
 		{
 			// The path is in front of the last slash
 			$path = substr($model, 0, ++$last_slash);
-
 			// And the model name behind it
 			$model = substr($model, $last_slash);
 		}
-
 		if (empty($name))
 		{
 			$name = $model;
 		}
-
 		if (in_array($name, $this->_ci_models, TRUE))
 		{
 			return $this;
 		}
-
 		$CI =& get_instance();
 		if (isset($CI->$name))
 		{
 			show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
 		}
-
 		if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE))
 		{
 			if ($db_conn === TRUE)
 			{
 				$db_conn = '';
 			}
-
 			$this->database($db_conn, FALSE, TRUE);
 		}
-
 		if ( ! class_exists('CI_Model', FALSE))
 		{
 			load_class('Model', 'core');
 		}
-
 		$model = ucfirst(strtolower($model));
-
 		foreach ($this->_ci_model_paths as $mod_path)
 		{
 			if ( ! file_exists($mod_path.'models/'.$path.$model.'.php'))
 			{
 				continue;
 			}
-
 			require_once($mod_path.'models/'.$path.$model.'.php');
-
 			$this->_ci_models[] = $name;
 			$CI->$name = new $model();
 			return $this;
 		}
-
 		// couldn't find the model
 		show_error('Unable to locate the model you have specified: '.$model);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database Loader
 	 *
@@ -327,31 +285,24 @@ class CI_Loader {
 	{
 		// Grab the super object
 		$CI =& get_instance();
-
 		// Do we even need to load the database class?
 		if ($return === FALSE && $query_builder === NULL && isset($CI->db) && is_object($CI->db) && ! empty($CI->db->conn_id))
 		{
 			return FALSE;
 		}
-
 		require_once(BASEPATH.'database/DB.php');
-
 		if ($return === TRUE)
 		{
 			return DB($params, $query_builder);
 		}
-
 		// Initialize the db variable. Needed to prevent
 		// reference errors with some configurations
 		$CI->db = '';
-
 		// Load the DB class
 		$CI->db =& DB($params, $query_builder);
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Load the Database Utilities Class
 	 *
@@ -362,28 +313,22 @@ class CI_Loader {
 	public function dbutil($db = NULL, $return = FALSE)
 	{
 		$CI =& get_instance();
-
 		if ( ! is_object($db) OR ! ($db instanceof CI_DB))
 		{
 			class_exists('CI_DB', FALSE) OR $this->database();
 			$db =& $CI->db;
 		}
-
 		require_once(BASEPATH.'database/DB_utility.php');
 		require_once(BASEPATH.'database/drivers/'.$db->dbdriver.'/'.$db->dbdriver.'_utility.php');
 		$class = 'CI_DB_'.$db->dbdriver.'_utility';
-
 		if ($return === TRUE)
 		{
 			return new $class($db);
 		}
-
 		$CI->dbutil = new $class($db);
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Load the Database Forge Class
 	 *
@@ -399,10 +344,8 @@ class CI_Loader {
 			class_exists('CI_DB', FALSE) OR $this->database();
 			$db =& $CI->db;
 		}
-
 		require_once(BASEPATH.'database/DB_forge.php');
 		require_once(BASEPATH.'database/drivers/'.$db->dbdriver.'/'.$db->dbdriver.'_forge.php');
-
 		if ( ! empty($db->subdriver))
 		{
 			$driver_path = BASEPATH.'database/drivers/'.$db->dbdriver.'/subdrivers/'.$db->dbdriver.'_'.$db->subdriver.'_forge.php';
@@ -416,18 +359,14 @@ class CI_Loader {
 		{
 			$class = 'CI_DB_'.$db->dbdriver.'_forge';
 		}
-
 		if ($return === TRUE)
 		{
 			return new $class($db);
 		}
-
 		$CI->dbforge = new $class($db);
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * View Loader
 	 *
@@ -444,9 +383,7 @@ class CI_Loader {
 	{
 		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Generic File Loader
 	 *
@@ -458,9 +395,7 @@ class CI_Loader {
 	{
 		return $this->_ci_load(array('_ci_path' => $path, '_ci_return' => $return));
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Set Variables
 	 *
@@ -479,9 +414,7 @@ class CI_Loader {
 		{
 			$vars = array($vars => $val);
 		}
-
 		$vars = $this->_ci_object_to_array($vars);
-
 		if (is_array($vars) && count($vars) > 0)
 		{
 			foreach ($vars as $key => $val)
@@ -489,12 +422,9 @@ class CI_Loader {
 				$this->_ci_cached_vars[$key] = $val;
 			}
 		}
-
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Clear Cached Variables
 	 *
@@ -507,9 +437,7 @@ class CI_Loader {
 		$this->_ci_cached_vars = array();
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get Variable
 	 *
@@ -522,9 +450,7 @@ class CI_Loader {
 	{
 		return isset($this->_ci_cached_vars[$key]) ? $this->_ci_cached_vars[$key] : NULL;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get Variables
 	 *
@@ -536,9 +462,7 @@ class CI_Loader {
 	{
 		return $this->_ci_cached_vars;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Helper Loader
 	 *
@@ -553,7 +477,6 @@ class CI_Loader {
 			{
 				continue;
 			}
-
 			// Is this a helper extension request?
 			$ext_helper = config_item('subclass_prefix').$helper;
 			$ext_loaded = FALSE;
@@ -565,7 +488,6 @@ class CI_Loader {
 					$ext_loaded = TRUE;
 				}
 			}
-
 			// If we have loaded extensions - check if the base one is here
 			if ($ext_loaded === TRUE)
 			{
@@ -574,38 +496,31 @@ class CI_Loader {
 				{
 					show_error('Unable to load the requested file: helpers/'.$helper.'.php');
 				}
-
 				include_once($base_helper);
 				$this->_ci_helpers[$helper] = TRUE;
 				log_message('info', 'Helper loaded: '.$helper);
 				continue;
 			}
-
 			// No extensions found ... try loading regular helpers and/or overrides
 			foreach ($this->_ci_helper_paths as $path)
 			{
 				if (file_exists($path.'helpers/'.$helper.'.php'))
 				{
 					include_once($path.'helpers/'.$helper.'.php');
-
 					$this->_ci_helpers[$helper] = TRUE;
 					log_message('info', 'Helper loaded: '.$helper);
 					break;
 				}
 			}
-
 			// unable to load the helper
 			if ( ! isset($this->_ci_helpers[$helper]))
 			{
 				show_error('Unable to load the requested file: helpers/'.$helper.'.php');
 			}
 		}
-
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Load Helpers
 	 *
@@ -620,9 +535,7 @@ class CI_Loader {
 	{
 		return $this->helper($helpers);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Language Loader
 	 *
@@ -637,9 +550,7 @@ class CI_Loader {
 		get_instance()->lang->load($files, $lang);
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Config Loader
 	 *
@@ -655,9 +566,7 @@ class CI_Loader {
 	{
 		return get_instance()->config->load($file, $use_sections, $fail_gracefully);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Driver Loader
 	 *
@@ -678,32 +587,26 @@ class CI_Loader {
 			{
 				$this->driver($driver);
 			}
-
 			return $this;
 		}
 		elseif (empty($library))
 		{
 			return FALSE;
 		}
-
 		if ( ! class_exists('CI_Driver_Library', FALSE))
 		{
 			// We aren't instantiating an object here, just making the base class available
 			require BASEPATH.'libraries/Driver.php';
 		}
-
 		// We can save the loader some time since Drivers will *always* be in a subfolder,
 		// and typically identically named to the library
 		if ( ! strpos($library, '/'))
 		{
 			$library = ucfirst($library).'/'.$library;
 		}
-
 		return $this->library($library, $params, $object_name);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Add Package Path
 	 *
@@ -722,22 +625,16 @@ class CI_Loader {
 	public function add_package_path($path, $view_cascade = TRUE)
 	{
 		$path = rtrim($path, '/').'/';
-
 		array_unshift($this->_ci_library_paths, $path);
 		array_unshift($this->_ci_model_paths, $path);
 		array_unshift($this->_ci_helper_paths, $path);
-
 		$this->_ci_view_paths = array($path.'views/' => $view_cascade) + $this->_ci_view_paths;
-
 		// Add config file path
 		$config =& $this->_ci_get_component('config');
 		$config->_config_paths[] = $path;
-
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get Package Paths
 	 *
@@ -750,9 +647,7 @@ class CI_Loader {
 	{
 		return ($include_base === TRUE) ? $this->_ci_library_paths : $this->_ci_model_paths;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Remove Package Path
 	 *
@@ -766,7 +661,6 @@ class CI_Loader {
 	public function remove_package_path($path = '')
 	{
 		$config =& $this->_ci_get_component('config');
-
 		if ($path === '')
 		{
 			array_shift($this->_ci_library_paths);
@@ -785,30 +679,24 @@ class CI_Loader {
 					unset($this->{$var}[$key]);
 				}
 			}
-
 			if (isset($this->_ci_view_paths[$path.'views/']))
 			{
 				unset($this->_ci_view_paths[$path.'views/']);
 			}
-
 			if (($key = array_search($path, $config->_config_paths)) !== FALSE)
 			{
 				unset($config->_config_paths[$key]);
 			}
 		}
-
 		// make sure the application default paths are still in the array
 		$this->_ci_library_paths = array_unique(array_merge($this->_ci_library_paths, array(APPPATH, BASEPATH)));
 		$this->_ci_helper_paths = array_unique(array_merge($this->_ci_helper_paths, array(APPPATH, BASEPATH)));
 		$this->_ci_model_paths = array_unique(array_merge($this->_ci_model_paths, array(APPPATH)));
 		$this->_ci_view_paths = array_merge($this->_ci_view_paths, array(APPPATH.'views/' => TRUE));
 		$config->_config_paths = array_unique(array_merge($config->_config_paths, array(APPPATH)));
-
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Internal CI Data Loader
 	 *
@@ -829,9 +717,7 @@ class CI_Loader {
 		{
 			$$_ci_val = isset($_ci_data[$_ci_val]) ? $_ci_data[$_ci_val] : FALSE;
 		}
-
 		$file_exists = FALSE;
-
 		// Set the path to the requested file
 		if (is_string($_ci_path) && $_ci_path !== '')
 		{
@@ -842,7 +728,6 @@ class CI_Loader {
 		{
 			$_ci_ext = pathinfo($_ci_view, PATHINFO_EXTENSION);
 			$_ci_file = ($_ci_ext === '') ? $_ci_view.'.php' : $_ci_view;
-
 			foreach ($this->_ci_view_paths as $_ci_view_file => $cascade)
 			{
 				if (file_exists($_ci_view_file.$_ci_file))
@@ -851,19 +736,16 @@ class CI_Loader {
 					$file_exists = TRUE;
 					break;
 				}
-
 				if ( ! $cascade)
 				{
 					break;
 				}
 			}
 		}
-
 		if ( ! $file_exists && ! file_exists($_ci_path))
 		{
 			show_error('Unable to load the requested file: '.$_ci_file);
 		}
-
 		// This allows anything loaded using $this->load (views, files, etc.)
 		// to become accessible from within the Controller and Model functions.
 		$_ci_CI =& get_instance();
@@ -874,7 +756,6 @@ class CI_Loader {
 				$this->$_ci_key =& $_ci_CI->$_ci_key;
 			}
 		}
-
 		/*
 		 * Extract and cache variables
 		 *
@@ -888,7 +769,6 @@ class CI_Loader {
 			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
 		}
 		extract($this->_ci_cached_vars);
-
 		/*
 		 * Buffer the output
 		 *
@@ -901,7 +781,6 @@ class CI_Loader {
 		 *	then stop the timer it won't be accurate.
 		 */
 		ob_start();
-
 		// If the PHP installation does not support short tags we'll
 		// do a little string replacement, changing the short tags
 		// to standard PHP echo statements.
@@ -913,9 +792,7 @@ class CI_Loader {
 		{
 			include($_ci_path); // include() vs include_once() allows for multiple views with the same name
 		}
-
 		log_message('info', 'File loaded: '.$_ci_path);
-
 		// Return the file data if requested
 		if ($_ci_return === TRUE)
 		{
@@ -923,7 +800,6 @@ class CI_Loader {
 			@ob_end_clean();
 			return $buffer;
 		}
-
 		/*
 		 * Flush the buffer... or buff the flusher?
 		 *
@@ -942,12 +818,9 @@ class CI_Loader {
 			$_ci_CI->output->append_output(ob_get_contents());
 			@ob_end_clean();
 		}
-
 		return $this;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Internal CI Library Loader
 	 *
@@ -965,14 +838,12 @@ class CI_Loader {
 		// The directory path can be included as part of the class name,
 		// but we don't want a leading slash
 		$class = str_replace('.php', '', trim($class, '/'));
-
 		// Was the path included with the class name?
 		// We look for a slash to determine this
 		if (($last_slash = strrpos($class, '/')) !== FALSE)
 		{
 			// Extract the path
 			$subdir = substr($class, 0, ++$last_slash);
-
 			// Get the filename from the path
 			$class = substr($class, $last_slash);
 		}
@@ -980,15 +851,12 @@ class CI_Loader {
 		{
 			$subdir = '';
 		}
-
 		$class = ucfirst($class);
-
 		// Is this a stock library? There are a few special conditions if so ...
 		if (file_exists(BASEPATH.'libraries/'.$subdir.$class.'.php'))
 		{
 			return $this->_ci_load_stock_library($class, $subdir, $params, $object_name);
 		}
-
 		// Let's search for the requested library file and load it.
 		foreach ($this->_ci_library_paths as $path)
 		{
@@ -997,9 +865,7 @@ class CI_Loader {
 			{
 				continue;
 			}
-
 			$filepath = $path.'libraries/'.$subdir.$class.'.php';
-
 			// Safety: Was the class already loaded by a previous call?
 			if (class_exists($class, FALSE))
 			{
@@ -1014,7 +880,6 @@ class CI_Loader {
 						return $this->_ci_init_library($class, '', $params, $object_name);
 					}
 				}
-
 				log_message('debug', $class.' class already loaded. Second attempt ignored.');
 				return;
 			}
@@ -1023,24 +888,19 @@ class CI_Loader {
 			{
 				continue;
 			}
-
 			include_once($filepath);
 			return $this->_ci_init_library($class, '', $params, $object_name);
 		}
-
 		// One last attempt. Maybe the library is in a subdirectory, but it wasn't specified?
 		if ($subdir === '')
 		{
 			return $this->_ci_load_library($class.'/'.$class, $params, $object_name);
 		}
-
 		// If we got this far we were unable to find the requested class.
 		log_message('error', 'Unable to load the requested class: '.$class);
 		show_error('Unable to load the requested class: '.$class);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Internal CI Stock Library Loader
 	 *
@@ -1056,14 +916,12 @@ class CI_Loader {
 	protected function _ci_load_stock_library($library_name, $file_path, $params, $object_name)
 	{
 		$prefix = 'CI_';
-
 		if (class_exists($prefix.$library_name, FALSE))
 		{
 			if (class_exists(config_item('subclass_prefix').$library_name, FALSE))
 			{
 				$prefix = config_item('subclass_prefix');
 			}
-
 			// Before we deem this to be a duplicate request, let's see
 			// if a custom object name is being supplied. If so, we'll
 			// return a new instance of the object
@@ -1075,16 +933,13 @@ class CI_Loader {
 					return $this->_ci_init_library($library_name, $prefix, $params, $object_name);
 				}
 			}
-
 			log_message('debug', $library_name.' class already loaded. Second attempt ignored.');
 			return;
 		}
-
 		$paths = $this->_ci_library_paths;
 		array_pop($paths); // BASEPATH
 		array_pop($paths); // APPPATH (needs to be the first path checked)
 		array_unshift($paths, APPPATH);
-
 		foreach ($paths as $path)
 		{
 			if (file_exists($path = $path.'libraries/'.$file_path.$library_name.'.php'))
@@ -1101,9 +956,7 @@ class CI_Loader {
 				}
 			}
 		}
-
 		include_once(BASEPATH.'libraries/'.$file_path.$library_name.'.php');
-
 		// Check for extensions
 		$subclass = config_item('subclass_prefix').$library_name;
 		foreach ($paths as $path)
@@ -1122,12 +975,9 @@ class CI_Loader {
 				}
 			}
 		}
-
 		return $this->_ci_init_library($library_name, $prefix, $params, $object_name);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Internal CI Library Instantiator
 	 *
@@ -1150,7 +1000,6 @@ class CI_Loader {
 		{
 			// Fetch the config paths containing any package paths
 			$config_component = $this->_ci_get_component('config');
-
 			if (is_array($config_component->_config_paths))
 			{
 				$found = FALSE;
@@ -1169,7 +1018,6 @@ class CI_Loader {
 						include($path.'config/'.ucfirst(strtolower($class)).'.php');
 						$found = TRUE;
 					}
-
 					if (file_exists($path.'config/'.ENVIRONMENT.'/'.strtolower($class).'.php'))
 					{
 						include($path.'config/'.ENVIRONMENT.'/'.strtolower($class).'.php');
@@ -1180,7 +1028,6 @@ class CI_Loader {
 						include($path.'config/'.ENVIRONMENT.'/'.ucfirst(strtolower($class)).'.php');
 						$found = TRUE;
 					}
-
 					// Break on the first found configuration, thus package
 					// files are not overridden by default paths
 					if ($found === TRUE)
@@ -1190,16 +1037,13 @@ class CI_Loader {
 				}
 			}
 		}
-
 		$class_name = $prefix.$class;
-
 		// Is the class name valid?
 		if ( ! class_exists($class_name, FALSE))
 		{
 			log_message('error', 'Non-existent class: '.$class_name);
 			show_error('Non-existent class: '.$class_name);
 		}
-
 		// Set the variable name we will assign the class to
 		// Was a custom class name supplied? If so we'll use it
 		if (empty($object_name))
@@ -1210,7 +1054,6 @@ class CI_Loader {
 				$object_name = $this->_ci_varmap[$object_name];
 			}
 		}
-
 		// Don't overwrite existing properties
 		$CI =& get_instance();
 		if (isset($CI->$object_name))
@@ -1220,21 +1063,16 @@ class CI_Loader {
 				log_message('debug', $class_name." has already been instantiated as '".$object_name."'. Second attempt aborted.");
 				return;
 			}
-
 			show_error("Resource '".$object_name."' already exists and is not a ".$class_name." instance.");
 		}
-
 		// Save the class name and object name
 		$this->_ci_classes[$object_name] = $class;
-
 		// Instantiate the class
 		$CI->$object_name = isset($config)
 			? new $class_name($config)
 			: new $class_name();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * CI Autoloader
 	 *
@@ -1249,17 +1087,14 @@ class CI_Loader {
 		{
 			include(APPPATH.'config/autoload.php');
 		}
-
 		if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/autoload.php'))
 		{
 			include(APPPATH.'config/'.ENVIRONMENT.'/autoload.php');
 		}
-
 		if ( ! isset($autoload))
 		{
 			return;
 		}
-
 		// Autoload packages
 		if (isset($autoload['packages']))
 		{
@@ -1268,7 +1103,6 @@ class CI_Loader {
 				$this->add_package_path($package_path);
 			}
 		}
-
 		// Load any custom config file
 		if (count($autoload['config']) > 0)
 		{
@@ -1277,7 +1111,6 @@ class CI_Loader {
 				$this->config($val);
 			}
 		}
-
 		// Autoload helpers and languages
 		foreach (array('helper', 'language') as $type)
 		{
@@ -1286,7 +1119,6 @@ class CI_Loader {
 				$this->$type($autoload[$type]);
 			}
 		}
-
 		// Autoload drivers
 		if (isset($autoload['drivers']))
 		{
@@ -1295,7 +1127,6 @@ class CI_Loader {
 				$this->driver($item);
 			}
 		}
-
 		// Load libraries
 		if (isset($autoload['libraries']) && count($autoload['libraries']) > 0)
 		{
@@ -1305,23 +1136,19 @@ class CI_Loader {
 				$this->database();
 				$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
 			}
-
 			// Load all other libraries
 			foreach ($autoload['libraries'] as $item)
 			{
 				$this->library($item);
 			}
 		}
-
 		// Autoload models
 		if (isset($autoload['model']))
 		{
 			$this->model($autoload['model']);
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * CI Object to Array translator
 	 *
@@ -1335,9 +1162,7 @@ class CI_Loader {
 	{
 		return is_object($object) ? get_object_vars($object) : $object;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * CI Component getter
 	 *
@@ -1351,9 +1176,7 @@ class CI_Loader {
 		$CI =& get_instance();
 		return $CI->$component;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Prep filename
 	 *
@@ -1376,9 +1199,7 @@ class CI_Loader {
 			{
 				$filename[$key] = strtolower(str_replace(array($extension, '.php'), '', $val).$extension);
 			}
-
 			return $filename;
 		}
 	}
-
 }

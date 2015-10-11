@@ -14,21 +14,16 @@
  *
  * There's absolutely no warranty.
  */
-
 #include <string.h>
 #include <openssl/md5.h>
-
 #ifdef TEST
 #include <stdio.h>
 #endif
-
 static char *itoa64 =
 	"./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
 static void encode64(char *dst, char *src, int count)
 {
 	int i, value;
-
 	i = 0;
 	do {
 		value = (unsigned char)src[i++];
@@ -46,7 +41,6 @@ static void encode64(char *dst, char *src, int count)
 		*dst++ = itoa64[(value >> 18) & 0x3f];
 	} while (i < count);
 }
-
 char *crypt_private(char *password, char *setting)
 {
 	static char output[32];
@@ -54,32 +48,25 @@ char *crypt_private(char *password, char *setting)
 	char hash[MD5_DIGEST_LENGTH];
 	char *p, *salt;
 	int count_log2, length, count;
-
 	strcpy(output, "*0");
 	if (!strncmp(setting, output, 2))
 		output[1] = '1';
-
 	if (strncmp(setting, "$P$", 3))
 		return output;
-
 	p = strchr(itoa64, setting[3]);
 	if (!p)
 		return output;
 	count_log2 = p - itoa64;
 	if (count_log2 < 7 || count_log2 > 31)
 		return output;
-
 	salt = setting + 4;
 	if (strlen(salt) < 8)
 		return output;
-
 	length = strlen(password);
-
 	MD5_Init(&ctx);
 	MD5_Update(&ctx, salt, 8);
 	MD5_Update(&ctx, password, length);
 	MD5_Final(hash, &ctx);
-
 	count = 1 << count_log2;
 	do {
 		MD5_Init(&ctx);
@@ -87,20 +74,15 @@ char *crypt_private(char *password, char *setting)
 		MD5_Update(&ctx, password, length);
 		MD5_Final(hash, &ctx);
 	} while (--count);
-
 	memcpy(output, setting, 12);
 	encode64(&output[12], hash, MD5_DIGEST_LENGTH);
-
 	return output;
 }
-
 #ifdef TEST
 int main(int argc, char **argv)
 {
 	if (argc != 3) return 1;
-
 	puts(crypt_private(argv[1], argv[2]));
-
 	return 0;
 }
 #endif

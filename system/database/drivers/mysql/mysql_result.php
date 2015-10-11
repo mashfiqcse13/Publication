@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * MySQL Result Class
  *
@@ -47,7 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_mysql_result extends CI_DB_result {
-
 	/**
 	 * Class constructor
 	 *
@@ -57,14 +55,11 @@ class CI_DB_mysql_result extends CI_DB_result {
 	public function __construct(&$driver_object)
 	{
 		parent::__construct($driver_object);
-
 		// Required, due to mysql_data_seek() causing nightmares
 		// with empty result sets
 		$this->num_rows = mysql_num_rows($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -74,9 +69,7 @@ class CI_DB_mysql_result extends CI_DB_result {
 	{
 		return $this->num_rows;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -86,9 +79,7 @@ class CI_DB_mysql_result extends CI_DB_result {
 	{
 		return mysql_num_fields($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -104,12 +95,9 @@ class CI_DB_mysql_result extends CI_DB_result {
 		{
 			$field_names[] = $field->name;
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -128,12 +116,9 @@ class CI_DB_mysql_result extends CI_DB_result {
 			$retval[$i]->max_length		= mysql_field_len($this->result_id, $i);
 			$retval[$i]->primary_key	= (int) (strpos(mysql_field_flags($this->result_id, $i), 'primary_key') !== FALSE);
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -147,9 +132,7 @@ class CI_DB_mysql_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -166,9 +149,7 @@ class CI_DB_mysql_result extends CI_DB_result {
 			? mysql_data_seek($this->result_id, $n)
 			: FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -180,9 +161,7 @@ class CI_DB_mysql_result extends CI_DB_result {
 	{
 		return mysql_fetch_assoc($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -195,5 +174,4 @@ class CI_DB_mysql_result extends CI_DB_result {
 	{
 		return mysql_fetch_object($this->result_id, $class_name);
 	}
-
 }

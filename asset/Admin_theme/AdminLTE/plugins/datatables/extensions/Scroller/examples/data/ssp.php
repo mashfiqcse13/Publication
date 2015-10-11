@@ -37,7 +37,6 @@ $sql_details = array(
 	'db'   => '',
 	'host' => ''
 );
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * If you just want to use the basic configuration for DataTables with PHP
  * server-side, there is no need to edit below this line.

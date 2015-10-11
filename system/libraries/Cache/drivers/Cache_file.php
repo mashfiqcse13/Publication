@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter File Caching Class
  *
@@ -47,14 +46,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link
  */
 class CI_Cache_file extends CI_Driver {
-
 	/**
 	 * Directory in which to save cache files
 	 *
 	 * @var string
 	 */
 	protected $_cache_path;
-
 	/**
 	 * Initialize file-based cache
 	 *
@@ -67,9 +64,7 @@ class CI_Cache_file extends CI_Driver {
 		$path = $CI->config->item('cache_path');
 		$this->_cache_path = ($path === '') ? APPPATH.'cache/' : $path;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Fetch from cache
 	 *
@@ -81,9 +76,7 @@ class CI_Cache_file extends CI_Driver {
 		$data = $this->_get($id);
 		return is_array($data) ? $data['data'] : FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Save into cache
 	 *
@@ -100,18 +93,14 @@ class CI_Cache_file extends CI_Driver {
 			'ttl'		=> $ttl,
 			'data'		=> $data
 		);
-
 		if (write_file($this->_cache_path.$id, serialize($contents)))
 		{
 			chmod($this->_cache_path.$id, 0640);
 			return TRUE;
 		}
-
 		return FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Delete from Cache
 	 *
@@ -122,9 +111,7 @@ class CI_Cache_file extends CI_Driver {
 	{
 		return file_exists($this->_cache_path.$id) ? unlink($this->_cache_path.$id) : FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Increment a raw value
 	 *
@@ -135,7 +122,6 @@ class CI_Cache_file extends CI_Driver {
 	public function increment($id, $offset = 1)
 	{
 		$data = $this->_get($id);
-
 		if ($data === FALSE)
 		{
 			$data = array('data' => 0, 'ttl' => 60);
@@ -144,15 +130,12 @@ class CI_Cache_file extends CI_Driver {
 		{
 			return FALSE;
 		}
-
 		$new_value = $data['data'] + $offset;
 		return $this->save($id, $new_value, $data['ttl'])
 			? $new_value
 			: FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Decrement a raw value
 	 *
@@ -163,7 +146,6 @@ class CI_Cache_file extends CI_Driver {
 	public function decrement($id, $offset = 1)
 	{
 		$data = $this->_get($id);
-
 		if ($data === FALSE)
 		{
 			$data = array('data' => 0, 'ttl' => 60);
@@ -172,15 +154,12 @@ class CI_Cache_file extends CI_Driver {
 		{
 			return FALSE;
 		}
-
 		$new_value = $data['data'] - $offset;
 		return $this->save($id, $new_value, $data['ttl'])
 			? $new_value
 			: FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Clean the Cache
 	 *
@@ -190,9 +169,7 @@ class CI_Cache_file extends CI_Driver {
 	{
 		return delete_files($this->_cache_path, FALSE, TRUE);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Cache Info
 	 *
@@ -205,9 +182,7 @@ class CI_Cache_file extends CI_Driver {
 	{
 		return get_dir_file_info($this->_cache_path);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get Cache Metadata
 	 *
@@ -220,29 +195,22 @@ class CI_Cache_file extends CI_Driver {
 		{
 			return FALSE;
 		}
-
 		$data = unserialize(file_get_contents($this->_cache_path.$id));
-
 		if (is_array($data))
 		{
 			$mtime = filemtime($this->_cache_path.$id);
-
 			if ( ! isset($data['ttl']))
 			{
 				return FALSE;
 			}
-
 			return array(
 				'expire' => $mtime + $data['ttl'],
 				'mtime'	 => $mtime
 			);
 		}
-
 		return FALSE;
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Is supported
 	 *
@@ -254,9 +222,7 @@ class CI_Cache_file extends CI_Driver {
 	{
 		return is_really_writable($this->_cache_path);
 	}
-
 	// ------------------------------------------------------------------------
-
 	/**
 	 * Get all data
 	 *
@@ -271,16 +237,12 @@ class CI_Cache_file extends CI_Driver {
 		{
 			return FALSE;
 		}
-
 		$data = unserialize(file_get_contents($this->_cache_path.$id));
-
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
 			unlink($this->_cache_path.$id);
 			return FALSE;
 		}
-
 		return $data;
 	}
-
 }

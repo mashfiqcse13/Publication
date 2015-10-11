@@ -28,7 +28,6 @@ var mySettings = {
 		{name:'Preview', className:'preview',  call:'preview'}
 	]
 };
-
 $(document).ready(function()	{
 	$('.texteditor').markItUp(mySettings);
 	$( 'textarea.mini-texteditor' ).markItUp(mySettings);

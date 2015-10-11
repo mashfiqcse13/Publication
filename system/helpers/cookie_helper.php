@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Cookie Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/cookie_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('set_cookie'))
 {
 	/**
@@ -73,9 +70,7 @@ if ( ! function_exists('set_cookie'))
 		get_instance()->input->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('get_cookie'))
 {
 	/**
@@ -92,9 +87,7 @@ if ( ! function_exists('get_cookie'))
 		return get_instance()->input->cookie($prefix.$index, $xss_clean);
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('delete_cookie'))
 {
 	/**

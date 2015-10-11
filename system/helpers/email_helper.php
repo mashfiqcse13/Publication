@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Email Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/email_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('valid_email'))
 {
 	/**
@@ -63,9 +60,7 @@ if ( ! function_exists('valid_email'))
 		return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('send_email'))
 {
 	/**

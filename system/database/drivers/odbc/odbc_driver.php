@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * ODBC Database Adapter Class
  *
@@ -51,23 +50,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_odbc_driver extends CI_DB {
-
 	/**
 	 * Database driver
 	 *
 	 * @var	string
 	 */
 	public $dbdriver = 'odbc';
-
 	/**
 	 * Database schema
 	 *
 	 * @var	string
 	 */
 	public $schema = 'public';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Identifier escape character
 	 *
@@ -76,23 +71,19 @@ class CI_DB_odbc_driver extends CI_DB {
 	 * @var	string
 	 */
 	protected $_escape_char = '';
-
 	/**
 	 * ESCAPE statement string
 	 *
 	 * @var	string
 	 */
 	protected $_like_escape_str = " {escape '%s'} ";
-
 	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var	array
 	 */
 	protected $_random_keyword = array('RND()', 'RND(%d)');
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -102,16 +93,13 @@ class CI_DB_odbc_driver extends CI_DB {
 	public function __construct($params)
 	{
 		parent::__construct($params);
-
 		// Legacy support for DSN in the hostname field
 		if (empty($this->dsn))
 		{
 			$this->dsn = $this->hostname;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Non-persistent database connection
 	 *
@@ -124,9 +112,7 @@ class CI_DB_odbc_driver extends CI_DB {
 			? odbc_pconnect($this->dsn, $this->username, $this->password)
 			: odbc_connect($this->dsn, $this->username, $this->password);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Execute the query
 	 *
@@ -137,9 +123,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return odbc_exec($this->conn_id, $sql);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
@@ -153,17 +137,13 @@ class CI_DB_odbc_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
 		$this->_trans_failure = ($test_mode === TRUE);
-
 		return odbc_autocommit($this->conn_id, FALSE);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
@@ -176,14 +156,11 @@ class CI_DB_odbc_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		$ret = odbc_commit($this->conn_id);
 		odbc_autocommit($this->conn_id, TRUE);
 		return $ret;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
@@ -196,14 +173,11 @@ class CI_DB_odbc_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		$ret = odbc_rollback($this->conn_id);
 		odbc_autocommit($this->conn_id, TRUE);
 		return $ret;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Platform-dependant string escape
 	 *
@@ -214,9 +188,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return remove_invisible_characters($str);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Affected Rows
 	 *
@@ -226,9 +198,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return odbc_num_rows($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
@@ -238,9 +208,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return ($this->db->db_debug) ? $this->db->display_error('db_unsupported_feature') : FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show table query
 	 *
@@ -252,18 +220,14 @@ class CI_DB_odbc_driver extends CI_DB {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '".$this->schema."'";
-
 		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
 		{
 			return $sql." AND table_name LIKE '".$this->escape_like_str($this->dbprefix)."%' "
 				.sprintf($this->_like_escape_str, $this->_like_escape_chr);
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -276,9 +240,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return 'SHOW COLUMNS FROM '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data query
 	 *
@@ -291,9 +253,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return 'SELECT TOP 1 FROM '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Error
 	 *
@@ -306,9 +266,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return array('code' => odbc_error($this->conn_id), 'message' => odbc_errormsg($this->conn_id));
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Update statement
 	 *
@@ -324,9 +282,7 @@ class CI_DB_odbc_driver extends CI_DB {
 		$this->qb_orderby = array();
 		return parent::_update($table, $values);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -342,9 +298,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		return 'DELETE FROM '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Delete statement
 	 *
@@ -358,9 +312,7 @@ class CI_DB_odbc_driver extends CI_DB {
 		$this->qb_limit = FALSE;
 		return parent::_delete($table);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -370,5 +322,4 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		odbc_close($this->conn_id);
 	}
-
 }

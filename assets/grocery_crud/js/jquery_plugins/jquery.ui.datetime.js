@@ -7,7 +7,6 @@
 // OK sprache durch parameter reingeben
 // OK mehrere felder bedienen
 // OK datepicker als klickbar machen
-
 /** fixes / 090521:
 	- convert widget time to am/pm if american mode is on
 	- show correct date from input
@@ -19,11 +18,9 @@
 	- write date from datepicker
 */
 jQuery.fn.datetime = function() {
-
 	var userLang 		= arguments[0]['userLang'] || 'en';
 	var b24Hour			= !(arguments[0]['americanMode'] || false);	
 	var markerClass		= 'hasDateTime';
-
 	return this.each(function(){
 			 
 				var datepicker_def 	= {
@@ -34,7 +31,6 @@ jQuery.fn.datetime = function() {
 							onSelect: writeDate						
 				};			
 				var lang = {};
-
 				lang['en'] = {
 								time: 	'Time',
 								hour:	'Hour',
@@ -84,7 +80,6 @@ jQuery.fn.datetime = function() {
 						$('#datepicker').datepicker();
 						$(document).mousedown(closePickPlug);			
 						$('#pickerplug .ui-datepicker-close').click(closePickPlug);							
-
 	 // Slider
 						$('#hourSlider').slider({
 							orientation: "vertical",   
@@ -140,7 +135,6 @@ jQuery.fn.datetime = function() {
 							//}
 						});					
 					}
-
 					$('.dayPeriod').toggle(!b24Hour);
 					$('#text_time').text(loadedLang['time']);
 					$('#text_hour').text(loadedLang['hour']);
@@ -169,19 +163,15 @@ jQuery.fn.datetime = function() {
 												$.datepicker.regional['']));	
 						$('#datepicker').datepicker('option', $.extend($(this).data('sets')));												
 					}					
-
 					parseTime(this);
 					if ($('#pickerplug').css('display') == 'none') { 											
 						$('#pickerplug').show('normal');
 					}
 					$(this).bind('keyup',parseTime);
 					//$(this).bind('slider',writeTime);
-
 					$(this).addClass(markerClass);
-
 					$('#pickerplug').data('inputfield',this);
 				});
-
 				function parseTime (obj) {
 					if($(obj).val() != '')
 						var time = ($(obj).val() || $(this).val()).split(" ");
@@ -200,7 +190,6 @@ jQuery.fn.datetime = function() {
 					var minute 	= time[1] || '00';
 					writeTime(hour,'hour');
 					writeTime(minute,'minute');
-
 					$('#hourSlider').slider('option', 'value', hour);
 					$('#minuteSlider').slider('option', 'value', minute);	
 					var zero_string = "0";
@@ -257,7 +246,6 @@ jQuery.fn.datetime = function() {
 					return time;
 				}				
 				function writeDate (text,type) {
-
 					switch (type) {
 						case 'time':
 							$('#pickerplug').data('lasttime',text+':00');						
@@ -270,7 +258,6 @@ jQuery.fn.datetime = function() {
 					);
 				}
 				function closePickPlug (event) {
-
 					if (($(event.target).parents('#pickerplug').length ||
 						$(event.target).hasClass(markerClass)) &&
 						!$(event.target).hasClass('ui-datepicker-close')) {					

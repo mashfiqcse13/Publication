@@ -77,8 +77,6 @@
 	$lang['list_export'] 			= "Excel форматаар хадгалах";
 	$lang['list_print'] 			= "Хэвлэх";
 	$lang['minimize_maximize'] 		= 'Хаах/Нээх';
-
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
 

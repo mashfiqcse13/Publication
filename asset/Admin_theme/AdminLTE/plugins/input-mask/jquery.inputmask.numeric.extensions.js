@@ -4,7 +4,6 @@ http://github.com/RobinHerbots/jquery.inputmask
 Copyright (c) 2010 - 2014 Robin Herbots
 Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
 Version: 0.0.0
-
 Optional extensions on the jquery.inputmask base
 */
 (function ($) {
@@ -29,11 +28,9 @@ Optional extensions on the jquery.inputmask base
             defaultValue: "",
             prefix: "",
             suffix: "",
-
             //todo
             getMaskLength: function (buffer, greedy, repeat, currentBuffer, opts) { //custom getMaskLength to take the groupSeparator into account
                 var calculatedLength = buffer.length;
-
                 if (!greedy) {
                     if (repeat == "*") {
                         calculatedLength = currentBuffer.length + 1;
@@ -41,7 +38,6 @@ Optional extensions on the jquery.inputmask base
                         calculatedLength += (buffer.length * (repeat - 1));
                     }
                 }
-
                 var escapedGroupSeparator = $.inputmask.escapeRegex.call(this, opts.groupSeparator);
                 var escapedRadixPoint = $.inputmask.escapeRegex.call(this, opts.radixPoint);
                 var currentBufferStr = currentBuffer.join(''), strippedBufferStr = currentBufferStr.replace(new RegExp(escapedGroupSeparator, "g"), "").replace(new RegExp(escapedRadixPoint), ""),
@@ -75,7 +71,6 @@ Optional extensions on the jquery.inputmask base
                 }
                 var newPos = $.inArray("?", buffer);
                 if (!reformatOnly) buffer.splice(newPos, 1);
-
                 return reformatOnly ? pos : newPos;
             },
             regex: {
@@ -113,16 +108,12 @@ Optional extensions on the jquery.inputmask base
                             buffer[0] = "";
                             return { "pos": 0 };
                         }
-
                         var cbuf = strict ? buffer.slice(0, pos) : buffer.slice();
-
                         cbuf.splice(pos, 0, chrs);
                         var bufferStr = cbuf.join('');
-
                         //strip groupseparator
                         var escapedGroupSeparator = $.inputmask.escapeRegex.call(this, opts.groupSeparator);
                         bufferStr = bufferStr.replace(new RegExp(escapedGroupSeparator, "g"), '');
-
                         var isValid = opts.regex.number(opts).test(bufferStr);
                         if (!isValid) {
                             //let's help the regex a bit
@@ -134,7 +125,6 @@ Optional extensions on the jquery.inputmask base
                                 for (var i = bufferStr.length - lastGroupSeparator; i <= 3; i++) {
                                     bufferStr += "0";
                                 }
-
                                 isValid = opts.regex.number(opts).test(bufferStr);
                                 if (!isValid && !strict) {
                                     if (chrs == opts.radixPoint) {
@@ -148,12 +138,10 @@ Optional extensions on the jquery.inputmask base
                                 }
                             }
                         }
-
                         if (isValid != false && !strict && chrs != opts.radixPoint) {
                             var newPos = opts.postFormat(buffer, pos, false, opts);
                             return { "pos": newPos };
                         }
-
                         return isValid;
                     },
                     cardinality: 1,

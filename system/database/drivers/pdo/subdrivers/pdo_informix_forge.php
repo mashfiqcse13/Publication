@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO Informix Forge Class
  *
@@ -45,14 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
-
 	/**
 	 * RENAME TABLE statement
 	 *
 	 * @var	string
 	 */
 	protected $_rename_table	= 'RENAME TABLE %s TO %s';
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -65,16 +62,13 @@ class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
 		'REAL'		=> 'DOUBLE PRECISION',
 		'SMALLFLOAT'	=> 'DOUBLE PRECISION'
 	);
-
 	/**
 	 * DEFAULT value representation in CREATE/ALTER TABLE statements
 	 *
 	 * @var	string
 	 */
 	protected $_default		= ', ';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -89,12 +83,9 @@ class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
 		{
 			$alter_type = 'MODIFY';
 		}
-
 		return parent::_alter_table($alter_type, $table, $field);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -128,9 +119,7 @@ class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute UNIQUE
 	 *
@@ -145,9 +134,7 @@ class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
 			$field['unique'] = ' UNIQUE CONSTRAINT '.$this->db->escape_identifiers($field['name']);
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -159,5 +146,4 @@ class CI_DB_pdo_informix_forge extends CI_DB_pdo_forge {
 	{
 		// Not supported
 	}
-
 }

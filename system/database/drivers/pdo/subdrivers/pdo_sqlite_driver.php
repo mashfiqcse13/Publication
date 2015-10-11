@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO SQLite Database Adapter Class
  *
@@ -51,25 +50,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
-
 	/**
 	 * Sub-driver
 	 *
 	 * @var	string
 	 */
 	public $subdriver = 'sqlite';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var	array
 	 */
 	protected $_random_keyword = ' RANDOM()';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Class constructor
 	 *
@@ -81,22 +75,17 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 	public function __construct($params)
 	{
 		parent::__construct($params);
-
 		if (empty($this->dsn))
 		{
 			$this->dsn = 'sqlite:';
-
 			if (empty($this->database) && empty($this->hostname))
 			{
 				$this->database = ':memory:';
 			}
-
 			$this->database = empty($this->database) ? $this->hostname : $this->database;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show table query
 	 *
@@ -108,18 +97,14 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\'';
-
 		if ($prefix_limit === TRUE && $this->dbprefix !== '')
 		{
 			return $sql.' AND "NAME" LIKE \''.$this->escape_like_str($this->dbprefix)."%' "
 				.sprintf($this->_like_escape_str, $this->_like_escape_chr);
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -133,9 +118,7 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 		// Not supported
 		return FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
@@ -148,13 +131,11 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 		{
 			return FALSE;
 		}
-
 		$query = $query->result_array();
 		if (empty($query))
 		{
 			return FALSE;
 		}
-
 		$retval = array();
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
@@ -165,12 +146,9 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 			$retval[$i]->default		= $query[$i]['dflt_value'];
 			$retval[$i]->primary_key	= isset($query[$i]['pk']) ? (int) $query[$i]['pk'] : 0;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Replace statement
 	 *
@@ -183,9 +161,7 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 	{
 		return 'INSERT OR '.parent::_replace($table, $keys, $values);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -201,5 +177,4 @@ class CI_DB_pdo_sqlite_driver extends CI_DB_pdo_driver {
 	{
 		return 'DELETE FROM '.$table;
 	}
-
 }

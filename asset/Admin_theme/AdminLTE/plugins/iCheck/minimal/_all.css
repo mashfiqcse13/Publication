@@ -12,7 +12,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-red {
     background-position: 0 0;
 }
@@ -29,7 +28,6 @@
     .icheckbox_minimal-red.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-red {
     background-position: -100px 0;
 }
@@ -46,7 +44,6 @@
     .iradio_minimal-red.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -59,7 +56,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* green */
 .icheckbox_minimal-green,
 .iradio_minimal-green {
@@ -74,7 +70,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-green {
     background-position: 0 0;
 }
@@ -91,7 +86,6 @@
     .icheckbox_minimal-green.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-green {
     background-position: -100px 0;
 }
@@ -108,7 +102,6 @@
     .iradio_minimal-green.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -121,7 +114,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* blue */
 .icheckbox_minimal-blue,
 .iradio_minimal-blue {
@@ -136,7 +128,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-blue {
     background-position: 0 0;
 }
@@ -153,7 +144,6 @@
     .icheckbox_minimal-blue.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-blue {
     background-position: -100px 0;
 }
@@ -170,7 +160,6 @@
     .iradio_minimal-blue.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -183,7 +172,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* aero */
 .icheckbox_minimal-aero,
 .iradio_minimal-aero {
@@ -198,7 +186,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-aero {
     background-position: 0 0;
 }
@@ -215,7 +202,6 @@
     .icheckbox_minimal-aero.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-aero {
     background-position: -100px 0;
 }
@@ -232,7 +218,6 @@
     .iradio_minimal-aero.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -245,7 +230,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* grey */
 .icheckbox_minimal-grey,
 .iradio_minimal-grey {
@@ -260,7 +244,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-grey {
     background-position: 0 0;
 }
@@ -277,7 +260,6 @@
     .icheckbox_minimal-grey.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-grey {
     background-position: -100px 0;
 }
@@ -294,7 +276,6 @@
     .iradio_minimal-grey.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -307,7 +288,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* orange */
 .icheckbox_minimal-orange,
 .iradio_minimal-orange {
@@ -322,7 +302,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-orange {
     background-position: 0 0;
 }
@@ -339,7 +318,6 @@
     .icheckbox_minimal-orange.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-orange {
     background-position: -100px 0;
 }
@@ -356,7 +334,6 @@
     .iradio_minimal-orange.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -369,7 +346,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* yellow */
 .icheckbox_minimal-yellow,
 .iradio_minimal-yellow {
@@ -384,7 +360,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-yellow {
     background-position: 0 0;
 }
@@ -401,7 +376,6 @@
     .icheckbox_minimal-yellow.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-yellow {
     background-position: -100px 0;
 }
@@ -418,7 +392,6 @@
     .iradio_minimal-yellow.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -431,7 +404,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* pink */
 .icheckbox_minimal-pink,
 .iradio_minimal-pink {
@@ -446,7 +418,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-pink {
     background-position: 0 0;
 }
@@ -463,7 +434,6 @@
     .icheckbox_minimal-pink.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-pink {
     background-position: -100px 0;
 }
@@ -480,7 +450,6 @@
     .iradio_minimal-pink.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),
@@ -493,7 +462,6 @@
         background-size: 200px 20px;
     }
 }
-
 /* purple */
 .icheckbox_minimal-purple,
 .iradio_minimal-purple {
@@ -508,7 +476,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_minimal-purple {
     background-position: 0 0;
 }
@@ -525,7 +492,6 @@
     .icheckbox_minimal-purple.checked.disabled {
         background-position: -80px 0;
     }
-
 .iradio_minimal-purple {
     background-position: -100px 0;
 }
@@ -542,7 +508,6 @@
     .iradio_minimal-purple.checked.disabled {
         background-position: -180px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),

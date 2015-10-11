@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * SQLite Database Adapter Class
  *
@@ -51,25 +50,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlite_driver extends CI_DB {
-
 	/**
 	 * Database driver
 	 *
 	 * @var	string
 	 */
 	public $dbdriver = 'sqlite';
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var	array
 	 */
 	protected $_random_keyword = array('RANDOM()', 'RANDOM()');
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Non-persistent database connection
 	 *
@@ -82,14 +76,10 @@ class CI_DB_sqlite_driver extends CI_DB {
 		$conn_id = ($persistent === TRUE)
 			? sqlite_popen($this->database, 0666, $error)
 			: sqlite_open($this->database, 0666, $error);
-
 		isset($error) && log_message('error', $error);
-
 		return $conn_id;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Database version number
 	 *
@@ -101,9 +91,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 			? $this->data_cache['version']
 			: $this->data_cache['version'] = sqlite_libversion();
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Execute the query
 	 *
@@ -116,9 +104,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 			? sqlite_exec($this->conn_id, $sql)
 			: sqlite_query($this->conn_id, $sql);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Begin Transaction
 	 *
@@ -132,18 +118,14 @@ class CI_DB_sqlite_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
 		$this->_trans_failure = ($test_mode === TRUE);
-
 		$this->simple_query('BEGIN TRANSACTION');
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Commit Transaction
 	 *
@@ -156,13 +138,10 @@ class CI_DB_sqlite_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		$this->simple_query('COMMIT');
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Rollback Transaction
 	 *
@@ -175,13 +154,10 @@ class CI_DB_sqlite_driver extends CI_DB {
 		{
 			return TRUE;
 		}
-
 		$this->simple_query('ROLLBACK');
 		return TRUE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Platform-dependant string escape
 	 *
@@ -192,9 +168,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		return sqlite_escape_string($str);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Affected Rows
 	 *
@@ -204,9 +178,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		return sqlite_changes($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Insert ID
 	 *
@@ -216,9 +188,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		return sqlite_last_insert_rowid($this->conn_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * List table query
 	 *
@@ -230,17 +200,13 @@ class CI_DB_sqlite_driver extends CI_DB {
 	protected function _list_tables($prefix_limit = FALSE)
 	{
 		$sql = "SELECT name FROM sqlite_master WHERE type='table'";
-
 		if ($prefix_limit !== FALSE && $this->dbprefix != '')
 		{
 			return $sql." AND 'name' LIKE '".$this->escape_like_str($this->dbprefix)."%' ".sprintf($this->_like_escape_str, $this->_like_escape_chr);
 		}
-
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Show column query
 	 *
@@ -254,9 +220,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 		// Not supported
 		return FALSE;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Returns an object with field data
 	 *
@@ -269,13 +233,11 @@ class CI_DB_sqlite_driver extends CI_DB {
 		{
 			return FALSE;
 		}
-
 		$query = $query->result_array();
 		if (empty($query))
 		{
 			return FALSE;
 		}
-
 		$retval = array();
 		for ($i = 0, $c = count($query); $i < $c; $i++)
 		{
@@ -286,12 +248,9 @@ class CI_DB_sqlite_driver extends CI_DB {
 			$retval[$i]->default		= $query[$i]['dflt_value'];
 			$retval[$i]->primary_key	= isset($query[$i]['pk']) ? (int) $query[$i]['pk'] : 0;
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Error
 	 *
@@ -306,9 +265,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 		$error['message'] = sqlite_error_string($error['code']);
 		return $error;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Replace statement
 	 *
@@ -323,9 +280,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		return 'INSERT OR '.parent::_replace($table, $keys, $values);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Truncate statement
 	 *
@@ -341,9 +296,7 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		return 'DELETE FROM '.$table;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -353,5 +306,4 @@ class CI_DB_sqlite_driver extends CI_DB {
 	{
 		sqlite_close($this->conn_id);
 	}
-
 }

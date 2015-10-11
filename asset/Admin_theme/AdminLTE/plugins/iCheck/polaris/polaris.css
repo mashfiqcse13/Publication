@@ -13,7 +13,6 @@
     border: none;
     cursor: pointer;
 }
-
 .icheckbox_polaris {
     background-position: 0 0;
 }
@@ -30,7 +29,6 @@
     .icheckbox_polaris.checked.disabled {
         background-position: -124px 0;
     }
-
 .iradio_polaris {
     background-position: -155px 0;
 }
@@ -47,7 +45,6 @@
     .iradio_polaris.checked.disabled {
         background-position: -279px 0;
     }
-
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (-moz-min-device-pixel-ratio: 1.5),

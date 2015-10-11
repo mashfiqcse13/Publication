@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 $lang['date_year'] = 'Year';
 $lang['date_years'] = 'Years';
 $lang['date_month'] = 'Month';
@@ -51,7 +50,6 @@ $lang['date_minute'] = 'Minute';
 $lang['date_minutes'] = 'Minutes';
 $lang['date_second'] = 'Second';
 $lang['date_seconds'] = 'Seconds';
-
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $lang['UM11']	= '(UTC -11:00) Niue';
 $lang['UM10']	= '(UTC -10:00) Hawaii-Aleutian Standard Time, Cook Islands, Tahiti';

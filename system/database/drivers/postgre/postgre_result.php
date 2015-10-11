@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Postgres Result Class
  *
@@ -49,7 +48,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_postgre_result extends CI_DB_result {
-
 	/**
 	 * Number of rows in the result set
 	 *
@@ -61,9 +59,7 @@ class CI_DB_postgre_result extends CI_DB_result {
 			? $this->num_rows
 			: $this->num_rows = pg_num_rows($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Number of fields in the result set
 	 *
@@ -73,9 +69,7 @@ class CI_DB_postgre_result extends CI_DB_result {
 	{
 		return pg_num_fields($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Field Names
 	 *
@@ -90,12 +84,9 @@ class CI_DB_postgre_result extends CI_DB_result {
 		{
 			$field_names[] = pg_field_name($this->result_id, $i);
 		}
-
 		return $field_names;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field data
 	 *
@@ -113,12 +104,9 @@ class CI_DB_postgre_result extends CI_DB_result {
 			$retval[$i]->type		= pg_field_type($this->result_id, $i);
 			$retval[$i]->max_length		= pg_field_size($this->result_id, $i);
 		}
-
 		return $retval;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Free the result
 	 *
@@ -132,9 +120,7 @@ class CI_DB_postgre_result extends CI_DB_result {
 			$this->result_id = FALSE;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Data Seek
 	 *
@@ -149,9 +135,7 @@ class CI_DB_postgre_result extends CI_DB_result {
 	{
 		return pg_result_seek($this->result_id, $n);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - associative array
 	 *
@@ -163,9 +147,7 @@ class CI_DB_postgre_result extends CI_DB_result {
 	{
 		return pg_fetch_assoc($this->result_id);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Result - object
 	 *
@@ -178,5 +160,4 @@ class CI_DB_postgre_result extends CI_DB_result {
 	{
 		return pg_fetch_object($this->result_id, NULL, $class_name);
 	}
-
 }

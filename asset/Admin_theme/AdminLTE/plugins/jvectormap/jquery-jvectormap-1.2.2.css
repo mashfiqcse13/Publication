@@ -11,7 +11,6 @@
     padding: 3px;
     z-index: 9999;
 }
-
 .jvectormap-zoomin, .jvectormap-zoomout {
     position: absolute;
     top: 100%;
@@ -28,12 +27,10 @@
     font-weight: bold;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
-
 .jvectormap-zoomin {
     left: 100%;
     margin-left: -50px;
 }
-
 .jvectormap-zoomout {
     left: 100%;
     margin-left: -30px;

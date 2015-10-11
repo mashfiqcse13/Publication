@@ -3,7 +3,6 @@
  *
  * @locale ja, ja-JP
  */
-
 $.extend($.ui.multiselect.locale, {
 	addAll:'すべて選択',
 	removeAll:'すべて削除',

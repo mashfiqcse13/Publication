@@ -11,18 +11,13 @@ $(function(){
 				$('#main-table-box #crudForm').slideUp("slow");
 			}
 		});
-
 		var save_and_close = false;
-
 		$('#save-and-go-back-button').click(function(){
 			save_and_close = true;
-
 			$('#crudForm').trigger('submit');
 		});
-
 		$('#crudForm').submit(function(){
 			var my_crud_form = $(this);
-
 			$(this).ajaxSubmit({
 				url: validation_url,
 				dataType: 'json',
@@ -46,9 +41,7 @@ $(function(){
 								if(data.success)
 								{
 									var data_unique_hash = my_crud_form.closest(".flexigrid").attr("data-unique-hash");
-
 									$('.flexigrid[data-unique-hash='+data_unique_hash+']').find('.ajax_refresh_and_loading').trigger('click');
-
 									if(save_and_close)
 									{
 										if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
@@ -57,10 +50,8 @@ $(function(){
 											$(".ui-dialog-content").dialog("close");
 											success_message(data.success_message);
 										}
-
 										return true;
 									}
-
 									$('.field_error').each(function(){
 										$(this).removeClass('field_error');
 									});
@@ -85,7 +76,6 @@ $(function(){
 						$.each(data.error_fields, function(index,value){
 							$('input[name='+index+']').addClass('field_error');
 						});
-
 					}
 				},
 				error: function(){
@@ -95,21 +85,16 @@ $(function(){
 			});
 			return false;
 		});
-
 		if( $('#cancel-button').closest('.ui-dialog').length === 0 ) {
-
 			$('#cancel-button').click(function(){
 				if( confirm( message_alert_add_form ) )
 				{
 					window.location = list_url;
 				}
-
 				return false;
 			});
-
 		}
 	});
-
 	function clearForm()
 	{
 		$('#crudForm').find(':input').each(function() {
@@ -126,20 +111,16 @@ $(function(){
 	                this.checked = false;
 	        }
 	    });
-
 		/* Clear upload inputs  */
 		$('.open-file,.gc-file-upload,.hidden-upload-input').each(function(){
 			$(this).val('');
 		});
-
 		$('.upload-success-url').hide();
 		$('.fileinput-button').fadeIn("normal");
 		/* -------------------- */
-
 		$('.remove-all').each(function(){
 			$(this).trigger('click');
 		});
-
 		$('.chosen-multiple-select, .chosen-select, .ajax-chosen-select').each(function(){
 			$(this).trigger("liszt:updated");
 		});

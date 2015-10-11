@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * PDO Oracle Forge Class
  *
@@ -45,37 +44,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
-
 	/**
 	 * CREATE DATABASE statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_database	= FALSE;
-
 	/**
 	 * DROP DATABASE statement
 	 *
 	 * @var	string
 	 */
 	protected $_drop_database	= FALSE;
-
 	/**
 	 * CREATE TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_table_if	= 'CREATE TABLE IF NOT EXISTS';
-
 	/**
 	 * UNSIGNED support
 	 *
 	 * @var	bool|array
 	 */
 	protected $_unsigned		= FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -94,7 +87,6 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 		{
 			$alter_type = 'MODIFY';
 		}
-
 		$sql = 'ALTER TABLE '.$this->db->escape_identifiers($table);
 		$sqls = array();
 		for ($i = 0, $c = count($field); $i < $c; $i++)
@@ -106,14 +98,12 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 			else
 			{
 				$field[$i]['_literal'] = "\n\t".$this->_process_column($field[$i]);
-
 				if ( ! empty($field[$i]['comment']))
 				{
 					$sqls[] = 'COMMENT ON COLUMN '
 						.$this->db->escape_identifiers($table).'.'.$this->db->escape_identifiers($field[$i]['name'])
 						.' IS '.$field[$i]['comment'];
 				}
-
 				if ($alter_type === 'MODIFY' && ! empty($field[$i]['new_name']))
 				{
 					$sqls[] = $sql.' RENAME COLUMN '.$this->db->escape_identifiers($field[$i]['name'])
@@ -121,19 +111,15 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 				}
 			}
 		}
-
 		$sql .= ' '.$alter_type.' ';
 		$sql .= (count($field) === 1)
 				? $field[0]
 				: '('.implode(',', $field).')';
-
 		// RENAME COLUMN must be executed after MODIFY
 		array_unshift($sqls, $sql);
 		return $sql;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -145,5 +131,4 @@ class CI_DB_pdo_oci_forge extends CI_DB_pdo_forge {
 	{
 		// Not supported - sequences and triggers must be used instead
 	}
-
 }

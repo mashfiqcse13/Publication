@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Typography Helpers
  *
@@ -46,9 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/typography_helper.html
  */
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('nl2br_except_pre'))
 {
 	/**
@@ -64,9 +61,7 @@ if ( ! function_exists('nl2br_except_pre'))
 		return $CI->typography->nl2br_except_pre($str);
 	}
 }
-
 // ------------------------------------------------------------------------
-
 if ( ! function_exists('auto_typography'))
 {
 	/**
@@ -83,9 +78,7 @@ if ( ! function_exists('auto_typography'))
 		return $CI->typography->auto_typography($str, $reduce_linebreaks);
 	}
 }
-
 // --------------------------------------------------------------------
-
 if ( ! function_exists('entity_decode'))
 {
 	/**

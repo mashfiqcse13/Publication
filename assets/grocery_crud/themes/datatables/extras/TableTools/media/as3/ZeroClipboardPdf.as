@@ -68,7 +68,6 @@ package {
 			// External functions - readd whenever the stage is made active for IE
 			addCallbacks();
 			stage.addEventListener(Event.ACTIVATE, addCallbacks);
-
 			// signal to the browser that we are ready
 			ExternalInterface.call( 'ZeroClipboard_TableTools.dispatch', domId, 'load', null );
 		}

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * SQLSRV Forge Class
  *
@@ -45,21 +44,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlsrv_forge extends CI_DB_forge {
-
 	/**
 	 * CREATE TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_table_if	= "IF NOT EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nCREATE TABLE";
-
 	/**
 	 * DROP TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_drop_table_if	= "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
-
 	/**
 	 * UNSIGNED support
 	 *
@@ -71,9 +67,7 @@ class CI_DB_sqlsrv_forge extends CI_DB_forge {
 		'INT'		=> 'BIGINT',
 		'REAL'		=> 'FLOAT'
 	);
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * ALTER TABLE
 	 *
@@ -88,19 +82,15 @@ class CI_DB_sqlsrv_forge extends CI_DB_forge {
 		{
 			return parent::_alter_table($alter_type, $table, $field);
 		}
-
 		$sql = 'ALTER TABLE '.$this->db->escape_identifiers($table).' ALTER COLUMN ';
 		$sqls = array();
 		for ($i = 0, $c = count($field); $i < $c; $i++)
 		{
 			$sqls[] = $sql.$this->_process_column($field[$i]);
 		}
-
 		return $sqls;
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute TYPE
 	 *
@@ -123,9 +113,7 @@ class CI_DB_sqlsrv_forge extends CI_DB_forge {
 			default: return;
 		}
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -140,5 +128,4 @@ class CI_DB_sqlsrv_forge extends CI_DB_forge {
 			$field['auto_increment'] = ' IDENTITY(1,1)';
 		}
 	}
-
 }

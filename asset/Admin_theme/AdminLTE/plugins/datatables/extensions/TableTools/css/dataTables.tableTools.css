@@ -20,7 +20,6 @@
  *   COLLECTIONS           Drop down list (collection) styles
  *   PRINTING              Print display styles
  */
-
 /*
  * CONTAINER
  * TableTools container element and styles applying to all components
@@ -43,7 +42,6 @@ div.DTTT_container {
 		height: 0;
 	}
 }
-
 button.DTTT_button,
 div.DTTT_button,
 a.DTTT_button {
@@ -75,7 +73,6 @@ a.DTTT_button {
 	background:         linear-gradient(top, #ffffff 0%,#f3f3f3 89%,#f9f9f9 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 ); /* IE6-9 */
 }
-
 /* Buttons are cunning border-box sizing - we can't just use that for A and DIV due to IE6/7 */
 button.DTTT_button {
 	height: 30px;
@@ -137,7 +134,6 @@ a.DTTT_disabled {
 	background:         linear-gradient(top, #ffffff 0%,#f9f9f9 89%,#fafafa 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
 }
-
 /*
  * BUTTON_STYLES
  * Action specific button styles
@@ -159,7 +155,6 @@ a.DTTT_button_print span {
 	line-height: 24px;
 	padding-right: 30px;
 }
-
 a.DTTT_button_csv span { background: url(../images/csv.png) no-repeat bottom right; }
 a.DTTT_button_csv:hover span { background: url(../images/csv_hover.png) no-repeat center right; }
 a.DTTT_button_xls span { background: url(../images/xls.png) no-repeat center right; }
@@ -179,7 +174,6 @@ button.DTTT_button_collection:hover span {
 	padding-right: 17px;
 	background: #f0f0f0 url(../images/collection_hover.png) no-repeat center right;
 }
-
 /*
  * SELECTING
  * Row selection styles
@@ -200,7 +194,6 @@ table.dataTable tr.DTTT_selected.odd td.sorting_2 {
 table.dataTable tr.DTTT_selected.odd td.sorting_3 {
 	background-color: #9FAFD1;
 }
-
 table.dataTable tr.DTTT_selected.even {
 	background-color: #B0BED9;
 }
@@ -213,7 +206,6 @@ table.dataTable tr.DTTT_selected.even td.sorting_2 {
 table.dataTable tr.DTTT_selected.even td.sorting_3 {
 	background-color: #B0BED9;
 }
-
 /*
  * COLLECTIONS
  * Drop down list (collection) styles
@@ -257,7 +249,6 @@ div.DTTT_collection a.DTTT_button {
 	     -o-box-shadow: 1px 1px 3px #999;
 	        box-shadow: 1px 1px 3px #999;
 }
-
 /*
  * PRINTING
  * Print display styles

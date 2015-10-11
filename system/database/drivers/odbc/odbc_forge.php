@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * ODBC Forge Class
  *
@@ -47,30 +46,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		http://codeigniter.com/database/
  */
 class CI_DB_odbc_forge extends CI_DB_forge {
-
 	/**
 	 * CREATE TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_create_table_if	= FALSE;
-
 	/**
 	 * DROP TABLE IF statement
 	 *
 	 * @var	string
 	 */
 	protected $_drop_table_if	= FALSE;
-
 	/**
 	 * UNSIGNED support
 	 *
 	 * @var	bool|array
 	 */
 	protected $_unsigned		= FALSE;
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Field attribute AUTO_INCREMENT
 	 *
@@ -82,5 +76,4 @@ class CI_DB_odbc_forge extends CI_DB_forge {
 	{
 		// Not supported (in most databases at least)
 	}
-
 }

@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 $lang['ut_test_name'] = 'Test Name';
 $lang['ut_test_datatype'] = 'Test Datatype';
 $lang['ut_res_datatype'] = 'Expected Datatype';

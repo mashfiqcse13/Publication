@@ -3,7 +3,6 @@
  *
  * @locale de, de-DE, de-AT, de-CH
  */
-
 $.extend($.ui.multiselect.locale, {
 	addAll:'Alle hinzufügen',
 	removeAll:'Alle entfernen',
