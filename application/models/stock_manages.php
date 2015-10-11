@@ -20,18 +20,10 @@ class Stock_manages extends CI_Model {
         }
         return $data;
     }
-<<<<<<< HEAD
-    
-    function find_contactsid_by_type($type1 ='' ,$type2= ''){
-        
-       $query=$this->db->query("SELECT contact_ID FROM pub_contacts WHERE contact_type=='$type1' && contact_type=='$type2'");
-        foreach($query->result_array() as $contactsid => $contact){
-=======
 
     function find_contactsid_by_type($type1 = '', $type2 = '') {
         $query = $this->db->query("SELECT contact_ID FROM pub_contacts WHERE contact_type=='$type1' && contact_type=='$type2'");
         foreach ($query->result_array() as $contactsid => $contact) {
->>>>>>> e0d102486c2bf20769164914015410878091b759
             $data[$contactsid] = $contact;
         }
         return $data;
