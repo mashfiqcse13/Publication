@@ -38,8 +38,14 @@
   <style type="text/css">
 @media print{
   .only_print{display: none;}
+  .memo_print_option{margin:0 auto;width:100%;}
+
 }
+ .margin-10{margin:0 10px;}
+ .margin-top-10{margin-top:10px;}
+
   </style>
+
 <?php 
 // echo "<pre>";
 // print_r($asset);

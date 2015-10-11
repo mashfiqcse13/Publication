@@ -24,6 +24,7 @@ class Stock_manages extends CI_Model{
     }
     
     function find_contactsid_by_type($type1 ='' ,$type2= ''){
+        
        $query=$this->db->query("SELECT contact_ID FROM pub_contacts WHERE contact_type=='$type1' && contact_type=='$type2'");
         foreach($query->result_array() as $contactsid => $contact){
             $data[$contactsid] = $contact;

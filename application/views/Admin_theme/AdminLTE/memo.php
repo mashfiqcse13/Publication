@@ -2,23 +2,14 @@
 <?php include_once 'header.php'; ?>
 
 <!-- Left side column. contains the logo and sidebar -->
-<?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
+
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" >
-    <section class="content-header">
-        <h1>
-            <?= $Title ?>
-            <small><?= $Title ?></small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Memo Management</li>
-        </ol>
-    </section>
 
 
 
-    <div class="container" style="background:#fff;width:750px;padding:25px 100px;margin-top:30px;">
+      
+
+<div class="container memo_print_option" style="background:#fff;width:750px;padding:25px 100px;margin-top:30px;" >
         <div class="row">
             <h1 class="page-header">দি যমুনা পাবলিশার্স</h1>
         </div>
@@ -55,11 +46,18 @@
             <br><br><br>
             <p>-----------------</p>
             <p>&nbsp;&nbsp;Signature</p>
-        <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
+        
         </div>
+        <div class="margin-top-10">
+            <a href="<?=$base_url ?>" class="only_print btn btn-primary "><i class="fa fa-dashboard"></i> Go Dashboard</a>
+       <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
+         <a href="" class="only_print pull-right btn btn-primary margin-10">Edit</a>
+        </div>
+        
 
+        
     </div>
 
-</div>
+
 
 <?php include_once 'footer.php'; ?>
