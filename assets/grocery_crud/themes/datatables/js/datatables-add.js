@@ -19,13 +19,6 @@ $(function () {
         save_and_close = true;
         $('#crudForm').trigger('submit');
     });
-    //    Edited By mashfiq
-    var save_and_print = false;
-    $('#save-and-print-button').click(function () {
-        save_and_print = true;
-        $('#crudForm').trigger('submit');
-    });
-//    Edited By mashfiq
     $('#crudForm').submit(function () {
         $(this).ajaxSubmit({
             url: validation_url,
@@ -57,10 +50,6 @@ $(function () {
                                         success_message(data.success_message);
                                         reload_datagrid();
                                     }
-                                    return true;
-                                } else if (save_and_print)
-                                {
-                                    window.location = "http://google.com";
                                     return true;
                                 }
                                 $('.field_error').removeClass('field_error');
