@@ -154,4 +154,22 @@ class Stock_manages extends CI_Model {
         return form_dropdown('to_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
     }
 
+    function get_max_sales_stock($book_ID) {
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select(
+                'stock_id,'
+                . $db_tables['pub_books'] . '.name as book_name,'
+                . $db_tables['pub_contacts'] . '.name as contact_name,'
+//                . 'contact_type,'
+                . 'Quantity');
+//        $this->db->select('*');
+        $this->db->from($db_tables['pub_stock']);
+        $this->db->join("{$db_tables['pub_books']}", "{$db_tables['pub_books']}.book_ID = {$db_tables['pub_stock']}.book_ID");
+        $this->db->join("{$db_tables['pub_contacts']}", "{$db_tables['pub_contacts']}.contact_ID = {$db_tables['pub_stock']}.printing_press_ID");
+        $this->db->where('contact_type', $contact_type);
+        $query = $this->db->get();
+
+        $db_rows = $query->result_array();
+    }
+
 }

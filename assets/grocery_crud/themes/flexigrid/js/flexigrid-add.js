@@ -62,7 +62,7 @@ $(function () {
                                     return true;
                                 } else if (save_and_print)
                                 {
-                                    window.location = "http://thejamunapub.com/Publication/index.php/admin/print_last_memo";
+                                    window.location = printing_url;
                                     return true;
                                 }
 

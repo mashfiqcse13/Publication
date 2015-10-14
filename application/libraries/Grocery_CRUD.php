@@ -3009,9 +3009,14 @@ class Grocery_CRUD extends grocery_CRUD_States {
     protected $unset_read_fields = null;
 
     /* The setters by mashfiq */
-    protected $set_save_and_print = true;
+    protected $set_save_and_print = false;
+
+    function Set_save_and_print($set_save_and_print) {
+        $this->set_save_and_print = $set_save_and_print;
+    }
 
     /* Callbacks */
+
     protected $callback_before_insert = null;
     protected $callback_after_insert = null;
     protected $callback_insert = null;

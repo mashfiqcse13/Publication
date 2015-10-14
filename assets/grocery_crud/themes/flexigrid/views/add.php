@@ -74,6 +74,7 @@ $this->set_js_lib($this->default_javascript_path . '/jquery_plugins/config/jquer
     </div>
 </div>
 <script>
+    var printing_url = '<?= site_url('admin/print_last_memo'); ?>';
     var validation_url = '<?php echo $validation_url ?>';
     var list_url = '<?php echo $list_url ?>';
     var message_alert_add_form = "<?php echo $this->l('alert_add_form') ?>";
