@@ -153,7 +153,7 @@ class Stock_manages extends CI_Model {
         return form_dropdown('to_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
     }
 
-<<<<<<< HEAD
+
      function get_bookid_dropdown() {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');
@@ -185,7 +185,7 @@ class Stock_manages extends CI_Model {
 
 
 
-=======
+
     function get_max_sales_stock($book_ID) {
         $db_tables = $this->config->item('db_tables');
         $this->db->select(
@@ -204,5 +204,5 @@ class Stock_manages extends CI_Model {
         $db_rows = $query->result_array();
     }
 
->>>>>>> 1274298eccc85558ac1b4e85b7e08c7eb570922e
+
 }

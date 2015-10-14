@@ -1,5 +1,4 @@
 <!--add header -->
-
 <?php include_once 'header.php'; ?>
 
       <!-- Left side column. contains the logo and sidebar -->
@@ -14,7 +13,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Book Management</li>
+            <li class="active">Add New stock</li>
           </ol>
         </section>
         
@@ -23,17 +22,15 @@
             <div class="row">
                 <div class="col-md-12">
 
+                    <div class="box">
                     
-                   <div class="box">
-
-                      <div class="box box-info">
-                
-                <!-- form start -->
-                <?php 
-                      $attributes = array('class' => 'form-horizontal');
-
+                    <div class="box box-info">
+                    <?php 
+                     $attributes = array('class' => 'form-horizontal');
                       echo form_open('admin/add_stock/true', $attributes);
-                ?>
+                
+                      
+                    ?>
                 
                   <div class="box-body">
                     <div class="form-group">
@@ -47,7 +44,7 @@
                       <div class="col-sm-8">
                         <?php echo $printingpress ?>
                       </div>
-                    </div>
+                      </div>
                      <div class="form-group">
                       <label class="col-sm-4 control-label" for="inputPassword3">Quantity:</label>
                       <div class="col-sm-8">
@@ -70,9 +67,8 @@
                   </div><!-- /.box-footer -->
                <!--  </form> -->
               </div>
-    
-                   
-                   </div>
+               
+                    </div>
                     
                 </div>
             </div>

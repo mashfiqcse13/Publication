@@ -43,10 +43,6 @@
 }
  .margin-10{margin:0 10px;}
  .margin-top-10{margin-top:10px;}
- .form-horizontal .control-label {
-
-  text-align: left;
-}
 
   </style>
 
