@@ -9,41 +9,46 @@
 
 
 
-<div class="container memo_print_option" style="background:#fff;width:595px;padding:25px 40px;margin-top:30px;font-size:12px;" >
+<div class="container memo_print_option" style="background:#fff;width:595px;height:842px;padding:25px 40px;margin-top:30px;font-size:12px;" >
 
 
     <div class="row">
         <div class="text-center">
+            <h6>বিসমিল্লাহির রহমানির রহিম</h6>
             <h1>দি যমুনা পাবলিশার্স</h1>
             <p>৩৮,বাংলাবাজার(১ম তলা) ঢাকা-১১০০ । ফোন- ৭১১৬০৬৯  </p>
             <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
-        </div><hr>
+        </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="pull-left">
-                    <p><strong>Name:</strong> <?= $Book_selection_table['party_name'] ?></p>
-                    
-                    <p>Mobile:</strong> <?= $Book_selection_table['phone'] ?></p>
-                    
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="pull-left">
-                    <p><strong>Address:</strong> <?= $Book_selection_table['address'] ?></p>
-                    <p><strong>District:</strong> <?= $Book_selection_table['district'] ?></p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="pull-right">
-                    <p><strong>Memo No:</strong> <?= $Book_selection_table['memoid']?></p>
-                    <p><strong>Date:</strong> <?php echo " " . date("Y-m-d") ?></p>
-                </div>
-            </div>
+            <table class="table">
+               <tr>
+                   <td><strong>Name:</strong></td>
+                   <td><?= $Book_selection_table['party_name'] ?></td>
+
+                   <td><strong>Address:</strong></td>
+                   <td><?= $Book_selection_table['address'] ?></td>
+
+                   <td><strong>Memo No:</strong></td>
+                   <td><?= $Book_selection_table['memoid']?></td>
+               </tr>
+               <tr>
+                   <td><strong>Mobile:</strong></td>
+                   <td> <?= $Book_selection_table['phone'] ?></td>
+
+                   <td><strong>District:</strong></td>
+                   <td><?= $Book_selection_table['district'] ?></td>
+                   
+                   <td><strong>Date:</strong></td>
+                   <td><?php echo " " . date("Y-m-d") ?></td>
+               </tr>
+            </table>
+
+     
         </div>
 
         
     </div>
-    <br>
+
     <div class="row" style="font-size:11px;">
 
         <?= $Book_selection_table['table'] ?>
