@@ -9,32 +9,42 @@
 
 
 
-<div class="container memo_print_option" style="background:#fff;width:750px;padding:25px 100px;margin-top:30px;" >
+<div class="container memo_print_option" style="background:#fff;width:595px;padding:25px 40px;margin-top:30px;font-size:12px;" >
+
 
     <div class="row">
-        <div class="pull-right">
-            <p>Date:<?php echo " " . date("Y-m-d") ?></p>
+        <div class="text-center">
+            <h1>দি যমুনা পাবলিশার্স</h1>
+            <p>৩৮,বাংলাবাজার(১ম তলা) ঢাকা-১১০০ । ফোন- ৭১১৬০৬৯  </p>
+            <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
+        </div><hr>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pull-left">
+                    <p><strong>Name:</strong> <?= $Book_selection_table['party_name'] ?></p>
+                    
+                    <p>Mobile:</strong> <?= $Book_selection_table['phone'] ?></p>
+                    
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pull-left">
+                    <p><strong>Address:</strong> <?= $Book_selection_table['address'] ?></p>
+                    <p><strong>District:</strong> <?= $Book_selection_table['district'] ?></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pull-right">
+                    <p><strong>Memo No:</strong> <?= $Book_selection_table['memoid']?></p>
+                    <p><strong>Date:</strong> <?php echo " " . date("Y-m-d") ?></p>
+                </div>
+            </div>
         </div>
+
+        
     </div>
-    <div class="row">
-        <div class="pull-left">
-            <h3>দি যমুনা পাবলিশার্স</h3>
-            <p>৩৮,বাংলাবাজার(১ম তলা) <br>
-                ঢাকা-১১০০ <br>
-                ফোন- ৭১১৬০৬৯ <br>
-                সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ <br>
-                ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ <br>
-                বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p> <br>
-        </div>
-        <div class="pull-right">
-            <h3><?= $Book_selection_table['party_name'] ?></h3>
-            <p><?= $Book_selection_table['phone'] ?><br>
-                <?= $Book_selection_table['address'] ?><br>
-                <?= $Book_selection_table['district'] ?><br>
-            </p>
-        </div>
-    </div>
-    <div class="row">
+    <br>
+    <div class="row" style="font-size:11px;">
 
         <?= $Book_selection_table['table'] ?>
 
