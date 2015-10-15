@@ -28,7 +28,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
 
                                 <table class="table table-bordered">
                                     <tr>
@@ -38,7 +38,7 @@
 
                                 <?= $printing_table ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <table class="table table-bordered">
                                     <tr>
 
@@ -48,7 +48,7 @@
 
                                 <?= $binding_table ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <table class="table table-bordered">
                                     <tr>
 
