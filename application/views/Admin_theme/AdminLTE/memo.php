@@ -10,9 +10,7 @@
 
 
 <div class="container memo_print_option" style="background:#fff;width:750px;padding:25px 100px;margin-top:30px;" >
-    <div class="row">
-        <h1 class="page-header">দি যমুনা পাবলিশার্স</h1>
-    </div>
+
     <div class="row">
         <div class="pull-right">
             <p>Date:<?php echo " " . date("Y-m-d") ?></p>
