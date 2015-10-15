@@ -29,6 +29,16 @@
                     ?>
                    
                     </div>
+
+                    <form action="" class="form-inline">
+                      <label for="datefrom">Date From: </label>
+                      <input type="text" name="datefrom" class="datepicker datetime-input form-control" data-date-format="mm/dd/yyyy">
+
+                      <label for="dateto">Date To:</label>
+                      <input type="text" name="dateto" class="datepicker datetime-input form-control" data-date-format="mm/dd/yyyy">
+                    
+                      <input type="submit" value="Search" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
           
