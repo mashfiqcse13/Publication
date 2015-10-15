@@ -14,7 +14,6 @@
     <div class="row">
         <div class="pull-right">
             <p>Date:<?php echo " " . date("Y-m-d") ?></p>
-            <p></p>
         </div>
     </div>
     <div class="row">
