@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -18,7 +18,7 @@ function set_dues_unpaid() {
         return 0;
     }
     $.ajax({
-        url: previousDueFinderUrl + '/' + contact_ID+ '/' + memo_ID
+        url: previousDueFinderUrl + '/' + contact_ID + '/' + memo_ID
     })
             .done(function (data) {
                 $('[name="dues_unpaid"]').val(data);
@@ -27,16 +27,18 @@ function set_dues_unpaid() {
 }
 set_dues_unpaid();
 $('[name="contact_ID"]').change(function () {
-   set_dues_unpaid();
+    set_dues_unpaid();
 });
 function TotalCal() {
     var discount = parseInt($('[name="discount"]').val());
     discount = (isNaN(discount)) ? 0 : discount;
+    var book_return = parseInt($('[name="book_return"]').val());
+    book_return = (isNaN(book_return)) ? 0 : book_return;
     var sub_total = parseInt($('[name="sub_total"]').val());
     sub_total = (isNaN(sub_total)) ? 0 : sub_total;
     var dues_unpaid = parseInt($('[name="dues_unpaid"]').val());
     dues_unpaid = (isNaN(dues_unpaid)) ? 0 : dues_unpaid;
-    var total = sub_total - discount + dues_unpaid;
+    var total = sub_total - discount - book_return + dues_unpaid;
     $('[name="total"]').val(total);
     $("#total").html(total);
 //    alert(sub_total+"+"+discount+"-"+dues_unpaid+"= " + total);
