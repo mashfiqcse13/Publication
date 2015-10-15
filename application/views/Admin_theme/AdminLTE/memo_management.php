@@ -1,49 +1,53 @@
 <!--add header -->
 <?php include_once 'header.php'; ?>
 
-      <!-- Left side column. contains the logo and sidebar -->
+<!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
-      <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-             <?=$Title ?>
-            <small><?=$Title ?></small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <?= $Title ?>
+            <small><?= $Title ?></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Contact Management</li>
-          </ol>
-        </section>
-        
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    
-                    <div class="box">
-                    
-                     <?php  
-                       echo $glosary->output;
-                    ?>
-                   
-                    </div>
+        </ol>
+    </section>
 
-                    <form action="" class="form-inline">
-                      <label for="datefrom">Date From: </label>
-                      <input type="text" name="datefrom" class="datepicker datetime-input form-control" data-date-format="mm/dd/yyyy">
-
-                      <label for="dateto">Date To:</label>
-                      <input type="text" name="dateto" class="datepicker datetime-input form-control" data-date-format="mm/dd/yyyy">
-                    
-                      <input type="submit" value="Search" class="btn btn-primary">
-                    </form>
-                </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <?php if (!$date_filter) { ?>
+                    <div class="form-group">
+                        <label>Date range:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="reservation" />
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                <?php } ?>
             </div>
-          
+            <div class="col-md-12">
 
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
+                <div class="box">
+
+                    <?php
+                    echo $glosary->output;
+                    ?>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
 <?php include_once 'footer.php'; ?>
