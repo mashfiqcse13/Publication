@@ -14,8 +14,22 @@
         <ol class="breadcrumb">
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Contact Management</li>
-        </ol>
-    </section>
+          </ol>
+        </section>
+        
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="box">
+                    
+                     <?php  
+                       echo $glosary->output;
+                    ?>
+                   
+                    </div>
+                    
 
     <!-- Main content -->
     <section class="content">
