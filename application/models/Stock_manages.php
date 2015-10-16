@@ -64,6 +64,20 @@ class Stock_manages extends CI_Model {
         return $this->table->generate($table_rows);
     }
 
+    function append_new_stock($book_id, $printingpress_id, $quantity) {
+        $destination_stock_details = $this->get_stock_details_by($book_id, $printingpress_id);
+
+        // checking if we have a blank destination stock
+        $destination_stock_details = (sizeof($destination_stock_details) < 1) ? false : $destination_stock_details;
+
+        if ($destination_stock_details) {       //if we have existing destination stock , we update the stock
+            $destination_stock_id = $destination_stock_details[0]['stock_id'];
+            $this->increase_stock($destination_stock_id, $quantity);
+        } else {        //if we have a blank destination stock , we insert new stock
+            $this->insert_stock($book_id, $printingpress_id, $quantity);
+        }
+    }
+
     function transfer_stock() {
         $from_stock_id = $this->input->post('stock_id_from');
         $to_contact_id = $this->input->post('to_contact_id');
@@ -80,8 +94,9 @@ class Stock_manages extends CI_Model {
         $destination_stock_details = (sizeof($destination_stock_details) < 1) ? false : $destination_stock_details;
 
         if ($destination_stock_details) {       //if we have existing destination stock , we update the stock
+            $destination_stock_id = $destination_stock_details[0]['stock_id'];
             $this->reduce_stock($from_stock_id, $Quantity);
-            $this->increase_stock($to_contact_id, $Quantity);
+            $this->increase_stock($destination_stock_id, $Quantity);
         } else {        //if we have a blank destination stock , we insert new stock
             $this->reduce_stock($from_stock_id, $Quantity);
             $this->insert_stock($source_stock_details['book_ID'], $to_contact_id, $Quantity);
@@ -100,9 +115,9 @@ class Stock_manages extends CI_Model {
         $this->db->query($sql);
     }
 
-    function increase_stock($printing_press_ID, $Quantity) {
+    function increase_stock($stock_id, $Quantity) {
         $db_tables = $this->config->item('db_tables');
-        $sql = "UPDATE `{$db_tables['pub_stock']}` SET `Quantity`=`Quantity` + $Quantity WHERE `printing_press_ID` = $printing_press_ID";
+        $sql = "UPDATE `{$db_tables['pub_stock']}` SET `Quantity`=`Quantity` + $Quantity WHERE `stock_id` = $stock_id";
         $this->db->query($sql);
     }
 

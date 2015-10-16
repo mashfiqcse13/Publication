@@ -76,7 +76,7 @@
                         <h4 class="modal-title" id="myModalLabel">Transfer Book Amount</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form-inline" action="<?= site_url('admin/test'); ?>" method="post">
+                        <form role="form-inline" action="<?= site_url('admin/transfer_stock'); ?>" method="post">
                             <input type="hidden" name="stock_id_from" />
                             <div class="box-body">
                                 <div class="row">
