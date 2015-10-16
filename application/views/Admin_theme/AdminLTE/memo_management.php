@@ -44,6 +44,23 @@
                 </div>
 
             </div>
+
+            <?php if (isset($total_due_section)) { ?>
+                <div class="col-md-8 col-md-offset-2 form-inline">
+
+                    <div class="form-group">
+                        <label>Party name:</label>
+                        <div class="input-group">
+                            <?= $contact_dropdown ?>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                    <div class="form-group">
+                        <label>Total Due:</label>
+                        <div class="input-group" id="total_due">
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group123 -->
+                </div>
+            <?php } ?>
         </div>
 
 

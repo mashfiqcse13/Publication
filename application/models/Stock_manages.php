@@ -168,6 +168,22 @@ class Stock_manages extends CI_Model {
         return form_dropdown('book_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
     }
 
+    function get_buyer_dropdown() {
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select('*');
+        $this->db->from($db_tables['pub_contacts']);
+        $this->db->where_in('contact_type', array('Buyer'));
+        $this->db->order_by('contact_type', "asc");
+        $query = $this->db->get();
+        $db_rows = $query->result_array();
+        $options['Select'] = "Select Party Name";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['contact_ID']] = $row['name'];
+        }
+
+        return form_dropdown('buyer_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
+    }
+
     function get_printingpress_dropdown() {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');

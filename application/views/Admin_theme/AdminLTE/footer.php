@@ -65,6 +65,20 @@
 <script type="text/javascript">
     //Date range picker
     $('#reservation').daterangepicker();
+    //Initialize Select2 Elements
+    $(".select2").select2();
+
+//        due management Property
+    $('[name="buyer_id"]').change(function () {
+        var buyer_id = $('[name="buyer_id"]').val();
+        alert("<?php echo site_url('admin/total_due/') ?>/" + buyer_id);
+//        $.ajax({
+//            url: "<?php echo site_url('admin/total_due/') ?>/" + buyer_id,
+//            cache: false
+//        }).done(function (data) {
+//                    $("#total_due").html(data);
+//                });
+    });
 </script>
 <?php if (isset($scriptInline)) echo $scriptInline; ?>
 
