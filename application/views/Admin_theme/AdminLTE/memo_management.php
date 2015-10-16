@@ -29,6 +29,7 @@
                     ?>
                    
                     </div>
+                    
 
                     <form action="" class="form-inline">
                       <label for="datefrom">Date From: </label>
