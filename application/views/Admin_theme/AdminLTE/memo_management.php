@@ -67,6 +67,8 @@
 
 
     </section><!-- /.content -->
+    <script type="text/javascript">
+    </script>
 </div><!-- /.content-wrapper -->
 
 <?php include_once 'footer.php'; ?>
