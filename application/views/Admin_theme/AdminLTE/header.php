@@ -47,6 +47,14 @@
 
   text-align: left;
 }
+.table_custom tr td{line-height: 1}
+#table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+  border: 1px solid #ddd;
+  line-height: .9;
+  padding:5px 8px;
+  vertical-align: top;
+}
+.upper{text-transform: uppercase;}
 
   </style>
 
