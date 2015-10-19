@@ -21,7 +21,7 @@ class Memo extends CI_Model {
             price,
             cash,
             sub_total,
-            pub_memos.total as total,
+            pub_memos.total as total_p,
             pub_memos_selected_books.total,
             pub_memos.dues_unpaid as dues_unpaid,
             discount,
@@ -61,7 +61,7 @@ class Memo extends CI_Model {
             $this->table->add_row($value->book_name, $value->book_price, $value->price, $value->quantity, $value->total);
             $this->due=$value->due;
             $this->cash=$value->cash;
-            $this->total=$value->total;
+            $this->total=$value->total_p;
             $this->dues_unpaid=$value->dues_unpaid;
             $this->book_return=$value->book_return;
         }
@@ -85,21 +85,73 @@ class Memo extends CI_Model {
 
 
 
-        $cell = array('border'=>0,'colspan' => 3);
+        $cell = array('border'=>0,'colspan' => 4);
+        $c3 = array('data' => '<strong><span class="upper">('.$this->convert_number($this->subtotal).')</span></strong>', 'colspan' => 3);
+        $c3r=array('data'=>'','colspan'=>3);
+        $this->table->add_row($cell,'');
 
-        $this->table->add_row($cell ,'<strong>বই মূল্য :</strong>', $this->subtotal);
-        $this->table->add_row($cell, '<strong>বই ফেরত :</strong>','(-) '.$this->book_return);
-        $this->table->add_row($cell, '<strong>বোনাস :</strong>','(-) '. $this->discount);
+        $this->table->add_row($c3,'<strong>বই মূল্য :</strong>', '<span id="number">'.$this->subtotal.'</span>');
+        $this->table->add_row('<strong>বই ফেরত :</strong>','(-) '.$this->book_return,'','<strong>পূর্বের বাকি :</strong>',$this->dues_unpaid);
+        $this->table->add_row('<strong>বোনাস :</strong>','(-) '. $this->discount,'','<strong>মোট :</strong>',$this->total);
 
-       
-        $this->table->add_row($cell, '<strong>পূর্বের বাকি :</strong>', $this->dues_unpaid);
+               
+        $this->table->add_row($c3r, '<strong>নগদ জমা :</strong>', $this->cash);
+        $this->table->add_row($c3r, '<strong>ব্যাংক জমা :</strong>', $this->cash);
         
-        $this->table->add_row($cell, '<strong>জমা :</strong>', $this->cash);
-        
-        $this->table->add_row($cell, '<strong>বাকি :</strong>',  $this->due);
+        $this->table->add_row($c3r, '<strong>বাকি :</strong>',  $this->due);
+        $this->table->add_row();
         $data['table'] = $this->table->generate();
         return $data;
     }
+
+    function convert_number($number) {
+        if (($number < 0) || ($number > 999999999)) {
+            throw new Exception("Number is out of range");
+        }
+        $Gn = floor($number / 1000000);
+        /* Millions (giga) */
+        $number -= $Gn * 1000000;
+        $kn = floor($number / 1000);
+        /* Thousands (kilo) */
+        $number -= $kn * 1000;
+        $Hn = floor($number / 100);
+        /* Hundreds (hecto) */
+        $number -= $Hn * 100;
+        $Dn = floor($number / 10);
+        /* Tens (deca) */
+        $n = $number % 10;
+        /* Ones */
+        $res = "";
+        if ($Gn) {
+            $res .= $this->convert_number($Gn) .  "Million";
+        }
+        if ($kn) {
+            $res .= (empty($res) ? "" : " ") .$this->convert_number($kn) . " Thousand";
+        }
+        if ($Hn) {
+            $res .= (empty($res) ? "" : " ") .$this->convert_number($Hn) . " Hundred";
+        }
+        $ones = array("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eightteen", "Nineteen");
+        $tens = array("", "", "Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eigthy", "Ninety");
+        if ($Dn || $n) {
+            if (!empty($res)) {
+                $res .= " and ";
+            }
+            if ($Dn < 2) {
+                $res .= $ones[$Dn * 10 + $n];
+            } else {
+                $res .= $tens[$Dn];
+                if ($n) {
+                    $res .= "-" . $ones[$n];
+                }
+            }
+        }
+        if (empty($res)) {
+            $res = "zero";
+        }
+        return $res;
+    }
+
 
     // function listmemo(){
     // 	$query = $this->db->query("SELECT name,memo_ID,memo_serial,issue_date
