@@ -56,22 +56,22 @@ class Memo extends CI_Model {
         $this->table->set_template($tmpl);
         $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Quantity', 'Total Price');
         foreach ($query->result() as $value) {
-            $this->subtotal=$value->sub_total;
+            $this->subtotal = $value->sub_total;
             $this->discount = $value->discount;
             $this->table->add_row($value->book_name, $value->book_price, $value->price, $value->quantity, $value->total);
-            $this->due=$value->due;
-            $this->cash=$value->cash;
-            $this->total=$value->total_p;
-            $this->dues_unpaid=$value->dues_unpaid;
-            $this->book_return=$value->book_return;
+            $this->due = $value->due;
+            $this->cash = $value->cash;
+            $this->total = $value->total_p;
+            $this->dues_unpaid = $value->dues_unpaid;
+            $this->book_return = $value->book_return;
         }
         $query1 = $this->db->query("SELECT pub_contacts.name as cname,
             pub_contacts.district as cdistrict,
             pub_contacts.address as caddress,
-            pub_contacts.phone as cphone, 
+            pub_contacts.phone as cphone,
             pub_memos.memo_ID as memoid
-            FROM `pub_contacts` 
-            LEFT join pub_memos on pub_contacts.contact_ID=pub_memos.contact_ID 
+            FROM `pub_contacts`
+            LEFT join pub_memos on pub_contacts.contact_ID=pub_memos.contact_ID
             where pub_memos.memo_ID='$id'");
 
         foreach ($query1->result() as $value) {
@@ -79,26 +79,26 @@ class Memo extends CI_Model {
             $data['phone'] = $value->cphone;
             $data['address'] = $value->caddress;
             $data['district'] = $value->cdistrict;
-            $data['memoid']=$value->memoid;
+            $data['memoid'] = $value->memoid;
         }
 
 
 
 
-        $cell = array('border'=>0,'colspan' => 4);
-        $c3 = array('data' => '<strong><span class="upper">('.$this->convert_number($this->subtotal).')</span></strong>', 'colspan' => 3);
-        $c3r=array('data'=>'','colspan'=>3);
-        $this->table->add_row($cell,'');
+        $cell = array('border' => 0, 'colspan' => 4);
+        $c3 = array('data' => '<strong><span class="upper">(' . $this->convert_number($this->subtotal) . ')</span></strong>', 'colspan' => 3);
+        $c3r = array('data' => '', 'colspan' => 3);
+        $this->table->add_row($cell, '');
 
-        $this->table->add_row($c3,'<strong>বই মূল্য :</strong>', '<span id="number">'.$this->subtotal.'</span>');
-        $this->table->add_row('<strong>বই ফেরত :</strong>','(-) '.$this->book_return,'','<strong>পূর্বের বাকি :</strong>',$this->dues_unpaid);
-        $this->table->add_row('<strong>বোনাস :</strong>','(-) '. $this->discount,'','<strong>মোট :</strong>',$this->total);
+        $this->table->add_row($c3, '<strong>বই মূল্য :</strong>', '<span id="number">' . $this->subtotal . '</span>');
+        $this->table->add_row('<strong>বই ফেরত :</strong>', '(-) ' . $this->book_return, '', '<strong>পূর্বের বাকি :</strong>', $this->dues_unpaid);
+        $this->table->add_row('<strong>বোনাস :</strong>', '(-) ' . $this->discount, '', '<strong>মোট :</strong>', $this->total);
 
-               
+
         $this->table->add_row($c3r, '<strong>নগদ জমা :</strong>', $this->cash);
         $this->table->add_row($c3r, '<strong>ব্যাংক জমা :</strong>', $this->cash);
-        
-        $this->table->add_row($c3r, '<strong>বাকি :</strong>',  $this->due);
+
+        $this->table->add_row($c3r, '<strong>বাকি :</strong>', $this->due);
         $this->table->add_row();
         $data['table'] = $this->table->generate();
         return $data;
@@ -123,13 +123,13 @@ class Memo extends CI_Model {
         /* Ones */
         $res = "";
         if ($Gn) {
-            $res .= $this->convert_number($Gn) .  "Million";
+            $res .= $this->convert_number($Gn) . "Million";
         }
         if ($kn) {
-            $res .= (empty($res) ? "" : " ") .$this->convert_number($kn) . " Thousand";
+            $res .= (empty($res) ? "" : " ") . $this->convert_number($kn) . " Thousand";
         }
         if ($Hn) {
-            $res .= (empty($res) ? "" : " ") .$this->convert_number($Hn) . " Hundred";
+            $res .= (empty($res) ? "" : " ") . $this->convert_number($Hn) . " Hundred";
         }
         $ones = array("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eightteen", "Nineteen");
         $tens = array("", "", "Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eigthy", "Ninety");
@@ -152,6 +152,20 @@ class Memo extends CI_Model {
         return $res;
     }
 
+    /*
+     * @param $range_string = 'MM/DD/YYYY - MM/DD/';
+     */
+
+    function dateformatter($range_string, $formate = 'Mysql') {
+        $date = explode(' - ', $range_string);
+        $date[0] = explode('/', $date[0]);
+        $date[1] = explode('/', $date[1]);
+
+        if ($formate == 'Mysql')
+            return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
+        else
+            return $date;
+    }
 
     // function listmemo(){
     // 	$query = $this->db->query("SELECT name,memo_ID,memo_serial,issue_date
