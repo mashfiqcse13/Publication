@@ -38,11 +38,11 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="date_range" value="<?= $date_range ?>" class="form-control pull-right" id="reservation" pattern="([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})\s[-]\s([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})" title="This is not a date"/>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation" pattern="([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})\s[-]\s([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})" title="This is not a date"/>
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    <button type="reset" class="btn btn-success"><i class="fa fa-refresh"></i></button>
+                    <?= anchor('admin/memo_management/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     <?= form_close(); ?>
                 <?php } ?>
             </div>
