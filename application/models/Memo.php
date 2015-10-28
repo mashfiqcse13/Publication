@@ -20,6 +20,7 @@ class Memo extends CI_Model {
             quantity,
             price,
             cash,
+            bank_pay,
             sub_total,
             pub_memos.total as total_p,
             pub_memos_selected_books.total,
@@ -64,6 +65,7 @@ class Memo extends CI_Model {
             $this->total = $value->total_p;
             $this->dues_unpaid = $value->dues_unpaid;
             $this->book_return = $value->book_return;
+            $this->bank_pay = $value->bank_pay;
         }
         $query1 = $this->db->query("SELECT pub_contacts.name as cname,
             pub_contacts.district as cdistrict,
@@ -92,11 +94,11 @@ class Memo extends CI_Model {
 
         $this->table->add_row($c3, '<strong>বই মূল্য :</strong>', '<span id="number">' . $this->subtotal . '</span>');
         $this->table->add_row('<strong>বই ফেরত :</strong>', '(-) ' . $this->book_return, '', '<strong>পূর্বের বাকি :</strong>', $this->dues_unpaid);
-        $this->table->add_row('<strong>বোনাস :</strong>', '(-) ' . $this->discount, '', '<strong>মোট :</strong>', $this->total);
+        $this->table->add_row('<strong>বোনাস :</strong>', '(-) ' . $this->discount, '', '<strong>মোট:</strong>', $this->total);
 
 
         $this->table->add_row($c3r, '<strong>নগদ জমা :</strong>', $this->cash);
-        $this->table->add_row($c3r, '<strong>ব্যাংক জমা :</strong>', $this->cash);
+        $this->table->add_row($c3r, '<strong>ব্যাংক জমা :</strong>', $this->bank_pay);
 
         $this->table->add_row($c3r, '<strong>বাকি :</strong>', $this->due);
         $this->table->add_row();
@@ -151,10 +153,6 @@ class Memo extends CI_Model {
         }
         return $res;
     }
-
-    /*
-     * @param $range_string = 'MM/DD/YYYY - MM/DD/';
-     */
 
     function dateformatter($range_string, $formate = 'Mysql') {
         $date = explode(' - ', $range_string);
