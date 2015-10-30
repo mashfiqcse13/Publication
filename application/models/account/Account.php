@@ -26,7 +26,7 @@ class Account extends CI_Model {
     }
 
     function monthly() {
-        $query = $this->db->query("SELECT due,sub_total,discount FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
+        $query = $this->db->query("SELECT due,sub_total,book_return,discount FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
         foreach ($query->result() as $value) {
             $this->monthlysell+=$value->sub_total - $value->discount - $value->book_return;
             $this->monthly_due+=$value->due;
