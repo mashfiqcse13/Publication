@@ -199,6 +199,22 @@ class Stock_manages extends CI_Model {
         return form_dropdown('buyer_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
     }
 
+    function get_book_returned_dropdown() {
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select('*');
+        $this->db->from($db_tables['pub_books']);
+        $this->db->join($db_tables['pub_books_return'], 'pub_books.book_ID = pub_books_return.book_ID');
+        $this->db->order_by('name', "asc");
+        $query = $this->db->get();
+        $db_rows = $query->result_array();
+        $options['Select'] = "Select Book Name";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['book_ID']] = $row['name'];
+        }
+
+        return form_dropdown('returned_book_ID', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
+    }
+
     function get_due_holder_dropdown() {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');
