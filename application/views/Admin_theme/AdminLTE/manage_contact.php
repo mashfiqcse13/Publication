@@ -29,21 +29,24 @@
             </div>
 
             <?php if (isset($total_book_return_section)) { ?>
-                <div class="col-md-8 col-md-offset-2 form-inline">
-
-                    <div class="form-group">
-                        <label>Book name:</label>
-                        <div class="input-group">
-                            <?= $book_returned_dropdown ?>
-                        </div><!-- /.input group -->
-                    </div><!-- /.form group -->
+                <div class="col-md-3">
+                    <label>Select Book Name :</label>
                 </div>
-                <div class="col-md-8 col-md-offset-2 form-inline">
-                    <div class="form-group">
-                        <label>Total Book Returned :</label>
-                        <div class="input-group" id="total_book_return">
-                        </div><!-- /.input group -->
-                    </div><!-- /.form group123 -->
+                <div class="col-md-6">
+                    <?= $book_returned_dropdown ?>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                    <label>Number of Returned Book :</label>
+                </div>
+                <div class="col-md-9" id="total_book_return">
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                    <label>Total Number of Returned Book :</label>
+                </div>
+                <div class="col-md-9">
+                    <?= $total_book_returned ?>
                 </div>
             <?php } ?>
 

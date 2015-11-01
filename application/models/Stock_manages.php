@@ -276,4 +276,12 @@ class Stock_manages extends CI_Model {
         return isset($db_rows[0]['Quantity']) ? $db_rows[0]['Quantity'] : false;
     }
 
+    function total_book_returned() {
+        $db_tables = $this->config->item('db_tables');
+        $db_rows = $this->db->select_sum('quantity')->from($db_tables['pub_books_return'])
+                        ->get()->result_array();
+
+        return isset($db_rows[0]['quantity']) ? $db_rows[0]['quantity'] : 0;
+    }
+
 }
