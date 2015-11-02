@@ -30,7 +30,7 @@
                         'method' => 'post');
                     echo form_open('', $attributes)
                     ?>
-                    <div class="form-group col-md-3 text-right">
+                    <div class="form-group col-md-3 text-left">
                         <label>Search with Date Range:</label>
                     </div>
                     <div class="form-group col-md-7">
@@ -59,14 +59,15 @@
             </div>
 
             <?php if (isset($total_due_section)) { ?>
-                <div class="col-md-8 col-md-offset-2 form-inline">
+                <div class="col-md-8 form-inline">
 
                     <div class="form-group">
-                        <label>Party name:</label>
+                        <label class="text-left">Party Name:</label>
                         <div class="input-group">
                             <?= $contact_dropdown ?>
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
+
                     <div class="form-group">
                         <label>Total Due:</label>
                         <div class="input-group" id="total_due">
