@@ -5,6 +5,7 @@
  */
 
 
+$('#field-issue_date').val(CurrentDate);
 
 $('[name="returned_book_ID"]').change(function () {
     $.ajax({
