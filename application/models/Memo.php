@@ -165,37 +165,61 @@ class Memo extends CI_Model {
             return $date;
     }
 
-    function dues_unpaid_updater() {
+    // comma separated
+    function last_memo_ID_of_each_contact_ID() {
         $this->load->library('table');
         $db_tables = $this->config->item('db_tables');
 
-        $due_holder_rows = $this->db->select('distinct(contact_ID)')
+        $contact_array = $this->db->select('distinct(contact_ID)')
                         ->from($db_tables['pub_memos'])
-                        ->where('due >', 0)
                         ->get()->result_array();
-        foreach ($due_holder_rows as $index => $row) {
-            $contact_ID = $row['contact_ID'];
-            $db_rows = $this->db->select("memo_ID,contact_ID,sub_total,discount,book_return,dues_unpaid,total,cash,bank_pay,due")
+        $distict_contact_IDs = $Last_Memo_IDs = array();
+        foreach ($contact_array as $value) {
+            array_push($distict_contact_IDs, $value['contact_ID']);
+            $Memo_ID = $this->db->select('max(memo_ID)')
                             ->from($db_tables['pub_memos'])
-                            ->where('due >', '0')
-                            ->where('contact_ID', $contact_ID)
-                            ->order_by('contact_ID', 'dsc')
-                            ->get()->result_array();
-//        print_r($db_rows);
-//        $this->table->set_heading('memo_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
-//        echo $this->table->generate($db_rows);
-            foreach ($db_rows as $index => $db_row) {
-                $db_rows[$index]['dues_unpaid'] = isset($db_rows[$index - 1]['due']) ? $db_rows[$index - 1]['due'] : 0;
-                $db_rows[$index]['total'] = $db_rows[$index]['sub_total'] - $db_rows[$index]['discount'] - $db_rows[$index]['book_return'] + $db_rows[$index]['dues_unpaid'];
-                $db_rows[$index]['due'] = $db_rows[$index]['total'] - $db_rows[$index]['cash'] - $db_rows[$index]['bank_pay'];
-            }
-            $this->db->update_batch($db_tables['pub_memos'], $db_rows, 'memo_ID');
-
-            $this->table->set_heading('memo_ID', 'contact_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
-            echo $this->table->generate($db_rows);
+                            ->where('contact_ID', $value['contact_ID'])
+                            ->get()->result_array()[0]['max(memo_ID)'];
+            array_push($Last_Memo_IDs, $Memo_ID);
         }
+        return $Last_Memo_IDs;
     }
 
+    function clean_pub_memos_selected_books_db() {
+        $db_tables = $this->config->item('db_tables');
+        $this->db->delete($db_tables['pub_memos_selected_books'], "`memo_ID` not in (SELECT `memo_ID` FROM `pub_memos` WHERE 1)");
+    }
+
+//    function dues_unpaid_updater() {
+//        $this->load->library('table');
+//        $db_tables = $this->config->item('db_tables');
+//
+//        $due_holder_rows = $this->db->select('distinct(contact_ID)')
+//                        ->from($db_tables['pub_memos'])
+//                        ->where('due >', 0)
+//                        ->get()->result_array();
+//        foreach ($due_holder_rows as $index => $row) {
+//            $contact_ID = $row['contact_ID'];
+//            $db_rows = $this->db->select("memo_ID,contact_ID,sub_total,discount,book_return,dues_unpaid,total,cash,bank_pay,due")
+//                            ->from($db_tables['pub_memos'])
+//                            ->where('due >', '0')
+//                            ->where('contact_ID', $contact_ID)
+//                            ->order_by('contact_ID', 'dsc')
+//                            ->get()->result_array();
+////        print_r($db_rows);
+////        $this->table->set_heading('memo_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
+////        echo $this->table->generate($db_rows);
+//            foreach ($db_rows as $index => $db_row) {
+//                $db_rows[$index]['dues_unpaid'] = isset($db_rows[$index - 1]['due']) ? $db_rows[$index - 1]['due'] : 0;
+//                $db_rows[$index]['total'] = $db_rows[$index]['sub_total'] - $db_rows[$index]['discount'] - $db_rows[$index]['book_return'] + $db_rows[$index]['dues_unpaid'];
+//                $db_rows[$index]['due'] = $db_rows[$index]['total'] - $db_rows[$index]['cash'] - $db_rows[$index]['bank_pay'];
+//            }
+//            $this->db->update_batch($db_tables['pub_memos'], $db_rows, 'memo_ID');
+//
+//            $this->table->set_heading('memo_ID', 'contact_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
+//            echo $this->table->generate($db_rows);
+//        }
+//    }
     // function listmemo(){
     // 	$query = $this->db->query("SELECT name,memo_ID,memo_serial,issue_date
     // 		from pub_memos LEFT join pub_contacts on
