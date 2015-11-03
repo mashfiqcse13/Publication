@@ -15,10 +15,11 @@ class Account extends CI_Model {
     private $total_sell = 0;
 
     function today() {
-        $query = $this->db->query("SELECT sub_total,discount,book_return,due FROM pub_memos WHERE issue_date=DATE(NOW())");
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW())");
         foreach ($query->result() as $value) {
             $this->todaysell+=$value->sub_total - $value->discount - $value->book_return;
-            $this->today_due+=$value->due;
+            $today_due = $value->total - $value->cash - $value->total + $value->total;
+            $this->today_due+=$value->total - $value->total - $value->total + $value->total;
         }
         $data['todaysell'] = $this->todaysell;
         $data['today_due'] = $this->today_due;
@@ -26,7 +27,7 @@ class Account extends CI_Model {
     }
 
     function monthly() {
-        $query = $this->db->query("SELECT due,sub_total,book_return,discount FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
         foreach ($query->result() as $value) {
             $this->monthlysell+=$value->sub_total - $value->discount - $value->book_return;
             $this->monthly_due+=$value->due;
