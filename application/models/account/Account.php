@@ -15,25 +15,30 @@ class Account extends CI_Model {
     private $total_sell = 0;
 
     function today() {
+
+
         $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW())");
+//        print_r($query->result_array());
+//        exit;
         foreach ($query->result() as $value) {
             $this->todaysell+=$value->sub_total - $value->discount - $value->book_return;
-            $today_due = $value->total - $value->cash - $value->total + $value->total;
-            $this->today_due+=$value->total - $value->total - $value->total + $value->total;
         }
         $data['todaysell'] = $this->todaysell;
-        $data['today_due'] = $this->today_due;
+        $data['today_due'] = $this->today_due();
         return $data;
     }
 
     function monthly() {
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
+        $this->load->model('Memo');
+        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() and memo_ID in ($last_memo_ID_of_each_contact_ID)");
+//        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
         foreach ($query->result() as $value) {
             $this->monthlysell+=$value->sub_total - $value->discount - $value->book_return;
-            $this->monthly_due+=$value->due;
         }
         $data['monthlysell'] = $this->monthlysell;
-        $data['monthly_due'] = $this->monthly_due;
+        $data['monthly_due'] = $this->monthly_due();
         return $data;
     }
 
@@ -56,13 +61,56 @@ class Account extends CI_Model {
         foreach ($query->result() as $value) {
             $this->total_cash_paid+=$value->cash;
             $this->total_bank_pay+=$value->bank_pay;
-            $this->total_due+=$value->due;
         }
         $data['total_cash_paid'] = $this->total_cash_paid;
         $data['total_bank_pay'] = $this->total_bank_pay;
-        $data['total_due'] = $this->total_due;
+        $data['total_due'] = $this->total_due();
         $data['total_sell'] = $this->total_cash_paid + $this->total_bank_pay + $this->total_due;
         return $data;
+    }
+
+    function total_due() {
+        $this->load->model('Memo');
+        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+        $query = $this->db->select_sum('due')
+                        ->from('pub_memos')
+                        ->where('memo_ID in', '(' . $last_memo_ID_of_each_contact_ID . ')', false)
+                        ->where('due >', '0')->get()->result_array();
+        return $query[0]['due'];
+    }
+
+    function today_due() {
+
+        $this->load->model('Memo');
+        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW()) and memo_ID in ($last_memo_ID_of_each_contact_ID)");
+//        print_r($query->result_array());
+//        exit;
+        foreach ($query->result() as $value) {
+            $today_due = $value->total - $value->cash - $value->bank_pay + $value->dues_unpaid;
+            if ($today_due >= 0) {
+                $this->today_due+=$today_due;
+            }
+        }
+        return $this->today_due;
+    }
+
+    function monthly_due() {
+
+        $this->load->model('Memo');
+        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() and memo_ID in ($last_memo_ID_of_each_contact_ID)");
+//        print_r($query->result_array());
+//        exit;
+        foreach ($query->result() as $value) {
+            $monthly_due = $value->total - $value->cash - $value->bank_pay + $value->dues_unpaid;
+            if ($monthly_due >= 0) {
+                $this->monthly_due+=$monthly_due;
+            }
+        }
+        return $this->monthly_due;
     }
 
 // function total_bank_pay(){
