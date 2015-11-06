@@ -121,6 +121,34 @@ class Stock_manages extends CI_Model {
         $this->db->query($sql);
     }
 
+    function marge_insert_book($post_array, $primary_key) {
+
+        $contact_ID = $post_array['contact_ID'];
+        $book_ID = $post_array['book_ID'];
+
+
+
+        $this->db->select_sum('quantity');
+        $this->db->where('contact_ID', $contact_ID);
+        $this->db->where('book_ID', $book_ID);
+        $new_quantity = $this->db->get('pub_books_return')->result_array()[0]['quantity'];
+//        die($new_quantity);
+        $this->db->where('contact_ID', $contact_ID);
+        $this->db->where('book_ID', $book_ID);
+        $this->db->delete('pub_books_return');
+
+        $data = array(
+            'contact_ID' => $contact_ID,
+            'book_ID' => $book_ID,
+            'quantity' => $new_quantity
+        );
+
+
+        $this->db->insert('pub_books_return', $data);
+
+        return TRUE;
+    }
+
     function insert_stock($book_ID, $printing_press_ID, $Quantity) {
         $db_tables = $this->config->item('db_tables');
         $data = array(
