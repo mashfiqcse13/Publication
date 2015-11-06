@@ -75,6 +75,11 @@
                     </div><!-- /.form group123 -->
                 </div>
             <?php } ?>
+            <?php if ($date_filter == "edit") { ?>
+                <div class="col-md-8">
+                    <?= anchor("admin/memo_management", "Go To the Memo Management", "class='btn btn-primary' ") ?>
+                </div>
+            <?php } ?>
         </div>
 
 

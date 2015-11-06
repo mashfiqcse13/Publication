@@ -9,11 +9,11 @@
     <section class="content-header">
         <h1>
             <?= $Title ?>
-            <small>manage <?= $Title ?></small>
+            <small>Manage <?= $Title ?></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Contact Management</li>
+            <li class="active"><?= $Title ?></li>
         </ol>
     </section>
 

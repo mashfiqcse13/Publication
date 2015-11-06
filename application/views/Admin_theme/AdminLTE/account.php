@@ -27,7 +27,7 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3><?= $account_today['todaysell'] ?> Tk</h3>
-                        <p><strong>Today sell </strong><br>after subtract discount and book return</p>
+                        <p><strong>Today sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -40,7 +40,7 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3><strong><?= $account_monthly['monthlysell'] ?> Tk</strong> </h3>
-                        <p><strong>Monthly sell </strong><br>after subtract discount and book return</p>
+                        <p><strong>Monthly sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -78,55 +78,30 @@
             </div><!-- ./col -->
         </div><!-- /.row -->
         <!-- Main row -->
+
         <div class="row">
             <div class="col-md-12">
+                <h2 class="content-header"><strong>Payment Information</strong></h2>
+            </div>
+            <div class="col-md-6">
+                <?= $today_monthly_account_detail_table ?>
+            </div>
+            <div class="col-md-6">
+                <?= $total_account_detail_table ?>
+            </div>
 
-                <div class="box">
-                    <div class="row">
-                        <br>
-                        <div class="col-md-8">
-                            <div class="" style="opacity:.8;">
-                                <h2 class="content-header"><strong>Payment Information</strong></h2>
-
-                                <table class="table table-striped">
-                                    <tr>
-                                        <td>Total Cash Paid:</td>
-                                        <td><?= $total['total_cash_paid'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Bank Pay:</td>
-                                        <td><?= $total['total_bank_pay'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Due:</td>
-                                        <td><?= $total['total_due'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Total Sale:<strong></td>
-                                                    <td><?= $total['total_sell'] ?></td>
-                                                    </tr>
-                                                    </table>
-
-                                                    </div>
-                                                    </div>
-
-                                                    </div>
-
-
-
-                                                    </div>
-
-                                                    </div>
-                                                    </div>
+        </div>
 
 
 
 
-                                                    </section><!-- /.content -->
-                                                    </div><!-- /.content-wrapper -->
-
-                                                    <!-- insert book -->
 
 
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
-                                                    <?php include_once 'footer.php'; ?>
+<!-- insert book -->
+
+
+
+<?php include_once 'footer.php'; ?>

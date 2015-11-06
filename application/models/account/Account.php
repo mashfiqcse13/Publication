@@ -20,8 +20,12 @@ class Account extends CI_Model {
         $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW())");
 //        print_r($query->result_array());
 //        exit;
+        $data['cash_paid'] = 0;
+        $data['bank_pay'] = 0;
         foreach ($query->result() as $value) {
             $this->todaysell+=$value->sub_total - $value->discount - $value->book_return;
+            $data['cash_paid'] += $value->cash;
+            $data['bank_pay'] += $value->bank_pay;
         }
         $data['todaysell'] = $this->todaysell;
         $data['today_due'] = $this->today_due();
@@ -34,8 +38,13 @@ class Account extends CI_Model {
 
         $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() and memo_ID in ($last_memo_ID_of_each_contact_ID)");
 //        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
+
+        $data['cash_paid'] = 0;
+        $data['bank_pay'] = 0;
         foreach ($query->result() as $value) {
             $this->monthlysell+=$value->sub_total - $value->discount - $value->book_return;
+            $data['cash_paid'] += $value->cash;
+            $data['bank_pay'] += $value->bank_pay;
         }
         $data['monthlysell'] = $this->monthlysell;
         $data['monthly_due'] = $this->monthly_due();
@@ -82,14 +91,14 @@ class Account extends CI_Model {
     function today_due() {
 
         $this->load->model('Memo');
-        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW()) and memo_ID in ($last_memo_ID_of_each_contact_ID)");
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE(NOW())");
 //        print_r($query->result_array());
 //        exit;
         foreach ($query->result() as $value) {
-            $today_due = $value->total - $value->cash - $value->bank_pay + $value->dues_unpaid;
-            if ($today_due >= 0) {
+            $today_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
+            if ($today_due > 0) {
                 $this->today_due+=$today_due;
             }
         }
@@ -99,18 +108,61 @@ class Account extends CI_Model {
     function monthly_due() {
 
         $this->load->model('Memo');
-        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() and memo_ID in ($last_memo_ID_of_each_contact_ID)");
+        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() ");
 //        print_r($query->result_array());
 //        exit;
         foreach ($query->result() as $value) {
-            $monthly_due = $value->total - $value->cash - $value->bank_pay + $value->dues_unpaid;
-            if ($monthly_due >= 0) {
+            $monthly_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
+            if ($monthly_due > 0) {
                 $this->monthly_due+=$monthly_due;
             }
         }
         return $this->monthly_due;
+    }
+
+    function total_account_detail_table() {
+        $this->load->library('table');
+        $total = $this->total();
+        $this->table->set_heading('Description', 'Amount(Tk)');
+        $data = array(
+            array('Total Cash Paid:', $total['total_cash_paid']),
+            array('Total Bank Pay:', $total['total_bank_pay']),
+            array('Total Due:', $total['total_due']),
+            array('<strong>Total Sale:<strong>', "<strong>{$total['total_sell']}<strong>")
+        );
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-striped">',
+            'heading_cell_start' => '<th class="success">'
+        );
+        $this->table->set_template($tmpl);
+        return $this->table->generate($data);
+    }
+
+    function today_monthly_account_detail_table() {
+
+        $this->load->library('table');
+
+        $account_today = $this->account->today();
+        $account_monthly = $this->account->monthly();
+        $total = $this->total();
+
+        $this->table->set_heading('Description', 'Amount(Tk)');
+        $data = array(
+            array('Today Cash Paid:', $account_today['cash_paid']),
+            array('Today Bank Pay:', $account_today['bank_pay']),
+            array('Monthly Cash Paid:', $account_monthly['cash_paid']),
+            array('Monthly Bank Pay:', $account_monthly['bank_pay'])
+        );
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-striped">',
+            'heading_cell_start' => '<th class="success">'
+        );
+        $this->table->set_template($tmpl);
+        return $this->table->generate($data);
     }
 
 // function total_bank_pay(){
