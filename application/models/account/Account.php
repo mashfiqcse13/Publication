@@ -66,15 +66,15 @@ class Account extends CI_Model {
 // 	return $this->monthly_due;
 // }
     function total() {
+        $data['total_cash_paid'] = 0;
+        $data['total_bank_pay'] = 0;
         $query = $this->db->query("SELECT cash,bank_pay,due FROM pub_memos");
         foreach ($query->result() as $value) {
-            $this->total_cash_paid+=$value->cash;
-            $this->total_bank_pay+=$value->bank_pay;
+            $data['total_cash_paid']+=$value->cash;
+            $data['total_bank_pay']+=$value->bank_pay;
         }
-        $data['total_cash_paid'] = $this->total_cash_paid;
-        $data['total_bank_pay'] = $this->total_bank_pay;
         $data['total_due'] = $this->total_due();
-        $data['total_sell'] = $this->total_cash_paid + $this->total_bank_pay + $this->total_due;
+        $data['total_sell'] = $data['total_cash_paid'] + $data['total_bank_pay'] + $data['total_due'];
         return $data;
     }
 
