@@ -91,6 +91,14 @@
             </div>
 
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Every Day Sells report</h2><hr>
+            </div>
+            <div class="col-md-12">
+                <?=$today_detail_table ?>
+            </div>
+        </div>
 
 
 
