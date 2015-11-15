@@ -22,6 +22,34 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
+            
+             <div class="col-md-12">
+                 
+                <?php
+                
+                    $attributes = array(
+                        'clase' => 'form-inline',
+                        'method' => 'post');
+                    echo form_open('', $attributes)
+                    ?>
+                    <div class="form-group col-md-3 text-left">
+                        <label>Search with Date Range:</label>
+                    </div>
+                    <div class="form-group col-md-7">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation" pattern="([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})\s[-]\s([0-1][0-2][/][0-3][0-9][/][0-2]{2}[0-9]{2})" title="This is not a date"/>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?= form_close(); ?>
+                <?php  ?>
+            </div>
+             
+
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -92,6 +120,9 @@
 
         </div>
         <div class="row">
+            <hr>
+           
+
             <div class="col-md-12">
                 <h2>Every Day Sells report</h2><hr>
             </div>
