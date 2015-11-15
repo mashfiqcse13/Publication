@@ -35,8 +35,8 @@ class Account extends CI_Model {
 
             $data['bank_pay'] += $value->bank_pay;
 
-            
-            $today_due+=$value->due;
+            $due=$value->due-$value->dues_unpaid;
+            $today_due+=$due;
             
         }
         $data['todaysell'] = $todaysell;
@@ -183,9 +183,13 @@ class Account extends CI_Model {
         return $this->table->generate($data);
     }
 
-        function today_detail_table() {
-
+        function today_detail_table($range) {
+                
 	        $this->load->library('table');
+	        $t_t_s=0;
+	        $t_t_d=0;
+	        $t_t_c=0;
+	        $t_t_b=0;
 
 	        $account_today = $this->account->today();
 	        $account_monthly = $this->account->monthly();
@@ -193,17 +197,27 @@ class Account extends CI_Model {
 
 	        $this->table->set_heading('Date', 'Sell','Cash Paid','Bank Paid','Due');
 
-	        $query=$this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos GROUP BY(issue_date)");
+	        $query=$this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE issue_date BETWEEN $range GROUP BY(issue_date)");
 
 	        foreach ($query->result() as $value) {
 	        	$data=$this->today($value->issue_date);
+
 	        	$today_sell=$data['todaysell'];
+	        	$t_t_s+=$today_sell;
+
 	        	$today_due=$data['today_due'];
+	        	$t_t_d+=$today_due;
+
 	        	$today_cash_pay=$data['cash_paid'];
+	        	$t_t_c+=$today_cash_pay;
+
 	        	$today_bank_pay=$data['bank_pay'];
+	        	$t_t_b+=$today_bank_pay;
 
 	        	$this->table->add_row($value->issue_date,$today_sell,$today_cash_pay ,$today_bank_pay ,$today_due);	
 	        }
+	        $this->table->add_row();
+	        $this->table->add_row('',$t_t_s,$t_t_d,$t_t_c,$t_t_b);
 
 	        
 	        // $data = array(

@@ -1,4 +1,4 @@
-<!--add header -->
+
 
 <?php include_once 'header.php'; ?>
 
@@ -47,8 +47,22 @@
                     <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     <?= form_close(); ?>
                 <?php  ?>
+            
+            
+        <?php if(isset($today_detail_table)){ ?>    
+        <div class="row">           
+
+            <div class="col-md-12" >
+                <h2 class="text-center page-header">Sales Report</h2>
+                
             </div>
-             
+            <div class="col-md-12">
+                <?=$today_detail_table ?>
+            </div>
+        </div>
+            
+       <?php  }?>
+        </div>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -119,17 +133,7 @@
             </div>
 
         </div>
-        <div class="row">
-            <hr>
-           
 
-            <div class="col-md-12">
-                <h2>Every Day Sells report</h2><hr>
-            </div>
-            <div class="col-md-12">
-                <?=$today_detail_table ?>
-            </div>
-        </div>
 
 
 
