@@ -218,7 +218,7 @@ class Account extends CI_Model {
 	        }
                 $cell = array('data' => '', 'class' => 'info', 'colspan' => 5);
 	        $this->table->add_row($cell);
-	        $this->table->add_row('<strong class="pull-right">Total: </strong>',$t_t_s,$t_t_d,$t_t_c,$t_t_b);
+	        $this->table->add_row('<strong class="pull-right">Total: </strong>',$t_t_s,$t_t_c,$t_t_b,$t_t_d);
 
 	        
 	        // $data = array(
