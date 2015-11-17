@@ -14,14 +14,14 @@ class Account extends CI_Model {
     private $total_due = 0;
     private $total_sell = 0;
 
-    function today($date='') {
+    function today($date = '') {
 
-    	$todaysell = 0;
-    	 $today_due = 0;
+        $todaysell = 0;
+        $today_due = 0;
 
-    	 if(empty($date)){
-    		$date=date('Y-m-d');
-    	}
+        if (empty($date)) {
+            $date = date('Y-m-d');
+        }
 
         $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE('$date')");
 //        print_r($query->result_array());
@@ -35,21 +35,18 @@ class Account extends CI_Model {
 
             $data['bank_pay'] += $value->bank_pay;
 
-            $due=$value->due-$value->dues_unpaid;
+            $due = $value->due - $value->dues_unpaid;
             $today_due+=$due;
-            
         }
         $data['todaysell'] = $todaysell;
         $data['today_due'] = $today_due;
         return $data;
     }
 
-
-
-    function today_due($date='') {
-    	if(empty($date)){
-    		$date=date('Y-m-d');
-    	}
+    function today_due($date = '') {
+        if (empty($date)) {
+            $date = date('Y-m-d');
+        }
 
         $this->load->model('Memo');
 //        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
@@ -70,8 +67,13 @@ class Account extends CI_Model {
         $this->load->model('Memo');
         $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() and memo_ID in ($last_memo_ID_of_each_contact_ID)");
-//        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW()");
+        $query = $this->db->query("SELECT * FROM pub_memos "
+                . "WHERE "
+                . "issue_date BETWEEN "
+                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
+                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
+                . "and "
+                . "memo_ID in ($last_memo_ID_of_each_contact_ID)");
 
         $data['cash_paid'] = 0;
         $data['bank_pay'] = 0;
@@ -122,13 +124,18 @@ class Account extends CI_Model {
         return $query[0]['due'];
     }
 
-
     function monthly_due() {
 
         $this->load->model('Memo');
-//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date BETWEEN DATE_ADD(now(),INTERVAL -1 MONTH) AND NOW() ");
+        $query = $this->db->query("SELECT * FROM pub_memos "
+                . "WHERE "
+                . "issue_date BETWEEN "
+                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
+                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
+                . "and "
+                . "memo_ID in ($last_memo_ID_of_each_contact_ID)");
 //        print_r($query->result_array());
 //        exit;
         foreach ($query->result() as $value) {
@@ -183,57 +190,57 @@ class Account extends CI_Model {
         return $this->table->generate($data);
     }
 
-        function today_detail_table($range) {
-                
-	        $this->load->library('table');
-	        $t_t_s=0;
-	        $t_t_d=0;
-	        $t_t_c=0;
-	        $t_t_b=0;
+    function today_detail_table($range) {
 
-	        $account_today = $this->account->today();
-	        $account_monthly = $this->account->monthly();
-	        $total = $this->total();
+        $this->load->library('table');
+        $t_t_s = 0;
+        $t_t_d = 0;
+        $t_t_c = 0;
+        $t_t_b = 0;
 
-	        $this->table->set_heading('Date', 'Sell','Cash Paid','Bank Paid','Due');
+        $account_today = $this->account->today();
+        $account_monthly = $this->account->monthly();
+        $total = $this->total();
 
-	        $query=$this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE issue_date BETWEEN $range GROUP BY(issue_date)");
+        $this->table->set_heading('Date', 'Sell', 'Cash Paid', 'Bank Paid', 'Due');
 
-	        foreach ($query->result() as $value) {
-	        	$data=$this->today($value->issue_date);
+        $query = $this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE issue_date BETWEEN $range GROUP BY(issue_date)");
 
-	        	$today_sell=$data['todaysell'];
-	        	$t_t_s+=$today_sell;
+        foreach ($query->result() as $value) {
+            $data = $this->today($value->issue_date);
 
-	        	$today_due=$data['today_due'];
-	        	$t_t_d+=$today_due;
+            $today_sell = $data['todaysell'];
+            $t_t_s+=$today_sell;
 
-	        	$today_cash_pay=$data['cash_paid'];
-	        	$t_t_c+=$today_cash_pay;
+            $today_due = $data['today_due'];
+            $t_t_d+=$today_due;
 
-	        	$today_bank_pay=$data['bank_pay'];
-	        	$t_t_b+=$today_bank_pay;
+            $today_cash_pay = $data['cash_paid'];
+            $t_t_c+=$today_cash_pay;
 
-	        	$this->table->add_row($value->issue_date,$today_sell,$today_cash_pay ,$today_bank_pay ,$today_due);	
-	        }
-                $cell = array('data' => '', 'class' => 'info', 'colspan' => 5);
-	        $this->table->add_row($cell);
-	        $this->table->add_row('<strong class="pull-right">Total: </strong>',$t_t_s,$t_t_c,$t_t_b,$t_t_d);
+            $today_bank_pay = $data['bank_pay'];
+            $t_t_b+=$today_bank_pay;
 
-	        
-	        // $data = array(
-	        //     array('Today Cash Paid:', $account_today['cash_paid']),
-	        //     array('Today Bank Pay:', $account_today['bank_pay']),
-	        //     array('Monthly Cash Paid:', $account_monthly['cash_paid']),
-	        //     array('Monthly Bank Pay:', $account_monthly['bank_pay'])
-	        // );
-	        //Setting table template
-	        $tmpl = array(
-	            'table_open' => '<table class="table table-striped">',
-	            'heading_cell_start' => '<th class="success">'
-	        );
-	        $this->table->set_template($tmpl);
-	        return $this->table->generate();
+            $this->table->add_row($value->issue_date, $today_sell, $today_cash_pay, $today_bank_pay, $today_due);
+        }
+        $cell = array('data' => '', 'class' => 'info', 'colspan' => 5);
+        $this->table->add_row($cell);
+        $this->table->add_row('<strong class="pull-right">Total: </strong>', $t_t_s, $t_t_c, $t_t_b, $t_t_d);
+
+
+        // $data = array(
+        //     array('Today Cash Paid:', $account_today['cash_paid']),
+        //     array('Today Bank Pay:', $account_today['bank_pay']),
+        //     array('Monthly Cash Paid:', $account_monthly['cash_paid']),
+        //     array('Monthly Bank Pay:', $account_monthly['bank_pay'])
+        // );
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-striped">',
+            'heading_cell_start' => '<th class="success">'
+        );
+        $this->table->set_template($tmpl);
+        return $this->table->generate();
     }
 
 // function total_bank_pay(){
