@@ -277,73 +277,92 @@ class Memo extends CI_Model {
         return $output;
     }
 
-    function after_adding_memo($post_array, $primary_key) {
+    function updating_memo_serial($new_memo_serial, $memo_ID) {
         $data = array(
-            'memo_serial' => $primary_key,
+            'memo_serial' => $new_memo_serial,
         );
 
-        $this->db->where('memo_ID', $primary_key);
+        $this->db->where('memo_ID', $memo_ID);
         $this->db->update('pub_memos', $data);
-
-        return $this->after_editing_memo($post_array, $primary_key);
     }
 
-    function after_editing_memo($post_array, $primary_key) {
+    function after_adding_memo($post_array, $primary_key) {
         $this->load->model('Stock_manages');
+        $this->updating_memo_serial($primary_key, $primary_key);
 
-        $this->db->where('memo_ID', $primary_key);
-        $this->db->delete('pub_memos_selected_books');
-        foreach ($post_array['quantity'] as $index => $value) {
-            if ($value <= 0)
-                continue;
-            $book_ordered_quantity_insert = array(
-                "memo_ID" => $primary_key,
-                "book_ID" => $index,
-                "quantity" => $value,
-                "price_per_book" => $post_array['price'][$index],
-                "total" => $value * $post_array['price'][$index]
-            );
-            $this->db->insert('pub_memos_selected_books', $book_ordered_quantity_insert);
-
-            $this->Stock_manages->reduce_stock($post_array['stock_ID'][$index], $value);
+        $pub_memos_selected_books_data = array();
+        foreach ($post_array['quantity'] as $book_ID => $quantity) {
+            if ($quantity > 0) {
+                array_push($pub_memos_selected_books_data, array(
+                    "memo_ID" => $primary_key,
+                    "book_ID" => $book_ID,
+                    "stock_ID" => $post_array['stock_ID'][$book_ID],
+                    "quantity" => $quantity,
+                    "price_per_book" => $post_array['price'][$book_ID],
+                    "total" => $quantity * $post_array['price'][$book_ID]
+                ));
+            }
+            $this->Stock_manages->reduce_stock($post_array['stock_ID'][$book_ID], $quantity);
         }
+
+        $this->db->insert_batch('pub_memos_selected_books', $pub_memos_selected_books_data);
 
         return TRUE;
     }
 
-//    function dues_unpaid_updater() {
-//        $this->load->library('table');
-//        $db_tables = $this->config->item('db_tables');
-//
-//        $due_holder_rows = $this->db->select('distinct(contact_ID)')
-//                        ->from($db_tables['pub_memos'])
-//                        ->where('due >', 0)
-//                        ->get()->result_array();
-//        foreach ($due_holder_rows as $index => $row) {
-//            $contact_ID = $row['contact_ID'];
-//            $db_rows = $this->db->select("memo_ID,contact_ID,sub_total,discount,book_return,dues_unpaid,total,cash,bank_pay,due")
-//                            ->from($db_tables['pub_memos'])
-//                            ->where('due >', '0')
-//                            ->where('contact_ID', $contact_ID)
-//                            ->order_by('contact_ID', 'dsc')
-//                            ->get()->result_array();
-////        print_r($db_rows);
-////        $this->table->set_heading('memo_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
-////        echo $this->table->generate($db_rows);
-//            foreach ($db_rows as $index => $db_row) {
-//                $db_rows[$index]['dues_unpaid'] = isset($db_rows[$index - 1]['due']) ? $db_rows[$index - 1]['due'] : 0;
-//                $db_rows[$index]['total'] = $db_rows[$index]['sub_total'] - $db_rows[$index]['discount'] - $db_rows[$index]['book_return'] + $db_rows[$index]['dues_unpaid'];
-//                $db_rows[$index]['due'] = $db_rows[$index]['total'] - $db_rows[$index]['cash'] - $db_rows[$index]['bank_pay'];
-//            }
-//            $this->db->update_batch($db_tables['pub_memos'], $db_rows, 'memo_ID');
-//
-//            $this->table->set_heading('memo_ID', 'contact_ID', 'sub_total', 'discount', 'book_return', 'dues_unpaid', 'total', 'cash', 'bank_pay', 'due');
-//            echo $this->table->generate($db_rows);
-//        }
-//    }
-    // function listmemo(){
-    // 	$query = $this->db->query("SELECT name,memo_ID,memo_serial,issue_date
-    // 		from pub_memos LEFT join pub_contacts on
-    // 		pub_memos.contact_ID=pub_contacts.contact_ID");
-    // }
+    function selected_book_quantity($memo_ID, $book_ID) {
+        $where = array(
+            'memo_ID' => $memo_ID,
+            'book_ID' => $book_ID
+        );
+        $data = $this->db->select('quantity')
+                        ->from('pub_memos_selected_books')
+                        ->where($where)->get()->result_array();
+        return isset($data[0]['quantity']) ? $data[0]['quantity'] : 0;
+    }
+
+    function after_editing_memo($post_array, $primary_key) {
+        $this->load->model('Stock_manages');
+        $pub_memos_selected_books_data = array();
+        foreach ($post_array['quantity'] as $book_ID => $quantity) {
+            $previous_quantity = $this->selected_book_quantity($primary_key, $book_ID);
+            if ($quantity > 0) {
+                array_push($pub_memos_selected_books_data, array(
+                    "memo_ID" => $primary_key,
+                    "book_ID" => $book_ID,
+                    "stock_ID" => $post_array['stock_ID'][$book_ID],
+                    "quantity" => $quantity,
+                    "price_per_book" => $post_array['price'][$book_ID],
+                    "total" => $quantity * $post_array['price'][$book_ID]
+                ));
+            }
+            $quantity = $previous_quantity - $quantity;
+            $this->Stock_manages->increase_stock($post_array['stock_ID'][$book_ID], $quantity);
+        }
+        $this->db->where('memo_ID', $primary_key);
+        $this->db->delete('pub_memos_selected_books');
+
+        $this->db->insert_batch('pub_memos_selected_books', $pub_memos_selected_books_data);
+
+        return TRUE;
+    }
+
+    function after_deleting_memo($primary_key) {
+        $this->load->model('Stock_manages');
+        $where = array(
+            'memo_ID' => $primary_key
+        );
+        $rows = $this->db->select('*')
+                        ->from('pub_memos_selected_books')
+                        ->where($where)->get()->result_array();
+
+        foreach ($rows as $index => $row) {
+
+            $this->Stock_manages->increase_stock($row['stock_ID'], $row['quantity']);
+        }
+
+        $this->db->delete('pub_memos_selected_books', $where);
+        return TRUE;
+    }
+
 }
