@@ -190,6 +190,127 @@ class Memo extends CI_Model {
         $this->db->delete($db_tables['pub_memos_selected_books'], "`memo_ID` not in (SELECT `memo_ID` FROM `pub_memos` WHERE 1)");
     }
 
+    function add_book_selector_table() {
+        $this->load->library('table');
+        // Getting Data
+//        $query = $this->db->query("SELECT * FROM `pub_books`");
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select("{$db_tables['pub_books']}.* ,{$db_tables['pub_stock']}.stock_ID ,{$db_tables['pub_stock']}.Quantity  ");
+        $query = $this->db->from($db_tables['pub_books'])
+                ->join("{$db_tables['pub_stock']}", "{$db_tables['pub_stock']}.book_ID = {$db_tables['pub_books']}.book_ID")
+                ->join("{$db_tables['pub_contacts']}", "{$db_tables['pub_contacts']}.contact_ID = {$db_tables['pub_stock']}.printing_press_ID")
+                ->where('contact_type', 'Sales Store')
+                ->get();
+        $data = array();
+        foreach ($query->result_array() as $index => $row) {
+            array_push($data, [$row['name'], $row['book_price'],
+                $row['price'],
+                '<input style="width: 100px;" data-index="' . $index . '" data-price="' . $row['price'] . '" name="quantity[' . $row['book_ID'] . ']" min="0" max="' . $row['Quantity'] . '" value="0" class="numeric form-control" type="number">'
+                . '     <input name="price[' . $row['book_ID'] . ']" value="' . $row['price'] . '" type="hidden">'
+                . '     <input name="stock_ID[' . $row['book_ID'] . ']" value="' . $row['stock_ID'] . '" type="hidden">'
+            ]);
+        }
+        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Quantity');
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped">',
+            'heading_cell_start' => '<th class="success">'
+        );
+        $this->table->set_template($tmpl);
+        $output = '<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:335px;">
+                    ' . $this->table->generate($data) . '</div>
+                   <label>Sub Total :</label><span id="sub_total">0</span><span>Tk</span> <input type="hidden" maxlength="50  " name="sub_total">';
+        $output.=""
+                . "<script>"
+                . "var memo_ID='';"
+                . "</script>\n";
+        return $output;
+    }
+
+    function edit_book_selector_table($value, $primary_key) {
+        $this->load->library('table');
+        // Getting Data
+        $where = array('memo_ID' => $primary_key);
+        $book_selection_query = $this->db->get_where('pub_memos_selected_books', $where);
+        $book_selection = $book_selection_query->result_array();
+        foreach ($book_selection as $index => $row) {
+            $book_ID = $row['book_ID'];
+            $quantity = $row['quantity'];
+            $book_quantity_by_id[$book_ID] = $quantity;
+        }
+
+//        Getting the books (not stock restricted)
+//        $query = $this->db->query("SELECT * FROM `pub_books`");
+//        Getting the books (stock restricted)
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select("{$db_tables['pub_books']}.*  ,{$db_tables['pub_stock']}.stock_ID ,{$db_tables['pub_stock']}.Quantity  ");
+        $query = $this->db->from($db_tables['pub_books'])
+                ->join("{$db_tables['pub_stock']}", "{$db_tables['pub_stock']}.book_ID = {$db_tables['pub_books']}.book_ID")
+                ->join("{$db_tables['pub_contacts']}", "{$db_tables['pub_contacts']}.contact_ID = {$db_tables['pub_stock']}.printing_press_ID")
+                ->where('contact_type', 'Sales Store')
+                ->get();
+
+        $data = array();
+        foreach ($query->result_array() as $index => $row) {
+            $book_quantity_by_id[$row['book_ID']] = isset($book_quantity_by_id[$row['book_ID']]) ? $book_quantity_by_id[$row['book_ID']] : 0;
+            array_push($data, [$row['name'], $row['book_price'],
+                $row['price'],
+                '<input style="width: 100px;" data-index="' . $index . '" data-price="' . $row['price'] . '" name="quantity[' . $row['book_ID'] . ']" value="' . $book_quantity_by_id[$row['book_ID']] . '" min="0" max="' . $row['Quantity'] . '"  class="numeric form-control" type="number">'
+                . '     <input name="price[' . $row['book_ID'] . ']" value="' . $row['price'] . '" type="hidden">'
+                . '     <input name="stock_ID[' . $row['book_ID'] . ']" value="' . $row['stock_ID'] . '" type="hidden">'
+            ]);
+        }
+        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Quantity');
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped">',
+            'heading_cell_start' => '<th class="success">'
+        );
+        $this->table->set_template($tmpl);
+        $output = '<label>Select Book Quantity:</label><div style="overflow-y:scroll;max-height:335px;">
+                    ' . $this->table->generate($data) . '</div>
+                   <label>Sub Total :</label><span id="sub_total">' . $value . '</span><span>Tk</span> <input type="hidden" maxlength="50" value="' . $value . '" name="sub_total">';
+        $output.=""
+                . "<script>"
+                . "var memo_ID='" . $primary_key . "';"
+                . "</script>\n";
+        return $output;
+    }
+
+    function after_adding_memo($post_array, $primary_key) {
+        $data = array(
+            'memo_serial' => $primary_key,
+        );
+
+        $this->db->where('memo_ID', $primary_key);
+        $this->db->update('pub_memos', $data);
+
+        return $this->after_editing_memo($post_array, $primary_key);
+    }
+
+    function after_editing_memo($post_array, $primary_key) {
+        $this->load->model('Stock_manages');
+
+        $this->db->where('memo_ID', $primary_key);
+        $this->db->delete('pub_memos_selected_books');
+        foreach ($post_array['quantity'] as $index => $value) {
+            if ($value <= 0)
+                continue;
+            $book_ordered_quantity_insert = array(
+                "memo_ID" => $primary_key,
+                "book_ID" => $index,
+                "quantity" => $value,
+                "price_per_book" => $post_array['price'][$index],
+                "total" => $value * $post_array['price'][$index]
+            );
+            $this->db->insert('pub_memos_selected_books', $book_ordered_quantity_insert);
+
+            $this->Stock_manages->reduce_stock($post_array['stock_ID'][$index], $value);
+        }
+
+        return TRUE;
+    }
+
 //    function dues_unpaid_updater() {
 //        $this->load->library('table');
 //        $db_tables = $this->config->item('db_tables');
