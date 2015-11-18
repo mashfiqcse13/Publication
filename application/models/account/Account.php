@@ -65,15 +65,12 @@ class Account extends CI_Model {
 
     function monthly() {
         $this->load->model('Memo');
-        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
         $query = $this->db->query("SELECT * FROM pub_memos "
                 . "WHERE "
                 . "issue_date BETWEEN "
                 . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
-                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
-                . "and "
-                . "memo_ID in ($last_memo_ID_of_each_contact_ID)");
+                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)");
 
         $data['cash_paid'] = 0;
         $data['bank_pay'] = 0;
