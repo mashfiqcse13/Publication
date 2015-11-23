@@ -127,7 +127,7 @@ class Account extends CI_Model {
         $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
 
         if ($last_memo_ID_of_each_contact_ID === '') {
-            die("<script>alert('কোন মেমো ডাটাবেজে নেই । দয়া করে মেমো যোগ করুন । ');"
+            die("<script>alert('কোন মেমো ডাটাবেজে নেই । দয়া করে মেমো যোগ ক্রুন । ');"
                     . "window.location.assign( '" . site_url('admin/memo_management/add') . "');</script>");
         }
 
