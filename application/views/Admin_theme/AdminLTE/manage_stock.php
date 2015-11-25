@@ -20,7 +20,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12" style="padding-bottom: 10px;">
-                <?= anchor(site_url("admin/report_sold_book_today"), "আজকের বিক্রীত বইসমূহ", 'class="btn btn-primary"') ?>
+                <?= anchor(site_url("admin/report_sold_book_today"), "Get info about today sold books", 'class="btn btn-primary"') ?>
             </div>
             <div class="col-md-12">
 
