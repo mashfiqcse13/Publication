@@ -19,12 +19,15 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
+            <div class="col-md-12" style="padding-bottom: 10px;">
+                <?= anchor(site_url("admin/report_sold_book_today"), "আজকের বিক্রীত বইসমূহ", 'class="btn btn-primary"') ?>
+            </div>
             <div class="col-md-12">
 
                 <div class="box">
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">Manage Stock</h3>
+                        <h3 class="box-title">Manage Stock </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
