@@ -50,7 +50,7 @@
         
     </div>
 
-    <div class="row" style="font-size:11px;">
+    <div class="row" style="font-size:16px;">
 
         <?= $Book_selection_table['table'] ?>
 
