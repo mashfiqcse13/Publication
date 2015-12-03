@@ -19,9 +19,10 @@ $(function () {
 
 //    Edited By mashfiq
     var save_and_print = false;
-    $('#save-and-print-button').click(function () {
+    $('#save-and-print-button').hover(function () {
         save_and_print = true;
-        $('#crudForm').trigger('submit');
+    }, function () {
+        save_and_print = false;
     });
 //    Edited By mashfiq
 

@@ -204,13 +204,13 @@ class Memo extends CI_Model {
         $data = array();
         foreach ($query->result_array() as $index => $row) {
             array_push($data, [$row['name'], $row['book_price'],
-                $row['price'],
+                $row['price'], $row['Quantity'],
                 '<input style="width: 100px;" data-index="' . $index . '" data-price="' . $row['price'] . '" name="quantity[' . $row['book_ID'] . ']" min="0" max="' . $row['Quantity'] . '" value="0" class="numeric form-control" type="number">'
                 . '     <input name="price[' . $row['book_ID'] . ']" value="' . $row['price'] . '" type="hidden">'
                 . '     <input name="stock_ID[' . $row['book_ID'] . ']" value="' . $row['stock_ID'] . '" type="hidden">'
             ]);
         }
-        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Quantity');
+        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Book Available', 'Quantity');
         //Setting table template
         $tmpl = array(
             'table_open' => '<table class="table table-bordered table-striped">',
@@ -254,13 +254,13 @@ class Memo extends CI_Model {
         foreach ($query->result_array() as $index => $row) {
             $book_quantity_by_id[$row['book_ID']] = isset($book_quantity_by_id[$row['book_ID']]) ? $book_quantity_by_id[$row['book_ID']] : 0;
             array_push($data, [$row['name'], $row['book_price'],
-                $row['price'],
-                '<input style="width: 100px;" data-index="' . $index . '" data-price="' . $row['price'] . '" name="quantity[' . $row['book_ID'] . ']" value="' . $book_quantity_by_id[$row['book_ID']] . '" min="0" max="' . $row['Quantity'] . '"  class="numeric form-control" type="number">'
+                $row['price'], $book_quantity_by_id[$row['book_ID']] + $row['Quantity'],
+                '<input style="width: 100px;" data-index="' . $index . '" data-price="' . $row['price'] . '" name="quantity[' . $row['book_ID'] . ']" value="' . $book_quantity_by_id[$row['book_ID']] . '" min="0" max="' . ($book_quantity_by_id[$row['book_ID']] + $row['Quantity'] ) . '"  class="numeric form-control" type="number">'
                 . '     <input name="price[' . $row['book_ID'] . ']" value="' . $row['price'] . '" type="hidden">'
                 . '     <input name="stock_ID[' . $row['book_ID'] . ']" value="' . $row['stock_ID'] . '" type="hidden">'
             ]);
         }
-        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Quantity');
+        $this->table->set_heading('Book Name', 'Book Price', 'Sales Price', 'Book Available', 'Quantity');
         //Setting table template
         $tmpl = array(
             'table_open' => '<table class="table table-bordered table-striped">',
