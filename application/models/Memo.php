@@ -93,11 +93,12 @@ class Memo extends CI_Model {
         $this->table->add_row($cell, '');
 
         $this->table->add_row($c3, '<strong>বই মূল্য :</strong>', '<span id="number">' . $this->subtotal . '</span>');
-        $this->table->add_row('<strong>বই ফেরত :</strong>', '(-) ' . $this->book_return, '', '<strong>পূর্বের বাকি:</strong>', $this->dues_unpaid);
+        $this->table->add_row(
+                '<strong>বই ফেরত :</strong>', '(-) ' . $this->book_return, '', '<strong>পূর্বের বাকি:</strong>', $this->dues_unpaid);
         $this->table->add_row('<strong>বোনাস :</strong>', '(-) ' . $this->discount, '', '<strong>মোট:</strong>', $this->total);
 
 
-        $this->table->add_row($c3r, '<strong>নগদ জমা :</strong>', $this->cash);
+        $this->table->add_row($c3r, '<strong>নগদ জমা:</strong>', $this->cash);
         $this->table->add_row($c3r, '<strong>ব্যাংক জমা:</strong>', $this->bank_pay);
 
         $this->table->add_row($c3r, '<strong>বাকি :</strong>', $this->due);
