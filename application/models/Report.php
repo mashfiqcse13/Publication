@@ -17,14 +17,17 @@ if (!defined('BASEPATH'))
 class Report extends CI_Model {
 
     //put your code here
-    function sold_book_today() {
+    function sold_book_today($range=false) {
+        $date=$range;
         $this->load->library('table');
-        $date = date('Y-m-d');
+        if(empty($date)){
+            $date = date('Y-m-d').' AND '.date('Y-m-d');
+        }
         $data = $this->db->query("SELECT name,sum(quantity) as quantity
             FROM `pub_memos_selected_books`
             JOIN `pub_memos` ON `pub_memos_selected_books`.memo_ID = `pub_memos`.memo_ID
             JOIN `pub_books` on `pub_memos_selected_books`.`book_ID` = `pub_books`.`book_ID`
-            WHERE issue_date=DATE('$date')
+            WHERE issue_date BETWEEN $date
             GROUP BY `pub_memos_selected_books`.`book_ID`")->result_array();
 //- interval 2 day
         $table_template = array(
@@ -38,6 +41,17 @@ class Report extends CI_Model {
             return $this->table->generate($data);
         else
             return "আজ কোন মেমো তৈরী হয়নি ।";
+    }
+    
+        function dateformatter($range_string, $formate = 'Mysql') {
+        $date = explode(' - ', $range_string);
+        $date[0] = explode('/', $date[0]);
+        $date[1] = explode('/', $date[1]);
+
+        if ($formate == 'Mysql')
+            return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
+        else
+            return $date;
     }
 
 }

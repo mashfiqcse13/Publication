@@ -13,7 +13,7 @@
     <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:12px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
 
 
-        <div class="row" style="padding-top:50px">
+        <div class="row" style="padding-top:50px"> 
             <div class="text-center" style="display:none">
                 <h6>বিসমিল্লাহির রহমানির রহিম</h6>
                 <h1>দি যমুনা পাবলিশার্স</h1>
@@ -50,7 +50,7 @@
 
         </div>
 
-        <div class="row" style="font-size:16px;">
+        <div class="row" style="font-size:15px;">
 
             <?= $Book_selection_table['table'] ?>
 
