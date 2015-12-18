@@ -35,7 +35,9 @@ class Report extends CI_Model {
             'heading_cell_start' => '<th class="success" >'
         );
         $this->table->set_template($table_template);
+        
         $this->table->set_heading("বইয়ের নাম", "পরিমাণ");
+        
 
         if ($data != array())
             return $this->table->generate($data);
@@ -52,6 +54,6 @@ class Report extends CI_Model {
             return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
         else
             return $date;
-    }
+    } 
 
 }

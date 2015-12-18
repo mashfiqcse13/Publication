@@ -27,13 +27,14 @@ include_once 'header.php';
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><?= $Title ?></li>
         </ol>
+    </section>
         <!-- Main content -->
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
                         
-                        <div class="box">
+                        <div class="box only_print">
                             <div class="box-body">
                                 <?php
                 
@@ -43,6 +44,7 @@ include_once 'header.php';
                     echo form_open('', $attributes)
                     ?>
                     <div class="form-group col-md-4 text-left">
+                        
                         <label>Search Report With Date Range:</label>
                     </div>
                     <div class="form-group col-md-6">
@@ -60,19 +62,37 @@ include_once 'header.php';
                 <?php  ?>
                             </div>
                         </div>
-
+                        
+                            
                         <div class="box-header ">
+                            <?php if(!isset($date_range)){ ?>
                             <h3 class="box-title">আজকের বিক্রীত বইসমূহ </h3>
+                            
+                            <?php }else{ ?>
+                            <h3 class="box-title">মোট বিক্রীত বইসমূহ </h3>
+                            
+                            <?php } ?>
+                           
                         </div><!-- /.box-header -->
                         <div class="box-body with-border">
-                            <!--content goes here-->
-                            <?= $main_content ?>
+                                   
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/> 
+                                    
+                                    <!--content goes here-->
+                                    <?= $main_content ?>
+                                    
+                                </div>
+                            </div>
+                            
                         </div>
-
+                       
+                             
                     </div>
                 </div>
             </div>
         </section>
-</div><!-- /.content-wrapper -->
+</div><!-- /.content-wrapper --> 
 
 <?php include_once 'footer.php'; ?>
