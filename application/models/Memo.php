@@ -306,8 +306,8 @@ class Memo extends CI_Model {
             }
             $this->Stock_manages->reduce_stock($post_array['stock_ID'][$book_ID], $quantity);
         }
-
-        $this->db->insert_batch('pub_memos_selected_books', $pub_memos_selected_books_data);
+        if ($pub_memos_selected_books_data != array())
+            $this->db->insert_batch('pub_memos_selected_books', $pub_memos_selected_books_data);
 
         return TRUE;
     }
