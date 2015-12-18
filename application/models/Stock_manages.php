@@ -42,7 +42,7 @@ class Stock_manages extends CI_Model {
         $this->db->from($db_tables['pub_stock']);
         $this->db->join("{$db_tables['pub_books']}", "{$db_tables['pub_books']}.book_ID = {$db_tables['pub_stock']}.book_ID");
         $this->db->join("{$db_tables['pub_contacts']}", "{$db_tables['pub_contacts']}.contact_ID = {$db_tables['pub_stock']}.printing_press_ID");
-        $this->db->where('contact_type', $contact_type);
+        $this->db->where('contact_type', $contact_type)->order_by($db_tables['pub_books'] . '.book_ID', 'ASC');
         $query = $this->db->get();
         $db_rows = $query->result_array();
 
