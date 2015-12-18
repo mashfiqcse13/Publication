@@ -201,6 +201,7 @@ class Memo extends CI_Model {
                 ->join("{$db_tables['pub_stock']}", "{$db_tables['pub_stock']}.book_ID = {$db_tables['pub_books']}.book_ID")
                 ->join("{$db_tables['pub_contacts']}", "{$db_tables['pub_contacts']}.contact_ID = {$db_tables['pub_stock']}.printing_press_ID")
                 ->where('contact_type', 'Sales Store')
+                ->order_by('book_ID', 'ASC')
                 ->get();
         $data = array();
         foreach ($query->result_array() as $index => $row) {
