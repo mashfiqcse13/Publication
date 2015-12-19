@@ -25,7 +25,13 @@
 
                     <div class="box-header with-border">
                         <h3 class="box-title">Manage Stock </h3>
+                        <p class="pull-right">Report Date: <?php echo date('d-m-Y'); ?></p>
+                        
                     </div><!-- /.box-header -->
+                    <div class="pull-right">
+                        <input class="only_print pull-right btn-info" style="padding:5px;margin:5px" type="button"  onClick="window.print()"  value="Print This Page"/>
+
+                    </div>
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
