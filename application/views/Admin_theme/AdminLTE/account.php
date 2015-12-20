@@ -55,9 +55,11 @@
 
             <div class="col-md-12" >
                 <h2 class="text-center page-header">Sales Report</h2>
+                
                 <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
             </div>
             <div class="col-md-12">
+                <p class="pull-right">Report Date: <?php echo date('d-m-Y'); ?>  </p>
                 <?=$today_detail_table ?>
             </div>
         </div>

@@ -22,7 +22,7 @@
 
 
 
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:12px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
+    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
 
 
 
@@ -44,7 +44,7 @@
 
 
 
-            <table class="table table_custom" >
+            <table class="table table_custom" style="font-size:13px">
 
                 <tr>
 
