@@ -56,7 +56,7 @@
 
                     <td><strong>Code No:</strong></td>
 
-                    <td><?= $Book_selection_table['contact_ID'] ?></td>
+                    <td><?= $Book_selection_table['code'] ?></td>
 
 
 
