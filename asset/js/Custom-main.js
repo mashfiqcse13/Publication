@@ -4,7 +4,20 @@
  * and open the template in the editor.
  */
 /*Memo Management*/
+addContactButtonContent = "<span style='margin: 0px 13px;'>or Party Code* :</span><input type='number' id='fake_contact_ID' />" + addContactButtonContent;
 $('#contact_ID_input_box').after(addContactButtonContent);
+$("#fake_contact_ID").change(function () {
+    var fake_contact_ID = $("#fake_contact_ID").val();
+    $("#field-contact_ID").val(fake_contact_ID);
+    var contact_ID = $("#field-contact_ID").val();
+    if (!contact_ID) {
+        $("#field-contact_ID").val("");
+        $("#fake_contact_ID").val('');
+        alert(fake_contact_ID + " is not a valid Party Code");
+    }
+});
+
+
 // setting issue date
 var objDate = new Date();
 if ($('#field-issue_date').val() == "")
