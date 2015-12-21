@@ -5,7 +5,15 @@
  */
 
 
-$('#field-issue_date').val(CurrentDate);
+// setting issue date
+var objDate = new Date();
+if ($('#field-issue_date').val() == "")
+    $('#field-issue_date').val(CurrentDate + " " + objDate.getHours() + ":" + objDate.getMinutes() + ":" + objDate.getSeconds());
+$('#field-issue_date').change(function () {
+    var objDate = new Date();
+    var date_selected = $('#field-issue_date').val();
+    $('#field-issue_date').val(date_selected + " " + objDate.getHours() + ":" + objDate.getMinutes() + ":" + objDate.getSeconds());
+});
 
 $('[name="returned_book_ID"]').change(function () {
     $.ajax({
