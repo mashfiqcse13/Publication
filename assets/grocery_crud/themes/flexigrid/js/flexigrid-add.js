@@ -19,10 +19,9 @@ $(function () {
 
 //    Edited By mashfiq
     var save_and_print = false;
-    $('#save-and-print-button').hover(function () {
+    $('#save-and-print-button').click(function () {
         save_and_print = true;
-    }, function () {
-        save_and_print = false;
+        $('#crudForm').trigger('submit');
     });
 //    Edited By mashfiq
 

@@ -62,7 +62,7 @@ $this->set_js_lib($this->default_javascript_path . '/jquery_plugins/config/jquer
             <?php } ?>
             <?php if ($this->set_save_and_print) { ?>
                 <div class='form-button-box'>
-                    <input id="save-and-print-button" type='submit' value='Save and Print'   class="btn btn-large"/>
+                    <input id="save-and-print-button" type='button' value='Save and Print'   class="btn btn-large"/>
                 </div>
             <?php } ?>
             <div class='form-button-box'>
