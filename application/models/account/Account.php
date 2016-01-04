@@ -141,7 +141,7 @@ class Account extends CI_Model {
 //        print_r($query->result_array());
 //        exit;
         foreach ($query->result() as $value) {
-            $monthly_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
+            $monthly_due = $value->total - $value->cash - $value->bank_pay;
             if ($monthly_due > 0) {
                 $this->monthly_due+=$monthly_due;
             }
