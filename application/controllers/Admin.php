@@ -73,9 +73,9 @@ class Admin extends CI_Controller {
     }
 
     function report_sold_book_today($cmd = false) {
-        
+
         $this->load->library('session');
-        
+
 //        basic info initialization
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Roport';
@@ -84,8 +84,8 @@ class Admin extends CI_Controller {
 //        Getting main content
         $this->load->model('Report');
         //$data['main_content'] = $this->Report->sold_book_today();
-        
-        
+
+
         $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
             $this->session->set_userdata('date_range', $data['date_range']);
@@ -100,9 +100,9 @@ class Admin extends CI_Controller {
         }
         if (isset($range)) {
             $data['main_content'] = $this->Report->sold_book_today($range);
-        }else{
-            
-            $data['main_content'] = $this->Report->sold_book_today(); 
+        } else {
+
+            $data['main_content'] = $this->Report->sold_book_today();
         }
 
 
@@ -129,17 +129,9 @@ class Admin extends CI_Controller {
     function manage_contact() {
         $crud = new grocery_CRUD();
         $crud->columns(
-                'contact_ID',
-                'name',
-                'district',
-                'upazila',
-                'contact_type',
-                'address',
-                'Institute_name',
-                'subject',
-                'phone'
-                ); 
-        $crud->display_as('contact_ID','Contact code');
+                'contact_ID', 'name', 'district', 'upazila', 'contact_type', 'address', 'Institute_name', 'subject', 'phone'
+        );
+        $crud->display_as('contact_ID', 'Contact code');
         $crud->set_table('pub_contacts')->set_subject('Contact')->order_by('contact_ID', 'desc');
         $crud->callback_add_field('contact_type', function () {
             return form_dropdown('contact_type', $this->config->item('contact_type'));
@@ -151,20 +143,20 @@ class Admin extends CI_Controller {
         })->callback_edit_field('district', function ($value, $primary_key) {
             return form_dropdown('district', $this->config->item('districts_english'), $value);
         });
-        
+
         $crud->callback_add_field('upazila', function () {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value);
         });
-        
-        
-          $crud->callback_add_field('subject', function () {
+
+
+        $crud->callback_add_field('subject', function () {
             return form_dropdown('subject', $this->config->item('teacher_subject'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('subject', function ($value, $primary_key) {
             return form_dropdown('subject', $this->config->item('teacher_subject'), $value);
         });
-        
+
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -322,7 +314,8 @@ class Admin extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('pub_memos')
                 ->set_subject('Memo')
-                ->display_as('contact_ID', 'Party Name')->order_by('memo_ID', 'desc')
+                ->display_as('contact_ID', 'Party Name')
+                ->display_as('issue_date', 'Issue Date (mm/dd/yyyy)')->order_by('memo_ID', 'desc')
                 ->required_fields('contact_ID', 'issue_date');
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name');
@@ -375,7 +368,7 @@ class Admin extends CI_Controller {
                 ->add_action('Print', '', site_url('admin/memo/1'), 'fa fa-print', function ($primary_key, $row) {
                     return site_url('admin/memo/' . $row->memo_ID);
                 });
-      
+
         $addContactButtonContent = anchor('admin/manage_contact/add', '<i class="fa fa-plus-circle"></i> Add New Contact', 'class="btn btn-default" style="margin-left: 15px;"');
         $data['scriptInline'] = ""
                 . "<script>"

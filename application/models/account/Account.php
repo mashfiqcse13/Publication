@@ -136,15 +136,14 @@ class Account extends CI_Model {
                 . "issue_date BETWEEN "
                 . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
                 . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
-                . "and "
-                . "memo_ID in ($last_memo_ID_of_each_contact_ID)");
+//                . "and "
+//                . "memo_ID in ($last_memo_ID_of_each_contact_ID)"
+                . "");
 //        print_r($query->result_array());
 //        exit;
         foreach ($query->result() as $value) {
-            $monthly_due = $value->total - $value->cash - $value->bank_pay;
-            if ($monthly_due > 0) {
-                $this->monthly_due+=$monthly_due;
-            }
+            $monthly_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
+            $this->monthly_due+=$monthly_due;
         }
         return $this->monthly_due;
     }
