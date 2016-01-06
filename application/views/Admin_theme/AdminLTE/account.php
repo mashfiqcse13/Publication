@@ -151,13 +151,11 @@
 
 
  <?php if(isset($today_detail_table)){ ?>    
-        <div class="row report-logo-for-print" style="background:#fff;margin-left:0px">
+        <div class="row rreport-logo-for-print" style="background:#fff;margin-left:0px">
             <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?>  </p>
-            <div class="page-header text-center report-logo-for-print">
-                
-                <h2><?php echo $this->config->item('SITETITLE') ?></h2>
-            </div>
+            
             <div class="col-md-12" >
+                <h2 class="text-center"><?php echo $this->config->item('SITETITLE') ?></h2>
                 <h2 class="text-center page-header">Sales Report</h2>
                 
                  </div>

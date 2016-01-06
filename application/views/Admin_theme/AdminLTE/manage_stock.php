@@ -146,12 +146,13 @@
 
 <div class="box-body">
                         <div class="row">
+                            <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
                             <div class="col-md-12">
-                                 <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
-                                <div class="page-header text-center report-logo-for-print">
-                
-                <h2><?php echo $this->config->item('SITETITLE') ?></h2>
-            </div>
+                                 
+                             <div class="box-header ">
+                                          <h2 class="text-center"><?php echo $this->config->item('SITETITLE') ?></h2>
+                                           
+                                       </div>
 
                                 <table class="table table-bordered">
                                     <tr>
