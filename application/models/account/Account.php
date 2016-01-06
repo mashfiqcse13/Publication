@@ -36,7 +36,13 @@ class Account extends CI_Model {
             $data['bank_pay'] += $value->bank_pay;
 
             $due = $value->due - $value->dues_unpaid;
-            $today_due+=$due;
+
+            // Friends IT Project Reference No : 1
+            $sell = $value->sub_total - $value->discount - $value->book_return;
+            $memo_due = $sell - $value->cash - $value->bank_pay;
+            if ($memo_due >= 0) {
+                $today_due+=$memo_due;
+            }
         }
         $data['todaysell'] = $todaysell;
         $data['today_due'] = $today_due;
