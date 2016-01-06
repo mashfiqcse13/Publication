@@ -3,7 +3,7 @@
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="min-height: 600px">
+<div class="content-wrapper only_print" style="min-height: 600px">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -25,7 +25,7 @@
 
                     <div class="box-header with-border">
                         <h3 class="box-title">Manage Stock </h3>
-                        <p class="pull-right">Report Date: <?php echo date('d-m-Y'); ?></p>
+                        <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
                         
                     </div><!-- /.box-header -->
                     <div class="pull-right">
@@ -144,5 +144,44 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+<div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                 <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
+                                <div class="page-header text-center report-logo-for-print">
+                
+                <h2><?php echo $this->config->item('SITETITLE') ?></h2>
+            </div>
 
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="5" class="text-center info">Printing press</th>
+                                    </tr>
+                                </table>
+
+                                <?= $printing_table ?>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <tr>
+
+                                        <th colspan="5" class="text-center warning">Binding Store</th>
+                                    </tr>
+                                </table>
+
+                                <?= $binding_table ?>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <tr>
+
+                                        <th colspan="5" class="text-center success">Sales Store</th>
+                                    </tr>
+                                </table>
+
+                                <?= $store_table ?>
+                            </div>
+                        </div>
+
+                    </div>
 <?php include_once 'footer.php'; ?>

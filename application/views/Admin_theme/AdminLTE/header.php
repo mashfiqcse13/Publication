@@ -81,8 +81,23 @@
 .right-text-for-account tr>td:first-child{
     text-align:left;
 }
+.right-text-for-account th.success:first-child {
+    text-align: left;
+}
+.right-text-for-account th.success {
+    text-align: right;
+}
 .report-logo-for-print{
     display: none;
+}
+.bDiv tr td:nth-child(1)>.text-left {
+    float: left;
+}
+.bDiv tr td:nth-child(2)>.text-left {
+    float: left;
+}
+.bDiv tr td .text-left {
+    text-align: right;
 }
 @media only print{
     .report-logo-for-print{

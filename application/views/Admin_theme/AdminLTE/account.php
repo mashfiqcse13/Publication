@@ -72,7 +72,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3><?= $account_today['todaysell'] ?> Tk</h3>
+                        <h3>TK <?= $account_today['todaysell'] ?></h3>
                         <p><strong>Today sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
@@ -85,7 +85,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><strong><?= $account_monthly['monthlysell'] ?> Tk</strong> </h3>
+                        <h3><strong>TK <?= $account_monthly['monthlysell'] ?></strong> </h3>
                         <p><strong>Monthly sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
@@ -98,7 +98,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3><strong><?= $account_today['today_due'] ?> Tk</strong></h3>
+                        <h3><strong>TK <?= $account_today['today_due'] ?></strong></h3>
                         <p><strong>Today due</strong><br></p>
 
                     </div>
@@ -112,7 +112,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3><strong><?= $account_monthly['monthly_due'] ?> Tk</strong></h3>
+                        <h3><strong>TK <?= $account_monthly['monthly_due'] ?></strong></h3>
                         <p><strong>Monthly due</strong><br></p>
 
                     </div>
@@ -151,17 +151,18 @@
 
 
  <?php if(isset($today_detail_table)){ ?>    
-        <div class="row report-logo-for-print" style="background:#fff;margin-left:0px">           
+        <div class="row report-logo-for-print" style="background:#fff;margin-left:0px">
+            <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?>  </p>
             <div class="page-header text-center report-logo-for-print">
-                <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
-                <h2>The Jamuna Publishers</h2>
+                
+                <h2><?php echo $this->config->item('SITETITLE') ?></h2>
             </div>
             <div class="col-md-12" >
                 <h2 class="text-center page-header">Sales Report</h2>
                 
                  </div>
             <div class="col-md-12">
-                <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?>  </p>
+                
                 <?=$today_detail_table ?>
             </div>
         </div>

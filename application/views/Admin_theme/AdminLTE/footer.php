@@ -3,7 +3,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.2.0
     </div>
-    <strong>Copyright &copy; 2014-<?php echo date("Y"); ?>  <a href="">The Jamuna Publishers</a>.</strong> All rights reserved.Developed by <a href="http://friendsitltd.com" target="_blank">Friends IT</a>
+    <strong>Copyright &copy; 2014-<?php echo date("Y"); ?>  <a href=""><?php echo $this->config->item('SITETITLE') ?></a>.</strong> All rights reserved.Developed by <a href="http://friendsitltd.com" target="_blank">Friends IT</a>
 </footer>
 
 <!-- Control Sidebar -->

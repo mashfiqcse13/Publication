@@ -111,8 +111,7 @@ include_once 'header.php';
                                 <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
                                 <div class="col-md-12">
                                     <div class="page-header text-center report-logo-for-print">
-                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
-                                  <h2>The Jamuna Publishers</h2>
+                                     <h2><?php echo $this->config->item('SITETITLE') ?></h2>
                                   </div>
                                       <div class="box-header ">
                                            <h3 class="box-title">বিক্রীত বইসমূহ </h3> 

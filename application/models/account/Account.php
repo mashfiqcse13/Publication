@@ -185,7 +185,7 @@ class Account extends CI_Model {
         //Setting table template
         $tmpl = array(
             'table_open' => '<table class="table table-striped right-text-for-account">',
-            'heading_cell_start' => '<th class="success">'
+            'heading_cell_start' => '<th class="success heading-right-for-page">'
         );
         $this->table->set_template($tmpl);
         return $this->table->generate($data);
