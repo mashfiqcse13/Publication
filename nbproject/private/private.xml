@@ -3,14 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Publication/application/models/memo/Memo_management.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/config/config.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/memo.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/account.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/models/Memo.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/controllers/Admin.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/header.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/models/Report.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/models/Stock_manages.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/models/index.html</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/main_sidebar.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/models/account/Account.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/manage_stock.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/config/common/site.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/page-book-sold-quantity.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/header.php</file>
         </group>
     </open-files>
 </project-private>
