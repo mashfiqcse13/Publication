@@ -422,7 +422,8 @@ class Admin extends CI_Controller {
             redirect("admin/due_management");
         }
         if ($this->session->userdata('date_range') != '') {
-            $crud->where("issue_date BETWEEN " . $this->Memo->dateformatter($this->session->userdata('date_range')));
+            $crud->where("DATE(issue_date) BETWEEN " . $this->Memo->dateformatter($this->session->userdata('date_range')));
+            //$crud->where("issue_date BETWEEN " . $this->Memo->dateformatter($this->session->userdata('date_range')));
             $data['date_range'] = $this->session->userdata('date_range');
         }
 
