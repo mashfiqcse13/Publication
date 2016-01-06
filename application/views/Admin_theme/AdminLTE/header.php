@@ -88,6 +88,10 @@
     .report-logo-for-print{
         display: block;
     }
+    aside.main-sidebar.only_print {
+    display: none;
+}
+.table>tbody>tr>td{padding-bottom: 9px}
 }
         </style>
 

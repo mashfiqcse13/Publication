@@ -5,7 +5,7 @@
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper only_print">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -22,10 +22,7 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-             <div class="page-header text-center report-logo-for-print">
-                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
-                                  <h2>The Jamuna Publishers</h2>
-                                  </div>
+             
              <div class="col-md-12">
               <div class="only_print">
                 <?php
@@ -153,5 +150,21 @@
 <!-- insert book -->
 
 
-
+ <?php if(isset($today_detail_table)){ ?>    
+        <div class="row report-logo-for-print" style="background:#fff;margin-left:0px">           
+            <div class="page-header text-center report-logo-for-print">
+                <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
+                <h2>The Jamuna Publishers</h2>
+            </div>
+            <div class="col-md-12" >
+                <h2 class="text-center page-header">Sales Report</h2>
+                
+                 </div>
+            <div class="col-md-12">
+                <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?>  </p>
+                <?=$today_detail_table ?>
+            </div>
+        </div>
+            
+       <?php  }?>
 <?php include_once 'footer.php'; ?>

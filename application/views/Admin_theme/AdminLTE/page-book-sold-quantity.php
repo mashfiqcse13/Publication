@@ -16,7 +16,7 @@ include_once 'header.php';
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper only_print">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -63,12 +63,16 @@ include_once 'header.php';
                 <?php  ?>
                             </div>
                         </div>
-                         <div class="page-header text-center report-logo-for-print">
-                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
-                                  <h2>The Jamuna Publishers</h2>
-                                  </div>
+                         
                             
-                        <div class="box-header ">
+                      
+                        <div class="box-body with-border">
+                                 
+                            <div class="row">
+                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
+                                <div class="col-md-12">
+                                   
+                                      <div class="box-header ">
                             <?php if(!isset($date_range)){ ?>
                             <h3 class="box-title">আজকের বিক্রীত বইসমূহ </h3>
                             
@@ -78,11 +82,6 @@ include_once 'header.php';
                             <?php } ?>
                            
                         </div><!-- /.box-header -->
-                        <div class="box-body with-border">
-                                 
-                            <div class="row">
-                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
-                                <div class="col-md-12">
                                     
                                     <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/> 
                                     
@@ -93,12 +92,36 @@ include_once 'header.php';
                             </div>
                             
                         </div>
+                        
+                      
                        
                              
                     </div>
                 </div>
             </div>
         </section>
+        
+         
+        
+        
 </div><!-- /.content-wrapper --> 
-
+ <div class="box-body with-border report-logo-for-print" style="margin-left:0px; background:#fff;">
+                                 
+                            <div class="row">
+                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
+                                <div class="col-md-12">
+                                    <div class="page-header text-center report-logo-for-print">
+                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
+                                  <h2>The Jamuna Publishers</h2>
+                                  </div>
+                                      <div class="box-header ">
+                                           <h3 class="box-title">বিক্রীত বইসমূহ </h3> 
+                                       </div><!-- /.box-header -->
+                                    <!--content goes here-->
+                                    <?= $main_content ?>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
 <?php include_once 'footer.php'; ?>
