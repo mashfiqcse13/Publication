@@ -154,6 +154,20 @@ class Account extends CI_Model {
         return $this->monthly_due;
     }
 
+    function due_in_date_range($range) {
+
+        $query = $this->db->query("SELECT * FROM pub_memos "
+                . "WHERE "
+                . "DATE(issue_date) BETWEEN $range"
+                . "");
+        $total_due = 0;
+        foreach ($query->result() as $value) {
+            $due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
+            $total_due+=$due;
+        }
+        return $total_due;
+    }
+
     function total_account_detail_table() {
         $this->load->library('table');
         $total = $this->total();
@@ -232,7 +246,7 @@ class Account extends CI_Model {
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
-        $this->table->add_row('<strong class="pull-right">Total: </strong>', $t_t_s, $t_t_c, $t_t_b, $t_t_d);
+        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $t_t_s, $t_t_c, $t_t_b, $this->due_in_date_range($range));
 
 
         // $data = array(
