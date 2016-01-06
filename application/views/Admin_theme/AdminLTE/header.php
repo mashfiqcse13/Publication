@@ -63,7 +63,32 @@
     
     border-bottom: 1px solid #d5d5d5;
 }
-
+.text-right-for-money tr > td:nth-child(3) {
+    text-align: right;
+}
+.text-right-for-money tr > td:nth-child(4) {
+    text-align: right;
+}
+.text-right-for-money tr > td:nth-child(5) {
+    text-align: right;
+}
+.move-tk-to-right-for-soldbook tr > td:nth-child(2) {
+    text-align: right;
+}
+.right-text-for-account tr>td{
+    text-align:right;
+}
+.right-text-for-account tr>td:first-child{
+    text-align:left;
+}
+.report-logo-for-print{
+    display: none;
+}
+@media only print{
+    .report-logo-for-print{
+        display: block;
+    }
+}
         </style>
 
         <?php

@@ -22,7 +22,10 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            
+             <div class="page-header text-center report-logo-for-print">
+                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
+                                  <h2>The Jamuna Publishers</h2>
+                                  </div>
              <div class="col-md-12">
               <div class="only_print">
                 <?php
@@ -59,7 +62,7 @@
                 <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
             </div>
             <div class="col-md-12">
-                <p class="pull-right">Report Date: <?php echo date('d-m-Y'); ?>  </p>
+                <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?>  </p>
                 <?=$today_detail_table ?>
             </div>
         </div>

@@ -36,7 +36,7 @@ class Report extends CI_Model {
             GROUP BY `pub_memos_selected_books`.`book_ID`")->result_array();
 //- interval 2 day
         $table_template = array(
-            'table_open' => '<table class="table table-bordered table-striped">',
+            'table_open' => '<table class="table table-bordered table-striped move-tk-to-right-for-soldbook">',
             'heading_cell_start' => '<th class="success" >'
         );
         $this->table->set_template($table_template);

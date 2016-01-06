@@ -63,7 +63,10 @@ include_once 'header.php';
                 <?php  ?>
                             </div>
                         </div>
-                        
+                         <div class="page-header text-center report-logo-for-print">
+                                  <img src="http://localhost:81/Publication//asset/img/jamuna logo.gif" class="img-circle" alt="User Image" style="width:80px">
+                                  <h2>The Jamuna Publishers</h2>
+                                  </div>
                             
                         <div class="box-header ">
                             <?php if(!isset($date_range)){ ?>
@@ -76,9 +79,9 @@ include_once 'header.php';
                            
                         </div><!-- /.box-header -->
                         <div class="box-body with-border">
-                                   
+                                 
                             <div class="row">
-                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('d-m-Y'); ?> </p>
+                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
                                 <div class="col-md-12">
                                     
                                     <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/> 

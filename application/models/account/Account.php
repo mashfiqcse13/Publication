@@ -151,16 +151,16 @@ class Account extends CI_Model {
     function total_account_detail_table() {
         $this->load->library('table');
         $total = $this->total();
-        $this->table->set_heading('Description', 'Amount(Tk)');
+        $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
-            array('Total Cash Paid:', $total['total_cash_paid']),
-            array('Total Bank Pay:', $total['total_bank_pay']),
+            array('Total Cash Collection:', $total['total_cash_paid']),
+            array('Total Bank Collection:', $total['total_bank_pay']),
             array('Total Due:', $total['total_due']),
             array('<strong>Total Sale:<strong>', "<strong>{$total['total_sell']}<strong>")
         );
         //Setting table template
         $tmpl = array(
-            'table_open' => '<table class="table table-striped">',
+            'table_open' => '<table class="table table-striped right-text-for-account">',
             'heading_cell_start' => '<th class="success">'
         );
         $this->table->set_template($tmpl);
@@ -175,16 +175,16 @@ class Account extends CI_Model {
         $account_monthly = $this->account->monthly();
         $total = $this->total();
 
-        $this->table->set_heading('Description', 'Amount(Tk)');
+        $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
-            array('Today Cash Paid:', $account_today['cash_paid']),
-            array('Today Bank Pay:', $account_today['bank_pay']),
-            array('Monthly Cash Paid:', $account_monthly['cash_paid']),
-            array('Monthly Bank Pay:', $account_monthly['bank_pay'])
+            array('Today Cash Collection:', $account_today['cash_paid']),
+            array('Today Bank Collection:', $account_today['bank_pay']),
+            array('Monthly Cash Collection:', $account_monthly['cash_paid']),
+            array('Monthly Bank Collection:', $account_monthly['bank_pay'])
         );
         //Setting table template
         $tmpl = array(
-            'table_open' => '<table class="table table-striped">',
+            'table_open' => '<table class="table table-striped right-text-for-account">',
             'heading_cell_start' => '<th class="success">'
         );
         $this->table->set_template($tmpl);
@@ -203,7 +203,7 @@ class Account extends CI_Model {
         $account_monthly = $this->account->monthly();
         $total = $this->total();
 
-        $this->table->set_heading('Date', 'Sell', 'Cash Paid', 'Bank Paid', 'Due');
+        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due');
 
         $query = $this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE DATE(issue_date) BETWEEN $range GROUP BY(DATE(issue_date))");
 
@@ -224,7 +224,7 @@ class Account extends CI_Model {
 
             $this->table->add_row($value->issue_date, $today_sell, $today_cash_pay, $today_bank_pay, $today_due);
         }
-        $cell = array('data' => '', 'class' => 'info', 'colspan' => 5);
+        $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
         $this->table->add_row('<strong class="pull-right">Total: </strong>', $t_t_s, $t_t_c, $t_t_b, $t_t_d);
 
@@ -237,7 +237,7 @@ class Account extends CI_Model {
         // );
         //Setting table template
         $tmpl = array(
-            'table_open' => '<table class="table table-striped">',
+            'table_open' => '<table class="table table-striped right-text-for-account">',
             'heading_cell_start' => '<th class="success">'
         );
         $this->table->set_template($tmpl);
