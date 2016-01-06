@@ -151,7 +151,7 @@
 
 
  <?php if(isset($today_detail_table)){ ?>    
-        <div class="row rreport-logo-for-print" style="background:#fff;margin-left:0px">
+        <div class="row report-logo-for-print" style="background:#fff;margin-left:0px">
             <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?>  </p>
             <div class="box-header text-center">
                 
