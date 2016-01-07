@@ -108,7 +108,7 @@ include_once 'header.php';
  <div class="box-body with-border report-logo-for-print" style="margin-left:0px; background:#fff;">
                                  
                             <div class="row">
-                                <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
+                                <p class="pull-right" style="margin-right:20px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
                                 <div class="col-md-12">
                                     
                                     

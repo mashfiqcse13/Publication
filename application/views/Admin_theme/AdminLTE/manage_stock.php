@@ -146,7 +146,7 @@
 
 <div class="box-body report-logo-for-print" style="background:#fff">
                         <div class="row">
-                            <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
+                            <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
                             <div class="col-md-12">
                                  
                              <div class="box-header ">
