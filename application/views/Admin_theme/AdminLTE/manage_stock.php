@@ -144,7 +144,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div class="box-body">
+<div class="box-body report-logo-for-print" style="background:#fff">
                         <div class="row">
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d'); ?></p>
                             <div class="col-md-12">
