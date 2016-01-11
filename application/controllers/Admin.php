@@ -25,7 +25,6 @@ class Admin extends CI_Controller {
             return 0;
         }
         $this->load->library('grocery_CRUD');
-        
     }
 
     function index() {
@@ -329,14 +328,14 @@ class Admin extends CI_Controller {
             if (!in_array($primary_id, $this->Memo->last_memo_ID_of_each_contact_ID())) {
                 if ($cmd == 'edit') {
                     die("<script>"
-                            . "alert('You are not permitted to edit this memo . Thank you');"
+                            . "alert(' আপনি এই মেমোটি এডিট করতে পারবেন না । প্রয়োজনে এই  ক্রেতার সর্বশেষ  মেমোটি এডিট  করুন । ধন্যবাদ ।   ');"
                             . "window.location.assign( '" . site_url('admin/memo_management') . "');"
                             . "</script>");
                     $crud->unset_edit();
                 }
                 if ($cmd == 'delete') {
                     die("<script>"
-                            . "alert('You are not permitted to edit this memo . Thank you');"
+                            . "alert('আপনি এই মেমোটি ডিলিট করতে পারবেন না । প্রয়োজনে এই  ক্রেতার সর্বশেষ  মেমোটি ডিলিট  করুন । ধন্যবাদ ।  ');"
                             . "window.location.assign( '" . site_url('admin/memo_management') . "');"
                             . "</script>");
                     $crud->unset_delete();
