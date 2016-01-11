@@ -15,6 +15,7 @@ $("#fake_contact_ID").change(function () {
         $("#fake_contact_ID").val('');
         alert(fake_contact_ID + " is not a valid Party Code");
     }
+    set_dues_unpaid();
 });
 
 
