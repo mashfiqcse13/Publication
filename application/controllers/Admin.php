@@ -115,6 +115,9 @@ class Admin extends CI_Controller {
         $crud->callback_add_field('catagory', function () {
             return form_dropdown('catagory', $this->config->item('book_categories'), '0');
         });
+        $crud->callback_column('name', function ($value, $row) {
+            return $row->name;
+        });
         $crud->callback_add_field('storing_place', function () {
             return form_dropdown('storing_place', $this->config->item('storing_place'));
         });
