@@ -21,6 +21,9 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                <a href="#" class="btn btn- pull-right" title="Teacher Contact">Click here for Teacher Contact</a>
+            </div>
+            <div class="col-md-12">
                 <div class="box">
                     <?php
                     echo $glosary->output;

@@ -166,7 +166,7 @@ class Admin extends CI_Controller {
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Manage Contact';
+        $data['Title'] = 'General Contact';
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
     }
 
