@@ -21,7 +21,11 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <a href="#" class="btn btn- pull-right" title="Teacher Contact">Click here for Teacher Contact</a>
+                <?php
+                if (current_url() == site_url('admin/manage_contact')) {
+                    echo anchor("admin/manage_contact_teacher", 'Click here for Teacher Contact', 'class="btn pull-right" title="Teacher Contact"');
+                }
+                ?>
             </div>
             <div class="col-md-12">
                 <div class="box">
