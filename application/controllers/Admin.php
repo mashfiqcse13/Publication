@@ -170,6 +170,41 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
     }
 
+    function manage_contact_teacher() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('pub_contacts_teacher')->set_subject('Teacher Contact')->order_by('teacher_ID', 'desc');
+        $crud->callback_add_field('division', function () {
+            return form_dropdown('division', $this->config->item('division'));
+        })->callback_edit_field('division', function ($value, $primary_key) {
+            return form_dropdown('division', $this->config->item('division'), $value);
+        });
+        $crud->callback_add_field('district', function () {
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
+        })->callback_edit_field('district', function ($value, $primary_key) {
+            return form_dropdown('district', $this->config->item('districts_english'), $value);
+        });
+
+        $crud->callback_add_field('upazila', function () {
+            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
+        })->callback_edit_field('upazila', function ($value, $primary_key) {
+            return form_dropdown('upazila', $this->config->item('upazila_english'), $value);
+        });
+
+
+        $crud->callback_add_field('subject', function () {
+            return form_dropdown('subject', $this->config->item('teacher_subject'), '', 'class="form-control select2 dropdown-width" ');
+        })->callback_edit_field('subject', function ($value, $primary_key) {
+            return form_dropdown('subject', $this->config->item('teacher_subject'), $value);
+        });
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Teacher Contact';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
+    }
+
     function book_return() {
         $this->load->model('Stock_manages');
         $crud = new grocery_CRUD();
