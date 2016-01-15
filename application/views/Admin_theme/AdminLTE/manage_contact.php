@@ -29,18 +29,18 @@
             </div>
             <div class="col-md-12">
                 <div class="box">
-                    <?php
-                    echo $glosary->output;
-                    ?>
+<?php
+echo $glosary->output;
+?>
                 </div>
             </div>
 
-            <?php if (isset($total_book_return_section)) { ?>
+<?php if (isset($total_book_return_section)) { ?>
                 <div class="col-md-3">
                     <label>Select Book Name :</label>
                 </div>
                 <div class="col-md-6">
-                    <?= $book_returned_dropdown ?>
+    <?= $book_returned_dropdown ?>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-3">
@@ -53,9 +53,9 @@
                     <label>Total Number of Returned Book :</label>
                 </div>
                 <div class="col-md-9">
-                    <?= $total_book_returned ?>
+    <?= $total_book_returned ?>
                 </div>
-            <?php } ?>
+                <?php } ?>
 
         </div>
 
