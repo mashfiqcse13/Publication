@@ -129,7 +129,7 @@ class Admin extends CI_Controller {
     function manage_contact() {
         $crud = new grocery_CRUD();
         $crud->columns(
-                'contact_ID', 'name', 'district', 'upazila', 'contact_type', 'address', 'Institute_name', 'subject', 'phone'
+                'contact_ID', 'name', 'district', 'upazila', 'contact_type', 'address', 'phone'
         );
         $crud->display_as('contact_ID', 'Contact code');
         $crud->set_table('pub_contacts')->set_subject('Contact')->order_by('contact_ID', 'desc');
