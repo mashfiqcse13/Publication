@@ -18,10 +18,18 @@ class Contact extends CI_Model {
 
 //put your code here
     public function set_filter($grocery_crud = false) {
+        $teacher_name = $this->input->post('filter_teacher_name');
         $district = $this->input->post('filter_district');
         $division = $this->input->post('filter_division');
         $upazila = $this->input->post('filter_upazila');
         $subject = $this->input->post('filter_subject');
+        $institute_name = $this->input->post('filter_institute_name');
+        if ($teacher_name) {
+            $grocery_crud->where("`teacher_name` LIKE  '%$teacher_name%'");
+        }
+        if ($institute_name) {
+            $grocery_crud->where("`institute_name` LIKE  '%$institute_name%'");
+        }
         if ($district) {
             $grocery_crud->where('district', $district);
         }
@@ -37,17 +45,23 @@ class Contact extends CI_Model {
         return $grocery_crud;
     }
 
-    function filter_dropdowns() {
+    function filter_elements() {
+        $teacher_name = $this->input->post('filter_teacher_name');
         $district = $this->input->post('filter_district');
         $division = $this->input->post('filter_division');
         $upazila = $this->input->post('filter_upazila');
         $subject = $this->input->post('filter_subject');
-        $filter_dropdowns['dropdown_division'] = form_dropdown('filter_division', $this->config->item('division'), $division, 'class="form-control" style="width: 200px;"');
-        $filter_dropdowns['dropdown_district'] = form_dropdown('filter_district', $this->config->item('districts_english'), $district, 'class="form-control" style="width: 200px;"');
-        $filter_dropdowns['dropdown_upazila'] = form_dropdown('filter_upazila', $this->config->item('upazila_english'), $upazila, 'class="form-control" style="width: 200px;"');
-        $filter_dropdowns['dropdown_subject'] = form_dropdown('filter_subject', $this->config->item('teacher_subject'), $subject, 'class="form-control" style="width: 200px;"');
+        $institute_name = $this->input->post('filter_institute_name');
 
-        return $filter_dropdowns;
+        $filter_elements['input_teacher_name'] = form_input('filter_teacher_name', $teacher_name, 'class="form-control" style="width: 200px;"');
+        $filter_elements['input_institute_name'] = form_input('filter_institute_name', $institute_name, 'class="form-control" style="width: 200px;"');
+
+        $filter_elements['dropdown_division'] = form_dropdown('filter_division', $this->config->item('division'), $division, 'class="form-control" style="width: 200px;"');
+        $filter_elements['dropdown_district'] = form_dropdown('filter_district', $this->config->item('districts_english'), $district, 'class="form-control" style="width: 200px;"');
+        $filter_elements['dropdown_upazila'] = form_dropdown('filter_upazila', $this->config->item('upazila_english'), $upazila, 'class="form-control" style="width: 200px;"');
+        $filter_elements['dropdown_subject'] = form_dropdown('filter_subject', $this->config->item('teacher_subject'), $subject, 'class="form-control" style="width: 200px;"');
+
+        return $filter_elements;
     }
 
 }

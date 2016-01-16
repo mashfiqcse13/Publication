@@ -177,7 +177,13 @@ class Admin extends CI_Controller {
         $this->load->model('Contact');
 
         $crud = new grocery_CRUD();
-        $crud->set_table('pub_contacts_teacher')->set_subject('Teacher Contact')->order_by('teacher_ID', 'desc');
+
+        $crud->set_table('pub_contacts_teacher')
+                ->set_subject('Teacher Contact')
+                ->display_as('teacher_name', "Teacher Name")
+                ->display_as('institute_name', "Institute Name")
+                ->order_by('teacher_ID', 'desc');
+
         $crud->callback_add_field('division', function () {
             return form_dropdown('division', $this->config->item('division'));
         })->callback_edit_field('division', function ($value, $primary_key) {
@@ -204,7 +210,7 @@ class Admin extends CI_Controller {
 
         if (current_url() == site_url('admin/manage_contact_teacher')) {
             $crud = $this->Contact->set_filter($crud);
-            $data['filter_dropdowns'] = $this->Contact->filter_dropdowns();
+            $data['filter_elements'] = $this->Contact->filter_elements();
         }
 
         $output = $crud->render();
