@@ -173,7 +173,7 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
     }
 
-    function manage_contact_teacher() {
+    function manage_contact_teacher($cmd = FALSE) {
         $this->load->model('Contact');
 
         $crud = new grocery_CRUD();
@@ -208,9 +208,10 @@ class Admin extends CI_Controller {
             return form_dropdown('subject', $this->config->item('teacher_subject'), $value);
         });
 
-        if (current_url() == site_url('admin/manage_contact_teacher')) {
-            $crud = $this->Contact->set_filter($crud);
-            $data['filter_elements'] = $this->Contact->filter_elements();
+        $crud = $this->Contact->set_filter($crud, $cmd);
+        $data['filter_elements'] = $this->Contact->filter_elements();
+        if (current_url() == site_url('admin/manage_contact_teacher') || $cmd == "success" || $cmd == "update") {
+            $data['filter_form_enabled'] = TRUE;
         }
 
         $output = $crud->render();

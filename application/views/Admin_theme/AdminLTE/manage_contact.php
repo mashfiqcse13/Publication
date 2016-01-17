@@ -28,7 +28,7 @@
                 ?>
             </div>
             <?php
-            if (current_url() == site_url('admin/manage_contact_teacher')) {
+            if (isset($filter_form_enabled) && $filter_form_enabled) {
                 include 'section-contact_filter.php';
             }
             ?>

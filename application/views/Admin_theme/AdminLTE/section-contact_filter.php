@@ -42,7 +42,7 @@
             <button type="submit" style="margin: 29px 0;" class="btn btn-success">Search Teacher Contact</button>
         </div>
         <div class="form-group col-lg-3">
-            <?= anchor("admin/manage_contact_teacher", 'Click here for Reset Filter', 'class="btn btn-primary" style="margin: 29px 0;" title="Reset"'); ?>
+            <?= anchor("admin/manage_contact_teacher/reset_filter", 'Click here for Reset Filter', 'class="btn btn-primary" style="margin: 29px 0;" title="Reset"'); ?>
         </div>
     </form>
 </div>
