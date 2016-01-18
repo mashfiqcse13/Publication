@@ -99,6 +99,11 @@
 .bDiv tr td .text-left {
     text-align: right;
 }
+            
+.position_top{
+    position: relative;
+    z-index: 999;
+}
 @media only print{
     .report-logo-for-print{
         display: block;

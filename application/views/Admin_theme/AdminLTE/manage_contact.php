@@ -23,7 +23,7 @@
             <div class="col-md-12">
                 <?php
                 if (current_url() == site_url('admin/manage_contact')) {
-                    echo anchor("admin/manage_contact_teacher", 'Click here for Teacher Contact', 'class="btn btn-primary pull-right" title="Teacher Contact"');
+                    echo anchor("admin/manage_contact_teacher", 'Click here for Teacher Contact', 'class="btn btn-primary pull-right position_top" title="Teacher Contact"');
                 }
                 ?>
             </div>
