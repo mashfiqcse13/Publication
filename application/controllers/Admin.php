@@ -181,6 +181,7 @@ class Admin extends CI_Controller {
         $crud->set_table('pub_contacts_teacher')
                 ->set_subject('Teacher Contact')
                 ->display_as('teacher_name', "Teacher Name")
+                ->display_as('designation',"Designation")
                 ->display_as('institute_name', "Institute Name")
                 ->order_by('teacher_ID', 'desc');
 
