@@ -194,6 +194,10 @@ class Stock_manages extends CI_Model {
             $options[$row['contact_ID']] = $row['name'] . "('{$row['contact_type']}')";
         }
 
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+
         return form_dropdown('to_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
     }
 
@@ -271,6 +275,9 @@ class Stock_manages extends CI_Model {
         $db_rows = $query->result_array();
         foreach ($db_rows as $index => $row) {
             $options[$row['contact_ID']] = $row['name'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
         }
 
         return form_dropdown('printingpress_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
