@@ -4,8 +4,7 @@ $(function () {
         {
             $(this).removeClass('vsble');
             $('#main-table-box #crudForm').slideDown("slow");
-        }
-        else
+        } else
         {
             $(this).addClass('vsble');
             $('#main-table-box #crudForm').slideUp("slow");
@@ -21,7 +20,11 @@ $(function () {
     var save_and_print = false;
     $('#save-and-print-button').click(function () {
         save_and_print = true;
-        $('#crudForm').trigger('submit');
+        if ($('#crudForm')[0].checkValidity()) {
+            $('#crudForm').trigger('submit');
+        }else{
+            $('#crudForm').find(':submit').click();
+        }
     });
 //    Edited By mashfiq
 
@@ -71,8 +74,7 @@ $(function () {
                                 });
                                 clearForm();
                                 form_success_message(data.success_message);
-                            }
-                            else
+                            } else
                             {
                                 alert(message_insert_error);
                             }
@@ -82,8 +84,7 @@ $(function () {
                             $("#FormLoading").hide();
                         }
                     });
-                }
-                else
+                } else
                 {
                     $('.field_error').removeClass('field_error');
                     form_error_message(data.error_message);
