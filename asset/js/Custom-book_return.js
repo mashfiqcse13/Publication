@@ -17,7 +17,7 @@ $('#field-issue_date').change(function () {
 
 $('[name="returned_book_ID"]').change(function () {
     $.ajax({
-        url: "http://thejamunapub.com/Publication/index.php/admin/total_book_return/" + $('[name="returned_book_ID"]').val(),
+        url: webServiceUrlTotal_book_return + $('[name="returned_book_ID"]').val(),
         beforeSend: function (xhr) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");
         }

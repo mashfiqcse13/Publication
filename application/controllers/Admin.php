@@ -241,6 +241,7 @@ class Admin extends CI_Controller {
 
         $data['scriptInline'] = "<script>"
                 . "var CurrentDate = '" . date("m/d/Y") . "';"
+                . "var webServiceUrlTotal_book_return = '" . site_url("admin/total_book_return/") . "/';"
                 . "</script>"
                 . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-book_return.js"></script>';
         $data['contact_dropdown'] = $this->Stock_manages->get_due_holder_dropdown();
