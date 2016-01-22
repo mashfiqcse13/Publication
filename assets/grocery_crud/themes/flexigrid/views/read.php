@@ -9,9 +9,6 @@
 ?>
 <div class="flexigrid crud-form" style='width: 100%;' data-unique-hash="<?php echo $unique_hash; ?>">
 	<div class="mDiv">
-		<div class="center-block" >
-			<img src="http://thejamunapub.com/wp-content/uploads/2015/09/logo.png" alt="">
-		</div>
 		<div class="ftitle">
 			<div class='ftitle-left'>
 				<?php echo $this->l('list_record'); ?> <?php echo $subject?>
