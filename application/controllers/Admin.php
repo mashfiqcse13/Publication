@@ -181,7 +181,7 @@ class Admin extends CI_Controller {
         $crud->set_table('pub_contacts_teacher')
                 ->set_subject('Teacher Contact')
                 ->display_as('teacher_name', "Teacher Name")
-                ->display_as('designation',"Designation")
+                ->display_as('designation', "Designation")
                 ->display_as('institute_name', "Institute Name")
                 ->order_by('teacher_ID', 'desc');
 
@@ -369,6 +369,7 @@ class Admin extends CI_Controller {
     function memo_management($cmd = false, $primary_id = false) {
         $this->load->model('Memo');
         $this->load->library('session');
+        $this->load->model('Common');
 
         $crud = new grocery_CRUD();
         $crud->set_table('pub_memos')
@@ -428,6 +429,16 @@ class Admin extends CI_Controller {
                 ->add_action('Print', '', site_url('admin/memo/1'), 'fa fa-print', function ($primary_key, $row) {
                     return site_url('admin/memo/' . $row->memo_ID);
                 });
+
+        $crud->callback_column('total', function ($value, $row) {
+            return $this->Common->taka_format($row->total);
+        })->callback_column('cash', function ($value, $row) {
+            return $this->Common->taka_format($row->cash);
+        })->callback_column('bank_pay', function ($value, $row) {
+            return $this->Common->taka_format($row->bank_pay);
+        })->callback_column('due', function ($value, $row) {
+            return $this->Common->taka_format($row->due);
+        });
 
         $addContactButtonContent = anchor('admin/manage_contact/add', '<i class="fa fa-plus-circle"></i> Add New Contact', 'class="btn btn-default" style="margin-left: 15px;"');
         $data['scriptInline'] = ""
