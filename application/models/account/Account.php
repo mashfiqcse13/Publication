@@ -173,10 +173,10 @@ class Account extends CI_Model {
         $total = $this->total();
         $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
-            array('Total Cash Collection:', $total['total_cash_paid']),
-            array('Total Bank Collection:', $total['total_bank_pay']),
-            array('Total Due:', $total['total_due']),
-            array('<strong>Total Sale:<strong>', "<strong>{$total['total_sell']}<strong>")
+            array('Total Cash Collection:', $this->Common->taka_format($total['total_cash_paid'])),
+            array('Total Bank Collection:', $this->Common->taka_format($total['total_bank_pay'])),
+            array('Total Due:', $this->Common->taka_format($total['total_due'])),
+            array('<strong>Total Sale:<strong>', "<strong>{$this->Common->taka_format($total['total_sell'])}<strong>")
         );
         //Setting table template
         $tmpl = array(
@@ -197,10 +197,10 @@ class Account extends CI_Model {
 
         $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
-            array('Today Cash Collection:', $account_today['cash_paid']),
-            array('Today Bank Collection:', $account_today['bank_pay']),
-            array('Monthly Cash Collection:', $account_monthly['cash_paid']),
-            array('Monthly Bank Collection:', $account_monthly['bank_pay'])
+            array('Today Cash Collection:', $this->Common->taka_format($account_today['cash_paid'])),
+            array('Today Bank Collection:', $this->Common->taka_format($account_today['bank_pay'])),
+            array('Monthly Cash Collection:', $this->Common->taka_format($account_monthly['cash_paid'])),
+            array('Monthly Bank Collection:', $this->Common->taka_format($account_monthly['bank_pay']))
         );
         //Setting table template
         $tmpl = array(
@@ -242,11 +242,11 @@ class Account extends CI_Model {
             $today_bank_pay = $data['bank_pay'];
             $t_t_b+=$today_bank_pay;
 
-            $this->table->add_row($value->issue_date, $today_sell, $today_cash_pay, $today_bank_pay, $today_due);
+            $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay), $this->Common->taka_format($today_due));
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
-        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $t_t_s, $t_t_c, $t_t_b, $this->due_in_date_range($range));
+        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)));
 
 
         // $data = array(

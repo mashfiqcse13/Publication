@@ -14,5 +14,22 @@ class Common extends CI_Model {
         } else
             return 'FALSE';
     }
-
+    
+    function taka_format($amount = 0) {
+        $tmp = explode(".", $amount);       // for float or double values
+        $strMoney = "";
+        $amount = $tmp[0];
+        $strMoney .= substr($amount, -3, 3);
+        $amount = substr($amount, 0, -3);
+        while (strlen($amount) > 0) {
+            $strMoney = substr($amount, -2, 2) . "," . $strMoney;
+            $amount = substr($amount, 0, -2);
+        }
+        if (isset($tmp[1])) {         // if float and double add the decimal digits here.
+            $tmp[1] = number_format($tmp[1], 2, '.', '');
+            return $strMoney . "." . $tmp[1];
+        }
+        return $strMoney;
+    }
+    
 }
