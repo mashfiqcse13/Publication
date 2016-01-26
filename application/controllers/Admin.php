@@ -25,6 +25,7 @@ class Admin extends CI_Controller {
             return 0;
         }
         $this->load->library('grocery_CRUD');
+        $this->load->model('Common');
     }
 
     function index() {
@@ -369,7 +370,6 @@ class Admin extends CI_Controller {
     function memo_management($cmd = false, $primary_id = false) {
         $this->load->model('Memo');
         $this->load->library('session');
-        $this->load->model('Common');
 
         $crud = new grocery_CRUD();
         $crud->set_table('pub_memos')
@@ -430,7 +430,15 @@ class Admin extends CI_Controller {
                     return site_url('admin/memo/' . $row->memo_ID);
                 });
 
-        $crud->callback_column('total', function ($value, $row) {
+        $crud->callback_column('sub_total', function ($value, $row) {
+            return $this->Common->taka_format($row->sub_total);
+        })->callback_column('discount', function ($value, $row) {
+            return $this->Common->taka_format($row->discount);
+        })->callback_column('book_return', function ($value, $row) {
+            return $this->Common->taka_format($row->book_return);
+        })->callback_column('dues_unpaid', function ($value, $row) {
+            return $this->Common->taka_format($row->dues_unpaid);
+        })->callback_column('total', function ($value, $row) {
             return $this->Common->taka_format($row->total);
         })->callback_column('cash', function ($value, $row) {
             return $this->Common->taka_format($row->cash);
