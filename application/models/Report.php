@@ -94,7 +94,7 @@ class Report extends CI_Model {
                     FROM `pub_memos_selected_books`
                     JOIN `pub_memos` ON `pub_memos_selected_books`.memo_ID = `pub_memos`.memo_ID
                     WHERE pub_memos_selected_books.`book_ID`= {$book_ID} and 
-                            WHERE DATE(issue_date) {$this->range} and
+                            DATE(issue_date) {$this->range} and
                         pub_memos.contact_ID in ({$speciment_contact_id})";
         return $this->db->query($sql)->result_array()[0]["quantity"];
     }
