@@ -338,7 +338,7 @@ class Stock_manages extends CI_Model {
             'heading_cell_start' => '<th class="success" >'
             );
             $this->table->set_template($table_template);
-            $this->table->set_heading("book id","Party Name","Book","Quantity","Issue Date");
+            $this->table->set_heading("Party Name","Book","Quantity","Issue Date");
             
             
          
