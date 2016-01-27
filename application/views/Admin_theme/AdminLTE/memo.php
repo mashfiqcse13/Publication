@@ -82,7 +82,7 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php echo " " . date("Y-m-d") ?></td>
+                    <td><?php echo " " .$Book_selection_table['issue_date'] ?></td>
 
                 </tr>
 
