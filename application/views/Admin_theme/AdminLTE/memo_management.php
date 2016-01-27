@@ -3,6 +3,11 @@
 
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
+<style>
+    #sub_total_field_box .form-display-as-box {
+        display: none;
+    }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

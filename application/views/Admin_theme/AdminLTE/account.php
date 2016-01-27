@@ -72,7 +72,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>TK <?= $account_today['todaysell'] ?></h3>
+                        <h3>TK <?= $this->Common->taka_format($account_today['todaysell']) ?></h3>
                         <p><strong>Today sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
@@ -85,7 +85,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><strong>TK <?= $account_monthly['monthlysell'] ?></strong> </h3>
+                        <h3><strong>TK <?= $this->Common->taka_format($account_monthly['monthlysell']) ?></strong> </h3>
                         <p><strong>Monthly sell </strong><br>after subtract discount & book return</p>
                     </div>
                     <div class="icon">
@@ -98,7 +98,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3><strong>TK <?= $account_today['today_due'] ?></strong></h3>
+                        <h3><strong>TK <?= $this->Common->taka_format($account_today['today_due']) ?></strong></h3>
                         <p><strong>Today due</strong><br></p>
 
                     </div>
@@ -112,7 +112,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3><strong>TK <?= $account_monthly['monthly_due'] ?></strong></h3>
+                        <h3><strong>TK <?= $this->Common->taka_format($account_monthly['monthly_due']) ?></strong></h3>
                         <p><strong>Monthly due</strong><br></p>
 
                     </div>
