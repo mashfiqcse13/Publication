@@ -323,12 +323,76 @@ class Stock_manages extends CI_Model {
         return isset($db_rows[0]['Quantity']) ? $db_rows[0]['Quantity'] : false;
     }
 
-    function total_book_returned() {
+    function total_book_returned($range = false) {
+        
+        $this->load->library('table');
+        $this->load->library('session');
+        
+        if ($range) {
+            
+            $db_tables = $this->config->item('db_tables');
+            $range = "DATE(issue_date) BETWEEN $range";
+            
+            $table_template = array(
+            'table_open' => '<table class="table table-bordered table-striped ">',
+            'heading_cell_start' => '<th class="success" >'
+            );
+            $this->table->set_template($table_template);
+            $this->table->set_heading("book id","Party Name","Book","Quantity","Issue Date");
+            
+            
+         
+            $data['query1'] = $this->db->select('pub_contacts.name as party_name, pub_books.name as book_name, pub_books_return.quantity as quantity ,pub_books_return.issue_date')
+                            ->from($db_tables['pub_books_return'])
+                            ->join('pub_books','pub_books.book_ID=pub_books_return.book_ID','left')
+                            ->join('pub_contacts','pub_contacts.contact_ID=pub_books_return.contact_ID','left')
+                            ->where($range)
+                            ->get()->result_array();
+            
+            //$data['query1']=$this->db->query('SELECT pub_contacts.name as party_name,
+            // pub_books.name as book_name, pub_books_return.quantity as quantity ,
+            // pub_books_return.issue_date  FROM `pub_books_return` 
+            // LEFT JOIN pub_contacts on pub_contacts.contact_ID=pub_books_return.contact_ID 
+            // LEFT join pub_books on pub_books.book_ID=pub_books_return.book_ID');
+            
+            
+           
+
+            $data_table=$this->table->generate($data['query1']);
+            return $data_table;
+            //$list_returnd_book=
+        } else {
+        
         $db_tables = $this->config->item('db_tables');
         $db_rows = $this->db->select_sum('quantity')->from($db_tables['pub_books_return'])
                         ->get()->result_array();
 
         return isset($db_rows[0]['quantity']) ? $db_rows[0]['quantity'] : 0;
+    }
+    }
+    function total_return_book_price($range=false){
+        $db_tables = $this->config->item('db_tables');
+            $range = "DATE(issue_date) BETWEEN $range";
+            
+        $memo_sum=$this->db->select_sum('book_return')->from($db_tables['pub_memos'])
+                                        ->where($range)
+                                        ->get();
+            
+            foreach($memo_sum->result() as $sum){
+                //$this->session->set_userdata('total_book_return_value', $sum->book_return);
+                return $sum->book_return;
+            }
+    }
+    
+       function dateformatter($range_string, $formate = 'Mysql') {
+        $date = explode(' - ', $range_string);
+        $date[0] = explode('/', $date[0]);
+        $date[1] = explode('/', $date[1]);
+
+        if ($formate == 'Mysql')
+            return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
+        else
+            return $date;
     }
 
 }

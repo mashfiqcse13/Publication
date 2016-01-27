@@ -223,7 +223,8 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
     }
 
-    function book_return() {
+    function book_return($cmd = false) {
+        $this->load->library('session');
         $this->load->model('Stock_manages');
         $crud = new grocery_CRUD();
         $crud->set_table('pub_books_return')->set_subject('Returned Book')
@@ -233,9 +234,28 @@ class Admin extends CI_Controller {
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name')
                 ->set_relation('book_ID', 'pub_books', 'name');
+        
+//        date range---------------------------
+        
+         $data['date_range'] = $this->input->post('date_range');
+        if ($data['date_range'] != '') {
+            $this->session->set_userdata('date_range', $data['date_range']);
+        }
+        if ($cmd == 'reset_date_range') {
+            $this->session->unset_userdata('date_range');
+            redirect("admin/book_return");
+        }
+        if ($this->session->userdata('date_range') != '') {
+            $range = $this->Stock_manages->dateformatter($this->session->userdata('date_range'));
+            $data['date_range'] = $this->session->userdata('date_range');
+        }
+        
+//        end date range----------------------
 
-
-
+//        if(isset($range)){
+//            $data['total_return_book_price']=$this->session->userdata('total_book_return_value');
+//            $this->session->unset_userdata('total_book_return_value');
+//        }
         $crud->callback_after_insert(array($this->Stock_manages, 'marge_insert_book'));
         $output = $crud->render();
 
@@ -249,8 +269,18 @@ class Admin extends CI_Controller {
         $data['glosary'] = $output;
 
         $data['total_book_return_section'] = true;
+        $data['return_book_page']=true;
+        
         $data['book_returned_dropdown'] = $this->Stock_manages->get_book_returned_dropdown();
-        $data['total_book_returned'] = $this->Stock_manages->total_book_returned();
+        
+        
+        if(isset($range)){
+            $data['main_content'] = $this->Stock_manages->total_book_returned($range);
+            $data['total_return_book_price']=$this->Stock_manages->total_return_book_price($range);
+            // $data['total_book_returned'] = $this->Stock_manages->total_book_returned($range);
+        }else{
+            $data['total_book_returned'] = $this->Stock_manages->total_book_returned();
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
