@@ -49,12 +49,13 @@
         
                         <div class="box-header">
                             <?php if(isset($date_range) && !empty($date_range)){ ?>
-                             <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
-                              
+                            
+                            <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+                                
                                                       
                                 <?= $main_content; ?>
                             
-                            <h3 class="box-title">Declared Returned Book Value:TK <?=$total_return_book_price; ?></h3>
+<!--                            <h3 class="box-title">Declared Returned Book Value: <?php //$total_return_book_price; ?>TK</h3>-->
                   
                             <?php } ?>
                            
@@ -67,26 +68,26 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
+<!--            <div class="col-md-12">
                 <?php
-                if (current_url() == site_url('admin/manage_contact')) {
-                    echo anchor("admin/manage_contact_teacher", 'Click here for Teacher Contact', 'class="btn btn-primary pull-right position_top" title="Teacher Contact"');
-                }
+//                if (current_url() == site_url('admin/manage_contact')) {
+//                    echo anchor("admin/manage_contact_teacher", 'Click here for Teacher Contact', 'class="btn btn-primary pull-right position_top" title="Teacher Contact"');
+//                }
                 ?>
-            </div>
+            </div>-->
             <?php
-            if (isset($filter_form_enabled) && $filter_form_enabled) {
-                include 'section-contact_filter.php';
-            }
+//            if (isset($filter_form_enabled) && $filter_form_enabled) {
+//                include 'section-contact_filter.php';
+//            }
             ?>
             <div class="col-md-12">
                 <div class="box">
+                    
                     <?php
                    if(!isset($date_range)){
                     echo $glosary->output;
                    }
                     ?>
-                    
                 </div>
             </div>
 
@@ -101,20 +102,20 @@
                     <label>Select Book Name :</label>
                 </div>
                 <div class="col-md-6">
-                    <?= $book_returned_dropdown ?>
+                    <?= $book_send_dropdown ?>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-3">
-                    <label>Number of Returned Book :</label>
+                    <label>Number of Book Send to Re-bind:</label>
                 </div>
                 <div class="col-md-9" id="total_book_return">
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-3">
-                    <label>Total Number of Returned Book :</label>
+                    <label>Total Number of Book Send to Re-bind:</label>
                 </div>
                 <div class="col-md-9">
-                    <?= $total_book_returned ?>
+                    <?= $total_book_send ?>
                 </div>
                 
             <?php } }?>
@@ -125,7 +126,7 @@
 
 
 
-
+  
 
 
 
@@ -135,7 +136,7 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-     <div class="box-body report-logo-for-print" style="background:#fff">
+      <div class="box-body report-logo-for-print" style="background:#fff">
           <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
             <?= $main_content; ?>
         </div>
