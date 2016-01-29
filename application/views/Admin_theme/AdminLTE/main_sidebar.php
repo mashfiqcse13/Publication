@@ -49,6 +49,7 @@
             <li><?php echo anchor('admin/memo_management', '<i class="fa fa-cog"></i>          <span>Memo Management</span>'); ?></li>
             <li><?php echo anchor('admin/add_stock', '<i class="fa fa-plus-circle"></i>         <span>New Stock Order</span>'); ?></li>
             <li><?php echo anchor('admin/manage_stocks', '<i class="fa fa-file"></i>         <span>Stock Management</span>'); ?></li>
+            <li><?php echo anchor('admin/stock_transfer_log', '<i class="fa fa-file"></i>         <span>Stock Transfer Log</span>'); ?></li>
             <li><?php echo anchor('admin/manage_book', '<i class="fa fa-book"></i>         <span>Book Management</span>'); ?></li>
             <li><?php echo anchor('admin/book_return', '<i class="fa fa-cog"></i>          <span>Book Return</span>'); ?></li>
             <li><?php echo anchor('admin/manage_contact', '<i class="fa fa-group"></i>        <span>Contact Management</span>'); ?></li>
