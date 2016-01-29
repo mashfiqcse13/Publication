@@ -7,7 +7,7 @@
                 <img src="<?= base_url() ?>/asset/img/jamuna logo.gif" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>The Jamuna <br>Publishers MGMT</p>
+                <p><?= $this->config->item('main_sidebar_title') ?></p>
                 <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
             </div>
         </div>
