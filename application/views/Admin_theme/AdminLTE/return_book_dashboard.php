@@ -26,7 +26,7 @@
                         <div class="header" style="padding:50px 20px">
                             <?php echo anchor('admin/book_return','<span class="btn btn-primary" style="width:300px">Receive Returned Book</span>'); ?>
                             <br><br>
-                             <?php echo anchor('admin/send_book_rebind', '<span class="btn btn-primary" style="width:300px">Send Book to Re-bind Page</span>'); ?>
+                             <?php echo anchor('admin/send_book_rebind', '<span class="btn btn-primary" style="width:300px">Send Book to Re-bind</span>'); ?>
                     
                         </div>
                        </div>
