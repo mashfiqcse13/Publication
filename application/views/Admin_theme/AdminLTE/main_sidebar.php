@@ -7,7 +7,7 @@
                 <img src="<?= base_url() ?>/asset/img/jamuna logo.gif" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>The Jamuna <br>Publishers MGMT</p>
+                <p><?= $this->config->item('main_sidebar_title') ?></p>
                 <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
             </div>
         </div>
@@ -49,6 +49,7 @@
             <li><?php echo anchor('admin/memo_management', '<i class="fa fa-cog"></i>          <span>Memo Management</span>'); ?></li>
             <li><?php echo anchor('admin/add_stock', '<i class="fa fa-plus-circle"></i>         <span>New Stock Order</span>'); ?></li>
             <li><?php echo anchor('admin/manage_stocks', '<i class="fa fa-file"></i>         <span>Stock Management</span>'); ?></li>
+            <li><?php echo anchor('admin/stock_transfer_log', '<i class="fa fa-file"></i>         <span>Stock Transfer Log</span>'); ?></li>
             <li><?php echo anchor('admin/manage_book', '<i class="fa fa-book"></i>         <span>Book Management</span>'); ?></li>
             <li><?php echo anchor('admin/return_book_dashboard', '<i class="fa fa-cog"></i>          <span>Book Return</span>'); ?></li>
 <!--            <li><?php //echo anchor('admin/send_book_rebind', '<i class="fa fa-cog"></i>          <span>Send Book to Rebind</span>'); ?></li>-->

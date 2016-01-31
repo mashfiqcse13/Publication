@@ -130,6 +130,26 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_book', $data);
     }
 
+    function stock_transfer_log() {
+        $crud = new grocery_CRUD();
+        $crud->display_as('book_ID', 'Book Name')
+                ->display_as('form_cotact_ID', 'From ')
+                ->display_as('to_contact_ID', 'To');
+        $crud->set_table('pub_stock_transfer_log')->set_subject('Stock Transfer Log')->order_by('stock_process_step_ID', 'desc');
+        
+        $crud->set_relation('form_cotact_ID', 'pub_contacts', 'name')
+                ->set_relation('to_contact_ID', 'pub_contacts', 'name')
+                ->set_relation('book_ID', 'pub_books', 'name');
+        $crud->unset_add()->unset_edit()->unset_delete();
+        
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Stock Transfer Log';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_book', $data);
+    }
+
     function manage_contact() {
         $crud = new grocery_CRUD();
         $crud->columns(

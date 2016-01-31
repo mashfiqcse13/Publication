@@ -11,14 +11,15 @@ $("#fake_contact_ID").change(function () {
     $("#field-contact_ID").val(fake_contact_ID);
     //setting dropdown value
     var PartyName = $("#field-contact_ID [value=\"" + fake_contact_ID + "\"]").html();
-    $("#contact_ID_input_box .chzn-single").attr("class","chzn-single");
+    $("#contact_ID_input_box .chzn-single").attr("class", "chzn-single");
     $('#contact_ID_input_box .chzn-single>span').html(PartyName);
 
     var contact_ID = $("#field-contact_ID").val();
     if (!contact_ID) {
         $("#field-contact_ID").val("");
         $("#fake_contact_ID").val('');
-    $("#contact_ID_input_box .chzn-single").attr("class","chzn-single  chzn-default");
+        $("#contact_ID_input_box .chzn-single").attr("class", "chzn-single  chzn-default");
+        $('#contact_ID_input_box .chzn-single>span').html("Select Party Name");
         alert(fake_contact_ID + " is not a valid Party Code");
     }
     set_dues_unpaid();

@@ -76,6 +76,19 @@ class Stock_manages extends CI_Model {
         } else {        //if we have a blank destination stock , we insert new stock
             $this->insert_stock($book_id, $printingpress_id, $quantity);
         }
+        $this->stock_transfer_logger($book_id, 3, $printingpress_id, $quantity);
+    }
+    
+    function stock_transfer_logger($book_ID, $form_cotact_ID, $to_contact_ID, $quantity){
+        $data = array(
+            'book_ID' => $book_ID,
+            'form_cotact_ID' => $form_cotact_ID,
+            'to_contact_ID' => $to_contact_ID,
+            'quantity' => $quantity
+        );
+
+
+        $this->db->insert('pub_stock_transfer_log', $data);
     }
 
     function transfer_stock() {
@@ -101,6 +114,7 @@ class Stock_manages extends CI_Model {
             $this->reduce_stock($from_stock_id, $Quantity);
             $this->insert_stock($source_stock_details['book_ID'], $to_contact_id, $Quantity);
         }
+        $this->stock_transfer_logger($source_stock_details['book_ID'], $source_stock_details['printing_press_ID'], $to_contact_id  , $Quantity);
         $this->remove_null_stock();
     }
 
