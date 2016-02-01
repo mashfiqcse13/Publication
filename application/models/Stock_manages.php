@@ -418,13 +418,14 @@ class Stock_manages extends CI_Model {
             
             
          
-            $data['query1'] = $this->db->select('pub_books.name as book_name, pub_books_return.quantity as quantity ')
+            $data['query1'] = $this->db->select('pub_books.name as book_name, sum(pub_books_return.quantity) as quantity ')
                             ->from($db_tables['pub_books_return'])
                             ->join('pub_books','pub_books.book_ID=pub_books_return.book_ID','left')
-                            ->join('pub_contacts','pub_contacts.contact_ID=pub_books_return.contact_ID','left')
+                            //->join('pub_contacts','pub_contacts.contact_ID=pub_books_return.contact_ID','left')
                             ->group_by('pub_books_return.book_ID')
                             ->where($range)
                             ->get()->result_array();
+
             
             //$data['query1']=$this->db->query('SELECT pub_contacts.name as party_name,
             // pub_books.name as book_name, pub_books_return.quantity as quantity ,
