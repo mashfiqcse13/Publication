@@ -319,6 +319,8 @@ class Admin extends CI_Controller {
         
         $data['remining_book']=$data['total_book_returned']-$data['total_book_send'];
         
+        $data['report']=$this->Stock_manages->difference_between_return_send_book();
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Return/Send Book Dashboard';

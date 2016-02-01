@@ -50,7 +50,7 @@
                         </div>
                <div class="box">
                    <h3>Full Report</h3><hr>
-                   
+                   <?php echo $report ?>
                </div>
            </div>
            
