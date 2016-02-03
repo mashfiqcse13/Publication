@@ -628,7 +628,7 @@ class Stock_manages extends CI_Model {
          }
          
          if(isset($con)){
-             $this->transfer_query=$this->db->select('pub_books.name as book_name,Form_name.name as form_name,To.name as to_name,pub_stock_transfer_log.quantity,pub_stock_transfer_log.transfer_date')
+             $this->transfer_query=$this->db->select('pub_books.name as book_name,form_name.name as form_name,To.name as to_name,pub_stock_transfer_log.quantity,pub_stock_transfer_log.transfer_date')
                         ->from($db_tables['pub_stock_transfer_log'])
                         ->join($db_tables['pub_books'],'pub_books.book_ID=pub_stock_transfer_log.book_ID')
                         ->join('pub_contacts as form_name','form_name.contact_ID=pub_stock_transfer_log.form_cotact_ID')
