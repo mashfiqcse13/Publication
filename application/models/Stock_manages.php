@@ -461,7 +461,9 @@ class Stock_manages extends CI_Model {
             );
         $this->table->set_template($table_template);
             //$this->table->set_heading("Party Name","Book","Quantity","Issue Date");
-            $this->table->set_heading("Book Name","Return Book Quantity","Send Book Quantity", "Remaining Quantity");
+
+            $this->table->set_heading("Book Name","Received  Returned Book Quantity","Send to Re-bind Book Quantity", "Remaining Book Quantity on Store");
+
         
         $data['query1'] = $this->db->select('pub_books.name as book_name, sum(pub_books_return.quantity) as book_return_quantity ,sum(pub_send_to_rebind.quantity) as rebind_quantity,(sum(pub_books_return.quantity)-sum(pub_send_to_rebind.quantity)) as Remaining_quantity')
                             ->from($db_tables['pub_books_return'])
