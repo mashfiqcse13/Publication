@@ -4,6 +4,8 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Stock_manages extends CI_Model {
+    
+    public $transfer_query;
 
     function book_details_by_id($id) {
         $query = $this->db->query("SELECT * FROM pub_books WHERE book_ID='$id'");
@@ -404,7 +406,6 @@ class Stock_manages extends CI_Model {
         $this->load->library('session');
         
         if ($range) {
-            
             $db_tables = $this->config->item('db_tables');
             $range = "DATE(issue_date) BETWEEN $range";
             
@@ -460,14 +461,14 @@ class Stock_manages extends CI_Model {
             );
         $this->table->set_template($table_template);
             //$this->table->set_heading("Party Name","Book","Quantity","Issue Date");
-            $this->table->set_heading("book name","return Quantity","send quantity", "remaining quantity");
+            $this->table->set_heading("Book Name","Return Book Quantity","Send Book Quantity", "Remaining Quantity");
         
         $data['query1'] = $this->db->select('pub_books.name as book_name, sum(pub_books_return.quantity) as book_return_quantity ,sum(pub_send_to_rebind.quantity) as rebind_quantity,(sum(pub_books_return.quantity)-sum(pub_send_to_rebind.quantity)) as Remaining_quantity')
                             ->from($db_tables['pub_books_return'])
                             ->join('pub_books','pub_books.book_ID=pub_books_return.book_ID','left')
                             ->join('pub_send_to_rebind','pub_send_to_rebind.book_ID=pub_books_return.book_ID','left')
                             //->join('pub_contacts','pub_contacts.contact_ID=pub_books_return.contact_ID','left')
-                            //->group_by('pub_books_return.book_ID')
+                            ->group_by('pub_books_return.book_ID')
                             //->where($range)
                             ->get()->result_array();
         
@@ -504,4 +505,144 @@ class Stock_manages extends CI_Model {
             return $date;
     }
 
+    function book_dropdown(){
+        $db_tables = $this->config->item('db_tables');
+           $db_rows=$this->db->select('name,pub_stock_transfer_log.book_ID')
+            ->from($db_tables['pub_stock_transfer_log'])
+            ->join($db_tables['pub_books'], 'pub_books.book_ID = pub_stock_transfer_log.book_ID')
+            ->order_by('name', "asc")
+            ->get()->result_array();
+        //$db_rows = $query->result_array();
+        $options[''] = "Select Book Name";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['book_ID']] = $row['name'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+      
+
+        return form_dropdown('book_name', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
+    
+    }
+    
+    function transfer_log_From_dropdown(){
+      $db_tables = $this->config->item('db_tables');
+           $db_rows=$this->db->select('name,pub_stock_transfer_log.form_cotact_ID')
+            ->from($db_tables['pub_stock_transfer_log'])
+            ->join($db_tables['pub_contacts'], 'pub_contacts.contact_ID = pub_stock_transfer_log.form_cotact_ID')
+            ->order_by('name', "asc")
+            ->get()->result_array();
+        //$db_rows = $query->result_array();
+        $options[''] = "Select From";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['form_cotact_ID']] = $row['name'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+      
+
+        return form_dropdown('from_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
+      
+    }
+    
+    
+     function transfer_log_to_dropdown(){
+      $db_tables = $this->config->item('db_tables');
+           $db_rows=$this->db->select('name,pub_stock_transfer_log.to_contact_ID')
+            ->from($db_tables['pub_stock_transfer_log'])
+            ->join($db_tables['pub_contacts'], 'pub_contacts.contact_ID = pub_stock_transfer_log.to_contact_ID')
+            ->order_by('name', "asc")
+            ->get()->result_array();
+        //$db_rows = $query->result_array();
+        $options[''] = "Select From";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['to_contact_ID']] = $row['name'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+      
+
+        return form_dropdown('to_contact_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"');
+      
+    }
+    
+    
+    function result_stock_table($data){
+        $db_tables = $this->config->item('db_tables');
+          $this->load->library('table');
+        
+         
+        $book_name=$data['book_name'];
+        $from=$data['from_contact_id'];
+        $to=$data['to_contact_id'];
+        $date_range=$data['date_range'];
+        
+        if(!empty($date_range)){
+            $range = $this->dateformatter($date_range);
+            $range = "DATE(transfer_date) BETWEEN $range";
+        }
+        
+        
+      $table_template = array(
+            'table_open' => '<table class="table table-bordered table-striped ">',
+            'heading_cell_start' => '<th class="success" >'
+            );
+            $this->table->set_template($table_template);
+            $this->table->set_heading("Book Name","From","To","Quantity","Transfer Date");
+            
+        
+         if(!empty($book_name) && !empty($from) && !empty($to) && !empty($date_range)){            
+            
+             $con="pub_stock_transfer_log.book_ID=$book_name AND pub_stock_transfer_log.form_cotact_ID=$from AND pub_stock_transfer_log.to_contact_ID=$to AND $range";
+         }else if(!empty($book_name) && !empty($from) && !empty($to)){
+            $con="pub_stock_transfer_log.book_ID=$book_name AND pub_stock_transfer_log.form_cotact_ID=$from AND pub_stock_transfer_log.to_contact_ID=$to";
+                      
+         }else if(!empty($book_name) && !empty($from)){
+            $con="pub_stock_transfer_log.book_ID=$book_name AND pub_stock_transfer_log.form_cotact_ID=$from";
+                      
+         }else if(!empty($book_name) && !empty($to)){
+            $con="pub_stock_transfer_log.book_ID=$book_name  AND pub_stock_transfer_log.to_contact_ID=$to";
+                      
+         }else if(!empty($book_name)){
+            $con="pub_stock_transfer_log.book_ID=$book_name";
+                      
+         }else if(!empty($from) && !empty($to)){
+            $con="pub_stock_transfer_log.form_cotact_ID=$from AND pub_stock_transfer_log.to_contact_ID=$to";
+                      
+         }else if(!empty($to)){
+            $con="pub_stock_transfer_log.to_contact_ID=$to";
+                      
+         }else if(!empty($from)){
+            $con="pub_stock_transfer_log.form_cotact_ID=$from";
+                      
+         }else if(!empty($date_range)){            
+            
+             $con="$range";
+         }else{
+             $con=' 1';
+         }
+         
+         if(isset($con)){
+             $this->transfer_query=$this->db->select('pub_books.name as book_name,Form_name.name as form_name,To.name as to_name,pub_stock_transfer_log.quantity,pub_stock_transfer_log.transfer_date')
+                        ->from($db_tables['pub_stock_transfer_log'])
+                        ->join($db_tables['pub_books'],'pub_books.book_ID=pub_stock_transfer_log.book_ID')
+                        ->join('pub_contacts as form_name','form_name.contact_ID=pub_stock_transfer_log.form_cotact_ID')
+                        ->join('pub_contacts as To','To.contact_ID=pub_stock_transfer_log.to_contact_ID')
+                        ->where($con)
+                      ->get()->result_array();
+         }
+             
+       
+      
+        
+         
+         $data_table=$this->table->generate($this->transfer_query);
+         return $data_table;
+         
+        
+        
+    }
 }

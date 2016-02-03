@@ -131,6 +131,27 @@ class Admin extends CI_Controller {
     }
 
     function stock_transfer_log() {
+         $this->load->library('session');
+        $this->load->model('Stock_manages'); //load 
+        
+        $data['book_dropdown']=$this->Stock_manages->book_dropdown();
+        $data['transfer_log_From_dropdown']=$this->Stock_manages->transfer_log_From_dropdown();
+        $data['transfer_log_to_dropdown']=$this->Stock_manages->transfer_log_to_dropdown();
+        
+        if($this->input->post('submit')){
+        $post['book_name']=$this->input->post('book_name');
+        $post['from_contact_id']=$this->input->post('from_contact_id');
+        $post['to_contact_id']=$this->input->post('to_contact_id');
+        $post['date_range']=$this->input->post('date_range');
+                 
+        if(!empty($post)){
+            //$filter_session=$this->session->set_userdata('transfer_filter',$post);
+
+            $data['transfer_log_table']=$this->Stock_manages->result_stock_table($post);
+        }
+        }
+        
+        
         $crud = new grocery_CRUD();
         $crud->display_as('book_ID', 'Book Name')
                 ->display_as('form_cotact_ID', 'From ')
@@ -147,7 +168,7 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Stock Transfer Log';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_book', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'stock_transfer_log', $data);
     }
 
     function manage_contact() {
@@ -683,5 +704,7 @@ function send_book_rebind($cmd = false) {
             echo $previousDue;
         }
     }
+    
+   
 
 }
