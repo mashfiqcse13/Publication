@@ -93,8 +93,9 @@
                         </div>
                         <?php } ?>
                     <?php  
-
+                    if(!isset($transfer_log_table)){
                        echo $glosary->output;
+                    }
                     ?>
                
                     </div>
