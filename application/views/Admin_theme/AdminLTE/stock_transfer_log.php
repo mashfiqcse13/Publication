@@ -75,17 +75,18 @@
                             <?php echo form_close() ?>
                             
                             
-                            <div class="col-md-12" style="margin-top:20px;">
-                                
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-md-12" style="padding:25px">
                                <?php 
                                if(isset($transfer_log_table)){
                                    echo '<input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/><br><br>';
-                               echo $transfer_log_table ;
+                                   echo '<h2 class="page-header text-center">Stock Transfer Log Report</h2>';
+                                   echo $transfer_log_table ;
                                
                                }
                              ?>
                                 
-                            
+                                </div>
                             </div>
                          </div>
                         <br>
@@ -121,7 +122,7 @@
               <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
            <?php 
                   if(isset($transfer_log_table)){
-                                  
+                     echo '<h2 class="page-header text-center">Stock Transfer Log Report</h2>';
                     echo $transfer_log_table ;
                                
                        }
