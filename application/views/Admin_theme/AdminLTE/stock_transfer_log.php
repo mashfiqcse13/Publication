@@ -4,7 +4,7 @@
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
       <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="min-height: 700px">
+<div class="content-wrapper" style="min-height: 650px">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -18,7 +18,7 @@
         </section>
         
         <!-- Main content -->
-        <section class="content">
+        <section class="content only_print">
             <div class="row">
                 <div class="col-md-12">
                     
@@ -117,12 +117,13 @@
 
       <!-- insert book -->
 <div class="box-body report-logo-for-print" style="background:#fff">
-      <div class="row" style="position:absolute;top:30px">
+      <div class="row">
+          <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
           <div class="col-md-12">
-              <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
+              
            <?php 
                   if(isset($transfer_log_table)){
-                     echo '<h2 class="page-header text-center">Stock Transfer Log Report</h2>';
+                    echo '<div class="box-header "><h2 class="text-center">Stock Transfer Log Report</h2></div>';
                     echo $transfer_log_table ;
                                
                        }
@@ -130,5 +131,5 @@
       </div>
 </div>
 </div>
-
+ 
 <?php include_once 'footer.php'; ?>
