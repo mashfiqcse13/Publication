@@ -516,8 +516,8 @@ function send_book_rebind($cmd = false) {
     }
 
     function test() {
-        $this->load->model('Memo');
-        echo $this->Memo->selected_book_quantity(9, 16);
+        $this->load->model('Due');
+        echo $this->Due->add_payment(12,13,123);
     }
 
     function memo($memo_id) {
