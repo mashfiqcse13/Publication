@@ -20,7 +20,7 @@ class Due extends CI_Model {
      * @return void
      */
 
-    function add_payment($memo_ID, $amount) {
+    function add_payment($memo_ID, $amount,$date) {
         $db_tables = $this->config->item('db_tables');
         $data = array(
             'momo_ID' => $memo_ID,

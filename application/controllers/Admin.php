@@ -130,39 +130,53 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_book', $data);
     }
 
-    function stock_transfer_log() {
-         $this->load->library('session');
-        $this->load->model('Stock_manages'); //load 
-        
-        $data['book_dropdown']=$this->Stock_manages->book_dropdown();
-        $data['transfer_log_From_dropdown']=$this->Stock_manages->transfer_log_From_dropdown();
-        $data['transfer_log_to_dropdown']=$this->Stock_manages->transfer_log_to_dropdown();
-        
-        if($this->input->post('submit')){
-        $post['book_name']=$this->input->post('book_name');
-        $post['from_contact_id']=$this->input->post('from_contact_id');
-        $post['to_contact_id']=$this->input->post('to_contact_id');
-        $post['date_range']=$this->input->post('date_range');
-                 
-        if(!empty($post)){
-            //$filter_session=$this->session->set_userdata('transfer_filter',$post);
+    function cost() {
+        $db_tables = $this->config->item('db_tables');
+        $crud = new grocery_CRUD();
+        $crud->set_table($db_tables['pub_cost'])
+                ->set_subject('Cost')
+                ->order_by('cost_ID', 'desc');
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Manage Cost';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_cost', $data);
+    }
 
-            $data['transfer_log_table']=$this->Stock_manages->result_stock_table($post);
+    function stock_transfer_log() {
+        $this->load->library('session');
+        $this->load->model('Stock_manages'); //load 
+
+        $data['book_dropdown'] = $this->Stock_manages->book_dropdown();
+        $data['transfer_log_From_dropdown'] = $this->Stock_manages->transfer_log_From_dropdown();
+        $data['transfer_log_to_dropdown'] = $this->Stock_manages->transfer_log_to_dropdown();
+
+        if ($this->input->post('submit')) {
+            $post['book_name'] = $this->input->post('book_name');
+            $post['from_contact_id'] = $this->input->post('from_contact_id');
+            $post['to_contact_id'] = $this->input->post('to_contact_id');
+            $post['date_range'] = $this->input->post('date_range');
+
+            if (!empty($post)) {
+                //$filter_session=$this->session->set_userdata('transfer_filter',$post);
+
+                $data['transfer_log_table'] = $this->Stock_manages->result_stock_table($post);
+            }
         }
-        }
-        
-        
+
+
         $crud = new grocery_CRUD();
         $crud->display_as('book_ID', 'Book Name')
                 ->display_as('form_cotact_ID', 'From ')
                 ->display_as('to_contact_ID', 'To');
         $crud->set_table('pub_stock_transfer_log')->set_subject('Stock Transfer Log')->order_by('stock_process_step_ID', 'desc');
-        
+
         $crud->set_relation('form_cotact_ID', 'pub_contacts', 'name')
                 ->set_relation('to_contact_ID', 'pub_contacts', 'name')
                 ->set_relation('book_ID', 'pub_books', 'name');
         $crud->unset_add()->unset_edit()->unset_delete();
-        
+
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -276,10 +290,10 @@ class Admin extends CI_Controller {
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name')
                 ->set_relation('book_ID', 'pub_books', 'name');
-        
+
 //        date range---------------------------
-        
-         $data['date_range'] = $this->input->post('date_range');
+
+        $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
             $this->session->set_userdata('date_range', $data['date_range']);
         }
@@ -291,9 +305,8 @@ class Admin extends CI_Controller {
             $range = $this->Stock_manages->dateformatter($this->session->userdata('date_range'));
             $data['date_range'] = $this->session->userdata('date_range');
         }
-        
-//        end date range----------------------
 
+//        end date range----------------------
 //        if(isset($range)){
 //            $data['total_return_book_price']=$this->session->userdata('total_book_return_value');
 //            $this->session->unset_userdata('total_book_return_value');
@@ -311,16 +324,16 @@ class Admin extends CI_Controller {
         $data['glosary'] = $output;
 
         $data['total_book_return_section'] = true;
-        $data['return_book_page']=true;
-        
+        $data['return_book_page'] = true;
+
         $data['book_returned_dropdown'] = $this->Stock_manages->get_book_returned_dropdown();
-        
-        
-        if(isset($range)){
+
+
+        if (isset($range)) {
             $data['main_content'] = $this->Stock_manages->total_book_returned($range);
-            $data['total_return_book_price']=$this->Stock_manages->total_return_book_price($range);
+            $data['total_return_book_price'] = $this->Stock_manages->total_return_book_price($range);
             // $data['total_book_returned'] = $this->Stock_manages->total_book_returned($range);
-        }else{
+        } else {
             $data['total_book_returned'] = $this->Stock_manages->total_book_returned();
         }
 
@@ -329,26 +342,25 @@ class Admin extends CI_Controller {
         $data['Title'] = 'Book Return';
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_contact', $data);
     }
-    
-    
-    function return_book_dashboard(){
-        
+
+    function return_book_dashboard() {
+
         $this->load->model('Stock_manages');
-        
+
         $data['total_book_returned'] = $this->Stock_manages->total_book_returned();
         $data['total_book_send'] = $this->Stock_manages->total_book_send();
-        
-        $data['remining_book']=$data['total_book_returned']-$data['total_book_send'];
-        
-        $data['report']=$this->Stock_manages->difference_between_return_send_book();
-        
+
+        $data['remining_book'] = $data['total_book_returned'] - $data['total_book_send'];
+
+        $data['report'] = $this->Stock_manages->difference_between_return_send_book();
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Return/Send Book Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'return_book_dashboard', $data);
     }
-    
-function send_book_rebind($cmd = false) {
+
+    function send_book_rebind($cmd = false) {
         $this->load->library('session');
         $this->load->model('Stock_manages');
         $crud = new grocery_CRUD();
@@ -359,10 +371,10 @@ function send_book_rebind($cmd = false) {
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name')
                 ->set_relation('book_ID', 'pub_books', 'name');
-        
+
 //        date range---------------------------
-        
-         $data['date_range'] = $this->input->post('date_range');
+
+        $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
             $this->session->set_userdata('date_range', $data['date_range']);
         }
@@ -374,9 +386,8 @@ function send_book_rebind($cmd = false) {
             $range = $this->Stock_manages->dateformatter($this->session->userdata('date_range'));
             $data['date_range'] = $this->session->userdata('date_range');
         }
-        
-//        end date range----------------------
 
+//        end date range----------------------
 //        if(isset($range)){
 //            $data['total_return_book_price']=$this->session->userdata('total_book_return_value');
 //            $this->session->unset_userdata('total_book_return_value');
@@ -394,16 +405,16 @@ function send_book_rebind($cmd = false) {
         $data['glosary'] = $output;
 
         $data['total_book_return_section'] = true;
-        $data['return_book_page']=true;
-        
+        $data['return_book_page'] = true;
+
         $data['book_send_dropdown'] = $this->Stock_manages->get_book_send_dropdown();
-        
-        
-        if(isset($range)){
+
+
+        if (isset($range)) {
             $data['main_content'] = $this->Stock_manages->total_book_send($range);
             //$data['total_book_send_price']=$this->Stock_manages->total_book_send($range);
             // $data['total_book_returned'] = $this->Stock_manages->total_book_returned($range);
-        }else{
+        } else {
             $data['total_book_send'] = $this->Stock_manages->total_book_send();
         }
 
@@ -412,9 +423,7 @@ function send_book_rebind($cmd = false) {
         $data['Title'] = 'Book Send to Re-binding';
         $this->load->view($this->config->item('ADMIN_THEME') . 'send_to_rebind', $data);
     }
-    
-    
-    
+
     function total_book_send($book_ID) {
         $data = $this->db->select('sum(quantity)')
                 ->from('pub_send_to_rebind')
@@ -423,6 +432,7 @@ function send_book_rebind($cmd = false) {
                 ->result_array();
         echo $data[0]['sum(quantity)'];
     }
+
     function total_book_return($book_ID) {
         $data = $this->db->select('sum(quantity)')
                 ->from('pub_books_return')
@@ -517,7 +527,7 @@ function send_book_rebind($cmd = false) {
 
     function test() {
         $this->load->model('Due');
-        echo $this->Due->add_payment(12,13,123);
+        echo $this->Due->add_payment(12, 13, 123);
     }
 
     function memo($memo_id) {
@@ -704,7 +714,5 @@ function send_book_rebind($cmd = false) {
             echo $previousDue;
         }
     }
-    
-   
 
 }
