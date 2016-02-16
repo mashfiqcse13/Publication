@@ -54,6 +54,7 @@
             <li><?php echo anchor('admin/return_book_dashboard', '<i class="fa fa-cog"></i>          <span>Book Return</span>'); ?></li>
 <!--            <li><?php //echo anchor('admin/send_book_rebind', '<i class="fa fa-cog"></i>          <span>Send Book to Rebind</span>');  ?></li>-->
             <li><?php echo anchor('admin/manage_contact', '<i class="fa fa-group"></i>        <span>Contact Management</span>'); ?></li>
+            <li><?php echo anchor('admin/cost', '<i class="fa fa-cog"></i>          <span>Cost Management</span>'); ?></li>
             <li><?php echo anchor('admin/due_management', '<i class="fa fa-cog"></i>          <span>Dues Management</span>'); ?></li>
             <li  class="treeview">
                 <a href="#">
