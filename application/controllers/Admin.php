@@ -642,6 +642,44 @@ class Admin extends CI_Controller {
 
         $this->Memo->clean_pub_memos_selected_books_db();
     }
+    
+    
+    function due_log() {
+        $db_tables = $this->config->item('db_tables');
+        $crud = new grocery_CRUD();
+        $crud->set_table($db_tables['pub_due_log'])
+                ->set_subject('Due Log')
+                ->display_as('contact_ID', 'Party Name')
+                ->order_by('memo_ID', 'desc')
+                ->set_relation('contact_ID', 'pub_contacts', 'name')
+                ->unset_add()
+                ->unset_edit()
+                ->unset_delete();
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Due Log';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_cost', $data);
+    }
+    function due_payment_ledger() {
+        $db_tables = $this->config->item('db_tables');
+        $crud = new grocery_CRUD();
+        $crud->set_table($db_tables['pub_due_payment_ledger'])
+                ->set_subject('Due Log')
+                ->display_as('contact_ID', 'Party Name')
+                ->order_by('memo_ID', 'desc')
+                ->set_relation('contact_ID', 'pub_contacts', 'name')
+                ->unset_add()
+                ->unset_edit()
+                ->unset_delete();
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Due Payment Ledger';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_cost', $data);
+    }
 
     function due_management($cmd = false) {
         $this->load->model('Stock_manages');
@@ -693,7 +731,7 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Due  Management';
         $data['base_url'] = base_url();
-        $this->load->view($this->config->item('ADMIN_THEME') . 'memo_management', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'due_management', $data);
     }
 
     //    Getting the previous due and make other row's due 0
