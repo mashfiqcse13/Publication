@@ -136,6 +136,16 @@ class Admin extends CI_Controller {
         $crud->set_table($db_tables['pub_cost'])
                 ->set_subject('Cost')
                 ->order_by('cost_ID', 'desc');
+        
+        
+          $data['scriptInline'] = ""
+                . "<script>"
+                
+                . "var CurrentDate = '" . date("m/d/Y h:i:s a") . "';"
+               
+                . "</script>\n"
+                . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

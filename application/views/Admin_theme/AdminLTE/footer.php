@@ -48,6 +48,7 @@
 <!-- jvectormap -->
 <script src="<?php echo $theme_asset_url ?>plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_asset_url ?>plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+<script src="<?= base_url() . $this->config->item('ASSET_FOLDER') ?>js/custom.js" type="text/javascript"></script>
 <!-- jQuery Knob Chart -->
 <script src="<?php echo $theme_asset_url ?>plugins/knob/jquery.knob.js" type="text/javascript"></script>
 <!-- daterangepicker -->
@@ -69,6 +70,7 @@
 <script src="<?php echo $theme_asset_url ?>dist/js/demo.js" type="text/javascript"></script>
 <!-- For Add memo form validation -->
 <script src="<?= base_url() . $this->config->item('ASSET_FOLDER') ?>js/memo-validation.js" type="text/javascript"></script>
+
 <script type="text/javascript">
     //Date range picker
     $('#reservation').daterangepicker();

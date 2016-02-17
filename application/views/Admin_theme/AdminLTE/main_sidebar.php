@@ -63,8 +63,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><?= anchor(site_url('admin/due_log'), '<i class="fa fa-circle-o"></i> Due Log') ?></li>
-                    <li><?= anchor(site_url('admin/due_payment_ledger'), '<i class="fa fa-circle-o"></i> Due Payment Ledger') ?></li>
+                    <li><?php //echo anchor(site_url('admin/due_log'), '<i class="fa fa-circle-o"></i> Due Log') ?></li>
+                    <li><?php //echo anchor(site_url('admin/due_payment_ledger'), '<i class="fa fa-circle-o"></i> Due Payment Ledger') ?></li>
                 </ul>
             </li>-->
             <li><?php echo anchor('admin/account', '<i class="fa fa-calculator"></i>   <span>Account Information</span>'); ?></li>
