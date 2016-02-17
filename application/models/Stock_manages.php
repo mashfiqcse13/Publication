@@ -221,6 +221,7 @@ class Stock_manages extends CI_Model {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');
         $this->db->from($db_tables['pub_books']);
+        $this->db->order_by('book_ID', 'desc');
 
         $query = $this->db->get();
         $db_rows = $query->result_array();
