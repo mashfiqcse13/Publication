@@ -68,7 +68,9 @@
                             </div>
                             <br><br>
                             <div class="col-md-12 pull-right">
-                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Search">
+                                <input type="submit" name="submit_single" class="btn btn-primary pull-right" value="Search for all transactions">
+                                
+                                <input style="margin-right:20px" type="submit" name="submit_sum" class="btn btn-primary pull-right" value="Search for total quantity">
                             </div>
                             
                             <br>
@@ -131,5 +133,5 @@
       </div>
 </div>
 </div>
- 
+<?php if(isset($script)){echo $script; }?>
 <?php include_once 'footer.php'; ?>

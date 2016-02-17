@@ -7,6 +7,7 @@
             <file>file:/C:/xampp/htdocs/Publication/application/controllers/Admin.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/models/Stock_manages.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/stock_transfer_log.php</file>
+            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/manage_stock.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/manage_book.php</file>
             <file>file:/C:/xampp/htdocs/Publication/application/config/common/site_localhost.php</file>
         </group>

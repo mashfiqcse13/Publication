@@ -89,6 +89,7 @@
 </script>
 <?php if (isset($scriptInline)) echo $scriptInline; ?>
 
+<?php if(isset($script)){echo $script; }?>
 
 
 </body>
