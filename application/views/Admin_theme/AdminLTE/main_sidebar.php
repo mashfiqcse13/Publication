@@ -54,9 +54,9 @@
             <li><?php echo anchor('admin/return_book_dashboard', '<i class="fa fa-cog"></i>          <span>Book Return</span>'); ?></li>
 <!--            <li><?php //echo anchor('admin/send_book_rebind', '<i class="fa fa-cog"></i>          <span>Send Book to Rebind</span>');  ?></li>-->
             <li><?php echo anchor('admin/manage_contact', '<i class="fa fa-group"></i>        <span>Contact Management</span>'); ?></li>
-            <li><?php echo anchor('admin/cost', '<i class="fa fa-cog"></i>          <span>Cost Management</span>'); ?></li>
+            <li><?php echo anchor('admin/cost', '<i class="fa fa-cog"></i>          <span>Office Cost Management</span>'); ?></li>
             <li><?php echo anchor('admin/due_management', '<i class="fa fa-cog"></i>          <span>Dues Management</span>'); ?></li>
-            <li  class="treeview">
+<!--            <li  class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
                     <span>Other Dues</span>
@@ -66,7 +66,7 @@
                     <li><?= anchor(site_url('admin/due_log'), '<i class="fa fa-circle-o"></i> Due Log') ?></li>
                     <li><?= anchor(site_url('admin/due_payment_ledger'), '<i class="fa fa-circle-o"></i> Due Payment Ledger') ?></li>
                 </ul>
-            </li>
+            </li>-->
             <li><?php echo anchor('admin/account', '<i class="fa fa-calculator"></i>   <span>Account Information</span>'); ?></li>
             <li><?php echo anchor('admin/report_sold_book_today', '<i class="fa fa-calculator"></i>   <span>Sold Book Information</span>'); ?></li>
             <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
