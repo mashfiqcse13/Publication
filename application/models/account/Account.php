@@ -74,9 +74,10 @@ class Account extends CI_Model {
 
         $query = $this->db->query("SELECT * FROM pub_memos "
                 . "WHERE "
-                . "issue_date BETWEEN "
-                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
-                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)");
+//                . "issue_date BETWEEN "
+//                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
+//                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)");
+                ."MONTH(issue_date) = MONTH(CURDATE())");
 
         $data['cash_paid'] = 0;
         $data['bank_pay'] = 0;
@@ -139,9 +140,10 @@ class Account extends CI_Model {
 
         $query = $this->db->query("SELECT * FROM pub_memos "
                 . "WHERE "
-                . "issue_date BETWEEN "
-                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
-                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
+                ."MONTH(issue_date) = MONTH(CURDATE())"
+//                . "issue_date BETWEEN "
+//                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
+//                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
 //                . "and "
 //                . "memo_ID in ($last_memo_ID_of_each_contact_ID)"
                 . "");
