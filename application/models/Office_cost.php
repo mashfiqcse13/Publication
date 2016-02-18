@@ -9,7 +9,7 @@ function today_office_cost(){
         $db_tables = $this->config->item('db_tables');
         $this->db->select('SUM(amount) as cost');
         $this->db->from($db_tables['pub_cost']);
-        $this->db->where('date="'.$date.'"');
+        $this->db->where('DATE(date)="'.$date.'"');
         
         $query = $this->db->get();
         
