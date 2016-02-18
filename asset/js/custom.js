@@ -1,5 +1,14 @@
 $(function(){
-    var cardate=$.datepicker.formatDate('mm/dd/yy', new Date());
-   $('#field-date').attr('value',cardate);
+
+var objDate = new Date();
+if ($('#field-date').val() == "")
+    $('#field-date').val(CurrentDate + " " + objDate.getHours() + ":" + objDate.getMinutes() + ":" + objDate.getSeconds());
+$('#field-date').change(function () {
+    var objDate = new Date();
+    var date_selected = $('#field-date').val();
+    $('#field-date').val(date_selected + " " + objDate.getHours() + ":" + objDate.getMinutes() + ":" + objDate.getSeconds());
 });
 
+
+   
+});
