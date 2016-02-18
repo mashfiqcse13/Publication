@@ -65,7 +65,7 @@
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3><strong>TK <?php echo $previous_month_office_cost ?></strong> </h3>
-                        <p><strong>Previous Office Cost </strong></p>
+                        <p><strong>Previous Month Office Cost </strong></p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
