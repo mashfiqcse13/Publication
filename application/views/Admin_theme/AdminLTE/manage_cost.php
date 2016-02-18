@@ -32,7 +32,48 @@
 
             </div>
         </div>
-
+        
+        <div class="row">
+             <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>TK <?php echo $today_office_cost ?></h3>
+                        <p><strong>Today Office Cost </strong></p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3><strong>TK <?php echo $monthly_office_cost ?></strong> </h3>
+                        <p><strong>This Month Office Cost </strong></p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+             <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3><strong>TK <?php echo $previous_month_office_cost ?></strong> </h3>
+                        <p><strong>Previous Office Cost </strong></p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+        </div>
 
 
 

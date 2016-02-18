@@ -132,6 +132,7 @@ class Admin extends CI_Controller {
 
     function cost() {
         $db_tables = $this->config->item('db_tables');
+        $this->load->model('Office_cost'); //load 
         $crud = new grocery_CRUD();
         $crud->set_table($db_tables['pub_cost'])
                 ->set_subject('Cost')
@@ -147,6 +148,13 @@ class Admin extends CI_Controller {
                 . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
         
         $output = $crud->render();
+        
+        $data['today_office_cost']=$this->Office_cost->today_office_cost();
+        
+        $data['monthly_office_cost']=$this->Office_cost->monthly_office_cost();
+        
+        $data['previous_month_office_cost']=$this->Office_cost->previous_month_office_cost();
+        
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
