@@ -77,7 +77,7 @@ class Account extends CI_Model {
 //                . "issue_date BETWEEN "
 //                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
 //                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)");
-                ."MONTH(issue_date) = MONTH(CURDATE())");
+                ."MONTH(issue_date) = MONTH(CURDATE()) && YEAR(issue_date) = YEAR(CURDATE())");
 
         $data['cash_paid'] = 0;
         $data['bank_pay'] = 0;
@@ -138,9 +138,11 @@ class Account extends CI_Model {
                     . "window.location.assign( '" . site_url('admin/memo_management/add') . "');</script>");
         }
 
+        
+        
         $query = $this->db->query("SELECT * FROM pub_memos "
                 . "WHERE "
-                ."MONTH(issue_date) = MONTH(CURDATE())"
+                ."MONTH(issue_date) = MONTH(CURDATE()) && YEAR(issue_date) = YEAR(CURDATE())"
 //                . "issue_date BETWEEN "
 //                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
 //                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"

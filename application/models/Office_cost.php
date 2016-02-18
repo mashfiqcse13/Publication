@@ -28,7 +28,7 @@ function monthly_office_cost(){
         $db_tables = $this->config->item('db_tables');
         $this->db->select('SUM(amount) as cost');
         $this->db->from($db_tables['pub_cost']);
-        $this->db->where('MONTH(date) = MONTH(CURDATE())');
+        $this->db->where('MONTH(date) = MONTH(CURDATE()) && YEAR(date) = YEAR(CURDATE())');
         
         $query = $this->db->get();
         
@@ -48,7 +48,7 @@ function previous_month_office_cost(){
         $db_tables = $this->config->item('db_tables');
         $this->db->select('SUM(amount) as cost');
         $this->db->from($db_tables['pub_cost']);
-        $this->db->where('MONTH(date) = MONTH(CURDATE())-1');
+        $this->db->where('MONTH(date) = MONTH(CURDATE())-1 && YEAR(date) = YEAR(CURDATE())');
         
         $query = $this->db->get();
         
