@@ -248,7 +248,7 @@ class Account extends CI_Model {
         $account_monthly = $this->account->monthly();
         $total = $this->total();
 
-        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due','Cost');
+        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due','Office Cost');
         
       
 
