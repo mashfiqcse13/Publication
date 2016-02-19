@@ -2,9 +2,11 @@
 
 class Office_cost extends CI_Model {
     
-function today_office_cost(){
+function today_office_cost($date=''){
         
-        $date =date('Y-m-d');
+        if (empty($date)) {
+            $date = date('Y-m-d');
+        }
      
         $db_tables = $this->config->item('db_tables');
         $this->db->select('SUM(amount) as cost');
@@ -17,7 +19,7 @@ function today_office_cost(){
         foreach ($db_rows as $row) {
             $cost=$row['cost'];
         }
-
+     
       return $cost;
 }
 

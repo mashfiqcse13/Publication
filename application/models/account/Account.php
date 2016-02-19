@@ -13,7 +13,9 @@ class Account extends CI_Model {
     private $total_bank_pay = 0;
     private $total_due = 0;
     private $total_sell = 0;
-
+    private $cost=0;
+                
+    
     function today($date = '') {
 
         $todaysell = 0;
@@ -36,6 +38,8 @@ class Account extends CI_Model {
             $data['bank_pay'] += $value->bank_pay;
 
             $due = $value->due - $value->dues_unpaid;
+            
+            
 
             // Friends IT Project Reference No : 1
             $sell = $value->sub_total - $value->discount - $value->book_return;
@@ -194,16 +198,29 @@ class Account extends CI_Model {
     function today_monthly_account_detail_table() {
 
         $this->load->library('table');
+        $this->load->model('Office_cost');
+        
+         $today_cost=$this->Office_cost->today_office_cost();
+        
+        $monthly_cost=$this->Office_cost->monthly_office_cost();
 
         $account_today = $this->account->today();
         $account_monthly = $this->account->monthly();
         $total = $this->total();
+        
+//        calculation for cash minus cost for today and monthly
+        
+        $cash_cost=$this->Common->taka_format($account_today['cash_paid']-$today_cost);
+        $t_cash_t_cost=$this->Common->taka_format($account_monthly['cash_paid']-$monthly_cost);
+        
 
         $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
             array('Today Cash Collection:', $this->Common->taka_format($account_today['cash_paid'])),
+            array('Today Cash in Hand After Cost:', '('.$this->Common->taka_format($account_today['cash_paid']).'-'.$this->Common->taka_format($today_cost).')='.($cash_cost)),
             array('Today Bank Collection:', $this->Common->taka_format($account_today['bank_pay'])),
             array('Monthly Cash Collection:', $this->Common->taka_format($account_monthly['cash_paid'])),
+             array('Monthly Cash in Hand After Cost:', '('.$this->Common->taka_format($account_monthly['cash_paid']).'-'.$this->Common->taka_format($monthly_cost).')='.($t_cash_t_cost)),
             array('Monthly Bank Collection:', $this->Common->taka_format($account_monthly['bank_pay']))
         );
         //Setting table template
@@ -216,18 +233,24 @@ class Account extends CI_Model {
     }
 
     function today_detail_table($range) {
-
+        $this->load->model('Office_cost');
+        
+        //$today_cost=$this->Office_cost->today_office_cost();
+        
         $this->load->library('table');
         $t_t_s = 0;
         $t_t_d = 0;
         $t_t_c = 0;
         $t_t_b = 0;
+        $t_c=0;
 
         $account_today = $this->account->today();
         $account_monthly = $this->account->monthly();
         $total = $this->total();
 
-        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due');
+        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due','Cost');
+        
+      
 
         $query = $this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE DATE(issue_date) BETWEEN $range GROUP BY(DATE(issue_date))");
 
@@ -245,12 +268,15 @@ class Account extends CI_Model {
 
             $today_bank_pay = $data['bank_pay'];
             $t_t_b+=$today_bank_pay;
+            
+            $cost=$this->Office_cost->today_office_cost($value->issue_date);
+            $t_c+=$cost;
 
-            $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay), $this->Common->taka_format($today_due));
+            $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay),$this->Common->taka_format($today_due),$this->Common->taka_format($cost));
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
-        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)));
+        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b),$this->Common->taka_format($this->due_in_date_range($range)),$this->Common->taka_format($t_c));
 
 
         // $data = array(

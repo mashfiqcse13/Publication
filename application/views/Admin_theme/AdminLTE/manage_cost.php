@@ -19,21 +19,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="box">
-
-                    <?php
-                    echo $glosary->output;
-                    ?>
-
-                </div>
-
-            </div>
-        </div>
         
-        <div class="row">
+            <div class="row">
              <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -74,6 +61,22 @@
                 </div>
             </div><!-- ./col -->
         </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="box">
+
+                    <?php
+                    echo $glosary->output;
+                    ?>
+
+                </div>
+
+            </div>
+        </div>
+        
+    
 
 
 

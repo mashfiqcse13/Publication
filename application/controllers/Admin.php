@@ -47,6 +47,7 @@ class Admin extends CI_Controller {
         $this->load->model('Memo');
         $this->load->library('session');
         $this->load->model('account/account');
+  
 
         $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
@@ -63,12 +64,20 @@ class Admin extends CI_Controller {
         if (isset($range)) {
             $data['today_detail_table'] = $this->account->today_detail_table($range);
         }
+        
+       
+        
+        
+        
         $data['account_today'] = $this->account->today();
         $data['account_monthly'] = $this->account->monthly();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Account Information';
         $data['today_monthly_account_detail_table'] = $this->account->today_monthly_account_detail_table();
         $data['total_account_detail_table'] = $this->account->total_account_detail_table();
+        
+        
+        
         $data['base_url'] = base_url();
         $this->load->view($this->config->item('ADMIN_THEME') . 'account', $data);
     }
@@ -149,11 +158,11 @@ class Admin extends CI_Controller {
         
         $output = $crud->render();
         
-        $data['today_office_cost']=$this->Office_cost->today_office_cost();
+        $data['today_office_cost']=$this->Common->taka_format($this->Office_cost->today_office_cost());
         
-        $data['monthly_office_cost']=$this->Office_cost->monthly_office_cost();
+        $data['monthly_office_cost']=$this->Common->taka_format($this->Office_cost->monthly_office_cost());
         
-        $data['previous_month_office_cost']=$this->Office_cost->previous_month_office_cost();
+        $data['previous_month_office_cost']=$this->Common->taka_format($this->Office_cost->previous_month_office_cost());
         
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
