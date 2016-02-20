@@ -553,8 +553,9 @@ class Admin extends CI_Controller {
     }
 
     function test() {
-        $this->load->model('Due');
-        echo $this->Due->add_payment(12, 13, 123);
+        $this->load->model('account/Account');
+        echo $this->Account->today_due()."\n";
+        echo $this->Account->monthly_due();
     }
 
     function memo($memo_id) {

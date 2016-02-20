@@ -13,13 +13,11 @@ class Account extends CI_Model {
     private $total_bank_pay = 0;
     private $total_due = 0;
     private $total_sell = 0;
-    private $cost=0;
-                
-    
+    private $cost = 0;
+
     function today($date = '') {
 
         $todaysell = 0;
-        $today_due = 0;
 
         if (empty($date)) {
             $date = date('Y-m-d');
@@ -38,18 +36,9 @@ class Account extends CI_Model {
             $data['bank_pay'] += $value->bank_pay;
 
             $due = $value->due - $value->dues_unpaid;
-            
-            
-
-            // Friends IT Project Reference No : 1
-            $sell = $value->sub_total - $value->discount - $value->book_return;
-            $memo_due = $sell - $value->cash - $value->bank_pay;
-            if ($memo_due >= 0) {
-                $today_due+=$memo_due;
-            }
         }
         $data['todaysell'] = $todaysell;
-        $data['today_due'] = $today_due;
+        $data['today_due'] = $this->today_due();
         return $data;
     }
 
@@ -57,20 +46,30 @@ class Account extends CI_Model {
         if (empty($date)) {
             $date = date('Y-m-d');
         }
+        $db_tables = $this->config->item('db_tables');
 
         $this->load->model('Memo');
 //        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
-
-        $query = $this->db->query("SELECT * FROM pub_memos WHERE issue_date=DATE('$date')");
-//        print_r($query->result_array());
-//        exit;
-        foreach ($query->result() as $value) {
-            $today_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
-            if ($today_due > 0) {
-                $this->today_due+=$today_due;
+        $sql = "SELECT tbl.contact_ID,
+            SUM(tbl.total_due) total_due,
+            SUM(tbl.total_due_payment) total_due_payment
+            FROM (
+	SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+	FROM `{$db_tables['pub_due_payment_ledger']}` WHERE DATE(payment_date)=DATE('$date') Group by `contact_ID`
+		UNION ALL
+	SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+	FROM `{$db_tables['pub_due_log']}` WHERE DATE(due_date)=DATE('$date') Group by `contact_ID`
+            ) as tbl
+            GROUP BY tbl.contact_ID";
+        $result = $this->db->query($sql)->result();
+        $today_due = 0;
+        foreach ($result as $row) {
+            $temp = $row->total_due - $row->total_due_payment;
+            If ($temp > 0) {
+                $today_due = $today_due + $temp;
             }
         }
-        return $this->today_due;
+        return $today_due;
     }
 
     function monthly() {
@@ -81,7 +80,7 @@ class Account extends CI_Model {
 //                . "issue_date BETWEEN "
 //                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
 //                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)");
-                ."MONTH(issue_date) = MONTH(CURDATE()) && YEAR(issue_date) = YEAR(CURDATE())");
+                . "MONTH(issue_date) = MONTH(CURDATE()) && YEAR(issue_date) = YEAR(CURDATE())");
 
         $data['cash_paid'] = 0;
         $data['bank_pay'] = 0;
@@ -142,24 +141,35 @@ class Account extends CI_Model {
                     . "window.location.assign( '" . site_url('admin/memo_management/add') . "');</script>");
         }
 
-        
-        
-        $query = $this->db->query("SELECT * FROM pub_memos "
-                . "WHERE "
-                ."MONTH(issue_date) = MONTH(CURDATE()) && YEAR(issue_date) = YEAR(CURDATE())"
-//                . "issue_date BETWEEN "
-//                . "(LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) "
-//                . "AND (LAST_DAY(CURDATE()) + INTERVAL 1 DAY)"
-//                . "and "
-//                . "memo_ID in ($last_memo_ID_of_each_contact_ID)"
-                . "");
-//        print_r($query->result_array());
-//        exit;
-        foreach ($query->result() as $value) {
-            $monthly_due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
-            $this->monthly_due+=$monthly_due;
+
+        $db_tables = $this->config->item('db_tables');
+
+        $this->load->model('Memo');
+//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+        $sql = "SELECT tbl.contact_ID,
+            SUM(tbl.total_due) total_due,
+            SUM(tbl.total_due_payment) total_due_payment
+            FROM (
+	SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+	FROM `{$db_tables['pub_due_payment_ledger']}` "
+                . "WHERE MONTH(payment_date) = MONTH(CURDATE()) && YEAR(payment_date) = YEAR(CURDATE())
+                    Group by `contact_ID`
+		UNION ALL
+	SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+	FROM `{$db_tables['pub_due_log']}` "
+                . "WHERE MONTH(due_date) = MONTH(CURDATE()) && YEAR(due_date) = YEAR(CURDATE())
+                    Group by `contact_ID`
+            ) as tbl
+            GROUP BY tbl.contact_ID";
+        $result = $this->db->query($sql)->result();
+        $monthly_due = 0;
+        foreach ($result as $row) {
+            $temp = $row->total_due - $row->total_due_payment;
+            If ($temp > 0) {
+                $monthly_due = $monthly_due + $temp;
+            }
         }
-        return $this->monthly_due;
+        return $monthly_due;
     }
 
     function due_in_date_range($range) {
@@ -199,28 +209,28 @@ class Account extends CI_Model {
 
         $this->load->library('table');
         $this->load->model('Office_cost');
-        
-         $today_cost=$this->Office_cost->today_office_cost();
-        
-        $monthly_cost=$this->Office_cost->monthly_office_cost();
+
+        $today_cost = $this->Office_cost->today_office_cost();
+
+        $monthly_cost = $this->Office_cost->monthly_office_cost();
 
         $account_today = $this->account->today();
         $account_monthly = $this->account->monthly();
         $total = $this->total();
-        
+
 //        calculation for cash minus cost for today and monthly
-        
-        $cash_cost=$this->Common->taka_format($account_today['cash_paid']-$today_cost);
-        $t_cash_t_cost=$this->Common->taka_format($account_monthly['cash_paid']-$monthly_cost);
-        
+
+        $cash_cost = $this->Common->taka_format($account_today['cash_paid'] - $today_cost);
+        $t_cash_t_cost = $this->Common->taka_format($account_monthly['cash_paid'] - $monthly_cost);
+
 
         $this->table->set_heading('Description', '<span class="pull-right">(TK)Amount</span>');
         $data = array(
             array('Today Cash Collection:', $this->Common->taka_format($account_today['cash_paid'])),
-            array('Today Cash in Hand After Cost:', '('.$this->Common->taka_format($account_today['cash_paid']).'-'.$this->Common->taka_format($today_cost).')='.($cash_cost)),
+            array('Today Cash in Hand After Cost:', '(' . $this->Common->taka_format($account_today['cash_paid']) . '-' . $this->Common->taka_format($today_cost) . ')=' . ($cash_cost)),
             array('Today Bank Collection:', $this->Common->taka_format($account_today['bank_pay'])),
             array('Monthly Cash Collection:', $this->Common->taka_format($account_monthly['cash_paid'])),
-             array('Monthly Cash in Hand After Cost:', '('.$this->Common->taka_format($account_monthly['cash_paid']).'-'.$this->Common->taka_format($monthly_cost).')='.($t_cash_t_cost)),
+            array('Monthly Cash in Hand After Cost:', '(' . $this->Common->taka_format($account_monthly['cash_paid']) . '-' . $this->Common->taka_format($monthly_cost) . ')=' . ($t_cash_t_cost)),
             array('Monthly Bank Collection:', $this->Common->taka_format($account_monthly['bank_pay']))
         );
         //Setting table template
@@ -234,23 +244,23 @@ class Account extends CI_Model {
 
     function today_detail_table($range) {
         $this->load->model('Office_cost');
-        
+
         //$today_cost=$this->Office_cost->today_office_cost();
-        
+
         $this->load->library('table');
         $t_t_s = 0;
         $t_t_d = 0;
         $t_t_c = 0;
         $t_t_b = 0;
-        $t_c=0;
+        $t_c = 0;
 
         $account_today = $this->account->today();
         $account_monthly = $this->account->monthly();
         $total = $this->total();
 
-        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due','Office Cost');
-        
-      
+        $this->table->set_heading('Date', 'Sell', 'Cash Collection', 'Bank Collection', 'Due', 'Office Cost');
+
+
 
         $query = $this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE DATE(issue_date) BETWEEN $range GROUP BY(DATE(issue_date))");
 
@@ -268,15 +278,15 @@ class Account extends CI_Model {
 
             $today_bank_pay = $data['bank_pay'];
             $t_t_b+=$today_bank_pay;
-            
-            $cost=$this->Office_cost->today_office_cost($value->issue_date);
+
+            $cost = $this->Office_cost->today_office_cost($value->issue_date);
             $t_c+=$cost;
 
-            $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay),$this->Common->taka_format($today_due),$this->Common->taka_format($cost));
+            $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay), $this->Common->taka_format($today_due), $this->Common->taka_format($cost));
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
-        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b),$this->Common->taka_format($this->due_in_date_range($range)),$this->Common->taka_format($t_c));
+        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($t_c));
 
 
         // $data = array(
