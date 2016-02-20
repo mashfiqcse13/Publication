@@ -688,7 +688,7 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Due Log';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_cost', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_due_log', $data);
     }
     function due_payment_ledger() {
         $db_tables = $this->config->item('db_tables');
@@ -706,7 +706,7 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Due Payment Ledger';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_cost', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_due_log', $data);
     }
 
     function due_management($cmd = false) {

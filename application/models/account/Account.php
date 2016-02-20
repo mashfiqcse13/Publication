@@ -38,7 +38,7 @@ class Account extends CI_Model {
             $due = $value->due - $value->dues_unpaid;
         }
         $data['todaysell'] = $todaysell;
-        $data['today_due'] = $this->today_due();
+        $data['today_due'] = $this->today_due($date);
         return $data;
     }
 
