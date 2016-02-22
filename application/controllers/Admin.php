@@ -47,7 +47,7 @@ class Admin extends CI_Controller {
         $this->load->model('Memo');
         $this->load->library('session');
         $this->load->model('account/account');
-  
+
 
         $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
@@ -64,20 +64,20 @@ class Admin extends CI_Controller {
         if (isset($range)) {
             $data['today_detail_table'] = $this->account->today_detail_table($range);
         }
-        
-       
-        
-        
-        
+
+
+
+
+
         $data['account_today'] = $this->account->today();
         $data['account_monthly'] = $this->account->monthly();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Account Information';
         $data['today_monthly_account_detail_table'] = $this->account->today_monthly_account_detail_table();
         $data['total_account_detail_table'] = $this->account->total_account_detail_table();
-        
-        
-        
+
+
+
         $data['base_url'] = base_url();
         $this->load->view($this->config->item('ADMIN_THEME') . 'account', $data);
     }
@@ -146,24 +146,22 @@ class Admin extends CI_Controller {
         $crud->set_table($db_tables['pub_cost'])
                 ->set_subject('Cost')
                 ->order_by('cost_ID', 'desc');
-        
-        
-          $data['scriptInline'] = ""
+
+
+        $data['scriptInline'] = ""
                 . "<script>"
-                
                 . "var CurrentDate = '" . date("m/d/Y h:i:s a") . "';"
-               
                 . "</script>\n"
                 . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
-        
+
         $output = $crud->render();
-        
-        $data['today_office_cost']=$this->Common->taka_format($this->Office_cost->today_office_cost());
-        
-        $data['monthly_office_cost']=$this->Common->taka_format($this->Office_cost->monthly_office_cost());
-        
-        $data['previous_month_office_cost']=$this->Common->taka_format($this->Office_cost->previous_month_office_cost());
-        
+
+        $data['today_office_cost'] = $this->Common->taka_format($this->Office_cost->today_office_cost());
+
+        $data['monthly_office_cost'] = $this->Common->taka_format($this->Office_cost->monthly_office_cost());
+
+        $data['previous_month_office_cost'] = $this->Common->taka_format($this->Office_cost->previous_month_office_cost());
+
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -179,7 +177,9 @@ class Admin extends CI_Controller {
         $data['transfer_log_From_dropdown'] = $this->Stock_manages->transfer_log_From_dropdown();
         $data['transfer_log_to_dropdown'] = $this->Stock_manages->transfer_log_to_dropdown();
 
-        if ($this->input->post('submit')) {
+
+
+        if ($this->input->post('submit_sum')) {
             $post['book_name'] = $this->input->post('book_name');
             $post['from_contact_id'] = $this->input->post('from_contact_id');
             $post['to_contact_id'] = $this->input->post('to_contact_id');
@@ -188,27 +188,12 @@ class Admin extends CI_Controller {
             if (!empty($post)) {
                 //$filter_session=$this->session->set_userdata('transfer_filter',$post);
 
-                $data['transfer_log_table'] = $this->Stock_manages->result_stock_table($post);
+                $data['transfer_log_table'] = $this->Stock_manages->result_stock_table_total($post);
+                $data['script'] = '<script>$("th:nth-child(5)").hide();$("td:nth-child(5)").hide();</script>';
             }
         }
-        }
-        
-        
-        if($this->input->post('submit_sum')){
-        $post['book_name']=$this->input->post('book_name');
-        $post['from_contact_id']=$this->input->post('from_contact_id');
-        $post['to_contact_id']=$this->input->post('to_contact_id');
-        $post['date_range']=$this->input->post('date_range');
-                 
-        if(!empty($post)){
-            //$filter_session=$this->session->set_userdata('transfer_filter',$post);
 
-            $data['transfer_log_table']=$this->Stock_manages->result_stock_table_total($post);
-            $data['script']='<script>$("th:nth-child(5)").hide();$("td:nth-child(5)").hide();</script>';
-        }
-        }
-        
-        
+
         $crud = new grocery_CRUD();
         $crud->display_as('book_ID', 'Book Name')
                 ->display_as('form_cotact_ID', 'From ')
@@ -570,7 +555,7 @@ class Admin extends CI_Controller {
 
     function test() {
         $this->load->model('account/Account');
-        echo $this->Account->today_due()."\n";
+        echo $this->Account->today_due() . "\n";
         echo $this->Account->monthly_due();
     }
 
@@ -686,8 +671,7 @@ class Admin extends CI_Controller {
 
         $this->Memo->clean_pub_memos_selected_books_db();
     }
-    
-    
+
     function due_log() {
         $db_tables = $this->config->item('db_tables');
         $crud = new grocery_CRUD();
@@ -706,6 +690,7 @@ class Admin extends CI_Controller {
         $data['Title'] = 'Due Log';
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_due_log', $data);
     }
+
     function due_payment_ledger() {
         $db_tables = $this->config->item('db_tables');
         $crud = new grocery_CRUD();
