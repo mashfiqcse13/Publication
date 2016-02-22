@@ -88,3 +88,4 @@ setInterval(function () {
     TotalCal();
     DueCal();
 }, 1000);
+
