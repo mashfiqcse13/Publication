@@ -177,6 +177,18 @@ class Admin extends CI_Controller {
         $data['transfer_log_From_dropdown'] = $this->Stock_manages->transfer_log_From_dropdown();
         $data['transfer_log_to_dropdown'] = $this->Stock_manages->transfer_log_to_dropdown();
 
+        if ($this->input->post('submit_single')) {
+            $post['book_name'] = $this->input->post('book_name');
+            $post['from_contact_id'] = $this->input->post('from_contact_id');
+            $post['to_contact_id'] = $this->input->post('to_contact_id');
+            $post['date_range'] = $this->input->post('date_range');
+
+            if (!empty($post)) {
+                //$filter_session=$this->session->set_userdata('transfer_filter',$post);
+
+                $data['transfer_log_table'] = $this->Stock_manages->result_stock_table($post);
+            }
+        }
 
 
         if ($this->input->post('submit_sum')) {
