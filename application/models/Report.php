@@ -81,6 +81,11 @@ class Report extends CI_Model {
 
         if ($formate == 'Mysql') {
             return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
+        } else if ($formate == "2_string") {
+            $date = explode(' - ', $range_string);
+            $from_date = date('Y-m-d', strtotime($date[0]));
+            $to_date = date('Y-m-d', strtotime($date[1]));
+            return compact(array('from_date', 'to_date'));
         } else {
             return $date;
         }
@@ -105,6 +110,7 @@ class Report extends CI_Model {
         $db_tables = $this->config->item('db_tables');
 
         if (!$date) {
+            //getting all data
             $sql = "SELECT tbl.contact_ID,
                     tbl2.name,
                     SUM(tbl.total_due) total_due, 
@@ -148,10 +154,7 @@ class Report extends CI_Model {
                 $from_date = date('Y-m-1');
                 $to_date = date('Y-m-t');
             } else {
-
-                $a_date = "2016-3-01";
-                $from_date = date('Y-m-1', strtotime($a_date));
-                $to_date = date('Y-m-t', strtotime($a_date));
+                extract($this->dateformatter($date, '2_string'));
             }
             $sql = "SELECT tbl.contact_ID,
                     tbl2.name,
@@ -173,8 +176,16 @@ class Report extends CI_Model {
                     {$db_tables['pub_contacts']} as tbl2
                     GROUP BY tbl.contact_ID";
         }
-        die($sql);
+//        die($sql);
         $rows_as_array = $this->db->query($sql)->result_array();
+
+        $total_due = $total_payment = $total_remaining = 0;
+        foreach ($rows_as_array as $row) {
+            $total_due += $row['total_due'];
+            $total_payment += $row['total_due_payment'];
+            $total_remaining += $row['due_remaining'];
+        }
+
         $this->load->library('table');
         //Setting table template
         $tmpl = array(
@@ -182,7 +193,15 @@ class Report extends CI_Model {
             'heading_cell_start' => '<th class="success heading-right-for-page">'
         );
         $this->table->set_template($tmpl);
-        $this->table->set_heading('Contact ID', 'Party Name', 'Total due', 'Total due payment', 'Due Remaining');
+        $this->table->set_heading('Contact ID', 'Party Name', 'Opening Due', ' Due payment', 'Due Remaining');
+
+        array_push($rows_as_array, array(
+            '', '<strong>Total</strong>',
+            "<strong>$total_due</strong>",
+            "<strong>$total_payment</strong>",
+            "<strong>$total_remaining</strong>"
+                )
+        );
 
         $due_remaining_table = $this->table->generate($rows_as_array);
         return $due_remaining_table;

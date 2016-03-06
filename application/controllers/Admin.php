@@ -566,6 +566,8 @@ class Admin extends CI_Controller {
     }
 
     function test() {
+        $a_date = "12/07/2016";
+        die(date('Y-m-d', strtotime($a_date)));
         $this->load->model('account/Account');
         echo $this->Account->today_due() . "\n<br>\n";
         echo $this->Account->monthly_due() . "\n<br>\n";
@@ -724,12 +726,13 @@ class Admin extends CI_Controller {
         $data['Title'] = 'Due Payment Ledger';
         $this->load->view($this->config->item('ADMIN_THEME') . 'template-report/due_payment_ledger', $data);
     }
-    
-    
+
     function due_total_report() {
         $this->load->model('Report');
-                
-        $data['due_remaining_table'] = $this->Report->due_remaining_table();
+
+        $data['date_range'] = $this->input->get('date_range');
+
+        $data['due_remaining_table'] = $this->Report->due_remaining_table($data['date_range']);
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total Due Report';

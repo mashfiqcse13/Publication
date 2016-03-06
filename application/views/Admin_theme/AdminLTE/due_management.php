@@ -32,7 +32,7 @@
                 if (!$date_filter) {
                     $attributes = array(
                         'clase' => 'form-inline',
-                        'method' => 'post');
+                        'method' => 'get');
                     echo form_open('', $attributes)
                     ?>
                     <div class="form-group col-md-3 text-left">
