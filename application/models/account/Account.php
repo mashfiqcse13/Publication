@@ -175,14 +175,30 @@ class Account extends CI_Model {
 
     function due_in_date_range($range) {
 
-        $query = $this->db->query("SELECT * FROM pub_memos "
-                . "WHERE "
-                . "DATE(issue_date) BETWEEN $range"
-                . "");
+        $db_tables = $this->config->item('db_tables');
+        $sql = "SELECT tbl.contact_ID,
+                    tbl2.name,
+                    SUM(tbl.total_due) total_due, 
+                    SUM(tbl.total_due_payment) total_due_payment,
+                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    FROM (
+                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+                            FROM `{$db_tables['pub_due_payment_ledger']}`
+                            WHERE DATE(payment_date) between $range 
+                            Group by `contact_ID`
+                        UNION ALL
+                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+                            FROM `{$db_tables['pub_due_log']}`
+                            WHERE DATE(due_date) between $range
+                            Group by `contact_ID`
+                    ) as tbl
+                    Natural join
+                    {$db_tables['pub_contacts']} as tbl2
+                    GROUP BY tbl.contact_ID";
+        $query = $this->db->query($sql);
         $total_due = 0;
         foreach ($query->result() as $value) {
-            $due = $value->total - $value->cash - $value->bank_pay - $value->dues_unpaid;
-            $total_due+=$due;
+            $total_due+=$value->due_remaining;
         }
         return $total_due;
     }
@@ -287,7 +303,9 @@ class Account extends CI_Model {
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
-        $this->table->add_row('<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($t_c));
+        $this->table->add_row(
+                '<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($t_c)
+        );
 
 
         // $data = array(
