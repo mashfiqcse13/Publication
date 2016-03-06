@@ -54,6 +54,7 @@
             <div class="col-md-12">
                 <?= anchor(site_url('admin/due_log'), "Due Log", ' class="btn btn-primary"') ?>
                 <?= anchor(site_url('admin/due_payment_ledger'), "Due Payment Ledger", ' class="btn btn-success"') ?>
+                <?= anchor(site_url('admin/due_total_report'), "Total Due Report", ' class="btn btn-info"') ?>
             </div>
             <div class="col-md-12">
 

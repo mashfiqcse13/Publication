@@ -15,7 +15,8 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Report extends CI_Model {
-    private $range ;
+
+    private $range;
 
     //put your code here
     function sold_book_today($range = false) {
@@ -28,7 +29,7 @@ class Report extends CI_Model {
             $date = date('Y-m-d');
             $range = "=DATE('$date')";
         }
-        $this->range=$range;
+        $this->range = $range;
 
         $sql = "SELECT pub_memos_selected_books.book_ID,name,sum(quantity) as quantity
             FROM `pub_memos_selected_books`
@@ -75,14 +76,14 @@ class Report extends CI_Model {
 
     function dateformatter($range_string, $formate = 'Mysql') {
         $date = explode(' - ', $range_string);
-        $date[
-                0] = explode('/', $date[0]);
+        $date[0] = explode('/', $date[0]);
         $date[1] = explode('/', $date[1]);
 
-        if ($formate == 'Mysql')
+        if ($formate == 'Mysql') {
             return "'{$date[0][2]}-{$date[0][0]}-{$date[0][1]}' and '{$date[1][2]}-{$date[1][0]}-{$date[1][1]}'";
-        else
+        } else {
             return $date;
+        }
     }
 
     function get_book_quantity($book_ID, $speciment_contact_id = FALSE) {
@@ -97,6 +98,94 @@ class Report extends CI_Model {
                          DATE(issue_date) {$this->range} and
                         pub_memos.contact_ID in ({$speciment_contact_id})";
         return $this->db->query($sql)->result_array()[0]["quantity"];
+    }
+
+    function due_remaining_table($date = FALSE) {
+
+        $db_tables = $this->config->item('db_tables');
+
+        if (!$date) {
+            $sql = "SELECT tbl.contact_ID,
+                    tbl2.name,
+                    SUM(tbl.total_due) total_due, 
+                    SUM(tbl.total_due_payment) total_due_payment,
+                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    FROM (
+                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+                            FROM `{$db_tables['pub_due_payment_ledger']}`
+                            Group by `contact_ID`
+                        UNION ALL
+                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+                            FROM `{$db_tables['pub_due_log']}`
+                            Group by `contact_ID`
+                    ) as tbl
+                    Natural join
+                    {$db_tables['pub_contacts']} as tbl2
+                    GROUP BY tbl.contact_ID";
+        } else if ($date == "today") {
+            $today = date('Y-m-d');
+            $sql = "SELECT tbl.contact_ID,
+                    tbl2.name,
+                    SUM(tbl.total_due) total_due, 
+                    SUM(tbl.total_due_payment) total_due_payment,
+                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    FROM (
+                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+                            FROM `{$db_tables['pub_due_payment_ledger']}`
+                            WHERE DATE(payment_date) = DATE('$today')
+                            Group by `contact_ID`
+                        UNION ALL
+                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+                            FROM `{$db_tables['pub_due_log']}`
+                            WHERE DATE(due_date) = DATE('$today')
+                            Group by `contact_ID`
+                    ) as tbl
+                    Natural join
+                    {$db_tables['pub_contacts']} as tbl2
+                    GROUP BY tbl.contact_ID";
+        } else {
+            if ($date == "this_month") {
+                $from_date = date('Y-m-1');
+                $to_date = date('Y-m-t');
+            } else {
+
+                $a_date = "2016-3-01";
+                $from_date = date('Y-m-1', strtotime($a_date));
+                $to_date = date('Y-m-t', strtotime($a_date));
+            }
+            $sql = "SELECT tbl.contact_ID,
+                    tbl2.name,
+                    SUM(tbl.total_due) total_due, 
+                    SUM(tbl.total_due_payment) total_due_payment,
+                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    FROM (
+                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+                            FROM `{$db_tables['pub_due_payment_ledger']}`
+                            WHERE DATE(payment_date) between DATE('$from_date') and Date('$to_date') 
+                            Group by `contact_ID`
+                        UNION ALL
+                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+                            FROM `{$db_tables['pub_due_log']}`
+                            WHERE DATE(due_date) between DATE('$from_date') and Date('$to_date')
+                            Group by `contact_ID`
+                    ) as tbl
+                    Natural join
+                    {$db_tables['pub_contacts']} as tbl2
+                    GROUP BY tbl.contact_ID";
+        }
+        die($sql);
+        $rows_as_array = $this->db->query($sql)->result_array();
+        $this->load->library('table');
+        //Setting table template
+        $tmpl = array(
+            'table_open' => '<table class="table table-striped right-text-for-account">',
+            'heading_cell_start' => '<th class="success heading-right-for-page">'
+        );
+        $this->table->set_template($tmpl);
+        $this->table->set_heading('Contact ID', 'Party Name', 'Total due', 'Total due payment', 'Due Remaining');
+
+        $due_remaining_table = $this->table->generate($rows_as_array);
+        return $due_remaining_table;
     }
 
 }

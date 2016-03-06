@@ -567,8 +567,11 @@ class Admin extends CI_Controller {
 
     function test() {
         $this->load->model('account/Account');
-        echo $this->Account->today_due() . "\n";
-        echo $this->Account->monthly_due();
+        echo $this->Account->today_due() . "\n<br>\n";
+        echo $this->Account->monthly_due() . "\n<br>\n";
+
+        $this->load->model('Report');
+        echo $this->Report->due_remaining_table();
     }
 
     function memo($memo_id) {
@@ -700,7 +703,7 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Due Log';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_due_log', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'template-report/due_log', $data);
     }
 
     function due_payment_ledger() {
@@ -719,7 +722,19 @@ class Admin extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Due Payment Ledger';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_due_log', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'template-report/due_payment_ledger', $data);
+    }
+    
+    
+    function due_total_report() {
+        $this->load->model('Report');
+                
+        $data['due_remaining_table'] = $this->Report->due_remaining_table();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Total Due Report';
+        $data['subTitle'] = 'Showing the due report by party wise';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'template-report/due_total_report', $data);
     }
 
     function due_management($cmd = false) {

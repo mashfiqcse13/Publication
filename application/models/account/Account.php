@@ -61,6 +61,7 @@ class Account extends CI_Model {
 	FROM `{$db_tables['pub_due_log']}` WHERE DATE(due_date)=DATE('$date') Group by `contact_ID`
             ) as tbl
             GROUP BY tbl.contact_ID";
+//        die($sql);
         $result = $this->db->query($sql)->result();
         $today_due = 0;
         foreach ($result as $row) {
