@@ -144,31 +144,31 @@ class Account extends CI_Model {
 
 
         $db_tables = $this->config->item('db_tables');
-
-        $this->load->model('Memo');
-//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
+        $from_date = date('Y-m-1');
+        $to_date = date('Y-m-t');
         $sql = "SELECT tbl.contact_ID,
-            SUM(tbl.total_due) total_due,
-            SUM(tbl.total_due_payment) total_due_payment
-            FROM (
-	SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
-	FROM `{$db_tables['pub_due_payment_ledger']}` "
-                . "WHERE MONTH(payment_date) = MONTH(CURDATE()) && YEAR(payment_date) = YEAR(CURDATE())
-                    Group by `contact_ID`
-		UNION ALL
-	SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
-	FROM `{$db_tables['pub_due_log']}` "
-                . "WHERE MONTH(due_date) = MONTH(CURDATE()) && YEAR(due_date) = YEAR(CURDATE())
-                    Group by `contact_ID`
-            ) as tbl
-            GROUP BY tbl.contact_ID";
-        $result = $this->db->query($sql)->result();
+                    tbl2.name,
+                    SUM(tbl.total_due) total_due, 
+                    SUM(tbl.total_due_payment) total_due_payment,
+                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    FROM (
+                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
+                            FROM `{$db_tables['pub_due_payment_ledger']}`
+                            WHERE DATE(payment_date) between DATE('$from_date') and Date('$to_date') 
+                            Group by `contact_ID`
+                        UNION ALL
+                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
+                            FROM `{$db_tables['pub_due_log']}`
+                            WHERE DATE(due_date) between DATE('$from_date') and Date('$to_date')
+                            Group by `contact_ID`
+                    ) as tbl
+                    Natural join
+                    {$db_tables['pub_contacts']} as tbl2
+                    GROUP BY tbl.contact_ID";
+        $query = $this->db->query($sql);
         $monthly_due = 0;
-        foreach ($result as $row) {
-            $temp = $row->total_due - $row->total_due_payment;
-            If ($temp > 0) {
-                $monthly_due = $monthly_due + $temp;
-            }
+        foreach ($query->result() as $value) {
+            $monthly_due+=$value->due_remaining;
         }
         return $monthly_due;
     }
