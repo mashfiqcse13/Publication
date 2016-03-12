@@ -41,11 +41,14 @@ class Report extends CI_Model {
         $data = $this->db->query($sql)->result_array();
 
         $table_data = array();
+        
+        
         foreach ($data as $rowIndex => $rowValue) {
             $have_speciment_book_copy = $this->get_book_quantity($rowValue["book_ID"]);
             if ($have_speciment_book_copy > 0) {
                 $quantity = "{$rowValue["quantity"]} - {$have_speciment_book_copy} = "
                         . ( $rowValue["quantity"] - $have_speciment_book_copy);
+               
             } else {
                 $quantity = $rowValue["quantity"];
             }
@@ -65,6 +68,9 @@ class Report extends CI_Model {
         $this->table->set_heading("বইয়ের নাম", array('data' => " (সর্বমোট - সৌজন্য) = বিক্রিত সংখ্যা",
             'style' => "text-align: right;"
         ));
+        
+        
+        
 
 
         if ($data != array()) {

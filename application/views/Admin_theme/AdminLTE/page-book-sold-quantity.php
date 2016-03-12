@@ -69,7 +69,10 @@ include_once 'header.php';
                         <div class="box-body with-border">
                                  
                             <div class="row">
+                                <p class="text-center"><strong>Sold Book Information</strong></p>
+                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
                                 <p class="pull-right" style="margin-right:10px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
+                                
                                 <div class="col-md-12">
                                    
                                       <div class="box-header ">
@@ -108,6 +111,9 @@ include_once 'header.php';
  <div class="box-body with-border report-logo-for-print" style="margin-left:0px; background:#fff;">
                                  
                             <div class="row">
+                                <p class="text-center"><strong>Sold Book Information</strong></p>
+                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                               
                                 <p class="pull-right" style="margin-right:20px;">Report Date: <?php echo date('Y-m-d'); ?> </p>
                                 <div class="col-md-12">
                                     

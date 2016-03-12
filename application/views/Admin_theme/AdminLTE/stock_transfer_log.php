@@ -68,6 +68,9 @@
                             </div>
                             <br><br>
                             <div class="col-md-12 pull-right">
+                                <?php if(isset($date_range)){ ?>
+                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                <?php } ?>
                                 <input type="submit" name="submit_single" class="btn btn-primary pull-right" value="Search for all transactions">
                                 
                                 <input style="margin-right:20px" type="submit" name="submit_sum" class="btn btn-primary pull-right" value="Search for total quantity">
@@ -120,12 +123,15 @@
       <!-- insert book -->
 <div class="box-body report-logo-for-print" style="background:#fff">
       <div class="row">
+          <p class="text-center"><strong>Stock Transfer Log</strong></p>
+          <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                
           <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
           <div class="col-md-12">
               
            <?php 
                   if(isset($transfer_log_table)){
-                    echo '<div class="box-header "><h2 class="text-center">Stock Transfer Log Report</h2></div>';
+                    //echo '<div class="box-header "><h2 class="text-center">Stock Transfer Log Report</h2></div>';
                     echo $transfer_log_table ;
                                
                        }

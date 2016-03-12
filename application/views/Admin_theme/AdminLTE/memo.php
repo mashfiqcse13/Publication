@@ -117,7 +117,9 @@
         <div class="margin-top-10">
 
             <a href="<?= $base_url ?>" class="only_print btn btn-primary "><i class="fa fa-dashboard"></i> Go Dashboard</a>
-
+            
+            <a href="<?= $base_url ?>index.php/admin/memo_management/add" class="only_print btn btn-primary "><i class="fa fa-pencil"></i> New Memo</a>
+            
             <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
 
             <a href="<?= $edit_btn_url ?>" class="only_print pull-right btn btn-primary margin-10">Edit</a>

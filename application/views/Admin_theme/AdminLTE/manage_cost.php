@@ -18,7 +18,47 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content only_print">
+        <div class="only_print">
+                <?php
+                
+                    $attributes = array(
+                        'clase' => 'form-inline',
+                        'method' => 'post');
+                    echo form_open('', $attributes)
+                    ?>
+                    <div class="form-group col-md-4 text-left">
+                        <label>Search Report With Date Range:</label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                            <br>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?= form_close(); ?>
+                <?php  ?>
+              </div>
+        
+        
+        <?php if(isset($main_content)){ ?>
+        
+        <div class="col-md-12" >
+                                
+                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                
+                <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+            </div>
+        
+        <?php
+             echo $main_content;
+        }else{ 
+        ?>
         
             <div class="row">
              <div class="col-lg-3 col-xs-6">
@@ -62,13 +102,20 @@
             </div><!-- ./col -->
         </div>
         
+        
         <div class="row">
             <div class="col-md-12">
 
                 <div class="box">
 
                     <?php
-                    echo $glosary->output;
+                    
+                    
+                   
+                        echo $glosary->output;
+                    }
+                        
+                    
                     ?>
 
                 </div>
@@ -84,7 +131,20 @@
 </div><!-- /.content-wrapper -->
 
 <!-- insert book -->
-
-
-
+<div class="row report-logo-for-print">
+<?php if(isset($main_content)){ ?>
+        
+        <div class="col-md-12" >
+                <h2 class="text-center page-header">Office Cost Report</h2>
+                
+                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                  <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?>  </p>               
+                <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+            </div>
+        
+        <?php
+             echo $main_content;
+        }
+        ?>
+</div>
 <?php include_once 'footer.php'; ?>

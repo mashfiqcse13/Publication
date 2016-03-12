@@ -54,8 +54,9 @@
         <div class="row">           
 
             <div class="col-md-12" >
-                <h2 class="text-center page-header">Sales Report</h2>
-                
+                                
+                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                
                 <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
             </div>
             <div class="col-md-12">

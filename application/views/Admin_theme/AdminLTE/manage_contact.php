@@ -49,6 +49,9 @@
         
                         <div class="box-header">
                             <?php if(isset($date_range) && !empty($date_range)){ ?>
+                            <p class="text-center"><strong>Return book Information</strong></p>
+                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                
                              <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
                               
                                                       
@@ -136,6 +139,9 @@
 </div><!-- /.content-wrapper -->
 
      <div class="box-body report-logo-for-print" style="background:#fff">
+         <p class="text-center"><strong>Return Book Information</strong></p>
+                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                
           <p class="pull-right" style="margin-right:20px">Report Date: <?php echo date('Y-m-d'); ?></p>
             <?= $main_content; ?>
         </div>
