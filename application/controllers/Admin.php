@@ -139,16 +139,16 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_book', $data);
     }
 
-    function cost($cmd=false) {
+    function cost($cmd = false) {
         $this->load->library('session');
         $db_tables = $this->config->item('db_tables');
         $this->load->model('Office_cost'); //load 
         $this->load->model('Report');
-        
-        
-      
-        
-        
+
+
+
+
+
         $crud = new grocery_CRUD();
         $crud->set_table($db_tables['pub_cost'])
                 ->set_subject('Cost')
@@ -161,7 +161,7 @@ class Admin extends CI_Controller {
                 . "</script>\n"
                 . '<script type="text/javascript" src="' . base_url() . $this->config->item('ASSET_FOLDER') . 'js/Custom-main.js"></script>';
 
-          $data['date_range'] = $this->input->post('date_range');
+        $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
             $this->session->set_userdata('date_range', $data['date_range']);
         }
@@ -175,12 +175,12 @@ class Admin extends CI_Controller {
         }
         if (isset($range)) {
             $data['main_content'] = $this->Office_cost->search_result($range);
-        }else{
-             $output = $crud->render();
-             $data['glosary'] = $output;
+        } else {
+            $output = $crud->render();
+            $data['glosary'] = $output;
         }
-        
-       
+
+
 
         $data['today_office_cost'] = $this->Common->taka_format($this->Office_cost->today_office_cost());
 
@@ -188,7 +188,7 @@ class Admin extends CI_Controller {
 
         $data['previous_month_office_cost'] = $this->Common->taka_format($this->Office_cost->previous_month_office_cost());
 
-        
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Cost';
@@ -208,8 +208,8 @@ class Admin extends CI_Controller {
             $post['from_contact_id'] = $this->input->post('from_contact_id');
             $post['to_contact_id'] = $this->input->post('to_contact_id');
             $post['date_range'] = $this->input->post('date_range');
-            
-            $data['date_range']=$post['date_range'];
+
+            $data['date_range'] = $post['date_range'];
 
             if (!empty($post)) {
                 //$filter_session=$this->session->set_userdata('transfer_filter',$post);
@@ -224,7 +224,7 @@ class Admin extends CI_Controller {
             $post['from_contact_id'] = $this->input->post('from_contact_id');
             $post['to_contact_id'] = $this->input->post('to_contact_id');
             $post['date_range'] = $this->input->post('date_range');
-            $data['date_range']=$post['date_range'];
+            $data['date_range'] = $post['date_range'];
 
             if (!empty($post)) {
                 //$filter_session=$this->session->set_userdata('transfer_filter',$post);
@@ -806,9 +806,10 @@ class Admin extends CI_Controller {
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name');
 
-        $crud->add_action('Update', '', site_url('admin/memo/'), 'fa fa-edit', function ($primary_key, $row) {
-            return site_url('admin/memo_management/edit/' . $row->memo_ID);
-        })->add_action('Print', '', site_url('admin/memo/'), 'fa fa-print', function ($primary_key, $row) {
+//        $crud->add_action('Update', '', site_url('admin/memo/'), 'fa fa-edit', function ($primary_key, $row) {
+//            return site_url('admin/memo_management/edit/' . $row->memo_ID);
+//        });
+        $crud->add_action('Print', '', site_url('admin/memo/'), 'fa fa-print', function ($primary_key, $row) {
             return site_url('admin/memo/' . $row->memo_ID);
         });
         $output = $crud->render();
