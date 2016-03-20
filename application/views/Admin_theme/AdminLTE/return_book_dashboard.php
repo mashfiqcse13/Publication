@@ -50,6 +50,7 @@
                         </div>
                <div class="box">
                    <h3>Full Report</h3><hr>
+                        <input class="only_print pull-right btn-primary" style="padding:5px;margin:5px" type="button"  onClick="window.print()"  value="Print This Page"/>
                    <?php echo $report ?>
                </div>
            </div>
@@ -67,4 +68,10 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+               <div class="box-body report-logo-for-print" style="background:#fff;margin: 5px">
+                        <div class="row">
+                   <h3>Full Report</h3><hr>
+                   <?php echo $report ?>
+               </div>
+               </div>
 <?php include_once 'footer.php'; ?>
