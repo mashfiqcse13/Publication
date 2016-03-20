@@ -41,23 +41,30 @@ class Report extends CI_Model {
         $data = $this->db->query($sql)->result_array();
 
         $table_data = array();
-        
-        
+
+        $total_quantity = 0;
+        $total_speciment_book_copy = 0;
+        $total_book_sold = 0;
+
         foreach ($data as $rowIndex => $rowValue) {
             $have_speciment_book_copy = $this->get_book_quantity($rowValue["book_ID"]);
             if ($have_speciment_book_copy > 0) {
                 $quantity = "{$rowValue["quantity"]} - {$have_speciment_book_copy} = "
                         . ( $rowValue["quantity"] - $have_speciment_book_copy);
-               
+                $total_speciment_book_copy = $total_speciment_book_copy + $have_speciment_book_copy;
+                $total_book_sold = $total_book_sold + $rowValue["quantity"] - $have_speciment_book_copy;
             } else {
                 $quantity = $rowValue["quantity"];
+                $total_book_sold = $total_book_sold + $rowValue["quantity"];
             }
-
+            $total_quantity = $total_quantity + $rowValue["quantity"];
             array_push($table_data, array(
                 $rowValue["name"], $quantity
             ));
         }
-
+        array_push($table_data, array(
+            '<strong>মোট :</strong>', "<strong>$total_quantity - $total_speciment_book_copy =  $total_book_sold</strong>"
+        ));
 //- interval 2 day
         $table_template = array(
             'table_open' => '<table class="table table-bordered table-striped move-tk-to-right-for-soldbook">',
@@ -68,9 +75,8 @@ class Report extends CI_Model {
         $this->table->set_heading("বইয়ের নাম", array('data' => " (সর্বমোট - সৌজন্য) = বিক্রিত সংখ্যা",
             'style' => "text-align: right;"
         ));
-        
-        
-        
+
+
 
 
         if ($data != array()) {

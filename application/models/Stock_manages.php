@@ -463,15 +463,22 @@ class Stock_manages extends CI_Model {
 
         $this->table->set_heading("Book Name", "Received  Returned Book Quantity", "Send to Re-bind Book Quantity", "Remaining Book Quantity on Store");
 
-
-        $data['query1'] = $this->db->select('pub_books.name as book_name, sum(pub_books_return.quantity) as book_return_quantity ,sum(pub_send_to_rebind.quantity) as rebind_quantity,(sum(pub_books_return.quantity)-sum(pub_send_to_rebind.quantity)) as Remaining_quantity')
-                        ->from($db_tables['pub_books_return'])
-                        ->join('pub_books', 'pub_books.book_ID=pub_books_return.book_ID', 'left')
-                        ->join('pub_send_to_rebind', 'pub_send_to_rebind.book_ID=pub_books_return.book_ID', 'left')
-                        //->join('pub_contacts','pub_contacts.contact_ID=pub_books_return.contact_ID','left')
-                        ->group_by('pub_books_return.book_ID')
-                        //->where($range)
-                        ->get()->result_array();
+        $sql = 'select
+                            (SELECT name  FROM `pub_books` WHERE pub_books.`book_ID` = tbl1.book_ID) as book_name,
+                            sum(tbl1.total_returned) total_returned,
+                            sum(tbl1.total_sent_to_rebind) total_sent_to_rebind,
+                            (sum(tbl1.total_returned) - sum(tbl1.total_sent_to_rebind)) as remaining_book_on_store
+                    FROM
+                    (
+                            SELECT `book_ID`,sum(0) as total_returned,sum(`quantity`) as total_sent_to_rebind 
+                            FROM `pub_send_to_rebind` WHERE 1 group by `book_ID`
+                    union all
+                            SELECT `book_ID`,sum(`quantity`) as total_returned,sum(0) as total_sent_to_rebind 
+                            FROM `pub_books_return` WHERE 1 group by `book_ID`
+                    )as tbl1
+                    group by tbl1.`book_ID`';
+        
+        $data['query1'] = $this->db->query($sql)->result_array();
 
 
         $data_table = $this->table->generate($data['query1']);

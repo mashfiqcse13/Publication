@@ -625,10 +625,9 @@ class Admin extends CI_Controller {
                 ->set_subject('Memo')
                 ->display_as('contact_ID', 'Party Name')
                 ->display_as('issue_date', 'Issue Date (mm/dd/yyyy)')
-                ->display_as('bank_info', 'DD/TT/Cheque name')
+                ->display_as('bank_info', 'DD/TT/Cheque')
                 ->display_as('bank_pay', 'Bank Collection')->order_by('memo_ID', 'desc')
                 ->required_fields('contact_ID', 'issue_date');
-        $crud->unset_columns('bank_info');
         $crud->set_relation('contact_ID', 'pub_contacts', 'name');
         $crud->unset_add_fields('memo_serial');
         $crud->Set_save_and_print(TRUE);
@@ -786,11 +785,10 @@ class Admin extends CI_Controller {
                 ->display_as('contact_ID', 'Party Name')
                 ->display_as('issue_date', 'Issue Date (mm/dd/yyyy)')
                 ->display_as('bank_pay', 'Bank Collection')->order_by('memo_ID', 'desc')
-                ->display_as('bank_info', 'DD/TT/Cheque name')
+                ->display_as('bank_info', 'DD/TT/Cheque')
                 ->unset_add()->unset_edit()->unset_delete()
                 ->where('memo_ID in', '(' . $last_memo_ID_of_each_contact_ID . ')', false)
                 ->where('due >', '0');
-        $crud->unset_columns('bank_info');
         //date range config
         $data['date_range'] = $this->input->post('date_range');
         if ($data['date_range'] != '') {
