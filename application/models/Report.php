@@ -127,7 +127,7 @@ class Report extends CI_Model {
                     tbl2.name,
                     SUM(tbl.total_due) total_due, 
                     SUM(tbl.total_due_payment) total_due_payment,
-                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    if(SUM(tbl.total_due) < SUM(tbl.total_due_payment) , 0 , SUM(tbl.total_due)-SUM(tbl.total_due_payment)) as due_remaining
                     FROM (
                             SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
                             FROM `{$db_tables['pub_due_payment_ledger']}`
@@ -146,7 +146,7 @@ class Report extends CI_Model {
                     tbl2.name,
                     SUM(tbl.total_due) total_due, 
                     SUM(tbl.total_due_payment) total_due_payment,
-                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    if(SUM(tbl.total_due) < SUM(tbl.total_due_payment) , 0 , SUM(tbl.total_due)-SUM(tbl.total_due_payment)) as due_remaining
                     FROM (
                             SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
                             FROM `{$db_tables['pub_due_payment_ledger']}`
@@ -172,7 +172,7 @@ class Report extends CI_Model {
                     tbl2.name,
                     SUM(tbl.total_due) total_due, 
                     SUM(tbl.total_due_payment) total_due_payment,
-                    if(total_due < total_due_payment , 0 , total_due-total_due_payment) as due_remaining
+                    if(SUM(tbl.total_due) < SUM(tbl.total_due_payment) , 0 , SUM(tbl.total_due)-SUM(tbl.total_due_payment)) as due_remaining
                     FROM (
                             SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
                             FROM `{$db_tables['pub_due_payment_ledger']}`
