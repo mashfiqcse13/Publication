@@ -13,7 +13,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Accounting section</li>
+            <li class="active"><?php echo $Title ?> section</li>
           </ol>
         </section>
         

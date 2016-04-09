@@ -22,7 +22,7 @@
        
             <li><?php echo anchor('salary/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Type</span>'); ?></li>
             
-            <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary advanced</span>'); ?></li>
+            <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary Advance</span>'); ?></li>
             
             
             

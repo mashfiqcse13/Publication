@@ -44,16 +44,7 @@ class Admin extends CI_Controller {
     }
 
 	
-    function salary_payment() {
-        $crud = new grocery_CRUD();
-        $crud=set_table('salary_payment');
-        $output = $crud->render();
-        $data['glosary'] = $output;
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Salary Payment';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'salary_payment', $data);
-    }
+
 
 	
 	
