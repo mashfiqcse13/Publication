@@ -44,20 +44,7 @@
                     <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i><span>Log Out</span>'); ?></li>
                 </ul>-->
 				
-		<ul class="sidebar-menu">
-            <li class="header">SALARY CRUD</li>
-            
-            <li><?php echo anchor('admin/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
-            
-            <li><?php echo anchor('admin/salary_bonus', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus</span>'); ?></li>
-       
-            <li><?php echo anchor('admin/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Type</span>'); ?></li>
-            
-            <li><?php echo anchor('admin/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary advanced</span>'); ?></li>
-            
-            <li><?php echo anchor('admin/', '<i class="fa fa-plus-circle"></i>  <span>New Memo</span>'); ?></li>
-            
-        </ul>
+	
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li><?php echo anchor('admin/memo_management/add', '<i class="fa fa-plus-circle"></i>  <span>New Memo</span>'); ?></li>
@@ -71,7 +58,10 @@
             <li><?php echo anchor('admin/manage_contact', '<i class="fa fa-group"></i>        <span>Contact Management</span>'); ?></li>
             <li><?php echo anchor('admin/cost', '<i class="fa fa-cog"></i>          <span>Office Cost Management</span>'); ?></li>
             <li><?php echo anchor('admin/due_management', '<i class="fa fa-cog"></i>          <span>Dues Management</span>'); ?></li>
-<!--            <li  class="treeview">
+            
+            
+
+            <!--            <li  class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
                     <span>Other Dues</span>
@@ -84,6 +74,14 @@
             </li>-->
             <li><?php echo anchor('admin/account', '<i class="fa fa-calculator"></i>   <span>Account Information</span>'); ?></li>
             <li><?php echo anchor('admin/report_sold_book_today', '<i class="fa fa-calculator"></i>   <span>Sold Book Information</span>'); ?></li>
+            
+                        <li class="header">MAIN NAVIGATION</li>
+            <li><?php echo anchor('salary/', '<i class="fa fa-plus-circle"></i>  <span>Salary</span>'); ?></li>
+            <li><?php echo anchor('loan/', '<i class="fa fa-plus-circle"></i>  <span>Loan</span>'); ?></li>
+            <li><?php echo anchor('expense/', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
+            <li><?php echo anchor('income/', '<i class="fa fa-plus-circle"></i>  <span>Income</span>'); ?></li>
+            <li><?php echo anchor('bank/', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
+            
             <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
         </ul>
     </section>
