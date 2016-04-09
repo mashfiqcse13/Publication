@@ -43,6 +43,21 @@
                     <li><a href="<?= site_url('admin/account') ?>"><i class="fa fa-cog"></i>Account Information</a></li>
                     <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i><span>Log Out</span>'); ?></li>
                 </ul>-->
+				
+		<ul class="sidebar-menu">
+            <li class="header">SALARY CRUD</li>
+            
+            <li><?php echo anchor('admin/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
+            
+            <li><?php echo anchor('admin/salary_bonus', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus</span>'); ?></li>
+       
+            <li><?php echo anchor('admin/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Type</span>'); ?></li>
+            
+            <li><?php echo anchor('admin/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary advanced</span>'); ?></li>
+            
+            <li><?php echo anchor('admin/', '<i class="fa fa-plus-circle"></i>  <span>New Memo</span>'); ?></li>
+            
+        </ul>
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li><?php echo anchor('admin/memo_management/add', '<i class="fa fa-plus-circle"></i>  <span>New Memo</span>'); ?></li>
