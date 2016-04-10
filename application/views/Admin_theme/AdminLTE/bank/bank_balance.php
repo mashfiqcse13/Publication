@@ -13,7 +13,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Salary section</li>
+            <li class="active"><?php echo $Title ?></li>
           </ol>
         </section>
         
@@ -26,7 +26,7 @@
                     
                     <?php  
 
-                       //echo $glosary->output;
+                       echo $glosary->output;
                     ?>
                
                     </div>
