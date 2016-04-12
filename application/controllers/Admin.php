@@ -43,16 +43,6 @@ class Admin extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'dashboard', $data);
     }
 
-	
-
-
-	
-	
-	
-	
-	
-	
-	
     function account($cmd = false) {
         $this->load->model('Memo');
         $this->load->library('session');
@@ -602,6 +592,18 @@ class Admin extends CI_Controller {
         $data['binding_table'] = $this->Stock_manages->get_stock_table('Binding Store');
         $data['store_table'] = $this->Stock_manages->get_stock_table('Sales Store');
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_stock', $data);
+    }
+
+    function manage_employee() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('employee')
+                ->set_subject('Employee');
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Manage Employee';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_employee', $data);
     }
 
     function test() {

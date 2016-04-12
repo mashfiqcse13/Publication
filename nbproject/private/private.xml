@@ -3,18 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/examples.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Salary.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Loan.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Income.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/expense/main_sidebar.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/account.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Bank.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/income/main_sidebar.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Expense.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/loan/main_sidebar.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/controllers/Admin.php</file>
-            <file>file:/C:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/loan/loan.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/bank/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/salary/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/account/bank_account_type.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/salary/salary_advanced.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/income/income.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/account/bank_account.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/loan/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/controllers/Admin.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/controllers/Salary.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/expense/main_sidebar.php</file>
+            <file>file:/G:/xampp/htdocs/Publication/application/views/Admin_theme/AdminLTE/income/main_sidebar.php</file>
         </group>
     </open-files>
 </project-private>
