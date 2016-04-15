@@ -51,8 +51,7 @@ class Bank extends CI_Controller {
     
     function bank_account() {
         $crud = new grocery_CRUD();
-        $crud->set_table('bank_account')
-                ->;
+        $crud->set_table('bank_account');
         $output = $crud->render();
         $data['glosary'] = $output;
         
