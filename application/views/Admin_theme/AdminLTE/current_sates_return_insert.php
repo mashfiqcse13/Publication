@@ -21,55 +21,61 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
 
-                <form action="" class="form">
-                    <div class="form-group">
-                        <label for="" >Binder Name:</label>
-                        <select name="" id="" class="form-control">
-                            <option value="">kamal ahamed</option>
-                            <option value="">kamal ahamed</option>
-                            <option value="">kamal ahamed</option>
-                            <option value="">kamal ahamed</option>
-                        </select>
+            <?php
+            $action = current_url();
+            $attributes = array(
+                'method' => "post"
+            );
+            echo form_open($action, $attributes)
+            ?>
+            <div class="col-md-8">
+                <div class="box box-warning">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Select Book Quantity</label>
+                            <?php echo $book_selector_table; ?>
+                        </div>
                     </div>
-                    <div class="form">
-                        <label for="">Issue Date</label>
-                        <input type="" class="datetime-input form-control"/>
+                    <div class="box-footer">
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
-                    <br>
-                    <div class="form">
-                        <table class="table table-border" >
-                            <tr>
-                                <th>Book Name</th>
-                                <th>Quantity</th>
-                            </tr>
-                            <tr>
-                                <td>English 1s part</td>
-                                <td>
-                                    <input type="number" class="form-control" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>English 2s part</td>
-                                <td>
-                                    <input type="number" class="form-control" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>English 3s part</td>
-                                <td>
-                                    <input type="number" class="form-control" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit"  value="Save" class="btn btn-primary pull-right"/>
-                    </div>
-                </form>
-
+                </div> 
             </div>
+            
+            <div class="col-md-4">
+
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Buyer Name:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-male"></i>
+                                </div>
+                                <?php echo $buyer_dropdown; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-4">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Return Date</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" required="true" data-mask="" value="<?php echo date('m/d/Y g:i:s')?>" name='return_date'>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <?php echo form_close(); ?>
+
         </div>
     </section>
 

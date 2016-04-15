@@ -26,7 +26,16 @@ class SalesReturn extends CI_Controller{
     }
     
     function current_sates_return_insert(){
+        $this->load->model('SalesReturnModel');
+        if(!empty($_POST)){
+//            die(print_r($_POST));
+            $this->SalesReturnModel->current_sates_return_insert_processor();
+        }
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['buyer_dropdown'] = $this->SalesReturnModel->get_buyer_dropdown();
+        $data['book_selector_table'] = $this->SalesReturnModel->book_selector_table();
+//        die($data['buyer_dropdown']);
         $data['Title'] = 'Add returned book';
         $data['base_url'] = base_url();
         $this->load->view($this->config->item('ADMIN_THEME') . 'current_sates_return_insert', $data);
