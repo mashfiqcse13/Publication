@@ -28,6 +28,24 @@ class SalesReturnModel extends CI_Model {
 
         return form_dropdown('buyer_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" required="true" aria-hidden="true"');
     }
+    function get_binding_store_dropdown() {
+        $db_tables = $this->config->item('db_tables');
+        $this->db->select('*');
+        $this->db->from($db_tables['pub_contacts']);
+        $this->db->where_in('contact_type', array('Binding Store'));
+        $this->db->order_by('contact_type', "asc");
+        $query = $this->db->get();
+        $db_rows = $query->result_array();
+        $options[''] = "Select Party Name";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['contact_ID']] = $row['name'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+
+        return form_dropdown('buyer_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" required="true" aria-hidden="true"');
+    }
 
     function book_selector_table() {
 

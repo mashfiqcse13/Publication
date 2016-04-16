@@ -13,7 +13,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><?php echo anchor('admin/return_book_dashboard', '<i class="fa fa-cog"></i> Book Return'); ?></li>
+            <li><?php echo anchor('admin/return_book_dashboard', '<i class="fa fa-cog"></i> Book Return Dashboard'); ?></li>
+            <li><?php echo anchor($crud_ci_link, '<i class="fa fa-cog"></i> '.$crud_ci_link_text); ?></li>
             <li class="active"><?php echo $Title ?></li>
         </ol>
     </section>
