@@ -15,7 +15,7 @@ class Sales_return_model extends CI_Model {
         $this->db->select('*');
         $this->db->from($db_tables['pub_contacts']);
         $this->db->where_in('contact_type', array('Buyer'));
-        $this->db->order_by('contact_type', "asc");
+        $this->db->order_by('name', "asc");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         $options[''] = "Select Party Name";
@@ -34,7 +34,7 @@ class Sales_return_model extends CI_Model {
         $this->db->select('*');
         $this->db->from($db_tables['pub_contacts']);
         $this->db->where_in('contact_type', array('Binding Store'));
-        $this->db->order_by('contact_type', "asc");
+        $this->db->order_by('name', "asc");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         $options[''] = "Select Party Name";
