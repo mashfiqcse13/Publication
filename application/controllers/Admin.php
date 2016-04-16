@@ -358,7 +358,8 @@ class Admin extends CI_Controller {
                 ->display_as('issue_date', 'Issue Date')->order_by('issue_date', 'desc');
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name')
-                ->set_relation('book_ID', 'pub_books', 'name');
+                ->set_relation('book_ID', 'pub_books', 'name')
+                ->unset_add();
 
 //        date range---------------------------
 
@@ -439,7 +440,8 @@ class Admin extends CI_Controller {
                 ->display_as('issue_date', 'Issue Date')->order_by('issue_date', 'desc');
 
         $crud->set_relation('contact_ID', 'pub_contacts', 'name')
-                ->set_relation('book_ID', 'pub_books', 'name');
+                ->set_relation('book_ID', 'pub_books', 'name')
+                ->unset_add();
 
 //        date range---------------------------
 

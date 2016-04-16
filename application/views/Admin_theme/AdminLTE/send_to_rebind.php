@@ -57,7 +57,7 @@
 
                     <?= $main_content; ?>
 
-        <!--                            <h3 class="box-title">Declared Returned Book Value: <?php //$total_return_book_price;  ?>TK</h3>-->
+                <!--                            <h3 class="box-title">Declared Returned Book Value: <?php //$total_return_book_price;   ?>TK</h3>-->
 
                 <?php } ?>
 
@@ -83,7 +83,11 @@
 //            }
                 ?>
                 <div class="col-md-12">
-                    <?= anchor('SalesReturn/book_rebind_insert', 'Add Send Book To Rebind', ' class="btn btn-success"') ?>
+                    <?php
+                    if (!isset($date_range)) {
+                        echo anchor('SalesReturn/book_rebind_insert', 'Add Send Book To Rebind', ' class="btn btn-success"');
+                    }
+                    ?>
                     <div class="box">
 
                         <?php
@@ -106,7 +110,7 @@
                             <label>Select Book Name :</label>
                         </div>
                         <div class="col-md-6">
-                            <?= $book_send_dropdown ?>
+        <?= $book_send_dropdown ?>
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-md-3">
@@ -119,11 +123,12 @@
                             <label>Total Number of Book Send to Re-bind:</label>
                         </div>
                         <div class="col-md-9">
-                            <?= $total_book_send ?>
+                        <?= $total_book_send ?>
                         </div>
 
-                    <?php }
-                } ?>
+    <?php }
+}
+?>
 
             </div>
 

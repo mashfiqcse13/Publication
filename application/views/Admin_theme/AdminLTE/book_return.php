@@ -83,7 +83,11 @@
                 }
                 ?>
                 <div class="col-md-12">
-                    <?= anchor('SalesReturn/current_sates_return_insert', 'Add Returned Book', ' class="btn btn-success"') ?>
+                    <?php
+                    if (!isset($date_range)) {
+                        echo anchor('SalesReturn/current_sates_return_insert', 'Add Returned Book', ' class="btn btn-success"');
+                    }
+                    ?>
 
                     <div class="box">
                         <?php

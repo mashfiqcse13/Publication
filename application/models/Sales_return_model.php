@@ -28,6 +28,7 @@ class Sales_return_model extends CI_Model {
 
         return form_dropdown('buyer_id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1" required="true" aria-hidden="true"');
     }
+
     function get_binding_store_dropdown() {
         $db_tables = $this->config->item('db_tables');
         $this->db->select('*');
@@ -81,7 +82,7 @@ class Sales_return_model extends CI_Model {
 
         $this->table->set_template($tmpl);
 
-        $output = '<div style="overflow-y:scroll;max-height:370px;">
+        $output = '<div style="overflow-y:scroll;max-height:333px;">
 
                     ' . $this->table->generate($data) . '</div>';
 
@@ -110,8 +111,35 @@ class Sales_return_model extends CI_Model {
 //        die(print_r($data_to_be_inserted));
         if (!empty($data_to_be_inserted)) {
             $this->db->insert_batch('pub_books_return', $data_to_be_inserted);
-            echo "<script>alert('Successfully Inserted');</script>";
-//            redirect('admin/return_book_dashboard');
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    function book_rebind_insert_processor() {
+        $buyer_id = $this->input->post('buyer_id');
+
+        $return_date = $this->input->post('return_date');
+        $return_date = date_format(date_create($return_date), 'Y-m-d H:i:s');
+        $book_selected = $this->input->post('book_section');
+        $data_to_be_inserted = array();
+        foreach ($book_selected as $index => $value) {
+            if (!empty($book_selected[$index]) && $book_selected[$index] != 0) {
+                array_push($data_to_be_inserted, array(
+                    'contact_ID' => $buyer_id,
+                    'book_ID' => $index,
+                    'quantity' => $value,
+                    'issue_date' => $return_date
+                ));
+            }
+        }
+//        die(print_r($data_to_be_inserted));
+        if (!empty($data_to_be_inserted)) {
+            $this->db->insert_batch('pub_send_to_rebind', $data_to_be_inserted);
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 
