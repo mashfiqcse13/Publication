@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
  *
  * @author MD. Mashfiq
  */
-class SalesReturnModel extends CI_Model {
+class Sales_return_model extends CI_Model {
 
     function get_buyer_dropdown() {
         $db_tables = $this->config->item('db_tables');
