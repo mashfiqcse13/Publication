@@ -63,14 +63,14 @@ class Account extends CI_Model {
             
             where tbl.contact_ID not in (
             
-                SELECT tbl2.contact_ID
+                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
                 FROM (
 
                 SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
                 FROM  `pub_memos` 
                 WHERE  `due` <0
                 GROUP BY  `contact_ID`
-                ) AS tbl2
+                ) AS party_wise_lase_memo_haveing_negetive_due
             )
             GROUP BY tbl.contact_ID";
 //        die($sql);
@@ -176,6 +176,18 @@ class Account extends CI_Model {
                     ) as tbl 
                     Natural join
                     {$db_tables['pub_contacts']} as tbl2
+            
+            where tbl.contact_ID not in (
+            
+                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
+                FROM (
+
+                SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
+                FROM  `pub_memos` 
+                WHERE  `due` <0
+                GROUP BY  `contact_ID`
+                ) AS party_wise_lase_memo_haveing_negetive_due
+            )
                     GROUP BY tbl.contact_ID";
         $query = $this->db->query($sql);
         $monthly_due = 0;
@@ -206,6 +218,18 @@ class Account extends CI_Model {
                     ) as tbl
                     Natural join
                     {$db_tables['pub_contacts']} as tbl2
+            
+                    where tbl.contact_ID not in (
+
+                        SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
+                        FROM (
+
+                        SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
+                        FROM  `pub_memos` 
+                        WHERE  `due` <0
+                        GROUP BY  `contact_ID`
+                        ) AS party_wise_lase_memo_haveing_negetive_due
+                    )
                     GROUP BY tbl.contact_ID";
         $query = $this->db->query($sql);
         $total_due = 0;
