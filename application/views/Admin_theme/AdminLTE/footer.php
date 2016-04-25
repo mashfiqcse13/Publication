@@ -1,4 +1,3 @@
-
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.2.0
@@ -54,6 +53,10 @@
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_asset_url ?>plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<!-- AdminLTE App -->
+<script src="<?php echo $theme_asset_url ?>dist/js/app.min.js" type="text/javascript"></script>
+
 <!-- datepicker -->
 <script src="<?php echo $theme_asset_url ?>plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -62,12 +65,24 @@
 <script src="<?php echo $theme_asset_url ?>plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- FastClick -->
 <script src="<?php echo $theme_asset_url ?>plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
+
+
+
+
 <!-- AdminLTE App -->
 <script src="<?php echo $theme_asset_url ?>dist/js/app.min.js" type="text/javascript"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo $theme_asset_url ?>dist/js/pages/dashboard.js" type="text/javascript"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo $theme_asset_url ?>dist/js/demo.js" type="text/javascript"></script>
+
+
+<!-- For Add memo form validation -->
+<script src="<?= base_url() . $this->config->item('ASSET_FOLDER') ?>js/memo-validation.js" type="text/javascript"></script>
+<script src="<?php echo $theme_asset_url ?>plugins/select2/select2.full.min.js" type="text/javascript"></script>
+
+
 <!-- For Add memo form validation -->
 <script src="<?= base_url() . $this->config->item('ASSET_FOLDER') ?>js/memo-validation.js" type="text/javascript"></script>
 
@@ -76,6 +91,26 @@
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
     $(".select2").select2();
+
+    // Datepicker
+    $('.datepicker').datepicker();
+    /*     
+ * Add collapse and remove events to boxes
+ */
+$("[data-widget='collapse']").click(function(e) {
+    e.preventdefault;
+    //Find the box parent        
+    var box = $(this).parents(".box").first();
+    //Find the body and the footer
+    var bf = box.find(".box-body");
+    if (!box.hasClass("collapsed-box")) {
+        box.addClass("collapsed-box");
+        bf.slideUp();
+    } else {
+        box.removeClass("collapsed-box");
+        bf.slideDown();
+    }
+});
 
 //        due management Property
     $('[name="buyer_id"]').change(function () {
