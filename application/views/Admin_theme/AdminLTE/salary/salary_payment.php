@@ -27,14 +27,15 @@
                     <?php
                     if ($this->uri->segment(3) === 'add') {
                         ?>
-                       
+
                         <?php
 //                        $message = $this->session->userdata('message');
 //                        if (isset($message)) {
 //                            echo $message;
 //                        }
 //                        $this->session->unset_userdata('message');
-//                        ?>
+//                        
+                        ?>
                         <!-- begin panel -->
                         <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
                             <div class="panel-heading">
@@ -42,11 +43,28 @@
                             </div>
                             <div class="panel-body">
                                 <form action="<?php echo base_url(); ?>index.php/Salary/save_salary_amount" method="post" class="form-horizontal">
-                                  
+
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Employee Name</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control select2"style="width:100%;" name="id_salary_bonus_type">
+                                                <option>Select Employee Name</option>
+                                                <?php
+                                                foreach ($employees as $employee) {
+                                                    ?>
+                                                    <option value="<?php echo $employee->id_employee; ?>"><?php echo $employee->name_employee; ?></option>
+                                                <?php }
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Month of Salary</label>
                                         <div class="col-md-9">
                                             <select name="month_salary_payment" class="form-control">
+                                                <option>Select Salary Month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
                                                 <option value="3">March</option>
@@ -97,40 +115,40 @@
                                                     </div><!-- /.box-tools -->
                                                 </div><!-- /.box-header -->
                                                 <div class="box-body">
-                                                    
-                                                        <div class="form-group ">
-                                                            <label class="col-md-3">Salary Bonus Type</label>
-                                                            <div class="col-md-9">
-                                                                <select class="form-control select2"style="width:100%;" name="id_salary_bonus_type">
-                                                                    <option>Select Bonus Type</option>
-                                                                    <?php
-                                                                    foreach ($salary_bonus as $bonus) {
-                                                                        ?>
-                                                                        <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?></option>
-                                                                    <?php }
-                                                                    ?>
-                                                                </select>
-                                                            </div>
 
-                                                        </div><!-- /.form-group -->
-                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label">Amount Salary Bonus</label>
-                                                            <div class="col-md-9">
-                                                                <input type="text" name="amount_salary_bonus" class="form-control" placeholder="Amount Salary Bonus" />
-                                                            </div>
+                                                    <div class="form-group ">
+                                                        <label class="col-md-3">Salary Bonus Type</label>
+                                                        <div class="col-md-9">
+                                                            <select class="form-control select2"style="width:100%;" name="id_salary_bonus_type">
+                                                                <option>Select Bonus Type</option>
+                                                                <?php
+                                                                foreach ($salary_bonus as $bonus) {
+                                                                    ?>
+                                                                    <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
                                                         </div>
 
-<!--                                                        <div class="form-group">
-                                                            <label class="col-md-3 control-label"></label>
-                                                            <div class="col-md-9">
-                                                                <button type="submit" class="btn btn-sm btn-success"> Save</button>
-                                                            </div>
-                                                        </div>-->
-                                                    
+                                                    </div><!-- /.form-group -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Amount Salary Bonus</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" name="amount_salary_bonus" class="form-control" placeholder="Amount Salary Bonus" />
+                                                        </div>
+                                                    </div>
+
+                                                    <!--                                                        <div class="form-group">
+                                                                                                                <label class="col-md-3 control-label"></label>
+                                                                                                                <div class="col-md-9">
+                                                                                                                    <button type="submit" class="btn btn-sm btn-success"> Save</button>
+                                                                                                                </div>
+                                                                                                            </div>-->
+
                                                 </div><!-- /.box-body -->
-                                                
+
                                             </div><!-- /.box -->
-                                            
+
                                         </div><!-- /.col -->
                                     </div>
                                     <div class="form-group">
@@ -152,16 +170,8 @@
                     ?>
 
                 </div>
-
             </div>
-
-
         </div>
-
-
-     
-
-
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
