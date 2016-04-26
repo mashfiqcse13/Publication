@@ -47,6 +47,7 @@ class Salary extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Payment';
+        $data['employees'] = $this->Salary_model->select_all('employee');
         $data['salary_payment'] = $this->Salary_model->select_all('salary_payment');
         $data['salary_bonus'] = $this->Salary_model->select_all('salary_bonus_type');
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_payment', $data);
