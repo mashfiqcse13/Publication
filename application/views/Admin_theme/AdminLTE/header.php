@@ -30,6 +30,7 @@
         <link href="<?php echo $theme_asset_url ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 
         <link href="<?php echo $theme_asset_url ?>plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $theme_asset_url ?>plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

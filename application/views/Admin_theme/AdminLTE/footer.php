@@ -44,6 +44,11 @@
 <script src="<?php echo $theme_asset_url ?>plugins/morris/morris.min.js" type="text/javascript"></script>
 <!-- Sparkline -->
 <script src="<?php echo $theme_asset_url ?>plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+<!--datatable-->
+<script src="<?php echo $theme_asset_url ?>plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="<?php echo $theme_asset_url ?>plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+
+
 <!-- jvectormap -->
 <script src="<?php echo $theme_asset_url ?>plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
 <script src="<?php echo $theme_asset_url ?>plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
@@ -65,6 +70,7 @@
 <script src="<?php echo $theme_asset_url ?>plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- FastClick -->
 <script src="<?php echo $theme_asset_url ?>plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
+
 
 
 
@@ -91,6 +97,10 @@
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
     $(".select2").select2();
+    
+    //datatables
+    $('#example1').DataTable();
+ 
 
     // Datepicker
     $('.datepicker').datepicker();
