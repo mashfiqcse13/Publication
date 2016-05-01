@@ -59,10 +59,14 @@
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>contact Id</th>
-                                    <th>book Id(s)</th>
-                                    <th>Quantity Version</th>
-                                    <th>Issue Date</th>
+                                    <th>Id Item</th>
+                                    <th>Opening Amount</th>
+                                    <th>Receive Amount</th>
+                                    <th>Sales Amount</th>
+                                    <th>Return Amount Reject</th>
+                                    <th>Reject Amount</th>
+                                    <th>Closing Stock</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,10 +76,14 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $sl; ?></td>
-                                        <td><?php echo $info->contact_ID; ?></td>
-                                        <td><?php echo $info->book_ID; ?></td>
-                                        <td><?php echo $info->quantity; ?></td>
-                                        <td><?php echo $info->issue_date; ?></td>
+                                        <td><?php echo $info->id_item; ?></td>
+                                        <td><?php echo $info->opening_amount; ?></td>
+                                        <td><?php echo $info->receive_amount; ?></td>
+                                        <td><?php echo $info->sales_amount; ?></td>
+                                        <td><?php echo $info->return_amountreject; ?></td>
+                                        <td><?php echo $info->reject_amount; ?></td>
+                                        <td><?php echo $info->closing_stock; ?></td>
+                                        <td><?php echo $info->date; ?></td>
                                     </tr>
                                     <?php
                                     $sl++;
@@ -85,10 +93,14 @@
                             <tfoot>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>contact Id</th>
-                                    <th>book Id(s)</th>
-                                    <th>Quantity Version</th>
-                                    <th>Issue Date</th>
+                                    <th>Id Item</th>
+                                    <th>Opening Amount</th>
+                                    <th>Receive Amount</th>
+                                    <th>Sales Amount</th>
+                                    <th>Return Amount Reject</th>
+                                    <th>Reject Amount</th>
+                                    <th>Closing Stock</th>
+                                    <th>Date</th>
                                 </tr>
                             </tfoot>
                         </table>
