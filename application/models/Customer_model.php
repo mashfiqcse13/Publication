@@ -15,7 +15,7 @@ class Customer_model extends CI_Model {
 
     function select_all() {
         $this->db->select('*');
-        $this->db->from('employee');
+        $this->db->from('pub_contacts');
         $query = $this->db->get();
         return $query->result();
     }
@@ -47,25 +47,6 @@ class Customer_model extends CI_Model {
         }
     }
 
-    function update_cash($amount) {
-        $current = $this->db->select('*')
-                ->from('cash')
-                ->where('id_cash', 1)
-                ->get()
-                ->result();
-        $current = $current[0];
-        if ($current->balance >= $amount) {
-            $sql = "UPDATE `cash` SET 
-                `total_out` = `total_out`+'$amount', 
-                `balance` = `balance`+'$amount' 
-            WHERE `cash`.`id_cash` = 1;";
-            $this->db->query($sql);
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
     function update_pub_memo($id, $amount) {
         $current = $this->db->select('*')
                 ->from('pub_memos')
@@ -78,8 +59,7 @@ class Customer_model extends CI_Model {
             return TRUE;
         } else {
             return FALSE;
-        }
-//        
+        }       
     }
 
 }
