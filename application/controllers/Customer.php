@@ -22,6 +22,7 @@ class Customer extends CI_Controller{
             return 0;
         }
         $this->load->model('Customer_model');
+        $this->load->model('misc/Cash','cash_model');
         $this->load->library('grocery_CRUD');
     }
     function index(){
@@ -32,14 +33,7 @@ class Customer extends CI_Controller{
         $this->load->view($this->config->item('ADMIN_THEME').'customer/customer_dashboard', $data);
     }
     function customer_payment(){
-//        $crud = new grocery_CRUD();
-//        $crud->set_table('customer_due')
-//                ->set_subject('Customer Payment');
-//               // ->display_as("id_employee", 'Employee Name')
-//                //->set_relation('id_employee', 'employee', "name_employee");
-//        $output = $crud->render();
-//        $data['glosary'] = $output;
-        $data['employees'] = $this->Customer_model->select_all();
+        $data['contacts'] = $this->Customer_model->select_all();
         $data['sales']=$this->Customer_model->sales_info();
       // echo '<pre>'; print_r($data['sales']);exit();
         
@@ -57,7 +51,7 @@ class Customer extends CI_Controller{
         //echo '<pre>'; print_r($data);exit();
         $this->Customer_model->save_info($data);
         $this->Customer_model->update_customer_due($data['id_customer'],$data['paid_amount']);
-        $this->Customer_model->update_cash($data['paid_amount']);
+        $this->cash_model->reduce($data['paid_amount']);
         $this->Customer_model->update_pub_memo($data['id_total_sales'],$data['paid_amount']);
         $sdata = array();
         $sdata['message'] = '<div class = "alert alert-success"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Your Data is successfully Saved</p></div>';
