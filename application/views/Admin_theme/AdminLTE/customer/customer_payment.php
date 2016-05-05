@@ -50,9 +50,9 @@
                                             <select class="form-control select2"style="width:100%;" name="id_customer">
                                                 <option>Select Employee id</option>
                                                 <?php
-                                                foreach ($employees as $employee) {
+                                                foreach ($contacts as $contact) {
                                                     ?>
-                                                    <option value="<?php echo $employee->id_employee; ?>"><?php echo $employee->id_employee; ?></option>
+                                                    <option value="<?php echo $contact->contact_ID; ?>"><?php echo $contact->contact_ID; ?></option>
                                                 <?php }
                                                 ?>
                                             </select>
