@@ -1,0 +1,84 @@
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Accounting
+ *
+ * @author MD. Mashfiq
+ */
+class sales_return extends CI_Controller {
+            
+    function __construct() {
+        parent::__construct();
+        date_default_timezone_set('Asia/Dhaka');
+        $this->load->library('tank_auth');
+        if (!$this->tank_auth->is_logged_in()) {         //not logged in
+            redirect('login');
+            return 0;
+        }
+        $this->load->library('grocery_CRUD');
+        $this->load->model('Common');
+        $this->load->model('Sales_return_m');
+        $this->load->model('Memo');
+        
+       
+    }
+    
+    function index(){
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Sales Return_m  ';
+        
+        $this->load->view($this->config->item('ADMIN_THEME').'sales_return/sales_return_dashboard', $data);
+    }
+    
+    
+    
+    function sales_current_sales_return() {
+        
+
+        
+        if($this->input->post('search_memo')==true){
+           $memo_id=$this->input->post('memo_id');
+           $data['search_memo']=$this->Sales_return_m->get_memos($memo_id);
+           $data['get_book_list']=$this->Sales_return_m->get_book_list($memo_id);
+           $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);           
+        }
+        
+        if($this->input->post('sales_return')==true){
+
+
+            $this->Sales_return_m->insert_return_item($_POST);
+            
+        }
+        
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Current Sales Return';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales_return/sales_current_sales_return', $data);
+    }
+    
+
+    
+    function sales_current_total_sales_return() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('sales_current_total_sales_return');
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Current Total Sales Return';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales_return/sales_current_total_sales_return', $data);
+    }
+    
+    
+    
+}
