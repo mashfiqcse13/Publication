@@ -52,28 +52,30 @@ class Salary extends CI_Controller {
         $data['salary_bonus'] = $this->Salary_model->select_all('salary_bonus_type');
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_payment', $data);
     }
-    
+
     //    save salary payment
-    public function save_salary_amount(){
+    public function save_salary_amount() {
+        $data['id_employee'] = $this->input->post('id_employee');
         $data['month_salary_payment'] = $this->input->post('month_salary_payment');
         $data['year_salary_payment'] = $this->input->post('year_salary_payment');
-        $data['issue_salary_payment'] = date('y-m-d',strtotime($this->input->post('issue_salary_payment')));
-        $data['date_salary_payment'] = date('y-m-d',strtotime($this->input->post('date_salary_payment')));
+        $data['issue_salary_payment'] = date('y-m-d', strtotime($this->input->post('issue_salary_payment')));
+        $data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
         $data['amount_salary_payment'] = $this->input->post('amount_salary_payment');
-        $payment_id = $this->Salary_model->save_info('salary_payment',$data);
-        
-        
-        
+        $payment_id = $this->Salary_model->save_info('salary_payment', $data);
+
+
+
         $info['id_salary_bonus_type'] = $this->input->post('id_salary_bonus_type');
         $info['id_salary_payment'] = $payment_id;
         $info['amount_salary_bonus'] = $this->input->post('amount_salary_bonus');
-        $this->Salary_model->save_info('salary_bonus',$info);
-        
+        if (!empty($info['id_salary_bonus_type']) && !empty($info['id_salary_payment']) && !empty($info['amount_salary_bonus'])) {
+            $this->Salary_model->save_info('salary_bonus', $info);
+        }
+
         $sdata = array();
         $sdata['message'] = '<div class = "alert alert-success"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Your Data is successfully Saved</p></div>';
         $this->session->set_userdata($sdata);
         redirect('Salary/salary_payment');
-        
     }
 
     function salary_advanced() {
@@ -118,6 +120,5 @@ class Salary extends CI_Controller {
         $data['Title'] = 'Salary Bonus type';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_bonus_type', $data);
     }
-    
 
 }

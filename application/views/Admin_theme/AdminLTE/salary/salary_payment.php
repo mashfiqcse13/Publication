@@ -42,12 +42,12 @@
                                 <h4 class="panel-title">Salary Table</h4>
                             </div>
                             <div class="panel-body">
-                                <form action="<?php echo base_url(); ?>index.php/Salary/save_salary_amount" method="post" class="form-horizontal">
+                                <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_salary_amount" method="post" class="form-horizontal">
 
                                     <div class="form-group ">
                                         <label class="col-md-3">Employee Name</label>
                                         <div class="col-md-9">
-                                            <select class="form-control select2"style="width:100%;" name="id_salary_bonus_type">
+                                            <select class="form-control select2"style="width:100%;" name="id_employee">
                                                 <option>Select Employee Name</option>
                                                 <?php
                                                 foreach ($employees as $employee) {
@@ -101,7 +101,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Amount of Salary</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" placeholder="Amount of Salary" name="amount_salary_payment" />
+                                            <input type="number" class="form-control" placeholder="Amount of Salary" name="amount_salary_payment" />
                                         </div>
                                     </div>
                                     <div class="form-group">
