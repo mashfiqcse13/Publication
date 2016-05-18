@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author MD. Mashfiq
  */
-class sales_return extends CI_Controller {
+class Sales_return extends CI_Controller {
             
     function __construct() {
         parent::__construct();
