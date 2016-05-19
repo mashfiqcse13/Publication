@@ -30,7 +30,7 @@ class Sales_return_m extends CI_Model {
 
       function insert_return_item($post){
          
-         
+                
               
                 $memo_ID = $this->input->post('memo_ID');
                 $book_ID= $this->input->post('book_ID');
@@ -38,6 +38,8 @@ class Sales_return_m extends CI_Model {
                 $quantity= $this->input->post('quantity');
                 $price_per_book= $this->input->post('price');
                 
+                
+              
       
                 $data=array();   
                 foreach($memo_ID as $key => $val){
@@ -52,18 +54,22 @@ class Sales_return_m extends CI_Model {
                             );
                             $this->db->insert('sales_current_sales_return',$data);
                             
-                            
+                          
                                  
-                }  
+                
+               
 
-            
+                }
 
       }
       
+
+      
+
       
       function get_book_list($id){
           
-        $query = $this->db->query("SELECT * ,pub_books.name as book_name
+        $query = $this->db->query("SELECT * ,pub_books.name as book_name, quantity-IFNULL((SELECT SUM(quantity) FROM sales_current_sales_return where memo_ID=pub_memos.memo_ID and book_ID=pub_books.book_ID),0) as return_quantity
             FROM `pub_memos_selected_books`
 			LEFT JOIN pub_books on pub_memos_selected_books.book_ID=pub_books.book_ID
 			LEFT JOIN pub_memos on pub_memos.memo_ID=pub_memos_selected_books.memo_ID
