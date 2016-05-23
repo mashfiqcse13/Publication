@@ -75,6 +75,7 @@
             <li><?php echo anchor('admin/account', '<i class="fa fa-calculator"></i>   <span>Account Information</span>'); ?></li>
             <li><?php echo anchor('admin/report_sold_book_today', '<i class="fa fa-calculator"></i>   <span>Sold Book Information</span>'); ?></li>
             
+            
             <li class="header">MAIN NAVIGATION</li>
             <li><?php echo anchor('salary/', '<i class="fa fa-plus-circle"></i>  <span>Salary</span>'); ?></li>
             <li><?php echo anchor('sales_return/', '<i class="fa fa-plus-circle"></i>  <span>Sales Return</span>'); ?></li>
@@ -85,6 +86,7 @@
             <li><?php echo anchor('admin/manage_employee', '<i class="fa fa-plus-circle"></i>  <span>Employee</span>'); ?></li>
             <li><?php echo anchor('stock/', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
             <li><?php echo anchor('customer/', '<i class="fa fa-plus-circle"></i>  <span>Customer</span>'); ?></li>
+            <li><?php echo anchor('users_info', '<i class="fa fa-plus-circle"></i>   <span>Users</span>'); ?></li>
             
             <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
         </ul>
