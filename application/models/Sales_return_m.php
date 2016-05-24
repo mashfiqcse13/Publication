@@ -29,13 +29,13 @@ class Sales_return_m extends CI_Model {
     }
     
     function get_all_return_item(){
-        
+       
         $this->load->library('table');
         
         $query=$this->db->query("SELECT selection_ID,memo_ID,pub_books.name,quantity,price_per_book,total "
                 . "FROM `sales_current_sales_return` "
                 . "LEFT JOIN pub_books ON sales_current_sales_return.book_ID=pub_books.book_ID "
-                . "WHERE  quantity>0")->result_array();
+                . "WHERE  quantity>0 ORDER BY selection_ID DESC")->result_array();
         
         
         $tmpl = array (
@@ -58,7 +58,7 @@ class Sales_return_m extends CI_Model {
 
                     'table_close'         => '</table>'
               );
-
+            
             $this->table->set_template($tmpl);
             $this->table->set_heading('Selection Id', 'Memo Id', 'Book Name', 'Quantity', 'Price', 'Total');
 
@@ -66,6 +66,8 @@ class Sales_return_m extends CI_Model {
     }
 
       function insert_return_item($post){
+              $this->load->model('misc/cash');
+              $this->load->model('misc/customer_due');
          
                 
               
@@ -75,10 +77,11 @@ class Sales_return_m extends CI_Model {
                 $quantity= $this->input->post('quantity');
                 $price_per_book= $this->input->post('price');
                 $pre_quantity=$this->input->post('pre_quantity');
+                $contact_ID=$this->input->post('contact_ID');
                 
                
                 $values=0;
-                $dataa_add=array();   
+                $data_add=array();   
                 foreach($memo_ID as $key => $val){
                   
                             $data_add=array(
@@ -96,6 +99,14 @@ class Sales_return_m extends CI_Model {
 
                 }
                 
+                $stock_add=array();   
+                foreach($memo_ID as $key => $val){
+                    
+                  $this->db->query("UPDATE pub_stock SET Quantity=Quantity+$quantity[$key] WHERE book_ID=$book_ID[$key] AND printing_press_ID=2");
+                  
+                  
+                }
+                
                 $data_delete=array();
                 foreach ($memo_ID as $key => $val){
                     $data_delete=array(
@@ -108,11 +119,31 @@ class Sales_return_m extends CI_Model {
                     $this->db->update('pub_memos_selected_books', $data_delete);
                }
                
+               
+               
+              
+              $this->customer_due->reduce($contact_ID,$values);
+              $this->cash->reduce($values);
 
                return $values;
       }
       
 
+      
+//      function update_memo($id){
+//                   
+//          $this->db->select('SUM(total) as total_price');
+//          $this->db->where('memo_ID',$id);
+//          $total_book_price = $this->db->get('pub_memos_selected_books');
+//
+//            foreach ($total_book_price->result() as $row)
+//            {
+//                $total_price= $row->total_price;
+//            }
+//            
+//            
+//          
+//      }
       
 
       
