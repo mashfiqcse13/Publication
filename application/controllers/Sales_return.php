@@ -27,10 +27,23 @@ class Sales_return extends CI_Controller {
         $this->load->model('Sales_return_m');
         $this->load->model('Memo');
         
+        
        
     }
     
     function index(){
+        
+        
+        $crud = new grocery_CRUD();
+        $crud->set_table('sales_current_sales_return')->order_by('selection_ID', 'desc');
+        $crud->columns('selection_ID','memo_ID','book_ID','stock_ID','quantity','total'); 
+         $crud->display_as('book_ID','Book Name');
+         $crud->set_relation('book_ID','pub_books','name');
+         $crud->unset_add();
+            $crud->unset_edit();
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Sales Return Dashboard  ';
