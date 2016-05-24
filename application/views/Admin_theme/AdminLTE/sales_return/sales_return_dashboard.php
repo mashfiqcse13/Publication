@@ -23,12 +23,16 @@
                 <div class="col-md-12">
 
                     <div class="box">
+                        <div class="panel-body">
                     
                     <?php  
+                    if( isset($get_all_return_item) && !empty($get_all_return_item)){
 
-                       //echo $glosary->output;
+                       echo $get_all_return_item;
+                    }
                     ?>
                
+                    </div>
                     </div>
                     
                 </div>
