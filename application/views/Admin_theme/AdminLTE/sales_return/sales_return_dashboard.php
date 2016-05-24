@@ -26,10 +26,13 @@
                         <div class="panel-body">
                     
                     <?php  
-                    if( isset($get_all_return_item) && !empty($get_all_return_item)){
-
-                       echo $get_all_return_item;
-                    }
+//                    if( isset($get_all_return_item) && !empty($get_all_return_item)){
+//
+//                       echo $get_all_return_item;
+//                       
+//                      
+//                    }
+                    echo $glosary->output;
                     ?>
                
                     </div>
