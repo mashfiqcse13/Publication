@@ -65,8 +65,7 @@ class Sales_return extends CI_Controller {
         }
         
         if($this->input->post('sales_return')==true){
-
-
+            
           $data['return_price'] =  $this->Sales_return_m->insert_return_item($_POST);
             
         }

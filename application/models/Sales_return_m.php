@@ -67,8 +67,7 @@ class Sales_return_m extends CI_Model {
 
       function insert_return_item($post){
               $this->load->model('misc/cash');
-              $this->load->model('misc/customer_due');
-         
+              $this->load->model('misc/customer_due');         
                 
               
                 $memo_ID = $this->input->post('memo_ID');
