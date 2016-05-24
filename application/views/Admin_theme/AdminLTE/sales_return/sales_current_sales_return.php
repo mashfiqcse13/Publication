@@ -49,6 +49,11 @@
                                     </div>
                                     
                                 <?php form_close() ?>
+                                
+                                <?php if(isset($return_price)){
+                                    echo "Cash Back: ".$return_price;
+                                }
+                                ?>
                             </div>
                         </div>
                             
@@ -132,9 +137,10 @@
                                             <td><?=$row['book_price']?></td>
                                             <td><?=$row['price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['price']?>"></td>
                                             <td>
-                                                <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['return_quantity']?>" value="0">
+                                                <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['quantity']?>" value="0">
                                                 <input type="hidden" name="memo_ID[]" class="form-control"  value="<?=$row['memo_ID']?>">                                                
                                                 <input type="hidden" name="stock_ID[]" class="form-control"  value="<?=$row['stock_ID']?>">
+                                                <input type="hidden" name="pre_quantity[]" class="form-control"  value="<?=$row['quantity']?>">
                                                 
                                                 
                                             </td>
