@@ -27,6 +27,43 @@ class Sales_return_m extends CI_Model {
         
         
     }
+    
+    function get_all_return_item(){
+        
+        $this->load->library('table');
+        
+        $query=$this->db->query("SELECT selection_ID,memo_ID,pub_books.name,quantity,price_per_book,total "
+                . "FROM `sales_current_sales_return` "
+                . "LEFT JOIN pub_books ON sales_current_sales_return.book_ID=pub_books.book_ID "
+                . "WHERE  quantity>0")->result_array();
+        
+        
+        $tmpl = array (
+                    'table_open'          => '<table class="table table-bordered table-striped">',
+
+                    'heading_row_start'   => '<tr>',
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th>',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr>',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr>',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+                    'table_close'         => '</table>'
+              );
+
+            $this->table->set_template($tmpl);
+            $this->table->set_heading('Selection Id', 'Memo Id', 'Book Name', 'Quantity', 'Price', 'Total');
+
+            return $this->table->generate($query);
+    }
 
       function insert_return_item($post){
          
@@ -37,14 +74,14 @@ class Sales_return_m extends CI_Model {
                 $stock_ID= $this->input->post('stock_ID');
                 $quantity= $this->input->post('quantity');
                 $price_per_book= $this->input->post('price');
+                $pre_quantity=$this->input->post('pre_quantity');
                 
-                
-              
-      
-                $data=array();   
+               
+                $values=0;
+                $dataa_add=array();   
                 foreach($memo_ID as $key => $val){
                   
-                            $data=array(
+                            $data_add=array(
                                 'memo_ID' => $memo_ID[$key],
                                 'book_ID' => $book_ID[$key],
                                 'stock_ID' => $stock_ID[$key],
@@ -52,15 +89,27 @@ class Sales_return_m extends CI_Model {
                                 'price_per_book' => $price_per_book[$key],
                                 'total' => $quantity[$key]*$price_per_book[$key]
                             );
-                            $this->db->insert('sales_current_sales_return',$data);
                             
-                          
-                                 
-                
-               
+                            $this->db->insert('sales_current_sales_return',$data_add);  
+                            
+                            $values+=$data_add['total'];
 
                 }
+                
+                $data_delete=array();
+                foreach ($memo_ID as $key => $val){
+                    $data_delete=array(
+                                'quantity' =>$pre_quantity[$key]-$quantity[$key],                                
+                                'total' =>($pre_quantity[$key]-$quantity[$key])*$price_per_book[$key]
+                            );
+                            
+                    $this->db->where('memo_ID', $memo_ID[$key]);
+                    $this->db->where('book_ID',$book_ID[$key]);
+                    $this->db->update('pub_memos_selected_books', $data_delete);
+               }
+               
 
+               return $values;
       }
       
 
