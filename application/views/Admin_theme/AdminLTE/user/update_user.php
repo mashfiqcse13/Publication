@@ -24,7 +24,7 @@
 
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Users Registration</h3>
+                        <h3 class="box-title">Update users info</h3>
                     </div><!-- /.box-header -->
                     <?php
                     foreach ($users as $user) {
@@ -50,14 +50,12 @@
                             'name' => 'password',
                             'id' => 'password',
                             'class' => 'form-control',
-                            'value' => $user->password,
                             'size' => 30,
                         );
                         $confirm_password = array(
                             'name' => 'confirm_password',
                             'id' => 'confirm_password',
                             'class' => 'form-control',
-                            'value' => $user->password,
                             'size' => 30,
                         );
                         $activation = array(
@@ -114,7 +112,7 @@
 
 
 
-                         <?php echo form_submit('register', 'Register', "class='btn btn-success'"); ?>
+                         <?php echo form_submit('register', 'Update User', "class='btn btn-success'"); ?>
                         <?php echo form_close(); ?>
                         <?php
                     }

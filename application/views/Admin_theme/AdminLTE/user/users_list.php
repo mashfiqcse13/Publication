@@ -33,7 +33,6 @@
                             <thead>
                                 <tr>
                                     <th>Username</th>
-                                    <th>Password</th>
                                     <th>Email</th>
                                     <th>Activated</th>
                                     <th>Banned</th>
@@ -49,7 +48,6 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $user->username;?></td>
-                                    <td><?php echo $user->password;?></td>
                                     <td><?php echo $user->email;?></td>
                                     <td><?php echo ($user->activated)?'active':'inactive';?></td>
                                     <td><?php echo $user->banned;?></td>
@@ -64,18 +62,6 @@
                                     }
                                 ?>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Password</th>
-                                    <th>Email</th>
-                                    <th>Activated</th>
-                                    <th>Banned</th>
-                                    <th>Reason of Banned</th>
-                                    <th>Last Login</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
 
