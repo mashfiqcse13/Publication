@@ -33,8 +33,8 @@ class Sales_return extends CI_Controller {
     function index(){
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Sales Return_m  ';
-        
+        $data['Title'] = 'Sales Return Dashboard  ';
+        $data['get_all_return_item']=$this->Sales_return_m->get_all_return_item();
         $this->load->view($this->config->item('ADMIN_THEME').'sales_return/sales_return_dashboard', $data);
     }
     
@@ -54,9 +54,11 @@ class Sales_return extends CI_Controller {
         if($this->input->post('sales_return')==true){
 
 
-            $this->Sales_return_m->insert_return_item($_POST);
+          $data['return_price'] =  $this->Sales_return_m->insert_return_item($_POST);
             
         }
+        
+        
         
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
