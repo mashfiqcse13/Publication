@@ -100,6 +100,7 @@ class Sales_return_m extends CI_Model {
                 
                 $stock_add=array();   
                 foreach($memo_ID as $key => $val){
+                  $memo_ID_update=$memo_ID[$key];
                     
                   $this->db->query("UPDATE pub_stock SET Quantity=Quantity+$quantity[$key] WHERE book_ID=$book_ID[$key] AND printing_press_ID=2");
                   
@@ -119,7 +120,7 @@ class Sales_return_m extends CI_Model {
                }
                
                
-               
+              $this->db->query("UPDATE `pub_memos` SET `sub_total`=sub_total-$values,`total`=total-$values,`due`=due-$values WHERE memo_ID=$memo_ID_update");
               
               $this->customer_due->reduce($contact_ID,$values);
               $this->cash->reduce($values);
