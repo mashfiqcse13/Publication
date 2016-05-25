@@ -98,12 +98,12 @@
                                             <input class="form-control datepicker" id="" placeholder="Date Salary Payment" name="date_salary_payment" type="text">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+<!--                                    <div class="form-group">
                                         <label class="col-md-3 control-label">Amount of Salary</label>
                                         <div class="col-md-9">
                                             <input type="number" class="form-control" placeholder="Amount of Salary" name="amount_salary_payment" />
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label"></label>
                                         <div class="col-md-9">
