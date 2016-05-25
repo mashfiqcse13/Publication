@@ -48,6 +48,9 @@ class Salary extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Payment';
         $data['employees'] = $this->Salary_model->select_all('employee');
+        $father = $data['employees'];
+        
+       // echo '<pre>';print_r($father[0]->father_name);exit();
         $data['salary_payment'] = $this->Salary_model->select_all('salary_payment');
         $data['salary_bonus'] = $this->Salary_model->select_all('salary_bonus_type');
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_payment', $data);
@@ -55,12 +58,18 @@ class Salary extends CI_Controller {
 
     //    save salary payment
     public function save_salary_amount() {
+       // $data['salary_info'] = $this->Salary_model->select_all('employee_salary_info');
+       // $salary = $data['salary_info'];
         $data['id_employee'] = $this->input->post('id_employee');
+        $data['salary_info'] = $this->Salary_model->sum_salary($data['id_employee']);
+        $salary = $data['salary_info'];
         $data['month_salary_payment'] = $this->input->post('month_salary_payment');
         $data['year_salary_payment'] = $this->input->post('year_salary_payment');
         $data['issue_salary_payment'] = date('y-m-d', strtotime($this->input->post('issue_salary_payment')));
         $data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
-        $data['amount_salary_payment'] = $this->input->post('amount_salary_payment');
+        //$data['amount_salary_payment'] = $salary[$data['id_employee']-1]->total;
+        $data['amount_salary_payment'] = $salary[0]->Total;
+        echo '<pre>';print_r($data);exit();
         $payment_id = $this->Salary_model->save_info('salary_payment', $data);
 
 

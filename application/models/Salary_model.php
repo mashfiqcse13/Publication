@@ -18,4 +18,14 @@ class Salary_model extends CI_Model{
         $this->db->insert($tbl_name,$data);
         return $this->db->insert_id();
     }
+    
+    function sum_salary($id){
+        $sql = $this->db->query('SELECT  (SUM(basic)+SUM(medical)+SUM(house_rent)+SUM(transport_allowance)+SUM(lunch)) AS Total
+ FROM employee_salary_info WHERE id='.$id);
+//        $this->db->select_sum('basic','medical','house_rent'.'transport_allowance','lunch');
+//        $this->db->from('employee_salary_info');
+//        $this->db->where('id',$id);
+//        $query = $this->db->get();
+        return $sql->result();
+    }
 }

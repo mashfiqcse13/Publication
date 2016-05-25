@@ -607,6 +607,20 @@ class Admin extends CI_Controller {
         $data['Title'] = 'Manage Employee';
         $this->load->view($this->config->item('ADMIN_THEME') . 'manage_employee', $data);
     }
+    
+    function manage_professtional_info(){
+        $crud = new grocery_CRUD();
+        $crud->set_table('employee_perfesional_info')
+                ->set_subject('Employee')
+                ->display_as("id_employee", 'Employee Name')
+                ->set_relation('id_employee', 'employee', "name_employee");
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Manage Employee';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'manage_employee', $data);
+    }
 
     function test() {
         $a_date = "12/07/2016";

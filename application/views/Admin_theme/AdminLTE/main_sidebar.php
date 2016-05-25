@@ -83,7 +83,7 @@
             <li><?php echo anchor('expense/', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
             <li><?php echo anchor('income/', '<i class="fa fa-plus-circle"></i>  <span>Income</span>'); ?></li>
             <li><?php echo anchor('bank/', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
-            <li><?php echo anchor('admin/manage_employee', '<i class="fa fa-plus-circle"></i>  <span>Employee</span>'); ?></li>
+            <li><?php echo anchor('employee/', '<i class="fa fa-plus-circle"></i>  <span>Employee</span>'); ?></li>
             <li><?php echo anchor('stock/', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
             <li><?php echo anchor('customer/', '<i class="fa fa-plus-circle"></i>  <span>Customer</span>'); ?></li>
             <li><?php echo anchor('users_info', '<i class="fa fa-plus-circle"></i>   <span>Users</span>'); ?></li>
