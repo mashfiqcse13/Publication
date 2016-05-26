@@ -61,25 +61,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'thejamun_master',
-	'password' => 'Mv,4K&ZRV)xP',
-	'database' => 'thejamun_publication_jamunapub',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => TRUE,
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
+    'dsn' => '',
+    'hostname' => 'localhost',
+    'username' => 'thejamun_master',
+    'password' => 'Mv,4K&ZRV)xP',
+    'database' => 'thejamun_publication_jamunapub',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
 );
 if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
     $db['default']['username'] = 'thejamun_master';
@@ -89,6 +89,10 @@ if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
     $db['default']['username'] = 'thejamun_master';
     $db['default']['password'] = 'Mv,4K&ZRV)xP';
     $db['default']['database'] = 'thejamun_publication_ohiprokashani';
+} else if ($_SERVER['HTTP_HOST'] == "fit.thejamunapub.com") {
+    $db['default']['username'] = 'thejamun_publication_fit';
+    $db['default']['password'] = '1Uz1U3+7;3f0';
+    $db['default']['database'] = 'thejamun_publication_fit';
 } else {
     $db['default']['username'] = 'root';
     $db['default']['password'] = '';

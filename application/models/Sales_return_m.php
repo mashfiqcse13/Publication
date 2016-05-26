@@ -1,4 +1,8 @@
 <?php
+
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 /**
  * Description of Salary_model
  *

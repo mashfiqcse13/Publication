@@ -12,21 +12,19 @@
             </div>
         </div>
         <ul class="sidebar-menu">
-            
-            
-            <li class="header">EXPENSE  CRUD s</li>
-            
-            <li><?php echo anchor('expense/expense', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
-            
-            <li><?php echo anchor('expense/expense_name', '<i class="fa fa-plus-circle"></i>  <span>Expense Name</span>'); ?></li>
-            <li><?php echo anchor('expense/expense_category', '<i class="fa fa-plus-circle"></i>  <span>Expense Category</span>'); ?></li>
-       
+
+
+            <li class="header">SALES CRUD s</li>
+
+            <li><?php echo anchor('sales/sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
+            <li><?php echo anchor('sales/tolal_sales', '<i class="fa fa-plus-circle"></i>  <span>Total sales</span>'); ?></li>
+
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
-           
-            
+
+
         </ul>
-            
+
     </section>
     <!-- /.sidebar -->
 </aside>
