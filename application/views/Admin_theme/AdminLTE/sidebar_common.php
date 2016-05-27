@@ -3,6 +3,7 @@
 <li><?php echo anchor('salary/', '<i class="fa fa-plus-circle"></i>  <span>Salary</span>'); ?></li>
 <li><?php echo anchor('sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
 <li><?php echo anchor('sales_return/', '<i class="fa fa-plus-circle"></i>  <span>Sales Return</span>'); ?></li>
+<li><?php echo anchor('items/', '<i class="fa fa-plus-circle"></i>  <span>Items</span>'); ?></li>
 <li><?php echo anchor('loan/', '<i class="fa fa-plus-circle"></i>  <span>Loan</span>'); ?></li>
 <li><?php echo anchor('expense/', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
 <li><?php echo anchor('income/', '<i class="fa fa-plus-circle"></i>  <span>Income</span>'); ?></li>

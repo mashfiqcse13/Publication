@@ -16,6 +16,7 @@
 
             <li class="header">SALES CRUD s</li>
 
+            <li><?php echo anchor('sales/new_sale', '<i class="fa fa-plus-circle"></i>  <span>New Sales</span>'); ?></li>
             <li><?php echo anchor('sales/sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
             <li><?php echo anchor('sales/tolal_sales', '<i class="fa fa-plus-circle"></i>  <span>Total sales</span>'); ?></li>
 

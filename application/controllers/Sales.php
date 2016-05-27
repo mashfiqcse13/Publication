@@ -57,13 +57,16 @@ class Sales extends CI_Controller {
 
     function new_sale() {
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
+        $data['item_dropdown'] = $this->Sales_model->get_item_dropdown();
+        $data['customer_due'] = $this->Sales_model->get_party_due();
+        $data['item_details'] = $this->Sales_model->get_item_details();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'New sale';
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/new_sale_form', $data);
     }
-    
+
     function memo_management($cmd = false, $primary_id = false) {
         $this->load->model('Memo');
         $this->load->library('session');
@@ -165,6 +168,5 @@ class Sales extends CI_Controller {
 
         $this->Memo->clean_pub_memos_selected_books_db();
     }
-
 
 }
