@@ -35,11 +35,21 @@ class Salary extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_dashboard', $data);
     }
 
+    function employee_salary() {
+        $id = $this->input->post('id');
+        $data['salary_info'] = $this->Salary_model->select_all_salary_info($id);
+        //echo '<pre>';print_r($data['salary_info']);exit();
+        echo json_encode($data['salary_info']);
+//        return $data['salary_info'];
+    }
+    
+
     function salary_payment() {
         $crud = new grocery_CRUD();
         $crud->set_table('salary_payment')
-                ->set_subject('Salary Payment')
-                ->display_as("id_employee", 'Employee Name')
+        ->set_subject('Salary Payment')
+        ->display_as("id_employee", 'Employee Name')
+                ->callback_column('status_salary_payment',array($this,'set_value'))
                 ->set_relation('id_employee', 'employee', "name_employee");
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -47,43 +57,69 @@ class Salary extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Payment';
+
         $data['employees'] = $this->Salary_model->select_all('employee');
-        $father = $data['employees'];
+
+        // echo '<pre>';print_r($father[0]->father_name);exit();
+        $id = $this->uri->segment(4);
+        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
         
-       // echo '<pre>';print_r($father[0]->father_name);exit();
+        //echo '<pre>';print_r($id);exit();
         $data['salary_payment'] = $this->Salary_model->select_all('salary_payment');
         $data['salary_bonus'] = $this->Salary_model->select_all('salary_bonus_type');
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_payment', $data);
     }
+    
+   function set_value($value){
+       if($value==1){
+           return'<b>Announced</b>';
+       }
+       if($value==2){
+           return'<b>Paid</b>';
+       }
+       if($value==3){
+           return'<b>Error</b>';
+       }
+   }
 
     //    save salary payment
     public function save_salary_amount() {
-       // $data['salary_info'] = $this->Salary_model->select_all('employee_salary_info');
-       // $salary = $data['salary_info'];
         $data['id_employee'] = $this->input->post('id_employee');
-        $data['salary_info'] = $this->Salary_model->sum_salary($data['id_employee']);
-        $salary = $data['salary_info'];
+        //$data['salary_info'] = $this->Salary_model->sum_salary($data['id_employee']);
+//        $salary = $data['salary_info'];
         $data['month_salary_payment'] = $this->input->post('month_salary_payment');
         $data['year_salary_payment'] = $this->input->post('year_salary_payment');
         $data['issue_salary_payment'] = date('y-m-d', strtotime($this->input->post('issue_salary_payment')));
-        $data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
+        //$data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
         //$data['amount_salary_payment'] = $salary[$data['id_employee']-1]->total;
-        $data['amount_salary_payment'] = $salary[0]->Total;
-        echo '<pre>';print_r($data);exit();
+        $data['amount_salary_payment'] = array_sum($this->input->post('basic_salary'));
+        $data['status_salary_payment'] = 1;
+
         $payment_id = $this->Salary_model->save_info('salary_payment', $data);
-
-
-
-        $info['id_salary_bonus_type'] = $this->input->post('id_salary_bonus_type');
-        $info['id_salary_payment'] = $payment_id;
-        $info['amount_salary_bonus'] = $this->input->post('amount_salary_bonus');
-        if (!empty($info['id_salary_bonus_type']) && !empty($info['id_salary_payment']) && !empty($info['amount_salary_bonus'])) {
-            $this->Salary_model->save_info('salary_bonus', $info);
-        }
 
         $sdata = array();
         $sdata['message'] = '<div class = "alert alert-success"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Your Data is successfully Saved</p></div>';
         $this->session->set_userdata($sdata);
+        redirect('Salary/salary_payment');
+
+//        $info['id_salary_bonus_type'] = $this->input->post('id_salary_bonus_type');
+//        $info['id_salary_payment'] = $payment_id;
+//        $info['amount_salary_bonus'] = $this->input->post('amount_salary_bonus');
+//        if (!empty($info['id_salary_bonus_type']) && !empty($info['id_salary_payment']) && !empty($info['amount_salary_bonus'])) {
+//            $this->Salary_model->save_info('salary_bonus', $info);
+//        }
+//
+//        $sdata = array();
+//        $sdata['message'] = '<div class = "alert alert-success"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Your Data is successfully Saved</p></div>';
+//        $this->session->set_userdata($sdata);
+//        redirect('Salary/salary_payment');
+    }
+
+    function update_salary_payment() {
+        $id = $this->input->post('id_salary_payment');
+        $data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
+        $data['status_salary_payment'] = 2;
+        $payment_id = $this->Salary_model->update_info('salary_payment', $data, $id);
         redirect('Salary/salary_payment');
     }
 

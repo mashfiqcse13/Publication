@@ -30,4 +30,20 @@ class Salary_model extends CI_Model{
 //        $query = $this->db->get();
         return $sql->result();
     }
+    
+    function select_salary_payment_by_salary_id($id){
+        $this->db->select('*');
+        $this->db->from('salary_payment');
+        $this->db->where('id_salary_payment',$id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function select_all_salary_info($id){
+        $this->db->select('*');
+        $this->db->from('employee_salary_info');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

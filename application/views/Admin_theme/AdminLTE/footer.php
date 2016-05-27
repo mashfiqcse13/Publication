@@ -97,30 +97,70 @@
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
     $(".select2").select2();
-    
+
     //datatables
     $('#example1').DataTable();
- 
+
 
     // Datepicker
     $('.datepicker').datepicker();
+
+//    $('#select').change(function(){
+//        var select = $( "#select option:selected" ).val();
+//    });
+
+    $.ajaxSetup({cache: false});
+    $('#select').change(function () {
+        var select = $("#select option:selected").val();
+
+
+        $.post("<?php echo base_url(); ?>index.php/salary/employee_salary", {"id": select});
+
+        var id = select;
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/salary/employee_salary',
+            data: {'id': id},
+            datatype: 'text',
+            type: 'POST',
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                $.each(obj, function (index, object) {
+                    //alert(object['basic']);
+                    $('#basic').append(object['basic']);
+                    $('#medical').append(object['medical']);
+                    $('#house_rent').append(object['house_rent']);
+                    $('#transport').append(object['transport_allowance']);
+                    $('#lunch').append(object['lunch']);
+                    $('#bas').val(object['basic']);
+                    $('#medi').val(object['medical']);
+                    $('#house').val(object['house_rent']);
+                    $('#trans').val(object['transport_allowance']);
+                    $('#lunchs').val(object['lunch']);
+                })
+            }
+        });
+
+        return false;
+    });
+    
+    
     /*     
- * Add collapse and remove events to boxes
- */
-$("[data-widget='collapse']").click(function(e) {
-    e.preventdefault;
-    //Find the box parent        
-    var box = $(this).parents(".box").first();
-    //Find the body and the footer
-    var bf = box.find(".box-body");
-    if (!box.hasClass("collapsed-box")) {
-        box.addClass("collapsed-box");
-        bf.slideUp();
-    } else {
-        box.removeClass("collapsed-box");
-        bf.slideDown();
-    }
-});
+     * Add collapse and remove events to boxes
+     */
+    $("[data-widget='collapse']").click(function (e) {
+        e.preventdefault;
+        //Find the box parent        
+        var box = $(this).parents(".box").first();
+        //Find the body and the footer
+        var bf = box.find(".box-body");
+        if (!box.hasClass("collapsed-box")) {
+            box.addClass("collapsed-box");
+            bf.slideUp();
+        } else {
+            box.removeClass("collapsed-box");
+            bf.slideDown();
+        }
+    });
 
 //        due management Property
     $('[name="buyer_id"]').change(function () {
@@ -136,7 +176,11 @@ $("[data-widget='collapse']").click(function(e) {
 </script>
 <?php if (isset($scriptInline)) echo $scriptInline; ?>
 
-<?php if(isset($script)){echo $script; }?>
+<?php
+if (isset($script)) {
+    echo $script;
+}
+?>
 
 
 </body>
