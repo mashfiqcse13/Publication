@@ -38,6 +38,18 @@ class Expense extends CI_Controller {
     function expense() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense');
+        $crud->display_as('id_name_expense','Expense Name');
+        $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
+        
+        
+           
+       
+        $crud->unset_edit();
+            $crud->callback_after_insert(array($this, 'cash_delete'));
+            $crud->callback_before_delete(array($this,'cash_add'));
+            
+            
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         
@@ -47,9 +59,38 @@ class Expense extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense', $data);
     }
     
+    function cash_delete($post_array){
+        
+        $this->load->model('misc/cash');
+        $values = $this->input->post('amount_expense');        
+           
+            $this->cash->reduce($values);
+            return true;
+        }
+        
+     function cash_add($primary_key){
+        
+        $this->load->model('misc/cash');
+        $this->db->where('id_expense',$primary_key);
+        $value=$this->db->get('expense');
+        foreach($value->result() as $row){
+            $values=$row->amount_expense;
+        }
+        $this->cash->add($values);
+        
+        return true;
+        }
+    
+
+        
     function expense_name() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense_name');
+        $crud->display_as('id_category_expense','Expense category');
+        $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
+        $crud->field_type('is_stock_item','enum',array('Yes','No'));
+        $crud->field_type('status_name_expense','enum',array('Yes','No'));
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         
