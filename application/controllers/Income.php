@@ -38,24 +38,60 @@ class Income extends CI_Controller {
     function income() {
         $crud = new grocery_CRUD();
         $crud->set_table('income');
+        $crud->display_as('id_name_income','Income Name');
+        $crud->set_relation('id_name_income', 'income_name', 'name_expense');
+        
+        $crud->callback_before_insert(array($this, 'cash_add'));
+        $crud->callback_before_delete(array($this, 'cash_delete'));
+        
+        
+        $crud->unset_edit();
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Loan';
+        $data['Title'] = 'Income';
         $this->load->view($this->config->item('ADMIN_THEME') . 'income/income', $data);
     }
+        function cash_add($post_array){
+        
+        $this->load->model('misc/cash');
+        $values = $this->input->post('amount_income');        
+           
+            $this->cash->add($values);
+            return true;
+        }
+        function cash_delete($primary_key){
+        
+            $this->load->model('misc/cash');
+            $this->db->where('id_income',$primary_key);
+            $value=$this->db->get('income');
+            foreach($value->result() as $row){
+                $values=$row->amount_income;
+            }
+            $this->cash->reduce($values);
+
+            return true;
+        }
     
     function income_name() {
         $crud = new grocery_CRUD();
         $crud->set_table('income_name');
+        
+         $crud->callback_add_field('status_name_expense', function () {
+        return '<input type="radio" value="1" name="status_name_expense"> Yes '
+            . '<input type="radio" value="2" name="status_name_expense"> No';
+        });
+    
+    
         $output = $crud->render();
         $data['glosary'] = $output;
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Loan Payment';
+        $data['Title'] = 'Income Name';
         $this->load->view($this->config->item('ADMIN_THEME') . 'income/income_name', $data);
     }
     

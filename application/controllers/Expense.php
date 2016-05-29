@@ -89,10 +89,18 @@ class Expense extends CI_Controller {
         $crud->display_as('id_category_expense','Expense category');
         $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
         
-        $crud->change_field_type('is_stock_item', 'enum', array( 'yes' => 'y', 'no' => '2' ));
-        //$crud->field_type('status_name_expense','enum',array(1=>'Yes',2=>'No'));
+        $crud->callback_add_field('is_stock_item', function () {
+        return '<input type="radio" value="1" name="is_stock_item"> Yes '
+            . '<input type="radio" value="2" name="is_stock_item"> No';
+    });
+      $crud->callback_add_field('status_name_expense', function () {
+        return '<input type="radio" value="1" name="status_name_expense"> Yes '
+            . '<input type="radio" value="2" name="status_name_expense"> No';
+    });
         
-        //$crud->callback_after_insert(array($this, 'add_stock_register'));
+
+        
+        $crud->callback_after_insert(array($this, 'add_stock_register'));
         
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -102,8 +110,8 @@ class Expense extends CI_Controller {
         $data['Title'] = 'Expense Name';
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense_name', $data);
     }
-    
-    function add_stock_register($postdata,$primary_key){
+ 
+function add_stock_register($postdata,$primary_key){
         $check_stock=$this->db->where('id_name_expense',$primary_key)->get('expense_name');
         foreach ($check_stock->result() as $result){
             $value=$result->is_stock_item;
