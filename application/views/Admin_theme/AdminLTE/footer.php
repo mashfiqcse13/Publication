@@ -71,6 +71,8 @@
 <!-- FastClick -->
 <script src="<?php echo $theme_asset_url ?>plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
 
+<script src="<?php echo $theme_asset_url ?>date.js" type="text/javascript"></script>
+
 
 
 
@@ -125,25 +127,80 @@
             success: function (data) {
                 var obj = $.parseJSON(data);
                 $.each(obj, function (index, object) {
-                    //alert(object['basic']);
-                    $('#basic').append(object['basic']);
-                    $('#medical').append(object['medical']);
-                    $('#house_rent').append(object['house_rent']);
-                    $('#transport').append(object['transport_allowance']);
-                    $('#lunch').append(object['lunch']);
-                    $('#bas').val(object['basic']);
-                    $('#medi').val(object['medical']);
-                    $('#house').val(object['house_rent']);
-                    $('#trans').val(object['transport_allowance']);
-                    $('#lunchs').val(object['lunch']);
+                    function month() {
+                        if (object['month_salary_payment'] == 1) {
+                            return 'January';
+                        } else if (object['month_salary_payment'] == 2) {
+                            return 'February';
+                        } else if (object['month_salary_payment'] == 3) {
+                            return 'March';
+                        } else if (object['month_salary_payment'] == 4) {
+                            return 'April';
+                        } else if (object['month_salary_payment'] == 5) {
+                            return 'May';
+                        } else if (object['month_salary_payment'] == 6) {
+                            return 'June';
+                        } else if (object['month_salary_payment'] == 7) {
+                            return 'July';
+                        } else if (object['month_salary_payment'] == 8) {
+                            return 'August';
+                        } else if (object['month_salary_payment'] == 9) {
+                            return 'September';
+                        } else if (object['month_salary_payment'] == 10) {
+                            return 'October';
+                        } else if (object['month_salary_payment'] == 11) {
+                            return 'November';
+                        } else if (object['month_salary_payment'] == 12) {
+                            return 'December';
+                        }
+                    }
+//                    var d = formatDate('MMM d, y');
+//                    alert(d);
+                    //alert(Getstring(object['issue_salary_payment']));
+                    //alert(object['id_employee']);
+                    $('#employee_id').val(object['id_employee']);
+                    $('#info').append('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
+                            + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
+                            + '<div class="col-md-9">' + '<p>' + object['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
+                            + '<div class="col-md-9">' + '<p>' + object['issue_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Salary' + '</label>'
+                            + '<div class="col-md-9">' + '<p>' + object['amount_salary_payment'] + '</p>' + '</div>' + '</div>');
+
                 })
             }
         });
 
         return false;
     });
-    
-    
+
+    $.ajaxSetup({cache: false});
+    $('#announced').change(function () {
+
+        var announced = $("#announced option:selected").val();
+
+
+        $.post("<?php echo base_url(); ?>index.php/salary/salary_info", {"id_employee": announced});
+
+        var id = announced;
+
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/salary/salary_info',
+            data: {'id_employee': id},
+            datatype: 'text',
+            type: 'POST',
+            success: function (data) {
+                
+                var obj = $.parseJSON(data);
+                $('#amount').val(obj);
+                $('#amount').html(obj);
+//                alert(obj);
+//                $.each(obj, function (index, object) {
+//                    alert(object);
+//                })
+            }
+        });
+        return false;
+    });
+    $('#msg').fadeOut(5000);
     /*     
      * Add collapse and remove events to boxes
      */

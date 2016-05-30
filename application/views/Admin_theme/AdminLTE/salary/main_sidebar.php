@@ -24,6 +24,8 @@
             
             <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary Advance</span>'); ?></li>
             
+            <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announced</span>'); ?></li>
+            
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
             
