@@ -68,7 +68,7 @@ class Account extends CI_Model {
 
                 SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
                 FROM  `pub_memos` 
-                WHERE  `due` <0
+                WHERE  `due` <0 and DATE(issue_date)=DATE('$date')
                 GROUP BY  `contact_ID`
                 ) AS party_wise_lase_memo_haveing_negetive_due
             )
@@ -184,7 +184,7 @@ class Account extends CI_Model {
 
                 SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
                 FROM  `pub_memos` 
-                WHERE  `due` <0
+                WHERE  `due` <0 and DATE(issue_date) between DATE('$from_date') and Date('$to_date')
                 GROUP BY  `contact_ID`
                 ) AS party_wise_lase_memo_haveing_negetive_due
             )
@@ -226,7 +226,7 @@ class Account extends CI_Model {
 
                         SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
                         FROM  `pub_memos` 
-                        WHERE  `due` <0
+                        WHERE  `due` <0 and DATE(issue_date) between $range
                         GROUP BY  `contact_ID`
                         ) AS party_wise_lase_memo_haveing_negetive_due
                     )
@@ -301,11 +301,11 @@ class Account extends CI_Model {
         //$today_cost=$this->Office_cost->today_office_cost();
 
         $this->load->library('table');
-        $t_t_s = 0;
-        $t_t_d = 0;
-        $t_t_c = 0;
-        $t_t_b = 0;
-        $t_c = 0;
+        $total_today_sell = 0;
+        $total_today_due = 0;
+        $total_today_cash_pay = 0;
+        $total_today_bank_pay = 0;
+        $total_office_cost = 0;
 
         $account_today = $this->account->today();
         $account_monthly = $this->account->monthly();
@@ -321,26 +321,26 @@ class Account extends CI_Model {
             $data = $this->today($value->issue_date);
 
             $today_sell = $data['todaysell'];
-            $t_t_s+=$today_sell;
+            $total_today_sell+=$today_sell;
 
             $today_due = $data['today_due'];
-            $t_t_d+=$today_due;
+            $total_today_due+=$today_due;
 
             $today_cash_pay = $data['cash_paid'];
-            $t_t_c+=$today_cash_pay;
+            $total_today_cash_pay+=$today_cash_pay;
 
             $today_bank_pay = $data['bank_pay'];
-            $t_t_b+=$today_bank_pay;
+            $total_today_bank_pay+=$today_bank_pay;
 
             $cost = $this->Office_cost->today_office_cost($value->issue_date);
-            $t_c+=$cost;
+            $total_office_cost+=$cost;
 
             $this->table->add_row($value->issue_date, $this->Common->taka_format($today_sell), $this->Common->taka_format($today_cash_pay), $this->Common->taka_format($today_bank_pay), $this->Common->taka_format($today_due), $this->Common->taka_format($cost));
         }
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
         $this->table->add_row(
-                '<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($t_t_s), $this->Common->taka_format($t_t_c), $this->Common->taka_format($t_t_b), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($t_c)
+                '<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($total_today_sell), $this->Common->taka_format($total_today_cash_pay), $this->Common->taka_format($total_today_bank_pay), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($total_office_cost)
         );
 
 
