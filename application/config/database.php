@@ -92,5 +92,5 @@ if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
 } else {
     $db['default']['username'] = 'root';
     $db['default']['password'] = '';
-    $db['default']['database'] = 'publication_accouting_test';
+    $db['default']['database'] = 'publication_jamuna';
 }

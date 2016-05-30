@@ -82,7 +82,7 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php echo " " .$Book_selection_table['issue_date'] ?></td>
+                    <td><?php echo " " .date("d/m/Y h:i:s", strtotime($Book_selection_table['issue_date'])) ?></td>
 
                 </tr>
 

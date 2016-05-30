@@ -59,7 +59,19 @@ class Account extends CI_Model {
 		UNION ALL
 	SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
 	FROM `{$db_tables['pub_due_log']}` WHERE DATE(due_date)=DATE('$date') Group by `contact_ID`
-            ) as tbl
+            ) as tbl 
+            
+            where tbl.contact_ID not in (
+            
+                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
+                FROM (
+
+                SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
+                FROM  `pub_memos` 
+                WHERE  `due` <0
+                GROUP BY  `contact_ID`
+                ) AS party_wise_lase_memo_haveing_negetive_due
+            )
             GROUP BY tbl.contact_ID";
 //        die($sql);
         $result = $this->db->query($sql)->result();
@@ -161,9 +173,21 @@ class Account extends CI_Model {
                             FROM `{$db_tables['pub_due_log']}`
                             WHERE DATE(due_date) between DATE('$from_date') and Date('$to_date')
                             Group by `contact_ID`
-                    ) as tbl
+                    ) as tbl 
                     Natural join
                     {$db_tables['pub_contacts']} as tbl2
+            
+            where tbl.contact_ID not in (
+            
+                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
+                FROM (
+
+                SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
+                FROM  `pub_memos` 
+                WHERE  `due` <0
+                GROUP BY  `contact_ID`
+                ) AS party_wise_lase_memo_haveing_negetive_due
+            )
                     GROUP BY tbl.contact_ID";
         $query = $this->db->query($sql);
         $monthly_due = 0;
@@ -194,6 +218,18 @@ class Account extends CI_Model {
                     ) as tbl
                     Natural join
                     {$db_tables['pub_contacts']} as tbl2
+            
+                    where tbl.contact_ID not in (
+
+                        SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
+                        FROM (
+
+                        SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
+                        FROM  `pub_memos` 
+                        WHERE  `due` <0
+                        GROUP BY  `contact_ID`
+                        ) AS party_wise_lase_memo_haveing_negetive_due
+                    )
                     GROUP BY tbl.contact_ID";
         $query = $this->db->query($sql);
         $total_due = 0;
