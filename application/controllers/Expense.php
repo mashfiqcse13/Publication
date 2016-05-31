@@ -38,15 +38,21 @@ class Expense extends CI_Controller {
     function expense() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense');
+        $crud->fields('id_name_expense','amount_expense','date_expense','stock_memo','stock_quantity','description_expense');
         $crud->display_as('id_name_expense','Expense Name');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
-        
-        
-           
        
+        
+        $crud->callback_before_insert(array($this,'callback_before_insert_or_update_extra_field'));
+        $crud->callback_before_update(array($this,'callback_before_insert_or_update_extra_field'));
+        $crud->unset_columns('stock_memo','stock_quantity');  
+        $crud->callback_add_field('date_expense', function(){
+           return '<style>div#date_expense_field_box {display: none;}</style>';
+       });
         $crud->unset_edit();
             $crud->callback_after_insert(array($this, 'cash_delete'));
             $crud->callback_before_delete(array($this,'cash_add'));
+            //$crud->callback_before_update(array($this,'cash_update'));
             
             
         
@@ -59,6 +65,39 @@ class Expense extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense', $data);
     }
     
+    function callback_before_insert_or_update_extra_field($post_array, $primary_key = null){
+        $this->load->model('misc/stationary_stock');
+        
+        $id_name_expense=$post_array['id_name_expense'];
+        $amount=$post_array['amount_expense'];
+        $memo=$post_array['stock_memo'];
+        $quantity=$post_array['stock_quantity'];
+        
+        $this->db->where('id_name_expense',$id_name_expense);
+        $check=$this->db->get('expense_name');
+        foreach($check->result() as $row){
+            $stock_item = $row->is_stock_item;
+        }
+                
+        if($stock_item==1){ 
+            $data=array(
+                'id_name_expense' => $id_name_expense,
+                'date_received' => now(),
+                'memo_number' => $memo,
+                'quantity' => $quantity
+            );
+            $this->db->insert('stationary_stock_register', $data); 
+       }
+        $this->stationary_stock->add($id_name_expense,$quantity);
+       
+        
+        unset($post_array['stock_memo'],$post_array['stock_quantity']);
+        
+        return $post_array;
+        }
+
+        
+    
     function cash_delete($post_array){
         
         $this->load->model('misc/cash');
@@ -69,14 +108,16 @@ class Expense extends CI_Controller {
         }
         
      function cash_add($primary_key){
-        
+        $this->load->model('misc/stationary_stock');
         $this->load->model('misc/cash');
         $this->db->where('id_expense',$primary_key);
         $value=$this->db->get('expense');
         foreach($value->result() as $row){
             $values=$row->amount_expense;
+            $id_name_expense=$row->id_name_expense;
         }
         $this->cash->add($values);
+        $this->stationary_stock->reduce($id_name_expense,$values);
         
         return true;
         }
@@ -100,7 +141,7 @@ class Expense extends CI_Controller {
         
 
         
-        $crud->callback_after_insert(array($this, 'add_stock_register'));
+        
         
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -111,21 +152,8 @@ class Expense extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense_name', $data);
     }
  
-function add_stock_register($postdata,$primary_key){
-        $check_stock=$this->db->where('id_name_expense',$primary_key)->get('expense_name');
-        foreach ($check_stock->result() as $result){
-            $value=$result->is_stock_item;
-        }
-        $name_expense=$postdata['name_expense'];
-        
-        if($value==1){
-            $this->db->where('id_name_expense',$name_expense);
-            $query_result=$this->db->get('stationary_stock_register');
-            if($query_result!==TRUE){
-                $this->db->query("INSERT INTO `stationary_stock_register`(`id_name_expense`) VALUES ($name_expense)");
-            }
-    }
-    }
+
+    
     function expense_category() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense_category');
