@@ -208,26 +208,26 @@ class Account extends CI_Model {
                     FROM (
                             SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
                             FROM `{$db_tables['pub_due_payment_ledger']}`
-                            WHERE DATE(payment_date) between $range 
+                            WHERE payment_date between $range 
                             Group by `contact_ID`
                         UNION ALL
                             SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
                             FROM `{$db_tables['pub_due_log']}`
-                            WHERE DATE(due_date) between $range
+                            WHERE due_date between $range
                             Group by `contact_ID`
                     ) as tbl
                     Natural join
                     {$db_tables['pub_contacts']} as tbl2
-            
+                    
                     where tbl.contact_ID not in (
 
                         SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
                         FROM (
 
                         SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
-                        FROM  `pub_memos` 
-                        WHERE  `due` <0 and DATE(issue_date) between $range
-                        GROUP BY  `contact_ID`
+                            FROM  `pub_memos` 
+                        WHERE  `due` <0 and issue_date between $range
+                            GROUP BY  `contact_ID` 
                         ) AS party_wise_lase_memo_haveing_negetive_due
                     )
                     GROUP BY tbl.contact_ID";
