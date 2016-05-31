@@ -4,6 +4,7 @@
     var item_details = <?php echo json_encode($item_details) ?>;
     var item_selection = new Array();
     var data_to_post = {
+        'action' : null,
         'id_customer': 0,
         'discount_percentage': 0,
         'discount_amount': 0,
@@ -16,6 +17,7 @@
         'total_due': 0,
         'item_selection': ''
     };
+    var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
 </script>
 <?php include_once __DIR__ . '/../header.php'; ?>
 <style>
@@ -39,6 +41,22 @@
 
     <!-- Main content -->
     <section class="content">
+        <!--massge box started-->
+        <style>
+            #massage_box{
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                height: 100%;
+                left: 0;
+                padding: 200px 50%;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                z-index: 1077;
+            }
+        </style>
+        <div ID="massage_box"><h1 class="msg_body">Processing......</h1></div>
+        <!--massge box ended-->
         <div class="row">
             <div class="col-md-6">
                 <!-- general form elements -->
@@ -51,7 +69,7 @@
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
-                                <input type="number" class="form-control" id="int_id_contact" placeholder="Password">
+                                <input type="text" disabled="" value="<?php echo date("m/d/Y"); ?>" class="form-control" id="int_id_contact" placeholder="Password">
                             </div>
 
                         </div>
@@ -93,14 +111,14 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
                                 <div class="input-group">
-                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount" placeholder="Password">
+                                    <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Bank payment :</label>
                                 <div class="input-group">
-                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount" placeholder="Password">
+                                    <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
@@ -114,9 +132,9 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="button" class="btn btn-primary">Save and Reset</button>
-                        <button type="button" class="btn btn-primary">Save and Back to list</button>
-                        <button type="button" class="btn btn-primary">Save and Print</button>
+                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_reset">Save and Reset</button>
+                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
+                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_print">Save and Print</button>
                     </div>
                 </div>
                 <!-- /.box -->
@@ -172,6 +190,8 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
 <script type="text/javascript">
+    $('#massage_box').hide();
+
     function string_to_int(input_field_value) {
         var integer_val = parseInt(input_field_value);
         return (isNaN(integer_val)) ? 0 : integer_val;
@@ -204,6 +224,7 @@
         data_to_post.item_selection = item_selection;
         $('table.cart tbody').html(output);
         $('#item_selection_status').html(' ');
+        $('#discount_percentage').trigger('change');
     }
 
     $(".select2").select2({
@@ -268,16 +289,27 @@
         delete item_selection[item_to_remove];
         update_cart();
     }
+    $('#cash_payment').change(function () {
+        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
+        update_total_amount_and_total_due();
+    });
     function update_total_amount_and_total_due() {
         data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
                 + string_to_int(data_to_post.sub_total)
                 - string_to_int(data_to_post.discount_amount);
-        data_to_post.total_due = string_to_int(data_to_post.total_amount)
-                + string_to_int(data_to_post.cash_payment)
-                - string_to_int(data_to_post.bank_payment);
+        data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment);
+        data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
         $('#total_due').html(data_to_post.total_due);
     }
+
+    $('.submit_btn').click(function () {
+        $(' #massage_box').show();
+        data_to_post.action = $(this).data('action');
+        $.post(ajax_url, data_to_post, function (data) {
+            $(' #massage_box').fadeOut();
+        });
+    });
 
 
 </script>
