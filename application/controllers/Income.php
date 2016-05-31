@@ -40,12 +40,15 @@ class Income extends CI_Controller {
         $crud->set_table('income');
         $crud->display_as('id_name_income','Income Name');
         $crud->set_relation('id_name_income', 'income_name', 'name_expense');
+        $crud->callback_add_field('date_income', function () {
+            return '<style>div#date_income_field_box {display: none;}</style>';
+        });
         
         $crud->callback_before_insert(array($this, 'cash_add'));
         $crud->callback_before_delete(array($this, 'cash_delete'));
+        $crud->callback_before_update(array($this, 'cash_update'));
         
         
-        $crud->unset_edit();
         
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -61,6 +64,22 @@ class Income extends CI_Controller {
         $values = $this->input->post('amount_income');        
            
             $this->cash->add($values);
+            return true;
+        }
+        function cash_update($post_array,$primary_key){
+        
+            $this->load->model('misc/cash');
+            $amount_income = $this->input->post('amount_income'); 
+            $this->db->where('id_income',$primary_key);
+            $value=$this->db->get('income');
+            
+            foreach($value->result() as $row){
+                $values=$row->amount_income;
+            }
+            
+            $this->cash->reduce($values);                 
+           
+            $this->cash->add($amount_income);
             return true;
         }
         function cash_delete($primary_key){
@@ -81,8 +100,9 @@ class Income extends CI_Controller {
         $crud->set_table('income_name');
         
          $crud->callback_add_field('status_name_expense', function () {
-        return '<input type="radio" value="1" name="status_name_expense"> Yes '
-            . '<input type="radio" value="2" name="status_name_expense"> No';
+        return '<input type="radio" value="1" name="status_name_expense" checked> Yes '
+            . '<input type="radio" value="2" name="status_name_expense"> No'
+            .  '<style>div#status_name_expense_field_box {display: none;}</style>'  ;
         });
     
     
