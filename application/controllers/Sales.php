@@ -42,6 +42,21 @@ class Sales extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/total_sales', $data);
     }
 
+    function ajax_url() {
+//        echo json_encode($_POST);
+        $data = array(
+            'id_customer' => $this->input->post('id_customer'),
+            'discount_percentage' => $this->input->post('discount_percentage'),
+            'discount_amount' => $this->input->post('discount_amount'),
+            'sub_total' => $this->input->post('sub_total'),
+            'total_amount' => $this->input->post('total_amount'),
+            'total_paid' => $this->input->post('total_paid'),
+            'total_due' => $this->input->post('total_due'),
+        );
+
+        $this->db->insert('sales_total_sales', $data) or die('failed');
+    }
+
     function sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales')
