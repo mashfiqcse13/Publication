@@ -55,7 +55,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
                                             <div class="col-md-9">
-                                                <button type="submit" class="btn btn-sm btn-success">Paid</button>
+                                                <button type="submit" class="btn btn-sm btn-success" id="paid">Paid</button>
                                             </div>
                                         </div>
                                     </form>

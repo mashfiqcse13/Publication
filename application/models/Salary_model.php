@@ -26,8 +26,8 @@ class Salary_model extends CI_Model {
     function select_salary_payment_by_salary_id($id) {
         $this->db->select('*');
         $this->db->from('salary_payment');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment');
         $this->db->where('id_employee', $id);
-        $this->db->where('status_salary_payment', 1);
         $query = $this->db->get();
         return $query->result();
     }
@@ -59,6 +59,28 @@ class Salary_model extends CI_Model {
         return $sql->result();
     }
     
+    function announce($id){
+        $this->db->select('id_employee');
+        $this->db->from('salary_payment');
+        $this->db->where('id_employee', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function select_bonus_amount($id){
+         $this->db->select('amount');
+        $this->db->from('bonus_amount');
+        $this->db->where('id_salary_bonus_type', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function  employee_info(){
+        $this->db->select('id_employee');
+        $this->db->from('salary_payment');
+        $query = $this->db->get();
+        return $query->result();
+    }
 //    p
 
 }

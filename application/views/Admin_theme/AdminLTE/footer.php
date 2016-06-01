@@ -11,7 +11,7 @@
         <?= $this->config->item('DEVELOPER')['name'] ?>
     </a>.
 </footer>
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 <!-- Control Sidebar -->
 <?php include_once 'right_sidebar.php' ?>
 
@@ -107,24 +107,23 @@
     // Datepicker
     $('.datepicker').datepicker();
 
-//    $('#select').change(function(){
-//        var select = $( "#select option:selected" ).val();
-//    });
+
 
     $.ajaxSetup({cache: false});
     $('#select').change(function () {
         var select = $("#select option:selected").val();
+        
 
-
-        $.post("<?php echo base_url(); ?>index.php/salary/employee_salary", {"id": select});
+        $.post("<?php echo base_url(); ?>index.php/salary/employee_salary", {"id_employee": select});
 
         var id = select;
         $.ajax({
             url: '<?php echo base_url(); ?>index.php/salary/employee_salary',
-            data: {'id': id},
+            data: {'id_employee': id},
             datatype: 'text',
             type: 'POST',
             success: function (data) {
+//                alert(data);
                 var obj = $.parseJSON(data);
                 $.each(obj, function (index, object) {
                     function month() {
@@ -154,16 +153,30 @@
                             return 'December';
                         }
                     }
+                    function announce() {
+                        if (object['amount_salary_bonus'] == 0) {
+                            return "No Bonus";
+                        } else {
+                            return object['amount_salary_bonus'];
+                        }
+                    }
 //                    var d = formatDate('MMM d, y');
-//                    alert(d);
+//                    alert(object['status_salary_payment']);
                     //alert(Getstring(object['issue_salary_payment']));
                     //alert(object['id_employee']);
                     $('#employee_id').val(object['id_employee']);
-                    $('#info').append('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
+                    if(object['status_salary_payment']==1){
+                    $('#info').html('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
                             + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
                             + '<div class="col-md-9">' + '<p>' + object['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
                             + '<div class="col-md-9">' + '<p>' + object['issue_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Salary' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + object['amount_salary_payment'] + '</p>' + '</div>' + '</div>');
+                            + '<div class="col-md-9">' + '<p>' + object['amount_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Bonus' + '</label>'
+                            + '<div class="col-md-9">' + '<p>' + announce() + '</p>' + '</div>' + '</div>');
+                    $('#paid').show();
+                }if(object['status_salary_payment']==2){
+                    $('#info').html('<h1 class="text-center">Already Paid!!</h1>');
+                    $('#paid').hide();
+                }
 
                 })
             }
@@ -172,35 +185,11 @@
         return false;
     });
 
-    $.ajaxSetup({cache: false});
-    $('#announced').change(function () {
-
-        var announced = $("#announced option:selected").val();
-
-
-        $.post("<?php echo base_url(); ?>index.php/salary/salary_info", {"id_employee": announced});
-
-        var id = announced;
-
-        $.ajax({
-            url: '<?php echo base_url(); ?>index.php/salary/salary_info',
-            data: {'id_employee': id},
-            datatype: 'text',
-            type: 'POST',
-            success: function (data) {
-                
-                var obj = $.parseJSON(data);
-                $('#amount').val(obj);
-                $('#amount').html(obj);
-//                alert(obj);
-//                $.each(obj, function (index, object) {
-//                    alert(object);
-//                })
-            }
-        });
-        return false;
-    });
     $('#msg').fadeOut(5000);
+//    $("#salary").on("change", "input:checkbox", function(){
+//        $("#salary").submit();
+//    });
+
     /*     
      * Add collapse and remove events to boxes
      */
