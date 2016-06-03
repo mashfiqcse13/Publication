@@ -36,4 +36,37 @@ class Report extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/cash_box', $data);
     }
 
+    function customer_due() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('customer_due')
+                ->set_subject('Customer Due')
+                ->set_relation('id_customer', 'customer', 'name')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add();
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Customer Due';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'report/customer_due_and_payment', $data);
+    }
+
+    function customer_payment() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('customer_payment')
+                ->set_subject('Customer Payment')
+                ->set_relation('id_customer', 'customer', 'name')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add();
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Customer Payment';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'report/customer_due_and_payment', $data);
+    }
 }

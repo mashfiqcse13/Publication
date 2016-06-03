@@ -61,19 +61,34 @@ class Sales_model extends CI_Model {
     }
 
     function processing_new_sales() {
+        $this->load->model('misc/Cash');
+        $this->load->model('misc/Customer_due');
+
+        $cash_payment = $this->input->post('cash_payment');
+        $total_due = $this->input->post('total_due');
+        $id_customer = $this->input->post('id_customer');
+        if ($cash_payment > 0) {
+            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
+        }
+        if ($total_due > 0) {
+            $this->Customer_due->add($id_customer, $total_due) or die('Failed to add due');
+        }
+
         $data = array(
-            'id_customer' => $this->input->post('id_customer'),
+            'id_customer' => $id_customer,
             'issue_date' => date('Y-m-d h:i:u'),
             'discount_percentage' => $this->input->post('discount_percentage'),
             'discount_amount' => $this->input->post('discount_amount'),
             'sub_total' => $this->input->post('sub_total'),
             'total_amount' => $this->input->post('total_amount'),
-            'cash' => $this->input->post('cash_payment'),
+            'cash' => $cash_payment,
             'total_paid' => $this->input->post('total_paid'),
-            'total_due' => $this->input->post('total_due'),
+            'total_due' => $total_due
         );
 
         $this->db->insert('sales_total_sales', $data) or die('failed to insert data on sales_total_sales');
+
+
         $id_total_sales = $this->db->insert_id() or die('failed to insert data on sales_total_sales');
 
         $item_selection = $this->input->post('item_selection');

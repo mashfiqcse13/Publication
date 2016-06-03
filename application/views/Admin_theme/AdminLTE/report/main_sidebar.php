@@ -17,7 +17,8 @@
             <li class="header">LOAN CRUD s</li>
 
             <li><?php echo anchor('report/cash_box', '<i class="fa fa-plus-circle"></i>  <span>Cash Box</span>'); ?></li>
-
+            <li><?php echo anchor('report/customer_due', '<i class="fa fa-plus-circle"></i>  <span>Customer Due</span>'); ?></li>
+            <li><?php echo anchor('report/customer_payment', '<i class="fa fa-plus-circle"></i>  <span>Customer Payment</span>'); ?></li>
 
 
 
