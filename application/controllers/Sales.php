@@ -7,7 +7,6 @@
  */
 class Sales extends CI_Controller {
 
-    //put your code here
     function __construct() {
         parent::__construct();
         date_default_timezone_set('Asia/Dhaka');
@@ -32,7 +31,14 @@ class Sales extends CI_Controller {
     function tolal_sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales_total_sales')
-                ->set_subject('Total sales');
+                ->columns('id_total_sales', 'id_customer', 'issue_date', 'discount_percentage', 'discount_amount', 'sub_total', 'total_amount', 'cash', 'bank_pay', 'total_paid', 'total_due')
+                ->display_as('id_total_sales', 'Memo No')
+                ->display_as('id_customer', 'Customer Name')
+                ->set_subject('Total sales')
+                ->set_relation('id_customer', 'customer', 'name')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -44,23 +50,18 @@ class Sales extends CI_Controller {
 
     function ajax_url() {
 //        echo json_encode($_POST);
-        $data = array(
-            'id_customer' => $this->input->post('id_customer'),
-            'discount_percentage' => $this->input->post('discount_percentage'),
-            'discount_amount' => $this->input->post('discount_amount'),
-            'sub_total' => $this->input->post('sub_total'),
-            'total_amount' => $this->input->post('total_amount'),
-            'total_paid' => $this->input->post('total_paid'),
-            'total_due' => $this->input->post('total_due'),
-        );
-
-        $this->db->insert('sales_total_sales', $data) or die('failed');
+        $this->Sales_model->processing_new_sales();
     }
 
     function sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales')
-                ->set_subject('Sales');
+                ->set_subject('Sales')
+                ->display_as('id_total_sales', 'Memo No')
+                ->set_relation('id_item', 'items', 'name')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
 
