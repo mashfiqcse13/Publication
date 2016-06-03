@@ -59,46 +59,6 @@
         <!--massge box ended-->
         <div class="row">
             <div class="col-md-6">
-                <!-- general form elements -->
-                <div class="box box-warning">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="form-group col-lg-8">
-                                <label for="id_contact">Select Item</label>
-                                <?php echo $item_dropdown ?>
-                            </div>
-                            <div class="form-group col-lg-4">
-                                <label for="int_id_contact">Quantity</label>
-                                <div class="input-group input-group-sm">
-                                    <input type="number" placeholder="Quantity" id="item_quantity" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-info btn-flat" id="add_to_cart" type="button">Add</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <table class="table table-hover cart">
-                            <thead>
-                                <tr class="success">
-                                    <th>Quantity</th>
-                                    <th>Book Name</th>
-                                    <th>Book Price</th>
-                                    <th>Sales Price</th>
-                                    <th>Total Price</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <div id="item_selection_status">No Item selected yet</div>
-                    </div>
-                </div>
-                <!-- /.box -->
-            </div>
-            <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="row">
@@ -170,13 +130,58 @@
                         </div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_reset">Save and Reset</button>
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_print">Save and Print</button>
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-warning">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label for="id_contact">Select Item</label>
+                                <?php echo $item_dropdown ?>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="int_id_contact">Quantity</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" placeholder="Quantity" id="item_quantity" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info btn-flat" id="add_to_cart" type="button">Add</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-hover cart">
+                            <thead>
+                                <tr class="success">
+                                    <th>Quantity</th>
+                                    <th>Book Name</th>
+                                    <th>Book Price</th>
+                                    <th>Sales Price</th>
+                                    <th>Total Price</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div id="item_selection_status">No Item selected yet</div>
                     </div>
                 </div>
                 <!-- /.box -->
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="box box-success">
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_reset">Save and Reset</button>
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
+                    </div>
+                </div>
             </div>
         </div>
 
