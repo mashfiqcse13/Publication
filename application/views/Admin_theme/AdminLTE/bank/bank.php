@@ -24,9 +24,10 @@
 
                     <div class="box">
                     
-                    
-                       <?php echo $main_content ?>
-                    
+                    <?php  
+
+                       echo $glosary->output;
+                    ?>
                
                     </div>
                     

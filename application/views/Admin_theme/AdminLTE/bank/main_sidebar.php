@@ -18,6 +18,7 @@
 
             <li><?php echo anchor('bank/bank_management', '<i class="fa fa-plus-circle"></i>  <span>Bank Management</span>'); ?></li>
             <li class="header">Bank Setting</li>
+            <li><?php echo anchor('bank/bank', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
             <li><?php echo anchor('bank/bank_account', '<i class="fa fa-plus-circle"></i>  <span>Bank Account</span>'); ?></li>
             <li><?php echo anchor('bank/bank_account_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Account Type</span>'); ?></li>
             <li><?php echo anchor('bank/bank_balance', '<i class="fa fa-plus-circle"></i>  <span>Bank Balace</span>'); ?></li>
