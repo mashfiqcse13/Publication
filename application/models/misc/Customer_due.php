@@ -79,4 +79,34 @@ class Customer_due extends CI_Model {
         return $this->db->query($sql)->result();
     }
 
+    function due_detail_table($customer_id) {
+        $sql = "SELECT `id_total_sales`, `issue_date`, `discount_amount`, `sub_total`, `total_amount`, `total_paid`, `total_due`
+            FROM `sales_total_sales` 
+            WHERE `id_customer`= $customer_id and `total_due`> 0";
+        $table_data = $this->db->query($sql)->result_array();
+        $this->load->library('table');
+
+        $this->table->set_heading('Memo No', 'Sales Date', 'Discount', 'Sub total', 'Total', 'Total Paid', 'Due');
+        $template = array(
+            'table_open' => '<table class="table table-bordered table-hover">',
+            'heading_row_start' => '<tr>',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td>',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td>',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+
+        $this->table->set_template($template);
+        $output = $this->table->generate($table_data);
+        return $output;
+    }
+
 }

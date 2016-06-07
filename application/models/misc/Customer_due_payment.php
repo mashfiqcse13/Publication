@@ -13,6 +13,8 @@ class Customer_due_payment extends CI_Model {
     function add($customer_id, $payment_amount) {
         $this->load->model('misc/Customer_due');
         $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
+        $this->load->model('misc/Cash');
+        $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
 
 //        echo "Customer ID :$customer_id" . "<br>\n"
 //        . "Due payment amount : $payment_amount" . "<br>\n"
