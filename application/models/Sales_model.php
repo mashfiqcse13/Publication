@@ -64,25 +64,39 @@ class Sales_model extends CI_Model {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Customer_due');
 
-        $cash_payment = $this->input->post('cash_payment');
-        $total_due = $this->input->post('total_due');
         $id_customer = $this->input->post('id_customer');
+        $discount_percentage = $this->input->post('discount_percentage');
+        $discount_amount = $this->input->post('discount_amount');
+        $sub_total = $this->input->post('sub_total');
+        $dues_unpaid = $this->input->post('dues_unpaid');
+        $cash_payment = $this->input->post('cash_payment');
+        $bank_payment = $this->input->post('bank_payment');
+        $total_paid = $cash_payment + $bank_payment;
+        $total_amount = $sub_total - $discount_amount;
+        $total_due = $total_amount - $total_paid;
+
         if ($cash_payment > 0) {
             $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
         }
         if ($total_due > 0) {
             $this->Customer_due->add($id_customer, $total_due) or die('Failed to add due');
         }
+        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
+            $due_payment_amount = $total_paid - $total_amount;
+            $this->load->model('misc/Customer_due_payment');
+            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+            $total_due = 0;
+        }
 
         $data = array(
             'id_customer' => $id_customer,
             'issue_date' => date('Y-m-d h:i:u'),
-            'discount_percentage' => $this->input->post('discount_percentage'),
-            'discount_amount' => $this->input->post('discount_amount'),
-            'sub_total' => $this->input->post('sub_total'),
-            'total_amount' => $this->input->post('total_amount'),
+            'discount_percentage' => $discount_percentage,
+            'discount_amount' => $discount_amount,
+            'sub_total' => $sub_total,
+            'total_amount' => $total_amount,
             'cash' => $cash_payment,
-            'total_paid' => $this->input->post('total_paid'),
+            'total_paid' => $cash_payment,
             'total_due' => $total_due
         );
 

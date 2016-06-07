@@ -309,8 +309,13 @@
     }
 
     $('.submit_btn').click(function () {
-        if (data_to_post.dues_unpaid > 0) {
-            alert('Currently we are not processing dues unpaid');
+        if (data_to_post.total_paid > data_to_post.total_amount) {
+            alert('We are not allowed to accept extra money . Reduce the cash .');
+            return;
+        }
+
+        if (data_to_post.sub_total < 1) {
+            alert('No item selected . Please select one');
             return;
         }
         $(' #massage_box').show();
