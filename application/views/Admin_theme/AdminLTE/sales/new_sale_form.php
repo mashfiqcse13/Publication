@@ -4,7 +4,7 @@
     var item_details = <?php echo json_encode($item_details) ?>;
     var item_selection = new Array();
     var data_to_post = {
-        'action' : null,
+        'action': null,
         'id_customer': 0,
         'discount_percentage': 0,
         'discount_amount': 0,
@@ -59,7 +59,6 @@
         <!--massge box ended-->
         <div class="row">
             <div class="col-md-6">
-                <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="row">
@@ -131,15 +130,11 @@
                         </div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_reset">Save and Reset</button>
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
-                        <button type="button" class="btn btn-primary submit_btn" data-action="save_and_print">Save and Print</button>
-                    </div>
                 </div>
                 <!-- /.box -->
             </div>
             <div class="col-md-6">
+                <!-- general form elements -->
                 <div class="box box-warning">
                     <div class="box-body">
                         <div class="row">
@@ -177,6 +172,16 @@
                     </div>
                 </div>
                 <!-- /.box -->
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="box box-success">
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_reset">Save and Reset</button>
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -304,11 +309,22 @@
     }
 
     $('.submit_btn').click(function () {
+        if (data_to_post.total_paid > data_to_post.total_amount) {
+            alert('We are not allowed to accept extra money . Reduce the cash .');
+            return;
+        }
+
+        if (data_to_post.sub_total < 1) {
+            alert('No item selected . Please select one');
+            return;
+        }
         $(' #massage_box').show();
         data_to_post.action = $(this).data('action');
         $.post(ajax_url, data_to_post, function (data) {
             $(' #massage_box').fadeOut();
-        });
+            alert(data.msg);
+            window.location = data.next_url;
+        }, 'json');
     });
 
 
