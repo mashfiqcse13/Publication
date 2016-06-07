@@ -63,12 +63,20 @@ class Customer_due extends CI_Model {
                 ->where('id_customer', $id_customer)
                 ->get()
                 ->result();
+        if (empty($current[0])) {
+            return FALSE;
+        }
         return $current[0];
     }
 
     // get current customer due
     function current_total_due($id_customer) {
-        return $this->current_due_info($id_customer)->total_due;
+        $result = $this->current_due_info($id_customer);
+        if ($result) {
+            return $result->total_due;
+        } else {
+            return 0;
+        }
     }
 
     // this will get information of customer due from total_sales table

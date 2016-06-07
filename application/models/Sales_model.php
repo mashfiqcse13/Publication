@@ -134,9 +134,110 @@ class Sales_model extends CI_Model {
             $response['next_url'] = site_url('sales/tolal_sales');
         } else if ($action == 'save_and_print') {
             $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
-            $response['next_url'] = site_url('sales/tolal_sales/read/' . $id_total_sales);
+            $response['next_url'] = site_url('sales/memo/' . $id_total_sales);
         }
         echo json_encode($response);
+    }
+
+    function memo_header_details($total_sales_id) {
+        $sql = "SELECT customer.name as party_name,
+            customer.district as district,
+            customer.address as caddress,
+            customer.phone as phone,
+            customer.id_customer as code,
+            sales_total_sales.id_total_sales as memoid,
+            sales_total_sales.issue_date as issue_date
+            FROM `customer`
+            LEFT join sales_total_sales on customer.id_customer=sales_total_sales.id_customer
+            where sales_total_sales.id_total_sales='$total_sales_id'";
+        $data = $this->db->query($sql)->result_array();
+        Return $data[0];
+    }
+
+    function memo_body_table($total_sales_id) {
+        $this->load->library('table');
+        // setting up the table design
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped text-right-for-money">',
+            'heading_row_start' => '<tr class="success">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td >',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td >',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+        $this->table->set_template($tmpl);
+        $this->table->set_heading('Quantity', 'Book Name', 'Book Price', 'Sales Price', 'Total Price');
+        //Getting the data form the sales table in db
+        $sql = "SELECT `quantity`,`items`.`name`, `items`.`regular_price`,`price`,`sub_total` 
+                    FROM `sales`
+                    left join
+                    `items`on `items`.`id_item`= `sales`.`id_item`
+                    WHERE `id_total_sales` = $total_sales_id";
+        $rows = $this->db->query($sql)->result_array();
+        $total_quantity = 0;
+        $total_price = 0;
+        foreach ($rows as $row) {
+            $total_quantity += $row['quantity'];
+            $total_price += $row['sub_total'];
+            $this->table->add_row($row);
+        }
+        // Showing total book amount
+        $separator_row = array(
+            'class' => 'separator'
+        );
+        // setting up the footer options of the memo
+        $sql = "SELECT * FROM `sales_total_sales` WHERE `id_total_sales` = $total_sales_id";
+        $total_sales_details = $this->db->query($sql)->result();
+        $total_sales_details = $total_sales_details[0];
+
+        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+        $this->table->add_row($total_quantity, '(Total Book ) ', array(
+            'data' => 'বই মূল্য : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $this->Common->taka_format($total_price));
+        $this->table->add_row('', '', array(
+            'data' => 'ছাড় : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $total_sales_details->discount_amount);
+        $this->table->add_row(array(
+            'data' => '<strong>কথায় : </strong>',
+            'colspan' => 2
+                ), array(
+            'data' => '	সর্বমোট : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $this->Common->taka_format($total_sales_details->total_amount));
+        $this->table->add_row(array(
+            'data' => $this->Common->convert_number($total_sales_details->total_amount),
+            'colspan' => 2,
+            'rowspan' => 2,
+                ), array(
+            'data' => '	নগদ জমা : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $this->Common->taka_format($total_sales_details->cash));
+        $this->table->add_row(array(
+            'data' => '	ব্যাংক জমা : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $this->Common->taka_format($total_sales_details->bank_pay));
+        $this->load->model('misc/Customer_due');
+        $this->table->add_row('', '', array(
+            'data' => '	সর্বশেষ বাকি : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)));
+        return $this->table->generate();
     }
 
 }

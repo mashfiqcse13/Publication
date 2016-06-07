@@ -39,7 +39,10 @@ class Sales extends CI_Controller {
                 ->order_by('id_total_sales', 'desc')
                 ->unset_edit()
                 ->unset_delete()
-                ->unset_add();
+                ->unset_add()
+                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
+                    return site_url('sales/memo/' . $primary_key);
+                });
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -91,6 +94,20 @@ class Sales extends CI_Controller {
 //        $this->Customer_due_payment->add($customer_id, $payment_amount);
         $this->load->model('misc/Customer_due');
         $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
+    }
+
+    function memo($total_sales_id) {
+        $this->load->model('Memo');
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['Title'] = 'Memo Generation';
+        $data['base_url'] = base_url();
+        $data['memo_header_details'] = $this->Sales_model->memo_header_details($total_sales_id);
+        $data['memo_body_table'] = $this->Sales_model->memo_body_table($total_sales_id);
+//        print_r($data['memo_header_details']);
+//        $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);
+        $data['edit_btn_url'] = site_url('due/make_payment/'.$data['memo_header_details']['code']);
+
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/memo', $data);
     }
 
 }
