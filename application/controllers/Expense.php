@@ -48,7 +48,9 @@ class Expense extends CI_Controller {
         
         $crud->callback_before_insert(array($this,'callback_before_insert_or_update_extra_field'));
         $crud->callback_before_update(array($this,'callback_before_insert_or_update_extra_field'));
+       
         $crud->unset_columns('stock_memo','stock_quantity');  
+       
         $crud->callback_add_field('date_expense', function(){
            return '<input id="field-date_expense" name="date_expense" type="text" value="'.date('Y-m-d h:i:u').'" >'
                    . '<style>div#date_expense_field_box {display: none;}</style>';
@@ -57,7 +59,7 @@ class Expense extends CI_Controller {
        
        
         $crud->unset_edit();
-        $crud->unset_delete();
+        //$crud->unset_delete();
             $crud->callback_after_insert(array($this, 'cash_delete'));
             $crud->callback_before_delete(array($this,'cash_add'));
             //$crud->callback_before_update(array($this,'cash_update'));
@@ -124,8 +126,8 @@ class Expense extends CI_Controller {
             $values=$row->amount_expense;
             $id_name_expense=$row->id_name_expense;
         }
-        $this->cash->add($values);
-        $this->stationary_stock->reduce($id_name_expense,$values);
+        $this->cash->reduce_revert($values);
+        $this->stationary_stock->add_revert($id_name_expense,$values);
         
         return true;
         }

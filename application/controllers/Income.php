@@ -70,22 +70,24 @@ class Income extends CI_Controller {
             $this->cash->add($values);
             return true;
         }
-        function cash_update($post_array,$primary_key){
         
-            $this->load->model('misc/cash');
-            $amount_income = $this->input->post('amount_income'); 
-            $this->db->where('id_income',$primary_key);
-            $value=$this->db->get('income');
-            
-            foreach($value->result() as $row){
-                $values=$row->amount_income;
-            }
-            
-            $this->cash->reduce($values);                 
-           
-            $this->cash->add($amount_income);
-            return true;
-        }
+//        
+//        function cash_update($post_array,$primary_key){
+//        
+//            $this->load->model('misc/cash');
+//            $amount_income = $this->input->post('amount_income'); 
+//            $this->db->where('id_income',$primary_key);
+//            $value=$this->db->get('income');
+//            
+//            foreach($value->result() as $row){
+//                $values=$row->amount_income;
+//            }
+//            
+//            $this->cash->reduce($values);                 
+//           
+//            $this->cash->add($amount_income);
+//            return true;
+//        }
         function cash_delete($primary_key){
         
             $this->load->model('misc/cash');
@@ -94,7 +96,7 @@ class Income extends CI_Controller {
             foreach($value->result() as $row){
                 $values=$row->amount_income;
             }
-            $this->cash->reduce($values);
+            $this->cash->add_revert($values);
 
             return true;
         }
@@ -109,7 +111,7 @@ class Income extends CI_Controller {
             .  '<style>div#status_name_expense_field_box {display: none;}</style>'  ;
         });
     
-    
+        $crud->callback_column('status_name_expense',array($this,'_yes_no_for_income_name'));
         $output = $crud->render();
         $data['glosary'] = $output;
         
@@ -119,5 +121,13 @@ class Income extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'income/income_name', $data);
     }
     
+        function _yes_no_for_income_name($value,$row){
+        if($row->status_name_expense==1){
+            $value='yes';
+        }else{
+            $value='no';
+        }
+        return $value;
+    }
     
 }

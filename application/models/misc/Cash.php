@@ -80,6 +80,24 @@ class Cash extends CI_Model {
             return FALSE;
         }
     }
+        function reduce_revert($amount) {
+       $current = $this->db->select('*')
+                ->from('cash')
+                ->where('id_cash', 1)
+                ->get()
+                ->result();
+        $current = $current[0];
+        if ($current->balance >= $amount) {
+            $sql = "UPDATE `cash` SET 
+                `total_out` = `total_out`-'$amount', 
+                `balance` = `balance`+'$amount' 
+            WHERE `cash`.`id_cash` = 1;";
+            $this->db->query($sql);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
     
 
 }

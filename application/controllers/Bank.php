@@ -65,6 +65,8 @@ class Bank extends CI_Controller {
         $crud->display_as('media_link','Upload Document');
         //$crud->set_relation('id_account', 'bank_account', 'id_bank_account');
         $crud->set_relation('id_user', 'users', 'username');
+        $crud->required_fields('amount_transaction');
+        
         
         $crud->callback_add_field('id_user',function(){
             $userid=$_SESSION['user_id'];
@@ -170,6 +172,7 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $crud->display_as('id_bank','Bank Name');
         $crud->display_as('id_account_type','Account type');
         
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         
@@ -197,6 +200,8 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $crud->unset_add();
         $crud->unset_edit();
         $crud->unset_delete();
+        
+        $crud->callback_column('id_account',array($this,'_bank_name_id'));
         
        // $crud->set_relation('id_account', 'bank_account', $related_title_field)
         $output = $crud->render();

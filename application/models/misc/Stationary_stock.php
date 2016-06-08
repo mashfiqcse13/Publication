@@ -31,6 +31,16 @@ class Stationary_stock extends CI_Model {
         $this->db->query($sql);
         return TRUE;
     }
+    
+        function add_revert($id_name_expense, $quantity) {
+
+        $sql = "UPDATE `stationary_stock` SET 
+                `total_in` = `total_in`-'$quantity', 
+                `total_balance` = `total_balance`-'$quantity' 
+            WHERE `stationary_stock`.`id_name_expense` = $id_name_expense;";
+        $this->db->query($sql);
+        return TRUE;
+    }
 
     function reduce($id_name_expense, $quantity) {
         // cheching if there is a row , otherwise creating it
