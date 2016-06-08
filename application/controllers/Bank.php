@@ -25,6 +25,7 @@ class Bank extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
         $this->load->library('session');
+        $this->load->library("pagination");
        
     }
     
@@ -206,13 +207,49 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['Title'] = 'Bank Balance';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_balance', $data);
     }
+    
+    
+    
     function bank_management_status() {
         $this->load->model('misc/bank_balance');
         
+        $config = array();
+        $config["base_url"] = base_url() . "index.php/bank/bank_management_status";
+        $config["total_rows"] = $this->bank_balance->record_count();
+        $config["per_page"] = 10;
+        $config["uri_segment"] = 3;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
         
-        $data['main_content'] = $this->bank_balance->get_list();
-
+                //config for bootstrap pagination class integration
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
         
+        $this->pagination->initialize($config);
+        
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data["main_content"] = $this->bank_balance->
+            list_bank_status($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
+        
+        
+       // $data['main_content'] = $this->bank_balance->list_bank_status();       
        
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -220,6 +257,9 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['Title'] = 'Bank management status';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_management_status', $data);
     }
+    
+    
+    
     
       function bank_transaction_type() {
         $crud = new grocery_CRUD();
@@ -231,6 +271,14 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['base_url'] = base_url();
         $data['Title'] = 'Bank Transaction Type';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_transaction_type', $data);
+    }
+    
+    function update_status(){        
+            $id=$this->input->post('id_management_status');
+            $status=$this->input->post('approval_status');
+            
+            $sql=$this->db->query("UPDATE `bank_management_status` SET `approval_status`='$status' WHERE `id_bank_management_status`=$id");
+       echo json_encode($data);
     }
     
     

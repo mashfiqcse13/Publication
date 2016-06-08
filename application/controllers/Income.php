@@ -40,14 +40,18 @@ class Income extends CI_Controller {
         $crud->set_table('income');
         $crud->display_as('id_name_income','Income Name');
         $crud->set_relation('id_name_income', 'income_name', 'name_expense');
+         //$crud->field_type('date_income', 'hidden');
         $crud->callback_add_field('date_income', function () {
-            return '<style>div#date_income_field_box {display: none;}</style>';
+            return '<input id="field-date_income" name="date_income" type="text" value="'.date('Y-m-d h:i:u').'" >'
+                   . '<style>div#date_income_field_box{display: none;}</style>';
+            
         });
         
         $crud->callback_before_insert(array($this, 'cash_add'));
         $crud->callback_before_delete(array($this, 'cash_delete'));
-        $crud->callback_before_update(array($this, 'cash_update'));
+        //$crud->callback_before_update(array($this, 'cash_update'));
         
+        $crud->unset_edit();
         
         
         $output = $crud->render();

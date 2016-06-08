@@ -28,6 +28,9 @@ class Expense extends CI_Controller {
     }
     
     function index(){
+        
+      
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Expense';
@@ -47,15 +50,20 @@ class Expense extends CI_Controller {
         $crud->callback_before_update(array($this,'callback_before_insert_or_update_extra_field'));
         $crud->unset_columns('stock_memo','stock_quantity');  
         $crud->callback_add_field('date_expense', function(){
-           return '<style>div#date_expense_field_box {display: none;}</style>';
+           return '<input id="field-date_expense" name="date_expense" type="text" value="'.date('Y-m-d h:i:u').'" >'
+                   . '<style>div#date_expense_field_box {display: none;}</style>';
+           
        });
+       
+       
         $crud->unset_edit();
+        $crud->unset_delete();
             $crud->callback_after_insert(array($this, 'cash_delete'));
             $crud->callback_before_delete(array($this,'cash_add'));
             //$crud->callback_before_update(array($this,'cash_update'));
             
-            
-        
+          
+        $crud->order_by('id_name_expense','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
         
@@ -130,15 +138,23 @@ class Expense extends CI_Controller {
         $crud->display_as('id_category_expense','Expense category');
         $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
         
+        $crud->field_type('status_name_expense', 'hidden');
+        
         $crud->callback_add_field('is_stock_item', function () {
         return '<input type="radio" value="1" name="is_stock_item"> Yes '
             . '<input type="radio" value="2" name="is_stock_item"> No';
     });
       $crud->callback_add_field('status_name_expense', function () {
-        return '<input type="radio" value="1" name="status_name_expense"> Yes '
+        return '<input type="radio" value="1" name="status_name_expense" checked> Yes '
             . '<input type="radio" value="2" name="status_name_expense"> No';
     });
+    $crud->callback_add_field('status_name_expense', function(){
+           return '<style>div#status_name_expense_field_box {display: none;}</style>';
+       });
         
+       $crud->callback_column('is_stock_item',array($this,'_yes_no_for_stock_item'));
+       
+       $crud->unset_columns('status_name_expense');
 
         
         
@@ -151,7 +167,15 @@ class Expense extends CI_Controller {
         $data['Title'] = 'Expense Name';
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense_name', $data);
     }
- 
+    
+    function _yes_no_for_stock_item($value,$row){
+        if($row->is_stock_item==1){
+            $value='yes';
+        }else{
+            $value='no';
+        }
+        return $value;
+    }
 
     
     function expense_category() {
