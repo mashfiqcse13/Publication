@@ -131,8 +131,9 @@
             <a href="<?php echo site_url('sales/new_sale') ?>" class="only_print btn btn-primary "><i class="fa fa-pencil"></i> New Memo</a>
 
             <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
-
-            <a href="<?= $edit_btn_url ?>" class="only_print pull-right btn btn-primary margin-10">Pay Due</a>
+            <?php if ($customer_total_due > 0) { ?>
+                <a href="<?= $edit_btn_url ?>" class="only_print pull-right btn btn-primary margin-10">Pay Due</a>
+            <?php } ?>
 
         </div>
 

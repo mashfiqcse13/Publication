@@ -88,16 +88,8 @@ class Sales extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/new_sale_form', $data);
     }
 
-    function test($customer_id, $payment_amount) {
-//        $this->db->select('')
-//        $this->load->model('misc/Customer_due_payment');
-//        $this->Customer_due_payment->add($customer_id, $payment_amount);
-        $this->load->model('misc/Customer_due');
-        $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
-    }
 
     function memo($total_sales_id) {
-        $this->load->model('Memo');
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
         $data['base_url'] = base_url();
@@ -105,7 +97,11 @@ class Sales extends CI_Controller {
         $data['memo_body_table'] = $this->Sales_model->memo_body_table($total_sales_id);
 //        print_r($data['memo_header_details']);
 //        $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);
-        $data['edit_btn_url'] = site_url('due/make_payment/'.$data['memo_header_details']['code']);
+        $customer_id = $data['memo_header_details']['code'];
+        $data['edit_btn_url'] = site_url('due/make_payment/' . $customer_id);
+
+        $this->load->model('misc/Customer_due');
+        $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/memo', $data);
     }
