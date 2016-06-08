@@ -104,43 +104,29 @@ class Bank_balance extends CI_Model {
         }
     }
     
-    
-    function  get_list(){
-        $this->load->library('table');
-        
-        $query=$this->db->query("SELECT * FROM `bank_management_status` "
-                . "LEFT JOIN bank_management ON "
-                . "bank_management.id_bank_management=bank_management_status.id_bank_management"
-                . " ORDER BY bank_management_status.id_bank_management DESC")
-                ->result_array();
-        
-         $tmpl = array (
-                    'table_open'          => '<table class="table table-bordered table-striped">',
-
-                    'heading_row_start'   => '<tr>',
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th>',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr>',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr>',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-                    'table_close'         => '</table>'
-              );
-            
-            $this->table->set_template($tmpl);
-            $this->table->set_heading('Date', 'Bank Name', 'Account No.', 'Amount', 'Transaction Type', 'User Entered','Approval Status');
-
-            return $this->table->generate($query);
+    function record_count() {
+        return $this->db->count_all("bank_management_status");
     }
+    
+    function list_bank_status($limit,$start){
+        $query=$this->db->query("select "
+                . "transaction_date,name_bank, account_number,amount_transaction,name_trnsaction_type, username,approval_status,id_bank_management_status"
+                . " from "
+                . "`bank_management_status`,`bank_management`, `bank_transaction_type`,`bank_account`, `users`,`bank`"
+                . " where "
+                . "bank_management_status.id_bank_management=bank_management.id_bank_management "
+                . "and bank_management.id_account=bank_account.id_bank_account "
+                . "and bank_management.id_transaction_type=bank_transaction_type.id_trnsaction_type "
+                . "and bank_account.id_bank=bank.id_bank "
+                . "and bank_management.id_user=users.id"
+                . " ORDER BY bank_management_status.id_bank_management DESC LIMIT $start,$limit");
+                
         
+        return $query;
+    }
+    
+    
+    
    
 
 }
