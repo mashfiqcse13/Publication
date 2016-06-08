@@ -63,6 +63,7 @@ class Sales_model extends CI_Model {
     function processing_new_sales() {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Customer_due');
+        $this->load->model('misc/Stock_perpetual');
 
         $id_customer = $this->input->post('id_customer');
         $discount_percentage = $this->input->post('discount_percentage');
@@ -121,6 +122,7 @@ class Sales_model extends CI_Model {
                 'sub_total' => $value['total'],
             );
             array_push($data_sales, $tmp_data_sales);
+            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
         }
 
 
