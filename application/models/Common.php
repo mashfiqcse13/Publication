@@ -115,4 +115,15 @@ class Common extends CI_Model {
         return $res;
     }
 
+    function get_item_dropdown() {
+        $items = $this->db->get('items')->result();
+
+        $data = array();
+        $data[''] = 'Select items by name or code';
+        foreach ($items as $item) {
+            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+        }
+        return form_dropdown('id_item', $data, '', ' class="select2" ');
+    }
+
 }

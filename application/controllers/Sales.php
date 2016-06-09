@@ -78,7 +78,7 @@ class Sales extends CI_Controller {
 
     function new_sale() {
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
-        $data['item_dropdown'] = $this->Sales_model->get_item_dropdown();
+        $data['item_dropdown'] = $this->Common->get_item_dropdown();
         $data['customer_due'] = $this->Sales_model->get_party_due();
         $data['item_details'] = $this->Sales_model->get_item_details();
 

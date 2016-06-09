@@ -10,17 +10,6 @@ if (!defined('BASEPATH'))
  */
 class Sales_model extends CI_Model {
 
-    function get_item_dropdown() {
-        $items = $this->db->get('items')->result();
-
-        $data = array();
-        $data[''] = 'Select items by name or code';
-        foreach ($items as $item) {
-            $data[$item->id_item] = $item->id_item . " - " . $item->name;
-        }
-        return form_dropdown('id_item', $data, '', ' class="select2" ');
-    }
-
     function get_party_dropdown() {
         $customers = $this->db->get('customer')->result();
 

@@ -16,10 +16,8 @@
 
             <li class="header">STOCK CRUD s</li>
 
-
-
+            <li><?php echo anchor('stock/final_stock', '<i class="fa fa-plus-circle"></i>  <span>Final Stock</span>'); ?></li>
             <li><?php echo anchor('stock/stock_perpetual', '<i class="fa fa-plus-circle"></i>  <span>Stock Perpetual</span>'); ?></li>
-
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 
