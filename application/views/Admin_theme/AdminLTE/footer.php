@@ -11,7 +11,7 @@
         <?= $this->config->item('DEVELOPER')['name'] ?>
     </a>.
 </footer>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
 <!-- Control Sidebar -->
 <?php include_once 'right_sidebar.php' ?>
 
@@ -35,8 +35,7 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
+    $.widget.bridge('uibutton', $.ui.button);</script>
 <!-- Bootstrap 3.3.2 JS -->
 <script src="<?php echo $theme_asset_url ?>bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Morris.js charts -->
@@ -99,92 +98,247 @@
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
     $(".select2").select2();
-
     //datatables
     $('#example1').DataTable();
-
-
     // Datepicker
     $('.datepicker').datepicker();
-
-
-
-    $.ajaxSetup({cache: false});
-    $('#select').change(function () {
-        var select = $("#select option:selected").val();
-        
-
+    
+    $('#info').hide();
+    $('#success').hide();
+//    $('#loan').hide();
+//  var test =  $('#loan').placeholder();
+//  alert(test);
+    $('#discharge').keyup(function () {
+        var discharge = $("#discharge").val();
+        var select = $('#employee_id').val();
+//        var select = 4;
         $.post("<?php echo base_url(); ?>index.php/salary/employee_salary", {"id_employee": select});
-
         var id = select;
         $.ajax({
             url: '<?php echo base_url(); ?>index.php/salary/employee_salary',
             data: {'id_employee': id},
-            datatype: 'text',
+            dataType: 'text',
             type: 'POST',
             success: function (data) {
 //                alert(data);
+//            for (var i = 0; i < data.length; i++) {
                 var obj = $.parseJSON(data);
-                $.each(obj, function (index, object) {
+                $.each(obj.edit_salary, function (index, salary) {
+                    function pay_loan() {
+                        if (discharge != null) {
+                            if (salary['amount_loan'] >= discharge){
+                                var loanAmount = salary['amount_loan'] - discharge;
+                                return loanAmount
+                            }if(discharge > salary['amount_loan']){
+                                alert('Cross the limit!!');
+                            }
+                            
+                        } else {
+                            return salary['amount_loan'];
+                        }
+                    }
+                    function get_total() {
+                        var payment, bonus, amount, advance, loan;
+                        payment = Number(salary['amount_salary_payment']);
+                        bonus = Number(salary['amount_salary_bonus']);
+                        advance = Number(salary['amount_given_salary_advance']);
+                        loan = Number(salary['amount_loan']);
+
+                        amount = payment + bonus;
+                        if (advance != null && discharge != null) {
+                            amount = amount - advance;
+                            amount = amount - discharge;
+                            return amount;
+                        }
+                        if (advance != null) {
+                            amount = amount - advance;
+                            return amount;
+                        }
+                        if (discharge != null) {
+                            amount = amount - discharge;
+                            return amount;
+                        }
+//                        
+                        return amount;
+
+                    }
+
+                    $('#amount_salary').val(get_total());
+                    $('#total').html(get_total());
+                    $('#pay').html(salary['amount_loan']);
+                    $('#remain').html(pay_loan());
+                });
+            }
+//         loan = $(this).val();
+
+        });
+    });
+//    alert(loan);
+    $.ajaxSetup({cache: false});
+    $('#select').change(function () {
+        var select = $("#select option:selected").val();
+        $.post("<?php echo base_url(); ?>index.php/salary/employee_salary", {"id_employee": select});
+        var id = select;
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/salary/employee_salary',
+            data: {'id_employee': id},
+            dataType: 'text',
+            type: 'POST',
+            success: function (data) {
+//                alert(data);
+//            for (var i = 0; i < data.length; i++) {
+                var obj = $.parseJSON(data);
+                $.each(obj.edit_salary, function (index, salary) {
+
+//                alert(salary['amount_given_salary_advance']);
+
                     function month() {
-                        if (object['month_salary_payment'] == 1) {
+                        if (salary['month_salary_payment'] == 1) {
                             return 'January';
-                        } else if (object['month_salary_payment'] == 2) {
+                        } else if (salary['month_salary_payment'] == 2) {
                             return 'February';
-                        } else if (object['month_salary_payment'] == 3) {
+                        } else if (salary['month_salary_payment'] == 3) {
                             return 'March';
-                        } else if (object['month_salary_payment'] == 4) {
+                        } else if (salary['month_salary_payment'] == 4) {
                             return 'April';
-                        } else if (object['month_salary_payment'] == 5) {
+                        } else if (salary['month_salary_payment'] == 5) {
                             return 'May';
-                        } else if (object['month_salary_payment'] == 6) {
+                        } else if (salary['month_salary_payment'] == 6) {
                             return 'June';
-                        } else if (object['month_salary_payment'] == 7) {
+                        } else if (salary['month_salary_payment'] == 7) {
                             return 'July';
-                        } else if (object['month_salary_payment'] == 8) {
+                        } else if (salary['month_salary_payment'] == 8) {
                             return 'August';
-                        } else if (object['month_salary_payment'] == 9) {
+                        } else if (salary['month_salary_payment'] == 9) {
                             return 'September';
-                        } else if (object['month_salary_payment'] == 10) {
+                        } else if (salary['month_salary_payment'] == 10) {
                             return 'October';
-                        } else if (object['month_salary_payment'] == 11) {
+                        } else if (salary['month_salary_payment'] == 11) {
                             return 'November';
-                        } else if (object['month_salary_payment'] == 12) {
+                        } else if (salary['month_salary_payment'] == 12) {
                             return 'December';
                         }
                     }
                     function announce() {
-                        if (object['amount_salary_bonus'] == 0) {
+                        if (salary['amount_salary_bonus'] == 0) {
                             return "No Bonus";
                         } else {
-                            return object['amount_salary_bonus'];
+                            return salary['amount_salary_bonus'];
                         }
                     }
+
+                    function advance() {
+                        if (salary['amount_given_salary_advance'] != null) {
+                            return salary['amount_given_salary_advance'];
+                        } else {
+                            return 'No Advance';
+                        }
+
+                    }
+                    function loan() {
+                        if (salary['amount_loan'] != null) {
+                            return salary['amount_loan'];
+                        } else {
+                            return 'No Loan';
+                        }
+
+                    }
+
+
+                    function get_total() {
+                        var payment, bonus, amount, advance, loan;
+                        payment = Number(salary['amount_salary_payment']);
+                        bonus = Number(salary['amount_salary_bonus']);
+                        advance = Number(salary['amount_given_salary_advance']);
+                        loan = Number(salary['amount_loan']);
+
+                        amount = payment + bonus;
+                        if (advance != null ) {
+                            amount = amount - advance;
+                            return amount;
+                        }
+//                        
+                        return amount;
+
+                    }
+
 //                    var d = formatDate('MMM d, y');
-//                    alert(object['status_salary_payment']);
+//                    alert(object.status_salary_payment);
                     //alert(Getstring(object['issue_salary_payment']));
-                    //alert(object['id_employee']);
-                    $('#employee_id').val(object['id_employee']);
-                    if(object['status_salary_payment']==1){
-                    $('#info').html('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + object['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + object['issue_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Salary' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + object['amount_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Bonus' + '</label>'
-                            + '<div class="col-md-9">' + '<p>' + announce() + '</p>' + '</div>' + '</div>');
-                    $('#paid').show();
-                }if(object['status_salary_payment']==2){
-                    $('#info').html('<h1 class="text-center">Already Paid!!</h1>');
-                    $('#paid').hide();
-                }
+//                    alert(salary['amount_loan']);
 
-                })
-            }
-        });
+                    $('#employee_id').val(salary['id_employee']);
+                   $('#loan_id').val(salary['id_loan']);
+                    $('#advance_id').val(salary['id_salary_advance']);
+                    $('#advance_amount').val(advance());
+                    
+                    if (salary['status_salary_payment'] == 1) {
+//                        $('#total_discharge').attr('type', 'text');
 
+                        var input = $('#loan').html();
+//                        alert(input);
+                        $('#info').show();
+                        $('#month').html(month());
+                        $('#year').html(salary['year_salary_payment']);
+                        $('#issue').html(salary['issue_salary_payment']);
+                        $('#aos').html(salary['amount_salary_payment']);
+                        $('#aob').html(announce());
+                        $('#advance').html(advance());
+                        $('#total').html(get_total());
+                        $('#pay').html(salary['amount_loan']);
+                        if(salary['amount_loan']!= null){
+                            $('#loan').show();
+                        }else{
+                            $('#loan').hide();
+                        }
+                        
+//                        $('#info').html('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['issue_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['amount_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Bonus' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + announce() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Advance' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + advance() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Discharge' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + '<input type="text" id="discharge" class="form-control" name="amount_loan" value=""/>' + '</p>' + '</div>' + '</div>'+ '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Rest of Loan' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + '<input type="text" id="discharge" class="form-control" name="amount_loan" value=""/>' + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Total' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + get_total() + '</p>' + '</div>' + '</div>');
+                        $('#paid').show();
+                        $('#success').hide();
+                    }
+                    if (salary['status_salary_payment'] == 2) {
+                        $('#heanding_success').html('Already Paid!!'+get_total());
+                        $('#salary_month').html(month());
+                        $('#salary_year').html(salary['year_salary_payment']);
+                        $('#salary_issue').html(salary['issue_salary_payment']);
+                        $('#salary_date').html(salary['date_salary_payment']);
+                        $('#salary_aos').html(salary['amount_salary_payment']);
+                        $('#salary_aob').html(announce());
+                        $('#salary_advance').html(advance());
+                        $('#salary_loan_bill').html(loan());
+                        $('#salary_total').html(get_total());
+                        $('#pay').html(salary['amount_loan']);
+//                        $('#success').html('<h1 class="text-center">Already Paid!!' + get_total() + '</h1>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['issue_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Date Salary Payment' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['date_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Salary' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + salary['amount_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Amount of Bonus' + '</label>'
+//                                + '<div class="col-md-9">' + '<p>' + announce() + '</p>' + '</div>' + '</div>' + '<b style="border-top:3px solid black;">' + '<hr>' + '</b>' + '<h3 class="text-center">Deduction</h3>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Advance' + '</label>'
+//                                + '<div class="col-md-9">' + '<p >' + advance() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Loan' + '</label>'
+//                                + '<div class="col-md-9">' + '<p >' + loan()+'</p>' + '</div>' + '</div>' + '<span style="border-top:3px solid black;">' + '<hr>' + '</span>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Total Amount Payable' + '</label>'
+//                                + '<div class="col-md-9">' + '<h3>' + get_total() + '</h3>' + '</div>' + '</div>');
+                        $('#success').show();
+                        $('#paid').hide();
+                        $('#info').hide();
+                    }
+                    if (salary['status_salary_payment'] == '') {
+                        $('#info').html('');
+                        $('#paid').hide();
+                    }
+                });
+            }});
         return false;
     });
-
     $('#msg').fadeOut(5000);
 //    $("#salary").on("change", "input:checkbox", function(){
 //        $("#salary").submit();
@@ -207,7 +361,6 @@
             bf.slideDown();
         }
     });
-
 //        due management Property
     $('[name="buyer_id"]').change(function () {
         var buyer_id = $('[name="buyer_id"]').val();

@@ -30,14 +30,17 @@ class Loan extends CI_Controller {
     function index(){
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Manage salary';
+        $data['Title'] = 'Manage Loan';
         
         $this->load->view($this->config->item('ADMIN_THEME').'loan/loan_dashboard', $data);
     }
     
     function loan() {
         $crud = new grocery_CRUD();
-        $crud->set_table('loan');
+        $crud->set_table('loan')
+               ->display_as("id_employee", 'Employee Name')
+                ->set_relation('id_employee', 'employee', "name_employee")
+                 ->unset_fields('installments_loan', 'installment_amount_loan','status');
         $output = $crud->render();
         $data['glosary'] = $output;
         

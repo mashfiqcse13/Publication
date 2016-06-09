@@ -25,12 +25,22 @@ class Salary_model extends CI_Model {
 
     function select_salary_payment_by_salary_id($id) {
         $this->db->select('*');
-        $this->db->from('salary_payment');
-        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment');
-        $this->db->where('id_employee', $id);
+        $this->db->from('salary_payment','salary_advance');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left');
+        $this->db->join('salary_advance', 'salary_payment.id_employee = salary_advance.id_employee', 'left');
+        $this->db->join('loan', 'salary_payment.id_employee = loan.id_employee', 'left');
+        $this->db->where('salary_payment.id_employee', $id);
         $query = $this->db->get();
         return $query->result();
     }
+    
+//    function select_salary_advance_by_salary_id($id){
+//        $this->db->select('*');
+//        $this->db->from('salary_advance');
+//        $this->db->where('id_employee', $id);
+//        $query = $this->db->get();
+//        return $query->result();
+//    }
 
     function select_all_salary_info($id) {
         $this->db->select('*');
@@ -48,9 +58,26 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
-    function update_info($tbl_name, $data, $id){
-        $this->db->where('id_employee',$id);
+    function update_info($tbl_name, $condition ,$data, $id,$return_id){
+        $this->db->where($condition,$id);
         $this->db->update($tbl_name,$data);
+        $this->db->select($return_id);
+        $this->db->from($tbl_name);
+        $this->db->where($condition,$id);
+        $query = $this->db->get();
+        return $query->row();
+        
+    }
+    
+    function deduction_update($tbl_name, $condition ,$data, $id,$amount,$column,$return_id){
+        $this->db->set($column,$amount);
+        $this->db->where($condition,$id);
+        $this->db->update($tbl_name,$data);
+        $this->db->select($return_id);
+        $this->db->from($tbl_name);
+        $this->db->where($condition,$id);
+        $query = $this->db->get();
+        return $query->row();
     }
     
     function select_employee_salary($id){
@@ -60,16 +87,23 @@ class Salary_model extends CI_Model {
     }
     
     function announce($id){
-        $this->db->select('id_employee');
+        $this->db->select('*');
         $this->db->from('salary_payment');
         $this->db->where('id_employee', $id);
         $query = $this->db->get();
-        return $query->result();
+        return $query->row();
+    }
+    function bonus($id){
+        $this->db->select('*');
+        $this->db->from('salary_bonus');
+        $this->db->where('id_salary_payment', $id);
+        $query = $this->db->get();
+        return $query->row();
     }
     
     function select_bonus_amount($id){
          $this->db->select('amount');
-        $this->db->from('bonus_amount');
+        $this->db->from('salary_bonus_announce');
         $this->db->where('id_salary_bonus_type', $id);
         $query = $this->db->get();
         return $query->result();
@@ -80,6 +114,10 @@ class Salary_model extends CI_Model {
         $this->db->from('salary_payment');
         $query = $this->db->get();
         return $query->result();
+    }
+    
+    function update_cash($tbl_name,$value){
+        $this->db->query('UPDATE `cash` SET `balance`= `balance`-'.$value.', `total_out`=`total_out`+'.$value.' WHERE `id_cash`='. 1);
     }
 //    p
 

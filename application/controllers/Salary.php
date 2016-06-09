@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,7 +38,7 @@ class Salary extends CI_Controller {
         $id = $this->input->post('id_employee');
         $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
 //        echo '<pre>';print_r($data['edit_salary']);exit();
-        echo json_encode($data['edit_salary']);
+        echo json_encode($data);
 //        return $data['salary_info'];
     }
 
@@ -117,10 +116,45 @@ class Salary extends CI_Controller {
     }
 
     function paid_salary_payment() {
-        $id = $this->input->post('id_salary_payment');
+        $id = $this->input->post('id_employee');
+//        payment update
         $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
         $data['status_salary_payment'] = 2;
-        $payment_id = $this->Salary_model->update_info('salary_payment', $data, $id);
+        $amount_salary = $this->input->post('amount_salary_payment');
+        $payment_id = $this->Salary_model->deduction_update('salary_payment','id_employee', $data, $id,$amount_salary,'amount_salary_payment','id_salary_payment');
+         $this->Salary_model->update_cash('cash',$amount_salary);
+        
+        
+//        bonus update
+        $bonus['status_bonus_payment'] = 2;
+        $bonus_id = $this->Salary_model->update_info('salary_bonus','id_salary_payment', $bonus, $payment_id->id_salary_payment,'id_salary_bonus');
+//        loan payment insert
+        if($this->input->post('id_loan')!= null){
+        $loan['id_loan'] = $this->input->post('id_loan');
+        $loan['paid_amount_loan_payment'] = $this->input->post('paid_amount_loan_payment');
+        $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
+        $this->Salary_model->save_info('loan_payment',$loan);
+        }
+//        advance update
+//        $amount = floatval($this->input->post('paid_amount_loan_payment'));
+//        $advance['amount_paid_salary_advance'] =  $this->input->post('amount_paid_salary_advance');
+//        $advance_id = $this->Salary_model->deduction_update('salary_advance','id_employee', $advance, $id,$amount,'amount_given_salary_advance','id_salary_advance');
+        
+//        advance payment insert
+        if($this->input->post('id_salary_advance')!= null){
+        $advance_payment['id_salary_advance'] = $this->input->post('id_salary_advance');
+        $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
+        $advance_payment['paid_amount_salary_advance_payment'] = $this->input->post('amount_paid_salary_advance');
+        
+        $this->Salary_model->save_info('salary_advance_payment',$advance_payment);
+       
+        }
+//        loan update
+//        $money = floatval($this->input->post('amount_paid_salary_advance'));
+//        $info['status'] = 'paid';
+//        $this->Salary_model->deduction_update('loan','id_employee', $info, $id,$money,'amount_loan');
+//        echo '<pre>';print_r($bonus_id);exit();
+        
         redirect('Salary/salary_payment');
     }
 

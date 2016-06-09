@@ -26,10 +26,12 @@
 
 
                     <div class="box-header" >
-                        <h2>Salary Announcement of <?php echo date('F', now());
-            echo ' ';
-            echo date('Y', now());
-            ; ?></h2>
+                        <h2>Salary Announcement of <?php
+                            echo date('F', now());
+                            echo ' ';
+                            echo date('Y', now());
+                            ;
+                            ?></h2>
                         <?php
                         $message = $this->session->userdata('message');
                         if (isset($message)) {
@@ -53,9 +55,9 @@
                                 </thead>
                                 <tbody>
 
-<?php
-foreach ($employees as $employee) {
-    ?>
+                                    <?php
+                                    foreach ($employees as $employee) {
+                                        ?>
                                         <tr>
                                             <td>
                                                 <input type="hidden" name="id_employee[]" value="<?php echo $employee->id_employee; ?>">
@@ -65,49 +67,58 @@ foreach ($employees as $employee) {
                                             <td id="click"><?php echo $employee->lmid_name; ?></td>
                                             <td>
                                                 <input type="hidden" name="amount_salary_payment[]" value="<?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>">
-    <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
+                                            <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
                                             </td>
-
-                                            <td>
-                                                <select class="form-control select2"style="width:100%;" name="bonus_type[]">
-                                                    <option value="0">Select Bonus Type</option>
-                                                    <?php
-                                                    foreach ($bonus_type as $bonus) {
-                                                        ?>
-                                                    <option value="<?php echo $bonus->id_salary_bonus_type?>"><?php echo $bonus->name_salary_bonus_type; ?>(1000)</option>
-    <?php }
-    ?>
-                                                    <option value="0">No Bonus</option>
-                                                </select>
-                                            </td>
+                                            <?php
+                                            $value = $this->Salary_model->announce($employee->id_employee);
+                                            $bonus = $this->Salary_model->bonus($value->id_salary_payment);
+                                            if ($bonus != null) {
+                                                ?>
+                                                <td>Bonus(<?php echo $bonus->amount_salary_bonus; ?>)</td>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <td>
+                                                    <select class="form-control select2"style="width:100%;" name="bonus_type[]">
+                                                        <option value="0">Select Bonus Type</option>
+                                                        <?php
+                                                        foreach ($bonus_type as $bonus) {
+                                                            ?>
+                                                            <option value="<?php echo $bonus->id_salary_bonus_type ?>"><?php echo $bonus->name_salary_bonus_type; ?>(1000)</option>
+        <?php }
+        ?>
+                                                        <option value="0">No Bonus</option>
+                                                    </select>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
                                             <td >
                                                 <?php
-//                                                        echo '<pre>';print_r($announced_test);exit();
-                                                        
-//                                                foreach ($announced_test as $value) {
-                                                $value =$this->Salary_model->announce($employee->id_employee);
-//                                                    echo '<pre>';print_r($value);exit();
-                                                if($value!=null){
-                                                    if ($employee->id_employee == $value[0]->id_employee) {
-//                                                        ?>
+                                                if ($value != null) {
+                                                    if ($employee->id_employee == $value->id_employee) {
+//                                                        
+                                                        ?>
                                                         <label>Announced</label>
             <?php
-        }} else {
-//            ?>
-                                                        <label >
-                                                            <input type="checkbox" name="status_salary_payment[]" value="<?php echo $employee->id_employee; ?>" id="check" > Announced
-                                                        </label>
-            <?php
         }
+    } else {
+//            
+        ?>
+                                                    <label >
+                                                        <input type="checkbox" name="status_salary_payment[]" value="<?php echo $employee->id_employee; ?>" id="check" > Announced
+                                                    </label>
+        <?php
+    }
 //    }
     ?>
                                             </td>
 
-    <!--                                            <td>
-                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                </td>-->
+        <!--                                            <td>
+                         <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
+                     <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                                        <button type="submit" class="btn btn-sm btn-success">Announced</button>
+                                                    </td>-->
 
                                         </tr>
     <?php

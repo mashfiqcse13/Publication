@@ -36,37 +36,153 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Employee Name</label>
                                         <div class="col-md-9">
-                                                <select class="form-control select2"style="width:100%;" name="id_employee" id="select">
-                                                    <option>Select Employee Name</option>
-                                                    <?php
-                                                    foreach ($employees as $employee) {
-                                                        ?>
-                                                        <option value="<?php echo $employee->id_employee; ?>"><?php echo $employee->name_employee; ?></option>
-                                                    <?php }
+                                            <select class="form-control select2"style="width:100%;" name="id_employee" id="select">
+                                                <option>Select Employee Name</option>
+                                                <?php
+                                                foreach ($employees as $employee) {
                                                     ?>
-                                                </select>
+                                                    <option value="<?php echo $employee->id_employee; ?>"><?php echo $employee->name_employee; ?></option>
+                                                <?php }
+                                                ?>
+                                            </select>
                                         </div>
 
                                     </div>
-                                    <div id="info">
-
-                                    </div>
-                                    <input type="hidden" id="employee_id" name="id_salary_payment" value=""/>
+                                    <div  id="success">
+                                        <h1 class="text-center" id="heanding_success"></h1>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label"></label>
+                                            <label class="col-md-3 control-label">Month of Salary</label>
+
                                             <div class="col-md-9">
-                                                <button type="submit" class="btn btn-sm btn-success" id="paid">Paid</button>
+                                                <p id="salary_month"></p>
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Year of Salary</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_year"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Issue Salary Payment</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_issue"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Date Salary Payment</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_date"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Amount of Salary</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_aos"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Amount of Bonus</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_aob"></p>
+                                            </div>
+                                        </div><hr>
+                                        <h3 class="text-center">Deduction</h3>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Advance</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_advance"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Loan</label>
+                                            <div class="col-md-9">
+                                                <p id="salary_loan_bill"></p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Total Amount Payable</label>
+                                            <div class="col-md-9">
+                                                <h3 id="salary_total"></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="info">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Month of Salary</label>
+                                            <div class="col-md-9"> 
+                                                <p id="month"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Year of Salary</label>
+                                            <div class="col-md-9"> 
+                                                <p id="year"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Issue Salary Payment</label>
+                                            <div class="col-md-9"> 
+                                                <p id="issue"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Amount of Salary</label>
+                                            <div class="col-md-9"> 
+                                                <p id="aos"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Amount of Bonus</label>
+                                            <div class="col-md-9"> 
+                                                <p id="aob"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Amount of Advance</label>
+                                            <div class="col-md-9"> 
+                                                <p id="advance"></p>
+                                            </div>
+                                        </div>
+                                        <div id="loan">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Loan</label>
+                                                <div class="col-md-9"> 
+                                                    <input type="text" id="discharge" class="form-control" placeholder="Maximum" name="paid_amount_loan_payment" max="" value=""/>
+                                                    <span style="color: red;font-weight: bold;">  *Loan to Pay  =   <span id="pay"></span>  &  Remaining Loan = <span id="remain"></span> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Total</label>
+                                            <div class="col-md-9"> 
+                                                <p id="total"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="employee_id" name="id_salary_payment" value=""/>
+                                    <input type="hidden" id="loan_id" name="id_loan" value=""/>
+                                    <input type="hidden" id="advance_amount" name="amount_paid_salary_advance" value=""/>
+                                    <input type="hidden" id="advance_id" name="id_salary_advance" value=""/>
+                                    <input type="hidden" id="amount_salary" name="amount_salary_payment" value=""/>
+                                    <!--<input type="text" id="discharge" class="form-control" name="amount_loan" value="" />-->
+                                     <!--<div id="loan"><input type="text" id="discharge" class="form-control total_discharge"  name="amount_loan" value=""/></div>-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"></label>
+                                        <div class="col-md-9">
+                                            <button type="submit" class="btn btn-sm btn-success" id="paid">Paid</button>
+                                        </div>
+                                    </div>
+                                </form>
 
-                                </div>
                             </div>
+                        </div>
 
 
 
 
-                            <?php
+                        <?php
                     } else {
 
                         echo $glosary->output;
