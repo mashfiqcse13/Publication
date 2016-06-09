@@ -20,16 +20,11 @@ class Stock_model extends CI_Model {
         return $query->result();
     }
 
-    function search_item($start_date, $end_date) {
-//        print_r($start_date);exit();
-        $this->db->select('*');
-        $this->db->from('stock_perpetual_stock_register');
-        $this->db->where('date BETWEEN "' . date('Y-m-d', strtotime($start_date)) . '" and "' . date('Y-m-d', strtotime($end_date)) . '"');
-        $query = $this->db->get();
-        return $query->result();
+    function get_where_clause($start_date, $end_date) {
+        return 'date BETWEEN "' . date('Y-m-d', strtotime($start_date)) . '" and "' . date('Y-m-d', strtotime($end_date)) . '"';
     }
-    
-     /*
+
+    /*
      * This will add cash amount to the database table 'Customer_due'
      */
 
@@ -75,8 +70,7 @@ class Stock_model extends CI_Model {
             return FALSE;
         }
     }
-    
-    
+
     // get current customer due all data as a db row object
     function current_stock_info($id_item) {
         $current = $this->db->select('*')

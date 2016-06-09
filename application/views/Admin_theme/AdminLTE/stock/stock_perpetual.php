@@ -32,7 +32,7 @@
                 <div class="form-group col-md-3 text-left">
                     <label>Search with Date Range:</label>
                 </div>
-                <form action="<?= $base_url ?>index.php/stock/stock_perpetual" method="post">
+                <form action="<?= $base_url ?>index.php/stock/stock_perpetual" method="get">
                     <div class="form-group col-md-7">
                         <div class="input-group">
                             <div class="input-group-addon">
@@ -42,7 +42,7 @@
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                     <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?php echo anchor(site_url('stock/stock_perpetual'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                 </form>
 
             </div>
@@ -52,58 +52,12 @@
                 <div class="box">
 
                     <div class="box-header">
-                        <h3 class="box-title">Data Table With Full Features</h3>
+                        <h3 class="box-title">Stock Perpitual Current View</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Id Item</th>
-                                    <th>Opening Amount</th>
-                                    <th>Receive Amount</th>
-                                    <th>Sales Amount</th>
-                                    <th>Return Amount Reject</th>
-                                    <th>Reject Amount</th>
-                                    <th>Closing Stock</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sl = 1;
-                                foreach ($stock_info as $info) {
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $sl; ?></td>
-                                        <td><?php echo $info->id_item; ?></td>
-                                        <td><?php echo $info->opening_amount; ?></td>
-                                        <td><?php echo $info->receive_amount; ?></td>
-                                        <td><?php echo $info->sales_amount; ?></td>
-                                        <td><?php echo $info->return_amountreject; ?></td>
-                                        <td><?php echo $info->reject_amount; ?></td>
-                                        <td><?php echo $info->closing_stock; ?></td>
-                                        <td><?php echo $info->date; ?></td>
-                                    </tr>
-                                    <?php
-                                    $sl++;
-                                }
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Id Item</th>
-                                    <th>Opening Amount</th>
-                                    <th>Receive Amount</th>
-                                    <th>Sales Amount</th>
-                                    <th>Return Amount Reject</th>
-                                    <th>Reject Amount</th>
-                                    <th>Closing Stock</th>
-                                    <th>Date</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <?php
+                        echo $glosary->output;
+                        ?>
                     </div><!-- /.box-body -->
 
                 </div>

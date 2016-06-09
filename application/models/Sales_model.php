@@ -10,6 +10,20 @@ if (!defined('BASEPATH'))
  */
 class Sales_model extends CI_Model {
 
+    function get_available_item_dropdown() {
+
+        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
+            FROM `items` natural join `stock_final_stock`
+            WHERE `total_in_hand` > 0 ")->result();
+
+        $data = array();
+        $data[''] = 'Select items by name or code';
+        foreach ($items as $item) {
+            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+        }
+        return form_dropdown('id_item', $data, '', ' class="select2" ');
+    }
+
     function get_party_dropdown() {
         $customers = $this->db->get('customer')->result();
 
@@ -34,8 +48,9 @@ class Sales_model extends CI_Model {
     }
 
     function get_item_details() {
-        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price` "
-                        . "FROM `items` WHERE 1")->result();
+        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
+            FROM `items` natural join `stock_final_stock`
+            WHERE `total_in_hand` > 0 ")->result();
 
         $data = array();
         foreach ($items as $item) {
@@ -44,6 +59,7 @@ class Sales_model extends CI_Model {
                 'name' => $item->name,
                 'regular_price' => $item->regular_price,
                 'sale_price' => $item->sale_price,
+                'total_in_hand' => $item->total_in_hand,
             );
         }
         return $data;
@@ -53,6 +69,7 @@ class Sales_model extends CI_Model {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Customer_due');
         $this->load->model('misc/Stock_perpetual');
+        $this->load->model('Stock_model');
 
         $id_customer = $this->input->post('id_customer');
         $discount_percentage = $this->input->post('discount_percentage');
@@ -75,6 +92,8 @@ class Sales_model extends CI_Model {
             $due_payment_amount = $total_paid - $total_amount;
             $this->load->model('misc/Customer_due_payment');
             $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+            $cash_payment = $total_amount;
+            $total_paid = $cash_payment + $bank_payment;
             $total_due = 0;
         }
 
@@ -112,6 +131,7 @@ class Sales_model extends CI_Model {
             );
             array_push($data_sales, $tmp_data_sales);
             $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
+            $this->Stock_model->stock_reduce($value['item_id'], $value['item_quantity']);
         }
 
 

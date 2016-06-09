@@ -21,11 +21,7 @@ class Sales extends CI_Controller {
     }
 
     function index() {
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Manage sales';
-
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/dashboard', $data);
+        $this->tolal_sales();
     }
 
     function tolal_sales() {
@@ -78,7 +74,7 @@ class Sales extends CI_Controller {
 
     function new_sale() {
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
-        $data['item_dropdown'] = $this->Common->get_item_dropdown();
+        $data['item_dropdown'] = $this->Sales_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Sales_model->get_party_due();
         $data['item_details'] = $this->Sales_model->get_item_details();
 
@@ -87,7 +83,6 @@ class Sales extends CI_Controller {
         $data['Title'] = 'New sale';
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/new_sale_form', $data);
     }
-
 
     function memo($total_sales_id) {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

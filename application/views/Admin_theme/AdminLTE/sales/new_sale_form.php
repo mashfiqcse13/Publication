@@ -150,6 +150,10 @@
                                         <button class="btn btn-info btn-flat" id="add_to_cart" type="button">Add</button>
                                     </span>
                                 </div>
+                                <span>
+                                    <strong>Item Available : </strong>
+                                </span>
+                                <span id="total_in_hand">0</span>
                             </div>
                         </div>
                     </div>
@@ -246,6 +250,11 @@
             alert('Enter quantity');
             return;
         }
+        var this_item_details = item_details[item_id];
+        if (item_quantity > this_item_details.total_in_hand) {
+            alert('Please don\'t select quantity bigger than '+this_item_details.total_in_hand);
+            return;
+        }
         item_selection[item_id] = {
             'item_id': item_id,
             'item_quantity': item_quantity,
@@ -258,6 +267,9 @@
     });
     $('[name="id_item"]').change(function () {
         $('#item_quantity').val('0');
+        var id_item = $('[name="id_item"]').val();
+        var this_item_details = item_details[id_item];
+        $('#total_in_hand').html(this_item_details.total_in_hand);
     });
     $('[name="id_customer"]').change(function () {
         data_to_post.id_customer = $('[name="id_customer"]').val();
@@ -311,6 +323,10 @@
     $('.submit_btn').click(function () {
         if (data_to_post.total_paid > data_to_post.total_amount) {
             alert('We are not allowed to accept extra money . Reduce the cash .');
+            return;
+        }
+        if (data_to_post.id_customer < 1) {
+            alert('No customer selected.');
             return;
         }
 
