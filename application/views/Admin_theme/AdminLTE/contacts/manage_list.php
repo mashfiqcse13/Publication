@@ -27,7 +27,7 @@
                     
                     <?php  
 
-                       //echo $glosary->output;
+                       echo $glosary->output;
                     ?>
                
                     </div>

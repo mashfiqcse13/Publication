@@ -11,7 +11,7 @@
 <li><?php echo anchor('bank', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
 <li><?php echo anchor('employee', '<i class="fa fa-plus-circle"></i>  <span>Employee</span>'); ?></li>
 <li><?php echo anchor('stock', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
-<li><?php echo anchor('customer', '<i class="fa fa-plus-circle"></i>  <span>Customer</span>'); ?></li>
+<li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Contacts</span>'); ?></li>
 <li><?php echo anchor('users_info', '<i class="fa fa-plus-circle"></i>   <span>Users</span>'); ?></li>
 <li><?php echo anchor('report', '<i class="fa fa-plus-circle"></i>  <span>Report</span>'); ?></li>
 <li><?php echo anchor('admin', '<i class="fa fa-plus-circle"></i>  <span>Old system</span>'); ?></li>
