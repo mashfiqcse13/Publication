@@ -30,6 +30,20 @@ class Report extends CI_Controller {
         $data['cash'] = $this->db->get('cash')->result();
         $data['cash'] = $data['cash'][0];
 //        die(print_r($data));
+        
+        
+        $query1=$this->db->query("SELECT IFNULL(sum(`total_amount`) ,0) as today_total,"
+                . "IFNULL(sum(`total_due`) ,0) as today_due,"
+                . " IFNULL(sum(`cash`) ,0) as today_cash,"
+                . " IFNULL(sum(`bank_pay`) ,0) as today_bank"
+                . "  FROM sales_total_sales WHERE  DATE(issue_date) = DATE(NOW())");
+        foreach ($query1->result() as $row){
+            $data['today_sales']=$row->today_total;
+            $data['today_due']=$row->today_due;
+            $data['today_cash']=$row->today_cash;
+            $data['today_bank']=$row->today_bank;
+        }
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Cash in Hand';
