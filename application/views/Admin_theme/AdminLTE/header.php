@@ -40,6 +40,13 @@
             <script src="<?php echo $theme_asset_url ?>https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <style type="text/css">
+            .select2-container--default .select2-selection--single {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 0;
+                height: 35px;
+            }
+
             @media print{
                 .only_print{display: none;}
                 .memo_print_option{margin:0 auto;width:100%;}

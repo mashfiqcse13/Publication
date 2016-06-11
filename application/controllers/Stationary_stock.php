@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author MD. Mashfiq
  */
-class Income extends CI_Controller {
+class Stationary_stock extends CI_Controller {
             
     function __construct() {
         parent::__construct();
@@ -28,114 +28,62 @@ class Income extends CI_Controller {
     }
     
     function index(){
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Manage salary';
-        
-        $this->load->view($this->config->item('ADMIN_THEME').'income/income_dashboard', $data);
-    }
-    
-    function income() {
         $crud = new grocery_CRUD();
-        $crud->set_table('income');
-        $crud->display_as('id_name_income','Income Name');
-        $crud->set_relation('id_name_income', 'income_name', 'name_expense');
-         //$crud->field_type('date_income', 'hidden');
-        $crud->callback_add_field('date_income', function () {
-            return '<input id="field-date_income" name="date_income" type="text" value="'.date('Y-m-d h:i:u').'" >'
-                   . '<style>div#date_income_field_box{display: none;}</style>';
-            
-        });
+        $crud->set_table('stationary_stock');
+        $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         
-        $crud->callback_before_insert(array($this, 'cash_add'));
-        $crud->callback_before_delete(array($this, 'cash_delete'));
-        //$crud->callback_before_update(array($this, 'cash_update'));
-        
+              
+        $crud->unset_add();
         $crud->unset_edit();
+        $crud->unset_delete();
         
-        $this->load->model('income_model');
+        
+        
+        $this->load->model('stationary_model');
+        $data['expense_name_dropdown']=$this->stationary_model->expense_name_dropdown();
+                
+        $expense_name_id=$this->input->post('expense_name_id');    
         $date_range = $this->input->post('date_range');
-        
-        if ($date_range != '') {
-            $data['report']=$this->income_model->income_report($date_range);
+         if ($date_range != '' or $expense_name_id !='') {
+            $data['report']=$this->stationary_model->stationary_report($date_range,$expense_name_id);
         }else{
            $output = $crud->render();
             $data['glosary'] = $output;
         }
         
- 
-        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Income';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'income/income', $data);
+        $data['Title'] = 'Stationary Stock';
+        
+        $this->load->view($this->config->item('ADMIN_THEME').'stationary/stationary', $data);
     }
-        function cash_add($post_array){
-        
-        $this->load->model('misc/cash');
-        $values = $this->input->post('amount_income');        
-           
-            $this->cash->add($values);
-            return true;
-        }
-        
-//        
-//        function cash_update($post_array,$primary_key){
-//        
-//            $this->load->model('misc/cash');
-//            $amount_income = $this->input->post('amount_income'); 
-//            $this->db->where('id_income',$primary_key);
-//            $value=$this->db->get('income');
-//            
-//            foreach($value->result() as $row){
-//                $values=$row->amount_income;
-//            }
-//            
-//            $this->cash->reduce($values);                 
-//           
-//            $this->cash->add($amount_income);
-//            return true;
-//        }
-        function cash_delete($primary_key){
-        
-            $this->load->model('misc/cash');
-            $this->db->where('id_income',$primary_key);
-            $value=$this->db->get('income');
-            foreach($value->result() as $row){
-                $values=$row->amount_income;
-            }
-            $this->cash->add_revert($values);
-
-            return true;
-        }
     
-    function income_name() {
+    function stationary_stock_register(){
         $crud = new grocery_CRUD();
-        $crud->set_table('income_name');
+        $crud->set_table('stationary_stock_register');
+        $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         
-         $crud->callback_add_field('status_name_expense', function () {
-        return '<input type="radio" value="1" name="status_name_expense" checked> Yes '
-            . '<input type="radio" value="2" name="status_name_expense"> No'
-            .  '<style>div#status_name_expense_field_box {display: none;}</style>'  ;
-        });
-    
-        $crud->callback_column('status_name_expense',array($this,'_yes_no_for_income_name'));
-        $output = $crud->render();
+              
+        $crud->unset_add();
+        $crud->unset_edit();
+        $crud->unset_delete();
+        
+        $this->load->model('stationary_model');
+        $date_range = $this->input->post('date_range');
+         if ($date_range != '') {
+            $data['report']=$this->stationary_model->stationary_report($date_range);
+        }else{
+           $output = $crud->render();
         $data['glosary'] = $output;
+        }
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Income Name';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'income/income_name', $data);
+        $data['Title'] = 'Stationary Stock';
+        
+        $this->load->view($this->config->item('ADMIN_THEME').'stationary/stationary_stock', $data);
     }
     
-        function _yes_no_for_income_name($value,$row){
-        if($row->status_name_expense==1){
-            $value='yes';
-        }else{
-            $value='no';
-        }
-        return $value;
-    }
+   
     
 }

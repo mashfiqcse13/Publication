@@ -101,7 +101,7 @@ class Expense extends CI_Controller {
         if($stock_item==1){ 
             $data=array(
                 'id_name_expense' => $id_name_expense,
-                'date_received' => now(),
+                'date_received' => date('Y-m-d h:i'),
                 'memo_number' => $memo,
                 'quantity' => $quantity
             );
