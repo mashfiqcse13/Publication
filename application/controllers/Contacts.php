@@ -33,7 +33,7 @@ class Contacts extends CI_Controller {
 
     function teacher() {
         $crud = new grocery_CRUD();
-        $crud->set_table('pub_contacts_teacher')
+        $crud->set_table('contact_teacher')
                 ->set_subject('Teachers');
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -64,6 +64,18 @@ class Contacts extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Agents';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'contacts/manage_list', $data);
+    }
+
+    function warehouses() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('stock_warehouse')
+                ->set_subject('Warehouses');
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Manage Warehouses';
         $this->load->view($this->config->item('ADMIN_THEME') . 'contacts/manage_list', $data);
     }
 
