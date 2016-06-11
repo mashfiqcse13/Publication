@@ -44,6 +44,7 @@
                 .only_print{display: none;}
                 .memo_print_option{margin:0 auto;width:100%;}
 
+
             }
             .margin-10{margin:0 10px;}
             .margin-top-10{margin-top:10px;}
@@ -116,6 +117,9 @@
     display: none;
 }
 .table>tbody>tr>td{padding-bottom: 9px}
+                    footer.main-footer {
+                        display:none;
+                    }
 }
         </style>
 

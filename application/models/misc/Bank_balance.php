@@ -110,7 +110,7 @@ class Bank_balance extends CI_Model {
     
     function list_bank_status($limit,$start){
         $query=$this->db->query("select "
-                . "transaction_date,name_bank, account_number,amount_transaction,name_trnsaction_type, username,approval_status,id_bank_management_status"
+                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction),name_trnsaction_type, username,approval_status,id_bank_management_status"
                 . " from "
                 . "`bank_management_status`,`bank_management`, `bank_transaction_type`,`bank_account`, `users`,`bank`"
                 . " where "
@@ -128,7 +128,7 @@ class Bank_balance extends CI_Model {
     function bank_report($date){
         $date=$this->dateformatter($date);
         
-        $range_query=$this->db->query("SELECT name_bank,account_number,name_trnsaction_type,transaction_date,amount_transaction,username,check_number,media_link FROM `bank_management`
+        $range_query=$this->db->query("SELECT name_bank,account_number,name_trnsaction_type,transaction_date,CONCAT('TK ',amount_transaction),username,check_number,media_link FROM `bank_management`
 LEFT JOIN bank_account on bank_account.id_bank_account=bank_management.id_account
 LEFT join bank on bank.id_bank=bank_account.id_bank
 left JOIN bank_transaction_type on bank_transaction_type.id_trnsaction_type=bank_management.id_transaction_type
@@ -140,7 +140,7 @@ WHERE transaction_date BETWEEN $date");
         $tmpl = array (
                     'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
 
-                    'heading_row_start'   => '<tr>',
+                    'heading_row_start'   => '<tr style="background:#ddd">',
                     'heading_row_end'     => '</tr>',
                     'heading_cell_start'  => '<th>',
                     'heading_cell_end'    => '</th>',
@@ -159,16 +159,25 @@ WHERE transaction_date BETWEEN $date");
               );
         
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span><span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4><hr>');
+                $this->table->set_caption('<h2 class="text-center">Advanced Publication</h2><br>'
+                . '<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span>'
+                . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>'
+                . '<style>td:nth-child(5) {    text-align: right;}</style>');
         return $this->table->generate($range_query);
         
         
     }
+    
+    
+    
+    
     function datereport($date){
         $date= str_replace("'", ' ', $date);
         $date=  str_replace('and', 'to', $date);
         return $date;
     }
+    
+    
     function dateformatter($range_string, $formate = 'Mysql') {
         $date = explode(' - ', $range_string);
         $date[0] = explode('/', $date[0]);

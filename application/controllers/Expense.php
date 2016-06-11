@@ -66,8 +66,17 @@ class Expense extends CI_Controller {
             
           
         $crud->order_by('id_name_expense','desc');
-        $output = $crud->render();
+        
+        
+        $this->load->model('expense_model');
+        $date_range = $this->input->post('date_range');
+        
+        if ($date_range != '') {
+            $data['report']=$this->expense_model->expense_report($date_range);
+        }else{
+           $output = $crud->render();
         $data['glosary'] = $output;
+        }
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();

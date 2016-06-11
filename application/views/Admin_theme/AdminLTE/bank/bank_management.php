@@ -4,7 +4,7 @@
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
       <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper only_print">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -30,6 +30,7 @@
                     echo form_open('', $attributes)
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                     ?>
+                    
                     <div class="form-group col-md-4 text-left">
 
                         <label>Search Report With Date Range:</label>
@@ -65,6 +66,8 @@
             </div>
             <div class="row">
                 <div class="panel-body">
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+
                     <?php if(isset($report)){echo $report; }?> 
                 </div>
             </div>
@@ -76,6 +79,9 @@
 
       <!-- insert book -->
 
-
+      <div class="report-logo-for-print">
+          <?php if(isset($report)){echo $report; }?> 
+      </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+

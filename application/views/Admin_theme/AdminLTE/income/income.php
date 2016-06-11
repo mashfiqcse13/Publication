@@ -4,7 +4,7 @@
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
       <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper only_print">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -21,16 +21,54 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+                    
+                                        <div class="box only_print">
+                <div class="box-body">
+                    <?php
+                    $attributes = array(
+                        'clase' => 'form-inline',
+                        'method' => 'post');
+                    echo form_open('', $attributes)
+                            //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
+                    ?>
+                    
+                    <div class="form-group col-md-4 text-left">
+
+                        <label>Search Report With Date Range:</label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                            <br>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+
+                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?= form_close(); ?>
+                    <?php ?>
+                </div>
+            </div>
 
                     <div class="box">
                     
                     <?php  
 
-                       echo $glosary->output;
+                       if(isset($glosary->output)){echo $glosary->output; }
                     ?>
                
                     </div>
                     
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel-body">
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+
+                    <?php if(isset($report)){echo $report; }?> 
                 </div>
             </div>
          
@@ -42,6 +80,8 @@
 
       <!-- insert book -->
 
-
+      <div class="report-logo-for-print">
+          <?php if(isset($report)){echo $report; }?> 
+      </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
