@@ -16,11 +16,11 @@
 
             <li class="header">SALES CRUD s</li>
 
-            <li><?php echo anchor('sales/new_sale', '<i class="fa fa-plus-circle"></i>  <span>New Sales</span>'); ?></li>
-            <li><?php echo anchor('sales/sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
-            <li><?php echo anchor('sales/tolal_sales', '<i class="fa fa-plus-circle"></i>  <span>Total sales</span>'); ?></li>
+            <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>New Specimen Entry</span>'); ?></li>
+            <li><?php echo anchor('specimen/items', '<i class="fa fa-plus-circle"></i>  <span>Specimen Items</span>'); ?></li>
+            <li><?php echo anchor('specimen/tolal', '<i class="fa fa-plus-circle"></i>  <span>Specimen Total</span>'); ?></li>
 
-            
+
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 
 
