@@ -95,7 +95,7 @@
                                             ?>
                                             <td >
                                                 <?php
-                                                if ($value != null) {
+                                                if ($value->status_salary_payment == 2) {
                                                     if ($employee->id_employee == $value->id_employee) {
 //                                                        
                                                         ?>

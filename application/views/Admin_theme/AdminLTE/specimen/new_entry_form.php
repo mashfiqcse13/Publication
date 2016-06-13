@@ -1,23 +1,13 @@
 <!--add header -->
 <script type="text/javascript">
-    var customer_due = <?php echo json_encode($customer_due) ?>;
     var item_details = <?php echo json_encode($item_details) ?>;
     var item_selection = new Array();
     var data_to_post = {
         'action': null,
-        'id_customer': 0,
-        'discount_percentage': 0,
-        'discount_amount': 0,
-        'sub_total': 0,
-        'dues_unpaid': 0,
-        'total_amount': 0,
-        'cash_payment': 0,
-        'bank_payment': 0,
-        'total_paid': 0,
-        'total_due': 0,
+        'id_agent': 0,
         'item_selection': ''
     };
-    var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
+    var ajax_url = '<?php echo site_url('specimen/ajax_url') ?>';
 </script>
 <?php include_once __DIR__ . '/../header.php'; ?>
 <style>
@@ -58,13 +48,13 @@
         <div ID="massage_box"><h1 class="msg_body">Processing......</h1></div>
         <!--massge box ended-->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-lg-8">
                                 <label for="id_contact">Party name</label>
-                                <?php echo $customer_dropdown ?>
+                                <?php echo $agent_dropdown ?>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
@@ -76,64 +66,8 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Payment info</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Discount percentage :</label>
-                                <div class="input-group">
-                                    <input type="email" name="discount_percentage" class="form-control" id="discount_percentage" value="0" min="0" max="100">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Discount amount :</label>
-                                <div class="input-group">
-                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="0" min="0">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Cash payment :</label>
-                                <div class="input-group">
-                                    <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Bank payment :</label>
-                                <div class="input-group">
-                                    <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-warning">
                     <div class="box-body">
@@ -183,7 +117,6 @@
                     <div class="box-footer">
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_reset">Save and Reset</button>
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
-                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
                     </div>
                 </div>
             </div>
@@ -228,12 +161,9 @@
                                 <td>' + sub_total + '</td>\n\
                                 <td>Taka</td>\n\
                             </tr>';
-        data_to_post.sub_total = sub_total;
-        update_total_amount_and_total_due();
         data_to_post.item_selection = item_selection;
         $('table.cart tbody').html(output);
         $('#item_selection_status').html(' ');
-        $('#discount_percentage').trigger('change');
     }
 
     $(".select2").select2({
@@ -252,7 +182,11 @@
         }
         var this_item_details = item_details[item_id];
         if (item_quantity > this_item_details.total_in_hand) {
-            alert('Please don\'t select quantity bigger than '+this_item_details.total_in_hand);
+            alert('Please don\'t select quantity bigger than ' + this_item_details.total_in_hand);
+            return;
+        }
+        if (item_quantity < 1) {
+            alert('Please don\'t select quantity smaller than 1');
             return;
         }
         item_selection[item_id] = {
@@ -271,53 +205,12 @@
         var this_item_details = item_details[id_item];
         $('#total_in_hand').html(this_item_details.total_in_hand);
     });
-    $('[name="id_customer"]').change(function () {
-        data_to_post.id_customer = $('[name="id_customer"]').val();
-        data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
-        $('#dues_unpaid').html(data_to_post.dues_unpaid);
-        update_total_amount_and_total_due();
-    });
-
-    $('#discount_amount').change(function () {
-        if (string_to_int(data_to_post.sub_total) > 0) {
-            data_to_post.discount_amount = string_to_int($('#discount_amount').val());
-            data_to_post.discount_percentage = string_to_int(data_to_post.discount_amount / string_to_int(data_to_post.sub_total) * 100);
-        } else {
-            data_to_post.discount_amount = 0;
-            $('#discount_amount').val(data_to_post.discount_amount);
-            data_to_post.discount_percentage = 0;
-        }
-        $('#discount_percentage').val(data_to_post.discount_percentage);
-        update_total_amount_and_total_due();
-    });
-    $('#discount_percentage').change(function () {
-        if (string_to_int(data_to_post.sub_total) > 0) {
-            data_to_post.discount_percentage = string_to_int($('#discount_percentage').val());
-            data_to_post.discount_amount = string_to_int(data_to_post.discount_percentage / 100 * string_to_int(data_to_post.sub_total));
-        } else {
-            data_to_post.discount_percentage = 0;
-            $('#discount_percentage').val(data_to_post.discount_percentage);
-            data_to_post.discount_amount = 0;
-        }
-        $('#discount_amount').val(data_to_post.discount_amount);
-        update_total_amount_and_total_due();
+    $('[name="id_agent"]').change(function () {
+        data_to_post.id_agent = $('[name="id_agent"]').val();
     });
     function remove_from_cart(item_to_remove) {
         delete item_selection[item_to_remove];
         update_cart();
-    }
-    $('#cash_payment').change(function () {
-        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
-        update_total_amount_and_total_due();
-    });
-    function update_total_amount_and_total_due() {
-        data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
-                + string_to_int(data_to_post.sub_total)
-                - string_to_int(data_to_post.discount_amount);
-        data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment);
-        data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
-        $('#total_amount').html(data_to_post.total_amount);
-        $('#total_due').html(data_to_post.total_due);
     }
 
     $('.submit_btn').click(function () {
@@ -325,8 +218,8 @@
             alert('We are not allowed to accept extra money . Reduce the cash .');
             return;
         }
-        if (data_to_post.id_customer < 1) {
-            alert('No customer selected.');
+        if (data_to_post.id_agent < 1) {
+            alert('No agent selected.');
             return;
         }
 

@@ -1,12 +1,6 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Stock
  *
@@ -95,16 +89,6 @@ class Stock extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Final stock';
         $this->load->view($this->config->item('ADMIN_THEME') . 'stock/final_stock', $data);
-    }
-
-    function test($id_item, $amount) {
-//        $this->db->select('')
-//        $this->load->model('misc/Customer_due_payment');
-//        $this->Customer_due_payment->add($customer_id, $payment_amount);
-//        $this->load->model('misc/Stock_perpetual');
-//        $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount, $type_code) or die('Unknown Type code');
-//        $this->Stock_model->stock_add($id_item, $amount) or die('failed');
-        $this->Stock_model->stock_reduce($id_item, $amount) or die('failed');
     }
 
 }
