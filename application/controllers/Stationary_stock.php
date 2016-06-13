@@ -28,8 +28,12 @@ class Stationary_stock extends CI_Controller {
     }
     
     function index(){
+        $this->stationary_stock();
+    }
+    
+    function stationary_stock_register(){
         $crud = new grocery_CRUD();
-        $crud->set_table('stationary_stock');
+        $crud->set_table('stationary_stock_register');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         
               
@@ -44,7 +48,7 @@ class Stationary_stock extends CI_Controller {
                 
         $expense_name_id=$this->input->post('expense_name_id');    
         $date_range = $this->input->post('date_range');
-         if ($date_range != '' or $expense_name_id !='') {
+         if ($date_range != '' || $expense_name_id !='') {
             $data['report']=$this->stationary_model->stationary_report($date_range,$expense_name_id);
         }else{
            $output = $crud->render();
@@ -55,12 +59,12 @@ class Stationary_stock extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Stationary Stock';
         
-        $this->load->view($this->config->item('ADMIN_THEME').'stationary/stationary', $data);
+        $this->load->view($this->config->item('ADMIN_THEME').'stationary/stationary_stock_register', $data);
     }
     
-    function stationary_stock_register(){
+    function stationary_stock(){
         $crud = new grocery_CRUD();
-        $crud->set_table('stationary_stock_register');
+        $crud->set_table('stationary_stock');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         
               
@@ -69,12 +73,15 @@ class Stationary_stock extends CI_Controller {
         $crud->unset_delete();
         
         $this->load->model('stationary_model');
-        $date_range = $this->input->post('date_range');
-         if ($date_range != '') {
-            $data['report']=$this->stationary_model->stationary_report($date_range);
+        $data['expense_name_dropdown']=$this->stationary_model->expense_name_dropdown();
+        
+        $expense_name_id=$this->input->post('expense_name_id');    
+        
+         if (isset($expense_name_id)) {
+            $data['report']=$this->stationary_model->stationary_stock_report($expense_name_id);
         }else{
            $output = $crud->render();
-        $data['glosary'] = $output;
+            $data['glosary'] = $output;
         }
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

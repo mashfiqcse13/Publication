@@ -29,13 +29,7 @@ class Expense extends CI_Controller {
     
     function index(){
         
-      
-        
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Expense';
-        
-        $this->load->view($this->config->item('ADMIN_THEME').'expense/expense_dashboard', $data);
+        $this->expense();
     }
     
     function expense() {

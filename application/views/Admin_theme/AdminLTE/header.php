@@ -73,7 +73,7 @@
             .dropdown-width{width:200px}
             .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
     
-    border-bottom: 1px solid #d5d5d5;
+    border: 1px solid #ddd;
 }
 .text-right-for-money tr > td:nth-child(3) {
     text-align: right;

@@ -24,7 +24,7 @@ class Bank extends CI_Controller {
         }
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
-        $this->load->library('session');
+        //$this->load->library('session');
         $this->load->library("pagination");
        
     }
@@ -70,6 +70,7 @@ class Bank extends CI_Controller {
         
         $crud->callback_add_field('id_user',function(){
             $userid=$_SESSION['user_id'];
+            //$userid=$this->session->userdata('id');
             $username=$this->session->userdata('username');
             return $username.'<input id="field-id_user" class="form-control" name="id_user" type="hidden" value="'.$userid.'">';
            
@@ -106,13 +107,21 @@ bank.id_bank=bank_account.id_bank");
         
         
         $this->load->model('misc/bank_balance');
-        $date_range = $this->input->post('date_range');
         
-        if ($date_range != '') {
-            $data['report']=$this->bank_balance->bank_report($date_range);
+        $data['transaction_type_dropdown']=$this->bank_balance->transaction_type_dropdown();
+        $data['account_dropdown']=$this->bank_balance->account_dropdown();
+        $data['user_dropdown']=$this->bank_balance->user_dropdown();
+        
+        $date_range = $this->input->post('date_range');
+        $user_id = $this->input->post('id');
+        $bank_account = $this->input->post('id_bank_account');
+        $transaction_type = $this->input->post('id_transaction_type');
+        
+        if ($date_range != '' || $user_id != '' || $bank_account != '' || $transaction_type != '') {
+            $data['report']=$this->bank_balance->bank_report($date_range,$user_id,$bank_account,$transaction_type);
         }else{
            $output = $crud->render();
-        $data['glosary'] = $output;
+           $data['glosary'] = $output;
         }
         
         
@@ -279,16 +288,31 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
         
-        $this->pagination->initialize($config);
+
         
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data["main_content"] = $this->bank_balance->
-            list_bank_status($config["per_page"], $page);
-        $data["links"] = $this->pagination->create_links();
+                
+        $this->load->model('misc/bank_balance');
         
-        
+        $data['transaction_type_dropdown']=$this->bank_balance->transaction_type_dropdown();
+        $data['account_dropdown']=$this->bank_balance->account_dropdown();
+        $data['user_dropdown']=$this->bank_balance->user_dropdown();
        // $data['main_content'] = $this->bank_balance->list_bank_status();       
        
+        $date_range = $this->input->post('date_range');
+        $user_id = $this->input->post('id');
+        $status_type = $this->input->post('status_type');
+        
+        if ($date_range != '' || $user_id != '' || $status_type != '') {
+            $data['report']=$this->bank_balance->bank_status_report($date_range,$user_id,$status_type);
+        }else{
+            $this->pagination->initialize($config);
+
+             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+             $data["main_content"] = $this->bank_balance->
+                 list_bank_status($config["per_page"], $page);
+             $data["links"] = $this->pagination->create_links();
+        }
+        
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -314,8 +338,8 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
     function update_status(){        
             $id=$this->input->post('id_management_status');
             $status=$this->input->post('approval_status');
-            
-            $sql=$this->db->query("UPDATE `bank_management_status` SET `approval_status`='$status' WHERE `id_bank_management_status`=$id");
+            $car_date=date('Y-m-d h:i');
+            $sql=$this->db->query("UPDATE `bank_management_status` SET `approval_status`='$status',action_date='$car_date' WHERE `id_bank_management_status`=$id");
        echo json_encode($data);
     }
     

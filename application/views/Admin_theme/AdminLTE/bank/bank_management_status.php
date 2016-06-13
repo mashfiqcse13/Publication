@@ -4,7 +4,7 @@
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
       <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper only_print">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -21,19 +21,88 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+                     <div class="box only_print">
+                <div class="box-body">
+                    <?php
+                    $attributes = array(
+                        'clase' => 'form-inline',
+                        'method' => 'post');
+                    echo form_open('', $attributes)
+                            //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
+                    ?>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group col-md-4 text-left">
+                                <label>Status Type:</label>                        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <select name="status_type" class="form-control">
+                                        <option>Select Bank Management Status</option>
+                                        <option value="1">Approve</option>
+                                        <option value="2">Cancel</option>
+                                        <option value="3">Pending</option>
+                                    </select>
+
+                                    </select>
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group col-md-4 text-left">
+                                <label>User:</label>                        
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <?php echo $user_dropdown; ?>
+
+                                    </select>
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                        </div>
+                    
+                        
+                    </div>
+                    
+                    <div class="row">
+
+                    <div class="col-md-12">
+                    <div class="form-group col-offset-2 col-md-4 text-left">
+
+                        <label>Search Report With Date Range:</label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                            <br>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                    <div class="form-group col-md-2">
+                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <?= anchor(current_url() . '/', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    </div></div></div>
+                    <?= form_close(); ?>
+                    <?php ?>
+                </div>
+            </div>
 
                     <div class="box">
-                    
+                <?php    if(isset($main_content)){ ?>
                         <div class="panel-body">
                            
                            <table class="table table-bordered">
                                <tr style="background:#ddd;">
-                                   <th>Date</th>
+                                   <th>Generate Date</th>
                                    <th>Bank Name</th>
                                    <th>Account No.</th>
                                    <th>Amount</th>
                                    <th>Transaction Type</th>
-                                   <th>user Entered</th>
+                                   <th>User Entered</th>
+                                   <th>Action Date</th>
                                    <th>Approval Status</th>
                                </tr>
                                
@@ -42,9 +111,10 @@
                                    <td><?php echo $row->transaction_date; ?></td>
                                    <td><?php echo $row->name_bank; ?></td>
                                    <td><?php echo $row->account_number; ?></td>
-                                   <td><?php echo $row->amount_transaction; ?></td>
+                                   <td style="text-align:right"><?php echo $row->amount_transaction; ?></td>
                                    <td><?php echo $row->name_trnsaction_type; ?></td>
                                    <td><?php echo $row->username; ?></td>
+                                   <td><?php echo $row->action_date; ?></td>
                                    <td class="approval">
                                       <?php if($row->approval_status==1){echo '<span style="color:green">Approved</span>'; }
                                       elseif($row->approval_status==2){echo '<span style="color:red">Canceled</span>'; }
@@ -66,9 +136,9 @@
 
                              
                             
-                             <?php //echo $main_content ?>
+                             
                         </div>
-                      
+                      <?php }//echo $main_content ?>
                     
                
                     </div>
@@ -76,7 +146,13 @@
                 </div>
             </div>
          
+            <div class="row">
+                <div class="panel-body">
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
 
+                    <?php if(isset($report)){echo $report; }?> 
+                </div>
+            </div>
 
           
         </section><!-- /.content -->
@@ -84,7 +160,13 @@
 
       <!-- insert book -->
 
+            <div class="row">
+                <div class="panel-body">
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
 
+                    <?php if(isset($report)){echo $report; }?> 
+                </div>
+            </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 

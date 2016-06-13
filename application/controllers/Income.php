@@ -28,11 +28,7 @@ class Income extends CI_Controller {
     }
     
     function index(){
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Manage salary';
-        
-        $this->load->view($this->config->item('ADMIN_THEME').'income/income_dashboard', $data);
+        $this->income();
     }
     
     function income() {

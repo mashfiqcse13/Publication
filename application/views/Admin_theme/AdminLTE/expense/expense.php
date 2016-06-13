@@ -47,7 +47,7 @@
                     </div><!-- /.form group -->
 
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?= anchor(current_url() . '/expense', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     <?= form_close(); ?>
                     <?php ?>
                 </div>
@@ -66,9 +66,10 @@
             </div>
             <div class="row">
                 <div class="panel-body">
-                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
-
-                    <?php if(isset($report)){echo $report; }?> 
+                   
+                    <?php if(isset($report)){ ?>
+                     <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+                    <?php  echo $report;   }?> 
                 </div>
             </div>
          

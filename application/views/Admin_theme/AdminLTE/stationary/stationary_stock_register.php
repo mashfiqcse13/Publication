@@ -31,17 +31,17 @@
                     echo form_open('', $attributes)
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                     ?>
+                    <div class="col-md-4">
                     <div class="form-group col-md-4 text-left">
                         <label>Select Item:</label>                        
                     </div>
                     <div class="form-group col-md-6">
                         <div class="input-group">
                             <?php echo $expense_name_dropdown; ?>
-                                
-                            </select>
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
-                    
+                    </div>
+                    <div class="col-md-8">
                     <div class="form-group col-md-4 text-left">
 
                         <label>Search Report With Date Range:</label>
@@ -58,7 +58,7 @@
                     <div class="form-group col-md-2">
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     <?= anchor(current_url() . '/', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                    </div>
+                    </div></div>
                     <?= form_close(); ?>
                     <?php ?>
                 </div>
@@ -77,9 +77,10 @@
             </div>
             <div class="row">
                 <div class="panel-body">
-                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
-
-                    <?php if(isset($report)){echo $report; }?> 
+                   
+                    <?php if(isset($report)){ ?>
+                     <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+                    <?php  echo $report;   }?> 
                 </div>
             </div>
          

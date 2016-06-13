@@ -34,7 +34,7 @@ WHERE date_income BETWEEN $date");
               );
         
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h2 class="text-center">Advanced Publication</h2><br>'
+        $this->table->set_caption('<h2 class="text-center">'.$this->config->item('SITE')['name'].'</h2><br>'
                 . '<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span>'
                 . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>'
                 . '<style>td:nth-child(2) {    text-align: right;}</style>');
