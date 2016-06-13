@@ -185,6 +185,10 @@
             alert('Please don\'t select quantity bigger than ' + this_item_details.total_in_hand);
             return;
         }
+        if (item_quantity < 1) {
+            alert('Please don\'t select quantity smaller than 1');
+            return;
+        }
         item_selection[item_id] = {
             'item_id': item_id,
             'item_quantity': item_quantity,
