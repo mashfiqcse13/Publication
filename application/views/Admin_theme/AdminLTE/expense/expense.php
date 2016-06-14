@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-12">
                     
-                                        <div class="box only_print">
+                <div class="box only_print">
                 <div class="box-body">
                     <?php
                     $attributes = array(

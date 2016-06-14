@@ -21,6 +21,37 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+                                                            
+                <div class="box only_print">
+                <div class="box-body">
+                    <?php
+                    $attributes = array(
+                        'clase' => 'form-inline',
+                        'method' => 'post');
+                    echo form_open(base_url().'index.php/sales/memo_report', $attributes)
+                            //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
+                    ?>
+                    
+                    <div class="form-group col-md-2 text-left">
+
+                        <label>Search By Memo:</label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        
+                            <?php echo $memo_list; ?>
+                            
+                        
+                    </div><!-- /.form group -->
+
+                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <?= anchor(current_url() . '/expense', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    
+                            
+                            
+                    <?= form_close(); ?>
+                    <?php ?>
+                </div>
+            </div>
 
                     <div class="box">
                     

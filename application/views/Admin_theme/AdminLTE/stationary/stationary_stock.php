@@ -40,7 +40,7 @@
                         <div class="input-group">
                             <?php echo $expense_name_dropdown; ?>
                                 
-                            </select>
+                          
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     </div>

@@ -123,7 +123,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Expense Name";
+        $options[''] = "Select Expense Name(ALl)";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_name_expense']] = $row['name_expense'];
         }

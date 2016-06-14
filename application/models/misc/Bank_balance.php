@@ -223,106 +223,11 @@ class Bank_balance extends CI_Model {
                     . "bank_management.id_transaction_type=$transaction_type and "
                     . "bank_management.id_account=$bank_account";
         }
-
         
-
-//        if(!empty($date) && !empty($user_id) && !empty($bank_account) && !empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_user=$user_id and "
-//                    . "bank_management.id_transaction_type=$transaction_type and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-        
-
-                
-//        if(empty($date) && empty($user_id) && empty($bank_account) && empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="";
-//        }
-//        
-//        
-//                        
-//        if(empty($date)){
-//            
-//            $condition="bank_management.id_user=$user_id and "
-//                    . "bank_management.id_transaction_type=$transaction_type and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//        
-//                        
-//        if(empty($date) && empty($user_id)){
-//            
-//            $condition="bank_management.id_transaction_type=$transaction_type and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//        
-//                        
-//        if(empty($date) && empty($user_id) && empty($bank_account) ){
-//           
-//            $condition="bank_management.id_transaction_type=$transaction_type";
-//        }
-//        
-//                        
-//        if(empty($user_id) && empty($bank_account) && empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date";
-//        }
-//        
-//                
-//        if(empty($bank_account) && empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_user=$user_id";
-//        }
-//                        
-//        if(empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_user=$user_id and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//                        
-//        if(empty($user_id) && empty($transaction_type)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//                        
-//        if(empty($date) && empty($bank_account)){            
-//            $condition="bank_management.id_transaction_type=$transaction_type and "
-//                    . "bank_management.id_user=$user_id";
-//        }
-//                                
-//        if(empty($date) && empty($transaction_type)){            
-//            $condition="bank_management.id_user=$user_id and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//        
-//        
-//        if(empty($user_id)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_transaction_type=$transaction_type and "
-//                    . "bank_management.id_account=$bank_account";
-//        }
-//        
-//                
-//        if(empty($bank_account)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_user=$user_id and "
-//                    . "bank_management.id_transaction_type=$transaction_type and ";
-//        }
-//        
-//                
-//        if(empty($user_id) && empty($bank_account)){
-//            $date=$this->dateformatter($date);
-//            $condition="transaction_date BETWEEN $date and "
-//                    . "bank_management.id_transaction_type=$transaction_type";
-//        }
-//        
-        
+       if(empty($date) && empty($user_id) && empty($bank_account) && empty($transaction_type)){
+            
+            $condition=" 1";
+        }
 
         
         //$date=$this->dateformatter($date);
@@ -391,16 +296,33 @@ WHERE $condition");
         
         
         
-
         if(!empty($user_id)){
             
             $condition="bank_management.id_user=$user_id";
         }elseif(!empty($date)){
             
             $condition="action_date BETWEEN $date";
+            
         }elseif(!empty($status_type)){
             
             $condition="bank_management_status.approval_status=$status_type";
+            
+        }elseif(!empty($user_id) && !empty ($date)){
+            $condition="action_date BETWEEN $date and bank_management.id_user=$user_id";
+            
+        }elseif(!empty($user_id) && !empty($status_type)){
+            
+            $condition="bank_management.id_user=$user_id and bank_management.id_user=$user_id";
+            
+        }elseif(!empty ($date) && !empty($status_type)){
+            
+            $condition="action_date BETWEEN $date and bank_management_status.approval_status=$status_type";
+        }elseif(!empty ($date) && !empty($status_type) && !empty($user_id)){
+            
+            $condition="action_date BETWEEN $date and bank_management_status.approval_status=$status_type and bank_management.id_user=$user_id";
+        }else if(empty($date) && empty($user_id) && empty($status_type)){
+            
+            $condition=" 1=1";
         }
 
 
@@ -471,7 +393,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Transaction Type";
+        $options[''] = "Select Transaction Type(All)";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_trnsaction_type']] = $row['name_trnsaction_type'];
         }
@@ -491,7 +413,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Account Number";
+        $options[''] = "Select Account Number(All)";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_bank_account']] = $row['account_number'];
         }
@@ -511,7 +433,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Transaction Type";
+        $options[''] = "Select Transaction Type(All)";
         foreach ($db_rows as $index => $row) {
             $options[$row['id']] = $row['username'];
         }

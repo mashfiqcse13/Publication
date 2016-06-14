@@ -41,7 +41,7 @@
 
         <div class="row" style="padding-top:50px">
 
-            <div class="text-center" style="display:none">
+<!--            <div class="text-center" style="display:none">
 
                 <h6>বিসমিল্লাহির রহমানির রহিম</h6>
 
@@ -51,7 +51,7 @@
 
                 <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
 
-            </div>
+            </div>-->
 
 
 

@@ -39,7 +39,7 @@
                             <div class="form-group col-md-6">
                                 <div class="input-group">
                                     <select name="status_type" class="form-control">
-                                        <option>Select Bank Management Status</option>
+                                        <option value="">Select Bank Management Status(All)</option>
                                         <option value="1">Approve</option>
                                         <option value="2">Cancel</option>
                                         <option value="3">Pending</option>
