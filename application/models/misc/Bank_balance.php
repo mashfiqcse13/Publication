@@ -272,8 +272,7 @@ WHERE $condition");
         }
         
         $this->table->set_template($tmpl);
-                $this->table->set_caption('<h2 class="text-center">Advanced Publication</h2><br>'
-                . '<h4><span class="pull-left">Date Range:'.$date_range.'</span>'
+                $this->table->set_caption('<h4><span class="pull-left">Date Range:'.$date_range.'</span>'
                 . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>'
                 . '<style>td:nth-child(5) {    text-align: right;}</style>');
         return $this->table->generate($range_query);
@@ -375,8 +374,7 @@ WHERE $condition");
         }
         
         $this->table->set_template($tmpl);
-                $this->table->set_caption('<h2 class="text-center">Advanced Publication</h2><br>'
-                . '<h4><span class="pull-left">Date Range:'.$date_range.'</span>'
+                $this->table->set_caption('<h4><span class="pull-left">Date Range:'.$date_range.'</span>'
                 . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>'
                 . '<style>td:nth-child(4) {    text-align: right;}</style>');
         return $this->table->generate($range_query);
@@ -393,7 +391,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Transaction Type(All)";
+        $options[''] = "All Selected ";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_trnsaction_type']] = $row['name_trnsaction_type'];
         }
@@ -413,7 +411,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Account Number(All)";
+        $options[''] = "All Selected ";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_bank_account']] = $row['account_number'];
         }
@@ -433,7 +431,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Transaction Type(All)";
+        $options[''] = "All Selected ";
         foreach ($db_rows as $index => $row) {
             $options[$row['id']] = $row['username'];
         }

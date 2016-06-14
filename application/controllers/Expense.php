@@ -65,7 +65,7 @@ class Expense extends CI_Controller {
         $this->load->model('expense_model');
         $date_range = $this->input->post('date_range');
         
-        if ($date_range != '') {
+        if (isset($btn)) {
             $data['report']=$this->expense_model->expense_report($date_range);
         }else{
            $output = $crud->render();

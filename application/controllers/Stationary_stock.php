@@ -48,7 +48,8 @@ class Stationary_stock extends CI_Controller {
                 
         $expense_name_id=$this->input->post('expense_name_id');    
         $date_range = $this->input->post('date_range');
-         if ($date_range != '' || $expense_name_id !='') {
+        $btn=$this->input->post('btn_submit');
+         if (isset($btn)) {
             $data['report']=$this->stationary_model->stationary_report($date_range,$expense_name_id);
         }else{
            $output = $crud->render();
@@ -74,10 +75,10 @@ class Stationary_stock extends CI_Controller {
         
         $this->load->model('stationary_model');
         $data['expense_name_dropdown']=$this->stationary_model->expense_name_dropdown();
-        
+        $btn=$this->input->post('btn_submit');
         $expense_name_id=$this->input->post('expense_name_id');    
         
-         if (isset($expense_name_id)) {
+        if (isset($btn)) {
             $data['report']=$this->stationary_model->stationary_stock_report($expense_name_id);
         }else{
            $output = $crud->render();

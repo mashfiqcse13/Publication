@@ -12,6 +12,9 @@
         font-weight: bold;
         text-align: right;
     }
+    .report_payment tr td:nth-child(2) {
+        text-align: right;
+    }
 </style>
 
 
@@ -82,17 +85,6 @@
 
         <div class="row" style="padding-top:50px">
 
-<!--            <div class="text-center" style="display:none">
-
-                <h6>বিসমিল্লাহির রহমানির রহিম</h6>
-
-                <h1>দি যমুনা পাবলিশার্স</h1>
-
-                <p>৩৮,বাংলাবাজার(১ম তলা) ঢাকা-১১০০ । ফোন- ৭১১৬০৬৯  </p>
-
-                <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
-
-            </div>-->
 
 
 <div style="padding:0px 0px 10px 0px">
@@ -157,7 +149,11 @@
         
         <div class="row">
             
-            <?php if(isset($check_dues_payment)) { echo $check_dues_payment; } ?>
+            <?php if(isset($check_dues_payment)) { 
+                echo $check_dues_payment['table1']; 
+                echo $check_dues_payment['table2'];
+                
+            } ?>
             
         </div>
     </div>
@@ -177,7 +173,6 @@
       </div><!-- /.content-wrapper -->
 
       <!-- insert book -->
-
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>

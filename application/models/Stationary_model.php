@@ -5,19 +5,26 @@ class Stationary_model extends CI_Model {
 
    function stationary_report($date='',$item=''){
        
-    $date=$date;
-    $item=$item;
+        $date=$date;
+        if($date==''){
+            $date='';
+        }else{
+            $date=$this->dateformatter($date);
+        }
+        $item=$item;
     
-    if(empty($date) || $date==''){
-           $condition="stationary_stock_register.id_name_expense=$item";
-    }
-    if(empty($item) || $item==''){
-        $date=$this->dateformatter($date);
+    if(!empty($date)){
         $condition="date_received BETWEEN $date";
-    }
-    if(!empty($date) && !empty($item)){
-        $date=$this->dateformatter($date);
+           
+    }elseif(!empty($item)){
+       $condition="stationary_stock_register.id_name_expense=$item";
+        
+    }elseif(!empty($date) && !empty($item)){
         $condition="date_received BETWEEN $date and stationary_stock_register.id_name_expense=$item";
+        
+        
+    }else{
+        $condition= '1=1';
     }
         
             
@@ -51,8 +58,7 @@ WHERE $condition");
               );
         
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h2 class="text-center">'.$this->config->item('SITE')['name'].'</h2><br>'
-                . '<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span>'
+        $this->table->set_caption('<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span>'
                 . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>');
         return $this->table->generate($range_query);
         
@@ -106,8 +112,7 @@ WHERE $condition");
               );
         
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h2 class="text-center">'.$this->config->item('SITE')['name'].'</h2><br>'
-                . '<h4><span class="pull-left"></span>'
+        $this->table->set_caption('<h4><span class="pull-left"></span>'
                 . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>');
         return $this->table->generate($range_query);
         
@@ -123,7 +128,7 @@ WHERE $condition");
         $query = $this->db->get();
         $db_rows = $query->result_array();
         
-        $options[''] = "Select Expense Name(ALl)";
+        $options[''] = "All Selected ";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_name_expense']] = $row['name_expense'];
         }

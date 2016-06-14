@@ -137,23 +137,7 @@ bank.id_bank=bank_account.id_bank");
        
     }
     
-//    function management_report(){
-//        $this->load->model('misc/bank_balance');
-//        $date_range = $this->input->post('date_range');
-//        
-//        if ($date_range != '') {
-//            $data['report']=$this->bank_balance->bank_report($date_range);
-//        }
-//        
-//        
-//        
-//        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-//        $data['base_url'] = base_url();
-//        $data['Title'] = 'Bank Management';
-//        $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_management', $data);
-//        
-//    }
-//    
+  
     
     function _bank_name_id($value,$row){
        $sql=$this->db->query("SELECT name_bank,account_number FROM `bank_account` LEFT JOIN bank ON 

@@ -52,7 +52,7 @@ class Income extends CI_Controller {
         $this->load->model('income_model');
         $date_range = $this->input->post('date_range');
         
-        if ($date_range != '') {
+        if (isset($btn)) {
             $data['report']=$this->income_model->income_report($date_range);
         }else{
            $output = $crud->render();

@@ -120,7 +120,9 @@ class Sales extends CI_Controller {
         $data['check_dues_payment']=$this->check_dues_payment($total_sales_id);
         
         $this->load->model('misc/Customer_due');
+        
         $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
+        
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/memo_report', $data);
     }
@@ -145,10 +147,15 @@ class Sales extends CI_Controller {
     }
     
     
+    
     function check_dues_payment($memo_id){
-        $query=$this->db->query("SELECT `payment_date`,CONCAT('TK',`paid_amount`) FROM `customer_payment` WHERE `id_total_sales`=$memo_id");
+        $query=$this->db->query("SELECT `payment_date`,CONCAT('TK',`paid_amount`) "
+                . "FROM `customer_payment` WHERE `id_total_sales`=$memo_id");
+        
+        
         $this->load->library('table');
         $this->table->set_heading(array('Payment Date','Paid Amount'));
+        
         $tmpl = array (
                     'table_open'          => '<table class="report_payment table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
 
@@ -171,10 +178,19 @@ class Sales extends CI_Controller {
               );
         
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h2 class="text-center">Deu\'s Payment Report</h2><br>'
-                . '<style>.report_payment tr td:nth-child(2) {    text-align: right;}</style>');
         
-        return $this->table->generate($query);
+        $data['table1']=$this->table->generate($query);
+        $this->table->clear();
+        $totalpadi=$this->db->query("SELECT CONCAT('TK ',sum(paid_amount)) as total FROM customer_payment WHERE `id_total_sales`=$memo_id");
+        foreach($totalpadi->result() as $row){
+            $total=$row->total;
+        }
+        $this->table->set_heading('', '');        
+        $this->table->add_row('<span style="float:right">Total :</span>',$total);
+
+        $data['table2']=$this->table->generate();
+        
+        return $data;
     }
 
 }
