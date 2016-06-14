@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,6 +48,7 @@ class Salary extends CI_Controller {
         $crud->set_table('salary_payment')
                 ->set_subject('Salary Payment')
                 ->display_as("id_employee", 'Employee Name')
+                ->display_as("amount_salary_payment", 'Total Amount of Salary')
                 ->unset_delete()
                 ->unset_edit()
                 ->unset_read()
@@ -121,40 +123,38 @@ class Salary extends CI_Controller {
         $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
         $data['status_salary_payment'] = 2;
         $amount_salary = $this->input->post('amount_salary_payment');
-        $payment_id = $this->Salary_model->deduction_update('salary_payment','id_employee', $data, $id,$amount_salary,'amount_salary_payment','id_salary_payment');
-         $this->Salary_model->update_cash('cash',$amount_salary);
-        
-        
+        $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id, $amount_salary, 'amount_salary_payment', 'id_salary_payment');
+        $this->Salary_model->update_cash('cash', $amount_salary);
+
+
 //        bonus update
         $bonus['status_bonus_payment'] = 2;
-        $bonus_id = $this->Salary_model->update_info('salary_bonus','id_salary_payment', $bonus, $payment_id->id_salary_payment,'id_salary_bonus');
+        $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
 //        loan payment insert
-        if($this->input->post('id_loan')!= null){
-        $loan['id_loan'] = $this->input->post('id_loan');
-        $loan['paid_amount_loan_payment'] = $this->input->post('paid_amount_loan_payment');
-        $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
-        $this->Salary_model->save_info('loan_payment',$loan);
+        if ($this->input->post('id_loan') != null) {
+            $loan['id_loan'] = $this->input->post('id_loan');
+            $loan['paid_amount_loan_payment'] = $this->input->post('paid_amount_loan_payment');
+            $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
+            $this->Salary_model->save_info('loan_payment', $loan);
         }
 //        advance update
 //        $amount = floatval($this->input->post('paid_amount_loan_payment'));
 //        $advance['amount_paid_salary_advance'] =  $this->input->post('amount_paid_salary_advance');
 //        $advance_id = $this->Salary_model->deduction_update('salary_advance','id_employee', $advance, $id,$amount,'amount_given_salary_advance','id_salary_advance');
-        
 //        advance payment insert
-        if($this->input->post('id_salary_advance')!= null){
-        $advance_payment['id_salary_advance'] = $this->input->post('id_salary_advance');
-        $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
-        $advance_payment['paid_amount_salary_advance_payment'] = $this->input->post('amount_paid_salary_advance');
-        
-        $this->Salary_model->save_info('salary_advance_payment',$advance_payment);
-       
+        if ($this->input->post('id_salary_advance') != null) {
+            $advance_payment['id_salary_advance'] = $this->input->post('id_salary_advance');
+            $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
+            $advance_payment['paid_amount_salary_advance_payment'] = $this->input->post('amount_paid_salary_advance');
+
+            $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
         }
 //        loan update
 //        $money = floatval($this->input->post('amount_paid_salary_advance'));
 //        $info['status'] = 'paid';
 //        $this->Salary_model->deduction_update('loan','id_employee', $info, $id,$money,'amount_loan');
 //        echo '<pre>';print_r($bonus_id);exit();
-        
+
         redirect('Salary/salary_payment');
     }
 
@@ -174,7 +174,29 @@ class Salary extends CI_Controller {
                 ->set_relation('id_employee', 'employee', "name_employee");
         $output = $crud->render();
         $data['glosary'] = $output;
+        
+//        employee search
+        $employee = $this->input->post('employee');
+        
+//        date range
+        $range = $this->input->post('date_range');
+        $part = explode("-", $range . '-');
+        $from = date('Y-m-d', strtotime($part[0]));
+        $to = date('Y-m-d', strtotime($part[1]));
+//        ---------------
+        
+         if ($employee != null) {
+            $data['salaries'] = $this->Salary_model->salary_advance_by_employee_id($employee);
+        } else if ($from != "1970-01-01") {
 
+            $data['salaries'] = $this->Salary_model->Salary_advance_by_date($from, $to);
+////            print_r($data);
+        } else {
+            $data['salaries'] = $this->Salary_model->salary_advance_with_employee();
+        }
+        
+        
+        $data['employees'] = $this->Salary_model->select_all('employee');
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Advance';
@@ -220,6 +242,37 @@ class Salary extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Announced';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_announced_list', $data);
+    }
+
+    function current_salary_payment() {
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Current Salary Payment';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/current_salary', $data);
+    }
+
+    function current() {
+        $month = date('n', now());
+        $data['current_salary'] = $this->Salary_model->current_salary($month);
+//        echo '<pre>';print_r($data['current_salary']);exit();
+        echo json_encode($data);
+    }
+
+    function total_employee_paid() {
+        $data['total_paid'] =  $this->Salary_model->select_all_salary_of_employee();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Total Employee Salary';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/total_employee_paid', $data);
+    }
+    
+    
+    function total_salary_paid(){
+        $data['total_paid_salary'] =  $this->Salary_model->select_all_paid_salary();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Total Salary Paid';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/total_salary_paid', $data);
     }
 
 }

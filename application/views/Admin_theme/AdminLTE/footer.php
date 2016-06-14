@@ -70,7 +70,7 @@
 <!-- FastClick -->
 <script src="<?php echo $theme_asset_url ?>plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
 
-<script src="<?php echo $theme_asset_url ?>date.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>asset/js/scripts.js" type="text/javascript"></script>
 
 
 
@@ -93,20 +93,24 @@
 <!-- For Add memo form validation -->
 <script src="<?= base_url() . $this->config->item('ASSET_FOLDER') ?>js/memo-validation.js" type="text/javascript"></script>
 
+
+<script type="text/javascript">
+var baseURL = "<?php echo base_url(); ?>";
+</script>
+
 <script type="text/javascript">
     //Date range picker
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
-    $(".select2").select2({
-        'width': '100%'
-    });
+    $(".select2").select2();
     //datatables
     $('#example1').DataTable();
     // Datepicker
     $('.datepicker').datepicker();
-
+    
     $('#info').hide();
     $('#success').hide();
+    
 //    $('#loan').hide();
 //  var test =  $('#loan').placeholder();
 //  alert(test);
@@ -128,14 +132,13 @@
                 $.each(obj.edit_salary, function (index, salary) {
                     function pay_loan() {
                         if (discharge != null) {
-                            if (salary['amount_loan'] >= discharge) {
+                            if (salary['amount_loan'] >= discharge){
                                 var loanAmount = salary['amount_loan'] - discharge;
                                 return loanAmount
-                            }
-                            if (discharge > salary['amount_loan']) {
+                            }if(discharge > salary['amount_loan']){
                                 alert('Cross the limit!!');
                             }
-
+                            
                         } else {
                             return salary['amount_loan'];
                         }
@@ -256,7 +259,7 @@
                         loan = Number(salary['amount_loan']);
 
                         amount = payment + bonus;
-                        if (advance != null) {
+                        if (advance != null ) {
                             amount = amount - advance;
                             return amount;
                         }
@@ -271,10 +274,10 @@
 //                    alert(salary['amount_loan']);
 
                     $('#employee_id').val(salary['id_employee']);
-                    $('#loan_id').val(salary['id_loan']);
+                   $('#loan_id').val(salary['id_loan']);
                     $('#advance_id').val(salary['id_salary_advance']);
                     $('#advance_amount').val(advance());
-
+                    
                     if (salary['status_salary_payment'] == 1) {
 //                        $('#total_discharge').attr('type', 'text');
 
@@ -289,12 +292,12 @@
                         $('#advance').html(advance());
                         $('#total').html(get_total());
                         $('#pay').html(salary['amount_loan']);
-                        if (salary['amount_loan'] != null) {
+                        if(salary['amount_loan']!= null){
                             $('#loan').show();
-                        } else {
+                        }else{
                             $('#loan').hide();
                         }
-
+                        
 //                        $('#info').html('<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Month of Salary' + '</label>'
 //                                + '<div class="col-md-9">' + '<p>' + month() + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Year of Salary' + '</label>'
 //                                + '<div class="col-md-9">' + '<p>' + salary['year_salary_payment'] + '</p>' + '</div>' + '</div>' + '<div class="form-group">' + '<label class="col-md-3 control-label">' + 'Issue Salary Payment' + '</label>'
@@ -309,7 +312,7 @@
                         $('#success').hide();
                     }
                     if (salary['status_salary_payment'] == 2) {
-                        $('#heanding_success').html('Already Paid!!' + get_total());
+                        $('#heanding_success').html('Already Paid!!'+get_total());
                         $('#salary_month').html(month());
                         $('#salary_year').html(salary['year_salary_payment']);
                         $('#salary_issue').html(salary['issue_salary_payment']);

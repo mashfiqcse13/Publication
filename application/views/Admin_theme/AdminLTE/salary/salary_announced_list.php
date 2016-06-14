@@ -72,7 +72,8 @@
                                             <?php
                                             $value = $this->Salary_model->announce($employee->id_employee);
                                             $bonus = $this->Salary_model->bonus($value->id_salary_payment);
-                                            if ($bonus != null) {
+                                            $current_month = date('n',now());
+                                            if ($bonus->status_bonus_payment == 2 && $value->month_salary_payment == $current_month) {
                                                 ?>
                                                 <td>Bonus(<?php echo $bonus->amount_salary_bonus; ?>)</td>
                                                 <?php
@@ -84,7 +85,7 @@
                                                         <?php
                                                         foreach ($bonus_type as $bonus) {
                                                             ?>
-                                                            <option value="<?php echo $bonus->id_salary_bonus_type ?>"><?php echo $bonus->name_salary_bonus_type; ?>(1000)</option>
+                                                            <option value="<?php echo $bonus->id_salary_bonus_type ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount_salary_bonus; ?>)</option>
         <?php }
         ?>
                                                         <option value="0">No Bonus</option>
@@ -95,7 +96,7 @@
                                             ?>
                                             <td >
                                                 <?php
-                                                if ($value->status_salary_payment == 2) {
+                                                if ($value->status_salary_payment == 2 && $value->month_salary_payment == $current_month) {
                                                     if ($employee->id_employee == $value->id_employee) {
 //                                                        
                                                         ?>

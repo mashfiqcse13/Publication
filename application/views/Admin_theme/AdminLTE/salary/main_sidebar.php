@@ -26,6 +26,12 @@
             
             <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announced</span>'); ?></li>
             
+            <li><?php echo anchor('salary/current_salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Current Salary</span>'); ?></li>
+            
+            <li><?php echo anchor('salary/total_employee_paid', '<i class="fa fa-plus-circle"></i>  <span>Total Paid</span>'); ?></li>
+            
+            <li><?php echo anchor('salary/total_salary_paid', '<i class="fa fa-plus-circle"></i>  <span>Total Salary Paid</span>'); ?></li>
+            
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
             

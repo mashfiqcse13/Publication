@@ -119,6 +119,64 @@ class Salary_model extends CI_Model {
     function update_cash($tbl_name,$value){
         $this->db->query('UPDATE `cash` SET `balance`= `balance`-'.$value.', `total_out`=`total_out`+'.$value.' WHERE `id_cash`='. 1);
     }
-//    p
+    
+    function  current_salary($month){
+        $this->db->select('*');
+        $this->db->from('salary_payment','salary_advance');
+        $this->db->join('employee','employee.id_employee = salary_payment.id_employee','left');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left');
+        $this->db->join('salary_advance', 'salary_payment.id_employee = salary_advance.id_employee', 'left');
+        $this->db->where('month_salary_payment',$month);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function select_all_salary_of_employee(){
+        $this->db->select('*');
+        $this->db->from('salary_payment');
+        $this->db->join('employee','employee.id_employee = salary_payment.id_employee','left');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function salary_advance_with_employee(){
+        $this->db->select('*');
+        $this->db->from('salary_advance');
+        $this->db->join('employee','employee.id_employee = salary_advance.id_employee','left');
+        $query = $this->db->get();
+        return $query->result();
+    }
+//    search employee
+    function salary_advance_by_employee_id($employee){
+        $this->db->select('*');
+        $this->db->from('salary_advance');
+        $this->db->join('employee','employee.id_employee = salary_advance.id_employee','left');
+        $this->db->where('salary_advance.id_employee',$employee);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function Salary_advance_by_date($from, $to){
+        $this->db->select('*');
+        $this->db->from('salary_advance');
+        $this->db->join('employee','employee.id_employee = salary_advance.id_employee','left');
+        $this->db->where('date_given_salary_advance >=', $from);
+        $this->db->where('date_given_salary_advance <=', $to);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function select_all_paid_salary(){
+     $sql =  $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee`
+ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment`');
+//        $this->db->select('*','SUM(amount_salary_payment) AS total_salary');
+//        $this->db->from('salary_payment');
+//        $this->db->join('employee','employee.id_employee = salary_payment.id_employee','left');
+//        $this->db->where('status_salary_payment',2);
+//        $this->db->group_by('date_salary_payment');
+//        $this->db->where('month_salary_payment','month_salary_payment');
+        return $sql->result();
+//        $query = $this->db->get();
+//        return $query->result();
+    }
 
 }

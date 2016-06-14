@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author MD. Mashfiq
  */
 class Loan extends CI_Controller {
-            
+
     function __construct() {
         parent::__construct();
         date_default_timezone_set('Asia/Dhaka');
@@ -24,43 +24,122 @@ class Loan extends CI_Controller {
         }
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
-       
+        $this->load->model('Loan_model');
     }
-    
-    function index(){
+
+    function index() {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Loan';
-        
-        $this->load->view($this->config->item('ADMIN_THEME').'loan/loan_dashboard', $data);
+
+        $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_dashboard', $data);
     }
-    
-    function loan() {
+
+    function loan($cmd = false) {
         $crud = new grocery_CRUD();
         $crud->set_table('loan')
-               ->display_as("id_employee", 'Employee Name')
+                ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                 ->unset_fields('installments_loan', 'installment_amount_loan','status');
+                ->unset_fields('installments_loan', 'installment_amount_loan', 'status');
+
         $output = $crud->render();
         $data['glosary'] = $output;
         
+        
+//        date range
+        $range = $this->input->post('date_range');
+        $part = explode("-", $range . '-');
+        $from = date('Y-m-d', strtotime($part[0]));
+        $to = date('Y-m-d', strtotime($part[1]));
+//        --------------
+        $status = $this->input->post('payment_status');
+        $employee = $this->input->post('employee');
+        if ($status != null) {
+            $data['loans'] = $this->Loan_model->loan_info_by_status($status);
+        } else if ($employee != null) {
+            $data['loans'] = $this->Loan_model->loan_info_by_employee($employee);
+        } else if ($from != "1970-01-01") {
+
+            $data['loans'] = $this->Loan_model->loan_info_by_date($from, $to);
+////            print_r($data);
+        } else {
+            $data['loans'] = $this->Loan_model->employee_loan();
+        }
+//        if ($status == null) {
+//            if ( $employee == null) {
+//            
+//        }
+//            $data['loans'] = $this->Loan_model->employee_loan();
+//        }
+
+        $data['employees'] = $this->Loan_model->select_all('employee');
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Loan';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan', $data);
     }
-    
+
     function loan_payment() {
         $crud = new grocery_CRUD();
         $crud->set_table('loan_payment');
         $output = $crud->render();
         $data['glosary'] = $output;
-        
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Loan Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_payment', $data);
     }
-    
-    
+
+    function loan_info() {
+        $id = $this->input->post('id_employee');
+        $data['loan_info'] = $this->Loan_model->select_loan_by_loan_id($id);
+//        for($i = 1; $i <= count($data['loan_info']); $i++){
+//         echo '<pre>';print_r(count($data['loan_info']));exit();
+        echo json_encode($data);
+//        }
+    }
+
+    function loan_history() {
+        $data['employees'] = $this->Loan_model->select_all('employee');
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Loan History';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_history', $data);
+    }
+
+    function loan_employee_list() {
+        $range = $this->input->post('date_range');
+        $part = explode("-", $range . '-');
+//        print_r($part);
+        $from = date('Y-m-d', strtotime($part[0]));
+//        echo $from;
+        $to = date('Y-m-d', strtotime($part[1]));
+        $date = array(
+            'date1' => $from,
+            'date2' => $to
+        );
+        if ($from == "1970-01-01") {
+            $data['employees_loan'] = $this->Loan_model->employee_loan();
+
+//            echo '<pre>'; print_r($data);
+        } else {
+            $data['employees_loan'] = $this->Loan_model->employee_loan_by_range($date);
+//            echo '<pre>'; print_r($_POST);
+        }
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Loan Employee List';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_empoloyee_list', $data);
+    }
+
+    function test() {
+        $part = explode("-", $this->input->post('date_range'));
+        $from = $part['0'];
+        $to = $part['1'];
+        echo '<pre>';
+        print_r($part['1']);
+        exit();
+    }
+
 }
