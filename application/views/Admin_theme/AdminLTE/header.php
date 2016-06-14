@@ -47,6 +47,10 @@
                 height: 35px;
             }
 
+            .form-input-box {
+                min-width: 200px;
+            }
+
             @media print{
                 .only_print{display: none;}
                 .memo_print_option{margin:0 auto;width:100%;}
@@ -72,62 +76,62 @@
             .upper{text-transform: uppercase;}
             .dropdown-width{width:200px}
             .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
-    
-    border: 1px solid #ddd;
-}
-.text-right-for-money tr > td:nth-child(3) {
-    text-align: right;
-}
-.text-right-for-money tr > td:nth-child(4) {
-    text-align: right;
-}
-.text-right-for-money tr > td:nth-child(5) {
-    text-align: right;
-}
-.move-tk-to-right-for-soldbook tr > td:nth-child(2) {
-    text-align: right;
-}
-.right-text-for-account tr>td{
-    text-align:right;
-}
-.right-text-for-account tr>td:first-child{
-    text-align:left;
-}
-.right-text-for-account th.success:first-child {
-    text-align: left;
-}
-.right-text-for-account th.success {
-    text-align: right;
-}
-.report-logo-for-print{
-    display: none;
-}
-.bDiv tr td:nth-child(1)>.text-left {
-    float: left;
-}
-.bDiv tr td:nth-child(2)>.text-left {
-    float: left;
-}
-.bDiv tr td .text-left {
-    text-align: right;
-}
-            
-.position_top{
-    position: relative;
-    z-index: 999;
-}
-@media only print{
-    .report-logo-for-print{
-        display: block;
-    }
-    aside.main-sidebar.only_print {
-    display: none;
-}
-.table>tbody>tr>td{padding-bottom: 9px}
-                    footer.main-footer {
-                        display:none;
-                    }
-}
+
+                border: 1px solid #ddd;
+            }
+            .text-right-for-money tr > td:nth-child(3) {
+                text-align: right;
+            }
+            .text-right-for-money tr > td:nth-child(4) {
+                text-align: right;
+            }
+            .text-right-for-money tr > td:nth-child(5) {
+                text-align: right;
+            }
+            .move-tk-to-right-for-soldbook tr > td:nth-child(2) {
+                text-align: right;
+            }
+            .right-text-for-account tr>td{
+                text-align:right;
+            }
+            .right-text-for-account tr>td:first-child{
+                text-align:left;
+            }
+            .right-text-for-account th.success:first-child {
+                text-align: left;
+            }
+            .right-text-for-account th.success {
+                text-align: right;
+            }
+            .report-logo-for-print{
+                display: none;
+            }
+            .bDiv tr td:nth-child(1)>.text-left {
+                float: left;
+            }
+            .bDiv tr td:nth-child(2)>.text-left {
+                float: left;
+            }
+            .bDiv tr td .text-left {
+                text-align: right;
+            }
+
+            .position_top{
+                position: relative;
+                z-index: 999;
+            }
+            @media only print{
+                .report-logo-for-print{
+                    display: block;
+                }
+                aside.main-sidebar.only_print {
+                    display: none;
+                }
+                .table>tbody>tr>td{padding-bottom: 9px}
+                footer.main-footer {
+                    display:none;
+                }
+            }
         </style>
 
         <?php
@@ -139,7 +143,7 @@
                 ?>
                 <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
 
-    <?php endforeach; ?>
+            <?php endforeach; ?>
 
 
         <style type='text/css'>
@@ -405,7 +409,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-<?php echo anchor('login/logout', 'Sign Out', 'class="btn btn-default btn-flat"'); ?>
+                                            <?php echo anchor('login/logout', 'Sign Out', 'class="btn btn-default btn-flat"'); ?>
                                         </div>
                                     </li>
                                 </ul>

@@ -126,4 +126,27 @@ class Common extends CI_Model {
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
 
+    function dropdown_subject($value = '', $primary_key) {
+        return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
+    }
+
+    function dropdown_upazila($value = '', $primary_key) {
+        return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+    }
+
+    function dropdown_division($value = '', $primary_key) {
+        return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" ');
+    }
+
+    function dropdown_district($value = '', $primary_key) {
+        return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width" ');
+    }
+
+    function dropdown_contact_type($value = '', $primary_key) {
+        return form_dropdown('contact_type', $this->config->item('contact_type'), $value, 'class="form-control select2 dropdown-width" ');
+    }
+//
+//    function dropdown_($value = '', $primary_key) {
+//        return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
+//    }
 }

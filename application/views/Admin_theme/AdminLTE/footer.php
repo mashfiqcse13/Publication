@@ -102,7 +102,9 @@ var baseURL = "<?php echo base_url(); ?>";
     //Date range picker
     $('#reservation').daterangepicker();
     //Initialize Select2 Elements
-    $(".select2").select2();
+    $(".select2").select2({
+        'width': '100%'
+    });
     //datatables
     $('#example1').DataTable();
     // Datepicker

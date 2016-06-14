@@ -29,70 +29,52 @@ class Production_process extends CI_Controller {
     }
 
     function index() {
-        $this->all_details();
-    }
-
-    function all_details($transfer = false) {
         $crud = new grocery_CRUD();
-        $crud->set_table('pub_stock')->set_subject('Stock');
-        $crud->set_relation('book_ID', 'pub_books', 'name');
-        $crud->set_relation('printing_press_ID', 'pub_contacts', 'name');
-//        $crud->set_relation('binding_store_ID', 'pub_contacts', 'name');
-//
-//        $crud->set_relation('sales_store_ID', 'pub_contacts', 'name');
+        $crud->set_table('processes')
+                ->set_subject('Production Process')
+                ->columns('id_processes', 'id_process_type', 'id_item', 'date_created', 'date_finished', 'order_quantity', 'actual_quantity', 'total_damaged_item', 'total_reject_item', 'total_missing_item', 'process_type_id_process_type')
+                ->set_relation('id_item', 'items', 'name')->set_relation('id_process_type', 'process_type', 'process_type')
+                ->order_by('id_processes', 'desc')->add_fields('id_process_type', 'id_item', 'order_quantity')
+                ->unset_edit()
+                ->unset_delete();
         $output = $crud->render();
         $data['glosary'] = $output;
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Manage production process';
-
-        $data['scriptInline'] = '<script>
-            jQuery(\'[data-StockId]\').click(function () {
-                var stock_id = $(this).attr("data-StockId");
-                var maxQuantity = $(this).attr("data-maxQuantity");
-                //console.log(stock_id);
-                jQuery(\'[name="stock_id_from"]\').val(stock_id);
-                jQuery(\'[name="Quantity"]\').attr("max",maxQuantity);
-            });
-        </script>';
-        $data['wearhouse_dropdown'] = $this->Production_process_model->get_wearhouse_dropdown();
-
-
-        $data['printing_table'] = $this->Production_process_model->get_wearhouse_table();
-        $data['binding_table'] = $this->Production_process_model->get_wearhouse_table('Binding Store');
-        $data['store_table'] = $this->Production_process_model->get_wearhouse_table('Sales Store');
-        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/all_details', $data);
+        $data['Title'] = 'Sales';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
     }
 
-    function add_stock($process = false) {
-//         $crud = new grocery_CRUD();
-//         $crud->set_table('pub_stock')->set_subject('Stock');
-//         $crud->set_relation('book_ID', 'pub_books', 'name');
-//         $crud->set_relation('printing_press_ID', 'pub_contacts', 'name');
-// //        $crud->set_relation('binding_store_ID', 'pub_contacts', 'name');
-// //        $crud->set_relation('sales_store_ID', 'pub_contacts', 'name');
-//         $output = $crud->render();
-//         $data['glosary'] = $output;
-        //  'admin/ass_stock/true' aso ?
-
-        $this->load->model('stock_manages');
-
-        if ($process) {
-            $book_id = $this->input->post('book_id');
-            $printingpress_id = $this->input->post('printingpress_id');
-            $quantity = $this->input->post('quantity');
-            $this->stock_manages->append_new_stock($book_id, $printingpress_id, $quantity);
-            redirect('admin/manage_stocks');
-        }
-
-
-        $data['bookname'] = $this->stock_manages->get_bookid_dropdown();
-        $data['printingpress'] = $this->stock_manages->get_printingpress_dropdown();
+    function type() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('process_type')
+                ->set_subject('Production type');
+        $output = $crud->render();
+        $data['glosary'] = $output;
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Manage Book';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'stock_manage', $data);
+        $data['Title'] = 'Production type';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
+    }
+
+    function vendor() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('contact_vendor')
+                ->set_subject('Vendor')->callback_add_field('division', array($this->Common, 'dropdown_division'))
+                ->callback_edit_field('division', array($this->Common, 'dropdown_division'))
+                ->callback_add_field('district', array($this->Common, 'dropdown_district'))
+                ->callback_edit_field('district', array($this->Common, 'dropdown_district'))
+                ->callback_add_field('upazila', array($this->Common, 'dropdown_upazila'))
+                ->callback_edit_field('upazila', array($this->Common, 'dropdown_upazila'));
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Vendor';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
     }
 
 }

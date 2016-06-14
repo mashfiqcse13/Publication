@@ -261,27 +261,14 @@ class Admin extends CI_Controller {
         );
         $crud->display_as('contact_ID', 'Contact code');
         $crud->set_table('pub_contacts')->set_subject('Contact')->order_by('contact_ID', 'desc');
-        $crud->callback_add_field('contact_type', function () {
-            return form_dropdown('contact_type', $this->config->item('contact_type'));
-        })->callback_edit_field('contact_type', function ($value, $primary_key) {
-            return form_dropdown('contact_type', $this->config->item('contact_type'), $value);
-        });
-        $crud->callback_add_field('division', function () {
-            return form_dropdown('division', $this->config->item('division'));
-        })->callback_edit_field('division', function ($value, $primary_key) {
-            return form_dropdown('division', $this->config->item('division'), $value);
-        });
-        $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
-        })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value);
-        });
-
-        $crud->callback_add_field('upazila', function () {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
-        })->callback_edit_field('upazila', function ($value, $primary_key) {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), $value);
-        });
+        $crud->callback_add_field('contact_type', array($this->Common, 'dropdown_contact_type'))
+                ->callback_edit_field('contact_type', array($this->Common, 'dropdown_contact_type'))
+                ->callback_add_field('division', array($this->Common, 'dropdown_division'))
+                ->callback_edit_field('division', array($this->Common, 'dropdown_division'))
+                ->callback_add_field('district', array($this->Common, 'dropdown_district'))
+                ->callback_edit_field('district', array($this->Common, 'dropdown_district'))
+                ->callback_add_field('upazila', array($this->Common, 'dropdown_upazila'))
+                ->callback_edit_field('upazila', array($this->Common, 'dropdown_upazila'));
 
 
         $crud->callback_add_field('subject', function () {
