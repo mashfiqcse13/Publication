@@ -103,7 +103,7 @@ class Sales extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/memo', $data);
     }
     
-        function memo_report() {
+    function memo_report() {
         $data['memo_list']=$this->memo_list();
         $total_sales_id=$this->input->post('id_total_sales');
         
