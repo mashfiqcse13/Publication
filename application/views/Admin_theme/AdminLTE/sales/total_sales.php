@@ -44,7 +44,7 @@
                     </div><!-- /.form group -->
 
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    <?= anchor(current_url() . '/expense', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                    <?= anchor(current_url() . 'index.php/sales/tolal_sales', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     
                             
                             

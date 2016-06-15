@@ -65,7 +65,8 @@ class Bank extends CI_Controller {
         $crud->display_as('media_link','Upload Document');
         //$crud->set_relation('id_account', 'bank_account', 'id_bank_account');
         $crud->set_relation('id_user', 'users', 'username');
-        $crud->required_fields('amount_transaction');
+        $crud->required_fields('id_account','amount_transaction');
+        
         
         
         $crud->callback_add_field('id_user',function(){
@@ -83,7 +84,7 @@ bank.id_bank=bank_account.id_bank");
         
         
                     
-        $data='<select id="field-id_account" name="id_account" class="chosen-select chzn-done" data-placeholder="Select Account Name">';
+        $data='<select id="field-id_account" name="id_account" class="chosen-select chzn-done" data-placeholder="Select Account Name" required>';
         $data.='<option value="">Select Account Name</option>';
         foreach ($sql->result() as $row){
             $data.='<option value="'.$row->id_bank_account.'">'.$row->name_bank.'-'.$row->account_number.'</option>';
@@ -319,13 +320,19 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['Title'] = 'Bank Transaction Type';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_transaction_type', $data);
     }
-    
+      
     function update_status(){        
             $id=$this->input->post('id_management_status');
+            $approved_by=$this->input->post('approved_by');
             $status=$this->input->post('approval_status');
             $car_date=date('Y-m-d h:i');
-            $sql=$this->db->query("UPDATE `bank_management_status` SET `approval_status`='$status',action_date='$car_date' WHERE `id_bank_management_status`=$id");
-       echo json_encode($data);
+            $sql=$this->db->query("UPDATE `bank_management_status` "
+                    . "SET "
+                    . "`approval_status`='$status',"
+                    . "action_date='$car_date',"
+                    . "`approved_by`=$approved_by "
+                    . "WHERE `id_bank_management_status`=$id");
+       return true;
     }
     
     

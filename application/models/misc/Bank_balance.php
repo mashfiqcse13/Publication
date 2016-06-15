@@ -110,7 +110,9 @@ class Bank_balance extends CI_Model {
     
     function list_bank_status($limit,$start){
         $query=$this->db->query("select "
-                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,name_trnsaction_type, username,action_date,approval_status,id_bank_management_status"
+                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,"
+                . "name_trnsaction_type, username,action_date,approval_status,id_bank_management_status,"
+                . "(select username from users where id=bank_management_status.approved_by) as approved_by"
                 . " from "
                 . "`bank_management_status`,`bank_management`, `bank_transaction_type`,`bank_account`, `users`,`bank`"
                 . " where "
@@ -119,6 +121,7 @@ class Bank_balance extends CI_Model {
                 . "and bank_management.id_transaction_type=bank_transaction_type.id_trnsaction_type "
                 . "and bank_account.id_bank=bank.id_bank "
                 . "and bank_management.id_user=users.id"
+                
                 . " ORDER BY bank_management_status.id_bank_management DESC LIMIT $start,$limit");
                 
         
@@ -324,10 +327,11 @@ WHERE $condition");
             $condition=" 1=1";
         }
 
-
+  
         
         $range_query=$this->db->query("select "
-                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,name_trnsaction_type, username,action_date,
+                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,
+                    name_trnsaction_type, username,(select username from users where id=bank_management_status.approved_by) as approved_by,action_date,
                     CASE
                         when approval_status='1' then 'approved'
                         when approval_status ='2' then 'canceled'
