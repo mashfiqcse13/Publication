@@ -250,5 +250,17 @@ class Sales_model extends CI_Model {
                 ), $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)));
         return $this->table->generate();
     }
+    
+    
+    function get_total_sales_info($from, $to){
+        $this->db->select('*');
+        $this->db->from('sales_total_sales');
+        $this->db->join('customer','sales_total_sales.id_customer = customer.id_customer','left');
+        $this->db->where('sales_total_sales.issue_date >= ',date('Y-m-d', strtotime($from)));
+        $this->db->where('sales_total_sales.issue_date <= ',date('Y-m-d', strtotime($to)));
+        $this->db->order_by('sales_total_sales.issue_date');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }

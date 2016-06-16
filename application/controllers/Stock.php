@@ -49,10 +49,11 @@ class Stock extends CI_Controller {
         $data['date_range'] = $this->input->get('date_range');
         $date = explode('-', $data['date_range']);
         if ($data['date_range'] != '') {
-            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
-            $crud->where($get_where_clause);
+//            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
+//            $crud->where($get_where_clause);
+            $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]);
         }
-
+        
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -89,6 +90,11 @@ class Stock extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Final stock';
         $this->load->view($this->config->item('ADMIN_THEME') . 'stock/final_stock', $data);
+    }
+    
+    
+    function stock_perpetual_report(){
+        
     }
 
 }
