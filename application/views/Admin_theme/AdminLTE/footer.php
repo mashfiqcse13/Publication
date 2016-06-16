@@ -139,6 +139,9 @@ var baseURL = "<?php echo base_url(); ?>";
 //                    $("#total_due").html(data);
 //                });
     });
+    
+    
+    
 </script>
 <?php if (isset($scriptInline)) echo $scriptInline; ?>
 
@@ -147,7 +150,14 @@ if (isset($script)) {
     echo $script;
 }
 ?>
+<script>
+var url=window.location;
+var value = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+if(value=='add' || value=='edit'){
+$('.box.only_print form').hide();
+}
 
+</script>
 
 </body>
 </html>

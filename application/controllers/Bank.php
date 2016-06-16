@@ -320,10 +320,10 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['Title'] = 'Bank Transaction Type';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_transaction_type', $data);
     }
-      
+    
     function update_status(){        
             $id=$this->input->post('id_management_status');
-            $approved_by=$this->input->post('approved_by');
+            $approved_by=$_SESSION['user_id'];
             $status=$this->input->post('approval_status');
             $car_date=date('Y-m-d h:i');
             $sql=$this->db->query("UPDATE `bank_management_status` "
@@ -332,7 +332,15 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
                     . "action_date='$car_date',"
                     . "`approved_by`=$approved_by "
                     . "WHERE `id_bank_management_status`=$id");
-       return true;
+            
+        if($status==1){
+            $data='<span style="color:green">Approved</span>';
+       }elseif($status==2){
+           $data='<span style="color:red">Canceled</span>';
+       }else{
+           $data='Pending';
+       }
+        echo json_encode($data);
     }
     
     
