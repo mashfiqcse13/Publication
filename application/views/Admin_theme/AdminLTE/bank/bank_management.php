@@ -138,3 +138,10 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
+      <script>     
+           
+            var today ='<?php echo DATE('m-d-Y') ?>';
+            $('#field-transaction_date').val(today);
+            
+      
+      </script>
