@@ -44,8 +44,6 @@ class Loan extends CI_Controller {
 
         $output = $crud->render();
         $data['glosary'] = $output;
-        
-        
 //        date range
         $range = $this->input->post('date_range');
         $part = explode("-", $range . '-');
@@ -55,33 +53,34 @@ class Loan extends CI_Controller {
         $status = $this->input->post('payment_status');
         $employee = $this->input->post('employee');
         if ($status != null) {
-            $data['loans'] = $this->Loan_model->loan_info_by_status($status);
+            $data['loans_search'] = $this->Loan_model->loan_info_by_status($status);
         } else if ($employee != null) {
-            $data['loans'] = $this->Loan_model->loan_info_by_employee($employee);
+            $data['loans_search'] = $this->Loan_model->loan_info_by_employee($employee);
         } else if ($from != "1970-01-01") {
 
-            $data['loans'] = $this->Loan_model->loan_info_by_date($from, $to);
+            $data['loans_search'] = $this->Loan_model->loan_info_by_date($from, $to);
 ////            print_r($data);
         } else {
             $data['loans'] = $this->Loan_model->employee_loan();
         }
-//        if ($status == null) {
-//            if ( $employee == null) {
-//            
-//        }
-//            $data['loans'] = $this->Loan_model->employee_loan();
-//        }
-
+        
+        $data['date_range'] = $range;
+        $data['status'] = $status;
+        $data['employee_info'] = $employee;
         $data['employees'] = $this->Loan_model->select_all('employee');
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Loan';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan', $data);
     }
-
+//                ->set_relation_n_n('Employee Name', 'loan', 'employee','id_loan_payment','id_employee','name_employee')
     function loan_payment() {
         $crud = new grocery_CRUD();
-        $crud->set_table('loan_payment');
+        $crud->set_table('loan_payment')
+                ->display_as('id_loan', 'Loan Title')
+                ->set_relation('id_loan', 'loan', 'title_loan')
+                ->set_relation('id_employee', 'employee', "name_employee");
+//                ->unset_fields('id_loan');
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -124,9 +123,10 @@ class Loan extends CI_Controller {
 
 //            echo '<pre>'; print_r($data);
         } else {
-            $data['employees_loan'] = $this->Loan_model->employee_loan_by_range($date);
+            $data['employees_loan_date'] = $this->Loan_model->employee_loan_by_range($date);
 //            echo '<pre>'; print_r($_POST);
         }
+        $data['date_range'] = $range;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Loan Employee List';

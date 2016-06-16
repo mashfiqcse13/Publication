@@ -149,22 +149,10 @@ class Salary extends CI_Controller {
 
             $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
         }
-//        loan update
-//        $money = floatval($this->input->post('amount_paid_salary_advance'));
-//        $info['status'] = 'paid';
-//        $this->Salary_model->deduction_update('loan','id_employee', $info, $id,$money,'amount_loan');
-//        echo '<pre>';print_r($bonus_id);exit();
 
         redirect('Salary/salary_payment');
     }
 
-//    function update_salary_payment() {
-//        $id = $this->input->post('id_salary_payment');
-//        $data['date_salary_payment'] = date('y-m-d', strtotime($this->input->post('date_salary_payment')));
-//        $data['status_salary_payment'] = 2;
-//        $payment_id = $this->Salary_model->update_info('salary_payment', $data, $id);
-//        redirect('Salary/salary_payment');
-//    }
 
     function salary_advanced() {
         $crud = new grocery_CRUD();
@@ -174,28 +162,29 @@ class Salary extends CI_Controller {
                 ->set_relation('id_employee', 'employee', "name_employee");
         $output = $crud->render();
         $data['glosary'] = $output;
-        
+
 //        employee search
         $employee = $this->input->post('employee');
-        
+
 //        date range
         $range = $this->input->post('date_range');
         $part = explode("-", $range . '-');
         $from = date('Y-m-d', strtotime($part[0]));
         $to = date('Y-m-d', strtotime($part[1]));
 //        ---------------
-        
-         if ($employee != null) {
-            $data['salaries'] = $this->Salary_model->salary_advance_by_employee_id($employee);
+
+        if ($employee != null) {
+            $data['salaries_search'] = $this->Salary_model->salary_advance_by_employee_id($employee);
         } else if ($from != "1970-01-01") {
 
-            $data['salaries'] = $this->Salary_model->Salary_advance_by_date($from, $to);
+            $data['salaries_search'] = $this->Salary_model->Salary_advance_by_date($from, $to);
 ////            print_r($data);
         } else {
             $data['salaries'] = $this->Salary_model->salary_advance_with_employee();
         }
-        
-        
+
+        $data['date_range'] = $range;
+        $data['employee_info'] = $employee;
         $data['employees'] = $this->Salary_model->select_all('employee');
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -240,7 +229,7 @@ class Salary extends CI_Controller {
         $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Salary Announced';
+        $data['Title'] = 'Salary Announcement';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_announced_list', $data);
     }
 
@@ -259,16 +248,32 @@ class Salary extends CI_Controller {
     }
 
     function total_employee_paid() {
-        $data['total_paid'] =  $this->Salary_model->select_all_salary_of_employee();
+        $data['total_paid'] = $this->Salary_model->select_all_salary_of_employee();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total Employee Salary';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/total_employee_paid', $data);
     }
-    
-    
-    function total_salary_paid(){
-        $data['total_paid_salary'] =  $this->Salary_model->select_all_paid_salary();
+
+    function total_salary_paid() {
+
+//        date range
+        $range = $this->input->post('date_range');
+        $part = explode("-", $range . '-');
+        $from = date('Y-m-d', strtotime($part[0]));
+        $to = date('Y-m-d', strtotime($part[1]));
+//        --------------
+        if ($from != "1970-01-01") {
+
+            $data['totals'] = $this->Salary_model->total_info_by_date($from, $to);
+////            print_r($data);
+        } else {
+            $data['total_paid_salary'] = $this->Salary_model->select_all_paid_salary();
+        }
+
+
+
+        $data['date_range'] = $range;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total Salary Paid';

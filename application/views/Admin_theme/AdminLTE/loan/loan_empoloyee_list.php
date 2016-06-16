@@ -20,86 +20,126 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
+            
             <div class="col-md-12">
                 <?php
-//                if (!$date_filter) {
-                    $attributes = array(
-                        'clase' => 'form-inline',
-                        'method' => 'post');
-                    echo form_open('', $attributes)
-                    ?>
-                    <div class="form-group col-md-3 text-left">
-                        <label>Search with Date Range:</label>
-                    </div>
-                    <div class="form-group col-md-7">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" name="date_range"  class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                        </div><!-- /.input group -->
-                    </div><!-- /.form group -->
-                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    <?= anchor(current_url() . '/reset_date_range', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                    <?= form_close(); ?>
-                <?php // } ?>
-            </div>
-            <div class="col-md-12">
-                <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-                    <div class="panel-heading">
-                        <!--<h4 class="panel-title">Salary</h4>-->
-                    </div>
-                    <div class="panel-body">
-                        <!--<form target="_new" action="<?php echo base_url(); ?>index.php/Salary/paid_salary_payment" method="post" class="form-horizontal" name="form">-->
-
-                        <div class="box">
-                            <div class="box-header" >
-                                <h1 class="text-center">Employee List of Loan</h1>
-                            </div>
-                            <div class="box-body">
-                                <table id="example1" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Loan Title</th>
-                                            <th>Amount of Loan</th>
-                                            <th>Date of Loan</th>
-                                            <th>Loan Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach ($employees_loan as $loan) {
-                                            ?>
-                                        <tr>
-                                            <td><?php echo $loan->name_employee;?></td>
-                                            <td><?php echo $loan->title_loan;?></td>
-                                            <td><?php echo $loan->amount_loan;?></td>
-                                            <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan));?></td>
-                                            <td><?php echo $loan->status;?></td>
-                                        </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Loan Title</th>
-                                            <th>Amount of Loan</th>
-                                            <th>Date of Loan</th>
-                                            <th>Loan Status</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-
+                $attributes = array(
+                    'clase' => 'form-inline',
+                    'method' => 'post');
+                echo form_open('', $attributes)
+                ?>
+                <div class="form-group col-md-3 text-left">
+                    <label>Search with Date Range:</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
                         </div>
-                    </div>
+                        <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+
+                    </div><!-- /.input group -->
+                </div><!-- /.form group -->
+                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <button type="reset" name="btn_submit" value="true" class="btn btn-success"><i class="fa fa-refresh"></i></button>
+
+                <?= form_close(); ?>
+                <div  style="margin: 40px;">
                 </div>
             </div>
+            <?php
+            if (!isset($date_range)) {
+                ?>
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header" >
+                            <h1 class="text-center">Employee List of Loan</h1>
+                        </div>
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Loan Title</th>
+                                        <th>Amount of Loan</th>
+                                        <th>Date of Loan</th>
+                                        <th>Loan Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($employees_loan as $loan) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $loan->name_employee; ?></td>
+                                            <td><?php echo $loan->title_loan; ?></td>
+                                            <td><?php echo $loan->amount_loan; ?></td>
+                                            <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
+                                            <td><?php echo $loan->status; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Loan Title</th>
+                                        <th>Amount of Loan</th>
+                                        <th>Date of Loan</th>
+                                        <th>Loan Status</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <?php
+            }if (isset($date_range)) {
+                ?>
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header" >
+                            <h1 class="text-center"><strong>ABC Publications</strong></h1>
+                            <h3 class="text-center"><strong>Employee List of Loan</strong></h3>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered table-hover">
+                                <thead style="background: #DFF0D8;">
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Amount of Loan</th>
+                                        <th>Date of Loan</th>
+                                        <th>Loan Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($employees_loan_date as $loan) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $loan->name_employee; ?></td>
+                                            <td><?php echo $loan->amount_loan; ?></td>
+                                            <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
+                                            <td><?php echo $loan->status; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
         </div>
-    </section><!-- /.content -->
+</section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
 <!-- insert book -->

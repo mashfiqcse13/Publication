@@ -20,20 +20,21 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-                    <div class="panel-heading">
-                        <!--<h4 class="panel-title">Salary</h4>-->
-                    </div>
+            <div class="col-md-12" id="block">
+                    
                     <div class="panel-body">
-                        <div id="employee_table">
+                        
+                        <div>
                             <div class="box">
+                                
                                 <div class="box-header" >
                                     <h1 class="text-center">Employee Salary</h1>
                                 </div>
                                 <div class="box-body">
-                                    <table id="example1" class="table table-bordered table-hover">
-                                        <thead>
+                                    <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                        <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y',now());?></div>
+                                    <table  class="table table-bordered table-hover">
+                                        <thead style="background: #DFF0D8;">
                                             <tr>
                                                 <th>Sl</th>
                                                 <th>Employee Name</th>
@@ -57,13 +58,6 @@
                                             }
                                             ?>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Sl</th>
-                                                <th>Employee Name</th>
-                                                <th>Total Salary</th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
 
@@ -75,7 +69,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 

@@ -20,18 +20,14 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" id="block">
 
                 <div class="box">
-
+                    
 
                     <div class="box-header" >
-                        <h2>Salary Announcement of <?php
-                            echo date('F', now());
-                            echo ' ';
-                            echo date('Y', now());
-                            ;
-                            ?></h2>
+                        <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                        <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y',now());?></div>
                         <?php
                         $message = $this->session->userdata('message');
                         if (isset($message)) {
@@ -41,6 +37,12 @@
                         ?>
                     </div><!-- /.box-header -->
                     <div class="box-body">
+                        <h2 class="text-center">Salary Announcement of <?php
+                            echo date('F', now());
+                            echo ' ';
+                            echo date('Y', now());
+                            ;
+                            ?></h2>
                         <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
                             <table id="example1" class="table table-bordered table-hover">
 

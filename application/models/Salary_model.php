@@ -139,6 +139,8 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
+    
+    
     function salary_advance_with_employee(){
         $this->db->select('*');
         $this->db->from('salary_advance');
@@ -168,15 +170,23 @@ class Salary_model extends CI_Model {
     function select_all_paid_salary(){
      $sql =  $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee`
 ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment`');
-//        $this->db->select('*','SUM(amount_salary_payment) AS total_salary');
-//        $this->db->from('salary_payment');
-//        $this->db->join('employee','employee.id_employee = salary_payment.id_employee','left');
-//        $this->db->where('status_salary_payment',2);
-//        $this->db->group_by('date_salary_payment');
-//        $this->db->where('month_salary_payment','month_salary_payment');
+
         return $sql->result();
-//        $query = $this->db->get();
-//        return $query->result();
+    }
+    
+    function total_info_by_date($from, $to){
+//        $sql =  $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee` ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 AND `date_salary_payment` >= '.$from.' AND `date_salary_payment` <= '.$to.' GROUP BY `date_salary_payment` ');
+        $this->db->select('*');
+        $this->db->select('SUM(amount_salary_payment) AS total ');
+        $this->db->from('salary_payment');
+        $this->db->join('employee','employee.id_employee = salary_payment.id_employee','left');
+        $this->db->where('status_salary_payment',2);
+        $this->db->where('date_salary_payment >= ',$from);
+        $this->db->where('date_salary_payment <= ',$to);
+        $this->db->group_by('date_salary_payment');
+        $query = $this->db->get();
+        return $query->result();
+//        return $sql->result();
     }
 
 }
