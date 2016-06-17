@@ -81,49 +81,50 @@
 
                                
 
-                                    <table class="table table-striped table_custom" style="font-size:13px;">
+            <table class="table table_custom" style="font-size:13px">
+                
 
-                                        <tr>
+                <tr>
 
-                                            <td><strong>Name:</strong></td>
+                    <td><strong>Name:</strong></td>
 
-                                            <td><?= $Book_selection_table['party_name'] ?></td>
-
-
-
-                                            <td><strong>Code No:</strong></td>
-
-                                            <td><?= $Book_selection_table['code'] ?></td>
+                    <td><?= $memo_header_details['party_name'] ?></td>
 
 
 
-                                            <td><strong>Memo No:</strong></td>
+                    <td><strong>Code No:</strong></td>
 
-                                            <td><?= $Book_selection_table['memoid'] ?></td>
-
-                                        </tr>
-
-                                        <tr>
-
-                                            <td><strong>Mobile:</strong></td>
-
-                                            <td> <?= $Book_selection_table['phone'] ?></td>
+                    <td><?= $memo_header_details['code'] ?></td>
 
 
 
-                                            <td><strong>District:</strong></td>
+                    <td><strong>Memo No:</strong></td>
 
-                                            <td><?= $Book_selection_table['district'] ?></td>
+                    <td><?= $memo_header_details['memoid'] ?></td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Mobile:</strong></td>
+
+                    <td> <?= $memo_header_details['phone'] ?></td>
 
 
 
-                                            <td><strong>Date:</strong></td>
+                    <td><strong>District:</strong></td>
 
-                                            <td><?php echo " " .$Book_selection_table['issue_date'] ?></td>
+                    <td><?= $memo_header_details['district'] ?></td>
 
-                                        </tr>
 
-                                    </table>
+
+                    <td><strong>Date:</strong></td>
+
+                    <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
+
+                </tr>
+
+            </table>
 
                                     <table class="table table-bordered table-striped">
                                         <tr>
@@ -134,15 +135,15 @@
                                         </tr>
                                         <?php foreach($get_book_list as $row) {?>
                                         <tr>
-                                            <td><?=$row['book_name']?><input type="hidden" name="book_ID[]" class="form-control"  value="<?=$row['book_ID']?>"></td>
-                                            <td><?=$row['book_price']?></td>
-                                            <td><?=$row['price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['price']?>"></td>
+                                            <td><?=$row['item_name']?><input type="hidden" name="id_item[]" class="form-control"  value="<?=$row['id_item']?>"></td>
+                                            <td><?=$row['regular_price']?></td>
+                                            <td><?=$row['sale_price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['sale_price']?>"></td>
                                             <td>
                                                 <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['quantity']?>"  placeholder="<?=$row['quantity']?>">
-                                                <input type="hidden" name="memo_ID[]" class="form-control"  value="<?=$row['memo_ID']?>">                                                
-                                                <input type="hidden" name="stock_ID[]" class="form-control"  value="<?=$row['stock_ID']?>">
+                                                <input type="hidden" name="id_total_sales[]" class="form-control"  value="<?=$row['id_total_sales']?>">                                                
+                                                
                                                 <input type="hidden" name="pre_quantity[]" class="form-control"  value="<?=$row['quantity']?>">
-                                                <input type="hidden" name="contact_ID" class="form-control"  value="<?=$row['contact_ID']?>">
+                                                <input type="hidden" name="id_customer" class="form-control"  value="<?=$row['id_customer']?>">
                                                 
                                                 
                                             </td>

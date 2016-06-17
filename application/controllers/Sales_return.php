@@ -26,6 +26,7 @@ class Sales_return extends CI_Controller {
         $this->load->model('Common');
         $this->load->model('Sales_return_m');
         $this->load->model('Memo');
+        $this->load->model('Sales_model');
         
         
        
@@ -38,7 +39,7 @@ class Sales_return extends CI_Controller {
         $crud->set_table('sales_current_sales_return')->order_by('selection_ID', 'desc');
         $crud->columns('selection_ID','memo_ID','book_ID','stock_ID','quantity','total'); 
          $crud->display_as('book_ID','Book Name');
-         $crud->set_relation('book_ID','pub_books','name');
+         $crud->set_relation('book_ID','items','name');
          $crud->unset_add();
             $crud->unset_edit();
         $output = $crud->render();
@@ -58,11 +59,18 @@ class Sales_return extends CI_Controller {
 
         
         if($this->input->post('search_memo')==true){
-           $memo_id=$this->input->post('memo_id');
-           $data['search_memo']=$this->Sales_return_m->get_memos($memo_id);
-           $data['get_book_list']=$this->Sales_return_m->get_book_list($memo_id);
-           $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);           
+           $total_sales_id=$this->input->post('memo_id');
+           $data['search_memo']=$this->Sales_return_m->get_memos($total_sales_id);
+           if($data['search_memo']==true){
+                $data['memo_header_details'] = $this->Sales_model->memo_header_details($total_sales_id);
+               //$data['get_book_list'] = $this->Sales_model->memo_body_table($total_sales_id);
+
+
+                  $data['get_book_list']=$this->Sales_return_m->get_book_list($total_sales_id);
+                 // $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);           
         }
+        
+           }
         
         if($this->input->post('sales_return')==true){
             
