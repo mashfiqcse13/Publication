@@ -13,7 +13,7 @@ class Stock_perpetual extends CI_Model {
     function Stock_perpetual_register($id_item, $amount, $type_code = 1) {
         $types = array('receive_amount', 'sales_amount', 'specimen', 'return_amountreject', 'reject_amount');
         $types_opetator = array('+', '-', '-', '+', '-');
-        if (empty($types[$type_code]) and empty($amount)) {
+        if (empty($types[$type_code]) or empty($amount)) {
             return false;
         }
         $current_id_perpetual_stock_register = $this->id_today_row($id_item) or
