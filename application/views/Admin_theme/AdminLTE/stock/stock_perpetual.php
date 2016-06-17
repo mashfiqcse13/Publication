@@ -47,19 +47,73 @@
 
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12" id="block">
 
                 <div class="box">
-
+                    <?php 
+                    if(!isset($date_range)){
+                        ?>
                     <div class="box-header">
                         <h3 class="box-title">Stock Perpitual Current View</h3>
                     </div><!-- /.box-header -->
+                    
                     <div class="box-body">
                         <?php
                         echo $glosary->output;
                         ?>
                     </div><!-- /.box-body -->
+                    <?php
+                    }if(isset($date_range)){
+                    ?>
+                    <div class="box-header">
+                          <p class="text-center"><strong>Stock Perpetual Report</strong></p>
+                    <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
+                    <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                    <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y',now());?></div>
+                    </div>
+                    <div class="box-body">
+                     <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                        <thead style="background: #DFF0D8;">
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Opening Amount</th>
+                                                <th>Receive Amount</th>
+                                                <th>Sales Amount</th>
+                                                <th>Specimen</th>
+                                                <th>Return Amount Reject</th>
+                                                <th>Reject Amount</th>
+                                                <th>Closing Stock</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            foreach ($stock_perpetual as $stock) {
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $stock->name; ?></td>
+                                                    <td><?php echo $stock->opening_amount; ?></td>
+                                                    <td><?php echo $stock->receive_amount; ?></td>
+                                                    <td><?php echo $stock->sales_amount; ?></td>
+                                                    <td><?php echo $stock->specimen; ?></td>
+                                                    <td><?php echo $stock->return_amountreject; ?></td>
+                                                    <td><?php echo $stock->reject_amount; ?></td>
+                                                    <td><?php echo $stock->closing_stock; ?></td>
+                                                    <td><?php echo $date = date('d/m/Y', strtotime($stock->date)); ?></td>
+                                                    
+
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+
+                    </div>
+                     <?php
+                    }
+                    ?>
                 </div>
 
             </div>

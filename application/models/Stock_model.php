@@ -87,5 +87,18 @@ class Stock_model extends CI_Model {
             return 0;
         }
     }
+    
+    
+//    get perpatual search info
+    function get_perpetual_info($from, $to){
+        $this->db->select('*');
+        $this->db->from('stock_perpetual_stock_register');
+        $this->db->join('items','stock_perpetual_stock_register.id_item = items.id_item','left');
+        $this->db->where('stock_perpetual_stock_register.date >= ',date('Y-m-d', strtotime($from)));
+        $this->db->where('stock_perpetual_stock_register.date <= ',date('Y-m-d', strtotime($to)));
+        $this->db->order_by('stock_perpetual_stock_register.date');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }

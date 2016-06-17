@@ -123,7 +123,7 @@
                                             <label for="inputPassword3" class="col-sm-6 control-label">Amount billed</label>
 
                                             <div class="col-sm-6">
-                                                <input type="number" value="0" name="amount_billed" min="0" max="<?php echo $remaining_order ?>" class="form-control" id="inputPassword3">
+                                                <input type="number" value="0" name="amount_billed" min="0" class="form-control" id="inputPassword3">
                                             </div>
                                         </div>
 
@@ -133,7 +133,7 @@
                                             <label for="inputPassword3" class="col-sm-6 control-label">Amount paid</label>
 
                                             <div class="col-sm-6">
-                                                <input type="number" value="0" name="amount_paid" min="0" max="<?php echo $remaining_order ?>" class="form-control" id="inputPassword3">
+                                                <input type="number" value="0" name="amount_paid" min="0" class="form-control" id="inputPassword3">
                                             </div>
                                         </div>
 

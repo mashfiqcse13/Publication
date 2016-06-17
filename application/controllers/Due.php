@@ -18,6 +18,7 @@ class Due extends CI_Controller {
             return 0;
         }
         $this->load->library('grocery_CRUD');
+        $this->load->model('Due_model');
         $this->load->model('Common');
     }
 
@@ -41,12 +42,21 @@ class Due extends CI_Controller {
                         return '#';
                     }
                 });
+                
+        $data['customer_id'] = $this->input->get('customer');
+        if ($data['customer_id'] != '') {
+            $data['customer_dues'] = $this->Due_model->get_customer_due_info($data['customer_id']);
+        }else{
         $output = $crud->render();
         $data['glosary'] = $output;
-
+        }
+        
+        
+        $data['customers'] = $this->Due_model->get_all_customers();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Due';
+//        echo '<pre>';print_r($data);exit();
         $this->load->view($this->config->item('ADMIN_THEME') . 'due/customer_due_and_payment', $data);
     }
 

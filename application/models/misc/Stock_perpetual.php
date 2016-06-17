@@ -11,9 +11,9 @@ if (!defined('BASEPATH'))
 class Stock_perpetual extends CI_Model {
 
     function Stock_perpetual_register($id_item, $amount, $type_code = 1) {
-        $types = array('receive_amount', 'sales_amount','specimen', 'return_amountreject', 'reject_amount');
+        $types = array('receive_amount', 'sales_amount', 'specimen', 'return_amountreject', 'reject_amount');
         $types_opetator = array('+', '-', '-', '+', '-');
-        if (empty($types[$type_code])) {
+        if (empty($types[$type_code]) or empty($amount)) {
             return false;
         }
         $current_id_perpetual_stock_register = $this->id_today_row($id_item) or
@@ -45,7 +45,7 @@ class Stock_perpetual extends CI_Model {
     }
 
     function start_today_row($id_item) {
-       $last_closeing_stock = $this->get_last_closeing_stock($id_item);
+        $last_closeing_stock = $this->get_last_closeing_stock($id_item);
         $data_to_insert_in_stock_perpetual_stock_register = array(
             'id_item' => $id_item,
             'opening_amount' => $last_closeing_stock,
