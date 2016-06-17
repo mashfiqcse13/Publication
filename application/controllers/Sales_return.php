@@ -41,7 +41,8 @@ class Sales_return extends CI_Controller {
          $crud->display_as('book_ID','Book Name');
          $crud->set_relation('book_ID','items','name');
          $crud->unset_add();
-            $crud->unset_edit();
+         $crud->unset_edit();
+         $crud->unset_delete();
         $output = $crud->render();
         $data['glosary'] = $output;
         
