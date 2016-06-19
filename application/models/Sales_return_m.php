@@ -83,12 +83,15 @@ class Sales_return_m extends CI_Model {
                 $price_per_book= $this->input->post('price');
                 $pre_quantity=$this->input->post('pre_quantity');
                 $contact_ID=$this->input->post('id_customer');
-                
-               
+//                echo '<pre>';
+//                print_r($post);
+//               exit();
                 $values=0;
-                $data_add=array();   
+                $data_add=array(); 
+                $id=array();
                 foreach($memo_ID as $key => $val){
-                  
+                           if($quantity[$key]!= 0){ 
+
                             $data_add=array(
                                 'memo_ID' => $memo_ID[$key],
                                 'book_ID' => $book_ID[$key],
@@ -99,8 +102,10 @@ class Sales_return_m extends CI_Model {
                             );
                             
                             $this->db->insert('sales_current_sales_return',$data_add);  
-                            
+                            $id[] = $this->db->insert_id();
                             $values+=$data_add['total'];
+                           }
+                                                      
 
                 }//insert sales_current_sales_return table
                 
@@ -137,11 +142,65 @@ class Sales_return_m extends CI_Model {
               
               $this->customer_due->reduce($contact_ID,$values);
               $this->cash->reduce($values);
+              
 
-               return $values;
+              return $id;
+              
       }
       
+      function list_return_item($start,$end){
+                 
+        $this->load->library('table');
+        
+        $query=$this->db->query("SELECT selection_ID,memo_ID,items.name,quantity,price_per_book,total "
+                . "FROM `sales_current_sales_return` "
+                . "LEFT JOIN items ON sales_current_sales_return.book_ID=items.id_item "
+                . "WHERE  selection_ID BETWEEN $start and $end ORDER BY selection_ID DESC")->result_array();
+        
+        $total=$this->db->query("SELECT sum(total) as total FROM sales_current_sales_return "
+                . "where selection_ID BETWEEN $start and $end");
+        foreach($total->result() as $row){
+            $total_price=$row->total;
+        }
+        
+        $tmpl = array (
+                    'table_open'          => '<table class="table table-bordered table-striped">',
 
+                    'heading_row_start'   => '<tr>',
+                    'heading_row_end'     => '</tr>',
+                    'heading_cell_start'  => '<th>',
+                    'heading_cell_end'    => '</th>',
+
+                    'row_start'           => '<tr>',
+                    'row_end'             => '</tr>',
+                    'cell_start'          => '<td>',
+                    'cell_end'            => '</td>',
+
+                    'row_alt_start'       => '<tr>',
+                    'row_alt_end'         => '</tr>',
+                    'cell_alt_start'      => '<td>',
+                    'cell_alt_end'        => '</td>',
+
+                    'table_close'         => '</table>'
+              );
+            
+            $this->table->set_template($tmpl);
+            $this->table->set_heading('Selection Id', 'Memo Id', 'Book Name', 'Quantity', 'Price', 'Total');
+            $data['table1']=$this->table->generate($query);
+            
+            
+            $this->table->clear();
+            $this->table->set_template($tmpl);
+            $cell1 = array('data' => 'Total: ', 'class' => 'text-right');
+            $cell2 = array('data' => 'TK '.$total_price, 'class' => 'text-right');
+            $this->table->add_row($cell1,$cell2);
+            $data['table2']=$this->table->generate();
+            
+            
+           // return $this->table->generate($query);
+          return $data;
+
+      }
       
 //      function update_memo($id){
 //                   
@@ -171,7 +230,7 @@ class Sales_return_m extends CI_Model {
           
 
         
-        $query=$this->db->query("SELECT `quantity`,quantity-IFNULL((SELECT SUM(quantity) 
+        $query=$this->db->query("SELECT `quantity`,quantity - IFNULL((SELECT SUM(quantity) 
                                         FROM sales_current_sales_return 
                                         where memo_ID=sales_total_sales.id_total_sales and 
                                         book_ID=items.id_item),0)
@@ -180,7 +239,7 @@ class Sales_return_m extends CI_Model {
                     `items`.`regular_price` as regular_price,
                     sales.`price` as sale_price,
                     sales.`sub_total` as sales_sub_total,
-                    sales.id_item,
+                    sales.id_item as id_item,
                     sales_total_sales.id_total_sales,
                     customer.id_customer as id_customer
                     FROM `sales`
