@@ -53,7 +53,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-lg-8">
-                                <label for="id_contact">Party name</label>
+                                <label for="id_contact">Select agent name</label>
                                 <?php echo $agent_dropdown ?>
                             </div>
                             <div class="form-group col-lg-4">
