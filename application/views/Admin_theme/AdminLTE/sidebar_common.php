@@ -1,7 +1,7 @@
 <li class="header">MAIN NAVIGATION</li>
 
 <li><?php echo anchor('salary', '<i class="fa fa-plus-circle"></i>  <span>Salary</span>'); ?></li>
-<li><?php echo anchor('sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
+<li><?php echo anchor('sales', '<i class="fa fa-plus-circle"></i>  <span>Sale</span>'); ?></li>
 <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>Specimen</span>'); ?></li>
 <li><?php echo anchor('sales_return', '<i class="fa fa-plus-circle"></i>  <span>Sales Return</span>'); ?></li>
 <li><?php echo anchor('due', '<i class="fa fa-plus-circle"></i>  <span>Customer Due</span>'); ?></li>

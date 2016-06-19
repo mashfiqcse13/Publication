@@ -13,7 +13,7 @@ class Specimen_model extends CI_Model {
         $customers = $this->db->get('specimen_agent')->result();
 
         $data = array();
-        $data[''] = 'Select party by name or code';
+        $data[''] = 'Select agent by name or code';
         foreach ($customers as $customer) {
             $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
         }
@@ -58,10 +58,10 @@ class Specimen_model extends CI_Model {
         $this->db->insert_batch('specimen_items', $data_sales) or die('failed to insert data on sales');
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_specimen_total";
+            $response['msg'] = "The specimen issue is successfully done . \n Specimen Issue: $id_specimen_total";
             $response['next_url'] = site_url('specimen/new_entry');
         } else if ($action == 'save_and_back_to_list') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_specimen_total";
+            $response['msg'] = "The sales is successfully done . \n Specimen Issue: $id_specimen_total";
             $response['next_url'] = site_url('specimen/tolal');
         }
         echo json_encode($response);

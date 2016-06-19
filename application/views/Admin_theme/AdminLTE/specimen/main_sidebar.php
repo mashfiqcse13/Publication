@@ -14,11 +14,11 @@
         <ul class="sidebar-menu">
 
 
-            <li class="header">SALES CRUD s</li>
+            <li class="header">Specimen</li>
 
             <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>New Specimen Entry</span>'); ?></li>
-            <li><?php echo anchor('specimen/items', '<i class="fa fa-plus-circle"></i>  <span>Specimen Items</span>'); ?></li>
-            <li><?php echo anchor('specimen/tolal', '<i class="fa fa-plus-circle"></i>  <span>Specimen Total</span>'); ?></li>
+            <!--<li><?php echo anchor('specimen/items', '<i class="fa fa-plus-circle"></i>  <span>Specimen Items</span>'); ?></li>-->
+            <li><?php echo anchor('specimen/tolal', '<i class="fa fa-plus-circle"></i>  <span>Specimen Dashboard</span>'); ?></li>
 
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
