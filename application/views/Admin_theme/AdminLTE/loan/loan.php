@@ -18,17 +18,17 @@
     </section>
 
     <!-- Main content -->
-    <section class="content" style="min-height: 800px">
+    <section class="content" style="min-height: 1000px">
         <div class="row">
             <?php
             if ($this->uri->segment(3) == '') {
                 if (!isset($employee_info) && !isset($status)) {
                     ?>
-            <div class="col-md-12">
+                    <div class="col-md-12">
                         <?php
                         $attributes = array(
                             'clase' => 'form-inline',
-                            'method' => 'post');
+                            'method' => 'get');
                         echo form_open('', $attributes)
                         ?>
                         <div class="form-group col-md-3 text-left">
@@ -43,11 +43,9 @@
                             </div><!-- /.input group -->
                         </div><!-- /.form group -->
                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        <button type="reset" name="btn_submit" value="true" class="btn btn-success"><i class="fa fa-refresh"></i></button>
+                        <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
 
                         <?= form_close(); ?>
-                        <div  style="margin: 40px;">
-                        </div>
                     </div>
                     <?php
                 }
@@ -55,12 +53,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <?php
-                        
-                            $attributes = array(
-                                'clase' => 'form-inline',
-                                'method' => 'post');
-                            echo form_open('', $attributes);
-                            if (!isset($employee_info) && !isset($date_range)) {
+                        $attributes = array(
+                            'clase' => 'form-inline',
+                            'method' => 'post');
+                        echo form_open('', $attributes);
+                        if (!isset($employee_info) && !isset($date_range)) {
                             ?>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -81,11 +78,11 @@
 
                             <?php
                         }
-                            $attributes = array(
-                                'clase' => 'form-inline',
-                                'method' => 'post');
-                            echo form_open('', $attributes);
-                            if (!isset($status) && !isset($date_range)) {
+                        $attributes = array(
+                            'clase' => 'form-inline',
+                            'method' => 'post');
+                        echo form_open('', $attributes);
+                        if (!isset($status) && !isset($date_range)) {
                             ?>
                             <div class="col-md-6">
                                 <div class="form-group ">
@@ -117,12 +114,13 @@
                 if (!isset($date_range) && !isset($status) && !isset($employee_info)) {
                     ?>
                     <div class="col-md-12" style="background: #fff;">
-                        <div>
+                        <?php echo $glosary->output;?>
+<!--                        <div>
                             <div class="box-header" >
-                                <h1 class="text-center">Employee List of Loan</h1>
+                                <h1 class="text-center">Loan List</h1>
                             </div>
                             <div class="box-body">
-                                <a href="<?php echo base_url(); ?>index.php/loan/loan/add" class="btn btn-primary" style="margin:5px;">Add Loan</a>
+                                <a href="<?php echo site_url('/loan/loan/add'); ?>" class="btn btn-primary" style="margin:5px;">Add Loan</a>
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -148,7 +146,7 @@
                                                 <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
                                                 <td>
                                                     <a href="<?php echo base_url(); ?>index.php/loan/loan/edit/<?php echo $loan->id_loan; ?>" class="btn btn-success"><span class="glyphicon glyphicon-edit" ></span></a>
-                                                    <a href="<?php echo base_url(); ?>index.php/loan/loan/add/<?php echo $loan->id_loan; ?>" class="btn btn-danger"><span class="glyphicon glyphicon-trash" ></span></a>
+                                                    <a href="<?php echo base_url(); ?>index.php/loan/loan/loan_delete/<?php echo $loan->id_loan; ?>" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash" ></span></a>
                                                 </td>
                                             </tr>
                                             <?php
@@ -169,39 +167,45 @@
                                 </table>
                             </div>
 
-                        </div>
+                        </div>-->
+                        
                     </div>
                     <?php
                 }
                 if (isset($date_range) || isset($status) || isset($employee_info)) {
                     ?>
-                <div class="col-md-12" style="background: #fff;" id="block">
+                    <div class="col-md-12" style="background: #fff;" id="block">
                         <div>
                             <div class="box-header" >
-                                 <h1 class="text-center"><strong>ABC Publications</strong></h1>
-                            <h3 class="text-center"><strong>Employee List of Loan</strong></h3>
-                            <?php
+                                <h3 class="text-center"><?= $this->config->item('SITE')['name'] ?></h3>
+                                <p class="text-center"> <?= $Title ?> Report</p>
+                                <div style="margin-bottom: 60px;">
+                                    <p class="pull-left" style="margin-left:5px">Report Generated by: <?php echo $_SESSION['username'] ?></p>
+                                    <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                </div>
+                                <div style="color: #777777;">
+                                    <?php
                                     if (isset($date_range)) {
                                         ?>
-                                        <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                        <p class="pull-left" style="margin-left:5px"> <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
                                         <?php
                                     } if (isset($employee_info)) {
                                         ?>
-                                        <p class="pull-left" style="margin-left:20px"> <strong>Search Employee: </strong> <?php echo $employee_info; ?></p>
+                                        <p class="pull-left" style="margin-left:5px"> <strong>Employee Id:  </strong> <?php echo $employee_info; ?></p>
                                         <?php
                                     } if (isset($status)) {
                                         ?>
-                                        <p class="pull-left" style="margin-left:20px"> <strong>Search Employee: </strong> <?php echo $status; ?></p>
+                                        <p class="pull-left" style="margin-left:5px"> <strong>Status </strong> <?php echo $status; ?></p>
                                         <?php
                                     }
                                     ?>
-                                        <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                                        <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y',now());?></div>
+                                    <div class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></div>
+                                </div>
                             </div>
                             <div class="box-body">
-                                <table  class="table table-bordered table-hover">
+                                <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                                     <thead>
-                                        <tr>
+                                        <tr style="background:#ddd">
                                             <th>Employee Name</th>
                                             <th>Amount of Loan</th>
                                             <th>Date of Loan</th>
@@ -219,7 +223,7 @@
                                                 <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
                                                 <td><?php echo $loan->status; ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
-                                                
+
                                             </tr>
                                             <?php
                                         }
@@ -256,7 +260,7 @@
 </div><!-- /.content-wrapper -->
 
 <script>
-    
+
 </script>
 <!-- insert book -->
 

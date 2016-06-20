@@ -40,6 +40,7 @@ class Salary extends CI_Controller {
         $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
 //        echo '<pre>';print_r($data['edit_salary']);exit();
         echo json_encode($data);
+        
 //        return $data['salary_info'];
     }
 
@@ -118,13 +119,14 @@ class Salary extends CI_Controller {
     }
 
     function paid_salary_payment() {
+        $this->load->model('misc/cash' ,'cash_model');
         $id = $this->input->post('id_employee');
 //        payment update
         $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
         $data['status_salary_payment'] = 2;
         $amount_salary = $this->input->post('amount_salary_payment');
         $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id, $amount_salary, 'amount_salary_payment', 'id_salary_payment');
-        $this->Salary_model->update_cash('cash', $amount_salary);
+        $this->cash_model->add_revert($amount_salary);
 
 
 //        bonus update
@@ -234,18 +236,15 @@ class Salary extends CI_Controller {
     }
 
     function current_salary_payment() {
+        $month = date('n', now());
+        $data['current_salary'] = $this->Salary_model->current_salary($month);
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Current Salary Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/current_salary', $data);
     }
 
-    function current() {
-        $month = date('n', now());
-        $data['current_salary'] = $this->Salary_model->current_salary($month);
-//        echo '<pre>';print_r($data['current_salary']);exit();
-        echo json_encode($data);
-    }
+    
 
     function total_employee_paid() {
         $data['total_paid'] = $this->Salary_model->select_all_salary_of_employee();
@@ -258,7 +257,7 @@ class Salary extends CI_Controller {
     function total_salary_paid() {
 
 //        date range
-        $range = $this->input->post('date_range');
+        $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');
         $from = date('Y-m-d', strtotime($part[0]));
         $to = date('Y-m-d', strtotime($part[1]));

@@ -116,9 +116,9 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
-    function update_cash($tbl_name,$value){
-        $this->db->query('UPDATE `cash` SET `balance`= `balance`-'.$value.', `total_out`=`total_out`+'.$value.' WHERE `id_cash`='. 1);
-    }
+//    function update_cash($tbl_name,$value){
+//        $this->db->query('UPDATE `cash` SET `balance`= `balance`-'.$value.', `total_out`=`total_out`+'.$value.' WHERE `id_cash`='. 1);
+//    }
     
     function  current_salary($month){
         $this->db->select('*');

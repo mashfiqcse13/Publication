@@ -26,12 +26,12 @@
                         <h4 class="panel-title">Loan History</h4>
                     </div>
                     <div class="panel-body">
-                        <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/paid_salary_payment" method="post" class="form-horizontal" name="form">
+                        <form target="_new" action="<?php echo site_url('/Salary/paid_salary_payment'); ?>" method="post" class="form-horizontal" name="form">
                             <div class="form-group ">
                                 <label class="col-md-3">Employee Name</label>
                                 <div class="col-md-9">
                                     <select class="form-control select2"style="width:100%;" name="id_employee" id="loan_select">
-                                        <option>Select Employee Name</option>
+                                        <option value="0">Select Employee Name</option>
                                         <?php
                                         foreach ($employees as $employee) {
                                             ?>
@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Loan History</label>
                                     <div class="col-md-9" id="loan_history">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -71,7 +71,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"> Loan Payment Date</label>
                                     <div class="col-md-9" id="loan_payment_date">
-                                        
+
                                     </div>
                                 </div>
 
@@ -104,3 +104,54 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+
+<script type="text/javascript">
+    $('#loan_info').hide();
+    $.ajaxSetup({cache: false});
+    $('#loan_select').change(function () {
+        var select = $("#loan_select option:selected").val();
+//        alert(select);
+        if( select != 0){
+        $.post("<?php echo base_url(); ?>index.php/loan/loan_info", {"id_employee": select});
+        var id = select;
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/loan/loan_info',
+            data: {'id_employee': id},
+            dataType: 'text',
+            type: 'POST',
+            success: function (data) {
+                var sum = 0;
+                var total_payment = 0;
+                var j = '';
+
+                var obj = $.parseJSON(data);
+                $('#loan_history').empty();
+                $('#loan_payment_date').empty();
+                $.each(obj.loan_info, function (i, loan) {
+//                    alert(loan['id_loan']);
+                    
+                        $('#loan_info').show();
+                        sum = sum + Number(loan['amount_loan']);
+                        total_payment = total_payment + Number(loan['paid_amount_loan_payment']);
+                        date = loan['date_taken_loan'];
+
+
+                        $('#total_loan').html(sum);
+                        $('#loan_history').prepend('<p>' + loan['date_taken_loan'] + '  ' + '(' + loan['amount_loan'] + ')' + ' Taken' + '<br/>' + loan['payment_date_loan_payment'] + '  ' + '(' + loan['paid_amount_loan_payment'] + ')' + ' Given' + '<br/>' + '</p>');
+                        $('#loan_status').html(loan['status']);
+                        $('#loan_payment').html(total_payment);
+                    if (loan['id_loan'] == null ) {
+                        $('#loan_info').hide();
+                    }
+
+
+                        ++j;  
+                });
+//        }
+            }});
+        return false;
+        }if( select == 0){
+            $('#loan_info').hide();
+        }
+    });
+</script>

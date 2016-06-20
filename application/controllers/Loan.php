@@ -45,7 +45,7 @@ class Loan extends CI_Controller {
         $output = $crud->render();
         $data['glosary'] = $output;
 //        date range
-        $range = $this->input->post('date_range');
+        $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');
         $from = date('Y-m-d', strtotime($part[0]));
         $to = date('Y-m-d', strtotime($part[1]));
@@ -77,9 +77,9 @@ class Loan extends CI_Controller {
     function loan_payment() {
         $crud = new grocery_CRUD();
         $crud->set_table('loan_payment')
-                ->display_as('id_loan', 'Loan Title')
-                ->set_relation('id_loan', 'loan', 'title_loan')
-                ->set_relation('id_employee', 'employee', "name_employee");
+                ->display_as('id_loan', 'Loan Id')
+                ->set_relation('id_loan', 'loan', 'id_loan');
+//                ->set_relation('id_employee', 'employee', "name_employee");
 //                ->unset_fields('id_loan');
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -108,7 +108,7 @@ class Loan extends CI_Controller {
     }
 
     function loan_employee_list() {
-        $range = $this->input->post('date_range');
+        $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');
 //        print_r($part);
         $from = date('Y-m-d', strtotime($part[0]));
@@ -133,13 +133,6 @@ class Loan extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_empoloyee_list', $data);
     }
 
-    function test() {
-        $part = explode("-", $this->input->post('date_range'));
-        $from = $part['0'];
-        $to = $part['1'];
-        echo '<pre>';
-        print_r($part['1']);
-        exit();
-    }
+   
 
 }

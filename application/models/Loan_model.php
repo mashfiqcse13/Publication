@@ -88,6 +88,7 @@ class Loan_model extends CI_Model {
 //        $this->db->where('date_taken_loan <=', $to);
         $query = $this->db->get();
         return $query->result();
-    }
+    }  
+   
 
 }
