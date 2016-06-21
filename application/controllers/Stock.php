@@ -39,9 +39,8 @@ class Stock extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $crud->set_table('stock_perpetual_stock_register')
-                ->set_subject('Stock Perpitual')
-                ->set_relation('id_item', 'items', 'name')
-                ->set_relation('id_item', 'items', 'name')
+                ->set_subject('Stock Perpitual')->display_as('return_amountreject', 'Sales Return Amount')->display_as('id_item', 'Item Name')
+                ->set_relation('id_item', 'items', 'name')->unset_columns('reject_amount')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();

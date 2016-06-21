@@ -18,6 +18,7 @@
 
             <li><?php echo anchor('items/index/add', '<i class="fa fa-plus-circle"></i>  <span>Add Books</span>'); ?></li>
             <li><?php echo anchor('Items', '<i class="fa fa-plus-circle"></i>  <span>Manage Books</span>'); ?></li>
+            <li><?php echo anchor('Items/category', '<i class="fa fa-plus-circle"></i>  <span>Category</span>'); ?></li>
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 
