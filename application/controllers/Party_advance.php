@@ -51,7 +51,15 @@ class Party_advance extends CI_Controller {
 
         $crud->callback_before_insert(array($this, 'party_advance_add'));
         $crud->callback_before_delete(array($this, 'party_advance_delete'));
-        $crud->callback_before_update(array($this, 'party_advance_update'));
+//        $crud->callback_before_update(array($this, 'party_advance_update'));
+        $crud->unset_edit();
+//        $crud->add_action('Add payment', '', '', 'fa fa-credit-card', function ($primary_key, $row) {
+//                    if ($row->amount_paid > 0) {
+//                        return site_url('due/make_payment/' . $row->id_customer);
+//                    } else {
+//                        return '#';
+//                    }
+//                });
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -68,8 +76,9 @@ class Party_advance extends CI_Controller {
 
         $this->load->model('party_advance_model');
         $values = $this->input->post('amount_paid');
+        $customer_id = $this->input->post('id_customer');
 
-        $this->party_advance_model->add($values);
+        $this->party_advance_model->add($values,$customer_id);
         return true;
     }
 
@@ -77,16 +86,19 @@ class Party_advance extends CI_Controller {
 
         $this->load->model('party_advance_model');
         $amount_income = $this->input->post('amount_paid');
+        $customer_id = $this->input->post('id_customer');
         $this->db->where('id_party_advance_payment_register', $primary_key);
         $value = $this->db->get('party_advance_payment_register');
 //        print_r($value);exit();
         foreach ($value->result() as $row) {
             $values = $row->amount_paid;
         }
+        echo $values;
+//        $this->party_advance_model->add($amount_income,$customer_id);
+        
+        $this->party_advance_model->reduce($values,$customer_id);
 
-        $this->party_advance_model->reduce($values);
-
-        $this->party_advance_model->add($amount_income);
+        
         return true;
     }
 
@@ -97,8 +109,9 @@ class Party_advance extends CI_Controller {
         $value = $this->db->get('party_advance_payment_register');
         foreach ($value->result() as $row) {
             $values = $row->amount_paid;
+            $id_customer = $row->id_customer;
         }
-        $this->party_advance_model->add_revert($values);
+        $this->party_advance_model->add_revert($values,$id_customer);
 
         return true;
     }
