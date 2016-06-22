@@ -18,4 +18,5 @@
 <li><?php echo anchor('stationary_stock', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock</span>'); ?></li>
 <li><?php echo anchor('report', '<i class="fa fa-plus-circle"></i>  <span>Report</span>'); ?></li>
 <li><?php echo anchor('admin', '<i class="fa fa-plus-circle"></i>  <span>Old system</span>'); ?></li>
+<li><?php echo anchor('party_advance', '<i class="fa fa-plus-circle"></i>  <span>Party Advance</span>'); ?></li>
 <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>

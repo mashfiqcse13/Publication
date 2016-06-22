@@ -109,6 +109,13 @@ class Salary extends CI_Controller {
                         $info['id_salary_payment'] = $payment_id;
                         $this->Salary_model->save_info('salary_bonus', $info);
                     }
+                    $bonus['id_salary_bonus_type'] = $bonus[$j];
+                    $bonus['amount'] = $basic[$j];
+                    $bonus['date_announce'] = date('Y-m-d H:i:s', now());
+                    $bonus['status'] = 1;
+                    $this->Salary_model->save_info('salary_bonus_announce', $bonus);
+                          
+                    
                 }
             }
         }
