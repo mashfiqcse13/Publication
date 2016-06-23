@@ -61,14 +61,13 @@ class Due extends CI_Controller {
 
     function customer_payment() {
         $crud = new grocery_CRUD();
-        $crud->set_table('customer_payment')
-                ->display_as('id_total_sales', 'Memo No')
-                ->display_as('id_customer', 'Customer Name')
-                ->set_subject('Customer Payment')
+        $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
+                ->display_as('id_customer', 'Customer Name')->set_subject('Customer Payment')
                 ->set_relation('id_customer', 'customer', 'name')
-                ->unset_edit()
-                ->unset_delete()
-                ->unset_add();
+                ->unset_edit()->unset_delete()->unset_add()->unset_read()->columns('Customer ID', 'id_customer', 'total_due_billed', 'total_paid', 'total_due')
+                ->callback_column('Customer ID', function ($value, $row) {
+                    return $row->id_customer;
+                });
         $output = $crud->render();
         $data['glosary'] = $output;
         
