@@ -47,6 +47,8 @@ class Due_model extends CI_Model {
     function get_all_customers(){
         $this->db->select('*');
         $this->db->from('customer');
+        $this->db->join('customer_due','customer.id_customer = customer_due.id_customer','left');
+        $this->db->where('customer_due.total_due_billed !=',null);
         $query = $this->db->get();
         return $query->result();
     }
