@@ -63,7 +63,8 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-lg-8">
-                                <label for="id_contact">Party name</label>
+                                <label for="id_contact">Party name</label> 
+                                <a href="<?php echo site_url('contacts/index/add') ?>" class="btn btn-xs btn-default">Add New</a>
                                 <?php echo $customer_dropdown ?>
                             </div>
                             <div class="form-group col-lg-4">

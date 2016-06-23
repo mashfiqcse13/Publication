@@ -89,6 +89,10 @@ if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
     $db['default']['username'] = 'thejamun_master';
     $db['default']['password'] = 'Mv,4K&ZRV)xP';
     $db['default']['database'] = 'thejamun_publication_ohiprokashani';
+} else if ($_SERVER['HTTP_HOST'] == "advancedpublication.com") {
+    $db['default']['username'] = 'thejamun_publication_advancedpublication';
+    $db['default']['password'] = 'a66XmkgVZEos';
+    $db['default']['database'] = 'thejamun_publication_advancedpublication';
 } else if ($_SERVER['HTTP_HOST'] == "fit.thejamunapub.com") {
     $db['default']['username'] = 'thejamun_publication_fit';
     $db['default']['password'] = '1Uz1U3+7;3f0';

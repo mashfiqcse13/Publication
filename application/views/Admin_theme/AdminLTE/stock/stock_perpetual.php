@@ -87,7 +87,6 @@
                                     <th>Sales Amount</th>
                                     <th>Specimen</th>
                                     <th>Return Amount Reject</th>
-                                    <th>Reject Amount</th>
                                     <th>Closing Stock</th>
                                     <th>Date</th>
                                 </tr>
@@ -103,7 +102,6 @@
                                         <td><?php echo $stock->sales_amount; ?></td>
                                         <td><?php echo $stock->specimen; ?></td>
                                         <td><?php echo $stock->return_amountreject; ?></td>
-                                        <td><?php echo $stock->reject_amount; ?></td>
                                         <td><?php echo $stock->closing_stock; ?></td>
                                         <td><?php echo $date = date('d/m/Y', strtotime($stock->date)); ?></td>
 
