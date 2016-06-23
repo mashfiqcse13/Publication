@@ -18,6 +18,8 @@
             
             <li><?php echo anchor('salary/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Type</span>'); ?></li>
             
+            <li><?php echo anchor('salary/salary_bonus_announcement', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Announcement</span>'); ?></li>
+            
             <li><?php echo anchor('salary/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
             
             <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announcement</span>'); ?></li>

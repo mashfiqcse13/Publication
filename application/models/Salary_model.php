@@ -90,6 +90,7 @@ class Salary_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('salary_payment');
         $this->db->where('id_employee', $id);
+        $this->db->order_by('id_salary_payment', 'desc');
         $query = $this->db->get();
         return $query->row();
     }
@@ -99,6 +100,13 @@ class Salary_model extends CI_Model {
         $this->db->where('id_salary_payment', $id);
         $query = $this->db->get();
         return $query->row();
+    }
+    function bonus_type(){
+        $this->db->select('*');
+        $this->db->from('salary_bonus_type');
+        $this->db->join('salary_bonus_announce','salary_bonus_type.id_salary_bonus_type = salary_bonus_announce.id_salary_bonus_type','left_join');
+        $query = $this->db->get();
+        return $query->result();
     }
     
     function select_bonus_amount($id){
