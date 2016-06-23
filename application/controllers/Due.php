@@ -72,7 +72,8 @@ class Due extends CI_Controller {
                 ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
-
+        
+        $data['customers'] = $this->Due_model->get_all_customers();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Payment';
