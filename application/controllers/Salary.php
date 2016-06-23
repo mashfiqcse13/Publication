@@ -40,7 +40,7 @@ class Salary extends CI_Controller {
         $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
 //        echo '<pre>';print_r($data['edit_salary']);exit();
         echo json_encode($data);
-        
+
 //        return $data['salary_info'];
     }
 
@@ -86,8 +86,22 @@ class Salary extends CI_Controller {
         }
     }
 
+    function salary_announced($id = null) {
+        $data['employees'] = $this->Salary_model->select_all_employee();
+        $salary = $data['employees'];
+        $data['bonus_type'] = $this->Salary_model->bonus_type();
+//        echo '<pre>';print_r($data);exit();
+//        after insert
+        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Salary Announcement';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_announced_list', $data);
+    }
+
     //    save salary payment
     public function save_announced() {
+//        echo '<pre>'; print_r($_POST);exit();
         $announced = $this->input->post('status_salary_payment');
         $employee = $this->input->post('id_employee');
         $basic = $this->input->post('amount_salary_payment');
@@ -109,13 +123,6 @@ class Salary extends CI_Controller {
                         $info['id_salary_payment'] = $payment_id;
                         $this->Salary_model->save_info('salary_bonus', $info);
                     }
-                    $bonus['id_salary_bonus_type'] = $bonus[$j];
-                    $bonus['amount'] = $basic[$j];
-                    $bonus['date_announce'] = date('Y-m-d H:i:s', now());
-                    $bonus['status'] = 1;
-                    $this->Salary_model->save_info('salary_bonus_announce', $bonus);
-                          
-                    
                 }
             }
         }
@@ -126,7 +133,7 @@ class Salary extends CI_Controller {
     }
 
     function paid_salary_payment() {
-        $this->load->model('misc/cash' ,'cash_model');
+        $this->load->model('misc/cash', 'cash_model');
         $id = $this->input->post('id_employee');
 //        payment update
         $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
@@ -146,11 +153,6 @@ class Salary extends CI_Controller {
             $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
             $this->Salary_model->save_info('loan_payment', $loan);
         }
-//        advance update
-//        $amount = floatval($this->input->post('paid_amount_loan_payment'));
-//        $advance['amount_paid_salary_advance'] =  $this->input->post('amount_paid_salary_advance');
-//        $advance_id = $this->Salary_model->deduction_update('salary_advance','id_employee', $advance, $id,$amount,'amount_given_salary_advance','id_salary_advance');
-//        advance payment insert
         if ($this->input->post('id_salary_advance') != null) {
             $advance_payment['id_salary_advance'] = $this->input->post('id_salary_advance');
             $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
@@ -161,7 +163,6 @@ class Salary extends CI_Controller {
 
         redirect('Salary/salary_payment');
     }
-
 
     function salary_advanced() {
         $crud = new grocery_CRUD();
@@ -229,17 +230,29 @@ class Salary extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_bonus_type', $data);
     }
 
-    function salary_announced($id = null) {
-        $data['employees'] = $this->Salary_model->select_all_employee();
-        $salary = $data['employees'];
-        $data['bonus_type'] = $this->Salary_model->select_all('salary_bonus_type');
-//        echo '<pre>';print_r($data);exit();
-//        after insert
-        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
+    function salary_bonus_announcement() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('salary_bonus_announce')
+                ->set_subject('Salary Bonus Announce')
+                ->display_as("id_salary_bonus_type", 'Bonus Type')
+                ->set_relation('id_salary_bonus_type', 'salary_bonus_type', "name_salary_bonus_type");
+        $crud->callback_add_field('date_announce', function () {
+            return '<input id="field-date_announce" name="date_annouce" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
+                    . '<style>div#date_announce_field_box{display: none;}</style>';
+        });
+        $crud->callback_add_field('status', function () {
+            return '<select name="status"> '
+                    . '<option>Select Status</option> '
+                    . '<option value="1">Active</option> '
+                    . '<option value="2">Inctive</option> '
+                    . '</select>';
+        });
+        $output = $crud->render();
+        $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Salary Announcement';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_announced_list', $data);
+        $data['Title'] = 'Salary Bonus Announce';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_bonus_announce', $data);
     }
 
     function current_salary_payment() {
@@ -250,8 +263,6 @@ class Salary extends CI_Controller {
         $data['Title'] = 'Current Salary Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/current_salary', $data);
     }
-
-    
 
     function total_employee_paid() {
         $data['total_paid'] = $this->Salary_model->select_all_salary_of_employee();
@@ -276,9 +287,6 @@ class Salary extends CI_Controller {
         } else {
             $data['total_paid_salary'] = $this->Salary_model->select_all_paid_salary();
         }
-
-
-
         $data['date_range'] = $range;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
