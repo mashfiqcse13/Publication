@@ -236,7 +236,7 @@ class Bank_balance extends CI_Model {
         //$date=$this->dateformatter($date);
         
         $range_query=$this->db->query("SELECT name_bank,account_number,name_trnsaction_type,transaction_date,
-            CONCAT('TK ',amount_transaction),username,check_number,media_link FROM `bank_management`
+            CONCAT('TK ',amount_transaction),username,check_number FROM `bank_management`
 LEFT JOIN bank_account on bank_account.id_bank_account=bank_management.id_account
 LEFT join bank on bank.id_bank=bank_account.id_bank
 left JOIN bank_transaction_type on bank_transaction_type.id_trnsaction_type=bank_management.id_transaction_type
@@ -244,9 +244,9 @@ left JOIN users on users.id=bank_management.id_user
 WHERE $condition");
         
         $this->load->library('table');
-        $this->table->set_heading(array('Bank Name', 'Account Number', 'Transaction Type','Transaction Date','Amount','User','Check Number','Media Link'));
+        $this->table->set_heading(array('Bank Name', 'Account Number', 'Transaction Type','Transaction Date','Amount','User','Check Number'));
         $tmpl = array (
-                    'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+                    'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" >',
 
                     'heading_row_start'   => '<tr style="background:#ddd">',
                     'heading_row_end'     => '</tr>',
@@ -347,7 +347,7 @@ WHERE $condition");
                 . "and $condition ");
         
         $this->load->library('table');
-        $this->table->set_heading(array('Generate Date', 'Bank Name', 'Account No','Amount','Transaction Type','User Entered','Action Date','Approval Status'));
+        $this->table->set_heading(array('Generate Date', 'Bank Name', 'Account No','Amount','Transaction Type','User Entered','Approved By','Action Date','Approval Status'));
         $tmpl = array (
                     'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
 

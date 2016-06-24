@@ -102,6 +102,7 @@
                                    <th>Amount</th>
                                    <th>Transaction Type</th>
                                    <th>User Entered</th>
+                                   <th>Approved By</th>
                                    <th>Action Date</th>
                                    <th>Approval Status</th>
                                </tr>
@@ -114,6 +115,7 @@
                                    <td style="text-align:right"><?php echo $row->amount_transaction; ?></td>
                                    <td><?php echo $row->name_trnsaction_type; ?></td>
                                    <td><?php echo $row->username; ?></td>
+                                   <td><?php echo $row->approved_by; ?></td>
                                    <td><?php echo $row->action_date; ?></td>
                                    <td class="approval">
                                       <?php if($row->approval_status==1){echo '<span style="color:green">Approved</span>'; }
@@ -187,7 +189,7 @@
    $('.save_status').click(function(ev){
        var form = $(this).parents('form:first');
        $.ajax({
-          url:"<?php echo base_url();?>index.php/bank/update_status",
+          url:"<?php echo site_url('bank/update_status'); ?>",
           type:"POST",
            data : form.serialize(),
            dataType: "json",

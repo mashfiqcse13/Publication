@@ -27,6 +27,8 @@ class Sales_return extends CI_Controller {
         $this->load->model('Sales_return_m');
         $this->load->model('Memo');
         $this->load->model('Sales_model');
+        $this->load->library('session');
+        
         
         
        
@@ -34,12 +36,17 @@ class Sales_return extends CI_Controller {
     
     function index(){
         
+        $this->sales_current_sales_return();
         
+    } 
+    
+    function sales_return_dashboard(){
         $crud = new grocery_CRUD();
         $crud->set_table('sales_current_sales_return')->order_by('selection_ID', 'desc');
         $crud->columns('selection_ID','memo_ID','book_ID','stock_ID','quantity','total'); 
          $crud->display_as('book_ID','Book Name');
          $crud->set_relation('book_ID','items','name');
+         $crud->order_by('selection_ID','desc');
          $crud->unset_add();
          $crud->unset_edit();
          $crud->unset_delete();
@@ -54,7 +61,6 @@ class Sales_return extends CI_Controller {
     }
     
     
-    
     function sales_current_sales_return() {
         
 
@@ -62,6 +68,7 @@ class Sales_return extends CI_Controller {
         if($this->input->post('search_memo')==true){
            $total_sales_id=$this->input->post('memo_id');
            $data['search_memo']=$this->Sales_return_m->get_memos($total_sales_id);
+           
            if($data['search_memo']==true){
                 $data['memo_header_details'] = $this->Sales_model->memo_header_details($total_sales_id);
                //$data['get_book_list'] = $this->Sales_model->memo_body_table($total_sales_id);
@@ -72,15 +79,30 @@ class Sales_return extends CI_Controller {
         }
         
            }
+           
+         $sales_return=  $this->input->post('sales_return');
         
-        if($this->input->post('sales_return')==true){
-            
+        if(isset($sales_return)){
+
           $data['return_price'] =  $this->Sales_return_m->insert_return_item($_POST);
-            
+          
+          //$this->session->userdata('return_book_list')=$data['return_price'];    
+          
+            if($data['return_price']== True){
+                
+              $id=$data['return_price'];
+              $first_id =  array_shift($id);
+              $last_id = array_pop($id);
+              
+              if(empty($last_id)){
+                  $last_id=$first_id;
+              }
+              $data['list_item']=$this->Sales_return_m->list_return_item($first_id, $last_id);
+            }
         }
+       
         
-        
-        
+
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();

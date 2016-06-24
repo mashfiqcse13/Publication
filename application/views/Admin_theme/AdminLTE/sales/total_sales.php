@@ -49,7 +49,7 @@
                             $attributes = array(
                                 'clase' => 'form-inline',
                                 'method' => 'post');
-                            echo form_open(base_url() . 'index.php/sales/memo_report', $attributes)
+                            echo form_open(site_url('sales/memo_report'), $attributes)
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                             ?>
 
@@ -65,7 +65,7 @@
                             </div><!-- /.form group -->
 
                             <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?= anchor(current_url() . 'index.php/sales/tolal_sales', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                            <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
 
 
 

@@ -4,9 +4,9 @@
       <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper" style="min-height:600px">
+      <div class="content-wrapper only_print" style="min-height:600px">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <section class="content-header ">
           <h1>
             <?=$Title ?>
             <small> <?=$Title ?></small>
@@ -19,7 +19,7 @@
         
         
         <!-- Main content -->
-        <section class="content">
+        <section class="content only_print">
             <div class="row">
                 <div class="col-md-12">
 
@@ -27,11 +27,13 @@
                         <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
+                                <form id="secondform1" class="form" action="<?php echo site_url('sales_return/sales_current_sales_return'); ?>" method="post">
+                                 
                                 <?php 
-                                $attributes = array(
-                                                'clase' => 'form-inline',
-                                                'method' => 'post');
-                                echo form_open('', $attributes)
+//                                $attributes = array(
+//                                                'clase' => 'form-inline',
+//                                                'method' => 'post');
+//                                echo form_open('', $attributes)
                                 ?>
                                     <div class="form-group">
                                         <div class="row">
@@ -48,26 +50,37 @@
                                     <div class="form-group">
                                         <input type="submit" value="Search Memo" name="search_memo">
                                     </div>
-                                    
-                                <?php form_close() ?>
+                                </form>
                                 
-                                <?php if(isset($return_price)){
-                                    echo "Cash Back: ".$return_price;
-                                }
-                                ?>
+                                <?php //form_close() ?>
+                                
+                                
                             </div>
                         </div>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                <?php if(isset($list_item)){
+                                    echo $list_item['table1'];
+                                    echo $list_item['table2'];
+                                    
+                                ?>
+                                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
+
+                                <?php }  ?>
+                                </div>
+                            </div>
                             
                             <div class="row">
                                 <div class="col-md-8">
-                                
-                                     <?php
-                                        if(isset($search_memo)){
-                                            $attributes1 = array(
+                                   
+                                     <?php   if(isset($search_memo)){ ?>
+                                    <form id="secondform" class="form" action="<?php echo site_url('sales_return/sales_current_sales_return'); ?>" method="post">
+<!--                                            $attributes1 = array(
                                                 'clase' => 'form-inline',
                                                 'method' => 'post');
-                                            echo form_open('', $attributes1)
-                                      ?>      
+                                            echo form_open('', $attributes1);
+                                      ?>      -->
                                             <div class="page-header">
                                                 <h2>Sales Return</h2>
                                             </div>
@@ -139,13 +152,13 @@
                                             <td><?=$row['regular_price']?></td>
                                             <td><?=$row['sale_price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['sale_price']?>"></td>
                                             <td>
-                                                <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['quantity']?>"  placeholder="<?=$row['quantity']?>">
+                                                <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['quantity']?>"  placeholder="<?=$row['quantity']?>" required>
                                                 <input type="hidden" name="id_total_sales[]" class="form-control"  value="<?=$row['id_total_sales']?>">                                                
                                                 
                                                 <input type="hidden" name="pre_quantity[]" class="form-control"  value="<?=$row['quantity']?>">
                                                 <input type="hidden" name="id_customer" class="form-control"  value="<?=$row['id_customer']?>">
                                                 
-                                                
+                                               
                                             </td>
                                         </tr>
                                         <?php } ?>
@@ -154,8 +167,8 @@
                             </div>
 
                                     <input type="submit" class="btn btn-primary pull-right" value="Update Sales Return" name="sales_return">
-                                        
-                                        <?php   }   echo form_close(); }   ?>
+                                       </form>  
+                                     <?php   }}  // echo form_close(); }    ?>
                                
                                
                             </div>
@@ -177,6 +190,15 @@
 
       <!-- insert book -->
 
+      <div class="report-logo-for-print" >
+          <h3 class="text-center"><?=$this->config->item('SITE')['name'] ?></h3>
+          <p class="text-center"> <?=$Title ?> Report</p>
+          <p>Report Generated by: <?php echo $_SESSION['username'] ?></p>
+            <?php if(isset($list_item)){
+                echo $list_item['table1'];
+                echo $list_item['table2'];
 
+            }   ?> 
+      </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
