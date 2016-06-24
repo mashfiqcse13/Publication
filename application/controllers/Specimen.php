@@ -30,7 +30,7 @@ class Specimen extends CI_Controller {
 
     function ajax_url() {
 //        echo json_encode($_POST);
-        $this->Specimen_model->processing_new_sales();
+        $this->Specimen_model->processing_new_specimen();
     }
 
     function new_entry() {
@@ -91,5 +91,16 @@ class Specimen extends CI_Controller {
         $data['Title'] = 'Total speciment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/manage_list', $data);
     }
+    
+    function report(){
+        $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_who_have_taken_specimen();
+        $data['item_dropdown'] = $this->Specimen_model->get_item_dropdown_who_are_given_as_specimen();
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Speciment Report';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
+    }
+    
 
 }

@@ -14,11 +14,11 @@
         <ul class="sidebar-menu">
 
 
-            <li class="header">SALES CRUD s</li>
+            <li class="header">SALE CRUD s</li>
 
-            <li><?php echo anchor('sales/new_sale', '<i class="fa fa-plus-circle"></i>  <span>New Sales</span>'); ?></li>
-            <li><?php echo anchor('sales/sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>
-            <li><?php echo anchor('sales/tolal_sales', '<i class="fa fa-plus-circle"></i>  <span>Total sales</span>'); ?></li>
+            <li><?php echo anchor('sales/new_sale', '<i class="fa fa-plus-circle"></i>  <span>New Sale</span>'); ?></li>
+            <!--<li><?php echo anchor('sales/sales', '<i class="fa fa-plus-circle"></i>  <span>Sales</span>'); ?></li>-->
+            <li><?php echo anchor('sales/tolal_sales', '<i class="fa fa-plus-circle"></i>  <span>Sale Dashboard</span>'); ?></li>
 
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>

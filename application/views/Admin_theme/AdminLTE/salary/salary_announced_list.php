@@ -73,22 +73,57 @@
                                             </td>
                                             <?php
                                             $value = $this->Salary_model->announce($employee->id_employee);
-                                            $bonus = $this->Salary_model->bonus($value->id_salary_payment);
-                                            $current_month = date('n', now());
-                                            if ($bonus->status_bonus_payment == 2 && $value->month_salary_payment == $current_month) {
-                                                ?>
-                                                <td>Bonus(<?php echo $bonus->amount_salary_bonus; ?>)</td>
-                                                <?php
-                                            } else {
+                                            if ($value != null) {
+                                                $bonus = $this->Salary_model->bonus($value->id_salary_payment);
+
+//                                            echo '<pre>';print_r($value);
+                                                $current_month = date('n', now());
+                                                if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $current_month) {
+                                                    ?>
+                                                    <td>Bonus(<?php echo $bonus->amount_salary_bonus; ?>)</td>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <td>
+                                                        <select class="form-control select2"style="width:100%;" name="bonus_type[]" required="">
+                                                            <option value="0">Select Bonus Type</option>
+                                                            <?php
+                                                            foreach ($bonus_type as $bonus) {
+                                                                if ($bonus->amount == null) {
+                                                                    ?>
+                                                                    <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(0)</option>
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount; ?>)</option>
+
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                            <option value="0">No Bonus</option>
+                                                        </select>
+                                                    </td>
+                                                    <?php
+                                                }
+                                            }if ($value == null) {
                                                 ?>
                                                 <td>
-                                                    <select class="form-control select2"style="width:100%;" name="bonus_type[]">
+                                                    <select class="form-control select2"style="width:100%;" name="bonus_type[]" required="">
                                                         <option value="0">Select Bonus Type</option>
                                                         <?php
                                                         foreach ($bonus_type as $bonus) {
-                                                            ?>
-                                                            <option value="<?php echo $bonus->id_salary_bonus_type ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount_salary_bonus; ?>)</option>
-                                                        <?php }
+                                                            if ($bonus->amount == null) {
+                                                                ?>
+                                                                <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(0)</option>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount; ?>)</option>
+
+                                                                <?php
+                                                            }
+                                                        }
                                                         ?>
                                                         <option value="0">No Bonus</option>
                                                     </select>
@@ -98,14 +133,23 @@
                                             ?>
                                             <td >
                                                 <?php
-                                                if ($value->status_salary_payment == 2 && $value->month_salary_payment == $current_month) {
-                                                    if ($employee->id_employee == $value->id_employee) {
+                                                if ($value != null) {
+                                                    if (isset($value->status_salary_payment) && $value->month_salary_payment == $current_month) {
+                                                        if ($employee->id_employee == $value->id_employee) {
 //                                                        
+                                                            ?>
+                                                            <label>Announced</label>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    if ($value->month_salary_payment != $current_month) {
                                                         ?>
-                                                        <label>Announced</label>
+                                                        <label >
+                                                            <input type="checkbox" name="status_salary_payment[]" value="<?php echo $employee->id_employee; ?>" id="check" > Announced
+                                                        </label>
                                                         <?php
                                                     }
-                                                } else {
+                                                } if ($value == null) {
 //            
                                                     ?>
                                                     <label >
@@ -117,11 +161,11 @@
                                                 ?>
                                             </td>
 
-                    <!--                                            <td>
-                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                                </td>-->
+                                        <!--                                            <td>
+                                                         <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                                     <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                                        <button type="submit" class="btn btn-sm btn-success">Announced</button>
+                                                                                    </td>-->
 
                                         </tr>
                                         <?php

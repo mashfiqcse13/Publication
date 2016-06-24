@@ -13,15 +13,38 @@ class Specimen_model extends CI_Model {
         $customers = $this->db->get('specimen_agent')->result();
 
         $data = array();
-        $data[''] = 'Select party by name or code';
+        $data[''] = 'Select agent by name or code';
+        foreach ($customers as $customer) {
+            $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
+        }
+        return form_dropdown('id_agent', $data, NULL, ' class="select2" required');
+    }
+
+    function get_agent_dropdown_who_have_taken_specimen() {
+        $sql = "SELECT distinct(`id_agent`), `name` FROM `specimen_total` natural join `specimen_agent`";
+        $customers = $this->db->query($sql)->result();
+
+        $data = array();
+        $data[''] = 'Select agent by name or code';
         foreach ($customers as $customer) {
             $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
         }
         return form_dropdown('id_agent', $data, NULL, ' class="select2" required');
     }
     
-    
-    function processing_new_sales() {
+    function get_item_dropdown_who_are_given_as_specimen() {
+
+        $items = $this->db->query("SELECT distinct(`id_item`), `name` FROM `items` natural join `specimen_items`")->result();
+
+        $data = array();
+        $data[''] = 'Select items by name or code';
+        foreach ($items as $item) {
+            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+        }
+        return form_dropdown('id_item', $data, '', ' class="select2" ');
+    }
+
+    function processing_new_specimen() {
         $this->load->model('misc/Stock_perpetual');
         $this->load->model('Stock_model');
 
@@ -50,7 +73,7 @@ class Specimen_model extends CI_Model {
                 'amount_copy' => $value['item_quantity']
             );
             array_push($data_sales, $tmp_data_sales);
-            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'],2);
+            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'], 2);
             $this->Stock_model->stock_reduce($value['item_id'], $value['item_quantity']);
         }
 
@@ -58,14 +81,13 @@ class Specimen_model extends CI_Model {
         $this->db->insert_batch('specimen_items', $data_sales) or die('failed to insert data on sales');
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_specimen_total";
+            $response['msg'] = "The specimen issue is successfully done . \n Specimen Issue: $id_specimen_total";
             $response['next_url'] = site_url('specimen/new_entry');
         } else if ($action == 'save_and_back_to_list') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_specimen_total";
+            $response['msg'] = "The sales is successfully done . \n Specimen Issue: $id_specimen_total";
             $response['next_url'] = site_url('specimen/tolal');
         }
         echo json_encode($response);
     }
-
 
 }

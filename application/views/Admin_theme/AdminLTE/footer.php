@@ -110,6 +110,7 @@ var baseURL = "<?php echo base_url(); ?>";
     // Datepicker
     $('.datepicker').datepicker();
     
+    $('#msg').fadeOut(5000);
 
     /*     
      * Add collapse and remove events to boxes

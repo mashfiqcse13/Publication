@@ -76,22 +76,22 @@ class Income extends CI_Controller {
         }
         
 //        
-//        function cash_update($post_array,$primary_key){
-//        
-//            $this->load->model('misc/cash');
-//            $amount_income = $this->input->post('amount_income'); 
-//            $this->db->where('id_income',$primary_key);
-//            $value=$this->db->get('income');
-//            
-//            foreach($value->result() as $row){
-//                $values=$row->amount_income;
-//            }
-//            
-//            $this->cash->reduce($values);                 
-//           
-//            $this->cash->add($amount_income);
-//            return true;
-//        }
+        function cash_update($post_array,$primary_key){
+        
+            $this->load->model('misc/cash');
+            $amount_income = $this->input->post('amount_income'); 
+            $this->db->where('id_income',$primary_key);
+            $value=$this->db->get('income');
+            
+            foreach($value->result() as $row){
+                $values=$row->amount_income;
+            }
+            
+            $this->cash->reduce($values);                 
+           
+            $this->cash->add($amount_income);
+            return true;
+        }
         function cash_delete($primary_key){
         
             $this->load->model('misc/cash');

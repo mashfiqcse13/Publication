@@ -14,11 +14,14 @@
         <ul class="sidebar-menu">
 
 
-            <li class="header">ITEM CRUD s</li>
+            <li class="header">PARTY ADVANCE CRUD s</li>
 
-            <li><?php echo anchor('items/index/add', '<i class="fa fa-plus-circle"></i>  <span>Add Books</span>'); ?></li>
-            <li><?php echo anchor('Items', '<i class="fa fa-plus-circle"></i>  <span>Manage Books</span>'); ?></li>
-            <li><?php echo anchor('Items/category', '<i class="fa fa-plus-circle"></i>  <span>Category</span>'); ?></li>
+            
+
+            <li><?php echo anchor('party_advance/party_advnce_payment_register', '<i class="fa fa-plus-circle"></i>  <span>Party Advance Payment Register</span>'); ?></li>
+            <li><?php echo anchor('party_advance/payment_method', '<i class="fa fa-plus-circle"></i>  <span>Payment Method</span>'); ?></li>
+            
+
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 

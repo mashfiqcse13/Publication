@@ -28,14 +28,13 @@ class Due extends CI_Controller {
 
     function customer_due() {
         $crud = new grocery_CRUD();
-        $crud->set_table('customer_due')
-                ->display_as('id_customer', 'Customer Name')
-                ->set_subject('Customer Due')
-                ->set_relation('id_customer', 'customer', 'name')
-                ->unset_edit()
-                ->unset_delete()
-                ->unset_add()
-                ->add_action('Add payment', '', '', 'fa fa-credit-card', function ($primary_key, $row) {
+        $crud->set_table('customer_due')->set_subject('Customer Due')
+                ->display_as('id_customer', 'Customer Name')->set_relation('id_customer', 'customer', 'name')
+                ->unset_edit()->unset_delete()->unset_add()->unset_read()
+                ->columns('Customer ID', 'id_customer', 'total_due_billed', 'total_paid', 'total_due')
+                ->callback_column('Customer ID', function ($value, $row) {
+                    return $row->id_customer;
+                })->add_action('Add payment', 'a', 'a', 'btn btn-xs btn-default', function ($primary_key, $row) {
                     if ($row->total_due > 0) {
                         return site_url('due/make_payment/' . $row->id_customer);
                     } else {
@@ -62,17 +61,17 @@ class Due extends CI_Controller {
 
     function customer_payment() {
         $crud = new grocery_CRUD();
-        $crud->set_table('customer_payment')
-                ->display_as('id_total_sales', 'Memo No')
-                ->display_as('id_customer', 'Customer Name')
-                ->set_subject('Customer Payment')
+        $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
+                ->display_as('id_customer', 'Customer Name')->set_subject('Customer Payment')
                 ->set_relation('id_customer', 'customer', 'name')
-                ->unset_edit()
-                ->unset_delete()
-                ->unset_add();
+                ->unset_edit()->unset_delete()->unset_add()->unset_read()->columns('Customer ID', 'id_customer', 'total_due_billed', 'total_paid', 'total_due')
+                ->callback_column('Customer ID', function ($value, $row) {
+                    return $row->id_customer;
+                });
         $output = $crud->render();
         $data['glosary'] = $output;
-
+        
+        $data['customers'] = $this->Due_model->get_all_customers();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Payment';

@@ -31,7 +31,7 @@ class Sales extends CI_Controller {
         $crud->set_table('sales_total_sales')
                 ->columns('id_total_sales', 'id_customer', 'issue_date', 'discount_percentage', 'discount_amount', 'sub_total', 'total_amount', 'cash', 'bank_pay', 'total_paid', 'total_due')
                 ->display_as('id_total_sales', 'Memo No')
-                ->display_as('id_customer', 'Customer Name')
+                ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')
                 ->set_subject('Total sales')
                 ->set_relation('id_customer', 'customer', 'name')
                 ->order_by('id_total_sales', 'desc')

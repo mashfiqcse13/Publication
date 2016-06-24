@@ -18,7 +18,7 @@
 
             <li><?php echo anchor('loan/loan', '<i class="fa fa-plus-circle"></i>  <span>Loan</span>'); ?></li>
 
-            <li><?php echo anchor('loan/loan_payment', '<i class="fa fa-plus-circle"></i>  <span>Loan Payment</span>'); ?></li>
+            <!--<li><?php echo anchor('loan/loan_payment', '<i class="fa fa-plus-circle"></i>  <span>Loan Payment</span>'); ?></li>-->
             
             <li><?php echo anchor('loan/loan_employee_list', '<i class="fa fa-plus-circle"></i>  <span>Loan Employee List</span>'); ?></li>
             
