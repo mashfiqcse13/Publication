@@ -24,7 +24,7 @@
                 <div class="col-md-12">
 
                     <div class="box">
-                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  style="margin: 29px 0;" value="Print Report"/>
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"   value="Print Report"/>
         
                     <?php  
 
