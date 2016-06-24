@@ -28,7 +28,7 @@
 //                        'method' => 'post');
 //                    echo form_open('', $attributes)
                 ?>
-                <form action="<?= site_url('/due/customer_due') ?>" method="get">
+                <form action="<?= site_url('/due/customer_payment') ?>" method="get">
                     <div class="form-group ">
                         <label class="col-md-3">Customer</label>
                         <div class="col-md-7">
@@ -85,20 +85,20 @@
                                 <thead>
                                     <tr style="background:#ddd">
                                         <th>Customer Name</th>
-                                        <th>Total Due Billed</th>
-                                        <th>Total Paid</th>
-                                        <th>Total Due</th>
+                                        <th>Amount (TK)</th>
+                                        <th>Memo ID</th>
+                                        <th>Payment Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($customer_dues as $due) {
+                                    foreach ($customer_due_payment as $due_payment) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $due->name; ?></td>
-                                            <td><?php echo $due->total_due_billed; ?></td>
-                                            <td><?php echo $due->total_paid; ?></td>
-                                            <td><?php echo $due->total_due; ?></td>
+                                            <td><?php echo $due_payment->name; ?></td>
+                                            <td><?php echo $due_payment->paid_amount; ?></td>
+                                            <td><?php echo $due_payment->id_total_sales; ?></td>
+                                            <td><?php echo $due_payment->payment_date; ?></td>
                                         </tr>
                                         <?php
                                     }

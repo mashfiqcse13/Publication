@@ -24,13 +24,12 @@ class Items extends CI_Controller {
 
     function index() {
         $crud = new grocery_CRUD();
-        $crud->set_table('items')->set_subject('Items')->order_by('id_item', 'desc')->display_as('sale_price', 'Sale Price')
-                ->display_as('id_items_category', 'Category')->set_relation('id_items_category', 'items_category', 'name');
+        $crud->set_table('items')->set_subject('Items')->order_by('id_item', 'desc')
+                ->columns('id_item', 'name', 'id_items_category', 'regular_price', 'sale_price')->display_as('id_item', 'ID')
+                ->display_as('sale_price', 'Sale Price')->display_as('id_items_category', 'Category')
+                ->set_relation('id_items_category', 'items_category', 'name');
         $crud->callback_add_field('catagory', function () {
             return form_dropdown('catagory', $this->config->item('book_categories'), '0');
-        });
-        $crud->callback_column('name', function ($value, $row) {
-            return $row->name;
         });
         $crud->callback_add_field('storing_place', function () {
             return form_dropdown('storing_place', $this->config->item('storing_place'));

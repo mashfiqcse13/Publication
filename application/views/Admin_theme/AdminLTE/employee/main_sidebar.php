@@ -19,8 +19,8 @@
            
             
             <li><?php echo anchor('employee/manage_employee', '<i class="fa fa-plus-circle"></i>  <span>Manage Employee</span>'); ?></li>
-            <li><?php echo anchor('employee/manage_professtional_info', '<i class="fa fa-plus-circle"></i>  <span>Employee Professional info</span>'); ?></li>
-            <li><?php echo anchor('employee/manage_salary_info', '<i class="fa fa-plus-circle"></i>  <span>Employee Salary info</span>'); ?></li>
+            <li><?php echo anchor('employee/manage_professtional_info', '<i class="fa fa-plus-circle"></i>  <span>Employee Professional Info</span>'); ?></li>
+            <li><?php echo anchor('employee/manage_salary_info', '<i class="fa fa-plus-circle"></i>  <span>Employee Salary Info</span>'); ?></li>
            
        
             
