@@ -91,7 +91,7 @@ class Old_book extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'New sale';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/new_sale_form', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_form', $data);
     }
 
     function memo($total_sales_id) {

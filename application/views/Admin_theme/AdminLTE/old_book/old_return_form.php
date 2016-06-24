@@ -139,9 +139,13 @@
                 <div class="box box-warning">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-lg-8">
+                            <div class="form-group col-lg-6">
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label for="id_contact">Price</label>
+                                <input type="number" name="price" class="form-control" />
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Quantity</label>
