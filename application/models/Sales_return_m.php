@@ -123,16 +123,17 @@ class Sales_return_m extends CI_Model {
                     }
    
                     //update stock,stock_perpetual_register section end
-          
-                    $data_delete=array(
-                                'quantity' =>$pre_quantity[$key]-$quantity[$key],                                
-                                'total_cost' =>($pre_quantity[$key]-$quantity[$key])*$price_per_book[$key]
-                            );
-                            
-                    $this->db->where('id_total_sales', $memo_ID[$key]);
-                    $this->db->where('id_item',$book_ID[$key]);
-                    $this->db->update('sales', $data_delete);
-               }
+//                    if($pre_quantity[$key]>=$quantity[$key] && $pre_quantity[$key]=!0){
+                        $data_delete=array(
+                                    'quantity' =>$pre_quantity[$key]-$quantity[$key],                                
+                                    'total_cost' =>($pre_quantity[$key]-$quantity[$key])*$price_per_book[$key]
+                                );
+
+                        $this->db->where('id_total_sales', $memo_ID[$key]);
+                        $this->db->where('id_item',$book_ID[$key]);
+                        $this->db->update('sales', $data_delete);
+                   //}
+                }
                
                
               $this->db->query("UPDATE `sales_total_sales` "

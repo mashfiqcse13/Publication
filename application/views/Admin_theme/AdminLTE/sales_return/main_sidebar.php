@@ -16,10 +16,10 @@
             
             <li class="header">Sales Return</li>
             
-            <li><?php echo anchor('sales_return/', '<i class="fa fa-plus-circle"></i>  <span>Sales Return Dashboard</span>'); ?></li>
+            <li><?php echo anchor('sales_return/sales_return_dashboard', '<i class="fa fa-plus-circle"></i>  <span>Sales Return Dashboard</span>'); ?></li>
             <li><?php echo anchor('sales_return/sales_current_sales_return', '<i class="fa fa-plus-circle"></i>  <span>Current sales return</span>'); ?></li>
-            <li><?php echo anchor('sales_return/sales_current_total_sales_return', '<i class="fa fa-plus-circle"></i>  <span>Current total sales return</span>'); ?></li>
-       
+<!--            <li><?php echo anchor('sales_return/sales_current_total_sales_return', '<i class="fa fa-plus-circle"></i>  <span>Current total sales return</span>'); ?></li>
+       -->
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
            

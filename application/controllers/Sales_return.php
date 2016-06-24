@@ -27,6 +27,7 @@ class Sales_return extends CI_Controller {
         $this->load->model('Sales_return_m');
         $this->load->model('Memo');
         $this->load->model('Sales_model');
+        $this->load->library('session');
         
         
         
@@ -35,7 +36,11 @@ class Sales_return extends CI_Controller {
     
     function index(){
         
+        $this->sales_current_sales_return();
         
+    }
+    
+    function sales_return_dashboard(){
         $crud = new grocery_CRUD();
         $crud->set_table('sales_current_sales_return')->order_by('selection_ID', 'desc');
         $crud->columns('selection_ID','memo_ID','book_ID','stock_ID','quantity','total'); 
@@ -54,7 +59,6 @@ class Sales_return extends CI_Controller {
         $data['get_all_return_item']=$this->Sales_return_m->get_all_return_item();
         $this->load->view($this->config->item('ADMIN_THEME').'sales_return/sales_return_dashboard', $data);
     }
-    
     
     
     function sales_current_sales_return() {
@@ -81,13 +85,20 @@ class Sales_return extends CI_Controller {
         if(isset($sales_return)){
 
           $data['return_price'] =  $this->Sales_return_m->insert_return_item($_POST);
+          
+          $this->session->userdata('return_book_list')=$data['return_price'];    
+          
+            if($data['return_price']== True){
+                
               $id=$data['return_price'];
               $first_id =  array_shift($id);
               $last_id = array_pop($id);
+              
               if(empty($last_id)){
                   $last_id=$first_id;
               }
               $data['list_item']=$this->Sales_return_m->list_return_item($first_id, $last_id);
+            }
         }
        
         
