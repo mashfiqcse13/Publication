@@ -137,7 +137,7 @@ class Contacts extends CI_Controller {
     function marketing_officer() {
         $crud = new grocery_CRUD();
         $crud->set_table('contact_marketing_officer')->columns('id_marketing_officer', 'name', 'division', 'district', 'upazila', 'address', 'phone')
-                ->display_as('id_marketing_officer', 'ID')->order_by('id_marketing_officer', 'desc')->display_as('name', 'Agent Name')->set_subject('Officer');
+                ->display_as('id_marketing_officer', 'ID')->order_by('id_marketing_officer', 'desc')->display_as('name', 'Officer Name')->set_subject('Officer');
 
 
         $crud->callback_add_field('division', function () {
