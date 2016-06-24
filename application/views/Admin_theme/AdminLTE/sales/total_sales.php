@@ -118,7 +118,21 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $sum_sub_total = 0;
+                                    $sum_total_amount = 0;
+                                    $sum_discount_amount = 0;
+                                    $sum_cash = 0;
+                                    $sum_bank_pay = 0;
+                                    $sum_total_paid = 0;
+                                    $sum_total_due = 0;
                                     foreach ($total_sales as $sales) {
+                                        $sum_sub_total += $sales->sub_total;
+                                        $sum_total_amount += $sales->total_amount;
+                                        $sum_discount_amount += $sales->discount_amount;
+                                        $sum_cash += $sales->cash;
+                                        $sum_bank_pay += $sales->bank_pay;
+                                        $sum_total_paid += $sales->total_paid;
+                                        $sum_total_due += $sales->total_due;
                                         ?>
                                         <tr>
                                             <td><?php echo $sales->name; ?></td>
@@ -131,12 +145,25 @@
                                             <td><?php echo $sales->total_paid; ?></td>
                                             <td><?php echo $sales->total_due; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
-
-
                                         </tr>
                                         <?php
                                     }
                                     ?>
+
+                                    <tr style="font-weight: bold">
+                                        <td>Total :</td>
+                                        <td><?php echo $sum_sub_total; ?></td>
+                                        <td><?php echo $sum_total_amount; ?></td>
+                                        <td></td>
+                                        <td><?php echo $sum_discount_amount; ?></td>
+                                        <td><?php echo $sum_cash; ?></td>
+                                        <td><?php echo $sum_bank_pay; ?></td>
+                                        <td><?php echo $sum_total_paid; ?></td>
+                                        <td><?php echo $sum_total_due; ?></td>
+                                        <td></td>
+
+
+                                    </tr>
                                 </tbody>
                             </table>
 

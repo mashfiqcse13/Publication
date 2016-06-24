@@ -21,6 +21,7 @@
             <li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Customers</span>'); ?></li>
             <li><?php echo anchor('contacts/teacher', '<i class="fa fa-plus-circle"></i>  <span>Teachers</span>'); ?></li>
             <li><?php echo anchor('contacts/agents', '<i class="fa fa-plus-circle"></i>  <span>Agents</span>'); ?></li>
+            <li><?php echo anchor('contacts/marketing_officer', '<i class="fa fa-plus-circle"></i>  <span>Marketing Officer</span>'); ?></li>
 
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
