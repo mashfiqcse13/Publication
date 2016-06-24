@@ -16,23 +16,25 @@
             
             <li class="header">SALARY CRUD s</li>
             
-            <li><?php echo anchor('salary/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Type</span>'); ?></li>
+            <li><?php echo anchor('salary/salary_bonus_type', '<i class="fa fa-plus-circle"></i>  <span>Bonus Type</span>'); ?></li>
             
-            <li><?php echo anchor('salary/salary_bonus_announcement', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus Announcement</span>'); ?></li>
-            
-            <li><?php echo anchor('salary/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
-            
+            <li><?php echo anchor('salary/salary_bonus_announcement', '<i class="fa fa-plus-circle"></i>  <span>Bonus Announcement</span>'); ?></li>
+                                   
             <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announcement</span>'); ?></li>
             
             <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary Advance</span>'); ?></li>
+            
+            <li><?php echo anchor('salary/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
             
             <li><?php // echo anchor('salary/salary_bonus', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus</span>'); ?></li>
        
             <li><?php echo anchor('salary/current_salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Current Salary</span>'); ?></li>
             
-            <li><?php echo anchor('salary/total_employee_paid', '<i class="fa fa-plus-circle"></i>  <span>Total Paid</span>'); ?></li>
+            <li><?php echo anchor('salary/total_salary_paid', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment Report</span>'); ?></li>
             
-            <li><?php echo anchor('salary/total_salary_paid', '<i class="fa fa-plus-circle"></i>  <span>Total Salary Paid</span>'); ?></li>
+            <li><?php echo anchor('salary/total_employee_paid', '<i class="fa fa-plus-circle"></i>  <span>Total Salary Paid</span>'); ?></li>
+            
+            
             
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>

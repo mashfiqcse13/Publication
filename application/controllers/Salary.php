@@ -54,6 +54,7 @@ class Salary extends CI_Controller {
                 ->unset_edit()
                 ->unset_read()
                 ->callback_column('status_salary_payment', array($this, 'set_value'))
+                ->callback_column('month_salary_payment', array($this, 'set_month'))
                 ->set_relation('id_employee', 'employee', "name_employee");
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -62,16 +63,17 @@ class Salary extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Payment';
 
-        $data['employees'] = $this->Salary_model->select_all('employee');
+//        $data['employees'] = $this->Salary_model->select_all('employee');
 
         // echo '<pre>';print_r($father[0]->father_name);exit();
-        $id = $this->uri->segment(4);
-        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
+//        $id = $this->uri->segment(4);
+//        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
+        $data['all_salary_info'] = $this->Salary_model->select_all_info();
 
-        //echo '<pre>';print_r($id);exit();
+//        echo '<pre>';print_r($data['all_salary_info']);exit();
         $data['salary_payment'] = $this->Salary_model->select_all('salary_payment');
         //$data['salary_bonus'] = $this->Salary_model->select_all('salary_bonus_type');
-        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_payment', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/payment', $data);
     }
 
     function set_value($value) {
@@ -83,6 +85,47 @@ class Salary extends CI_Controller {
         }
         if ($value == 3) {
             return'<b>Error</b>';
+        }
+    }
+    function set_month($value) {
+        if ($value == 1) {
+            return'<b>January</b>';
+        }
+        if ($value == 2) {
+            return'<b>February</b>';
+        }
+        if ($value == 3) {
+            return'<b>March</b>';
+        }
+        if ($value == 4) {
+            return'<b>April</b>';
+        }
+        if ($value == 5) {
+            return'<b>May</b>';
+        }
+        if ($value == 6) {
+            return'<b>June</b>';
+        }
+        if ($value == 7) {
+            return'<b>July</b>';
+        }
+        if ($value == 8) {
+            return'<b>August</b>';
+        }
+        if ($value == 9) {
+            return'<b>September</b>';
+        }
+        if ($value == 10) {
+            return'<b>October</b>';
+        }
+        if ($value == 10) {
+            return'<b>October</b>';
+        }
+        if ($value == 11) {
+            return'<b>November</b>';
+        }
+        if ($value == 12) {
+            return'<b>December</b>';
         }
     }
 

@@ -34,6 +34,17 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
+    function select_all_info(){
+        $this->db->select('*');
+        $this->db->from('employee','salary_payment','salary_advance');
+        $this->db->join('salary_payment', 'employee.id_employee = salary_payment.id_employee', 'left');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left');
+        $this->db->join('salary_advance', 'salary_payment.id_employee = salary_advance.id_employee', 'left');
+        $this->db->join('loan', 'salary_payment.id_employee = loan.id_employee', 'left');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
 //    function select_salary_advance_by_salary_id($id){
 //        $this->db->select('*');
 //        $this->db->from('salary_advance');
