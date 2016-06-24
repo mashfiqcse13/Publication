@@ -38,7 +38,7 @@ class Sales_return extends CI_Controller {
         
         $this->sales_current_sales_return();
         
-    }
+    } 
     
     function sales_return_dashboard(){
         $crud = new grocery_CRUD();
@@ -86,7 +86,7 @@ class Sales_return extends CI_Controller {
 
           $data['return_price'] =  $this->Sales_return_m->insert_return_item($_POST);
           
-          $this->session->userdata('return_book_list')=$data['return_price'];    
+          //$this->session->userdata('return_book_list')=$data['return_price'];    
           
             if($data['return_price']== True){
                 

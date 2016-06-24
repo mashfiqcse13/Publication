@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-/**
+/** 
  * Description of Sales
  *
  * @author MD. Mashfiq

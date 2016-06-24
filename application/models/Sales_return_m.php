@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 /**
  * Description of Salary_model
  *
- * @author Rokibul Hasan
+ * @author Rokibul Hasan 
  */
 
 class Sales_return_m extends CI_Model {

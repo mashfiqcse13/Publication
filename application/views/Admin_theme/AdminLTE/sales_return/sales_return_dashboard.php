@@ -8,7 +8,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            <?=$Title ?>
+            <?=$Title ?> 
             <small> <?=$Title ?></small>
           </h1>
           <ol class="breadcrumb">

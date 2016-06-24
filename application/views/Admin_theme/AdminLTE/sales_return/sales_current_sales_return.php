@@ -168,7 +168,7 @@
 
                                     <input type="submit" class="btn btn-primary pull-right" value="Update Sales Return" name="sales_return">
                                        </form>  
-                                     <?php   }}  // echo form_close(); }   ?>
+                                     <?php   }}  // echo form_close(); }    ?>
                                
                                
                             </div>
