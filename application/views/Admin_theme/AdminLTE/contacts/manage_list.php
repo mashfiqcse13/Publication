@@ -44,4 +44,4 @@
       <!-- insert book -->
 
 
-<?php include_once __DIR__ . '/../footer.php'; ?>
+<?php include_once __DIR__ . '/../footer.php'; ?>z
