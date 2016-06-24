@@ -14,7 +14,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=$base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Customer section</li>
+            <li class="active"><?=$Title ?></li>
           </ol>
         </section>
         

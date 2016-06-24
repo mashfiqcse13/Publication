@@ -71,10 +71,10 @@ class Specimen extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('specimen_total')
                 ->display_as('id_specimen_total', 'Specimen Total ID')
-                ->display_as('id_agent', 'Customer Name')
+                ->display_as('id_agent', 'Name')
                 ->display_as('id_employee', 'Approved by')
-                ->set_subject('Total speciment')
-                ->display_as('id_agent', 'Customer Name')
+                ->columns('id_specimen_total', 'id_agent', 'date_entry', 'id_employee')
+                ->set_subject('Total specimen')
                 ->set_relation('id_agent', 'specimen_agent', 'name')
                 ->set_relation('id_employee', 'users', 'username')
                 ->order_by('id_specimen_total', 'desc')
@@ -89,7 +89,7 @@ class Specimen extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Total speciment';
+        $data['Title'] = 'Total specimen';
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/manage_list', $data);
     }
 
@@ -99,7 +99,7 @@ class Specimen extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Speciment Report';
+        $data['Title'] = 'Specimen Issue Report';
 
         $data['id_agent'] = $this->input->post('id_agent');
         $data['id_item'] = $this->input->post('id_item');

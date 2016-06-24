@@ -13,7 +13,7 @@ class Specimen_model extends CI_Model {
         $customers = $this->db->get('specimen_agent')->result();
 
         $data = array();
-        $data[''] = 'Select agent by name or code';
+        $data[''] = 'Select Agent/Marketing Officer by name or code';
         foreach ($customers as $customer) {
             $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
         }
@@ -25,7 +25,7 @@ class Specimen_model extends CI_Model {
         $customers = $this->db->query($sql)->result();
 
         $data = array();
-        $data[''] = 'Select agent by name or code';
+        $data[''] = 'Select Agent/Marketing Officer by name or code';
         foreach ($customers as $customer) {
             $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
         }
