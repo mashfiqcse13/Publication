@@ -128,6 +128,10 @@ class Contacts extends CI_Controller {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+        })->callback_add_field('type', function () {
+            return "Agent";
+        })->callback_edit_field('type', function ($value, $primary_key) {
+            return "Agent";
         });
 
         $output = $crud->render();
@@ -141,7 +145,7 @@ class Contacts extends CI_Controller {
     function marketing_officer() {
         $crud = new grocery_CRUD();
         $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type','Marketing Officer')
-                ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Officer')->order_by('id_agent', 'desc')
+                ->display_as('id_agent', 'ID')->display_as('name', 'Officer Name')->set_subject('Officer')->order_by('id_agent', 'desc')
                 ->callback_before_insert(array($this->Contacts_model,'marketing_officer_type_setter_post_array'))
                 ->callback_before_update(array($this->Contacts_model,'marketing_officer_type_setter_post_array'));
 
@@ -160,6 +164,10 @@ class Contacts extends CI_Controller {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+        })->callback_add_field('type', function () {
+            return "Marketing Office";
+        })->callback_edit_field('type', function ($value, $primary_key) {
+            return "Marketing Office";
         });
 
         $output = $crud->render();
