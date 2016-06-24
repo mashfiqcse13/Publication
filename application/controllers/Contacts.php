@@ -94,7 +94,8 @@ class Contacts extends CI_Controller {
         $crud = $this->Contacts_model->set_filter($crud);
         $data['filter_elements'] = $this->Contacts_model->filter_elements();
 
-
+        
+        
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
