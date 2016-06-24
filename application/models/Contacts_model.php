@@ -116,4 +116,14 @@ class Contacts_model extends CI_Model {
         return $filter_elements;
     }
 
+    function agent_type_setter_post_array($post_array) {
+        $post_array['type'] = 'Agent';
+        return $post_array;
+    }
+    
+    function marketing_officer_type_setter_post_array($post_array) {
+        $post_array['type'] = 'Marketing Officer';
+        return $post_array;
+    }
+
 }

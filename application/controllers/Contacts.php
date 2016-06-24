@@ -106,8 +106,10 @@ class Contacts extends CI_Controller {
 
     function agents() {
         $crud = new grocery_CRUD();
-        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')
-                ->display_as('id_agent', 'ID')->order_by('id_agent', 'desc')->display_as('name', 'Agent Name')->set_subject('Agents');
+        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type','Agent')
+                ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Agents')->order_by('id_agent', 'desc')
+                ->callback_before_insert(array($this->Contacts_model,'agent_type_setter_post_array'))
+                ->callback_before_update(array($this->Contacts_model,'agent_type_setter_post_array'));
 
 
         $crud->callback_add_field('division', function () {
@@ -137,9 +139,10 @@ class Contacts extends CI_Controller {
 
     function marketing_officer() {
         $crud = new grocery_CRUD();
-        $crud->set_table('contact_marketing_officer')->columns('id_marketing_officer', 'name', 'division', 'district', 'upazila', 'address', 'phone')
-                ->display_as('id_marketing_officer', 'ID')->order_by('id_marketing_officer', 'desc')->display_as('name', 'Officer Name')->set_subject('Officer');
-
+        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type','Marketing Officer')
+                ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Officer')->order_by('id_agent', 'desc')
+                ->callback_before_insert(array($this->Contacts_model,'marketing_officer_type_setter_post_array'))
+                ->callback_before_update(array($this->Contacts_model,'marketing_officer_type_setter_post_array'));
 
         $crud->callback_add_field('division', function () {
             return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" ');
