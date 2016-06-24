@@ -29,9 +29,9 @@ class Specimen_model extends CI_Model {
         foreach ($customers as $customer) {
             $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
         }
-        return form_dropdown('id_agent', $data, NULL, ' class="select2" required');
+        return form_dropdown('id_agent', $data, NULL, ' class="select2"');
     }
-    
+
     function get_item_dropdown_who_are_given_as_specimen() {
 
         $items = $this->db->query("SELECT distinct(`id_item`), `name` FROM `items` natural join `specimen_items`")->result();
@@ -88,6 +88,69 @@ class Specimen_model extends CI_Model {
             $response['next_url'] = site_url('specimen/tolal');
         }
         echo json_encode($response);
+    }
+
+    function get_report_table($id_agent = '', $id_item = '', $date_range = '') {
+        $where = array();
+        if (!empty($id_agent)) {
+            array_push($where, "specimen_total.id_agent = $id_agent");
+        }
+        if (!empty($id_item)) {
+            array_push($where, "specimen_items.id_item = $id_item");
+        }
+        if (!empty($date_range)) {
+            array_push($where, "date(date_entry) BETWEEN" . $this->Common->convert_date_range_to_mysql_between($date_range));
+        }
+        if (empty($where) && sizeof($where) == 0) {
+            $where = 1;
+        } else {
+            $where = implode(' AND ', $where);
+        }
+        $sql = "SELECT 
+                    id_item,
+                    item_name,
+                    SUM(amount_copy) as total_quantity
+                    FROM(
+                            SELECT specimen_total.id_agent, specimen_agent.name as agent_name, specimen_items.id_item,
+                            items.name as item_name, amount_copy, date_entry
+                            FROM  `specimen_total`  NATURAL JOIN  `specimen_items` NATURAL JOIN  `items` 
+                            JOIN  `specimen_agent` on specimen_total.id_agent= specimen_agent.id_agent
+                            where $where
+                    ) AS report
+                    GROUP BY id_item ORDER BY  `id_item` ASC  ";
+        $this->table->set_heading(array('Item ID', 'Item Name', 'Total Amount'));
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+            'heading_row_start' => '<tr style="background:#ddd">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td>',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td>',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+        $this->table->set_template($tmpl);
+        $table_data = $this->db->query($sql)->result_array();
+        return $this->table->generate($table_data);
+    }
+
+    function get_agent_name_by($id_agent) {
+        if (empty($id_agent)) {
+            return false;
+        }
+        $sql = "SELECT * FROM specimen_agent where id_agent = $id_agent";
+        $agent_details = $this->db->query($sql)->result();
+        if (empty($agent_details[0]->name)) {
+            return false;
+        } else {
+            return $agent_details[0]->name;
+        }
     }
 
 }

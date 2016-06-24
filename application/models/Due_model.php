@@ -61,6 +61,14 @@ class Due_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    function get_customer_due_payment_info($customer_name){
+        $this->db->select('*');
+        $this->db->from('customer_payment');
+        $this->db->join('customer','customer.id_customer = customer_payment.id_customer','left');
+        $this->db->where('customer_payment.id_customer',$customer_name);
+        $query = $this->db->get();
+        return $query->result();
+    }
   
     
 

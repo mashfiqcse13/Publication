@@ -49,6 +49,7 @@ class Employee extends CI_Controller {
     function manage_professtional_info() {
         $crud = new grocery_CRUD();
         $crud->set_table('employee_perfesional_info')
+                ->display_as("previous_work_experience_year", 'Previous work experience in year')
                 ->set_subject('Employee Professional')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee");
@@ -59,6 +60,7 @@ class Employee extends CI_Controller {
         $data['Title'] = 'Manage Employee';
         $this->load->view($this->config->item('ADMIN_THEME') . 'employee/manage_employee_professional', $data);
     }
+
     function manage_salary_info() {
         $crud = new grocery_CRUD();
         $crud->set_table('employee_salary_info')

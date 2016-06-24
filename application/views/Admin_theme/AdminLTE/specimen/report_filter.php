@@ -54,8 +54,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="report_asked" value="true">
                                 <div class="form-group col-md-3 pull-right">
-                                    <button type="submit" class="btn btn-primary">Generate Report</button> 
+                                    <button type="submit" class="btn btn-primary" name="get_report" value="all">Generate Report</button> 
                                     <a href="<?php echo site_url('specimen/report') ?>" class="btn btn-success">Reset filter</a>
                                 </div>
                             </div>

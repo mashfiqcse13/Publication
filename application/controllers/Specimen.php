@@ -22,6 +22,7 @@ class Specimen extends CI_Controller {
         $this->load->model('Common');
         $this->load->model('Sales_model');
         $this->load->model('Specimen_model');
+        $this->load->library('table');
     }
 
     function index() {
@@ -91,16 +92,30 @@ class Specimen extends CI_Controller {
         $data['Title'] = 'Total speciment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/manage_list', $data);
     }
-    
-    function report(){
+
+    function report() {
         $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_who_have_taken_specimen();
         $data['item_dropdown'] = $this->Specimen_model->get_item_dropdown_who_are_given_as_specimen();
-        
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Speciment Report';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
+
+        $data['id_agent'] = $this->input->post('id_agent');
+        $data['id_item'] = $this->input->post('id_item');
+        $data['date_range'] = $this->input->post('date_range');
+        $data['report_asked'] = $this->input->post('report_asked');
+
+        if (!empty($data['report_asked'])) {
+            $data['report'] = $this->Specimen_model->get_report_table($data['id_agent'], $data['id_item'], $data['date_range']);
+            $data['agent_name'] = $this->Specimen_model->get_agent_name_by($data['id_agent']) or
+                    $data['agent_name'] = 'Any';
+            $data['item_name'] = $this->Common->get_item_name_by($data['id_item']) or
+                    $data['item_name'] = 'Any';
+            $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_page', $data);
+        } else {
+            $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
+        }
     }
-    
 
 }
