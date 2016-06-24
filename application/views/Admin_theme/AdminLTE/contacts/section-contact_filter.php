@@ -38,11 +38,14 @@
             <label for="dropdown_subject">Subject : &nbsp; </label>
             <?= $filter_elements['dropdown_subject'] ?>
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-lg-2">
             <button type="submit" style="margin: 29px 0;" class="btn btn-success">Search Teacher Contact</button>
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-lg-2">
             <?= anchor("contacts/teacher/reset_filter", 'Click here for Reset Filter', 'class="btn btn-primary" style="margin: 29px 0;" title="Reset"'); ?>
+        </div>
+        <div class="form-group col-lg-2">
+            <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  style="margin: 29px 0;" value="Print Report"/>
         </div>
     </form>
 </div>

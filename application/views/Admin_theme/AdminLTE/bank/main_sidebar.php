@@ -16,14 +16,15 @@
 
             <li class="header">BANK CRUD</li>
 
-            <li><?php echo anchor('bank/bank_management', '<i class="fa fa-plus-circle"></i>  <span>Bank Management</span>'); ?></li>
+            <li><?php echo anchor('bank/bank_management', '<i class="fa fa-plus-circle"></i>  <span>Bank Transaction</span>'); ?></li>
+            <li><?php echo anchor('bank/bank_management_status', '<i class="fa fa-plus-circle"></i>  <span>Bank Transaction Status</span>'); ?></li>
+             <li><?php echo anchor('bank/bank_balance', '<i class="fa fa-plus-circle"></i>  <span>Bank Balace</span>'); ?></li>
             <li class="header">Bank Setting</li>
-            <li><?php echo anchor('bank/bank', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
-            <li><?php echo anchor('bank/bank_account', '<i class="fa fa-plus-circle"></i>  <span>Bank Account</span>'); ?></li>
+            <li><?php echo anchor('bank/bank', '<i class="fa fa-plus-circle"></i>  <span>Bank Name</span>'); ?></li>
+            <li><?php echo anchor('bank/bank_account', '<i class="fa fa-plus-circle"></i>  <span>Bank Account No.</span>'); ?></li>
             <li><?php echo anchor('bank/bank_account_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Account Type</span>'); ?></li>
-            <li><?php echo anchor('bank/bank_balance', '<i class="fa fa-plus-circle"></i>  <span>Bank Balace</span>'); ?></li>
-            <li><?php echo anchor('bank/bank_management_status', '<i class="fa fa-plus-circle"></i>  <span>Bank Management Status</span>'); ?></li>
-            <li><?php echo anchor('bank/bank_transaction_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Transaction Type</span>'); ?></li>
+           
+            <!--            <li><?php echo anchor('bank/bank_transaction_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Transaction Type</span>'); ?></li>-->
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 
