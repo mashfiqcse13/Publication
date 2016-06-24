@@ -247,8 +247,13 @@
     $("#add_to_cart").click(function () {
         var item_id = string_to_int($('[name="id_item"]').val());
         var item_quantity = string_to_int($('#item_quantity').val());
+        var item_price = string_to_int($('#item_price')).val();
         if (item_id == 0) {
             alert('No book selected');
+            return;
+        }
+        if (item_price == 0) {
+            alert('Enter Price');
             return;
         }
         if (item_quantity == 0) {
