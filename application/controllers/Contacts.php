@@ -127,6 +127,10 @@ class Contacts extends CI_Controller {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+        })->callback_add_field('type', function () {
+            return "Agent";
+        })->callback_edit_field('type', function ($value, $primary_key) {
+            return "Agent";
         });
 
         $output = $crud->render();
@@ -159,6 +163,10 @@ class Contacts extends CI_Controller {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+        })->callback_add_field('type', function () {
+            return "Marketing Office";
+        })->callback_edit_field('type', function ($value, $primary_key) {
+            return "Marketing Office";
         });
 
         $output = $crud->render();
