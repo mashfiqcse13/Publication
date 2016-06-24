@@ -82,8 +82,7 @@
                     echo $glosary->output;
                     ?>
                     
-                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
-                    
+                       
                   <?php  }      ?>
                     
                     
