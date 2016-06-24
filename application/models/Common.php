@@ -32,6 +32,13 @@ class Common extends CI_Model {
         return $strMoney;
     }
 
+    function convert_date_range_to_mysql_between($data_picker_date_range) {
+        $dates = explode(' - ', $data_picker_date_range);
+        $from = date('Y-m-d', strtotime($dates[0]));
+        $to = date('Y-m-d', strtotime($dates[1]));
+        return " '$from' and '$to' ";
+    }
+
     function convert_number($number) {
 
         if (($number < 0) || ($number > 999999999)) {
@@ -145,8 +152,18 @@ class Common extends CI_Model {
     function dropdown_contact_type($value = '', $primary_key) {
         return form_dropdown('contact_type', $this->config->item('contact_type'), $value, 'class="form-control select2 dropdown-width" ');
     }
-//
-//    function dropdown_($value = '', $primary_key) {
-//        return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
-//    }
+
+    function get_item_name_by($id_item) {
+        if (empty($id_item)) {
+            return false;
+        }
+        $sql = "SELECT * FROM items where id_item = $id_item";
+        $item_details = $this->db->query($sql)->result();
+        if (empty($item_details[0]->name)) {
+            return false;
+        } else {
+            return $item_details[0]->name;
+        }
+    }
+
 }
