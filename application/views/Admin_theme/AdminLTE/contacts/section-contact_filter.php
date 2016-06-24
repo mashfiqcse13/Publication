@@ -44,8 +44,8 @@
         <div class="form-group col-lg-2">
             <?= anchor("contacts/teacher/reset_filter", 'Click here for Reset Filter', 'class="btn btn-primary" style="margin: 29px 0;" title="Reset"'); ?>
         </div>
-        <div class="form-group col-lg-2">
+<!--        <div class="form-group col-lg-2">
             <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  style="margin: 29px 0;" value="Print Report"/>
-        </div>
+        </div>--> 
     </form>
 </div>
