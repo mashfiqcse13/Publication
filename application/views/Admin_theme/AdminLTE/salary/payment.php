@@ -42,6 +42,7 @@
                                             <th>Amount of Salary</th>
                                             <th>Amount of bonus</th>
                                             <th>Loan</th>
+                                            <th>Loan Installment</th>
                                             <th>Advance</th>
                                             <th>Net Salary</th>
                                             <th>Paid or Not</th>
@@ -54,9 +55,9 @@
                                             $salary = $value->amount_salary_payment;
                                             $bonus = $value->amount_salary_bonus;
                                             $total = $salary + $bonus;
-                                            $loan = $value->amount_loan;
+                                            $loan_installment = $value->installments_loan;
                                             $advance = $value->amount_given_salary_advance;
-                                            $deduction = $loan + $advance;
+                                            $deduction = $loan_installment + $advance;
                                             $total = $total - $deduction;
                                             ?>
                                             <tr>
@@ -65,6 +66,7 @@
                                                 <td><?php echo $value->amount_salary_payment; ?></td>
                                                 <td><?php echo $value->amount_salary_bonus; ?></td>
                                                 <td><?php echo $value->amount_loan; ?></td>
+                                                <td><?php echo $value->installments_loan; ?></td>
                                                 <td><?php echo $value->amount_given_salary_advance; ?></td>
                                                 <td><?php echo $total; ?></td>
                                                 <td style="display: none;">

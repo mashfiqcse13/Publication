@@ -27,11 +27,12 @@ class Employee extends CI_Controller {
     }
 
     function index() {
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Manage Employee';
-
-        $this->load->view($this->config->item('ADMIN_THEME') . 'employee/employee_dashboard', $data);
+//        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+//        $data['base_url'] = base_url();
+//        $data['Title'] = 'Manage Employee';
+//
+//        $this->load->view($this->config->item('ADMIN_THEME') . 'employee/employee_dashboard', $data);
+        redirect('employee/manage_employee');
     }
 
     function manage_employee() {
