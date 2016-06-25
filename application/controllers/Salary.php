@@ -209,7 +209,7 @@ class Salary extends CI_Controller {
                     if ($advance_id[$j] != null) {
                         $advance_payment['id_salary_advance'] = $advance_id;
                         $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
-                        $advance_payment['paid_amount_salary_advance_payment'] = $advance_amount;
+                        $advance_payment['paid_amount_salary_advance_payment'] = $advance_amount[$j];
 
                         $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
                     }
