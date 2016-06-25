@@ -64,7 +64,6 @@ class Salary extends CI_Controller {
         $data['Title'] = 'Salary Payment';
 
 //        $data['employees'] = $this->Salary_model->select_all('employee');
-
         // echo '<pre>';print_r($father[0]->father_name);exit();
 //        $id = $this->uri->segment(4);
 //        $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
@@ -87,6 +86,7 @@ class Salary extends CI_Controller {
             return'<b>Error</b>';
         }
     }
+
     function set_month($value) {
         if ($value == 1) {
             return'<b>January</b>';
@@ -144,7 +144,6 @@ class Salary extends CI_Controller {
 
     //    save salary payment
     public function save_announced() {
-//        echo '<pre>'; print_r($_POST);exit();
         $announced = $this->input->post('status_salary_payment');
         $employee = $this->input->post('id_employee');
         $basic = $this->input->post('amount_salary_payment');
@@ -159,9 +158,9 @@ class Salary extends CI_Controller {
                     $data['amount_salary_payment'] = $basic[$j];
                     $data['status_salary_payment'] = 1;
                     $payment_id = $this->Salary_model->save_info('salary_payment', $data);
-                    $amount = $this->Salary_model->select_bonus_amount($bonus[$j]);
+                    $amount = $this->Salary_model->select_bonus_amount($bonus[$i]);
                     if ($amount != null) {
-                        $info['id_salary_bonus_type'] = $bonus[$j];
+                        $info['id_salary_bonus_type'] = $bonus[$i];
                         $info['amount_salary_bonus'] = $amount[0]->amount;
                         $info['id_salary_payment'] = $payment_id;
                         $this->Salary_model->save_info('salary_bonus', $info);
@@ -176,32 +175,46 @@ class Salary extends CI_Controller {
     }
 
     function paid_salary_payment() {
+//        echo '<pre>'; print_r($_POST);exit();
         $this->load->model('misc/cash', 'cash_model');
+        $status = $this->input->post('status');
+        $salary = $this->input->post('amount_salary_payment');
+        $loan_id = $this->input->post('id_loan');
+        $advance_id = $this->input->post('id_salary_advance');
+        $loan_payment = $this->input->post('paid_amount_loan_payment');
+        $advance_amount = $this->input->post('amount_paid_salary_advance');
+
         $id = $this->input->post('id_employee');
+        for ($i = 0; $i < count($status); $i++) {
+            for ($j = 0; $j < count($id); $j++) {
+                if ($status[$i] == $id[$j]) {
 //        payment update
-        $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
-        $data['status_salary_payment'] = 2;
-        $amount_salary = $this->input->post('amount_salary_payment');
-        $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id, $amount_salary, 'amount_salary_payment', 'id_salary_payment');
-        $this->cash_model->add_revert($amount_salary);
+                    $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
+                    $data['status_salary_payment'] = 2;
+                    $amount_salary = $salary[$j];
+                    $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id[$j], $amount_salary, 'amount_salary_payment', 'id_salary_payment');
+                    $this->cash_model->add_revert($amount_salary);
 
 
 //        bonus update
-        $bonus['status_bonus_payment'] = 2;
-        $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
+                    $bonus['status_bonus_payment'] = 2;
+                    $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
 //        loan payment insert
-        if ($this->input->post('id_loan') != null) {
-            $loan['id_loan'] = $this->input->post('id_loan');
-            $loan['paid_amount_loan_payment'] = $this->input->post('paid_amount_loan_payment');
-            $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
-            $this->Salary_model->save_info('loan_payment', $loan);
-        }
-        if ($this->input->post('id_salary_advance') != null) {
-            $advance_payment['id_salary_advance'] = $this->input->post('id_salary_advance');
-            $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
-            $advance_payment['paid_amount_salary_advance_payment'] = $this->input->post('amount_paid_salary_advance');
+                    if ($loan_id[$j] != null) {
+                        $loan['id_loan'] = $loan_id[$j];
+                        $loan['paid_amount_loan_payment'] = $loan_payment[$j];
+                        $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
+                        $this->Salary_model->save_info('loan_payment', $loan);
+                    }
+                    if ($advance_id[$j] != null) {
+                        $advance_payment['id_salary_advance'] = $advance_id;
+                        $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
+                        $advance_payment['paid_amount_salary_advance_payment'] = $advance_amount;
 
-            $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
+                        $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
+                    }
+                }
+            }
         }
 
         redirect('Salary/salary_payment');
