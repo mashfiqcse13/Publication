@@ -243,7 +243,7 @@
                 <div class="box">
 
                     <?php
-                    if ($this->uri->segment(3) === 'add' || $this->uri->segment(3) === 'edit') {
+                    if ($this->uri->segment(3) === 'add' || $this->uri->segment(3) === 'edit' || $this->uri->segment(3) === 'success') {
                         echo $glosary->output;
                     }
                     ?>
