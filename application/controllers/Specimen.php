@@ -20,7 +20,6 @@ class Specimen extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Sales_model');
         $this->load->model('Common');
-        $this->load->model('Sales_model');
         $this->load->model('Specimen_model');
         $this->load->library('table');
     }
@@ -78,11 +77,9 @@ class Specimen extends CI_Controller {
                 ->set_relation('id_agent', 'specimen_agent', 'name')
                 ->set_relation('id_employee', 'users', 'username')
                 ->order_by('id_specimen_total', 'desc')
-                ->unset_edit()
-                ->unset_delete()
-                ->unset_add()
-                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
-                    return site_url('specimen/items/' . $primary_key);
+                ->unset_edit()->unset_delete()->unset_add()->unset_read()
+                ->add_action('Print Memo', '', '', 'btn btn-default print_meno', function ($primary_key, $row) {
+                    return site_url('specimen/memo/' . $primary_key);
                 });
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -116,6 +113,17 @@ class Specimen extends CI_Controller {
         } else {
             $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
         }
+    }
+
+    function memo($id_specimen_total) {
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['Title'] = 'Memo Generation';
+        $data['base_url'] = base_url();
+        $data['memo_header_details'] = $this->Specimen_model->specimen_memo_header_details($id_specimen_total);
+        $data['memo_body_table'] = $this->Specimen_model->memo_body_table($id_specimen_total);
+
+        $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/memo', $data);
     }
 
 }
