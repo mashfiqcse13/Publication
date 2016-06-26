@@ -220,6 +220,10 @@ class Salary extends CI_Controller {
                         $advance_payment['paid_amount_salary_advance_payment'] = $advance_amount[$j];
                         $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
                     }
+                    
+                    if($loan_payment[$j] == null || $advance_id[$j] == null){
+                        redirect('Salary/salary_payment');
+                    }
                 }
             }
         }
