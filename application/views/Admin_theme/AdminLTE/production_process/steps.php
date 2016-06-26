@@ -34,131 +34,184 @@
                 </div>
                 <!-- /.box -->
             </div>
-            <?php if ($process_steps_table != FALSE) { ?>
-                <div class="col-md-12">
-                    <div class="box  box-success">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Process Steps Details</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <?php echo $process_steps_table ?>
-                        </div>
+            <div class="col-md-12">
+                <div class="box  box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Process Steps Details &nbsp; <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#modalAddStep" >Add step</button></h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <?php
+                        if ($process_steps_table != FALSE) {
+                            echo $process_steps_table
+                            ?>
+                            <button class="btn btn-lg btn-danger btn-block" >Finish This Process</button>
+
+                            <?php
+                        } else {
+                            echo 'No steps Found';
+                        }
+                        ?>
                     </div>
                     <!-- /.box -->
                 </div>
-                <?php
-            }
-            if ($remaining_order > 0) {
-                ?>
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Add step</h3>
+            </div>
+
+
+
+
+    </section><!--/.content -->
+</div><!--/.content-wrapper -->
+
+<!--insert book -->
+
+
+<!-- Modal for add step-->
+<div class="modal modal-primary fade" id="modalAddStep" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add step</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="<?php echo site_url('production_process/add_step'); ?>" method="post">
+                    <input type="hidden" name="id_processes" value="<?php echo $id_processes ?>">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Vendor Name</label>
+
+                                <div class="col-sm-9">
+                                    <?php echo $vendor_dropdown ?>
+                                </div>
+                            </div>
+
                         </div>
-                        <!-- /.box-header -->
-                        <!-- form start -->
-                        <form class="form-horizontal" action="<?php echo site_url('production_process/add_step/' . $id_processes); ?>" method="post">
+                        <div class="col-md-12">
 
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Step Name</label>
 
-                                        <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-3 control-label">Vendor Name</label>
-
-                                            <div class="col-sm-9">
-                                                <?php echo $vendor_dropdown ?>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-6 control-label">Transfered</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="<?php echo $remaining_order ?>" name="transfered_amount" min="0" max="<?php echo $remaining_order ?>" class="form-control" id="inputPassword3">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label" for="inputPassword3">Rejected</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="0" name="reject_amount" min="0" max="<?php echo $remaining_order ?>" id="inputPassword3" class="form-control">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label" for="inputPassword3">Damaged</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="0" name="damaged_amount" min="0" max="<?php echo $remaining_order ?>" id="inputPassword3" class="form-control">
-                                            </div>
-                                        </div>
-
-                                    </div><div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label" for="inputPassword3">Missing</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="0" name="missing_amount" min="0" max="<?php echo $remaining_order ?>" id="inputPassword3" class="form-control">
-                                            </div>
-                                        </div>
-
-                                    </div><div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-6 control-label">Amount billed</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="0" name="amount_billed" min="0" class="form-control" id="inputPassword3">
-                                            </div>
-                                        </div>
-
-                                    </div><div class="col-md-3">
-
-                                        <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-6 control-label">Amount paid</label>
-
-                                            <div class="col-sm-6">
-                                                <input type="number" value="0" name="amount_paid" min="0" class="form-control" id="inputPassword3">
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                <div class="col-sm-9">
+                                    <?php echo $step_name_dropdown ?>
                                 </div>
                             </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Add step</button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form>
+
+                        </div>
                     </div>
-                    <!-- /.box -->
-                </div>
-            <?php } ?>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline">Add step</button>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
+<!-- Modal for add step-->
 
 
+<!-- Modal for add step-->
+<div class="modal modal-success fade" id="modalStepToStepTransfer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Transfer</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="<?php echo site_url('production_process/step_transfer/' . $id_processes); ?>" method="post">
+                    <input type="hidden" name="id_process_step_from">
+                    <div class="row">
+                        <div class="col-md-6">
 
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Transferring</label>
 
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="amount_transfered" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
 
-<!-- insert book -->
+                        </div>
+<!--                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Rejected</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Damaged</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Missing</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>-->
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Amount Billed</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="amount_billed" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Amount Paid</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="amount_paid" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline">Transfer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for add step-->
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script>
+    var transferable_amount = 0;
+    $('.btnStepToStepTransfer').click(function () {
+        var id_process_steps = $(this).data('id_process_steps');
+        transferable_amount = $(this).data('transferable_amount');
+        console.log(id_process_steps);
+        console.log(transferable_amount);
+        $('[name="id_process_step_from"]').val(id_process_steps);
+    });
+</script>
