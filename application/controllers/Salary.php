@@ -66,8 +66,9 @@ class Salary extends CI_Controller {
 
 //      
         $month = $this->input->get('month');
+        $year = $this->input->get('year');
         if (isset($month)) {
-            $data['all_salary_info'] = $this->Salary_model->select_all_info_by_month($month);
+            $data['all_salary_info'] = $this->Salary_model->select_all_info_by_month($month,$year);
         } else {
             $data['all_salary_info'] = $this->Salary_model->select_all_info();
         }
@@ -134,11 +135,13 @@ class Salary extends CI_Controller {
 
     function salary_announced($id = null) {
         $data['employees'] = $this->Salary_model->select_all_employee();
+//        echo '<pre>';print_r($data['employees']);exit();
         $salary = $data['employees'];
         $data['bonus_type'] = $this->Salary_model->bonus_type();
 //        echo '<pre>';print_r($data);exit();
 //        after insert
         $data['edit_salary'] = $this->Salary_model->select_salary_payment_by_salary_id($id);
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Announcement';
@@ -207,6 +210,10 @@ class Salary extends CI_Controller {
                     $bonus['status_bonus_payment'] = 2;
                     $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
 //        loan payment insert
+//                     echo '<pre>'; print_r($loan_payment[$j]);exit();
+                    if($loan_payment[$j] == null || $advance_id[$j] == null){
+                        redirect('Salary/salary_payment');
+                    }
                     if ($loan_payment[$j] != null) {
                         $loan['id_loan'] = $loan_id[$j];
                         $loan['paid_amount_loan_payment'] = $loan_payment[$j];
@@ -221,9 +228,7 @@ class Salary extends CI_Controller {
                         $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
                     }
                     
-                    if($loan_payment[$j] == null || $advance_id[$j] == null){
-                        redirect('Salary/salary_payment');
-                    }
+                    
                 }
             }
         }
@@ -329,8 +334,9 @@ class Salary extends CI_Controller {
 
     function current_salary_payment() {
         $month = $this->input->get('month');
+        $year = $this->input->get('year');
         if (isset($month)) {
-            $data['all_salary_info'] = $this->Salary_model->select_all_info_by_month($month);
+            $data['all_salary_info'] = $this->Salary_model->select_all_info_by_month($month,$year);
         } else {
             $data['all_salary_info'] = $this->Salary_model->select_all_info();
         }
@@ -338,7 +344,7 @@ class Salary extends CI_Controller {
 //        $data['current_salary'] = $this->Salary_model->current_salary($month);
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Salary Payment';
+        $data['Title'] = 'Salary Payslip';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/current_salary', $data);
     }
 

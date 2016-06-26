@@ -28,10 +28,10 @@
                     'name' => 'form');
                 echo form_open('', $attributes)
                 ?>
-                <div class="form-group col-md-3 text-left">
+<!--                <div class="form-group col-md-3 text-left">
                     <label>Search month:</label>
-                </div>
-                <div class="form-group col-md-7">
+                </div>-->
+                <div class="form-group col-md-5">
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -52,6 +52,27 @@
                             <option value="11">November</option>
                             <option value="12">December</option>
                         </select>
+                        
+
+                    </div><!-- /.input group -->
+                </div><!-- /.form group -->
+                <div class="form-group col-md-5">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <!--<input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>-->
+                        <select name="year" id="" class="form-control pull-right">
+                            <option value="">Select Year</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                        </select>
+                        
 
                     </div><!-- /.input group -->
                 </div><!-- /.form group -->
