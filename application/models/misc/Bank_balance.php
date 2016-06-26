@@ -109,20 +109,19 @@ class Bank_balance extends CI_Model {
     }
     
     function list_bank_status($limit,$start){
-        $query=$this->db->query("select "
-                . "transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,"
-                . "name_trnsaction_type, username,action_date,approval_status,id_bank_management_status,"
-                . "(select username from users where id=bank_management_status.approved_by) as approved_by"
-                . " from "
-                . "`bank_management_status`,`bank_management`, `bank_transaction_type`,`bank_account`, `users`,`bank`"
-                . " where "
-                . "bank_management_status.id_bank_management=bank_management.id_bank_management "
-                . "and bank_management.id_account=bank_account.id_bank_account "
-                . "and bank_management.id_transaction_type=bank_transaction_type.id_trnsaction_type "
-                . "and bank_account.id_bank=bank.id_bank "
-                . "and bank_management.id_user=users.id"
-                
-                . " ORDER BY bank_management_status.id_bank_management DESC LIMIT $start,$limit");
+        $query=$this->db->query("select 
+                transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,amount_transaction as amount,
+                name_trnsaction_type,id_trnsaction_type, username,action_date,approval_status,id_bank_management_status,bank_management.id_bank_management as id_manage,
+                (select username from users where id=bank_management_status.approved_by) as approved_by
+                 from 
+                `bank_management_status`,`bank_management`, `bank_transaction_type`,`bank_account`, `users`,`bank`
+                 where 
+                bank_management_status.id_bank_management=bank_management.id_bank_management 
+                and bank_management.id_account=bank_account.id_bank_account 
+                and bank_management.id_transaction_type=bank_transaction_type.id_trnsaction_type 
+                and bank_account.id_bank=bank.id_bank 
+                and bank_management.id_user=users.id                
+                 ORDER BY bank_management_status.id_bank_management DESC LIMIT $start,$limit");
                 
         
         return $query;
@@ -386,13 +385,32 @@ WHERE $condition");
         
     }
     
-    
+    function create_transaction_type(){
+        $data=$this->db->select('*')
+                        ->from('bank_transaction_type')
+                        ->order_by('name_trnsaction_type', "asc")
+                        ->get()
+                        ->result();
+        if(!isset($data) && empty($data)){
+                $this->db->query("INSERT INTO `bank_transaction_type` 
+                    (`id_trnsaction_type`, `name_trnsaction_type`)
+                    VALUES ('1', 'Deposit');");
+                $this->db->query("INSERT INTO `bank_transaction_type` 
+                    (`id_trnsaction_type`, `name_trnsaction_type`)
+                    VALUES ('2', 'Withdraw');");
+        }
+       
+    }
+            
     function transaction_type_dropdown() {
+        
+        
         
         $this->db->select('*');
         $this->db->from('bank_transaction_type');
         $this->db->order_by('name_trnsaction_type', "asc");
         $query = $this->db->get();
+       
         $db_rows = $query->result_array();
         
         $options[''] = "All Selected ";

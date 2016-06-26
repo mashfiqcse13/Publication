@@ -6,9 +6,9 @@ if (!defined('BASEPATH'))
 /** 
  * Description of Sales
  *
- * @author MD. Mashfiq
+ * @author Rokibul Hasan
  */
-class Sales_model extends CI_Model {
+class Old_book_model extends CI_Model {
 
     function get_available_item_dropdown() {
 
@@ -65,90 +65,191 @@ class Sales_model extends CI_Model {
         return $data;
     }
 
-    function processing_new_sales() {
+    function processing_return_oldbook() {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Customer_due');
         $this->load->model('misc/Stock_perpetual');
         $this->load->model('Stock_model');
 
         $id_customer = $this->input->post('id_customer');
-        $discount_percentage = $this->input->post('discount_percentage');
-        $discount_amount = $this->input->post('discount_amount');
+        //$discount_percentage = $this->input->post('discount_percentage');
+        //$discount_amount = $this->input->post('discount_amount');
         $sub_total = $this->input->post('sub_total');
-        $dues_unpaid = $this->input->post('dues_unpaid');
-        $cash_payment = $this->input->post('cash_payment');
-        $bank_payment = $this->input->post('bank_payment');
-        $total_paid = $cash_payment + $bank_payment;
-        $total_amount = $sub_total - $discount_amount;
-        $total_due = $total_amount - $total_paid;
+        //$dues_unpaid = $this->input->post('dues_unpaid');
+        //$cash_payment = $this->input->post('cash_payment');
+        //$bank_payment = $this->input->post('bank_payment');
+        
+        $payment_type=$this->input->post('payment');
 
-        if ($cash_payment > 0) {
-            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
-        }
-        if ($total_due > 0) {
-            $this->Customer_due->add($id_customer, $total_due) or die('Failed to add due');
-        }
-        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
-            $due_payment_amount = $total_paid - $total_amount;
-            $this->load->model('misc/Customer_due_payment');
-            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
-            $cash_payment = $total_amount;
-            $total_paid = $cash_payment + $bank_payment;
-            $total_due = 0;
-        }
+        
+//        if($sub_total > $dues_unpaid){
+//            $total_amount = $sub_total - $dues_unpaid;
+//        }else{
+//            $total_amount = 0;
+//        }
+        $total_amount = $sub_total;
+        $total_paid = $total_amount;
+        
+//        if( $dues_unpaid > $sub_total ){
+//            
+//            $total_due = $dues_unpaid - $sub_total;
+//        }else{
+//            $total_due = 0;
+//        }        
+        
 
+//        if ($cash_payment > 0) {
+//            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
+//        }
+//        if ($total_due == 0 && $dues_unpaid =! 0) {
+//            $due_payment_amount = $dues_unpaid;
+//            $this->load->model('misc/Customer_due_payment');
+//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//        }
+//        elseif ( $total_due > 0){
+//           
+//            $due_payment_amount = $dues_unpaid - $total_due;
+//            $this->load->model('misc/Customer_due_payment');
+//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//        }
+//        
+//        
+//        advanced paymend update
+        if($payment_type == 2 && $total_paid > 0 ){
+            $this->load->model('party_advance_model');
+            $this->party_advance_model->add($total_paid , $id_customer);
+            
+        $data = array(
+            'id_customer' => $id_customer,
+            'id_payment_method' => '4',
+            'amount_paid' => $total_amount,  
+            'date_payment' => date('Y-m-d h:i:u'),          
+            
+        );
+                
+
+        $this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
+
+
+            
+            
+        }
+        
+        //cash payment
+//        if($payment_type == 1){
+//            
+//        }
+        
+//        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
+//            $due_payment_amount = $total_paid - $total_amount;
+//            $this->load->model('misc/Customer_due_payment');
+//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//            $cash_payment = $total_amount;
+//            $total_paid = $cash_payment + $bank_payment;
+//            $total_due = 0;
+//        }
+
+
+        
         $data = array(
             'id_customer' => $id_customer,
             'issue_date' => date('Y-m-d h:i:u'),
-            'discount_percentage' => $discount_percentage,
-            'discount_amount' => $discount_amount,
             'sub_total' => $sub_total,
-            'total_amount' => $total_amount,
-            'cash' => $cash_payment,
-            'total_paid' => $cash_payment,
-            'total_due' => $total_due
+            'discount_percentage' => '',
+            'discount_amount' => '',            
+            'total_amount' => $total_amount,            
+            'payment_type' => $payment_type,
+            'mamo_number' => ''
         );
+                
 
-        $this->db->insert('sales_total_sales', $data) or die('failed to insert data on sales_total_sales');
+        $this->db->insert('old_book_return_total', $data) or die('failed to insert data on old_book_return_total');
 
 
-        $id_total_sales = $this->db->insert_id() or die('failed to insert data on sales_total_sales');
+        $id_old_book_return_total = $this->db->insert_id() or die('failed to insert data on old_book_return_total');
 
+        
+//        old_book_return_items
+        
         $item_selection = $this->input->post('item_selection');
-        $data_sales = array();
+        $data_return = array();
         foreach ($item_selection as $value) {
             if (empty($value)) {
                 continue;
             }
-            $tmp_data_sales = array(
-                'id_total_sales' => $id_total_sales,
+            $tmp_return_book = array(
+                'id_old_book_return_total' => $id_old_book_return_total,
                 'id_item' => $value['item_id'],
                 'quantity' => $value['item_quantity'],
-                'price' => $value['sale_price'],
+                'price' => $value['item_price'],
                 'total_cost' => $value['total'],
-                'discount' => 0,
+                'discount_amount' => 0,
                 'sub_total' => $value['total'],
             );
-            array_push($data_sales, $tmp_data_sales);
-            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
-            $this->Stock_model->stock_reduce($value['item_id'], $value['item_quantity']);
+            array_push($data_return, $tmp_return_book);
+            //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
+            //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
+            $this->stock_add($value['item_id'], $value['item_quantity']);
         }
 
 
-        $this->db->insert_batch('sales', $data_sales) or die('failed to insert data on sales');
+        $this->db->insert_batch('old_book_return_items', $data_return) or die('failed to insert data on old_book_return_items');
+        
+        
+//        old_stock_register
+        $data_return_register = array();
+        foreach ($item_selection as $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $tmp_return_book = array(
+                'id_item' => $value['item_id'],
+                'id_total_old_book_return' => $id_old_book_return_total,
+                'quantity_reeceived' => $value['item_quantity'],
+                'date_received' => date('Y-m-d h:i:u')
+            );
+            array_push($data_return_register, $tmp_return_book);
+           
+        }
+        $this->db->insert_batch('old_stock_register', $data_return_register) or die('failed to insert data on old_stock_register');
+        
+        
+        
+        
+        
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
-            $response['next_url'] = site_url('sales/new_sale');
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book');
         } else if ($action == 'save_and_back_to_list') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
-            $response['next_url'] = site_url('sales/tolal_sales');
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book_total');
         } else if ($action == 'save_and_print') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
-            $response['next_url'] = site_url('sales/memo/' . $id_total_sales);
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book_print' . $id_total_sales);
         }
         echo json_encode($response);
     }
+    
+        function stock_add($id_item, $amount) {
+        // cheching if there is a row , otherwise creating it
+        $this->db->select('*')
+                        ->from('old_book_stock')
+                        ->where('id_item', $id_item)
+                        ->get()
+                        ->result() or
+                $this->db->query("INSERT INTO `old_book_stock` 
+                    (`id_old_book_stock`, `id_item`, `total_in`, `total_out`, `total_balance`)
+                    VALUES (NULL, '$id_item', '0', '0', '0');");
+
+        $sql = "UPDATE `old_book_stock` SET 
+                `total_in` = `total_in`+'$amount', 
+                `total_balance` = `total_balance`+'$amount' 
+            WHERE `old_book_stock`.`id_item` = $id_item;";
+        $this->db->query($sql);
+        return TRUE;
+    }
+    
 
     function memo_header_details($total_sales_id) {
         $sql = "SELECT customer.name as party_name,

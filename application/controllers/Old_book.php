@@ -20,26 +20,40 @@ class Old_book extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
         $this->load->model('Sales_model');
+        $this->load->model('Old_book_model');
     }
 
     function index() {
         $this->return_book();
     }
-
-    function tolal_sales() {
+    
+    
+    function old_book_dashboard(){
+        $this->tolal_return_book();
+    }
+    
+    function tolal_return_book() {
         $crud = new grocery_CRUD();
-        $crud->set_table('sales_total_sales')
-                ->columns('id_total_sales', 'id_customer', 'issue_date', 'discount_percentage', 'discount_amount', 'sub_total', 'total_amount', 'cash', 'bank_pay', 'total_paid', 'total_due')
-                ->display_as('id_total_sales', 'Memo No')
-                ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')
-                ->set_subject('Total sales')
+        $crud->set_table('old_book_return_total')
+                ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total','discount_percentage','	discount_amount', 'total_amount', 'payment_type')
+                ->display_as('id_old_book_return_total', 'Memo No')
+                ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Return Price')
+                ->set_subject('Old Book Return')
                 ->set_relation('id_customer', 'customer', 'name')
-                ->order_by('id_total_sales', 'desc')
+                ->order_by('id_old_book_return_total', 'desc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add()
                 ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
-                    return site_url('sales/memo/' . $primary_key);
+                    return site_url('old_book/memo/' . $primary_key);
+                });
+                $crud->callback_column('payment_type', function($value){
+                    if($value == 1){
+                        return 'cash';
+                    }elseif($value == 2){
+                       return 'Advanced';
+                    }
+                    
                 });
         $data['date_range'] = $this->input->get('date_range');
         $date = explode('-', $data['date_range']);
@@ -55,12 +69,12 @@ class Old_book extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total sales';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/total_sales', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_sales', $data);
     }
 
     function ajax_url() {
 //        echo json_encode($_POST);
-        $this->Sales_model->processing_new_sales();
+        $this->Old_book_model->processing_return_oldbook();
     }
 
     function sales() {

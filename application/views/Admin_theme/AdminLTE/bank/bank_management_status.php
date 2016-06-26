@@ -122,6 +122,10 @@
                                       elseif($row->approval_status==2){echo '<span style="color:red">Canceled</span>'; }
                                       else{ ?>
                                        <form class="formforstatus" method="" action="">
+                                           <input type="hidden" name="amount_transaction" value="<?php echo $row->amount; ?>">
+                                           <input type="hidden" name="account_number" value="<?php echo $row->account_number; ?>"/>
+                                           <input type="hidden" name="transaction_type" value="<?php echo $row->id_trnsaction_type; ?>"/>
+                                           
                                            <input type="hidden" name="id_management_status" value="<?php echo $row->id_bank_management_status; ?>">
                                            Approved <input type="radio" name="approval_status" value="1" <?php if($row->approval_status==1){echo 'checked';}?> >
                                            Canceled <input type="radio" name="approval_status" value="2"  <?php if($row->approval_status==2){echo 'checked';}?>>

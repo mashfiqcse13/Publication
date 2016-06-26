@@ -15,10 +15,9 @@
         'bank_payment': 0,
         'total_paid': 0,
         'total_due': 0,
-        'payment': 0,
         'item_selection': ''
     };
-    var ajax_url = '<?php echo site_url('old_book/ajax_url') ?>';
+    var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
 </script>
 <?php include_once __DIR__ . '/../header.php'; ?>
 <style>
@@ -84,7 +83,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-<!--                        <div class="row">
+                        <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Discount percentage :</label>
                                 <div class="input-group">
@@ -99,39 +98,36 @@
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="row">
-<!--                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
-                            </div>-->
+                            </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-12">
-                                <label for="payment_type">Payment Type:</label> 
-                                <select name="payment" id="payment" class="form-control">
-                                    <option value="2">Add to Advanced</option>
-                                    <option value="1">Cash</option>
-                                </select>
-<!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
-                                 <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced
-                                -->
-                            </div>
-<!--                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
                                 <div class="input-group">
                                     <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
-                            </div>-->
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="discount_amount">Bank payment :</label>
+                                <div class="input-group">
+                                    <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
+                                    <span class="input-group-addon">Tk</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
-<!--                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -148,8 +144,8 @@
                                 <?php echo $item_dropdown ?>
                             </div>
                             <div class="form-group col-lg-2">
-                                <label for="price">Price</label>
-                                <input type="number" name="price" id="price" class="form-control" />
+                                <label for="id_contact">Price</label>
+                                <input type="number" name="price" class="form-control" />
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Quantity</label>
@@ -240,7 +236,7 @@
         data_to_post.item_selection = item_selection;
         $('table.cart tbody').html(output);
         $('#item_selection_status').html(' ');
-        //$('#discount_percentage').trigger('change');
+        $('#discount_percentage').trigger('change');
     }
 
     $(".select2").select2({
@@ -283,78 +279,64 @@
         update_cart();
     });
     
-    $('[name="id_item"]').change(function () {
-        $('#item_quantity').val('0');
-        $('#price').val('0');
-        var id_item = $('[name="id_item"]').val();
-    });
-    
-
-    
+//    $('[name="id_item"]').change(function () {
+//        $('#item_quantity').val('0');
+//        var id_item = $('[name="id_item"]').val();
+//        var this_item_details = item_details[id_item];
+//        $('#total_in_hand').html(this_item_details.total_in_hand);
+//    });
     $('[name="id_customer"]').change(function () {
         data_to_post.id_customer = $('[name="id_customer"]').val();
-        //data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
-        //$('#dues_unpaid').html(data_to_post.dues_unpaid);
+        data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
+        $('#dues_unpaid').html(data_to_post.dues_unpaid);
         update_total_amount_and_total_due();
     });
 
-//    $('#discount_amount').change(function () {
-//        if (string_to_int(data_to_post.sub_total) > 0) {
-//            data_to_post.discount_amount = string_to_int($('#discount_amount').val());
-//            data_to_post.discount_percentage = string_to_int(data_to_post.discount_amount / string_to_int(data_to_post.sub_total) * 100);
-//        } else {
-//            data_to_post.discount_amount = 0;
-//            $('#discount_amount').val(data_to_post.discount_amount);
-//            data_to_post.discount_percentage = 0;
-//        }
-//        $('#discount_percentage').val(data_to_post.discount_percentage);
-//        update_total_amount_and_total_due();
-//    });
+    $('#discount_amount').change(function () {
+        if (string_to_int(data_to_post.sub_total) > 0) {
+            data_to_post.discount_amount = string_to_int($('#discount_amount').val());
+            data_to_post.discount_percentage = string_to_int(data_to_post.discount_amount / string_to_int(data_to_post.sub_total) * 100);
+        } else {
+            data_to_post.discount_amount = 0;
+            $('#discount_amount').val(data_to_post.discount_amount);
+            data_to_post.discount_percentage = 0;
+        }
+        $('#discount_percentage').val(data_to_post.discount_percentage);
+        update_total_amount_and_total_due();
+    });
     
     
-//    $('#discount_percentage').change(function () {
-//        if (string_to_int(data_to_post.sub_total) > 0) {
-//            data_to_post.discount_percentage = string_to_int($('#discount_percentage').val());
-//            data_to_post.discount_amount = string_to_int(data_to_post.discount_percentage / 100 * string_to_int(data_to_post.sub_total));
-//        } else {
-//            data_to_post.discount_percentage = 0;
-//            $('#discount_percentage').val(data_to_post.discount_percentage);
-//            data_to_post.discount_amount = 0;
-//        }
-//        $('#discount_amount').val(data_to_post.discount_amount);
-//        update_total_amount_and_total_due();
-//    });
+    $('#discount_percentage').change(function () {
+        if (string_to_int(data_to_post.sub_total) > 0) {
+            data_to_post.discount_percentage = string_to_int($('#discount_percentage').val());
+            data_to_post.discount_amount = string_to_int(data_to_post.discount_percentage / 100 * string_to_int(data_to_post.sub_total));
+        } else {
+            data_to_post.discount_percentage = 0;
+            $('#discount_percentage').val(data_to_post.discount_percentage);
+            data_to_post.discount_amount = 0;
+        }
+        $('#discount_amount').val(data_to_post.discount_amount);
+        update_total_amount_and_total_due();
+    });
     function remove_from_cart(item_to_remove) {
         delete item_selection[item_to_remove];
         update_cart();
     }
-//    $('#cash_payment').change(function () {
-//        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
-//        update_total_amount_and_total_due();
-//    });
+    $('#cash_payment').change(function () {
+        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
+        update_total_amount_and_total_due();
+    });
     function update_total_amount_and_total_due() {
-        data_to_post.total_amount = string_to_int(data_to_post.sub_total);
-       
-//        if( string_to_int(data_to_post.dues_unpaid) < string_to_int(data_to_post.sub_total)){
-//           data_to_post.total_amount = string_to_int(data_to_post.sub_total) - string_to_int(data_to_post.dues_unpaid);
-//       }else{ 
-//           data_to_post.total_amount = 0 ;
-//       }
-       // - string_to_int(data_to_post.dues_unpaid);
-        data_to_post.total_paid = data_to_post.total_amount ;
-        
-//        if( string_to_int(data_to_post.dues_unpaid) > string_to_int(data_to_post.sub_total)){
-//           data_to_post.total_due = string_to_int(data_to_post.dues_unpaid) - string_to_int(data_to_post.sub_total);
-//       }else{ 
-//           data_to_post.total_due = 0 ;
-//       }
-           
+        data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
+                + string_to_int(data_to_post.sub_total)
+                - string_to_int(data_to_post.discount_amount);
+        data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment);
+        data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
-        //$('#total_due').html(data_to_post.total_due);
+        $('#total_due').html(data_to_post.total_due);
     }
 
     $('.submit_btn').click(function () {
-        data_to_post.payment = $('[name="payment"]').val();
         if (data_to_post.total_paid > data_to_post.total_amount) {
             alert('We are not allowed to accept extra money . Reduce the cash .');
             return;

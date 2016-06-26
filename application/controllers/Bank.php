@@ -99,17 +99,20 @@ bank.id_bank=bank_account.id_bank");
         $crud->callback_column('id_account',array($this,'_bank_name_id'));
         
         $crud->set_field_upload('media_link','assets/uploads/files');
-
         
-        $crud->callback_after_insert(array($this, 'balance_add'));
-        $crud->callback_before_delete(array($this,'balance_delete'));
+        $crud->callback_after_insert(array($this, 'add_status'));
+        
+//        $crud->callback_after_insert(array($this, 'balance_add'));
+//        $crud->callback_before_delete(array($this,'balance_delete'));
         
         $crud->unset_edit();
-        
+        $crud->unset_delete();
         
         $this->load->model('misc/bank_balance');
         
+        $this->bank_balance->create_transaction_type();
         $data['transaction_type_dropdown']=$this->bank_balance->transaction_type_dropdown();
+        
         $data['account_dropdown']=$this->bank_balance->account_dropdown();
         $data['user_dropdown']=$this->bank_balance->user_dropdown();
         
@@ -138,7 +141,34 @@ bank.id_bank=bank_account.id_bank");
        
     }
     
+      function bank_balance() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('bank_balance');
+        $crud->display_as('id_account','Account Name');
+        
+        $crud->unset_add();
+        $crud->unset_edit();
+        $crud->unset_delete();
   
+        $crud->callback_column('id_account',array($this,'_bank_balance_name_id'));
+       // $crud->set_relation('id_account', 'bank_account', $related_title_field)
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Bank Balance';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_balance', $data);
+    }
+    
+    function _bank_balance_name_id($value,$row){
+       $sql=$this->db->query("SELECT name_bank,account_number FROM `bank_account` LEFT JOIN bank ON 
+bank.id_bank=bank_account.id_bank where account_number=$row->id_account");
+       foreach($sql->result() as $row){
+           return $row->name_bank.'-'.$row->account_number;
+       }
+         
+    }
     
     function _bank_name_id($value,$row){
        $sql=$this->db->query("SELECT name_bank,account_number FROM `bank_account` LEFT JOIN bank ON 
@@ -148,48 +178,36 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
        }
          
     }
-    
-        function balance_add($post_array,$primary_key){
-            
-                $this->load->model('misc/bank_balance');
-                $amount = $post_array['amount_transaction'];
-                $id=$post_array['id_account'];
-                $transaction_type=$post_array['id_transaction_type'];
-
-                if($transaction_type==1){
-                    $this->bank_balance->add($id,$amount);            
-                }
-                if($transaction_type==2){
-                    $this->bank_balance->reduce($id,$amount);
-                }
+        function add_status($post_array,$primary_key){ 
                 
                 $this->db->query("INSERT INTO `bank_management_status`(`id_bank_management`) VALUES ('$primary_key')");
            
             return true;
         }
-        
-     function balance_delete($primary_key){
-        
-        $this->load->model('misc/bank_balance');
-        $this->db->where('id_bank_management',$primary_key);
-        $value=$this->db->get('bank_management');
-        
-        foreach($value->result() as $row){
-            $amount=$row->amount_transaction;
-            $id=$row->id_account;
-            $transaction_type=$row->id_transaction_type;
-        }
-        
-        if($transaction_type==1){
-            $this->bank_balance->add_reverse($id,$amount);
-        }
-        if($transaction_type==2){
-            $this->bank_balance->reduce_reverse($id,$amount);
-        }
-        $this->db->query("DELETE FROM `bank_management_status` WHERE id_bank_management=$primary_key");
-        
-        return true;
-        }
+
+//        
+//     function balance_delete($primary_key){
+//        
+//        $this->load->model('misc/bank_balance');
+//        $this->db->where('id_bank_management',$primary_key);
+//        $value=$this->db->get('bank_management');
+//        
+//        foreach($value->result() as $row){
+//            $amount=$row->amount_transaction;
+//            $id=$row->id_account;
+//            $transaction_type=$row->id_transaction_type;
+//        }
+//        
+//        if($transaction_type==1){
+//            $this->bank_balance->add_reverse($id,$amount);
+//        }
+//        if($transaction_type==2){
+//            $this->bank_balance->reduce_reverse($id,$amount);
+//        }
+//        $this->db->query("DELETE FROM `bank_management_status` WHERE id_bank_management=$primary_key");
+//        
+//        return true;
+//        }
         
 
     function bank_account() {
@@ -222,24 +240,7 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_account_type', $data);
     }
     
-    function bank_balance() {
-        $crud = new grocery_CRUD();
-        $crud->set_table('bank_balance');
-        $crud->unset_add();
-        $crud->unset_edit();
-        $crud->unset_delete();
-        
-        $crud->callback_column('id_account',array($this,'_bank_name_id'));
-        
-       // $crud->set_relation('id_account', 'bank_account', $related_title_field)
-        $output = $crud->render();
-        $data['glosary'] = $output;
-        
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Bank Balance';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_balance', $data);
-    }
+
     
     
     
@@ -321,10 +322,30 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_transaction_type', $data);
     }
     
+            
+        function balance_update($id,$amount,$transaction_type){
+            
+                $this->load->model('misc/bank_balance');
+
+                
+                if($transaction_type==1){
+                    $this->bank_balance->add($id,$amount);            
+                }elseif($transaction_type==2){
+                    $this->bank_balance->reduce($id,$amount);
+                }               
+               
+            return true;
+        }
+    
     function update_status(){        
             $id=$this->input->post('id_management_status');
+            $account_number=$this->input->post('account_number');
             $approved_by=$_SESSION['user_id'];
             $status=$this->input->post('approval_status');
+            $amount=$this->input->post('amount_transaction');
+            $transaction_type=$this->input->post('transaction_type');
+            
+
             $car_date=date('Y-m-d h:i');
             $sql=$this->db->query("UPDATE `bank_management_status` "
                     . "SET "
@@ -332,8 +353,10 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
                     . "action_date='$car_date',"
                     . "`approved_by`=$approved_by "
                     . "WHERE `id_bank_management_status`=$id");
+        
             
-        if($status==1){
+       if($status==1){
+            $this->balance_update($account_number, $amount, $transaction_type);
             $data='<span style="color:green">Approved</span>';
        }elseif($status==2){
            $data='<span style="color:red">Canceled</span>';
