@@ -45,7 +45,7 @@ class Salary_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    function select_all_info_by_month($month){
+    function select_all_info_by_month($month,$year){
         $this->db->select('*','employee.id_employee');
         $this->db->from('employee');
         $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
@@ -54,6 +54,7 @@ class Salary_model extends CI_Model {
         $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left'); 
         $this->db->where('salary_payment.status_salary_payment !=',null);
         $this->db->where('salary_payment.month_salary_payment',$month);
+        $this->db->where('salary_payment.year_salary_payment',$year);
         $query = $this->db->get();
         return $query->result();
     }
