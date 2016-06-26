@@ -220,5 +220,6 @@ ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_
         return $query->result();
 //        return $sql->result();
     }
+    
 
 }

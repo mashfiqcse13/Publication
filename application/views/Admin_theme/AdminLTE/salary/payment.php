@@ -20,6 +20,47 @@
     <!-- Main content -->
     <section class="content" style="min-height:1350px;" >
         <div class="row">
+             <div class="col-md-12">
+                <?php
+                $attributes = array(
+                    'clase' => 'form-inline',
+                    'method' => 'get',
+                    'name' => 'form');
+                echo form_open('', $attributes)
+                ?>
+                <div class="form-group col-md-3 text-left">
+                    <label>Search month:</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <!--<input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>-->
+                        <select name="month" id="" class="form-control pull-right">
+                            <option value="">Select Month Here</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+
+                    </div><!-- /.input group -->
+                </div><!-- /.form group -->
+                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <?= anchor(current_url() . '/salary/salary_payment', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                <?= form_close(); ?>
+                <div  style="margin: 40px;">
+                </div>
+            </div>
             <div class="col-md-12" id="block">
 
                 <div class="box">
@@ -50,6 +91,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
+
                                         foreach ($all_salary_info as $value) {
 //                                        print_r($value);
                                             $salary = $value->amount_salary_payment;
@@ -74,8 +116,8 @@
                                                     <input type="hidden" name="id_loan[]" value="<?php echo $value->id_loan; ?>"/>
                                                     <input type="hidden" name="id_salary_advance[]" value="<?php echo $value->id_salary_advance; ?>"/>
                                                     <input type="hidden" name="amount_salary_payment[]" value="<?php echo $total; ?>"/>
-                                                    <input type="hidden" name="paid_amount_loan_payment[]" value="<?php echo $value->paid_amount_loan_payment; ?>"/>
-                                                    <input type="hidden" name="amount_paid_salary_advance[]" value="<?php echo $value->amount_paid_salary_advance; ?>"/>
+                                                    <input type="hidden" name="paid_amount_loan_payment[]" value="<?php echo $value->installment_amount_loan; ?>"/>
+                                                    <input type="hidden" name="amount_paid_salary_advance[]" value="<?php echo $value->amount_given_salary_advance; ?>"/>
                                                 </td>
                                                 <td>
                                                     <?php
@@ -131,4 +173,6 @@
 
 <script type="text/javascript">
     $('#example2').DataTable();
+//    document.forms['form'].elements['month'].value = "<?php echo $value->month_salary_payment;?>";
+
 </script>

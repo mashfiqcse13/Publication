@@ -28,7 +28,7 @@
             
             <li><?php // echo anchor('salary/salary_bonus', '<i class="fa fa-plus-circle"></i>  <span>Salary Bonus</span>'); ?></li>
        
-            <li><?php echo anchor('salary/current_salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Current Salary Payslip</span>'); ?></li>
+            <li><?php echo anchor('salary/current_salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payslip</span>'); ?></li>
             
             <li><?php echo anchor('salary/total_salary_paid', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment Report</span>'); ?></li>
             
