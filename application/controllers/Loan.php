@@ -28,11 +28,12 @@ class Loan extends CI_Controller {
     }
 
     function index() {
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Manage Loan';
-
-        $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_dashboard', $data);
+//        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+//        $data['base_url'] = base_url();
+//        $data['Title'] = 'Manage Loan';
+//
+//        $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_dashboard', $data);
+        redirect('loan/loan');
     }
 
     function loan($cmd = false) {
@@ -40,7 +41,11 @@ class Loan extends CI_Controller {
         $crud->set_table('loan')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                ->unset_fields('installments_loan', 'installment_amount_loan', 'status');
+                ->unset_fields('installments_loan', 'status')
+                ->callback_add_field('date_taken_loan', function () {
+                    return '<input id="field-date_taken_loan" name="date_income" type="text" value="' . date('Y-m-d h:i:u',now()) . '" >'
+                            . '<style>div#date_taken_loan_field_box{display: none;}</style>';
+                });
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -63,7 +68,7 @@ class Loan extends CI_Controller {
         } else {
             $data['loans'] = $this->Loan_model->employee_loan();
         }
-        
+
         $data['date_range'] = $range;
         $data['status'] = $status;
         $data['employee_info'] = $employee;
@@ -73,6 +78,7 @@ class Loan extends CI_Controller {
         $data['Title'] = 'Loan';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan', $data);
     }
+
 //                ->set_relation_n_n('Employee Name', 'loan', 'employee','id_loan_payment','id_employee','name_employee')
     function loan_payment() {
         $crud = new grocery_CRUD();
@@ -132,7 +138,5 @@ class Loan extends CI_Controller {
         $data['Title'] = 'Loan Employee List';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan_empoloyee_list', $data);
     }
-
-   
 
 }

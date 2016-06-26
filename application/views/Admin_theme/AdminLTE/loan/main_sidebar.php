@@ -16,7 +16,7 @@
 
             <li class="header">LOAN CRUD s</li>
 
-            <li><?php echo anchor('loan/loan', '<i class="fa fa-plus-circle"></i>  <span>Loan</span>'); ?></li>
+            <li><?php echo anchor('loan/loan', '<i class="fa fa-plus-circle"></i>  <span>Loan Enty</span>'); ?></li>
 
             <!--<li><?php echo anchor('loan/loan_payment', '<i class="fa fa-plus-circle"></i>  <span>Loan Payment</span>'); ?></li>-->
             

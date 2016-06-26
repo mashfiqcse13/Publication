@@ -32,7 +32,7 @@
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             </div>
                             <div style="color: #777777;">
-                                <p class="pull-left" style="margin-left:5px"> <strong>Month : </strong> <?php echo date('F',now()); ?></p>
+                                <p class="pull-left" style="margin-left:5px"> <strong>Month : </strong> <?php echo date('F', now()); ?></p>
                                 <div class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></div>
                             </div>
                         </div>
@@ -41,22 +41,49 @@
                                 <thead>
                                     <tr style="background:#ddd">
                                         <th>Employee Name</th>
-                                        <th>Amount of Bonus</th>
+                                        <th>Date of Issue</th>
                                         <th>Amount of Salary</th>
-                                        <th>Date of Salary</th>
-                                        <th>Salary Status</th>
+                                        <th>Amount of bonus</th>
+                                        <th>Loan</th>
+                                        <th>Loan Installment</th>
+                                        <th>Advance</th>
+                                        <th>Net Salary</th>
+                                        <th>Paid or Not</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($current_salary as $current) {
+                                    foreach ($all_salary_info as $value) {
+//                                        print_r($value);
+                                        $salary = $value->amount_salary_payment;
+                                        $bonus = $value->amount_salary_bonus;
+                                        $total = $salary + $bonus;
+                                        $loan_installment = $value->installment_amount_loan;
+                                        $advance = $value->amount_given_salary_advance;
+                                        $deduction = $loan_installment + $advance;
+                                        $total = $total - $deduction;
                                         ?>
                                         <tr>
-                                            <td><?php echo $current->name_employee; ?></td>
-                                            <td><?php echo $current->amount_salary_bonus; ?></td>
-                                            <td><?php echo $current->amount_salary_payment; ?></td>
-                                            <td><?php echo $current->date_salary_payment; ?></td>
-                                            <td><?php echo ($current->status_salary_payment == 1) ? ("Announced") : ("Paid"); ?></td>
+                                            <td><?php echo $value->name_employee; ?></td>
+                                            <td><?php echo date('d/m/Y', strtotime($value->issue_salary_payment)); ?></td>
+                                            <td><?php echo $value->amount_salary_payment; ?></td>
+                                            <td><?php echo $value->amount_salary_bonus; ?></td>
+                                            <td><?php echo $value->amount_loan; ?></td>
+                                            <td><?php echo $value->installment_amount_loan; ?></td>
+                                            <td><?php echo $value->amount_given_salary_advance; ?></td>
+                                            <td><?php echo $total; ?></td>
+                                            <td>
+                                                <?php
+                                                if ($value->status_salary_payment == 2) {
+                                                    ?>
+                                                    <label for="">
+                                                        PAID
+                                                    </label>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
+
                                         </tr>
                                         <?php
                                     }

@@ -9,59 +9,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Production_process_model extends CI_Model {
 
-    function add_process_step($id_processes, $id_vendor, $transfered_amount, $amount_billed, $amount_paid, $reject_amount = 0, $damaged_amount = 0, $missing_amount = 0) {
+    function add_process_step($id_processes, $id_vendor, $id_step_name) {
         $last_process_step_id = $this->last_process_step_id($id_processes);
-        $order_amount = $this->get_remaining_order($id_processes);
-        if ($order_amount < $transfered_amount) {
-            return FALSE;
+        if ($last_process_step_id > 0) {
+            $order_quantity = 0;
+        } else {
+            $order_quantity = $this->get_order_quantity($id_processes);
         }
 
         $data_to_insert_in_process_steps = array(
             'id_processes' => $id_processes,
-            'order_amount' => $order_amount,
-            'transfered_amount' => $transfered_amount,
+            'id_step_name' => $id_step_name,
+            'order_amount' => $order_quantity,
+            'transfered_amount' => 0,
             'id_previous_step' => $last_process_step_id,
-            'reject_amount' => $reject_amount,
-            'damaged_amount' => $damaged_amount,
-            'missing_amount' => $missing_amount,
-            'id_vendor' => $id_vendor
+            'reject_amount' => 0,
+            'damaged_amount' => 0,
+            'missing_amount' => 0,
+            'id_vendor' => $id_vendor,
+            'date_created' => date('Y-m-d h:i:u')
         );
         $this->db->insert('process_steps', $data_to_insert_in_process_steps);
-        $insert_id_of_process_steps = $this->db->insert_id();
-        $data_to_insert_in_process_step_transfer_log = array(
-            'id_process_step_from' => $last_process_step_id,
-            'id_process_step_to' => $insert_id_of_process_steps,
-            'amount_transfered' => $transfered_amount,
-            'date_transfered' => date('Y-m-d h:i:u')
-        );
-        $this->db->insert('process_step_transfer_log', $data_to_insert_in_process_step_transfer_log);
-        $insert_id_of_process_step_transfer_log = $this->db->insert_id();
-        $data_to_insert_in_process_step_transfer_billing = array(
-            'id_process_step_transfer_log' => $insert_id_of_process_step_transfer_log,
-            'id_process_steps' => $insert_id_of_process_steps,
-            'amount_billed' => $amount_billed,
-            'amount_paid' => $amount_paid
-        );
-        $this->db->insert('process_step_transfer_billing', $data_to_insert_in_process_step_transfer_billing);
-
-        $sql = "UPDATE `processes` 
-            SET `actual_quantity` = `actual_quantity` + $transfered_amount,
-            `total_damaged_item` =`total_damaged_item` + $damaged_amount, 
-            `total_reject_item` =`total_reject_item`+ $reject_amount,
-            `total_missing_item` = `total_missing_item` + $missing_amount
-            WHERE `id_processes` = $id_processes;";
-        if ($order_amount == $transfered_amount) {
-            $current_date = date('Y-m-d h:i:u');
-            $sql = "UPDATE `processes` 
-            SET `actual_quantity` = `actual_quantity` + $transfered_amount, `total_damaged_item` =`total_damaged_item` + $damaged_amount, 
-            `total_reject_item` =`total_reject_item`+ $reject_amount, `total_missing_item` = `total_missing_item` + $missing_amount, 
-            `date_finished` = '$current_date' , `process_status` = 2
-            WHERE `id_processes` = $id_processes;";
-        }
-        $result = $this->db->query($sql);
+        return TRUE;
     }
 
-    function get_remaining_order($id_processes) {
+    function delete_process_step($id_process_steps) {
+        $id_previous_step = $this->previous_process_step_id($id_process_steps);
+        $sql = "DELETE FROM `process_steps` WHERE `id_process_steps` = $id_process_steps and `order_amount`= 0 ";
+        $this->db->query($sql);
+        $step_details = $this->get_step_info_by($id_process_steps);
+        $next_process_step_id = $this->next_process_step_id($id_process_steps);
+        if ($next_process_step_id != FALSE && $step_details == FALSE) {  // $step_details == FALSE means step is deleted
+            $sql = "UPDATE `process_steps` SET `id_previous_step` = '$id_previous_step' WHERE `id_process_steps` = $next_process_step_id ";
+            $this->db->query($sql);
+        }
+    }
+
+    function is_transferable_amount_in_step($id_process_steps, $amount_transfered) {
+        $transferable_amount = $this->get_transferable_amount_in_step($id_process_steps);
+        if ($amount_transfered <= $transferable_amount && $amount_transfered > 0) {
+            return TRUE;
+        } else {
+            return false;
+        }
+    }
+
+    function get_transferable_amount_in_step($id_process_steps) {
+        $sql = "SELECT `order_amount`-(`reject_amount`+ `damaged_amount`+ `missing_amount`) 
+            as transferable_amount FROM `process_steps` where `id_process_steps` = $id_process_steps";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0])) {
+            return 0;
+        } else {
+            return $result[0]->transferable_amount;
+        }
+    }
+
+    function get_order_quantity($id_processes) {
         $sql = "SELECT `order_quantity`-(`actual_quantity`+ `total_damaged_item`+ `total_reject_item`+ `total_missing_item`) 
             as remaining_order_amount FROM `processes` where `id_processes` = $id_processes";
         $result = $this->db->query($sql)->result();
@@ -82,21 +86,70 @@ class Production_process_model extends CI_Model {
         }
     }
 
-    function get_steps($id_processes) {
-        $sql = "SELECT  `process_steps`.`id_vendor` ,
-                `contact_vendor`.`name`,
-                `process_steps`.`order_amount`, 
-                `process_steps`.`transfered_amount`,
-                `process_steps`.`reject_amount`, 
-                `process_steps`.`damaged_amount`, 
-                `process_steps`.`missing_amount`,
-                `process_step_transfer_billing`.`amount_billed`,
-                `process_step_transfer_billing`.`amount_paid` ,
-                `process_step_transfer_log`.`date_transfered`
-                FROM `process_steps`
-                left join `process_step_transfer_log` on `process_steps`.`id_process_steps`=`process_step_transfer_log`.`id_process_step_to`
-                left join `process_step_transfer_billing`on `process_step_transfer_billing`.`id_process_steps` = `process_steps`.`id_process_steps`
-                left join `contact_vendor`on `process_steps`.`id_vendor` = `contact_vendor`.`id_vendor`
+    function next_process_step_id($current_id_process_steps) {
+        $sql = "SELECT id_process_steps FROM `process_steps` WHERE `id_previous_step` = $current_id_process_steps";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]) || $result[0]->id_process_steps == '') {
+            return false;
+        } else {
+            return $result[0]->id_process_steps;
+        }
+    }
+
+    function previous_process_step_id($id_process_steps) {
+        $step_details = $this->get_step_info_by($id_process_steps);
+        if ($step_details == FALSE) {
+            return FALSE;
+        }
+        return $step_details->id_previous_step;
+    }
+
+    function step_transfer($id_process_step_from, $amount_transfered, $amount_billed, $amount_paid) {
+        $id_process_step_to = $this->next_process_step_id($id_process_step_from);
+        if (!$id_process_step_to || !$this->is_transferable_amount_in_step($id_process_step_from, $amount_transfered)) {
+            return FALSE;
+        }
+        $sql = "UPDATE `process_steps` 
+            SET `transfered_amount` = `transfered_amount` + $amount_transfered
+            WHERE `id_process_steps` = $id_process_step_from";
+        $this->db->query($sql);
+        $sql = "UPDATE `process_steps` 
+            SET `order_amount` = `order_amount` + $amount_transfered
+            WHERE `id_process_steps` = $id_process_step_to";
+        $this->db->query($sql);
+        $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered);
+        $this->add_step_transfer_billing($id_process_step_transfer_log, $id_process_step_from, $amount_billed, $amount_paid);
+        return TRUE;
+    }
+
+    function add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered) {
+        $data = array(
+            'id_process_step_from' => $id_process_step_from,
+            'id_process_step_to' => $id_process_step_to,
+            'amount_transfered' => $amount_transfered,
+            'date_transfered' => date('Y-m-d h:i:u')
+        );
+        $this->db->insert('process_step_transfer_log', $data);
+        return $this->db->insert_id();
+    }
+
+    function add_step_transfer_billing($id_process_step_transfer_log, $id_process_step_from, $amount_billed, $amount_paid) {
+        $data = array(
+            'id_process_step_transfer_log' => $id_process_step_transfer_log,
+            'id_process_steps' => $id_process_step_from,
+            'amount_billed' => $amount_billed,
+            'amount_paid' => $amount_paid
+        );
+        $this->db->insert('process_step_transfer_billing', $data);
+        return $this->db->insert_id();
+    }
+
+    function get_steps_info($id_processes) {
+        $sql = "SELECT  `contact_vendor`.`name` as vendor_name,`process_step_name`.`step_name`, `process_steps`.*,
+                    `order_amount`-(`reject_amount`+ `damaged_amount`+ `missing_amount`) as transferable_amount
+                    FROM `process_steps`
+                    left join `contact_vendor`on `process_steps`.`id_vendor` = `contact_vendor`.`id_vendor`
+                    left join `process_step_name`on `process_steps`.`id_step_name` = `process_step_name`.`id_step_name`
                 WHERE `id_processes`= $id_processes";
         $result = $this->db->query($sql)->result();
         if (empty($result)) {
@@ -106,15 +159,35 @@ class Production_process_model extends CI_Model {
         }
     }
 
+    function get_step_info_by($id_process_steps) {
+        $sql = "SELECT  * FROM `process_steps` WHERE `id_process_steps`= $id_process_steps";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0])) {
+            return FALSE;
+        } else {
+            return $result[0];
+        }
+    }
+
     function process_steps_table($id_processes) {
         $this->load->library('table');
-        $process_steps = $this->get_steps($id_processes);
+        $process_steps = $this->get_steps_info($id_processes);
         if ($process_steps == FALSE) {
-            return $process_steps;
+            return FALSE;
         }
-        foreach ($process_steps as $each_step) {
+        foreach ($process_steps as $index => $each_step) {
+            $action_btn = "";
+            if ($each_step->transferable_amount > 0 && $this->next_process_step_id($each_step->id_process_steps)) {
+                $action_btn .= "<button data-toggle=\"modal\" data-target=\"#modalStepToStepTransfer\" 
+                    class=\"btn btn-xs btn-success btnStepToStepTransfer\" data-id_process_steps=\"{$each_step->id_process_steps}\" 
+                        data-transferable_amount=\"{$each_step->transferable_amount}\">Transfer</button> ";
+            }
+            if ($each_step->order_amount == 0) {
+                $delet_url = site_url('production_process/delete_step/' . $each_step->id_processes . '/' . $each_step->id_process_steps);
+                $action_btn .= "<a href=\"$delet_url\" class=\"btn btn-xs btn-warning\" data-id_process_steps=\"{$each_step->id_process_steps}\">Delete</a> ";
+            }
             $this->table->add_row(
-                    $each_step->name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->amount_billed, $each_step->amount_paid, $each_step->date_transfered
+                    $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created, $action_btn
             );
         }
         $tmpl = array(
@@ -134,7 +207,7 @@ class Production_process_model extends CI_Model {
             'table_close' => '</table>'
         );
         $this->table->set_template($tmpl);
-        $this->table->set_heading('Vendor Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Amount billed', 'Amount paid', 'Transfer Date');
+        $this->table->set_heading('Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Action');
         return $this->table->generate();
     }
 
@@ -225,6 +298,17 @@ class Production_process_model extends CI_Model {
             $data[$item->id_vendor] = $item->id_vendor . " - " . $item->name . " ( {$item->type} ) ";
         }
         return form_dropdown('id_vendor', $data, '', ' class="select2" ');
+    }
+
+    function get_step_name_dropdown() {
+        $items = $this->db->get('process_step_name')->result();
+
+        $data = array();
+        $data[''] = 'Select Step name';
+        foreach ($items as $item) {
+            $data[$item->id_step_name] = $item->step_name;
+        }
+        return form_dropdown('id_step_name', $data, '', ' class="select2" ');
     }
 
 }

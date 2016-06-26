@@ -14,7 +14,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Customer section</li>
+            <li class="active"><?=$Title ?></li>
         </ol>
     </section>
 
@@ -31,8 +31,8 @@
                     <!-- form start -->
                     <form class="form-horizontal" method="post">
                         <div class="box-body"><div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="exampleInputEmail1" class="col-md-3  control-label">Agent name</label>
+                                <div class="form-group col-md-12">
+                                    <label for="exampleInputEmail1" class="col-md-3  control-label">Agent/Marketing Officer Name</label>
                                     <div class="col-sm-9">
                                         <?php echo $agent_dropdown ?>
                                     </div>

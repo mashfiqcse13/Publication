@@ -34,6 +34,30 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
+    function select_all_info(){
+        $this->db->select('*','employee.id_employee');
+        $this->db->from('employee');
+        $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
+        $this->db->join('loan', 'employee.id_employee = loan.id_employee', 'left');
+        $this->db->join('salary_payment', 'employee.id_employee = salary_payment.id_employee', 'left');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left'); 
+        $this->db->where('salary_payment.status_salary_payment !=',null);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function select_all_info_by_month($month){
+        $this->db->select('*','employee.id_employee');
+        $this->db->from('employee');
+        $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
+        $this->db->join('loan', 'employee.id_employee = loan.id_employee', 'left');
+        $this->db->join('salary_payment', 'employee.id_employee = salary_payment.id_employee', 'left');
+        $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left'); 
+        $this->db->where('salary_payment.status_salary_payment !=',null);
+        $this->db->where('salary_payment.month_salary_payment',$month);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
 //    function select_salary_advance_by_salary_id($id){
 //        $this->db->select('*');
 //        $this->db->from('salary_advance');
@@ -110,7 +134,7 @@ class Salary_model extends CI_Model {
     }
     
     function select_bonus_amount($id){
-         $this->db->select('amount');
+        $this->db->select('amount');
         $this->db->from('salary_bonus_announce');
         $this->db->where('id_salary_bonus_type', $id);
         $query = $this->db->get();
