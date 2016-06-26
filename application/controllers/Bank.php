@@ -66,6 +66,7 @@ class Bank extends CI_Controller {
         //$crud->set_relation('id_account', 'bank_account', 'id_bank_account');
         $crud->set_relation('id_user', 'users', 'username');
         $crud->required_fields('id_account','amount_transaction');
+        $crud->order_by('id_bank_management', 'desc');
         
         
         
@@ -105,7 +106,7 @@ bank.id_bank=bank_account.id_bank");
 //        $crud->callback_after_insert(array($this, 'balance_add'));
 //        $crud->callback_before_delete(array($this,'balance_delete'));
         
-        $crud->unset_edit();
+        //$crud->unset_edit();
         $crud->unset_delete();
         
         $this->load->model('misc/bank_balance');
@@ -330,13 +331,17 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
 
                 
                 if($transaction_type==1){
-                    $this->bank_balance->add($id,$amount);            
+                    $data=$this->bank_balance->add($id,$amount);            
                 }elseif($transaction_type==2){
-                    $this->bank_balance->reduce($id,$amount);
+                    $data=$this->bank_balance->reduce($id,$amount);
                 }               
                
-            return true;
+            if($data==true){
+                return true;
+        }else{
+            return false;
         }
+    }
     
     function update_status(){        
             $id=$this->input->post('id_management_status');
@@ -357,8 +362,22 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         
             
        if($status==1){
-            $this->balance_update($account_number, $amount, $transaction_type);
-            $data='<span style="color:green">Approved</span>';
+            $return_data=$this->balance_update($account_number, $amount, $transaction_type);
+            if($return_data==true){
+                $data='<span style="color:green">Approved</span>';
+            }else{
+                $status='3';
+                $sql=$this->db->query("UPDATE `bank_management_status` "
+                    . "SET "
+                    . "`approval_status`='$status',"
+                    . "action_date='$car_date',"
+                    . "`approved_by`=$approved_by "
+                    . "WHERE `id_bank_management_status`=$id");
+                
+                $data='<span style="color:red">Current Balance is less then withdraw amount</span>';
+                
+            }
+            
        }elseif($status==2){
            $data='<span style="color:red">Canceled</span>';
        }else{

@@ -142,7 +142,7 @@
 
       <script>     
            
-            var today ='<?php echo DATE('m-d-Y') ?>';
+            var today ='<?php echo DATE('m-d-Y h:i') ?>';
             $('#field-transaction_date').val(today);
             
        

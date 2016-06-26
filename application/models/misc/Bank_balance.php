@@ -151,7 +151,7 @@ class Bank_balance extends CI_Model {
         }
         if(!empty($date)){
             
-            $condition="transaction_date BETWEEN $date";
+            $condition="date(transaction_date) BETWEEN $date";
         }
        if(!empty($transaction_type)){
             
@@ -159,19 +159,19 @@ class Bank_balance extends CI_Model {
         }
         if(!empty($date) && !empty($user_id) ){
             
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_user=$user_id";
         }        
         
          if(!empty($date) && !empty($transaction_type)){
             
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_transaction_type=$transaction_type";
         }
         
         if(!empty($date) && !empty($bank_account)){
            
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_account=$bank_account";
         }
         
@@ -194,7 +194,7 @@ class Bank_balance extends CI_Model {
         }
         if(!empty($date) && !empty($user_id) && !empty($bank_account)){
             //$date=$this->dateformatter($date);
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_user=$user_id and "
                     . "bank_management.id_account=$bank_account";
         }
@@ -204,7 +204,7 @@ class Bank_balance extends CI_Model {
         
         if(!empty($date) && !empty($bank_account) && !empty($transaction_type)){
             //$date=$this->dateformatter($date);
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_transaction_type=$transaction_type and "
                     . "bank_management.id_account=$bank_account";
         }
@@ -212,7 +212,7 @@ class Bank_balance extends CI_Model {
         
         if(!empty($date) && !empty($user_id) && !empty($transaction_type)){
             //$date=$this->dateformatter($date);
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_user=$user_id and "
                     . "bank_management.id_transaction_type=$transaction_type";
         }
@@ -220,7 +220,7 @@ class Bank_balance extends CI_Model {
         
         if(!empty($date) && !empty($user_id) && !empty($bank_account) && !empty($transaction_type)){
             
-            $condition="transaction_date BETWEEN $date and "
+            $condition="date(transaction_date) BETWEEN $date and "
                     . "bank_management.id_user=$user_id and "
                     . "bank_management.id_transaction_type=$transaction_type and "
                     . "bank_management.id_account=$bank_account";
@@ -296,35 +296,75 @@ WHERE $condition");
         $status_type=$status_type;
         
         
-        
         if(!empty($user_id)){
             
             $condition="bank_management.id_user=$user_id";
-        }elseif(!empty($date)){
+        }
+        if(!empty($date)){
             
-            $condition="action_date BETWEEN $date";
+            $condition="date(action_date) BETWEEN $date";
             
-        }elseif(!empty($status_type)){
+        }
+        if(!empty($status_type)){
             
             $condition="bank_management_status.approval_status=$status_type";
             
-        }elseif(!empty($user_id) && !empty ($date)){
-            $condition="action_date BETWEEN $date and bank_management.id_user=$user_id";
+        }
+        if(!empty($user_id) && !empty ($date)){
+            $condition="date(action_date) BETWEEN $date and bank_management.id_user=$user_id";
             
-        }elseif(!empty($user_id) && !empty($status_type)){
+        }
+        if(!empty($user_id) && !empty($status_type)){
             
-            $condition="bank_management.id_user=$user_id and bank_management.id_user=$user_id";
+            $condition="bank_management.id_user=$user_id and bank_management_status.approval_status=$status_type";
             
-        }elseif(!empty ($date) && !empty($status_type)){
+        }
+        if(!empty ($date) && !empty($status_type)){
             
-            $condition="action_date BETWEEN $date and bank_management_status.approval_status=$status_type";
-        }elseif(!empty ($date) && !empty($status_type) && !empty($user_id)){
+            $condition=" bank_management_status.approval_status=$status_type and  date(action_date) BETWEEN $date";
             
-            $condition="action_date BETWEEN $date and bank_management_status.approval_status=$status_type and bank_management.id_user=$user_id";
-        }else if(empty($date) && empty($user_id) && empty($status_type)){
+        }
+        if(!empty ($date) && !empty($status_type) && !empty($user_id)){
+            
+            $condition="date(action_date) BETWEEN $date and bank_management_status.approval_status=$status_type and bank_management.id_user=$user_id";
+        }
+        if(empty($date) && empty($user_id) && empty($status_type)){
             
             $condition=" 1=1";
         }
+
+        
+        
+//        
+//        if(!empty($user_id)){
+//            
+//            $condition="bank_management.id_user=$user_id";
+//        }elseif(!empty($date)){
+//            
+//            $condition="date(action_date) BETWEEN $date";
+//            
+//        }elseif(!empty($status_type)){
+//            
+//            $condition="bank_management_status.approval_status=$status_type";
+//            
+//        }elseif(!empty($user_id) && !empty ($date)){
+//            $condition="date(action_date) BETWEEN $date and bank_management.id_user=$user_id";
+//            
+//        }elseif(!empty($user_id) && !empty($status_type)){
+//            
+//            $condition="bank_management.id_user=$user_id and bank_management.id_user=$user_id";
+//            
+//        }elseif(!empty ($date) && !empty($status_type)){
+//            
+//            $condition=" bank_management_status.approval_status=$status_type and  date(action_date) BETWEEN $date";
+//            
+//        }elseif(!empty ($date) && !empty($status_type) && !empty($user_id)){
+//            
+//            $condition="date(action_date) BETWEEN $date and bank_management_status.approval_status=$status_type and bank_management.id_user=$user_id";
+//        }else if(empty($date) && empty($user_id) && empty($status_type)){
+//            
+//            $condition=" 1=1";
+//        }
 
   
         

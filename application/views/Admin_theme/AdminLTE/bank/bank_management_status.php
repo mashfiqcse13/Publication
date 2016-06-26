@@ -173,7 +173,7 @@
 
       <!-- insert book -->
 
-            <div class="row">
+            <div class="row report-logo-for-print">
                 <div class="panel-body">
 
                     <?php if(isset($report)){ ?>
