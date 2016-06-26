@@ -192,6 +192,7 @@ class Salary extends CI_Controller {
         $loan_id = $this->input->post('id_loan');
         $advance_id = $this->input->post('id_salary_advance');
         $loan_payment = $this->input->post('paid_amount_loan_payment');
+         
 //        
         $advance_amount = $this->input->post('amount_paid_salary_advance');
 
@@ -200,6 +201,7 @@ class Salary extends CI_Controller {
         for ($i = 0; $i < count($status); $i++) {
             for ($j = 0; $j < count($id); $j++) {
                 if ($status[$i] == $id[$j]) {
+//                    echo '<pre>'; print_r($loan_payment[$j]);exit();
 //        payment update
                     $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
                     $data['status_salary_payment'] = 2;
@@ -214,6 +216,8 @@ class Salary extends CI_Controller {
                     if($loan_payment[$j] == null || $advance_id[$j] == null){
                         redirect('Salary/salary_payment');
                     }
+                    
+                    
                     if ($loan_payment[$j] != null) {
                         $loan['id_loan'] = $loan_id[$j];
                         $loan['paid_amount_loan_payment'] = $loan_payment[$j];
@@ -228,7 +232,9 @@ class Salary extends CI_Controller {
                         $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
                     }
                     
-                    
+                    if($loan_payment[$j] == null || $advance_id[$j] == null){
+                        redirect('Salary/salary_payment');
+                    }
                 }
             }
         }

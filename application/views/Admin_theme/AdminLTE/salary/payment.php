@@ -101,7 +101,7 @@
                         </div>
                         <div class="box-body">
                             <h2 class="text-center">Salary Payment</h2>
-                            <form action="<?php echo site_url('salary/paid_salary_payment') ?>" method="post">
+                            <form action="<?php echo site_url('salary/paid_salary_payment');?>" method="post">
                                 <table id="example1" class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                                     <thead>
                                         <tr>
