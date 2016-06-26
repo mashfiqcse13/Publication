@@ -110,7 +110,8 @@ bank.id_bank=bank_account.id_bank");
         
         $this->load->model('misc/bank_balance');
         
-        $this->bank_balance->create_transaction_type();
+        $this->bank_balance->create_transaction_type(); 
+        
         $data['transaction_type_dropdown']=$this->bank_balance->transaction_type_dropdown();
         
         $data['account_dropdown']=$this->bank_balance->account_dropdown();
@@ -146,7 +147,7 @@ bank.id_bank=bank_account.id_bank");
         $crud->set_table('bank_balance');
         $crud->display_as('id_account','Account Name');
         
-        $crud->unset_add();
+        $crud->unset_add(); 
         $crud->unset_edit();
         $crud->unset_delete();
   

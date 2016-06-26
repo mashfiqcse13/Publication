@@ -73,7 +73,7 @@ class Bank_balance extends CI_Model {
             return FALSE;
         }
     }
-    
+     
 
     function reduce($id_account, $amount) {
         // cheching if there is a row , otherwise creating it
@@ -391,7 +391,7 @@ WHERE $condition");
                         ->order_by('name_trnsaction_type', "asc")
                         ->get()
                         ->result();
-        if(!isset($data) && empty($data)){
+        if(empty($data)){
                 $this->db->query("INSERT INTO `bank_transaction_type` 
                     (`id_trnsaction_type`, `name_trnsaction_type`)
                     VALUES ('1', 'Deposit');");
@@ -402,7 +402,7 @@ WHERE $condition");
        
     }
             
-    function transaction_type_dropdown() {
+    function transaction_type_dropdown() { 
         
         
         

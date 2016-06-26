@@ -120,7 +120,7 @@
                                    <td class="approval">
                                       <?php if($row->approval_status==1){echo '<span style="color:green">Approved</span>'; }
                                       elseif($row->approval_status==2){echo '<span style="color:red">Canceled</span>'; }
-                                      else{ ?>
+                                      else{ ?> 
                                        <form class="formforstatus" method="" action="">
                                            <input type="hidden" name="amount_transaction" value="<?php echo $row->amount; ?>">
                                            <input type="hidden" name="account_number" value="<?php echo $row->account_number; ?>"/>

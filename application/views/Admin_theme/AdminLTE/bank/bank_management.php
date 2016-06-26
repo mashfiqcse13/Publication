@@ -145,5 +145,5 @@
             var today ='<?php echo DATE('m-d-Y') ?>';
             $('#field-transaction_date').val(today);
             
-      
+       
       </script>
