@@ -28,9 +28,9 @@
                     'name' => 'form');
                 echo form_open('', $attributes)
                 ?>
-<!--                <div class="form-group col-md-3 text-left">
-                    <label>Search month:</label>
-                </div>-->
+                <!--                <div class="form-group col-md-3 text-left">
+                                    <label>Search month:</label>
+                                </div>-->
                 <div class="form-group col-md-5">
                     <div class="input-group">
                         <div class="input-group-addon">
@@ -52,7 +52,7 @@
                             <option value="11">November</option>
                             <option value="12">December</option>
                         </select>
-                        
+
 
                     </div><!-- /.input group -->
                 </div><!-- /.form group -->
@@ -72,7 +72,7 @@
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
                         </select>
-                        
+
 
                     </div><!-- /.input group -->
                 </div><!-- /.form group -->
@@ -178,7 +178,6 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-//    document.forms['form'].elements['month'].value = "<?php echo $value->month_salary_payment;?>";
-   
-
+    document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
+    document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>

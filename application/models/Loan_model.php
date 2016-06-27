@@ -26,8 +26,10 @@ class Loan_model extends CI_Model {
     function select_loan_by_loan_id($id) {
         $this->db->select('*');
         $this->db->from('loan');
+        $this->db->join('employee', 'loan.id_employee = employee.id_employee', 'left');
         $this->db->join('loan_payment', 'loan.id_loan = loan_payment.id_loan', 'left');
-        $this->db->where('id_employee', $id);
+        
+        $this->db->where('loan.id_employee', $id);
         $query = $this->db->get();
         return $query->result();
     }

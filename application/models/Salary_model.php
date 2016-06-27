@@ -82,6 +82,16 @@ class Salary_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    function select_all_employee_by_month_year($month,$year) {
+        $this->db->select('*');
+        $this->db->from('employee');
+        $this->db->join('employee_salary_info', 'employee.id_employee = employee_salary_info.id_employee');
+        $this->db->join('salary_payment', 'employee.id_employee = salary_payment.id_employee');
+        $this->db->where('salary_payment.month_salary_payment',$month);
+        $this->db->where('salary_payment.year_salary_payment',$year);
+        $query = $this->db->get();
+        return $query->result();
+    }
     
     function update_info($tbl_name, $condition ,$data, $id,$return_id){
         $this->db->where($condition,$id);

@@ -100,7 +100,7 @@ class Loan extends CI_Controller {
         $id = $this->input->post('id_employee');
         $data['loan_info'] = $this->Loan_model->select_loan_by_loan_id($id);
 //        for($i = 1; $i <= count($data['loan_info']); $i++){
-//         echo '<pre>';print_r(count($data['loan_info']));exit();
+//         echo '<pre>';print_r($data['loan_info']);exit();
         echo json_encode($data);
 //        }
     }
