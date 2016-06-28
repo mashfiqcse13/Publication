@@ -10,6 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Production_process_model extends CI_Model {
 
     function add_process_step($id_processes, $id_vendor, $id_step_name) {
+        if ($this->get_process_status($id_processes) != 1) {
+            return FALSE;
+        }
         $last_process_step_id = $this->last_process_step_id($id_processes);
         if ($last_process_step_id > 0) {
             $order_quantity = 0;
@@ -34,6 +37,9 @@ class Production_process_model extends CI_Model {
     }
 
     function delete_process_step($id_process_steps) {
+        if ($this->get_process_status($id_processes) != 1) {
+            return FALSE;
+        }
         $id_previous_step = $this->previous_process_step_id($id_process_steps);
         $sql = "DELETE FROM `process_steps` WHERE `id_process_steps` = $id_process_steps and `order_amount`= 0 ";
         $this->db->query($sql);
@@ -106,7 +112,7 @@ class Production_process_model extends CI_Model {
 
     function step_transfer($id_process_step_from, $amount_transfered, $amount_billed, $amount_paid) {
         $id_process_step_to = $this->next_process_step_id($id_process_step_from);
-        if (!$id_process_step_to || !$this->is_transferable_amount_in_step($id_process_step_from, $amount_transfered)) {
+        if (!$id_process_step_to || !$this->is_transferable_amount_in_step($id_process_step_from, $amount_transfered) || $this->get_process_status($id_processes) != 1) {
             return FALSE;
         }
         $sql = "UPDATE `process_steps` 
@@ -186,9 +192,16 @@ class Production_process_model extends CI_Model {
                 $delet_url = site_url('production_process/delete_step/' . $each_step->id_processes . '/' . $each_step->id_process_steps);
                 $action_btn .= "<a href=\"$delet_url\" class=\"btn btn-xs btn-warning\" data-id_process_steps=\"{$each_step->id_process_steps}\">Delete</a> ";
             }
-            $this->table->add_row(
-                    $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created, $action_btn
-            );
+            $process_status = $this->get_process_status($id_processes);
+            if ($process_status == 1) {
+                $this->table->add_row(
+                        $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created, $action_btn
+                );
+            } else {
+                $this->table->add_row(
+                        $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created
+                );
+            }
         }
         $tmpl = array(
             'table_open' => '<table class="table table-hover table-bordered">',
@@ -207,7 +220,11 @@ class Production_process_model extends CI_Model {
             'table_close' => '</table>'
         );
         $this->table->set_template($tmpl);
-        $this->table->set_heading('Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Action');
+        if ($process_status == 1) {
+            $this->table->set_heading('Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Action');
+        } else {
+            $this->table->set_heading('Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created');
+        }
         return $this->table->generate();
     }
 
@@ -220,6 +237,22 @@ class Production_process_model extends CI_Model {
         } else {
             return $result[0];
         }
+    }
+
+    function get_process_status($id_processes) {
+        $process_details = $this->get_process_details($id_processes);
+        if ($process_details == FALSE) {
+            return FALSE;
+        }
+        return $process_details->process_status;
+    }
+
+    function stop_process($id_processes) {
+        if (empty($id_processes)) {
+            return FALSE;
+        }
+        $sql = "UPDATE `processes` SET process_status = '2'  WHERE `id_processes` = $id_processes ";
+        $this->db->query($sql);
     }
 
     function process_detail_table($id_processes) {

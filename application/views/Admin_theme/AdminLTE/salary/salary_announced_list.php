@@ -102,6 +102,7 @@
                                 echo $message;
                             }
                             $this->session->unset_userdata('message');
+
                             function set_month($value) {
                                 if ($value == 1) {
                                     return'<b>January</b>';
@@ -147,22 +148,22 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <?php
-                            if(isset($month) && isset($year)){
-                            ?>
-                            <h2 class="text-center">Salary Announcement of  <?php
-                                echo set_month($month);
-                                echo ' ';
-                                echo $year;
-                                ?></h2>
-                            <?php
-                            }else{
+                            if (isset($month) && isset($year)) {
                                 ?>
-                            <h2 class="text-center">Salary Announcement of  <?php
-                                echo date('F', now());
-                                echo ' ';
-                                echo date('Y', now());
-                                ?></h2>
-                            <?php
+                                <h2 class="text-center">Salary Announcement of  <?php
+                                    echo set_month($month);
+                                    echo ' ';
+                                    echo $year;
+                                    ?></h2>
+                                <?php
+                            } else {
+                                ?>
+                                <h2 class="text-center">Salary Announcement of  <?php
+                                    echo date('F', now());
+                                    echo ' ';
+                                    echo date('Y', now());
+                                    ?></h2>
+                                <?php
                             }
                             ?>
                             <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
@@ -198,7 +199,7 @@
                                                 </td>
                                                 <?php
                                                 $value = $this->Salary_model->announce($employee->id_employee);
-                                                if ($value != null) {
+                                                if (!empty($value)) {
                                                     $bonus = $this->Salary_model->bonus($value->id_salary_payment);
                                                     $current_month = date('n', now());
 //                                                    if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $current_month) {
@@ -215,7 +216,8 @@
 
                                                             <?php
                                                         }
-                                                    } if ($bonus->status_bonus_payment == null) {
+                                                    }
+                                                    if (empty($bonus->status_bonus_payment)) {
                                                         ?>
 
                                                         <td>
@@ -239,7 +241,8 @@
                                                         </td>
                                                         <?php
                                                     }
-                                                }if ($value == null) {
+                                                }
+                                                if ($value == null) {
                                                     ?>
                                                     <td>
                                                         <select class="form-control select2"style="width:100%;" name="bonus_type[]" id="bonus" required>
@@ -287,11 +290,11 @@
                                                     ?>
                                                 </td>
 
-                                                                    <!--                                            <td>
-                                                                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                                                                                </td>-->
+                                                                                                    <!--                                            <td>
+                                                                                                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                                                                                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                                                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
+                                                                                                                                                </td>-->
 
                                             </tr>
                                             <?php
