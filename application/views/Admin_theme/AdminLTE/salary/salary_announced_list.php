@@ -102,16 +102,69 @@
                                 echo $message;
                             }
                             $this->session->unset_userdata('message');
+                            function set_month($value) {
+                                if ($value == 1) {
+                                    return'<b>January</b>';
+                                }
+                                if ($value == 2) {
+                                    return'<b>February</b>';
+                                }
+                                if ($value == 3) {
+                                    return'<b>March</b>';
+                                }
+                                if ($value == 4) {
+                                    return'<b>April</b>';
+                                }
+                                if ($value == 5) {
+                                    return'<b>May</b>';
+                                }
+                                if ($value == 6) {
+                                    return'<b>June</b>';
+                                }
+                                if ($value == 7) {
+                                    return'<b>July</b>';
+                                }
+                                if ($value == 8) {
+                                    return'<b>August</b>';
+                                }
+                                if ($value == 9) {
+                                    return'<b>September</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 11) {
+                                    return'<b>November</b>';
+                                }
+                                if ($value == 12) {
+                                    return'<b>December</b>';
+                                }
+                            }
                             ?>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <h2 class="text-center">Salary Announcement  <?php
-//                            of
-//                                echo date('F', now());
-//                                echo ' ';
-//                                echo date('Y', now());
-//                                ;
+                            <?php
+                            if(isset($month) && isset($year)){
+                            ?>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo set_month($month);
+                                echo ' ';
+                                echo $year;
                                 ?></h2>
+                            <?php
+                            }else{
+                                ?>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo date('F', now());
+                                echo ' ';
+                                echo date('Y', now());
+                                ?></h2>
+                            <?php
+                            }
+                            ?>
                             <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
                                 <table id="example1" class="table table-bordered table-hover">
 
@@ -140,11 +193,15 @@
                                                     <input type="hidden" name="amount_salary_payment[]" value="<?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>">
                                                     <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
                                                 </td>
+                                                <td style="display:none;">
+                                                    <input type="hidden" name="bonus_type[]">
+                                                </td>
                                                 <?php
                                                 $value = $this->Salary_model->announce($employee->id_employee);
                                                 if ($value != null) {
                                                     $bonus = $this->Salary_model->bonus($value->id_salary_payment);
-
+                                                    $current_month = date('n', now());
+//                                                    if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $current_month) {
                                                     if (isset($bonus->status_bonus_payment)) {
                                                         ?>
                                                         <?php
@@ -158,8 +215,9 @@
 
                                                             <?php
                                                         }
-                                                    } if ($bonus->status_bonus_payment == 0) {
+                                                    } if ($bonus->status_bonus_payment == null) {
                                                         ?>
+
                                                         <td>
                                                             <select class="form-control select2"style="width:100%;" name="bonus_type[]" id="bonus" required>
                                                                 <option value="0">Select Bonus Type</option>
@@ -208,6 +266,7 @@
                                                 <td >
                                                     <?php
                                                     if ($value != null) {
+//                                                        if (isset($value->status_salary_payment)&& $value->month_salary_payment == $current_month) {
                                                         if (isset($value->status_salary_payment)) {
                                                             if ($employee->id_employee == $value->id_employee) {
 //                                                        
@@ -216,7 +275,6 @@
                                                                 <?php
                                                             }
                                                         }
-                                                        
                                                     } if ($value == null) {
 //            
                                                         ?>
@@ -229,11 +287,11 @@
                                                     ?>
                                                 </td>
 
-                                                            <!--                                            <td>
-                                                                             <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                         <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                                                            <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                                                                        </td>-->
+                                                                    <!--                                            <td>
+                                                                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                                                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
+                                                                                                                </td>-->
 
                                             </tr>
                                             <?php
@@ -276,6 +334,6 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-    document.forms['form'].elements['month'].value = "<?php echo $month;?>";
-    document.forms['form'].elements['year'].value = "<?php echo $year;?>";
+    document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
+    document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>

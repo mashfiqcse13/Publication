@@ -56,7 +56,8 @@ class Salary extends CI_Controller {
                 ->unset_read()
                 ->callback_column('status_salary_payment', array($this, 'set_value'))
                 ->callback_column('month_salary_payment', array($this, 'set_month'))
-                ->set_relation('id_employee', 'employee', "name_employee");
+                ->set_relation('id_employee', 'employee', "name_employee")
+                ->order_by('id_salary_payment','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -174,23 +175,21 @@ class Salary extends CI_Controller {
                     $data['amount_salary_payment'] = $basic[$j];
                     $data['status_salary_payment'] = 1;
                     $payment_id = $this->Salary_model->save_info('salary_payment', $data);
-                    for ($k = 0; $k < count($bonus); $k++) {
-                        if ($bonus[$k] == 0) {
-                            $info['id_salary_bonus_type'] = $bonus[$k];
+                        if ($bonus[$j] == 0) {
+                            $info['id_salary_bonus_type'] = $bonus[$j];
                             $info['amount_salary_bonus'] = 0;
                             $info['id_salary_payment'] = $payment_id;
                             $this->Salary_model->save_info('salary_bonus', $info);
                         } else {
-                            $amount = $this->Salary_model->select_bonus_amount($bonus[$k]);
+                            $amount = $this->Salary_model->select_bonus_amount($bonus[$j]);
 
                             if ($amount != null) {
-                                $info['id_salary_bonus_type'] = $bonus[$k];
+                                $info['id_salary_bonus_type'] = $bonus[$j];
                                 $info['amount_salary_bonus'] = $amount[0]->amount;
                                 $info['id_salary_payment'] = $payment_id;
                                 $this->Salary_model->save_info('salary_bonus', $info);
                             }
                         }
-                    }
                 }
             }
         }
@@ -272,12 +271,13 @@ class Salary extends CI_Controller {
                 ->callback_add_field('status_salary_advance', function () {
                     return '<select name="status_salary_advance">
                           <option>Select Status Advance</option>'
-                            . '<option value="1">Partially Paid</option>'
-                            . '<option value="2">Full Paid</option>'
+                            . '<option value="1">Active</option>'
+                            . '<option value="2">Inactive</option>'
                             . '</select>';
 //                    return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
 //                            . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
                 })
+                ->order_by('id_salary_advance','desc')
                 ->unset_fields('amount_paid_salary_advance');
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -311,25 +311,26 @@ class Salary extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_advanced', $data);
     }
 
-    function salary_bonus() {
-        $crud = new grocery_CRUD();
-        $crud->set_table('salary_bonus')
-                ->set_subject('Salary Bonus')
-                ->set_relation('id_salary_bonus_type', 'salary_bonus_type', "name_salary_bonus_type")
-                ->set_relation('id_salary_payment', 'salary_payment', "id_salary_payment");
-        $output = $crud->render();
-        $data['glosary'] = $output;
-
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Salary Bonus';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_bonus', $data);
-    }
+//    function salary_bonus() {
+//        $crud = new grocery_CRUD();
+//        $crud->set_table('salary_bonus')
+//                ->set_subject('Salary Bonus')
+//                ->set_relation('id_salary_bonus_type', 'salary_bonus_type', "name_salary_bonus_type")
+//                ->set_relation('id_salary_payment', 'salary_payment', "id_salary_payment");
+//        $output = $crud->render();
+//        $data['glosary'] = $output;
+//
+//        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+//        $data['base_url'] = base_url();
+//        $data['Title'] = 'Salary Bonus';
+//        $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_bonus', $data);
+//    }
 
     function salary_bonus_type() {
         $crud = new grocery_CRUD();
         $crud->set_table('salary_bonus_type')
-                ->set_subject('Salary Bouns Type');
+                ->set_subject('Salary Bouns Type')
+                ->order_by('id_salary_bonus_type','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -344,7 +345,8 @@ class Salary extends CI_Controller {
         $crud->set_table('salary_bonus_announce')
                 ->set_subject('Salary Bonus Announce')
                 ->display_as("id_salary_bonus_type", 'Bonus Type')
-                ->set_relation('id_salary_bonus_type', 'salary_bonus_type', "name_salary_bonus_type");
+                ->set_relation('id_salary_bonus_type', 'salary_bonus_type', "name_salary_bonus_type")
+                ->order_by('id_bonus_announce','desc');
         $crud->callback_add_field('date_announce', function () {
             return '<input id="field-date_announce" name="date_annouce" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
                     . '<style>div#date_announce_field_box{display: none;}</style>';
