@@ -82,8 +82,8 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
-    $db['default']['username'] = 'thejamun_master';
-    $db['default']['password'] = 'Mv,4K&ZRV)xP';
+    $db['default']['username'] = 'thejamun_publication_jamunapub';
+    $db['default']['password'] = 'uc@^rZ3iDb&g';
     $db['default']['database'] = 'thejamun_publication_jamunapub';
 } else if ($_SERVER['HTTP_HOST'] == "ohiprokashani.com") {
     $db['default']['username'] = 'thejamun_master';
