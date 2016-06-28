@@ -82,14 +82,9 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
-//    Main db access
-//    $db['default']['username'] = 'thejamun_master';
-//    $db['default']['password'] = 'Mv,4K&ZRV)xP';
-//    $db['default']['database'] = 'thejamun_publication_jamunapub';{
-} else if ($_SERVER['HTTP_HOST'] == "publication2.thejamunapub.com") {
-    $db['default']['username'] = 'thejamun_publication_jamunapub2';
-    $db['default']['password'] = 'pn8qJ{mIycng';
-    $db['default']['database'] = 'thejamun_publication_jamunapub2';
+    $db['default']['username'] = 'thejamun_master';
+    $db['default']['password'] = 'Mv,4K&ZRV)xP';
+    $db['default']['database'] = 'thejamun_publication_jamunapub';
 } else if ($_SERVER['HTTP_HOST'] == "ohiprokashani.com") {
     $db['default']['username'] = 'thejamun_master';
     $db['default']['password'] = 'Mv,4K&ZRV)xP';
