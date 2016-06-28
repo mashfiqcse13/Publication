@@ -208,7 +208,7 @@ class Old_book_model extends CI_Model {
             array_push($data_return, $tmp_return_book);
             //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
             //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
-            $this->stock_add($value['item_id'], $value['item_quantity']);
+            $this->old_book_stock_add($value['item_id'], $value['item_quantity']);
         }
 
 
@@ -250,7 +250,7 @@ class Old_book_model extends CI_Model {
         echo json_encode($response);
     }
     
-        function stock_add($id_item, $amount) {
+        function old_book_stock_add($id_item, $amount) {
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('old_book_stock')
@@ -269,118 +269,141 @@ class Old_book_model extends CI_Model {
         return TRUE;
     }
     
+    
+    function old_book_stock_reduce($id_item, $amount) {
+        // cheching if there is a row , otherwise creating it
+        $this->db->select('*')
+                        ->from('old_book_stock')
+                        ->where('id_item', $id_item)
+                        ->get()
+                        ->result() or
+                $this->db->query("INSERT INTO `old_book_stock` 
+                    (`id_final_stock`, `id_item`, `total_in`, `total_out`, `total_balance`)
+                    VALUES (NULL, '$id_item', '0', '0', '0');");
 
-    function memo_header_details($total_sales_id) {
-        $sql = "SELECT customer.name as party_name,
-            customer.district as district,
-            customer.address as caddress,
-            customer.phone as phone,
-            customer.id_customer as code,
-            sales_total_sales.id_total_sales as memoid,
-            sales_total_sales.issue_date as issue_date
-            FROM `customer`
-            LEFT join sales_total_sales on customer.id_customer=sales_total_sales.id_customer
-            where sales_total_sales.id_total_sales='$total_sales_id'";
-        $data = $this->db->query($sql)->result_array();
-        Return $data[0];
-    }
-
-    function memo_body_table($total_sales_id) {
-        $this->load->library('table');
-        // setting up the table design
-        $tmpl = array(
-            'table_open' => '<table class="table table-bordered table-striped text-right-for-money">',
-            'heading_row_start' => '<tr class="success">',
-            'heading_row_end' => '</tr>',
-            'heading_cell_start' => '<th>',
-            'heading_cell_end' => '</th>',
-            'row_start' => '<tr>',
-            'row_end' => '</tr>',
-            'cell_start' => '<td >',
-            'cell_end' => '</td>',
-            'row_alt_start' => '<tr>',
-            'row_alt_end' => '</tr>',
-            'cell_alt_start' => '<td >',
-            'cell_alt_end' => '</td>',
-            'table_close' => '</table>'
-        );
-        $this->table->set_template($tmpl);
-        $this->table->set_heading('Quantity', 'Book Name', 'Book Price', 'Sales Price', 'Total Price');
-        //Getting the data form the sales table in db
-        $sql = "SELECT `quantity`,`items`.`name`, `items`.`regular_price`,`price`,`sub_total` 
-                    FROM `sales`
-                    left join
-                    `items`on `items`.`id_item`= `sales`.`id_item`
-                    WHERE `id_total_sales` = $total_sales_id";
-        $rows = $this->db->query($sql)->result_array();
-        $total_quantity = 0;
-        $total_price = 0;
-        foreach ($rows as $row) {
-            $total_quantity += $row['quantity'];
-            $total_price += $row['sub_total'];
-            $this->table->add_row($row);
+        $current = $this->current_stock_info($id_item);
+        if ($current->total_balance >= $amount) {
+            $sql = "UPDATE `old_book_stock` SET 
+                `total_out` = `total_out`+'$amount', 
+                `total_balance` = `total_balance`-'$amount' 
+            WHERE `old_book_stock`.`id_item` = $id_item;";
+            $this->db->query($sql);
+            return TRUE;
+        } else {
+            return FALSE;
         }
-        // Showing total book amount
-        $separator_row = array(
-            'class' => 'separator'
-        );
-        // setting up the footer options of the memo
-        $sql = "SELECT * FROM `sales_total_sales` WHERE `id_total_sales` = $total_sales_id";
-        $total_sales_details = $this->db->query($sql)->result();
-        $total_sales_details = $total_sales_details[0];
+    }
+    
+    
+        function current_stock_info($id_item) {
+        $current = $this->db->select('*')
+                ->from('old_book_stock')
+                ->where('id_item', $id_item)
+                ->get()
+                ->result();
+        if (empty($current[0])) {
+            return FALSE;
+        }
+        return $current[0];
+    }
+//            function stock_add($id_item, $amount) {
+//        // cheching if there is a row , otherwise creating it
+//        $this->db->select('*')
+//                        ->from('old_book_stock')
+//                        ->where('id_item', $id_item)
+//                        ->get()
+//                        ->result() or
+//                $this->db->query("INSERT INTO `old_book_stock` 
+//                    (`id_old_book_stock`, `id_item`, `total_in`, `total_out`, `total_balance`)
+//                    VALUES (NULL, '$id_item', '0', '0', '0');");
+//
+//        $sql = "UPDATE `old_book_stock` SET 
+//                `total_in` = `total_in`+'$amount', 
+//                `total_balance` = `total_balance`+'$amount' 
+//            WHERE `old_book_stock`.`id_item` = $id_item;";
+//        $this->db->query($sql);
+//        return TRUE;
+//    }
+    
+    function old_book_sale_or_rebind(){
+        $this->load->model('misc/Cash');
+        $this->load->model('misc/Stock_perpetual');
+        $this->load->model('Stock_model');
 
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
-        $this->table->add_row($total_quantity, '(Total Book ) ', array(
-            'data' => 'বই মূল্য : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($total_price));
-        $this->table->add_row('', '', array(
-            'data' => 'ছাড় : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $total_sales_details->discount_amount);
-        $this->table->add_row(array(
-            'data' => '<strong>কথায় : </strong>',
-            'colspan' => 2
-                ), array(
-            'data' => '	সর্বমোট : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->total_amount));
-        $this->table->add_row(array(
-            'data' => $this->Common->convert_number($total_sales_details->total_amount),
-            'colspan' => 2,
-            'rowspan' => 2,
-                ), array(
-            'data' => '	নগদ জমা : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->cash));
-        $this->table->add_row(array(
-            'data' => '	ব্যাংক জমা : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->bank_pay));
-        $this->load->model('misc/Customer_due');
-        $this->table->add_row('', '', array(
-            'data' => '	সর্বশেষ বাকি : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)));
-        return $this->table->generate();
+        $id_customer = $this->input->post('id_customer');
+        $sub_total = $this->input->post('price');
+        $transfer_type=$this->input->post('process');
+
+        $total_amount = $sub_total;
+        
+        
+ //        add income and cash
+        if($transfer_type == 1){
+            $this->load->model('Income_model');            
+            $this->Income_model->add_income('1',$total_amount);
+            $this->Cash->add($total_amount);       
+        
+        }
+        
+//          send rebind        
+        if($transfer_type == 2){
+            
+        }
+        
+//        old book transfer total              
+            
+            $data_total = array(
+                'type_transfer' => $transfer_type,
+                'date_transfer' => date('Y-m-d h:i:u'),
+                'price' => $total_amount
+            );                
+
+        $this->db->insert('old_book_transfer_total', $data_total) or die('failed to insert data on old_book_transfer_total');
+        $id_old_book_transfer_total = $this->db->insert_id() or die('failed to insert data on old_book_return_total');
+    
+
+ 
+       
+//        old_book_return_items
+        
+        $item_selection = $this->input->post('item_selection');
+        $data_return = array();
+        foreach ($item_selection as $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $tmp_return_book = array(
+               
+                'id_item' => $value['item_id'],
+                'quantity_item' => $value['item_quantity'],
+                'id_old_book_transfer_total' => $id_old_book_transfer_total,
+            );
+            array_push($data_return, $tmp_return_book);
+            //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
+            //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
+            $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+        }   
+        
+        $this->db->insert_batch('old_book_transfer_items', $data_return) or die('failed to insert data on id_old_book_transfer_items');
+        
+       
+        
+        
+        $action = $this->input->post('action');
+        if ($action == 'save_and_reset') {
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book_sale');
+        } else if ($action == 'save_and_back_to_list') {
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book_sale_list');
+        } else if ($action == 'save_and_print') {
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['next_url'] = site_url('old_book/return_book_print' . $id_total_sales);
+        }
+        echo json_encode($response);
     }
     
-    
-    function get_total_sales_info($from, $to){
-        $this->db->select('*');
-        $this->db->from('sales_total_sales');
-        $this->db->join('customer','sales_total_sales.id_customer = customer.id_customer','left');
-        $this->db->where('sales_total_sales.issue_date >= ',date('Y-m-d', strtotime($from)));
-        $this->db->where('sales_total_sales.issue_date <= ',date('Y-m-d', strtotime($to)));
-        $this->db->order_by('sales_total_sales.issue_date');
-        $query = $this->db->get();
-        return $query->result();
-    }
+
+
 
 }

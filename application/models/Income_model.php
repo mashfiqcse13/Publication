@@ -41,6 +41,19 @@ WHERE date_income BETWEEN $date");
         
         
     }
+    
+    
+    function add_income($id,$amount){
+        $data=array(
+            'id_name_income' => $id,
+            'amount_income'  => $amount,
+            'date_income'   => date('Y-m-d h:i:u')
+        );
+        $this->db->insert('income', $data) or die('failed to insert data on income');
+       
+        return true;
+        
+    }
 
     
 

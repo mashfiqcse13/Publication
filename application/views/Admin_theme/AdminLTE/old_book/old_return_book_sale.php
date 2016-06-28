@@ -17,7 +17,7 @@
         'total_due': 0,
         'item_selection': ''
     };
-    var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
+    var ajax_url = '<?php echo site_url('old_book/old_book_sale_or_rebind') ?>';
 </script>
 <?php include_once __DIR__ . '/../header.php'; ?>
 <style>
@@ -62,13 +62,13 @@
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-lg-8">
+<!--                            <div class="form-group col-lg-8">
                                 <label for="id_contact">Party name</label> 
                                 <a href="<?php echo site_url('contacts/index/add') ?>" class="btn btn-xs btn-default">Add New</a>
                                 
                                 <?php echo $customer_dropdown ?>
-                            </div>
-                            <div class="form-group col-lg-4">
+                            </div>-->
+                            <div class="form-group col-lg-6">
                                 <label for="int_id_contact">Issue Date</label>
                                 <input type="text" disabled="" value="<?php echo date("m/d/Y"); ?>" class="form-control" id="int_id_contact" placeholder="Password">
                             </div>
@@ -112,7 +112,7 @@
                             <div class="form-group col-lg-6">
                                 <label for="process">Process Type:</label>                                
                                 <select name="process" id="process" class="form-control select2">
-                                    <option>Select Process Type</option>
+                                    <option value="0">Select Process Type</option>
                                     <option value="2">Send to Rebind</option>
                                     <option value="1">Sales</option>
                                     <option value="3">Throw Away</option>
@@ -120,6 +120,10 @@
 <!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
                                  <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced
                                 -->
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="id_contact">Total Price</label>
+                                <input type="number" name="price" class="form-control" />
                             </div>
 <!--                            <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
@@ -156,10 +160,7 @@
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
                             </div>
-                            <div class="form-group col-lg-2">
-                                <label for="id_contact">Price</label>
-                                <input type="number" name="price" class="form-control" />
-                            </div>
+
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Quantity</label>
                                 <div class="input-group input-group-sm">
@@ -181,8 +182,6 @@
                                 <tr class="success">
                                     <th>Quantity</th>
                                     <th>Book Name</th>
-                                    <th>Book Price</th>                                    
-                                    <th>Total Price</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -190,6 +189,7 @@
                             </tbody>
                         </table>
                         <div id="item_selection_status">No Item selected yet</div>
+                            
                     </div>
                 </div>
                 <!-- /.box -->
@@ -230,21 +230,16 @@
             output += '<tr>\n\
                                 <td>' + item.item_quantity + '</td>\n\
                                 <td>' + item.name + '</td>\n\
-                                <td>' + item.item_price + '</td>\n\
-                                <td>' + item.total + '</td>\n\
                                 <td><a id="remove_item" onclick="remove_from_cart(' + item.item_id + ');" href="#" \n\
                                              data-item-id="' + item.item_id + '"\n\
                                              title="Remove ' + item.name + '">\n\
                                                 <i class="fa fa-minus-circle"></i></a></td>\n\
                             </tr>';
-            sub_total += item.total;
+          
         });
         output += '<tr  style="font-weight: bold;border-top: 2px solid;">\n\
-                                <td colspan="3" style="text-align: right;">Sub Total = </td>\n\
-                                <td>' + sub_total + '</td>\n\
-                                <td>Taka</td>\n\
                             </tr>';
-        data_to_post.sub_total = sub_total;
+        
         update_total_amount_and_total_due();
         data_to_post.item_selection = item_selection;
         $('table.cart tbody').html(output);
@@ -265,10 +260,7 @@
             alert('No book selected');
             return;
         }
-        if (item_price == 0) {
-            alert('Enter Price');
-            return;
-        }
+
         if (item_quantity == 0) {
             alert('Enter quantity');
             return;
@@ -350,19 +342,18 @@
     }
 
     $('.submit_btn').click(function () {
-        if (data_to_post.total_paid > data_to_post.total_amount) {
-            alert('We are not allowed to accept extra money . Reduce the cash .');
-            return;
-        }
-        if (data_to_post.id_customer < 1) {
-            alert('No customer selected.');
+        data_to_post.process = $('[name="process"]').val();
+        data_to_post.price = $('[name="price"]').val();
+        
+        if (data_to_post.process == 0) {
+            alert('Please Select Any Process.');
             return;
         }
 
-        if (data_to_post.sub_total < 1) {
-            alert('No item selected . Please select one');
-            return;
-        }
+//        if (data_to_post.sub_total < 1) {
+//            alert('No item selected . Please select one');
+//            return;
+//        }
         $(' #massage_box').show();
         data_to_post.action = $(this).data('action');
         $.post(ajax_url, data_to_post, function (data) {

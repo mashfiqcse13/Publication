@@ -76,6 +76,10 @@ class Old_book extends CI_Controller {
 //        echo json_encode($_POST);
         $this->Old_book_model->processing_return_oldbook();
     }
+    
+    function old_book_sale_or_rebind(){
+        $this->Old_book_model->old_book_sale_or_rebind();
+    }
 
     function sales() {
         $crud = new grocery_CRUD();
