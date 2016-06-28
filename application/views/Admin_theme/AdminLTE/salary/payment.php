@@ -135,23 +135,31 @@
                                 return'<b>December</b>';
                             }
                         }
-                        ?>
-                        <div class="box-header">
-                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
 
-                        </div>
-                        <div class="box-body">
-                            <?php
-                            if (isset($month) && isset($year)) {
-                                ?>
-                                <h2 class="text-center">Salary Payment <?php echo set_month($month);
-                        echo' ' . $year; ?></h2>
+                        if ($all_salary_info == null) {
+                            echo '<h1 class="text-center" >No Record Exist</h1>';
+                        } else {
+                            ?>
+                            <div class="box-header">
+                                <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+
+                            </div>
+                            <div class="box-body">
                                 <?php
-                            }else {
+                                if (isset($month) && isset($year)) {
                                     ?>
-                                    <h2 class="text-center">Salary Payment <?php echo date('F',now());
-                        echo' ' .date('Y',now()); ?></h2>
+                                    <h2 class="text-center">Salary Payment <?php
+                                        echo set_month($month);
+                                        echo' ' . $year;
+                                        ?></h2>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <h2 class="text-center">Salary Payment <?php
+                                        echo date('F', now());
+                                        echo' ' . date('Y', now());
+                                        ?></h2>
                                     <?php
                                 }
                                 ?>
@@ -261,32 +269,34 @@
                             </div>
                             <div class="box-body">
                                 <?php
-                            } else {
-                                echo $glosary->output;
                             }
-                            ?>
-                        </div>
+                        } else {
+                            echo $glosary->output;
+                        }
+                        ?>
                     </div>
 
                 </div>
+
             </div>
+        </div>
 
 
 
 
-        </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
-    <!-- insert book -->
+<!-- insert book -->
 
 
 
-    <?php include_once __DIR__ . '/../footer.php'; ?>
-    <script type="text/javascript">
-        $(document).ready(function () {
-        "scrollX": true,
-                "pagingType": "full_numbers"
-        });
-        document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
-        document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
+<?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+    "scrollX": true,
+            "pagingType": "full_numbers"
+    });
+    document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
+    document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>
