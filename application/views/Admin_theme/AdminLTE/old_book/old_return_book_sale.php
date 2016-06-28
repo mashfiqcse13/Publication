@@ -104,9 +104,9 @@
 <!--                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
                             </div>-->
-                            <div class="form-group col-lg-6">
+<!--                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
@@ -200,7 +200,8 @@
                     <div class="box-footer">
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_reset">Save and Reset</button>
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
-                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
+<!--                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
+                    -->
                     </div>
                 </div>
             </div>
@@ -228,7 +229,7 @@
         var output = '', sub_total = 0;
         item_selection.forEach(function (item, index) {
             output += '<tr>\n\
-                                <td>' + item.item_quantity + '</td>\n\
+                                <td id="quantity">' + item.item_quantity + '</td>\n\
                                 <td>' + item.name + '</td>\n\
                                 <td><a id="remove_item" onclick="remove_from_cart(' + item.item_id + ');" href="#" \n\
                                              data-item-id="' + item.item_id + '"\n\
@@ -255,7 +256,7 @@
     $("#add_to_cart").click(function () {
         var item_id = string_to_int($('[name="id_item"]').val());
         var item_quantity = string_to_int($('#item_quantity').val());
-        var item_price = string_to_int($('[name="price"]').val());
+        
         if (item_id == 0) {
             alert('No book selected');
             return;
@@ -277,9 +278,7 @@
         item_selection[item_id] = {
             'item_id': item_id,
             'item_quantity': item_quantity,
-            'name': item_details[item_id].name,
-            'item_price': item_price,            
-            'total': item_price * item_quantity
+            'name': item_details[item_id].name
         };
         update_cart();
     });
@@ -290,70 +289,74 @@
         var this_item_details = item_details[id_item];
         $('#total_in_hand').html(this_item_details.total_balance);
     });
-    $('[name="id_customer"]').change(function () {
-        data_to_post.id_customer = $('[name="id_customer"]').val();
-        data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
-        $('#dues_unpaid').html(data_to_post.dues_unpaid);
-        update_total_amount_and_total_due();
-    });
+//    $('[name="id_customer"]').change(function () {
+//        data_to_post.id_customer = $('[name="id_customer"]').val();
+//        data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
+//        $('#dues_unpaid').html(data_to_post.dues_unpaid);
+//        update_total_amount_and_total_due();
+//    });
 
-    $('#discount_amount').change(function () {
-        if (string_to_int(data_to_post.sub_total) > 0) {
-            data_to_post.discount_amount = string_to_int($('#discount_amount').val());
-            data_to_post.discount_percentage = string_to_int(data_to_post.discount_amount / string_to_int(data_to_post.sub_total) * 100);
-        } else {
-            data_to_post.discount_amount = 0;
-            $('#discount_amount').val(data_to_post.discount_amount);
-            data_to_post.discount_percentage = 0;
-        }
-        $('#discount_percentage').val(data_to_post.discount_percentage);
-        update_total_amount_and_total_due();
-    });
+//    $('#discount_amount').change(function () {
+//        if (string_to_int(data_to_post.sub_total) > 0) {
+//            data_to_post.discount_amount = string_to_int($('#discount_amount').val());
+//            data_to_post.discount_percentage = string_to_int(data_to_post.discount_amount / string_to_int(data_to_post.sub_total) * 100);
+//        } else {
+//            data_to_post.discount_amount = 0;
+//            $('#discount_amount').val(data_to_post.discount_amount);
+//            data_to_post.discount_percentage = 0;
+//        }
+//        $('#discount_percentage').val(data_to_post.discount_percentage);
+//        update_total_amount_and_total_due();
+//    });
     
     
-    $('#discount_percentage').change(function () {
-        if (string_to_int(data_to_post.sub_total) > 0) {
-            data_to_post.discount_percentage = string_to_int($('#discount_percentage').val());
-            data_to_post.discount_amount = string_to_int(data_to_post.discount_percentage / 100 * string_to_int(data_to_post.sub_total));
-        } else {
-            data_to_post.discount_percentage = 0;
-            $('#discount_percentage').val(data_to_post.discount_percentage);
-            data_to_post.discount_amount = 0;
-        }
-        $('#discount_amount').val(data_to_post.discount_amount);
-        update_total_amount_and_total_due();
-    });
+//    $('#discount_percentage').change(function () {
+//        if (string_to_int(data_to_post.sub_total) > 0) {
+//            data_to_post.discount_percentage = string_to_int($('#discount_percentage').val());
+//            data_to_post.discount_amount = string_to_int(data_to_post.discount_percentage / 100 * string_to_int(data_to_post.sub_total));
+//        } else {
+//            data_to_post.discount_percentage = 0;
+//            $('#discount_percentage').val(data_to_post.discount_percentage);
+//            data_to_post.discount_amount = 0;
+//        }
+//        $('#discount_amount').val(data_to_post.discount_amount);
+//        update_total_amount_and_total_due();
+//    });
+
     function remove_from_cart(item_to_remove) {
         delete item_selection[item_to_remove];
         update_cart();
     }
-    $('#cash_payment').change(function () {
-        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
-        update_total_amount_and_total_due();
-    });
+//    $('#cash_payment').change(function () {
+//        data_to_post.cash_payment = string_to_int($('#cash_payment').val());
+//        update_total_amount_and_total_due();
+//    });
     function update_total_amount_and_total_due() {
+        
         data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
                 + string_to_int(data_to_post.sub_total)
                 - string_to_int(data_to_post.discount_amount);
         data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment);
         data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
-        $('#total_due').html(data_to_post.total_due);
+        
     }
 
     $('.submit_btn').click(function () {
         data_to_post.process = $('[name="process"]').val();
         data_to_post.price = $('[name="price"]').val();
+        data_to_post.quantity = $('#quantity').html();
         
         if (data_to_post.process == 0) {
             alert('Please Select Any Process.');
             return;
         }
 
-//        if (data_to_post.sub_total < 1) {
-//            alert('No item selected . Please select one');
-//            return;
-//        }
+        if (!data_to_post.quantity) {
+            alert('No item selected . Please select one');
+            return;
+        }
+        
         $(' #massage_box').show();
         data_to_post.action = $(this).data('action');
         $.post(ajax_url, data_to_post, function (data) {

@@ -333,6 +333,7 @@ class Old_book_model extends CI_Model {
         $id_customer = $this->input->post('id_customer');
         $sub_total = $this->input->post('price');
         $transfer_type=$this->input->post('process');
+        $item_selection = $this->input->post('item_selection');
 
         $total_amount = $sub_total;
         
@@ -348,6 +349,27 @@ class Old_book_model extends CI_Model {
 //          send rebind        
         if($transfer_type == 2){
             
+            $data_return = array();
+            foreach ($item_selection as $value) {
+                if (empty($value)) {
+                    continue;
+                }
+                $tmp_return_book = array(
+
+                    'id_item' => $value['item_id'],
+                    'id_process_type' => 1,
+                    'order_quantity' => $value['item_quantity'],
+                    'date_created'  => date('Y-m-d h:i:u')
+                );
+                array_push($data_return, $tmp_return_book);
+                //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
+                //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
+                $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+            }   
+
+            $this->db->insert_batch('processes', $data_return) or die('failed to insert data on processes');
+
+       
         }
         
 //        old book transfer total              
@@ -366,7 +388,7 @@ class Old_book_model extends CI_Model {
        
 //        old_book_return_items
         
-        $item_selection = $this->input->post('item_selection');
+       
         $data_return = array();
         foreach ($item_selection as $value) {
             if (empty($value)) {
@@ -391,15 +413,12 @@ class Old_book_model extends CI_Model {
         
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
-            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_transfer_total";
             $response['next_url'] = site_url('old_book/return_book_sale');
         } else if ($action == 'save_and_back_to_list') {
-            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_transfer_total";
             $response['next_url'] = site_url('old_book/return_book_sale_list');
-        } else if ($action == 'save_and_print') {
-            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
-            $response['next_url'] = site_url('old_book/return_book_print' . $id_total_sales);
-        }
+        } 
         echo json_encode($response);
     }
     

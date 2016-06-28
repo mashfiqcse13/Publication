@@ -108,7 +108,7 @@ class Old_book extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'New sale';
+        $data['Title'] = 'Old Book Return';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_form', $data);
     }
     
@@ -120,9 +120,46 @@ class Old_book extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'New sale';
+        $data['Title'] = 'Old Book Sales/Rebind';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_book_sale', $data);  
     }
+    
+    function return_book_sale_list(){
+        $crud = new grocery_CRUD();
+        $crud->set_table('old_book_transfer_total')
+                ->set_subject('Old Book Sales or Rebind')
+                ->display_as('type_transfer', 'Transfer Type')
+                ->display_as('id_old_book_transfer_total','Id')
+                ->order_by('id_old_book_transfer_total', 'desc')
+                ->columns('id_old_book_transfer_total','type_transfer','date_transfer','price')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add()
+                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
+                    return site_url('old_book/memo/' . $primary_key);
+                });
+        
+                
+                $crud->callback_column('type_transfer', function($value){
+                    if($value == 1){
+                        return 'Old Book Sale';
+                    }elseif($value == 2){
+                       return 'Send To Rebind';
+                    }else{
+                        return 'Throw Away';                        
+                    }
+        
+                });   
+        
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Old Book Sales/Rebind List';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/list_old_book_sale_rebind', $data);
+    }
+    
 
     function memo($total_sales_id) {
 
