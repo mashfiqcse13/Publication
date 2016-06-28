@@ -42,47 +42,89 @@ class Account extends CI_Model {
         return $data;
     }
 
+    function get_due($date_from, $date_to, $return_type = 1) {
+        $this->load->library('table');
+        $sql = "SELECT contact_ID,name,due_billed_this_range,0 as dues_unpaid FROM (
+	SELECT `contact_ID`, pub_contacts.name,
+	sum(`sub_total`) as sum_sub_total,
+	sum( `discount`)as sum_discount,
+	sum( `book_return`)as sum_book_return,
+	sum( `cash`)as sum_cash,
+	sum( `bank_pay`)as sum_bank_pay ,
+	(sum(`sub_total`)-sum( `discount`)-sum( `book_return`)-sum( `cash`)-sum( `bank_pay`)-sum( `bank_pay`)) as due_billed_this_range
+	FROM `pub_memos` natural join pub_contacts
+	WHERE date(`issue_date`) between '$date_from' and '$date_to'
+	and
+	contact_ID in(
+		select contact_ID 
+		FROM `pub_memos` 
+		where memo_ID in(
+			select max(memo_ID)
+			from (
+				SELECT * 
+				FROM `pub_memos` 
+				where date(`issue_date`) between '$date_from' and '$date_to'
+			) AS TBL1
+			group by contact_ID
+		) and due > 0
+	)
+	group by `contact_ID`
+) as adfasdfasdf
+where adfasdfasdf.due_billed_this_range > 0
+
+union
+
+select contact_ID,name,0 as due_billed_this_range, dues_unpaid
+	FROM `pub_memos` natural join pub_contacts
+	where memo_ID in(
+		select min(memo_ID)
+		from (
+			SELECT * 
+			FROM `pub_memos` 
+			where date(`issue_date`) between '$date_from' and '$date_to'
+		) AS TBL1
+		group by contact_ID
+	) and contact_ID in(
+		select contact_ID 
+		FROM `pub_memos` 
+		where memo_ID in(
+			select max(memo_ID)
+			from (
+				SELECT * 
+				FROM `pub_memos` 
+				where date(`issue_date`) between '$date_from' and '$date_to'
+			) AS TBL1
+			group by contact_ID
+		) and due > 0
+	) and `dues_unpaid` < 0";
+//        die($sql);
+        $result = $this->db->query($sql)->result();
+
+        $sum_due_billed_this_range = 0;
+        $sum_dues_unpaid = 0;
+        foreach ($result as $key => $row) {
+            $sum_due_billed_this_range+=$row->due_billed_this_range;
+            $sum_dues_unpaid+=$row->dues_unpaid;
+            if ($return_type == 2) {
+                $this->table->add_row($row->contact_ID, $row->name, $row->due_billed_this_range, $row->dues_unpaid);
+            }
+        }
+        $due = $sum_due_billed_this_range + $sum_dues_unpaid;
+
+        if ($return_type == 1) {
+            return $due;
+        } else if ($return_type == 2) {
+            $this->table->add_row('', '', $sum_due_billed_this_range, $sum_dues_unpaid, $due);
+            $this->table->set_heading("Contact ID", "Customer Name", "Due billed in the last memo", "Dues Unpaid in the first value");
+            return $this->table->generate();
+        }
+    }
+
     function today_due($date = '') {
         if (empty($date)) {
             $date = date('Y-m-d');
         }
-        $db_tables = $this->config->item('db_tables');
-
-        $this->load->model('Memo');
-//        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
-        $sql = "SELECT tbl.contact_ID,
-            SUM(tbl.total_due) total_due,
-            SUM(tbl.total_due_payment) total_due_payment
-            FROM (
-	SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
-	FROM `{$db_tables['pub_due_payment_ledger']}` WHERE DATE(payment_date)=DATE('$date') Group by `contact_ID`
-		UNION ALL
-	SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
-	FROM `{$db_tables['pub_due_log']}` WHERE DATE(due_date)=DATE('$date') Group by `contact_ID`
-            ) as tbl 
-            
-            where tbl.contact_ID not in (
-            
-                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
-                FROM (
-
-                SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
-                FROM  `pub_memos` 
-                WHERE  `due` <0 and DATE(issue_date)=DATE('$date')
-                GROUP BY  `contact_ID`
-                ) AS party_wise_lase_memo_haveing_negetive_due
-            )
-            GROUP BY tbl.contact_ID";
-//        die($sql);
-        $result = $this->db->query($sql)->result();
-        $today_due = 0;
-        foreach ($result as $row) {
-            $temp = $row->total_due - $row->total_due_payment;
-            If ($temp > 0) {
-                $today_due = $today_due + $temp;
-            }
-        }
-        return $today_due;
+        return $this->get_due($date, $date);
     }
 
     function monthly() {
@@ -146,97 +188,9 @@ class Account extends CI_Model {
 
     function monthly_due() {
 
-        $this->load->model('Memo');
-        $last_memo_ID_of_each_contact_ID = implode(',', $this->Memo->last_memo_ID_of_each_contact_ID());
-
-        if ($last_memo_ID_of_each_contact_ID === '') {
-            die("<script>alert('কোন মেমো ডাটাবেজে নেই । দয়া করে মেমো যোগ করুন । ');"
-                    . "window.location.assign( '" . site_url('admin/memo_management/add') . "');</script>");
-        }
-
-
-        $db_tables = $this->config->item('db_tables');
         $from_date = date('Y-m-1');
         $to_date = date('Y-m-t');
-        $sql = "SELECT tbl.contact_ID,
-                    tbl2.name,
-                    SUM(tbl.total_due) total_due, 
-                    SUM(tbl.total_due_payment) total_due_payment,
-                    if(SUM(tbl.total_due) < SUM(tbl.total_due_payment) , 0 , SUM(tbl.total_due)-SUM(tbl.total_due_payment)) as due_remaining
-                    FROM (
-                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
-                            FROM `{$db_tables['pub_due_payment_ledger']}`
-                            WHERE DATE(payment_date) between DATE('$from_date') and Date('$to_date') 
-                            Group by `contact_ID`
-                        UNION ALL
-                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
-                            FROM `{$db_tables['pub_due_log']}`
-                            WHERE DATE(due_date) between DATE('$from_date') and Date('$to_date')
-                            Group by `contact_ID`
-                    ) as tbl 
-                    Natural join
-                    {$db_tables['pub_contacts']} as tbl2
-            
-            where tbl.contact_ID not in (
-            
-                SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
-                FROM (
-
-                SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
-                FROM  `pub_memos` 
-                WHERE  `due` <0 and DATE(issue_date) between DATE('$from_date') and Date('$to_date')
-                GROUP BY  `contact_ID`
-                ) AS party_wise_lase_memo_haveing_negetive_due
-            )
-                    GROUP BY tbl.contact_ID";
-        $query = $this->db->query($sql);
-        $monthly_due = 0;
-        foreach ($query->result() as $value) {
-            $monthly_due+=$value->due_remaining;
-        }
-        return $monthly_due;
-    }
-
-    function due_in_date_range($range) {
-
-        $db_tables = $this->config->item('db_tables');
-        $sql = "SELECT tbl.contact_ID,
-                    tbl2.name,
-                    SUM(tbl.total_due) total_due, 
-                    SUM(tbl.total_due_payment) total_due_payment,
-                    if(SUM(tbl.total_due) < SUM(tbl.total_due_payment) , 0 , SUM(tbl.total_due)-SUM(tbl.total_due_payment)) as due_remaining
-                    FROM (
-                            SELECT contact_ID,SUM(0) total_due,sum(due_payment_amount) total_due_payment 
-                            FROM `{$db_tables['pub_due_payment_ledger']}`
-                            WHERE payment_date between $range 
-                            Group by `contact_ID`
-                        UNION ALL
-                            SELECT contact_ID,sum(due_amount ) total_due,SUM(0) total_due_payment 
-                            FROM `{$db_tables['pub_due_log']}`
-                            WHERE due_date between $range
-                            Group by `contact_ID`
-                    ) as tbl
-                    Natural join
-                    {$db_tables['pub_contacts']} as tbl2
-                    
-                    where tbl.contact_ID not in (
-
-                        SELECT party_wise_lase_memo_haveing_negetive_due.contact_ID
-                        FROM (
-
-                        SELECT MAX(  `memo_ID` ) ,  `contact_ID` ,  `due` 
-                            FROM  `pub_memos` 
-                        WHERE  `due` <0 and issue_date between $range
-                            GROUP BY  `contact_ID` 
-                        ) AS party_wise_lase_memo_haveing_negetive_due
-                    )
-                    GROUP BY tbl.contact_ID";
-        $query = $this->db->query($sql);
-        $total_due = 0;
-        foreach ($query->result() as $value) {
-            $total_due+=$value->due_remaining;
-        }
-        return $total_due;
+        return $this->get_due($from_date, $to_date);
     }
 
     function total_account_detail_table() {
@@ -297,7 +251,12 @@ class Account extends CI_Model {
 
     function today_detail_table($range) {
         $this->load->model('Office_cost');
-
+        $date = str_replace("'", '', $range);
+        $date = explode(" and ", $date);
+        $date_from = $date[0];
+        $date_to = $date[1];
+//        var_dump($date);
+//        die($range);
         //$today_cost=$this->Office_cost->today_office_cost();
 
         $this->load->library('table');
@@ -318,7 +277,7 @@ class Account extends CI_Model {
         $query = $this->db->query("SELECT DATE(issue_date) as issue_date FROM pub_memos WHERE DATE(issue_date) BETWEEN $range GROUP BY(DATE(issue_date))");
 
         foreach ($query->result() as $value) {
-            $data = $this->today($value->issue_date);
+            $data = $this->today(date('Y-m-d',  strtotime($value->issue_date)));
 
             $today_sell = $data['todaysell'];
             $total_today_sell+=$today_sell;
@@ -340,7 +299,7 @@ class Account extends CI_Model {
         $cell = array('data' => '', 'class' => 'info pull-right', 'colspan' => 5);
         $this->table->add_row($cell);
         $this->table->add_row(
-                '<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($total_today_sell), $this->Common->taka_format($total_today_cash_pay), $this->Common->taka_format($total_today_bank_pay), $this->Common->taka_format($this->due_in_date_range($range)), $this->Common->taka_format($total_office_cost)
+                '<strong>Last info of searched range of dates : </strong>', $this->Common->taka_format($total_today_sell), $this->Common->taka_format($total_today_cash_pay), $this->Common->taka_format($total_today_bank_pay), $this->Common->taka_format($this->get_due($date_from, $date_to)), $this->Common->taka_format($total_office_cost)
         );
 
 
