@@ -247,7 +247,7 @@ class Account extends CI_Model {
             array('Total Cash Collection:', $this->Common->taka_format($total['total_cash_paid'])),
             array('Total Bank Collection:', $this->Common->taka_format($total['total_bank_pay'])),
             array('Total Due:', $this->Common->taka_format($total['total_due'])),
-            array('<strong>Total Sale:<strong>', "<strong>{$this->Common->taka_format($total['total_sell'])}<strong>")
+            array('<strong>Total Collection:<strong>', "<strong>{$this->Common->taka_format($total['total_sell'])}<strong>")
         );
         //Setting table template
         $tmpl = array(
