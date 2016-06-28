@@ -88,6 +88,49 @@
                     <div class="box">
                         <div class="box-body">
                             <?php
+
+                            function set_month($value) {
+                                if ($value == 1) {
+                                    return'<b>January</b>';
+                                }
+                                if ($value == 2) {
+                                    return'<b>February</b>';
+                                }
+                                if ($value == 3) {
+                                    return'<b>March</b>';
+                                }
+                                if ($value == 4) {
+                                    return'<b>April</b>';
+                                }
+                                if ($value == 5) {
+                                    return'<b>May</b>';
+                                }
+                                if ($value == 6) {
+                                    return'<b>June</b>';
+                                }
+                                if ($value == 7) {
+                                    return'<b>July</b>';
+                                }
+                                if ($value == 8) {
+                                    return'<b>August</b>';
+                                }
+                                if ($value == 9) {
+                                    return'<b>September</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 11) {
+                                    return'<b>November</b>';
+                                }
+                                if ($value == 12) {
+                                    return'<b>December</b>';
+                                }
+                            }
+
                             if ($all_salary_info == null) {
                                 echo '<h1 class="text-center" >No Record Exist</h1>';
                             } else {
@@ -107,7 +150,23 @@
                                 </div>
                             </div>
                             <div class="box-body">
-
+                                <?php
+                                if (isset($month) && isset($year)) {
+                                    ?>
+                                    <h2 class="text-center">Salary Payslip <?php
+                                        echo set_month($month);
+                                        echo' ' . $year;
+                                        ?></h2>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <h2 class="text-center">Salary Payslip <?php
+                                        echo date('F', now());
+                                        echo' ' . date('Y', now());
+                                        ?></h2>
+                                    <?php
+                                }
+                                ?>
                                 <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                                     <thead>
                                         <tr style="background:#ddd">
@@ -126,49 +185,6 @@
                                     </thead>
                                     <tbody>
                                         <?php
-
-                                        function set_month($value) {
-                                            if ($value == 1) {
-                                                return'<b>January</b>';
-                                            }
-                                            if ($value == 2) {
-                                                return'<b>February</b>';
-                                            }
-                                            if ($value == 3) {
-                                                return'<b>March</b>';
-                                            }
-                                            if ($value == 4) {
-                                                return'<b>April</b>';
-                                            }
-                                            if ($value == 5) {
-                                                return'<b>May</b>';
-                                            }
-                                            if ($value == 6) {
-                                                return'<b>June</b>';
-                                            }
-                                            if ($value == 7) {
-                                                return'<b>July</b>';
-                                            }
-                                            if ($value == 8) {
-                                                return'<b>August</b>';
-                                            }
-                                            if ($value == 9) {
-                                                return'<b>September</b>';
-                                            }
-                                            if ($value == 10) {
-                                                return'<b>October</b>';
-                                            }
-                                            if ($value == 10) {
-                                                return'<b>October</b>';
-                                            }
-                                            if ($value == 11) {
-                                                return'<b>November</b>';
-                                            }
-                                            if ($value == 12) {
-                                                return'<b>December</b>';
-                                            }
-                                        }
-
                                         foreach ($all_salary_info as $value) {
 //                                        print_r($value);
                                             $salary = $value->amount_salary_payment;
@@ -176,7 +192,11 @@
                                             $total = $salary + $bonus;
                                             $loan_installment = $value->installment_amount_loan;
                                             $advance = $value->amount_given_salary_advance;
-                                            $deduction = $loan_installment + $advance;
+                                            if ($value->status_salary_advance == 1) {
+                                                $deduction = $loan_installment + $advance;
+                                            } else {
+                                                $deduction = $loan_installment;
+                                            }
                                             $total = $total - $deduction;
                                             ?>
                                             <tr>
@@ -221,8 +241,8 @@
                                 </table>
 
                             </div>
-                        <?php }
-                        ?>
+<?php }
+?>
                     </div>
                 </div>
             </div>

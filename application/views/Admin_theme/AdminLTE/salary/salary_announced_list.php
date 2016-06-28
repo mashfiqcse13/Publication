@@ -102,16 +102,69 @@
                                 echo $message;
                             }
                             $this->session->unset_userdata('message');
+                            function set_month($value) {
+                                if ($value == 1) {
+                                    return'<b>January</b>';
+                                }
+                                if ($value == 2) {
+                                    return'<b>February</b>';
+                                }
+                                if ($value == 3) {
+                                    return'<b>March</b>';
+                                }
+                                if ($value == 4) {
+                                    return'<b>April</b>';
+                                }
+                                if ($value == 5) {
+                                    return'<b>May</b>';
+                                }
+                                if ($value == 6) {
+                                    return'<b>June</b>';
+                                }
+                                if ($value == 7) {
+                                    return'<b>July</b>';
+                                }
+                                if ($value == 8) {
+                                    return'<b>August</b>';
+                                }
+                                if ($value == 9) {
+                                    return'<b>September</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 10) {
+                                    return'<b>October</b>';
+                                }
+                                if ($value == 11) {
+                                    return'<b>November</b>';
+                                }
+                                if ($value == 12) {
+                                    return'<b>December</b>';
+                                }
+                            }
                             ?>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <h2 class="text-center">Salary Announcement  <?php
-//                            of
-//                                echo date('F', now());
-//                                echo ' ';
-//                                echo date('Y', now());
-//                                ;
+                            <?php
+                            if(isset($month) && isset($year)){
+                            ?>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo set_month($month);
+                                echo ' ';
+                                echo $year;
                                 ?></h2>
+                            <?php
+                            }else{
+                                ?>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo date('F', now());
+                                echo ' ';
+                                echo date('Y', now());
+                                ?></h2>
+                            <?php
+                            }
+                            ?>
                             <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
                                 <table id="example1" class="table table-bordered table-hover">
 
@@ -162,7 +215,7 @@
 
                                                             <?php
                                                         }
-                                                    } if ($bonus->status_bonus_payment == 0) {
+                                                    } if ($bonus->status_bonus_payment == null) {
                                                         ?>
 
                                                         <td>

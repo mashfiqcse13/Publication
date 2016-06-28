@@ -93,6 +93,48 @@
                 <div class="box">
                     <?php
                     if ($this->uri->segment(3) === 'add') {
+
+                        function set_month($value) {
+                            if ($value == 1) {
+                                return'<b>January</b>';
+                            }
+                            if ($value == 2) {
+                                return'<b>February</b>';
+                            }
+                            if ($value == 3) {
+                                return'<b>March</b>';
+                            }
+                            if ($value == 4) {
+                                return'<b>April</b>';
+                            }
+                            if ($value == 5) {
+                                return'<b>May</b>';
+                            }
+                            if ($value == 6) {
+                                return'<b>June</b>';
+                            }
+                            if ($value == 7) {
+                                return'<b>July</b>';
+                            }
+                            if ($value == 8) {
+                                return'<b>August</b>';
+                            }
+                            if ($value == 9) {
+                                return'<b>September</b>';
+                            }
+                            if ($value == 10) {
+                                return'<b>October</b>';
+                            }
+                            if ($value == 10) {
+                                return'<b>October</b>';
+                            }
+                            if ($value == 11) {
+                                return'<b>November</b>';
+                            }
+                            if ($value == 12) {
+                                return'<b>December</b>';
+                            }
+                        }
                         ?>
                         <div class="box-header">
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
@@ -100,178 +142,151 @@
 
                         </div>
                         <div class="box-body">
-                            <h2 class="text-center">Salary Payment</h2>
-                            <form target="_new" action="<?php echo site_url('salary/paid_salary_payment'); ?>" method="post" id="salary">
-                                <table id="example2" class="table table-bordered table-striped">
-                                    <thead>
-                                          <tr style="background:#ddd">
-                                            <th>Employee Name</th>
-                                            <th>Month</th>
-                                            <th>Year</th>
-                                            <th>Date of Issue</th>
-                                            <th>Amount of Salary</th>
-                                            <th>Amount of bonus</th>
-                                            <th>Loan</th>
-                                            <th>Loan Installment</th>
-                                            <th>Advance</th>
-                                            <th>Net Salary</th>
-                                            <th>Paid or Not</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-
-                                        function set_month($value) {
-                                            if ($value == 1) {
-                                                return'<b>January</b>';
-                                            }
-                                            if ($value == 2) {
-                                                return'<b>February</b>';
-                                            }
-                                            if ($value == 3) {
-                                                return'<b>March</b>';
-                                            }
-                                            if ($value == 4) {
-                                                return'<b>April</b>';
-                                            }
-                                            if ($value == 5) {
-                                                return'<b>May</b>';
-                                            }
-                                            if ($value == 6) {
-                                                return'<b>June</b>';
-                                            }
-                                            if ($value == 7) {
-                                                return'<b>July</b>';
-                                            }
-                                            if ($value == 8) {
-                                                return'<b>August</b>';
-                                            }
-                                            if ($value == 9) {
-                                                return'<b>September</b>';
-                                            }
-                                            if ($value == 10) {
-                                                return'<b>October</b>';
-                                            }
-                                            if ($value == 10) {
-                                                return'<b>October</b>';
-                                            }
-                                            if ($value == 11) {
-                                                return'<b>November</b>';
-                                            }
-                                            if ($value == 12) {
-                                                return'<b>December</b>';
-                                            }
-                                        }
-
-                                        foreach ($all_salary_info as $value) {
+                            <?php
+                            if (isset($month) && isset($year)) {
+                                ?>
+                                <h2 class="text-center">Salary Payment <?php echo set_month($month);
+                        echo' ' . $year; ?></h2>
+                                <?php
+                            }else {
+                                    ?>
+                                    <h2 class="text-center">Salary Payment <?php echo date('F',now());
+                        echo' ' .date('Y',now()); ?></h2>
+                                    <?php
+                                }
+                                ?>
+                                <form target="_new" action="<?php echo site_url('salary/paid_salary_payment'); ?>" method="post" id="salary">
+                                    <table id="example2" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr style="background:#ddd">
+                                                <th>Employee Name</th>
+                                                <th>Month</th>
+                                                <th>Year</th>
+                                                <th>Date of Issue</th>
+                                                <th>Amount of Salary</th>
+                                                <th>Amount of bonus</th>
+                                                <th>Loan</th>
+                                                <th>Loan Installment</th>
+                                                <th>Advance</th>
+                                                <th>Net Salary</th>
+                                                <th>Paid or Not</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            foreach ($all_salary_info as $value) {
 //                                        print_r($value);
-                                            $salary = $value->amount_salary_payment;
-                                            $bonus = $value->amount_salary_bonus;
-                                            $total = $salary + $bonus;
-                                            $loan_installment = $value->installment_amount_loan;
-                                            $advance = $value->amount_given_salary_advance;
-                                            $deduction = $loan_installment + $advance;
-                                            $total = $total - $deduction;
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $value->name_employee; ?></td>
-                                                <td><?php echo set_month($value->month_salary_payment); ?></td>
-                                                <td><?php echo $value->year_salary_payment; ?></td>
-                                                <td><?php echo date('d/m/Y', strtotime($value->issue_salary_payment)); ?></td>
-                                                <td><?php echo $value->amount_salary_payment; ?></td>
-                                                <td><?php echo $value->amount_salary_bonus; ?></td>
-                                                <td><?php echo $value->amount_loan; ?></td>
-                                                <td><?php echo $value->installment_amount_loan; ?></td>
-                                                <?php
+                                                $salary = $value->amount_salary_payment;
+                                                $bonus = $value->amount_salary_bonus;
+                                                $total = $salary + $bonus;
+                                                $loan_installment = $value->installment_amount_loan;
+                                                $advance = $value->amount_given_salary_advance;
                                                 if ($value->status_salary_advance == 1) {
-                                                    ?>
-                                                    <td><?php echo $value->amount_given_salary_advance; ?></td>
-                                                    <?php
+                                                    $deduction = $loan_installment + $advance;
                                                 } else {
-                                                    ?>
-                                                    <td></td>
-                                                    <?php
+                                                    $deduction = $loan_installment;
                                                 }
+                                                $total = $total - $deduction;
                                                 ?>
-                                                <td><?php echo $total; ?></td>
-                                                <td style="display: none;">
-                                                    <input type="hidden" name="id_employee[]" value="<?php echo $value->id_employee; ?>"/>
-                                                    <input type="hidden" name="id_loan[]" value="<?php echo $value->id_loan; ?>"/>
-                                                    <input type="hidden" name="id_salary_advance[]" value="<?php echo $value->id_salary_advance; ?>"/>
-                                                    <input type="hidden" name="amount_salary_payment[]" value="<?php echo $total; ?>"/>
-                                                    <input type="hidden" name="paid_amount_loan_payment[]" value="<?php echo $value->installment_amount_loan; ?>"/>
-                                                    <input type="hidden" name="amount_paid_salary_advance[]" value="<?php echo $value->amount_given_salary_advance; ?>"/>
-                                                </td>
-                                                <td>
+                                                <tr>
+                                                    <td><?php echo $value->name_employee; ?></td>
+                                                    <td><?php echo set_month($value->month_salary_payment); ?></td>
+                                                    <td><?php echo $value->year_salary_payment; ?></td>
+                                                    <td><?php echo date('d/m/Y', strtotime($value->issue_salary_payment)); ?></td>
+                                                    <td><?php echo $value->amount_salary_payment; ?></td>
+                                                    <td><?php echo $value->amount_salary_bonus; ?></td>
+                                                    <td><?php echo $value->amount_loan; ?></td>
+                                                    <td><?php echo $value->installment_amount_loan; ?></td>
                                                     <?php
-                                                    if ($value->status_salary_payment == 2) {
+                                                    if ($value->status_salary_advance == 1) {
                                                         ?>
-                                                        <label for="">
-                                                            PAID
-                                                        </label>
+                                                        <td><?php echo $value->amount_given_salary_advance; ?></td>
                                                         <?php
-                                                    } else if ($value->status_salary_payment == 1) {
+                                                    } else {
                                                         ?>
-                                                        <label for="">
-                                                            <input type="checkbox" name="status[]" value="<?php echo $value->id_employee; ?>" /> paid
-                                                        </label>
+                                                        <td></td>
                                                         <?php
                                                     }
                                                     ?>
-                                                </td>
+                                                    <td><?php echo $total; ?></td>
+                                                    <td style="display: none;">
+                                                        <input type="hidden" name="id_employee[]" value="<?php echo $value->id_employee; ?>"/>
+                                                        <input type="hidden" name="id_loan[]" value="<?php echo $value->id_loan; ?>"/>
+                                                        <input type="hidden" name="id_salary_advance[]" value="<?php echo $value->id_salary_advance; ?>"/>
+                                                        <input type="hidden" name="amount_salary_payment[]" value="<?php echo $total; ?>"/>
+                                                        <input type="hidden" name="paid_amount_loan_payment[]" value="<?php echo $value->installment_amount_loan; ?>"/>
+                                                        <input type="hidden" name="amount_paid_salary_advance[]" value="<?php echo $value->amount_given_salary_advance; ?>"/>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if ($value->status_salary_payment == 2) {
+                                                            ?>
+                                                            <label for="">
+                                                                PAID
+                                                            </label>
+                                                            <?php
+                                                        } else if ($value->status_salary_payment == 1) {
+                                                            ?>
+                                                            <label for="">
+                                                                <input type="checkbox" name="status[]" value="<?php echo $value->id_employee; ?>" /> paid
+                                                            </label>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </td>
 
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Employee Name</th>
+                                                <th>Month</th>
+                                                <th>Year</th>
+                                                <th>Date of Issue</th>
+                                                <th>Amount of Salary</th>
+                                                <th>Amount of bonus</th>
+                                                <th>Loan</th>
+                                                <th>Loan Installment</th>
+                                                <th>Advance</th>
+                                                <th>Net Salary</th>
+                                                <th>Paid or Not</th>
                                             </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Month</th>
-                                            <th>Year</th>
-                                            <th>Date of Issue</th>
-                                            <th>Amount of Salary</th>
-                                            <th>Amount of bonus</th>
-                                            <th>Loan</th>
-                                            <th>Loan Installment</th>
-                                            <th>Advance</th>
-                                            <th>Net Salary</th>
-                                            <th>Paid or Not</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                <button type="submit" class="btn btn-sm btn-success pull-right" id="submit"> Paid</button> 
-                            </form>
+                                        </tfoot>
+                                    </table>
+                                    <button type="submit" class="btn btn-sm btn-success pull-right" id="submit"> Paid</button> 
+                                </form>
+                            </div>
+                            <div class="box-body">
+                                <?php
+                            } else {
+                                echo $glosary->output;
+                            }
+                            ?>
                         </div>
-                        <div class="box-body">
-                            <?php
-                        } else {
-                            echo $glosary->output;
-                        }
-                        ?>
                     </div>
+
                 </div>
-
             </div>
-        </div>
 
 
 
 
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
 
-<!-- insert book -->
+    <!-- insert book -->
 
 
 
-<?php include_once __DIR__ . '/../footer.php'; ?>
-<script type="text/javascript">
-    $(document).ready(function () {
-    "scrollX": true,
-            "pagingType": "full_numbers"
-    });
-    document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
-    document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
+    <?php include_once __DIR__ . '/../footer.php'; ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        "scrollX": true,
+                "pagingType": "full_numbers"
+        });
+        document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
+        document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>
