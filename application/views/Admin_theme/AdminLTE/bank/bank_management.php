@@ -109,8 +109,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="panel-body">
-
+                <div class="col-md-12">
+                <div class="panel-body box">
+                    
                     <?php if(isset($report)){?>
                     
                         <h3 class="text-center"><?=$this->config->item('SITE')['name'] ?></h3>
@@ -122,6 +123,7 @@
                       
                     <?php    echo $report; }?> 
                 </div>
+            </div>
             </div>
 
 

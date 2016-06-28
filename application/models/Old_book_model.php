@@ -64,6 +64,25 @@ class Old_book_model extends CI_Model {
         }
         return $data;
     }
+    
+    
+    function get_old_item_details() {
+        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_balance` 
+            FROM `items` natural join `old_book_stock`
+            WHERE `total_balance` > 0 ")->result();
+
+        $data = array();
+        foreach ($items as $item) {
+            $data[$item->id_item] = array(
+                'id_item' => $item->id_item,
+                'name' => $item->name,
+                'regular_price' => $item->regular_price,
+                'sale_price' => $item->sale_price,
+                'total_balance' => $item->total_balance,
+            );
+        }
+        return $data;
+    }
 
     function processing_return_oldbook() {
         $this->load->model('misc/Cash');

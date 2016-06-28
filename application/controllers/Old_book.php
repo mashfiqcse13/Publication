@@ -68,8 +68,8 @@ class Old_book extends CI_Controller {
         $data['memo_list'] = $this->memo_list();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Total sales';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_sales', $data);
+        $data['Title'] = 'Old Book Return';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_return', $data);
     }
 
     function ajax_url() {
@@ -97,15 +97,27 @@ class Old_book extends CI_Controller {
     }
 
     function return_book() {
-        $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
-        $data['item_dropdown'] = $this->Sales_model->get_available_item_dropdown();
-        $data['customer_due'] = $this->Sales_model->get_party_due();
-        $data['item_details'] = $this->Sales_model->get_item_details();
+        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
+        $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
+        $data['customer_due'] = $this->Old_book_model->get_party_due();
+        $data['item_details'] = $this->Old_book_model->get_item_details();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'New sale';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_form', $data);
+    }
+    
+    function return_book_sale(){
+        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
+        $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
+        $data['customer_due'] = $this->Old_book_model->get_party_due();
+        $data['item_details'] = $this->Old_book_model->get_old_item_details();
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'New sale';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_book_sale', $data);  
     }
 
     function memo($total_sales_id) {

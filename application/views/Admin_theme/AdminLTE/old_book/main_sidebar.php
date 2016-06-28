@@ -18,6 +18,7 @@
             <li><?php echo anchor('old_book/old_book_dashboard', '<i class="fa fa-plus-circle"></i>  <span>Old Book Dashboard</span>'); ?></li>
             
             <li><?php echo anchor('old_book/return_book', '<i class="fa fa-plus-circle"></i>  <span>Old Book Return</span>'); ?></li>
+           <li><?php echo anchor('old_book/return_book_sale', '<i class="fa fa-plus-circle"></i>  <span>Old Book Sale</span>'); ?></li>
             <!--<li><?php echo anchor('old_book/old_book_sales', '<i class="fa fa-plus-circle"></i>  <span>Old Book Sales</span>'); ?></li>-->
             <li><?php echo anchor('old_book/old_book_rebind', '<i class="fa fa-plus-circle"></i>  <span>Old Book Rebind</span>'); ?></li>
 

@@ -64,6 +64,7 @@
                         <div class="row">
                             <div class="form-group col-lg-8">
                                 <label for="id_contact">Party name</label> 
+                                <a href="<?php echo site_url('contacts/index/add') ?>" class="btn btn-xs btn-default">Add New</a>
                                 
                                 <?php echo $customer_dropdown ?>
                             </div>
@@ -83,7 +84,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Discount percentage :</label>
                                 <div class="input-group">
@@ -98,17 +99,29 @@
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row">
-                            <div class="form-group col-lg-6">
+<!--                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
-                            </div>
+                            </div>-->
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
+                                <label for="process">Process Type:</label>                                
+                                <select name="process" id="process" class="form-control select2">
+                                    <option>Select Process Type</option>
+                                    <option value="2">Send to Rebind</option>
+                                    <option value="1">Sales</option>
+                                    <option value="3">Throw Away</option>
+                                </select>
+<!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
+                                 <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced
+                                -->
+                            </div>
+<!--                            <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
                                 <div class="input-group">
                                     <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
@@ -121,14 +134,14 @@
                                     <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
 
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -155,10 +168,10 @@
                                         <button class="btn btn-info btn-flat" id="add_to_cart" type="button">Add</button>
                                     </span>
                                 </div>
-<!--                                <span>
+                                <span>
                                     <strong>Item Available : </strong>
                                 </span>
-                                <span id="total_in_hand">0</span>-->
+                                <span id="total_in_hand">0</span>
                             </div>
                         </div>
                     </div>
@@ -261,10 +274,10 @@
             return;
         }
         var this_item_details = item_details[item_id];
-//        if (item_quantity > this_item_details.total_in_hand) {
-//            alert('Please don\'t select quantity bigger than '+this_item_details.total_in_hand);
-//            return;
-//        }
+        if (item_quantity > this_item_details.total_balance) {
+            alert('Please don\'t select quantity bigger than '+this_item_details.total_balance);
+            return;
+        }
         if (item_quantity < 1) {
             alert('Please don\'t select quantity smaller than 1');
             return;
@@ -279,12 +292,12 @@
         update_cart();
     });
     
-//    $('[name="id_item"]').change(function () {
-//        $('#item_quantity').val('0');
-//        var id_item = $('[name="id_item"]').val();
-//        var this_item_details = item_details[id_item];
-//        $('#total_in_hand').html(this_item_details.total_in_hand);
-//    });
+    $('[name="id_item"]').change(function () {
+        $('#item_quantity').val('0');
+        var id_item = $('[name="id_item"]').val();
+        var this_item_details = item_details[id_item];
+        $('#total_in_hand').html(this_item_details.total_balance);
+    });
     $('[name="id_customer"]').change(function () {
         data_to_post.id_customer = $('[name="id_customer"]').val();
         data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);

@@ -41,40 +41,6 @@
                         </form>
 
                     </div>
-                    <?php
-                    if (!isset($date_range)) {
-                        ?>
-                        <div class="box-body">
-                            <?php
-                            $attributes = array(
-                                'clase' => 'form-inline',
-                                'method' => 'post');
-                            echo form_open(site_url('sales/memo_report'), $attributes)
-                            //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
-                            ?>
-
-                            <div class="form-group col-md-2 text-left">
-
-                                <label>Search By Memo:</label>
-                            </div>
-                            <div class="form-group col-md-3">
-
-                                <?php echo $memo_list; ?>
-
-
-                            </div><!-- /.form group -->
-
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-
-
-
-                            <?= form_close(); ?>
-                            <?php ?>
-                        </div>
-                        <?php
-                    }
-                    ?>
                 </div>
 
                 <div class="box" id="block">
@@ -82,7 +48,7 @@
                     if (!isset($date_range)) {
                         ?>
                         <div class="box-header">
-                            <h3 class="box-title">Stock Perpitual Current View</h3>
+                            <h3 class="box-title">Old Book Return</h3>
                         </div><!-- /.box-header -->
 
                         <div class="box-body">
@@ -94,7 +60,7 @@
                     }if (isset($date_range)) {
                         ?>
                         <div class="box-header">
-                            <p class="text-center"><strong>Total Sales Report</strong></p>
+                            <p class="text-center"><strong>Old Book Report</strong></p>
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
