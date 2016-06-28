@@ -104,8 +104,10 @@
                             <form target="_new" action="<?php echo site_url('salary/paid_salary_payment'); ?>" method="post" id="salary">
                                 <table id="example2" class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
+                                          <tr style="background:#ddd">
                                             <th>Employee Name</th>
+                                            <th>Month</th>
+                                            <th>Year</th>
                                             <th>Date of Issue</th>
                                             <th>Amount of Salary</th>
                                             <th>Amount of bonus</th>
@@ -118,6 +120,49 @@
                                     </thead>
                                     <tbody>
                                         <?php
+
+                                        function set_month($value) {
+                                            if ($value == 1) {
+                                                return'<b>January</b>';
+                                            }
+                                            if ($value == 2) {
+                                                return'<b>February</b>';
+                                            }
+                                            if ($value == 3) {
+                                                return'<b>March</b>';
+                                            }
+                                            if ($value == 4) {
+                                                return'<b>April</b>';
+                                            }
+                                            if ($value == 5) {
+                                                return'<b>May</b>';
+                                            }
+                                            if ($value == 6) {
+                                                return'<b>June</b>';
+                                            }
+                                            if ($value == 7) {
+                                                return'<b>July</b>';
+                                            }
+                                            if ($value == 8) {
+                                                return'<b>August</b>';
+                                            }
+                                            if ($value == 9) {
+                                                return'<b>September</b>';
+                                            }
+                                            if ($value == 10) {
+                                                return'<b>October</b>';
+                                            }
+                                            if ($value == 10) {
+                                                return'<b>October</b>';
+                                            }
+                                            if ($value == 11) {
+                                                return'<b>November</b>';
+                                            }
+                                            if ($value == 12) {
+                                                return'<b>December</b>';
+                                            }
+                                        }
+
                                         foreach ($all_salary_info as $value) {
 //                                        print_r($value);
                                             $salary = $value->amount_salary_payment;
@@ -130,12 +175,24 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $value->name_employee; ?></td>
+                                                <td><?php echo set_month($value->month_salary_payment); ?></td>
+                                                <td><?php echo $value->year_salary_payment; ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($value->issue_salary_payment)); ?></td>
                                                 <td><?php echo $value->amount_salary_payment; ?></td>
                                                 <td><?php echo $value->amount_salary_bonus; ?></td>
                                                 <td><?php echo $value->amount_loan; ?></td>
                                                 <td><?php echo $value->installment_amount_loan; ?></td>
-                                                <td><?php echo $value->amount_given_salary_advance; ?></td>
+                                                <?php
+                                                if ($value->status_salary_advance == 1) {
+                                                    ?>
+                                                    <td><?php echo $value->amount_given_salary_advance; ?></td>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <td></td>
+                                                    <?php
+                                                }
+                                                ?>
                                                 <td><?php echo $total; ?></td>
                                                 <td style="display: none;">
                                                     <input type="hidden" name="id_employee[]" value="<?php echo $value->id_employee; ?>"/>
@@ -171,6 +228,8 @@
                                     <tfoot>
                                         <tr>
                                             <th>Employee Name</th>
+                                            <th>Month</th>
+                                            <th>Year</th>
                                             <th>Date of Issue</th>
                                             <th>Amount of Salary</th>
                                             <th>Amount of bonus</th>
@@ -210,8 +269,8 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
     $(document).ready(function () {
-        "scrollX": true,
-        "pagingType": "full_numbers"
+    "scrollX": true,
+            "pagingType": "full_numbers"
     });
     document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
     document.forms['form'].elements['year'].value = "<?php echo $year; ?>";

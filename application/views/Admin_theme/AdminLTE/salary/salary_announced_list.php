@@ -140,11 +140,15 @@
                                                     <input type="hidden" name="amount_salary_payment[]" value="<?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>">
                                                     <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
                                                 </td>
+                                                <td style="display:none;">
+                                                    <input type="hidden" name="bonus_type[]">
+                                                </td>
                                                 <?php
                                                 $value = $this->Salary_model->announce($employee->id_employee);
                                                 if ($value != null) {
                                                     $bonus = $this->Salary_model->bonus($value->id_salary_payment);
-
+                                                    $current_month = date('n', now());
+//                                                    if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $current_month) {
                                                     if (isset($bonus->status_bonus_payment)) {
                                                         ?>
                                                         <?php
@@ -160,6 +164,7 @@
                                                         }
                                                     } if ($bonus->status_bonus_payment == 0) {
                                                         ?>
+
                                                         <td>
                                                             <select class="form-control select2"style="width:100%;" name="bonus_type[]" id="bonus" required>
                                                                 <option value="0">Select Bonus Type</option>
@@ -208,6 +213,7 @@
                                                 <td >
                                                     <?php
                                                     if ($value != null) {
+//                                                        if (isset($value->status_salary_payment)&& $value->month_salary_payment == $current_month) {
                                                         if (isset($value->status_salary_payment)) {
                                                             if ($employee->id_employee == $value->id_employee) {
 //                                                        
@@ -216,7 +222,6 @@
                                                                 <?php
                                                             }
                                                         }
-                                                        
                                                     } if ($value == null) {
 //            
                                                         ?>
@@ -229,11 +234,11 @@
                                                     ?>
                                                 </td>
 
-                                                            <!--                                            <td>
-                                                                             <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                         <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                                                            <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                                                                        </td>-->
+                                                                    <!--                                            <td>
+                                                                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                                                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
+                                                                                                                </td>-->
 
                                             </tr>
                                             <?php
@@ -276,6 +281,6 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-    document.forms['form'].elements['month'].value = "<?php echo $month;?>";
-    document.forms['form'].elements['year'].value = "<?php echo $year;?>";
+    document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
+    document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>

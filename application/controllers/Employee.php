@@ -38,7 +38,8 @@ class Employee extends CI_Controller {
     function manage_employee() {
         $crud = new grocery_CRUD();
         $crud->set_table('employee')
-                ->set_subject('Employee');
+                ->set_subject('Employee')
+                ->order_by('id_employee','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -53,7 +54,8 @@ class Employee extends CI_Controller {
                 ->display_as("previous_work_experience_year", 'Previous work experience in year')
                 ->set_subject('Employee Professional')
                 ->display_as("id_employee", 'Employee Name')
-                ->set_relation('id_employee', 'employee', "name_employee");
+                ->set_relation('id_employee', 'employee', "name_employee")
+                ->order_by('id_employee_perfesional_info','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -67,7 +69,8 @@ class Employee extends CI_Controller {
         $crud->set_table('employee_salary_info')
                 ->set_subject('Employee salary ')
                 ->display_as("id_employee", 'Employee Name')
-                ->set_relation('id_employee', 'employee', "name_employee");
+                ->set_relation('id_employee', 'employee', "name_employee")
+                ->order_by('id','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

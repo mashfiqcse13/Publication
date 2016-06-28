@@ -45,7 +45,8 @@ class Loan extends CI_Controller {
                 ->callback_add_field('date_taken_loan', function () {
                     return '<input id="field-date_taken_loan" name="date_income" type="text" value="' . date('Y-m-d h:i:u',now()) . '" >'
                             . '<style>div#date_taken_loan_field_box{display: none;}</style>';
-                });
+                })
+                ->order_by('id_loan','desc');
 
         $output = $crud->render();
         $data['glosary'] = $output;
