@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="box only_print">
+<!--                <div class="box only_print">
                     <div class="box-body">
                         <div class="form-group col-md-3 text-left">
                             <label>Search with Date Range:</label>
@@ -34,14 +34,14 @@
                                         <i class="fa fa-calendar"></i>
                                     </div>
                                     <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                                </div><!-- /.input group -->
-                            </div><!-- /.form group -->
+                                </div> /.input group 
+                            </div> /.form group 
                             <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             <?php echo anchor(site_url('stock/stock_perpetual'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                         </form>
 
                     </div>
-                </div>
+                </div>-->
 
                 <div class="box" id="block">
                     <?php
