@@ -47,13 +47,7 @@
                     <div class="box-body">
                         <?php
                         if ($process_steps_table != FALSE) {
-                            echo $process_steps_table
-                            ?>
-                            <?php if ($process_status == 1) { ?>
-                                <a href="<?php echo site_url('production_process/stop_process/' . $id_processes); ?>" class="btn btn-lg btn-danger btn-block" >Finish This Process</a>
-                            <?php } ?>
-
-                            <?php
+                            echo $process_steps_table;
                         } else {
                             echo 'No steps Found';
                         }
@@ -142,39 +136,39 @@
                             </div>
 
                         </div>
-                        <!--                        <div class="col-md-6">
-                        
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label" for="inputPassword3">Rejected</label>
-                        
-                                                        <div class="col-sm-6">
-                                                            <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                                <div class="col-md-6">
-                        
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label" for="inputPassword3">Damaged</label>
-                        
-                                                        <div class="col-sm-6">
-                                                            <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                                <div class="col-md-6">
-                        
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label" for="inputPassword3">Missing</label>
-                        
-                                                        <div class="col-sm-6">
-                                                            <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>-->
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Rejected</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="rejected_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Damaged</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="damaged_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="inputPassword3">Missing</label>
+
+                                <div class="col-sm-6">
+                                    <input type="number" value="0" name="missing_amount" min="0" id="inputPassword3" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
