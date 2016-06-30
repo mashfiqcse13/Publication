@@ -124,9 +124,23 @@ class Salary_model extends CI_Model {
     }
     
     function announce($id){
+        $month = date('n', now());
+        $year = date('Y', now());
         $this->db->select('*');
         $this->db->from('salary_payment');
         $this->db->where('id_employee', $id);
+        $this->db->where('month_salary_payment', $month);
+        $this->db->where('year_salary_payment', $year);
+        $this->db->order_by('id_salary_payment', 'desc');
+        $query = $this->db->get();
+        return $query->row();
+    }
+    function announce_by_month_year($id,$month,$year){
+        $this->db->select('*');
+        $this->db->from('salary_payment');
+        $this->db->where('id_employee', $id);
+        $this->db->where('month_salary_payment', $month);
+        $this->db->where('year_salary_payment', $year);
         $this->db->order_by('id_salary_payment', 'desc');
         $query = $this->db->get();
         return $query->row();
