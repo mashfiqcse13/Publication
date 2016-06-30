@@ -122,7 +122,7 @@
                 <h4 class="modal-title" id="myModalLabel">Transfer</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="<?php echo site_url('production_process/step_transfer/' . $id_processes); ?>" method="post">
+                <form class="form-horizontal" id="transfer_form" action="<?php echo site_url('production_process/step_transfer/' . $id_processes); ?>" method="post">
                     <input type="hidden" name="id_process_step_from">
                     <div class="row">
                         <div class="col-md-6">
@@ -207,11 +207,53 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script>
     var transferable_amount = 0;
+    var amount_transfered = 0;
+    var rejected_amount = 0;
+    var damaged_amount = 0;
+    var missing_amount = 0;
+
+    function string_to_int(input_field_value) {
+        var integer_val = parseInt(input_field_value);
+        return (isNaN(integer_val)) ? 0 : integer_val;
+    }
     $('.btnStepToStepTransfer').click(function () {
         var id_process_steps = $(this).data('id_process_steps');
-        transferable_amount = $(this).data('transferable_amount');
+        transferable_amount = string_to_int($(this).data('transferable_amount'));
         console.log(id_process_steps);
         console.log(transferable_amount);
         $('[name="id_process_step_from"]').val(id_process_steps);
+        if ($(this).html() == "Finish") {
+            $('#modalStepToStepTransfer .modal-title').html("Finsih this process by inputing last transfer details");
+            $('#modalStepToStepTransfer [type="submit"]').html("Terminate Process");
+            $('#modalStepToStepTransfer').removeClass('modal-success');
+            $('#modalStepToStepTransfer').addClass('modal-danger');
+        } else {
+            $('#modalStepToStepTransfer .modal-title').html("Transfer");
+            $('#modalStepToStepTransfer [type="submit"]').html("Transfer");
+            $('#modalStepToStepTransfer').removeClass('modal-danger');
+            $('#modalStepToStepTransfer').addClass('modal-success');
+        }
+    });
+
+    $('input[type="number"]').change(function () {
+        amount_transfered = string_to_int($('[name="amount_transfered"]').val());
+        rejected_amount = string_to_int($('[name="rejected_amount"]').val());
+        damaged_amount = string_to_int($('[name="damaged_amount"]').val());
+        missing_amount = string_to_int($('[name="missing_amount"]').val());
+        console.log(amount_transfered);
+        console.log(rejected_amount);
+        console.log(damaged_amount);
+        console.log(missing_amount);
+    });
+    $('#transfer_form').submit(function () {
+        var selected_amount = (amount_transfered + rejected_amount + damaged_amount + missing_amount);
+        if (transferable_amount < selected_amount) {
+            alert('Transferable amount must be greater than Selectable amount . \n Tranferable amount : ' + transferable_amount + "\n Selected Total Amount : " + selected_amount);
+            return false;
+        }
+        if (selected_amount < 1) {
+            alert("Selectable amount must greater than 0 .\n  Selected Total Amount : " + selected_amount);
+            return false;
+        }
     });
 </script>
