@@ -94,6 +94,7 @@
                     <?php
                     if ($this->uri->segment(3) === 'add') {
 
+//                        month selection function
                         function set_month($value) {
                             if ($value == 1) {
                                 return'<b>January</b>';
@@ -182,6 +183,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $sl = 0;
                                             foreach ($all_salary_info as $value) {
 //                                        print_r($value);
                                                 $salary = $value->amount_salary_payment;
@@ -218,12 +220,15 @@
                                                     ?>
                                                     <td><?php echo $total; ?></td>
                                                     <td style="display: none;">
-                                                        <input type="hidden" name="id_employee[]" value="<?php echo $value->id_employee; ?>"/>
-                                                        <input type="hidden" name="id_loan[]" value="<?php echo $value->id_loan; ?>"/>
-                                                        <input type="hidden" name="id_salary_advance[]" value="<?php echo $value->id_salary_advance; ?>"/>
-                                                        <input type="hidden" name="amount_salary_payment[]" value="<?php echo $total; ?>"/>
-                                                        <input type="hidden" name="paid_amount_loan_payment[]" value="<?php echo $value->installment_amount_loan; ?>"/>
-                                                        <input type="hidden" name="amount_paid_salary_advance[]" value="<?php echo $value->amount_given_salary_advance; ?>"/>
+                                                        <input type="hidden" name="id_employee[<?php echo $sl; ?>]" value="<?php echo $value->id_employee; ?>"/>
+                                                        <input type="hidden" name="id_loan[<?php echo $sl; ?>]" value="<?php echo $value->id_loan; ?>"/>
+                                                        <input type="hidden" name="id_salary_advance[<?php echo $sl; ?>]" value="<?php echo $value->id_salary_advance; ?>"/>
+                                                        <input type="hidden" name="amount_salary_payment[<?php echo $sl; ?>]" value="<?php echo $total; ?>"/>
+                                                        <input type="hidden" name="paid_amount_loan_payment[<?php echo $sl; ?>]" value="<?php echo $value->installment_amount_loan; ?>"/>
+                                                        <input type="hidden" name="amount_paid_salary_advance[<?php echo $sl; ?>]" value="<?php echo $value->amount_given_salary_advance; ?>"/>
+                                                    </td>
+                                                    <td style="display:none;">
+                                                        <!--<input type="hidden" name="status[<?php // echo $sl; ?>]">-->
                                                     </td>
                                                     <td>
                                                         <?php
@@ -242,9 +247,11 @@
                                                         }
                                                         ?>
                                                     </td>
+                                                    
 
                                                 </tr>
                                                 <?php
+                                                $sl++;
                                             }
                                             ?>
                                         </tbody>
@@ -293,10 +300,6 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-    $(document).ready(function () {
-    "scrollX": true,
-            "pagingType": "full_numbers"
-    });
     document.forms['form'].elements['month'].value = "<?php echo $month; ?>";
     document.forms['form'].elements['year'].value = "<?php echo $year; ?>";
 </script>

@@ -22,6 +22,15 @@ class Salary_model extends CI_Model {
         $this->db->insert($tbl_name, $data);
         return $this->db->insert_id();
     }
+    
+    function update_advance($update_advance,$advance_amount,$id){
+//        $sql = $this->db->query('UPDATE `salary_advance` SET `amount_given_salary_advance`= `amount_given_salary_advance`-'.$advance_amount.', `amount_paid_salary_advance`='.$advance_amount.', `status_salary_advance`= 2 WHERE `id_salary_advance`='. $id);
+//        $this->db->query($sql);
+//        $this->db->where()
+//        $this->db->set('amount_given_salary_advance','amount_given_salary_advance-'.$advance_amount);
+        $this->db->where('id_salary_advance',$id);
+        $this->db->update('salary_advance',$update_advance);
+    }
 
     function select_salary_payment_by_salary_id($id) {
         $this->db->select('*');
