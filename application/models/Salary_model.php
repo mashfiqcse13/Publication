@@ -24,10 +24,6 @@ class Salary_model extends CI_Model {
     }
     
     function update_advance($update_advance,$advance_amount,$id){
-//        $sql = $this->db->query('UPDATE `salary_advance` SET `amount_given_salary_advance`= `amount_given_salary_advance`-'.$advance_amount.', `amount_paid_salary_advance`='.$advance_amount.', `status_salary_advance`= 2 WHERE `id_salary_advance`='. $id);
-//        $this->db->query($sql);
-//        $this->db->where()
-//        $this->db->set('amount_given_salary_advance','amount_given_salary_advance-'.$advance_amount);
         $this->db->where('id_salary_advance',$id);
         $this->db->update('salary_advance',$update_advance);
     }
@@ -70,13 +66,14 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
-//    function select_salary_advance_by_salary_id($id){
-//        $this->db->select('*');
-//        $this->db->from('salary_advance');
-//        $this->db->where('id_employee', $id);
-//        $query = $this->db->get();
-//        return $query->result();
-//    }
+    function select_employee_salary_advance(){
+        $this->db->select('*');
+        $this->db->from('employee');
+        $this->db->join('salary_advance','employee.id_employee = salary_advance.id_employee','left');
+        $this->db->where('status_salary_advance', 1);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     function select_all_salary_info($id) {
         $this->db->select('*');
@@ -237,7 +234,7 @@ class Salary_model extends CI_Model {
     
     function select_all_paid_salary(){
      $sql =  $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee`
-ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment`');
+ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment` ORDER BY `id_salary_payment` DESC');
 
         return $sql->result();
     }

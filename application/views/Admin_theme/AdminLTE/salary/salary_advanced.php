@@ -32,7 +32,7 @@
                                 <?php
                                 $attributes = array(
                                     'clase' => 'form-inline',
-                                    'method' => 'post');
+                                    'method' => 'get');
                                 echo form_open('', $attributes)
                                 ?>
                                 <div class="form-group col-md-3 text-left">
@@ -59,7 +59,8 @@
                                 <?php
                                 $attributes = array(
                                     'class' => 'form-inline',
-                                    'method' => 'post');
+                                    'name' => 'form',
+                                    'method' => 'get');
                                 echo form_open('', $attributes)
                                 ?>
                                 <div class="form-group col-md-3 text-left">
@@ -78,7 +79,7 @@
                                     </select>
                                 </div>
                                 <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-
+                                <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                 <?= form_close(); ?>
                             </div>
                             <?php
@@ -167,3 +168,6 @@
 
 
     <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    document.forms['form'].elements['employee'].value = "<?php echo $employee_info; ?>";
+</script>

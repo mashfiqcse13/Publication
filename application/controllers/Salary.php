@@ -288,10 +288,10 @@ class Salary extends CI_Controller {
         $data['glosary'] = $output;
 
 //        employee search
-        $employee = $this->input->post('employee');
+        $employee = $this->input->get('employee');
 
 //        date range
-        $range = $this->input->post('date_range');
+        $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');
         $from = date('Y-m-d', strtotime($part[0]));
         $to = date('Y-m-d', strtotime($part[1]));
@@ -309,7 +309,7 @@ class Salary extends CI_Controller {
 
         $data['date_range'] = $range;
         $data['employee_info'] = $employee;
-        $data['employees'] = $this->Salary_model->select_all('employee');
+        $data['employees'] = $this->Salary_model->select_employee_salary_advance();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Advance';
