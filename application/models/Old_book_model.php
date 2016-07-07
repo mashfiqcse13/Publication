@@ -391,7 +391,24 @@ class Old_book_model extends CI_Model {
             'class' => 'left_separator',
             'colspan' => 1
                 ), $this->Common->taka_format($total_price));
-
+        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
+        
+        $this->table->add_row(array(
+            'data' => 'Advanced Balance Added',
+            'colspan' => 2
+        ),array(
+            'data' => $this->Common->taka_format($total_price),
+            'colspan' => 2
+        ));
+        
+        $this->table->add_row(array(
+            'data' => 'Total Balance For Customer',
+            'colspan' => 2
+        ),array(
+            'data' => $this->Common->taka_format($total_price),
+            'colspan' => 2
+        ));
+        
         return $this->table->generate();
     }
     
