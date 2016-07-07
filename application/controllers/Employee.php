@@ -55,7 +55,7 @@ class Employee extends CI_Controller {
                 ->set_subject('Employee Professional')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                ->order_by('id_employee_perfesional_info','desc');
+                ->order_by('id','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

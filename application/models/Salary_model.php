@@ -22,6 +22,11 @@ class Salary_model extends CI_Model {
         $this->db->insert($tbl_name, $data);
         return $this->db->insert_id();
     }
+    
+    function update_advance($update_advance,$advance_amount,$id){
+        $this->db->where('id_salary_advance',$id);
+        $this->db->update('salary_advance',$update_advance);
+    }
 
     function select_salary_payment_by_salary_id($id) {
         $this->db->select('*');
@@ -61,13 +66,14 @@ class Salary_model extends CI_Model {
         return $query->result();
     }
     
-//    function select_salary_advance_by_salary_id($id){
-//        $this->db->select('*');
-//        $this->db->from('salary_advance');
-//        $this->db->where('id_employee', $id);
-//        $query = $this->db->get();
-//        return $query->result();
-//    }
+    function select_employee_salary_advance(){
+        $this->db->select('*');
+        $this->db->from('employee');
+        $this->db->join('salary_advance','employee.id_employee = salary_advance.id_employee','left');
+        $this->db->where('status_salary_advance', 1);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     function select_all_salary_info($id) {
         $this->db->select('*');
@@ -124,9 +130,23 @@ class Salary_model extends CI_Model {
     }
     
     function announce($id){
+        $month = date('n', now());
+        $year = date('Y', now());
         $this->db->select('*');
         $this->db->from('salary_payment');
         $this->db->where('id_employee', $id);
+        $this->db->where('month_salary_payment', $month);
+        $this->db->where('year_salary_payment', $year);
+        $this->db->order_by('id_salary_payment', 'desc');
+        $query = $this->db->get();
+        return $query->row();
+    }
+    function announce_by_month_year($id,$month,$year){
+        $this->db->select('*');
+        $this->db->from('salary_payment');
+        $this->db->where('id_employee', $id);
+        $this->db->where('month_salary_payment', $month);
+        $this->db->where('year_salary_payment', $year);
         $this->db->order_by('id_salary_payment', 'desc');
         $query = $this->db->get();
         return $query->row();
@@ -214,7 +234,7 @@ class Salary_model extends CI_Model {
     
     function select_all_paid_salary(){
      $sql =  $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee`
-ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment`');
+ON `salary_payment`.`id_employee`=`employee`.`id_employee` WHERE `status_salary_payment` = 2 GROUP BY `date_salary_payment` ORDER BY `id_salary_payment` DESC');
 
         return $sql->result();
     }

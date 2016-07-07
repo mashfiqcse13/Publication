@@ -87,126 +87,154 @@
                 <div class="box">
                     <div class="box-body">
                         <?php
-                        if ($employees == null) {
-                            echo '<h1 class="text-center" >No Record Exist</h1>';
+//                        if ($employees == null) {
+//                            echo '<h1 class="text-center" >No Record Exist</h1>';
+//                        } else {
+//                            
+                        ?>
+                    </div>
+
+                    <div class="box-header" >
+                        <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                        <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                        <?php
+                        $message = $this->session->userdata('message');
+                        if (isset($message)) {
+                            echo $message;
+                        }
+                        $this->session->unset_userdata('message');
+
+                        function set_month($value) {
+                            if ($value == 1) {
+                                return'<b>January</b>';
+                            }
+                            if ($value == 2) {
+                                return'<b>February</b>';
+                            }
+                            if ($value == 3) {
+                                return'<b>March</b>';
+                            }
+                            if ($value == 4) {
+                                return'<b>April</b>';
+                            }
+                            if ($value == 5) {
+                                return'<b>May</b>';
+                            }
+                            if ($value == 6) {
+                                return'<b>June</b>';
+                            }
+                            if ($value == 7) {
+                                return'<b>July</b>';
+                            }
+                            if ($value == 8) {
+                                return'<b>August</b>';
+                            }
+                            if ($value == 9) {
+                                return'<b>September</b>';
+                            }
+                            if ($value == 10) {
+                                return'<b>October</b>';
+                            }
+                            if ($value == 10) {
+                                return'<b>October</b>';
+                            }
+                            if ($value == 11) {
+                                return'<b>November</b>';
+                            }
+                            if ($value == 12) {
+                                return'<b>December</b>';
+                            }
+                        }
+                        ?>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <?php
+                        if (isset($month) && isset($year)) {
+                            ?>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo set_month($month);
+                                echo ' ';
+                                echo $year;
+                                ?></h2>
+                            <?php
                         } else {
                             ?>
-                        </div>
-
-                        <div class="box-header" >
-                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                            <h2 class="text-center">Salary Announcement of  <?php
+                                echo date('F', now());
+                                echo ' ';
+                                echo date('Y', now());
+                                ?></h2>
                             <?php
-                            $message = $this->session->userdata('message');
-                            if (isset($message)) {
-                                echo $message;
-                            }
-                            $this->session->unset_userdata('message');
+                        }
+                        ?>
+                        <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
+                            <table id="example1" class="table table-bordered table-hover">
 
-                            function set_month($value) {
-                                if ($value == 1) {
-                                    return'<b>January</b>';
-                                }
-                                if ($value == 2) {
-                                    return'<b>February</b>';
-                                }
-                                if ($value == 3) {
-                                    return'<b>March</b>';
-                                }
-                                if ($value == 4) {
-                                    return'<b>April</b>';
-                                }
-                                if ($value == 5) {
-                                    return'<b>May</b>';
-                                }
-                                if ($value == 6) {
-                                    return'<b>June</b>';
-                                }
-                                if ($value == 7) {
-                                    return'<b>July</b>';
-                                }
-                                if ($value == 8) {
-                                    return'<b>August</b>';
-                                }
-                                if ($value == 9) {
-                                    return'<b>September</b>';
-                                }
-                                if ($value == 10) {
-                                    return'<b>October</b>';
-                                }
-                                if ($value == 10) {
-                                    return'<b>October</b>';
-                                }
-                                if ($value == 11) {
-                                    return'<b>November</b>';
-                                }
-                                if ($value == 12) {
-                                    return'<b>December</b>';
-                                }
-                            }
-                            ?>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <?php
-                            if (isset($month) && isset($year)) {
-                                ?>
-                                <h2 class="text-center">Salary Announcement of  <?php
-                                    echo set_month($month);
-                                    echo ' ';
-                                    echo $year;
-                                    ?></h2>
-                                <?php
-                            } else {
-                                ?>
-                                <h2 class="text-center">Salary Announcement of  <?php
-                                    echo date('F', now());
-                                    echo ' ';
-                                    echo date('Y', now());
-                                    ?></h2>
-                                <?php
-                            }
-                            ?>
-                            <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <!--<th>Designation</th>-->
+                                        <th>Basic</th>
+                                        <th>Bonus</th>
+                                        <th>Salary Announced or Not</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                    <thead>
+                                    <?php
+                                    $sl = 0;
+                                    foreach ($employees as $employee) {
+                                        ?>
                                         <tr>
-                                            <th>Employee Name</th>
-                                            <th>Designation</th>
-                                            <th>Basic</th>
-                                            <th>Bonus</th>
-                                            <th>Salary Announced or Not</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            <td>
+                                                <input type="hidden" name="id_employee[]" value="<?php echo $employee->id_employee; ?>">
+                                                <?php echo $employee->name_employee; ?>
+                                            </td>
 
-                                        <?php
-                                        foreach ($employees as $employee) {
-                                            ?>
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" name="id_employee[]" value="<?php echo $employee->id_employee; ?>">
-                                                    <?php echo $employee->name_employee; ?>
-                                                </td>
-
-                                                <td id="click"><?php ?></td>
-                                                <td>
-                                                    <input type="hidden" name="amount_salary_payment[]" value="<?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>">
-                                                    <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
-                                                </td>
-                                                <td style="display:none;">
-                                                    <input type="hidden" name="bonus_type[]">
-                                                </td>
+                                                                        <!--<td id="click"><?php ?></td>-->
+                                            <td>
+                                                <input type="hidden" name="amount_salary_payment[]" value="<?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>">
+                                                <?php echo $employee->basic + $employee->medical + $employee->house_rent + $employee->transport_allowance + $employee->lunch; ?>
+                                            </td>
+                                            <td style="display:none;">
+                                                <input type="hidden" name="bonus_type[<?php echo $sl;?>]">
                                                 <?php
+//                                                value of month and year
+                                                if (isset($month) && isset($year)) {
+                                                    ?>
+                                                    <input type="hidden" name="month" value="<?php echo $month; ?>">
+                                                    <input type="hidden" name="year" value="<?php echo $year; ?>">
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <input type="hidden" name="month" value="<?php echo date('n', now()); ?>">
+                                                    <input type="hidden" name="year" value="<?php echo date('Y', now()); ?>">
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <!--bonus and announce-->
+                                            <?php
+//                                                salary payment is announced or not
+                                            if (isset($month) && isset($year)) { // search result 
+                                                $value = $this->Salary_model->announce_by_month_year($employee->id_employee, $month, $year);
+                                            } else {
                                                 $value = $this->Salary_model->announce($employee->id_employee);
+                                            }
+                                            $current_month = date('n', now());
+                                            //
+//                                                if value is not null then bonus money and announced will be shown
+                                            if ((empty($month) && empty($year))) {
                                                 if (!empty($value)) {
+//                                                    any value is exit in bonus table or not
                                                     $bonus = $this->Salary_model->bonus($value->id_salary_payment);
-                                                    $current_month = date('n', now());
+//                                                    ---------------
 //                                                    if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $current_month) {
+//                                                    if bonus status is exist then show bonus money
                                                     if (isset($bonus->status_bonus_payment)) {
                                                         ?>
                                                         <?php
-                                                        if ($bonus->amount_salary_bonus == null || $bonus->amount_salary_bonus == 0) {
+                                                        if (empty($bonus->amount_salary_bonus) || $bonus->amount_salary_bonus == 0) {
                                                             ?>
                                                             <td>Bonus(0)</td>
                                                             <?php
@@ -216,12 +244,12 @@
 
                                                             <?php
                                                         }
-                                                    }
-                                                    if (empty($bonus->status_bonus_payment)) {
+//                                                        if bonus status is empty then show bonus type option
+                                                    } if (empty($bonus->status_bonus_payment)) {
                                                         ?>
 
                                                         <td>
-                                                            <select class="form-control select2"style="width:100%;" name="bonus_type[]" id="bonus" required>
+                                                            <select class="form-control select2"style="width:100%;" name="bonus_type[<?php echo $sl;?>]" id="bonus" required>
                                                                 <option value="0">Select Bonus Type</option>
                                                                 <?php
                                                                 foreach ($bonus_type as $bonus) {
@@ -239,17 +267,30 @@
                                                                 ?>
                                                             </select>
                                                         </td>
-                                                        <?php
-                                                    }
-                                                }
-                                                if ($value == null) {
+                                                    <?php }
                                                     ?>
                                                     <td>
-                                                        <select class="form-control select2"style="width:100%;" name="bonus_type[]" id="bonus" required>
+                                                        <?php
+                                                        if (isset($value->status_salary_payment)) {                  //salary payment status is exist then show announce
+                                                            if ($employee->id_employee == $value->id_employee) {        //if employee id and salary payment employee id is same then show announce
+//                                                        
+                                                                ?>
+                                                                <label>Announced</label>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <?php
+//                                                    if the value is empty option will be shown
+                                                }if (empty($value)) {
+                                                    ?>
+                                                    <td>
+                                                        <select class="form-control select2"style="width:100%;" name="bonus_type[<?php echo $sl;?>]" id="bonus" required>
                                                             <option value="0">Select Bonus Type</option>
                                                             <?php
                                                             foreach ($bonus_type as $bonus) {
-                                                                if ($bonus->amount == null) {
+                                                                if (empty($bonus->amount)) {
                                                                     ?>
                                                                     <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(0)</option>
                                                                     <?php
@@ -263,62 +304,132 @@
                                                             ?>
                                                         </select>
                                                     </td>
-                                                    <?php
-                                                }
-                                                ?>
-                                                <td >
-                                                    <?php
-                                                    if ($value != null) {
-//                                                        if (isset($value->status_salary_payment)&& $value->month_salary_payment == $current_month) {
-                                                        if (isset($value->status_salary_payment)) {
-                                                            if ($employee->id_employee == $value->id_employee) {
-//                                                        
-                                                                ?>
-                                                                <label>Announced</label>
-                                                                <?php
-                                                            }
-                                                        }
-                                                    } if ($value == null) {
-//            
-                                                        ?>
-                                                        <label >
+                                                    <td >
+                                                        <label>
                                                             <input type="checkbox" name="status_salary_payment[]" value="<?php echo $employee->id_employee; ?>" id="check" > Announced
                                                         </label>
+                                                    </td>
+                                                    <?php
+                                                }
+                                            }
+//                                                    <!--search result--> 
+//                                                      if value is not null then bonus money and announced will be shown
+                                            if (isset($month) && isset($year)) {
+                                                if (!empty($value)) {
+//                                                    any value is exit in bonus table or not
+                                                    $bonus = $this->Salary_model->bonus($value->id_salary_payment);
+//                                                    ---------------
+                                                    if (isset($bonus->status_bonus_payment) && $value->month_salary_payment == $month && $value->year_salary_payment == $year) {
+//                                                    if bonus status is exist then show bonus money
+                                                        if (isset($bonus->status_bonus_payment)) {
+                                                            ?>
+                                                            <?php
+                                                            if (empty($bonus->amount_salary_bonus) || $bonus->amount_salary_bonus == 0) {
+                                                                ?>
+                                                                <td>Bonus(0)</td>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <td>Bonus(<?php echo $bonus->amount_salary_bonus; ?>)</td>
+
+                                                                <?php
+                                                            }
+
+//                                                        if bonus status is empty then show bonus type option
+                                                        }
+                                                        if (empty($bonus->status_bonus_payment) && empty($value->month_salary_payment) && empty($value->year_salary_payment)) {
+                                                            ?>
+
+                                                            <td>
+                                                                <select class="form-control select2"style="width:100%;" name="bonus_type[<?php echo $sl;?>]" id="bonus" required>
+                                                                    <option value="0">Select Bonus Type</option>
+                                                                    <?php
+                                                                    foreach ($bonus_type as $bonus) {
+                                                                        if ($bonus->amount == null) {
+                                                                            ?>
+                                                                            <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(0)</option>
+                                                                            <?php
+                                                                        } else {
+                                                                            ?>
+                                                                            <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount; ?>)</option>
+
+                                                                            <?php
+                                                                        }
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </td>
+                                                        <?php }
+                                                        ?>
+                                                        <td>
+                                                            <?php
+                                                            if (isset($value->status_salary_payment)) {                  //salary payment status is exist then show announce
+                                                                if ($employee->id_employee == $value->id_employee) {        //if employee id and salary payment employee id is same then show announce
+//                                                        
+                                                                    ?>
+                                                                    <label>Announced</label>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <?php
+//                                                    if the value is empty option will be shown
                                                     }
-//    }
+                                                }if (empty($value)) {
                                                     ?>
-                                                </td>
+                                                    <td>
+                                                        <select class="form-control select2"style="width:100%;" name="bonus_type[<?php echo $sl;?>]" id="bonus" required>
+                                                            <option value="0">Select Bonus Type</option>
+                                                            <?php
+                                                            foreach ($bonus_type as $bonus) {
+                                                                if (empty($bonus->amount)) {
+                                                                    ?>
+                                                                    <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(0)</option>
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <option value="<?php echo $bonus->id_salary_bonus_type; ?>"><?php echo $bonus->name_salary_bonus_type; ?>(<?php echo $bonus->amount; ?>)</option>
 
-                                                                                                    <!--                                            <td>
-                                                                                                                     <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                                                                 <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                                                                                                    <button type="submit" class="btn btn-sm btn-success">Announced</button>
-                                                                                                                                                </td>-->
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                    <td >
+                                                        <label>
+                                                            <input type="checkbox" name="status_salary_payment[]" value="<?php echo $employee->id_employee; ?>" id="check" > Announced
+                                                        </label>
+                                                    </td>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
 
-                                            </tr>
-                                            <?php
-                                        }
-                                        ?>
-
-
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Designation</th>
-                                            <th>Basic</th>
-                                            <th>Bonus</th>
-                                            <th>Salary Announced or Not</th>
                                         </tr>
-                                    </tfoot>
-                                </table>
-                                <button type="submit" class="btn btn-sm btn-success pull-right" id="submit"> Save</button> 
-                            </form>
-                        </div>
-                        <?php
-                    }
+                                        <?php
+                                  $sl++;  }
+                                    ?>
+
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <!--<th>Designation</th>-->
+                                        <th>Basic</th>
+                                        <th>Bonus</th>
+                                        <th>Salary Announced or Not</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <button type="submit" class="btn btn-sm btn-success pull-right" id="submit"> Save</button> 
+                        </form>
+                    </div>
+                    <?php
+//                    }
                     ?>
                 </div>
 
