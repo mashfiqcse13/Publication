@@ -325,6 +325,76 @@ class Old_book_model extends CI_Model {
 //        return TRUE;
 //    }
     
+    function memo_header_details($total_sales_id) {
+        $sql = "SELECT customer.name as party_name,
+            customer.district as district,
+            customer.address as caddress,
+            customer.phone as phone,
+            customer.id_customer as code,
+            old_book_return_total.id_old_book_return_total as memoid,
+            old_book_return_total.issue_date as issue_date
+            FROM `customer`
+            LEFT join old_book_return_total on customer.id_customer=old_book_return_total.id_customer
+            where old_book_return_total.id_old_book_return_total='$total_sales_id'";
+        $data = $this->db->query($sql)->result_array();
+        Return $data[0];
+    }
+    
+    function memo_body_table($total_sales_id) {
+        $this->load->library('table');
+        // setting up the table design
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped text-right-for-money">',
+            'heading_row_start' => '<tr class="success">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td >',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td >',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+        $this->table->set_template($tmpl);
+        $this->table->set_heading('Quantity', 'Book Name', 'Buy Price', 'Total Price');
+        //Getting the data form the sales table in db
+        $sql = "SELECT `quantity`,`items`.`name`,`price`,`sub_total` 
+                    FROM `old_book_return_items`
+                    left join
+                    `items`on `items`.`id_item`= `old_book_return_items`.`id_item`
+                    WHERE `id_old_book_return_total` = $total_sales_id";
+        $rows = $this->db->query($sql)->result_array();
+        $total_quantity = 0;
+        $total_price = 0;
+        foreach ($rows as $row) {
+            $total_quantity += $row['quantity'];
+            $total_price += $row['sub_total'];
+            $this->table->add_row($row);
+        }
+        // Showing total book amount
+        $separator_row = array(
+            'class' => 'separator'
+        );
+        // setting up the footer options of the memo
+        $sql = "SELECT * FROM `old_book_return_total` WHERE `id_old_book_return_total` = $total_sales_id";
+        $total_sales_details = $this->db->query($sql)->result();
+        $total_sales_details = $total_sales_details[0];
+
+        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
+        
+        $this->table->add_row($total_quantity, '(Total Book ) ', array(
+            'data' => 'বই মূল্য : ',
+            'class' => 'left_separator',
+            'colspan' => 1
+                ), $this->Common->taka_format($total_price));
+
+        return $this->table->generate();
+    }
+    
     function old_book_sale_or_rebind(){
         $this->load->model('misc/Cash');
         $this->load->model('misc/Stock_perpetual');

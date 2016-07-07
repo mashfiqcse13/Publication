@@ -81,24 +81,7 @@ class Old_book extends CI_Controller {
         $this->Old_book_model->old_book_sale_or_rebind();
     }
 
-    function sales() {
-        $crud = new grocery_CRUD();
-        $crud->set_table('sales')
-                ->set_subject('Sales')
-                ->display_as('id_total_sales', 'Memo No')
-                ->set_relation('id_item', 'items', 'name')
-                ->order_by('id_sales', 'desc')
-                ->unset_edit()
-                ->unset_delete()
-                ->unset_add();
-        $output = $crud->render();
-        $data['glosary'] = $output;
 
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Sales';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/sales', $data);
-    }
 
     function return_book() {
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
@@ -134,10 +117,10 @@ class Old_book extends CI_Controller {
                 ->columns('id_old_book_transfer_total','type_transfer','date_transfer','price')
                 ->unset_edit()
                 ->unset_delete()
-                ->unset_add()
-                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
-                    return site_url('old_book/memo/' . $primary_key);
-                });
+                ->unset_add();
+//                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
+//                    return site_url('old_book/memo/' . $primary_key);
+//                });
         
                 
                 $crud->callback_column('type_transfer', function($value){
@@ -162,12 +145,12 @@ class Old_book extends CI_Controller {
     
 
     function memo($total_sales_id) {
-
+        
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
         $data['base_url'] = base_url();
-        $data['memo_header_details'] = $this->Sales_model->memo_header_details($total_sales_id);
-        $data['memo_body_table'] = $this->Sales_model->memo_body_table($total_sales_id);
+        $data['memo_header_details'] = $this->Old_book_model->memo_header_details($total_sales_id);
+        $data['memo_body_table'] = $this->Old_book_model->memo_body_table($total_sales_id);
 //        print_r($data['memo_header_details']);
 //        $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);
         $customer_id = $data['memo_header_details']['code'];
@@ -176,7 +159,7 @@ class Old_book extends CI_Controller {
         $this->load->model('misc/Customer_due');
         $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
 
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/memo', $data);
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/memo', $data);
     }
 
     function memo_report() {
