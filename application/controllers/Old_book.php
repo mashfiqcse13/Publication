@@ -154,11 +154,10 @@ class Old_book extends CI_Controller {
 //        print_r($data['memo_header_details']);
 //        $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);
         $customer_id = $data['memo_header_details']['code'];
-        $data['edit_btn_url'] = site_url('due/make_payment/' . $customer_id);
-
-        $this->load->model('misc/Customer_due');
-        $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
-
+        $data['balance']=$this->Old_book_model->current_advanced_balance($customer_id);
+       
+        
+        
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/memo', $data);
     }
 

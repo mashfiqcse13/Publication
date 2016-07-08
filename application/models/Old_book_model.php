@@ -245,7 +245,7 @@ class Old_book_model extends CI_Model {
             $response['next_url'] = site_url('old_book/return_book_total');
         } else if ($action == 'save_and_print') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
-            $response['next_url'] = site_url('old_book/return_book_print' . $id_total_sales);
+            $response['next_url'] = site_url('old_book/memo/' . $id_old_book_return_total);
         }
         echo json_encode($response);
     }
@@ -340,6 +340,13 @@ class Old_book_model extends CI_Model {
         $data = $this->db->query($sql)->result_array();
         Return $data[0];
     }
+    function current_advanced_balance($id_customer){
+         $balance=$this->db->query("SELECT balance FROM `party_advance` WHERE `id_customer`=$id_customer");
+         foreach($balance->result_array() as $row){
+             $advanced_balance=$row['balance'];
+         }
+         return $advanced_balance;
+    }
     
     function memo_body_table($total_sales_id) {
         $this->load->library('table');
@@ -384,7 +391,9 @@ class Old_book_model extends CI_Model {
         $sql = "SELECT * FROM `old_book_return_total` WHERE `id_old_book_return_total` = $total_sales_id";
         $total_sales_details = $this->db->query($sql)->result();
         $total_sales_details = $total_sales_details[0];
-
+       
+        
+        
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
         
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
@@ -402,13 +411,13 @@ class Old_book_model extends CI_Model {
             'colspan' => 2
         ));
         
-        $this->table->add_row(array(
-            'data' => 'Total Balance For Customer',
-            'colspan' => 2
-        ),array(
-            'data' => $this->Common->taka_format($total_price),
-            'colspan' => 2
-        ));
+//        $this->table->add_row(array(
+//            'data' => 'Total Advanced Balance',
+//            'colspan' => 2
+//        ),array(
+//            'data' => $this->Common->taka_format($total_price),
+//            'colspan' => 2
+//        ));
         
         return $this->table->generate();
     }
