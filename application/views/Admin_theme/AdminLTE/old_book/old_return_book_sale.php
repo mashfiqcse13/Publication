@@ -115,7 +115,7 @@
                                     <option value="0">Select Process Type</option>
                                     <option value="2">Send to Rebind</option>
                                     <option value="1">Sales</option>
-                                    <option value="3">Throw Away</option>
+                                    
                                 </select>
 <!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
                                  <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced

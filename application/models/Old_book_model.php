@@ -282,6 +282,7 @@ class Old_book_model extends CI_Model {
                     VALUES (NULL, '$id_item', '0', '0', '0');");
 
         $current = $this->current_stock_info($id_item);
+
         if ($current->total_balance >= $amount) {
             $sql = "UPDATE `old_book_stock` SET 
                 `total_out` = `total_out`+'$amount', 
@@ -451,7 +452,7 @@ class Old_book_model extends CI_Model {
                 array_push($data_return, $tmp_return_book);
                 //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
                 //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
-                $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+//                $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
             }   
 
             $this->db->insert_batch('processes', $data_return) or die('failed to insert data on processes');
@@ -481,6 +482,8 @@ class Old_book_model extends CI_Model {
             if (empty($value)) {
                 continue;
             }
+            $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+
             $tmp_return_book = array(
                
                 'id_item' => $value['item_id'],
@@ -490,7 +493,7 @@ class Old_book_model extends CI_Model {
             array_push($data_return, $tmp_return_book);
             //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
             //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
-            $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+            
         }   
         
         $this->db->insert_batch('old_book_transfer_items', $data_return) or die('failed to insert data on id_old_book_transfer_items');

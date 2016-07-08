@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="form-group col-lg-12">
                                 <label for="payment_type">Payment Type:</label> 
-                                <select name="payment" id="payment" class="form-control">
+                                <select name="payment" id="payment" class="form-control select2">
                                     <option value="2">Add to Advanced</option>
                                     <option value="1">Cash</option>
                                 </select>
