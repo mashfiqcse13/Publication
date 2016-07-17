@@ -61,7 +61,7 @@ class Production_process_model extends CI_Model {
     }
 
     function get_transferable_amount_in_step($id_process_steps) {
-        $sql = "SELECT `order_amount`-(`reject_amount`+ `damaged_amount`+ `missing_amount`) 
+        $sql = "SELECT `order_amount`-(`transfered_amount` + `reject_amount`+ `damaged_amount`+ `missing_amount`) 
             as transferable_amount FROM `process_steps` where `id_process_steps` = $id_process_steps";
         $result = $this->db->query($sql)->result();
         if (empty($result[0])) {
@@ -123,6 +123,11 @@ class Production_process_model extends CI_Model {
             WHERE `id_process_steps` = $id_process_step_from";
         $this->db->query($sql);
 
+
+
+        $process_step_details = $this->get_step_info_by($id_process_step_from);
+        $id_processes = $process_step_details->id_processes;
+
         $id_process_step_to = $this->next_process_step_id($id_process_step_from);
         if ($id_process_step_to != false) {
             $sql = "UPDATE `process_steps` 
@@ -130,9 +135,10 @@ class Production_process_model extends CI_Model {
             WHERE `id_process_steps` = $id_process_step_to";
             $this->db->query($sql);
             $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered);
+            $this->update_process_total_production_fault($id_processes);
         } else {
             $process_step_details = $this->get_step_info_by($id_process_step_from);
-            $this->stop_process($process_step_details->id_processes);
+            $this->step_transfer_to_final_process($id_processes, $amount_transfered);
             $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, 0, $amount_transfered);
         }
         $this->add_step_transfer_billing($id_process_step_transfer_log, $id_process_step_from, $amount_billed, $amount_paid);
@@ -202,7 +208,7 @@ class Production_process_model extends CI_Model {
             if ($each_step->order_amount != 0 && !$this->next_process_step_id($each_step->id_process_steps)) {
                 $action_btn .= "<button data-toggle=\"modal\" data-target=\"#modalStepToStepTransfer\" 
                     class=\"btn btn-xs btn-danger btnStepToStepTransfer\" data-id_process_steps=\"{$each_step->id_process_steps}\" 
-                        data-transferable_amount=\"{$each_step->transferable_amount}\">Finish</button> ";
+                        data-transferable_amount=\"{$each_step->transferable_amount}\">Final Transfer</button> ";
             }
             if ($each_step->order_amount == 0) {
                 $delet_url = site_url('production_process/delete_step/' . $each_step->id_processes . '/' . $each_step->id_process_steps);
@@ -295,6 +301,31 @@ class Production_process_model extends CI_Model {
         $this->db->query($sql);
     }
 
+    function step_transfer_to_final_process($id_processes, $amount_transfered) {
+        $total_production_fault = $this->get_total_production_fault($id_processes);
+        if (empty($id_processes) || $total_production_fault == FALSE) {
+            return FALSE;
+        }
+        $sql = "UPDATE `processes` SET `actual_quantity` = `actual_quantity` +  '$amount_transfered',
+            `total_damaged_item` = {$total_production_fault->total_damaged_item},
+            `total_reject_item` = {$total_production_fault->total_reject_item},
+            `total_missing_item` = {$total_production_fault->total_missing_item}  WHERE `id_processes` = $id_processes ";
+        $this->db->query($sql);
+    }
+
+    function update_process_total_production_fault($id_processes) {
+        $total_production_fault = $this->get_total_production_fault($id_processes);
+        if (empty($id_processes) || $total_production_fault == FALSE) {
+            return FALSE;
+        }
+        $sql = "UPDATE `processes` SET 
+            `total_damaged_item` = {$total_production_fault->total_damaged_item},
+            `total_reject_item` = {$total_production_fault->total_reject_item},
+            `total_missing_item` = {$total_production_fault->total_missing_item}  
+             WHERE `id_processes` = $id_processes ";
+        $this->db->query($sql);
+    }
+
     function process_detail_table($id_processes) {
         $this->load->library('table');
         $process_details = $this->get_process_details($id_processes);
@@ -328,8 +359,18 @@ class Production_process_model extends CI_Model {
         $this->table->set_heading('Ordered', 'Found', 'Damaged', 'Rejected', 'Missing');
         $output .= ' <h4>Item quantity details :</h4>';
         $output .= $this->table->generate();
-        $this->table->set_heading('Status', 'Progress ');
-        $this->table->add_row($this->process_status_decoder($process_details->process_status), $progress_bar['progress'] . $progress_bar['bar']);
+
+        if ($process_details->process_status == 1) {
+            $stop_url = site_url("production_process/change_status/$id_processes/2");
+            $reject_url = site_url("production_process/change_status/$id_processes/3");
+            $process_status_btn = "&nbsp; &nbsp;<a href=\"$stop_url\" class=\"btn btn-xs btn-success show_confirmation\" data-onfimation_msg=\"Do you want to finish this project ?\">Stop</a>&nbsp; &nbsp;
+            <a href=\"$reject_url\" class=\"btn btn-xs btn-danger show_confirmation\" data-onfimation_msg=\"Do you want to reject this project ?\">Reject</a> ";
+            $this->table->set_heading('Status', 'Progress ', "Action");
+            $this->table->add_row($this->process_status_decoder($process_details->process_status), $progress_bar['progress'] . $progress_bar['bar'], $process_status_btn);
+        } else {
+            $this->table->set_heading('Status', 'Progress ');
+            $this->table->add_row($this->process_status_decoder($process_details->process_status) , $progress_bar['progress'] . $progress_bar['bar']);
+        }
         $output .= ' <h4>Process details :</h4>';
         $output .= $this->table->generate();
         return $output;
@@ -339,10 +380,18 @@ class Production_process_model extends CI_Model {
         if ($value == 1) {
             return '<span class="label label-warning">Ongoing</span>';
         } else if ($value == 2) {
-            return '<span class="label label-success">Stopped</span>';
+            return '<span class="label label-success">Finished</span>';
         } else if ($value == 3) {
             return '<span class="label label-danger">Rejected</span>';
         }
+    }
+
+    function process_status_change($id_processes, $status_code) {
+        $current_time = date('Y-m-d h:i:u');
+        $sql = "UPDATE `processes` SET `process_status` = '$status_code',
+            `date_finished` = '$current_time'
+            WHERE `processes`.`id_processes` = $id_processes";
+        $this->db->query($sql);
     }
 
     function progress_bar($progress_in_percent) {

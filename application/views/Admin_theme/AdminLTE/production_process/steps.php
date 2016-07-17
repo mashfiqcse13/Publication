@@ -222,9 +222,9 @@
         console.log(id_process_steps);
         console.log(transferable_amount);
         $('[name="id_process_step_from"]').val(id_process_steps);
-        if ($(this).html() == "Finish") {
+        if ($(this).html() == "Final Transfer") {
             $('#modalStepToStepTransfer .modal-title').html("Finsih this process by inputing last transfer details");
-            $('#modalStepToStepTransfer [type="submit"]').html("Terminate Process");
+            $('#modalStepToStepTransfer [type="submit"]').html("Transfer to the final stock");
             $('#modalStepToStepTransfer').removeClass('modal-success');
             $('#modalStepToStepTransfer').addClass('modal-danger');
         } else {

@@ -84,7 +84,7 @@ class Production_process extends CI_Controller {
         $data['vendor_dropdown'] = $this->Production_process_model->get_vendor_dropdown();
         $data['step_name_dropdown'] = $this->Production_process_model->get_step_name_dropdown();
         $data['id_processes'] = $id_processes;
-        $data['process_status'] = $this->Production_process_model->get_process_status_by_process_step_id($id_processes);
+        $data['process_status'] = $this->Production_process_model->get_process_status_by_process_id($id_processes);
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -119,6 +119,11 @@ class Production_process extends CI_Controller {
         if (!empty($id_process_step_from) && !empty($amount_transfered) && $amount_transfered > 0 && !empty($amount_billed) && !empty($amount_paid)) {
             $this->Production_process_model->step_transfer($id_process_step_from, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount, $amount_billed, $amount_paid);
         }
+        redirect('production_process/steps/' . $id_processes);
+    }
+
+    function change_status($id_processes, $status_code) {
+        $this->Production_process_model->process_status_change($id_processes, $status_code);
         redirect('production_process/steps/' . $id_processes);
     }
 
