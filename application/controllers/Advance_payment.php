@@ -27,8 +27,10 @@ class Advance_payment extends CI_Controller {
     function index(){
         $id_customer = $this->input->post('id_customer');
         $amount = $this->input->post('amount');
+        $id_method = $this->input->post('id_payment_method');
+//        print_r($amount);exit();
         if (!empty($id_customer) && !empty($amount)) {
-            $this->Advance_payment_model->payment_add($id_customer, $amount) or die('failed');
+            $this->Advance_payment_model->payment_add($id_customer, $amount,$id_method) or die('failed');
             redirect(current_url());
             die();
         }

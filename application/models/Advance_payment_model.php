@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Advance_payment_model extends CI_Model {
 
-    function payment_add($id_customer, $amount) {
+    function payment_add($id_customer, $amount ,$id_method) {
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('party_advance')
@@ -25,6 +25,11 @@ class Advance_payment_model extends CI_Model {
                 `balance` = `balance`+'$amount' 
             WHERE `party_advance`.`id_customer` = $id_customer;";
         $this->db->query($sql);
+        
+        $register = "INSERT INTO `party_advance_payment_register`"
+                . "(`id_customer`, `id_payment_method`, `amount_paid`, `date_payment`) "
+                . "VALUES (".$id_customer.",".$id_method.",".$amount.",".date('Y-m-d H:i:s').")";
+        $this->db->query($register);
         return TRUE;
     }
 
