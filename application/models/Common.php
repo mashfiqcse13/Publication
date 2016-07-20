@@ -132,6 +132,16 @@ class Common extends CI_Model {
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
+    function get_customer_dropdown() {
+        $items = $this->db->get('customer')->result();
+
+        $data = array();
+        $data[''] = 'Select customer by name or code';
+        foreach ($items as $item) {
+            $data[$item->id_customer] = $item->id_customer . " - " . $item->name;
+        }
+        return form_dropdown('id_customer', $data, '', ' class="select2" ');
+    }
 
     function dropdown_subject($value = '', $primary_key) {
         return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
