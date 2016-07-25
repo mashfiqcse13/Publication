@@ -20,6 +20,8 @@ class Sales extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
         $this->load->model('Sales_model');
+        $this->load->model('Bank_model');
+        $this->load->model('Advance_payment_model');
     }
 
     function index() {
@@ -29,7 +31,7 @@ class Sales extends CI_Controller {
     function tolal_sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales_total_sales')
-                ->columns('id_total_sales', 'id_customer', 'issue_date', 'discount_percentage', 'discount_amount', 'sub_total', 'total_amount', 'cash', 'bank_pay', 'total_paid', 'total_due')
+                ->columns('id_total_sales', 'id_customer', 'issue_date', 'discount_percentage', 'discount_amount', 'sub_total', 'total_amount', 'total_paid', 'total_due')
                 ->display_as('id_total_sales', 'Memo No')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')
                 ->set_subject('Total sales')
@@ -83,6 +85,9 @@ class Sales extends CI_Controller {
     }
 
     function new_sale() {
+        $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
+        $data['customer_current_balance'] = $this->Advance_payment_model->get_all_advance_payment_balance();
+
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
         $data['item_dropdown'] = $this->Sales_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Sales_model->get_party_due();

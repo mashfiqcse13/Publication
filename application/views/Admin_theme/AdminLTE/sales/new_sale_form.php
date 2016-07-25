@@ -1,7 +1,9 @@
 <!--add header -->
 <script type="text/javascript">
     var customer_due = <?php echo json_encode($customer_due) ?>;
+    var customer_current_balance = <?php echo json_encode($customer_current_balance) ?>;
     var item_details = <?php echo json_encode($item_details) ?>;
+    var previously_paid = 0;
     var item_selection = new Array();
     var data_to_post = {
         'action': null,
@@ -11,8 +13,11 @@
         'sub_total': 0,
         'dues_unpaid': 0,
         'total_amount': 0,
+        'customer_balance_reduction': 0,
         'cash_payment': 0,
         'bank_payment': 0,
+        'bank_account_id': 0,
+        'bank_check_no': '',
         'total_paid': 0,
         'total_due': 0,
         'item_selection': ''
@@ -111,15 +116,60 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
                                 <div class="input-group">
-                                    <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
+                                    <input type="number" min="0" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="discount_amount">Bank payment :</label>
-                                <div class="input-group">
-                                    <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
-                                    <span class="input-group-addon">Tk</span>
+                                <div id="customer_current_balance">
+                                    <label for="discount_percentage">Previously paid :</label> <span>0</span> Tk
+                                </div>
+                                <div id="bank_payment">
+                                    <label for="discount_percentage">Bank payment :</label> <span>0</span> Tk 
+                                    <button type="button" class="btn btn-primary btn-xs  pull-right" data-toggle="modal" data-target="#bankTransactionForm">
+                                        <i class="fa fa-plus"></i> Add
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal modal-primary fade" id="bankTransactionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Bank Transaction</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Note :</strong> If you use this form , this balance will be added to the account balance automatically as an approved transaction .</p>
+                                                    <form class="form-horizontal" id="bankTransactionFormWrapper">
+                                                        <div class="form-group">
+                                                            <label for="bank_account" class="col-sm-4 control-label">Receiving Account</label>
+                                                            <div class="col-sm-8">
+                                                                <?php echo $bank_account_dropdown ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="bank_payment" class="col-sm-4 control-label">Amount</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="bank_payment" name="bank_payment" placeholder="Amount">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="check_no" class="col-sm-4 control-label">Check No</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="check_no" name="check_no" placeholder="Check No">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-outline" data-dismiss="modal">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="total_paid">
+                                    <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
                                 </div>
                             </div>
                         </div>
@@ -201,6 +251,7 @@
 
 <script type="text/javascript">
     $('#massage_box').hide();
+    $('#customer_current_balance').hide();
 
     function string_to_int(input_field_value) {
         var integer_val = parseInt(input_field_value);
@@ -253,7 +304,7 @@
         }
         var this_item_details = item_details[item_id];
         if (item_quantity > this_item_details.total_in_hand) {
-            alert('Please don\'t select quantity bigger than '+this_item_details.total_in_hand);
+            alert('Please don\'t select quantity bigger than ' + this_item_details.total_in_hand);
             return;
         }
         if (item_quantity < 1) {
@@ -279,7 +330,25 @@
     $('[name="id_customer"]').change(function () {
         data_to_post.id_customer = $('[name="id_customer"]').val();
         data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
+        previously_paid = string_to_int(customer_current_balance[data_to_post.id_customer]);
         $('#dues_unpaid').html(data_to_post.dues_unpaid);
+        if (previously_paid > 0) {
+            $('#customer_current_balance').show();
+            $('#customer_current_balance > span').html(previously_paid);
+        } else {
+            $('#customer_current_balance').hide();
+        }
+        update_total_amount_and_total_due();
+    });
+
+    $('#bankTransactionFormWrapper').change(function () {
+        data_to_post.bank_account_id = string_to_int($('[name="id_account"]').val());
+        data_to_post.bank_payment = string_to_int($('[name="bank_payment"]').val());
+        data_to_post.bank_check_no = $('[name="check_no"]').val();
+        console.log(data_to_post.bank_account_id);
+        console.log(data_to_post.bank_payment);
+        console.log(data_to_post.bank_check_no);
+        $("#bank_payment > span").html(data_to_post.bank_payment);
         update_total_amount_and_total_due();
     });
 
@@ -319,17 +388,30 @@
         data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
                 + string_to_int(data_to_post.sub_total)
                 - string_to_int(data_to_post.discount_amount);
-        data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment);
+        data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment) + previously_paid;
         data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
         $('#total_due').html(data_to_post.total_due);
+        $('#total_paid > span').html(data_to_post.total_paid);
     }
 
     $('.submit_btn').click(function () {
-        if (data_to_post.total_paid > data_to_post.total_amount) {
-            alert('We are not allowed to accept extra money . Reduce the cash .');
+        if (data_to_post.total_paid > data_to_post.total_amount && (data_to_post.cash_payment > 0 || data_to_post.bank_payment > 0)) {
+            alert('We are not allowed to accept extra money . Reduce the cash or bank payment .');
             return;
         }
+
+        if (data_to_post.bank_payment > 0) {
+            if (data_to_post.bank_account_id < 1) {
+                alert('No account selected');
+                return;
+            }
+            if (data_to_post.bank_check_no < 1) {
+                alert('No check no given');
+                return;
+            }
+        }
+
         if (data_to_post.id_customer < 1) {
             alert('No customer selected.');
             return;

@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-/** 
+/**
  * Description of Sales
  *
  * @author MD. Mashfiq
@@ -69,7 +69,9 @@ class Sales_model extends CI_Model {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Customer_due');
         $this->load->model('misc/Stock_perpetual');
+        $this->load->model('misc/Customer_due_payment');
         $this->load->model('Stock_model');
+        $this->load->model('Advance_payment_model');
 
         $id_customer = $this->input->post('id_customer');
         $discount_percentage = $this->input->post('discount_percentage');
@@ -82,19 +84,37 @@ class Sales_model extends CI_Model {
         $total_amount = $sub_total - $discount_amount;
         $total_due = $total_amount - $total_paid;
 
-        if ($cash_payment > 0) {
-            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
-        }
+        $advance_payment_balance = $this->Advance_payment_model->get_advance_payment_balance_by($id_customer);
+        $amount_to_reduce_from_advance_payment = 0;
+        $due_payment_amount = 0;
         if ($total_due > 0) {
-            $this->Customer_due->add($id_customer, $total_due) or die('Failed to add due');
+            if ($total_due >= $advance_payment_balance) {   //যদি due , advance payment er cheye বেশি বা সমান হয় , তবে due থেকে advance payment বাদ দিয়ে resistry করা হবে
+                $amount_to_reduce_from_advance_payment = $advance_payment_balance;
+                $total_due = $total_due - $amount_to_reduce_from_advance_payment;
+                $this->Customer_due->add($id_customer, $total_due) or die('Failed to add due');
+            } else {   //যদি due , advance payment er cheye কম হয়, তবে advance payment থেকে due বাদ দিয়ে resistry করা হবে
+                $amount_to_reduce_from_advance_payment = $total_due;
+                $total_due = 0;
+            }
+            $total_paid = $total_paid + $amount_to_reduce_from_advance_payment;
+        } else if ($total_due < 0) {
+            if ($dues_unpaid > 0) {
+                $due_payment_amount += (-1) * $total_due;
+                $total_paid -= (-1) * $total_due;
+                $dues_unpaid -= (-1) * $total_due;
+                $total_due = 0;
+            } else {
+                die("Due cannot be negetive");
+            }
         }
-        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
-            $due_payment_amount = $total_paid - $total_amount;
-            $this->load->model('misc/Customer_due_payment');
-            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
-            $cash_payment = $total_amount;
-            $total_paid = $cash_payment + $bank_payment;
-            $total_due = 0;
+
+        if ($dues_unpaid > 0) {
+            $advance_payment_balance = $advance_payment_balance - $amount_to_reduce_from_advance_payment;
+            if ($dues_unpaid >= $advance_payment_balance) {
+                $due_payment_amount += $advance_payment_balance;
+            } else {
+                $due_payment_amount += $dues_unpaid;
+            }
         }
 
         $data = array(
@@ -104,8 +124,7 @@ class Sales_model extends CI_Model {
             'discount_amount' => $discount_amount,
             'sub_total' => $sub_total,
             'total_amount' => $total_amount,
-            'cash' => $cash_payment,
-            'total_paid' => $cash_payment,
+            'total_paid' => $total_paid,
             'total_due' => $total_due
         );
 
@@ -113,6 +132,27 @@ class Sales_model extends CI_Model {
 
 
         $id_total_sales = $this->db->insert_id() or die('failed to insert data on sales_total_sales');
+
+
+        if ($cash_payment > 0) {
+            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
+            $this->Customer_due_payment->payment_register($id_customer, $cash_payment, $id_total_sales, 1);
+        }
+        if ($bank_payment > 0) {
+            $this->load->model('Bank_model');
+            $bank_check_no = $this->input->post('bank_check_no');
+            $bank_account_id = $this->input->post('bank_account_id');
+            $this->Bank_model->bank_transection($bank_account_id, 1, $bank_payment, $bank_check_no, 1);
+            $this->Customer_due_payment->payment_register($id_customer, $bank_payment, $id_total_sales, 3);
+        }
+        if ($amount_to_reduce_from_advance_payment > 0) {
+            $this->Customer_due_payment->payment_register($id_customer, $amount_to_reduce_from_advance_payment, $id_total_sales, 2);
+            $this->Advance_payment_model->payment_reduce($id_customer, $amount_to_reduce_from_advance_payment);
+        }
+
+        if ($due_payment_amount > 0) {
+            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+        }
 
         $item_selection = $this->input->post('item_selection');
         $data_sales = array();
@@ -233,31 +273,25 @@ class Sales_model extends CI_Model {
             'colspan' => 2,
             'rowspan' => 2,
                 ), array(
-            'data' => '	নগদ জমা : ',
+            'data' => '	মোট জমা : ',
             'class' => 'left_separator',
             'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->cash));
-        $this->table->add_row(array(
-            'data' => '	ব্যাংক জমা : ',
-            'class' => 'left_separator',
-            'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->bank_pay));
+                ), $this->Common->taka_format($total_sales_details->total_paid));
         $this->load->model('misc/Customer_due');
-        $this->table->add_row('', '', array(
+        $this->table->add_row(array(
             'data' => '	সর্বশেষ বাকি : ',
             'class' => 'left_separator',
             'colspan' => 2
                 ), $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)));
         return $this->table->generate();
     }
-    
-    
-    function get_total_sales_info($from, $to){
+
+    function get_total_sales_info($from, $to) {
         $this->db->select('*');
         $this->db->from('sales_total_sales');
-        $this->db->join('customer','sales_total_sales.id_customer = customer.id_customer','left');
-        $this->db->where('sales_total_sales.issue_date >= ',date('Y-m-d', strtotime($from)));
-        $this->db->where('sales_total_sales.issue_date <= ',date('Y-m-d', strtotime($to)));
+        $this->db->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
+        $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
+        $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
         $this->db->order_by('sales_total_sales.issue_date');
         $query = $this->db->get();
         return $query->result();

@@ -27,16 +27,14 @@ class Advance_payment extends CI_Controller {
     function index(){
         $id_customer = $this->input->post('id_customer');
         $amount = $this->input->post('amount');
-        $id_method = $this->input->post('id_payment_method');
 //        print_r($amount);exit();
         if (!empty($id_customer) && !empty($amount)) {
-            $this->Advance_payment_model->payment_add($id_customer, $amount,$id_method) or die('failed');
+            $this->Advance_payment_model->payment_add($id_customer, $amount,1) or die('failed');
             redirect(current_url());
             die();
         }
 
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
-        $data['payment_method_dropdown'] = $this->Advance_payment_model->get_payment_method_dropdown();
 
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance')

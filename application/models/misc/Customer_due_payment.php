@@ -36,17 +36,16 @@ class Customer_due_payment extends CI_Model {
             $data_to_insert_in_due_payment[$key]['id_customer'] = $row->id_customer;
             $data_to_insert_in_due_payment[$key]['payment_date'] = date('Y-m-d h:i:u');
             $data_to_insert_in_due_payment[$key]['paid_amount'] = $payment_amount;
+            $data_to_insert_in_due_payment[$key]['id_payment_method'] = 6;
 
             if ($payment_amount > $row->total_due) {
                 // transfering total due to cash and total_paid
-                $data_to_update_in_total_sales[$key]['cash'] = $row->cash + $row->total_due;
                 $data_to_update_in_total_sales[$key]['total_paid'] = $row->total_paid + $row->total_due;
                 // setting the rest of money to payment amount for the due payment of next payment
                 $payment_amount = $payment_amount - $row->total_due;
                 $data_to_update_in_total_sales[$key]['total_due'] = 0;
             } else if ($row->total_due >= $payment_amount) {
                 // reducing form total_due and sending to( cash and total_paid)  about $payment_amount 
-                $data_to_update_in_total_sales[$key]['cash'] = $row->cash + $payment_amount;
                 $data_to_update_in_total_sales[$key]['total_paid'] = $row->total_paid + $payment_amount;
                 $data_to_update_in_total_sales[$key]['total_due'] = $row->total_due - $payment_amount;
                 $payment_amount = 0;
@@ -61,6 +60,17 @@ class Customer_due_payment extends CI_Model {
 
         $this->db->update_batch('sales_total_sales', $data_to_update_in_total_sales, 'id_total_sales');
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
+    }
+
+    function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method) {
+        $data_to_insert = array(
+            'id_customer' => $id_customer,
+            'paid_amount' => $amount,
+            'id_total_sales' => $id_total_sales,
+            'payment_date' => date('Y-m-d h:i:u'),
+            'id_payment_method' => $id_payment_method
+        );
+        $this->db->insert('customer_payment', $data_to_insert);
     }
 
 }

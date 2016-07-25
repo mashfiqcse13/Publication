@@ -81,7 +81,7 @@ class Customer_due extends CI_Model {
 
     // this will get information of customer due from total_sales table
     function details_from_total_sales($customer_id) {
-        $sql = "SELECT `id_total_sales`,`id_customer`, `total_amount`, `cash`, `bank_pay`, `total_paid`, `total_due`
+        $sql = "SELECT `id_total_sales`,`id_customer`, `total_amount`, `total_paid`, `total_due`
             FROM `sales_total_sales` 
             WHERE `id_customer`= $customer_id and `total_due`> 0";
         return $this->db->query($sql)->result();

@@ -9,7 +9,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Advance_payment_model extends CI_Model {
 
-    function payment_add($id_customer, $amount ,$id_method) {
+    function payment_add($id_customer, $amount, $id_method) {
+        if($id_method == 1){
+            $this->load->model('misc/Cash');
+            $this->Cash->add($amount);
+        }
+        
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('party_advance')
@@ -25,11 +30,9 @@ class Advance_payment_model extends CI_Model {
                 `balance` = `balance`+'$amount' 
             WHERE `party_advance`.`id_customer` = $id_customer;";
         $this->db->query($sql);
-        
-        $register = "INSERT INTO `party_advance_payment_register`"
-                . "(`id_customer`, `id_payment_method`, `amount_paid`, `date_payment`) "
-                . "VALUES (".$id_customer.",".$id_method.",".$amount.",".date('Y-m-d H:i:s').")";
-        $this->db->query($register);
+
+        $this->payment_register($id_customer, $id_method, $amount);
+
         return TRUE;
     }
 
@@ -56,6 +59,14 @@ class Advance_payment_model extends CI_Model {
         }
     }
 
+    function payment_register($id_customer, $id_method, $amount) {
+        $current_date = date('Y-m-d H:i:s');
+        $register = "INSERT INTO `party_advance_payment_register`
+            (`id_customer`, `id_payment_method`, `amount_paid`, `date_payment`)
+            VALUES ('$id_customer','$id_method','$amount','$current_date')";
+        $this->db->query($register);
+    }
+
     // get current customer due all data as a db row object
     function current_payment_info($id_customer) {
         $current = $this->db->select('*')
@@ -76,6 +87,27 @@ class Advance_payment_model extends CI_Model {
             $data[$item->id_payment_method] = $item->name_payment_method;
         }
         return form_dropdown('id_payment_method', $data, '', ' class="select2" ');
+    }
+
+    function get_all_advance_payment_balance() {
+        $customers = $this->db->query("SELECT id_customer,balance
+                            FROM party_advance
+                            WHERE balance > 0 ")->result();
+
+        $data = array();
+        foreach ($customers as $customer) {
+            $data[$customer->id_customer] = $customer->balance;
+        }
+        return $data;
+    }
+
+    function get_advance_payment_balance_by($id_customer) {
+        $all_advance_payment_balance = $this->get_all_advance_payment_balance();
+        if (empty($all_advance_payment_balance[$id_customer])) {
+            return 0;
+        } else {
+            return $all_advance_payment_balance[$id_customer];
+        }
     }
 
 }
