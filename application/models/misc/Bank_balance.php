@@ -104,6 +104,33 @@ class Bank_balance extends CI_Model {
         }
     }
     
+    function bank_transection($bank_account = '', $transaction_type = '', $amount = '', $check_num = '') {
+        
+        $userid = $_SESSION['user_id'];
+        $insert_query = 'INSERT INTO `bank_management`(`id_account`, `id_transaction_type`, `transaction_date`, `amount_transaction`, `id_user`,`check_number`) VALUES (' . $bank_account . ',' . $transaction_type . ',' . date('Y-m-d') . ',' . $amount . ',' . $userid . ',' . $check_num . ')';
+        $this->db->query($insert_query);
+        $bank_management = $this->db->insert_id();
+
+        $insert_status = 'INSERT INTO `bank_management_status`(`approval_status`, `id_bank_management`, `action_date`, `approved_by`) VALUES (3,' . $bank_management . ',' . date('Y-m-d') . ',' . $userid . ')';
+        $this->db->query($insert_status);
+        $bank_management_status = $this->db->insert_id();
+
+        $query = 'SELECT * FROM `bank_management_status` WHERE `id_bank_management_status`= ' . $bank_management_status;
+        $approved = $this->db->query($query)->row();
+
+        if ($approved->approval_status == 1) {
+            $this->load->model('misc/Cash', 'cash');
+            $CA = & get_instance();
+            if ($transaction_type == 1) {
+                $this->add($bank_account, $amount);
+                $CA->cash->add($amount);
+            }if ($transaction_type == 2) {
+                $this->reduce($bank_account, $amount);
+                $CA->cash->reduce($amount);
+            }
+        }
+    }
+    
     function record_count() {
         return $this->db->count_all("bank_management_status");
     }
