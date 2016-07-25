@@ -13,10 +13,10 @@
  */
 class Bank_model extends CI_Model{
     //put your code here
-     function bank_transection($bank_account = '', $transaction_type = '', $amount = '', $check_num = '') {
+     function bank_transection($id_account = '', $id_transaction_type = '', $amount = '', $check_num = '') {
         
         $userid = $_SESSION['user_id'];
-        $insert_query = 'INSERT INTO `bank_management`(`id_account`, `id_transaction_type`, `transaction_date`, `amount_transaction`, `id_user`,`check_number`) VALUES (' . $bank_account . ',' . $transaction_type . ',' . date('Y-m-d') . ',' . $amount . ',' . $userid . ',' . $check_num . ')';
+        $insert_query = 'INSERT INTO `bank_management`(`id_account`, `id_transaction_type`, `transaction_date`, `amount_transaction`, `id_user`,`check_number`) VALUES (' . $id_account . ',' . $id_transaction_type . ',' . date('Y-m-d') . ',' . $amount . ',' . $userid . ',' . $check_num . ')';
         $this->db->query($insert_query);
         $bank_management = $this->db->insert_id();
 
