@@ -10,11 +10,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Advance_payment_model extends CI_Model {
 
     function payment_add($id_customer, $amount, $id_method) {
-        if($id_method == 1){
+        // If this user have previous due
+        $this->load->model('misc/Customer_due');
+        $this->load->model('misc/Customer_due_payment');
+        $current_total_due = $this->Customer_due->current_total_due($id_customer);
+        if ($current_total_due > 0) {
+            if ($current_total_due >= $amount) {
+                $this->Customer_due_payment->add($id_customer, $amount);
+                return TRUE;
+            } else {
+                $amount -= $current_total_due;
+                $this->Customer_due_payment->add($id_customer, $current_total_due);
+            }
+        }
+
+        if ($id_method == 1) {
             $this->load->model('misc/Cash');
             $this->Cash->add($amount);
         }
-        
+
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('party_advance')
@@ -59,11 +73,11 @@ class Advance_payment_model extends CI_Model {
         }
     }
 
-    function payment_register($id_customer, $id_method, $amount) {
+    function payment_register($id_customer, $id_payment_method, $amount_paid) {
         $current_date = date('Y-m-d H:i:s');
         $register = "INSERT INTO `party_advance_payment_register`
             (`id_customer`, `id_payment_method`, `amount_paid`, `date_payment`)
-            VALUES ('$id_customer','$id_method','$amount','$current_date')";
+            VALUES ('$id_customer','$id_payment_method','$amount_paid','$current_date')";
         $this->db->query($register);
     }
 

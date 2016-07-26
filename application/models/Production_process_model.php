@@ -303,9 +303,18 @@ class Production_process_model extends CI_Model {
 
     function step_transfer_to_final_process($id_processes, $amount_transfered) {
         $total_production_fault = $this->get_total_production_fault($id_processes);
-        if (empty($id_processes) || $total_production_fault == FALSE) {
+        $process_details = $this->get_process_details($id_processes);
+        if (empty($id_processes) || $total_production_fault == FALSE || $process_details == FALSE) {
             return FALSE;
         }
+
+        // adding to final stock and stock perpitual
+        $this->load->model('misc/Stock_perpetual');
+        $this->load->model('Stock_model');
+        $id_item = $process_details->id_item;
+        $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount_transfered, 0);
+        $this->Stock_model->stock_add($id_item, $amount_transfered);
+
         $sql = "UPDATE `processes` SET `actual_quantity` = `actual_quantity` +  '$amount_transfered',
             `total_damaged_item` = {$total_production_fault->total_damaged_item},
             `total_reject_item` = {$total_production_fault->total_reject_item},
@@ -369,7 +378,7 @@ class Production_process_model extends CI_Model {
             $this->table->add_row($this->process_status_decoder($process_details->process_status), $progress_bar['progress'] . $progress_bar['bar'], $process_status_btn);
         } else {
             $this->table->set_heading('Status', 'Progress ');
-            $this->table->add_row($this->process_status_decoder($process_details->process_status) , $progress_bar['progress'] . $progress_bar['bar']);
+            $this->table->add_row($this->process_status_decoder($process_details->process_status), $progress_bar['progress'] . $progress_bar['bar']);
         }
         $output .= ' <h4>Process details :</h4>';
         $output .= $this->table->generate();
