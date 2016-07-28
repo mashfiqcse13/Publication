@@ -61,8 +61,8 @@ class Sales extends CI_Controller {
     }
 
     function ajax_url() {
-//        echo json_encode($_POST);
-        $this->Sales_model->processing_new_sales();
+        $this->load->model('Sales_processing_model');
+        $this->Sales_processing_model->initiate();
     }
 
     function sales() {

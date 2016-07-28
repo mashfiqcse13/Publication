@@ -1,27 +1,24 @@
 <?php
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 /**
- * Description of Customer_due_payment
+ * Description of Customer_payment
  *
  * @author MD. Mashfiq
  */
-class Customer_due_payment extends CI_Model {
+class Customer_payment extends CI_Model {
 
-    function add($customer_id, $payment_amount) {
+    function add($customer_id, $payment_amount, $id_payment_method = 1) {
         $this->load->model('misc/Customer_due');
         $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
-        $this->load->model('misc/Cash');
-        $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
-
-//        echo "Customer ID :$customer_id" . "<br>\n"
-//        . "Due payment amount : $payment_amount" . "<br>\n"
-//        . "Current due amount : {$this->Customer_due->current_total_due($customer_id) }" . "<br>\n";
-
+        if ($id_payment_method == 1) {
+            $this->load->model('misc/Cash');
+            $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
+        }
         $result_total_sates_details = $this->Customer_due->details_from_total_sales($customer_id);
-//        print_r($result_total_sates_details);
         $data_to_update_in_total_sales = array();
         $data_to_insert_in_due_payment = array();
         foreach ($result_total_sates_details as $key => $row) {
@@ -29,14 +26,11 @@ class Customer_due_payment extends CI_Model {
                 break;
             }
             $data_to_update_in_total_sales[$key]['id_total_sales'] = $row->id_total_sales;
-//                $data_to_update_in_total_sales[$key]['id_customer'] = $row->id_customer;
-//                $data_to_update_in_total_sales[$key]['total_amount'] = $row->total_amount;
-
             $data_to_insert_in_due_payment[$key]['id_total_sales'] = $row->id_total_sales;
             $data_to_insert_in_due_payment[$key]['id_customer'] = $row->id_customer;
             $data_to_insert_in_due_payment[$key]['payment_date'] = date('Y-m-d h:i:u');
             $data_to_insert_in_due_payment[$key]['paid_amount'] = $payment_amount;
-            $data_to_insert_in_due_payment[$key]['id_payment_method'] = 6;
+            $data_to_insert_in_due_payment[$key]['id_payment_method'] = $id_payment_method;      //cash only
 
             if ($payment_amount > $row->total_due) {
                 // transfering total due to cash and total_paid
@@ -54,10 +48,6 @@ class Customer_due_payment extends CI_Model {
 
             $data_to_insert_in_due_payment[$key]['paid_amount'] -= $payment_amount;
         }
-//        print_r($data_to_update_in_total_sales);
-//        print_r($data_to_insert_in_due_payment);
-
-
         $this->db->update_batch('sales_total_sales', $data_to_update_in_total_sales, 'id_total_sales');
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
     }
@@ -71,6 +61,20 @@ class Customer_due_payment extends CI_Model {
             'id_payment_method' => $id_payment_method
         );
         $this->db->insert('customer_payment', $data_to_insert);
+    }
+
+    /*
+     * $id_payment_method = 1(cash) or 3 (bank) see payment_method_table
+     */
+
+    function today_collection($id_payment_method = 1) {
+        $sql = "SELECT sum(`paid_amount`) as today_collection FROM `customer_payment` WHERE `id_payment_method`= $id_payment_method and date(`payment_date`) = DATE(NOW())";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_collection)) {
+            return 0;
+        } else {
+            return $result[0]->today_collection;
+        }
     }
 
 }

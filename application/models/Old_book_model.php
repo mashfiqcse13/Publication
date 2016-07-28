@@ -122,14 +122,14 @@ class Old_book_model extends CI_Model {
 //        }
 //        if ($total_due == 0 && $dues_unpaid =! 0) {
 //            $due_payment_amount = $dues_unpaid;
-//            $this->load->model('misc/Customer_due_payment');
-//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//            $this->load->model('misc/Customer_payment');
+//            $this->Customer_payment->add($id_customer, $due_payment_amount);
 //        }
 //        elseif ( $total_due > 0){
 //           
 //            $due_payment_amount = $dues_unpaid - $total_due;
-//            $this->load->model('misc/Customer_due_payment');
-//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//            $this->load->model('misc/Customer_payment');
+//            $this->Customer_payment->add($id_customer, $due_payment_amount);
 //        }
 //        
 //        
@@ -161,8 +161,8 @@ class Old_book_model extends CI_Model {
         
 //        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
 //            $due_payment_amount = $total_paid - $total_amount;
-//            $this->load->model('misc/Customer_due_payment');
-//            $this->Customer_due_payment->add($id_customer, $due_payment_amount);
+//            $this->load->model('misc/Customer_payment');
+//            $this->Customer_payment->add($id_customer, $due_payment_amount);
 //            $cash_payment = $total_amount;
 //            $total_paid = $cash_payment + $bank_payment;
 //            $total_due = 0;

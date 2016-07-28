@@ -30,20 +30,20 @@ class Report extends CI_Controller {
         $data['cash'] = $this->db->get('cash')->result();
         $data['cash'] = $data['cash'][0];
 //        die(print_r($data));
-        
-        
-        $query1=$this->db->query("SELECT IFNULL(sum(`total_amount`) ,0) as today_total,"
-                . "IFNULL(sum(`total_due`) ,0) as today_due,"
-                . " IFNULL(sum(`cash`) ,0) as today_cash,"
-                . " IFNULL(sum(`bank_pay`) ,0) as today_bank"
+
+
+        $query1 = $this->db->query("SELECT IFNULL(sum(`total_amount`) ,0) as today_total,"
+                . "IFNULL(sum(`total_due`) ,0) as today_due"
                 . "  FROM sales_total_sales WHERE  DATE(issue_date) = DATE(NOW())");
-        foreach ($query1->result() as $row){
-            $data['today_sales']=$row->today_total;
-            $data['today_due']=$row->today_due;
-            $data['today_cash']=$row->today_cash;
-            $data['today_bank']=$row->today_bank;
+        foreach ($query1->result() as $row) {
+            $data['today_sales'] = $row->today_total;
+            $data['today_due'] = $row->today_due;
         }
-        
+        $this->load->model('misc/Customer_payment');
+        $this->load->model('Advance_payment_model');
+        $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection();
+        $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Cash in Hand';
@@ -83,4 +83,5 @@ class Report extends CI_Controller {
         $data['Title'] = 'Customer Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/customer_due_and_payment', $data);
     }
+
 }

@@ -38,7 +38,7 @@
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Due Payment Amount</h3>
+                        <h3 class="box-title">Due Payment Amount (Cash Only )</h3>
                     </div>
                     <div class="box-body">
                         <?php echo form_open(); ?>
