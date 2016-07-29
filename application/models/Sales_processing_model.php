@@ -161,7 +161,14 @@ class Sales_processing_model extends CI_Model {
         );
         $this->db->insert('sales_total_sales', $data) or $this->exception_handler('failed to insert data on sales_total_sales');
         $this->Master_reconcillation_model->add_total_sale($this->total_amount);
-        return $this->db->insert_id();
+        $this->id_total_sales = $this->max_id_total_sales();
+        return $this->id_total_sales;
+    }
+
+    function max_id_total_sales() {
+        $sql = "SELECT max(`id_total_sales`) as max_id_total_sales FROM `sales_total_sales`";
+        $result = $this->db->query($sql)->result();
+        return $result[0]->max_id_total_sales;
     }
 
     function insert_on_sale_table($id_total_sales, $item_selection) {
