@@ -11,7 +11,7 @@ if (!defined('BASEPATH')) {
  */
 class Customer_payment extends CI_Model {
 
-    function add($customer_id, $payment_amount, $id_payment_method = 1) {
+    function due_payment($customer_id, $payment_amount, $id_payment_method = 1) {
         $this->load->model('misc/Customer_due');
         $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
         if ($id_payment_method == 1) {

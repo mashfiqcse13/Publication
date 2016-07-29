@@ -16,11 +16,11 @@ class Advance_payment_model extends CI_Model {
         $current_total_due = $this->Customer_due->current_total_due($id_customer);
         if ($current_total_due > 0) {
             if ($current_total_due >= $amount) {
-                $this->Customer_payment->add($id_customer, $amount);
+                $this->Customer_payment->due_payment($id_customer, $amount);
                 return TRUE;
             } else {
                 $amount -= $current_total_due;
-                $this->Customer_payment->add($id_customer, $current_total_due);
+                $this->Customer_payment->due_payment($id_customer, $current_total_due);
             }
         }
 
@@ -134,6 +134,16 @@ class Advance_payment_model extends CI_Model {
             return 0;
         } else {
             return $result[0]->today_collection;
+        }
+    }
+    
+    function total_advance_payment_balance(){
+        $sql = "SELECT sum(`balance`) as total_advance_payment_balance FROM `party_advance`";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->total_advance_payment_balance)) {
+            return 0;
+        } else {
+            return $result[0]->total_advance_payment_balance;
         }
     }
 

@@ -29,6 +29,8 @@ class Customer_due extends CI_Model {
                 `total_due` = `total_due`+'$amount' 
             WHERE `customer_due`.`id_customer` = $id_customer;";
         $this->db->query($sql);
+        $this->load->model('misc/Master_reconcillation_model');
+        $this->Master_reconcillation_model->add_due($amount);
         return TRUE;
     }
 
@@ -50,6 +52,8 @@ class Customer_due extends CI_Model {
                 `total_due` = `total_due`-'$amount' 
             WHERE `customer_due`.`id_customer` = $id_customer;";
             $this->db->query($sql);
+            $this->load->model('misc/Master_reconcillation_model');
+            $this->Master_reconcillation_model->reduce_due($amount);
             return TRUE;
         } else {
             return FALSE;
@@ -115,6 +119,16 @@ class Customer_due extends CI_Model {
         $this->table->set_template($template);
         $output = $this->table->generate($table_data);
         return $output;
+    }
+
+    function total_due() {
+        $sql = "SELECT sum(`total_due`) as total_due FROM `customer_due` ";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->total_due)) {
+            return 0;
+        } else {
+            return $result[0]->total_due;
+        }
     }
 
 }

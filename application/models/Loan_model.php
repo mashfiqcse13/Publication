@@ -28,7 +28,7 @@ class Loan_model extends CI_Model {
         $this->db->from('loan');
         $this->db->join('employee', 'loan.id_employee = employee.id_employee', 'left');
         $this->db->join('loan_payment', 'loan.id_loan = loan_payment.id_loan', 'left');
-        
+
         $this->db->where('loan.id_employee', $id);
         $query = $this->db->get();
         return $query->result();
@@ -43,6 +43,7 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
     function loan_info() {
         $this->db->select('*');
         $this->db->from('loan');
@@ -50,6 +51,7 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
     function loan_info_by_status($status) {
         $this->db->select('*');
         $this->db->from('loan');
@@ -58,7 +60,7 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    
+
     function loan_info_by_employee($employee) {
         $this->db->select('*');
         $this->db->from('loan');
@@ -67,8 +69,8 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    
-    function loan_info_by_date($from,$to){
+
+    function loan_info_by_date($from, $to) {
         $this->db->select('*');
         $this->db->from('loan');
         $this->db->join('employee', 'loan.id_employee = employee.id_employee', 'left');
@@ -77,9 +79,10 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    
+
     function employee_loan_by_range($date) {
-        $condition = "date_taken_loan BETWEEN " . "'" . $date['date1'] . "'" . " AND " . "'" . $date['date2'] . "'";;
+        $condition = "date_taken_loan BETWEEN " . "'" . $date['date1'] . "'" . " AND " . "'" . $date['date2'] . "'";
+        ;
         $this->db->select('*');
         $this->db->from('loan');
         $this->db->join('employee', 'loan.id_employee = employee.id_employee', 'left');
@@ -90,7 +93,6 @@ class Loan_model extends CI_Model {
 //        $this->db->where('date_taken_loan <=', $to);
         $query = $this->db->get();
         return $query->result();
-    }  
-   
+    }
 
 }

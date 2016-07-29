@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-                <div class="row">
+        <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -94,7 +94,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-                                            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
@@ -107,13 +107,26 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            
-                        <div class="col-lg-3 col-xs-6">
+
+            <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3><?php echo $today_bank; ?> TK</h3>
                         <p>Today Total Bank Payment</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-pricetag-outline"></i>
+                    </div>
+                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3><?php echo $advance_payment_balance; ?> TK</h3>
+                        <p>Party Total Advance Payment</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>

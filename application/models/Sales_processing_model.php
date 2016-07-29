@@ -55,6 +55,7 @@ class Sales_processing_model extends CI_Model {
         $this->load->model('misc/Customer_payment');
         $this->load->model('Stock_model');
         $this->load->model('Advance_payment_model');
+        $this->load->model('misc/Master_reconcillation_model');
 
         $this->id_customer = $this->input->post('id_customer');
         $this->discount_percentage = $this->input->post('discount_percentage');
@@ -92,22 +93,29 @@ class Sales_processing_model extends CI_Model {
     }
 
     function ExecuteCaseType1() {
+        $this->load->model('Bank_model');
+        $this->Bank_model->bank_transection($this->bank_account_id, 1, $this->bank_payment, $this->bank_check_no, 1);       //accepting bank payment
         if ($this->dues_unpaid > 0 && $this->bank_payment > 0) {
-            $this->load->model('Bank_model');
-            $this->Bank_model->bank_transection($this->bank_account_id, 1, $this->bank_payment, $this->bank_check_no, 1);
-
-            $due_bank_payment = abs($this->bank_payment - $this->dues_unpaid);
-            $this->bank_payment = $this->bank_payment - $due_bank_payment;
-            $this->dues_unpaid = $this->dues_unpaid - $due_bank_payment;
-
-            $this->Customer_payment->add($this->id_customer, $due_bank_payment, 3);
+            if ($this->bank_payment >= $this->dues_unpaid) {
+                $this->Customer_payment->due_payment($this->id_customer, $this->dues_unpaid, 3);
+                $this->bank_payment = $this->bank_payment - $this->dues_unpaid;
+                $this->dues_unpaid = 0;
+            } else {
+                $this->Customer_payment->due_payment($this->id_customer, $this->bank_payment, 3);
+                $this->bank_payment = 0;
+                $this->dues_unpaid = $this->dues_unpaid - $this->bank_payment;
+            }
         }
         if ($this->dues_unpaid > 0 && $this->cash_payment > 0) {
-            $due_cash_payment = abs($this->cash_payment - $this->dues_unpaid);
-            $this->cash_payment = $this->cash_payment - $due_cash_payment;
-            $this->dues_unpaid = $this->dues_unpaid - $due_cash_payment;
-
-            $this->Customer_payment->add($this->id_customer, $due_cash_payment, 1);
+            if ($this->cash_payment >= $this->dues_unpaid) {
+                $this->Customer_payment->due_payment($this->id_customer, $this->dues_unpaid, 1);
+                $this->cash_payment = $this->cash_payment - $this->dues_unpaid;
+                $this->dues_unpaid = 0;
+            } else {
+                $this->Customer_payment->due_payment($this->id_customer, $this->cash_payment, 1);
+                $this->cash_payment = 0;
+                $this->dues_unpaid = $this->dues_unpaid - $this->cash_payment;
+            }
         }
         $total_paid = $this->bank_payment + $this->cash_payment;
         $total_due = $this->total_amount - $total_paid;
@@ -152,6 +160,7 @@ class Sales_processing_model extends CI_Model {
             'total_due' => $total_due
         );
         $this->db->insert('sales_total_sales', $data) or $this->exception_handler('failed to insert data on sales_total_sales');
+        $this->Master_reconcillation_model->add_total_sale($this->total_amount);
         return $this->db->insert_id();
     }
 

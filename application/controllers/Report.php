@@ -43,6 +43,7 @@ class Report extends CI_Controller {
         $this->load->model('Advance_payment_model');
         $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection();
         $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
+        $data['advance_payment_balance'] = $this->Advance_payment_model->total_advance_payment_balance();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -82,6 +83,33 @@ class Report extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/customer_due_and_payment', $data);
+    }
+
+    function master_reconcillation() {
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Master reconcillation';
+
+        $crud = new grocery_CRUD();
+        $crud->set_table('master_reconcillation')
+                ->set_subject('Master reconcillation')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_add();
+
+        $data['date_range'] = $this->input->get('date_range');
+        $date = explode('-', $data['date_range']);
+        if ($data['date_range'] != '') {
+            $from_date = date('Y-m-d', strtotime($date[0]));
+            $to_date = date('Y-m-d', strtotime($date[0]));
+            $crud->where("date(`date`) between '$from_date' and '$to_date'");
+        }
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+
+        $this->load->view($this->config->item('ADMIN_THEME') . 'report/master_reconcillation', $data);
     }
 
 }

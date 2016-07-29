@@ -29,6 +29,8 @@ class Cash extends CI_Model {
                 `balance` = `balance`+'$amount' 
             WHERE `cash`.`id_cash` = 1;";
         $this->db->query($sql);
+        $this->load->model('misc/Master_reconcillation_model');
+        $this->Master_reconcillation_model->add_cash($amount);
         return TRUE;
     }
 
@@ -55,15 +57,16 @@ class Cash extends CI_Model {
                 `balance` = `balance`-'$amount' 
             WHERE `cash`.`id_cash` = 1;";
             $this->db->query($sql);
+            $this->load->model('misc/Master_reconcillation_model');
+            $this->Master_reconcillation_model->reduce_cash($amount);
             return TRUE;
         } else {
             return FALSE;
         }
     }
-    
-    
+
     function add_revert($amount) {
-       $current = $this->db->select('*')
+        $current = $this->db->select('*')
                 ->from('cash')
                 ->where('id_cash', 1)
                 ->get()
@@ -75,13 +78,16 @@ class Cash extends CI_Model {
                 `balance` = `balance`-'$amount' 
             WHERE `cash`.`id_cash` = 1;";
             $this->db->query($sql);
+            $this->load->model('misc/Master_reconcillation_model');
+            $this->Master_reconcillation_model->reduce_cash($amount);
             return TRUE;
         } else {
             return FALSE;
         }
     }
-        function reduce_revert($amount) {
-       $current = $this->db->select('*')
+
+    function reduce_revert($amount) {
+        $current = $this->db->select('*')
                 ->from('cash')
                 ->where('id_cash', 1)
                 ->get()
@@ -93,11 +99,22 @@ class Cash extends CI_Model {
                 `balance` = `balance`+'$amount' 
             WHERE `cash`.`id_cash` = 1;";
             $this->db->query($sql);
+            $this->load->model('misc/Master_reconcillation_model');
+            $this->Master_reconcillation_model->add_cash($amount);
             return TRUE;
         } else {
             return FALSE;
         }
     }
-    
+
+    function cash_in_hand() {
+        $sql = "SELECT sum(`balance`) as balance FROM `cash`";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->balance)) {
+            return 0;
+        } else {
+            return $result[0]->balance;
+        }
+    }
 
 }
