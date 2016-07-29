@@ -80,6 +80,15 @@ class Salary extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/payment', $data);
     }
 
+    function set_status_advance_salary($value) {
+        if ($value == 1) {
+            return'<b>Partial Paid</b>';
+        }
+        if ($value == 2) {
+            return'<b>Full PAID</b>';
+        }
+    }
+    
     function set_value($value) {
         if ($value == 1) {
             return'<b>ANNOUNCED</b>';
@@ -281,7 +290,7 @@ class Salary extends CI_Controller {
                             . '</select>';
 //                    return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
 //                            . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
-                })
+                })->callback_column('status_salary_advance',array($this,'set_status_advance_salary'))
                 ->order_by('id_salary_advance', 'desc')
                 ->unset_fields('amount_paid_salary_advance');
         $output = $crud->render();

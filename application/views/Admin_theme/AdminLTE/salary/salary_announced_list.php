@@ -167,7 +167,7 @@
                             <?php
                         }
                         ?>
-                        <form target="_new" action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
+                        <form action="<?php echo base_url(); ?>index.php/Salary/save_announced" method="post" id="salary">
                             <table id="example1" class="table table-bordered table-hover">
 
                                 <thead>

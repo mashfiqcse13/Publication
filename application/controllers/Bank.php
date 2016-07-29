@@ -30,20 +30,7 @@ class Bank extends CI_Controller {
     }
 
     function index() {
-        $crud = new grocery_CRUD();
-        $crud->set_table('bank_balance');
-        $crud->unset_add();
-        $crud->unset_edit();
-        $crud->unset_delete();
-
-        // $crud->set_relation('id_account', 'bank_account', $related_title_field)
-        $output = $crud->render();
-        $data['glosary'] = $output;
-
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Bank Balance';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_balance', $data);
+        redirect('bank/bank_balance');
     }
 
     function bank() {

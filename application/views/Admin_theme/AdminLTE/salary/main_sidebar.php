@@ -20,9 +20,9 @@
             
             <li><?php echo anchor('salary/salary_bonus_announcement', '<i class="fa fa-plus-circle"></i>  <span>Bonus Announcement</span>'); ?></li>
                                    
-            <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announcement</span>'); ?></li>
+            <li><?php echo anchor('salary/salary_announced', '<i class="fa fa-plus-circle"></i>  <span>Salary Announcement Status</span>'); ?></li>
             
-            <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Salary Advance</span>'); ?></li>
+            <li><?php echo anchor('salary/salary_advanced', '<i class="fa fa-plus-circle"></i>  <span>Advance Salary</span>'); ?></li>
             
             <li><?php echo anchor('salary/salary_payment', '<i class="fa fa-plus-circle"></i>  <span>Salary Payment</span>'); ?></li>
             
