@@ -88,7 +88,7 @@ class Salary extends CI_Controller {
             return'<b>Full PAID</b>';
         }
     }
-    
+
     function set_value($value) {
         if ($value == 1) {
             return'<b>ANNOUNCED</b>';
@@ -142,12 +142,12 @@ class Salary extends CI_Controller {
             return'<b>December</b>';
         }
     }
-    
+
     function paid_salary_payment() {
 //        echo '<pre>'; print_r($_POST);exit();
         $this->load->model('misc/cash', 'cash_model');
         $status = $this->input->post('status');
-        
+
         $salary = $this->input->post('amount_salary_payment');
 
         $loan_id = $this->input->post('id_loan');
@@ -179,20 +179,20 @@ class Salary extends CI_Controller {
                         $loan['payment_date_loan_payment'] = date('Y-m-d H:i:s', now());
                         $this->Salary_model->save_info('loan_payment', $loan);
                     }
-                    
-                    if(!empty($advance_id[$j])){
+
+                    if (!empty($advance_id[$j])) {
                         
                     }
-                    
+
                     if (!empty($advance_id[$j])) {
                         $advance_payment['id_salary_advance'] = $advance_id[$j];
                         $advance_payment['payment_date_salary_advance_payment'] = date('Y-m-d H:i:s', now());
                         $advance_payment['paid_amount_salary_advance_payment'] = $advance_amount[$j];
                         $this->Salary_model->save_info('salary_advance_payment', $advance_payment);
 //                        update salary advance
-                        $update_advance['amount_paid_salary_advance'] =  $advance_amount[$j];
+                        $update_advance['amount_paid_salary_advance'] = $advance_amount[$j];
                         $update_advance['status_salary_advance'] = '2';
-                        $this->Salary_model->update_advance($update_advance,$advance_amount[$j],$advance_id[$j]);
+                        $this->Salary_model->update_advance($update_advance, $advance_amount[$j], $advance_id[$j]);
                     }
 
                     if (empty($loan_payment[$j]) || empty($advance_id[$j])) {
@@ -213,7 +213,7 @@ class Salary extends CI_Controller {
 //        if (isset($month) && isset($year)) {
 //            $data['employees'] = $this->Salary_model->select_all_employee_by_month_year($month, $year);
 //        } else {
-            $data['employees'] = $this->Salary_model->select_all_employee();
+        $data['employees'] = $this->Salary_model->select_all_employee();
 //        }
 //        echo '<pre>';print_r($data['employees']);exit();
         $salary = $data['employees'];
@@ -247,7 +247,7 @@ class Salary extends CI_Controller {
                     $data['amount_salary_payment'] = $basic[$j];
                     $data['status_salary_payment'] = 1;
                     $payment_id = $this->Salary_model->save_info('salary_payment', $data);
-                    
+
                     if ($bonus[$j] == 0) {
                         $info['id_salary_bonus_type'] = $bonus[$j];
                         $info['amount_salary_bonus'] = 0;
@@ -272,7 +272,6 @@ class Salary extends CI_Controller {
         redirect('Salary/salary_announced');
     }
 
-
     function salary_advanced() {
         $crud = new grocery_CRUD();
         $crud->set_table('salary_advance')
@@ -290,7 +289,7 @@ class Salary extends CI_Controller {
                             . '</select>';
 //                    return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
 //                            . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
-                })->callback_column('status_salary_advance',array($this,'set_status_advance_salary'))
+                })->callback_column('status_salary_advance', array($this, 'set_status_advance_salary'))
                 ->order_by('id_salary_advance', 'desc')
                 ->unset_fields('amount_paid_salary_advance');
         $output = $crud->render();

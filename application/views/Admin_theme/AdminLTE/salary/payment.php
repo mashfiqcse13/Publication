@@ -164,7 +164,7 @@
                                     <?php
                                 }
                                 ?>
-                                <form target="_new" action="<?php echo site_url('salary/paid_salary_payment'); ?>" method="post" id="salary">
+                                <form  action="<?php echo site_url('salary/paid_salary_payment'); ?>" method="post" id="salary">
                                     <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr style="background:#ddd">

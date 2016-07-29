@@ -27,7 +27,7 @@
 
                     </div>
                     <div class="panel-body">
-                        <form target="_new" action="<?php echo site_url('/Salary/paid_salary_payment'); ?>" method="post" class="form-horizontal" name="form">
+                        <form  action="<?php echo site_url('/Salary/paid_salary_payment'); ?>" method="post" class="form-horizontal" name="form">
                             <div class="form-group ">
                                 <label class="col-md-3">Employee Name</label>
                                 <div class="col-md-9">
