@@ -241,7 +241,7 @@
                                                         } else if ($value->status_salary_payment == 1) {
                                                             ?>
                                                             <label for="">
-                                                                <input type="checkbox" name="status[]" value="<?php echo $value->id_employee; ?>" /> paid
+                                                                <input type="checkbox" name="status[<?php echo $sl; ?>]" value="<?php echo $value->id_employee; ?>" /> paid
                                                             </label>
                                                             <?php
                                                         }
