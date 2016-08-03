@@ -110,10 +110,11 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-12">
-                                <label for="payment_type">Payment Type:</label> 
-                                <select name="payment" id="payment" class="form-control select2">
-                                    <option value="2">Add to Advanced</option>
-                                    <option value="1">Cash</option>
+                                <label for="payment_type">Payment Type: </label> 
+                                
+                                <select name="payment" id="payment" class="form-control select disabled" >
+                                    <option value="2" selected="selected">Add to Advanced</option>
+                                    <option value="1" class="hidden">Cash</option>
                                 </select>
 <!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
                                  <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced

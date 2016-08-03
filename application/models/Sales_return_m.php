@@ -70,10 +70,12 @@ class Sales_return_m extends CI_Model {
     }
 
       function insert_return_item($post){
+          
               $this->load->model('misc/cash');
               $this->load->model('misc/customer_due');  
               $this->load->model('misc/Stock_perpetual'); 
               $this->load->model('Stock_model');
+              $this->load->model('advance_payment_model');
                 
               
                 $memo_ID = $this->input->post('id_total_sales');
@@ -105,9 +107,33 @@ class Sales_return_m extends CI_Model {
                             $id[] = $this->db->insert_id();
                             $values+=$data_add['total'];
                            }
+                           
+                           $this->db->query("UPDATE `sales` "
+                                            . "SET `quantity`=quantity-$quantity[$key],"
+                                            . "`total_cost`=total_cost-$quantity[$key]*$price_per_book[$key],"
+                                            . "`sub_total`=sub_total-$quantity[$key]*$price_per_book[$key]"
+                                            . " WHERE id_total_sales=$memo_ID[$key] AND "
+                                            . " id_item=$book_ID[$key]");
                                                       
 
                 }//insert sales_current_sales_return table
+                
+                
+                
+                //update_sales_table
+                
+//            $tmp_data_sales = array(
+//                'id_total_sales' => $id_total_sales,
+//                'id_item' => $value['item_id'],
+//                'quantity' => $value['item_quantity'],
+//                'price' => $value['sale_price'],
+//                'total_cost' => $value['total'],
+//                'discount' => 0,
+//                'sub_total' => $value['total'],
+//            );
+//            array_push($data_sales, $tmp_data_sales);
+            
+            
                 
                 $stock_add=array(); 
                 $data_delete=array();
@@ -119,7 +145,8 @@ class Sales_return_m extends CI_Model {
                     $amount=$quantity[$key];
                     if(!empty($amount)){
                         $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount, $type_code = 3) ;
-                        $this->Stock_model->stock_add($id_item, $amount);
+                        $this->Stock_model->stock_add($id_item, $amount);                        
+                        
                     }
    
                     //update stock,stock_perpetual_register section end
@@ -138,10 +165,12 @@ class Sales_return_m extends CI_Model {
                
               $this->db->query("UPDATE `sales_total_sales` "
                       . "SET `sub_total`=sub_total-$values,"
-                      . "`total_amount`=total_amount-$values,`total_due`=total_due-$values"
+                      . "`total_amount`=total_amount-$values, "
+                      . " total_paid = total_paid-$values"
                       . " WHERE id_total_sales=$memo_ID_update");
               
               $this->customer_due->reduce($contact_ID,$values);
+              $this->advance_payment_model->payment_add($contact_ID, $values, 2);
               $this->cash->reduce($values);
               
 

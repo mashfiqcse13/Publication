@@ -135,19 +135,21 @@ class Old_book_model extends CI_Model {
 //        
 //        advanced paymend update
         if($payment_type == 2 && $total_paid > 0 ){
-            $this->load->model('party_advance_model');
-            $this->party_advance_model->add($total_paid , $id_customer);
-            
-        $data = array(
-            'id_customer' => $id_customer,
-            'id_payment_method' => '4',
-            'amount_paid' => $total_amount,  
-            'date_payment' => date('Y-m-d h:i:u'),          
-            
-        );
+            $this->load->model('advance_payment_model');
+            $this->advance_payment_model->payment_add($id_customer, $total_paid, 4);
+                    
+                    
+//            
+//        $data = array(
+//            'id_customer' => $id_customer,
+//            'id_payment_method' => '4',
+//            'amount_paid' => $total_amount,  
+//            'date_payment' => date('Y-m-d h:i:u'),          
+//            
+//        );
                 
 
-        $this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
+        //$this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
 
 
             
