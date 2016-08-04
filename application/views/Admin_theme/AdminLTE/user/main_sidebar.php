@@ -20,7 +20,8 @@
             
             <li><?php echo anchor('users_info/user_list', '<i class="fa fa-plus-circle"></i>  <span>Users List</span>'); ?></li>
            <li><?php echo anchor('users_info/user_access_area', '<i class="fa fa-plus-circle"></i>  <span>Users Access Area</span>'); ?></li>
-           <li><?php echo anchor('users_info/user_access_group', '<i class="fa fa-plus-circle"></i>  <span>Users Access Group</span>'); ?></li>
+           <li><?php echo anchor('users_info/user_access_group', '<i class="fa fa-plus-circle"></i>  <span>Users Access Group Add</span>'); ?></li>
+           <li><?php echo anchor('users_info/user_access_group_list', '<i class="fa fa-plus-circle"></i>  <span>Users Access Group List</span>'); ?></li>
            <li><?php echo anchor('users_info/user_group_element', '<i class="fa fa-plus-circle"></i>  <span>Users Group Element</span>'); ?></li>
            
            

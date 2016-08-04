@@ -28,10 +28,31 @@
                     </div><!-- /.box-header -->
                     
                     <div class="box-body">
-                        <?php  
+                        <?php echo anchor('users_info/user_access_group', '<span class="btn btn-primary"> <i class="fa fa-plus-circle"></i>  Users Access Group Add</span>'); ?>           
+                       <?php
+                       if($this->session->userdata('user_access_message')){ ?>
+                        <div class="" >
+                            <div class="box box-default box-solid">
+                              <div class="box-header with-border">
+                                <?php 
+                           echo $this->session->userdata('user_access_message');
+                           $this->session->unset_userdata('user_access_message');
+                           ?>
+
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                                <!-- /.box-tools -->
+                              </div>
+                              
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                            
+                      <?php }
 
                        echo $glosary->output;
-                    ?>
+                        ?>
                     </div>
                 </div>
             </div>

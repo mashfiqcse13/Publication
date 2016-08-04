@@ -24,7 +24,7 @@
 
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">User access group</h3>
+                        <h3 class="box-title"><?= $Title ?></h3>
                     </div><!-- /.box-header -->
                     
                     <div class="box-body">
