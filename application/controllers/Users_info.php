@@ -180,5 +180,59 @@ class Users_info extends CI_Controller {
         $this->email->set_alt_message($this->load->view('email/' . $type . '-txt', $data, TRUE));
         $this->email->send();
     }
+    
+    function user_access_group(){
+        
+        $this->load->model('tank_auth/user_access_model');
+        $data['access_area']=$this->user_access_model->get_user_access_area();
+        $btn=$this->input->post('btn_submit');
+        if($btn){
+            
+            $data['insert']=$this->user_access_model->insert_access_group($_POST);
+            //$access_area=$this->input->post('access_area');
+            
+        
+            echo '<pre>';
+            print_r($data);
+        
+        }
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'User Access Group';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group', $data);
+        
+    }
+    
+    function user_access_area() {
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+        $crud->set_table('user_access_area');
 
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'User Access';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_area', $data);
+    }
+    
+    function user_group_element(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+        $crud->set_table('user_group_elements')
+                ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
+                ->set_relation('id_user_access_area', 'user_access_area', 'user_access_area_title')
+                ->unset_add()
+                ->unset_edit()
+                ->unset_delete();
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'User Access element';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_element', $data);
+    }
 }
