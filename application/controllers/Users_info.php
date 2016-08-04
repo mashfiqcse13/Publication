@@ -223,9 +223,11 @@ class Users_info extends CI_Controller {
         $crud->set_table('user_group_elements')
                 ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
                 ->set_relation('id_user_access_area', 'user_access_area', 'user_access_area_title')
-                ->unset_add()
-                ->unset_edit()
-                ->unset_delete();
+                ->display_as('id_user_access_group','User Group Name')
+                ->display_as('id_user_access_area','User Access Area Name')
+                ->unset_add();
+                //->unset_edit()
+                //->unset_delete();
 
         $output = $crud->render();
         $data['glosary'] = $output;
