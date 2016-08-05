@@ -253,4 +253,21 @@ class Users_info extends CI_Controller {
         $data['Title'] = 'User Access element';
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_element', $data);
     }
+    function user_group_assign_to_user(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+        $crud->set_table('user_access_area_permission')
+                ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
+                ->set_relation('user_id', 'users', 'username')
+                ->display_as('id_user_access_group','User Group Name')
+                ->display_as('user_id','User Name')->order_by('id_user_access_group');
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'User Group Allocation';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_element', $data);
+    }
 }

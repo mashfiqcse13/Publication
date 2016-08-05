@@ -24,26 +24,24 @@ class User_access_model extends ci_model {
     }
 
     function generate_buffer() {
-        $this->db->select('*');
-        $this->db->from('users');
-        $this->db->join('user_access_area_permission', 'users.id = user_access_area_permission.user_id', 'left');
-        $this->db->join('user_access_group', 'user_access_area_permission.id_user_access_group = user_access_group.id_user_access_group', 'left');
-        $this->db->join('user_group_elements', 'user_access_group.id_user_access_group = user_group_elements.id_user_access_group', 'left');
-        $this->db->join('user_access_area', 'user_group_elements.id_user_access_area = user_access_area.id_user_access_area', 'left');
-        $results = $this->db->get()->result();
+        $sql = "SELECT  `user_id` ,  `id_user_access_area` 
+                    FROM  `user_access_area_permission` 
+                    NATURAL JOIN  `user_group_elements` ";
+        $results = $this->db->query($sql)->result();
         $this->user_access_buffe = array();
         foreach ($results as $result) {
-            $this->user_access_buffer['user_id']['access_area_id'] = TRUE;
+            $this->user_access_buffer[$result->user_id][$result->id_user_access_area] = TRUE;
         }
     }
 
-    function if_user_has_permission($id_user_access_area) {
+    function if_user_has_permission($id_user_access_area, $user_id = "from_session") {
         if ($this->user_access_buffer == false) {
             $this->generate_buffer();
         }
-        $user_id = $_SESSION['user_id'];
-        $result = $this->user_access_buffer[$user_id][$id_user_access_area];
-        if ($result == TRUE) {
+        if ($user_id == 'from_session') {
+            $user_id = $_SESSION['user_id'];
+        }
+        if (!empty($this->user_access_buffer[$user_id][$id_user_access_area]) && $this->user_access_buffer[$user_id][$id_user_access_area] == TRUE) {
             return TRUE;
         } else {
             return FALSE;
