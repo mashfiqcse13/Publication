@@ -24,7 +24,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Add items to the stock</h3>
+                        <h3 class="box-title"><strong>Add item to the stock</strong></h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->

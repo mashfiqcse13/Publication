@@ -1,6 +1,7 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Description of Stock
  *
@@ -24,11 +25,7 @@ class Stock extends CI_Controller {
     }
 
     function index() {
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Stock';
-
-        $this->load->view($this->config->item('ADMIN_THEME') . 'stock/stock_dashboard', $data);
+        $this->stock_perpetual();
     }
 
     function stock_perpetual($cmd = false) {
@@ -52,7 +49,7 @@ class Stock extends CI_Controller {
 //            $crud->where($get_where_clause);
             $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]);
         }
-        
+
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -78,7 +75,7 @@ class Stock extends CI_Controller {
                 ->set_subject('Final stock')
                 ->set_relation('id_item', 'items', 'name')
                 ->set_relation('id_item', 'items', 'name')
-                ->order_by('id_item', 'desc')
+                ->order_by('id_item', 'desc')->display_as('id_item', 'Item Name')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
@@ -90,9 +87,8 @@ class Stock extends CI_Controller {
         $data['Title'] = 'Final stock';
         $this->load->view($this->config->item('ADMIN_THEME') . 'stock/final_stock', $data);
     }
-    
-    
-    function stock_perpetual_report(){
+
+    function stock_perpetual_report() {
         
     }
 

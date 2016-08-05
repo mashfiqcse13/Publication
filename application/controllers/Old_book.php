@@ -68,7 +68,7 @@ class Old_book extends CI_Controller {
         $data['memo_list'] = $this->memo_list();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Old Book Return';
+        $data['Title'] = 'Old Book Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_return', $data);
     }
 
@@ -91,7 +91,7 @@ class Old_book extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Old Book Return';
+        $data['Title'] = 'New Entry Of Old Book ';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_form', $data);
     }
     
@@ -103,7 +103,7 @@ class Old_book extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Old Book Sales/Rebind';
+        $data['Title'] = 'New Entry of Rebined/Sale';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_book_sale', $data);  
     }
     
@@ -139,7 +139,7 @@ class Old_book extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Old Book Sales/Rebind List';
+        $data['Title'] = 'Rebine/Sale Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/list_old_book_sale_rebind', $data);
     }
     

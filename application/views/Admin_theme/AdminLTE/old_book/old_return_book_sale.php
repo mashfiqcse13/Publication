@@ -114,7 +114,7 @@
                                 <select name="process" id="process" class="form-control select2">
                                     <option value="0">Select Process Type</option>
                                     <option value="2">Send to Rebind</option>
-                                    <option value="1">Sales</option>
+                                    <option value="1">Sale</option>
                                     
                                 </select>
 <!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
@@ -122,7 +122,7 @@
                                 -->
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="id_contact">Total Price</label>
+                                <label for="id_contact">Total Sale Price</label>
                                 <input type="number" name="price" class="form-control" />
                             </div>
 <!--                            <div class="form-group col-lg-6">
