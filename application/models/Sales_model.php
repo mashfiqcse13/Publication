@@ -181,7 +181,7 @@ class Sales_model extends CI_Model {
         return $this->table->generate();
     }
 
-    function get_total_sales_info($from = false, $to, $id_customer) {
+    function get_total_sales_info($from, $to, $id_customer) {
         $this->db->select('*');
         $this->db->from('sales_total_sales');
         $this->db->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
