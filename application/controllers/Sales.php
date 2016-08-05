@@ -44,16 +44,23 @@ class Sales extends CI_Controller {
                     return site_url('sales/memo/' . $primary_key);
                 });
         $data['date_range'] = $this->input->get('date_range');
+        $id_customer = $this->input->get('id_customer');
         $date = explode('-', $data['date_range']);
+        $from = '';$to = '';
         if ($data['date_range'] != '') {
+            $from = $date[0];
+            $to = $date[1];
+        }
+        if ($data['date_range'] != '' || !empty($id_customer)) {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
-            $data['total_sales'] = $this->Sales_model->get_total_sales_info($date[0], $date[1]);
+            $data['total_sales'] = $this->Sales_model->get_total_sales_info($from, $to, $id_customer);
         }
 
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['memo_list'] = $this->memo_list();
+        $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total sales';

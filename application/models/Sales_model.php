@@ -77,6 +77,17 @@ class Sales_model extends CI_Model {
             LEFT join sales_total_sales on customer.id_customer=sales_total_sales.id_customer
             where sales_total_sales.id_total_sales='$total_sales_id'";
         $data = $this->db->query($sql)->result_array();
+//        $this->db->select('customer.name as party_name,customer.district as district, customer.address as caddress,customer.phone as phone,customer.id_customer as code,sales_total_sales.id_total_sales as memoid,sales_total_sales.issue_date as issue_date');
+//        $this->db->from('customer');
+//        $this->db->join('sales_total_sales','customer.id_customer=sales_total_sales.id_customer','left');
+//        if(!empty($total_sales_id)){
+//            $this->db->where('sales_total_sales.id_total_sales',$total_sales_id);
+//        }
+//        if(!empty($id_customer)){
+//            $this->db->where('sales_total_sales.id_customer',$id_customer);
+//        }
+//        $data = $this->db->get()->result_array();
+//        print_r($data);exit();
         Return $data[0];
     }
 
@@ -107,6 +118,15 @@ class Sales_model extends CI_Model {
                     left join
                     `items`on `items`.`id_item`= `sales`.`id_item`
                     WHERE `id_total_sales` = $total_sales_id";
+//        $this->db->select('quantity.itemx.name,items.regular_price,price,sub_total');
+//        $this->db->from('sales');
+//        $this->db->join('items','items.id_item = sales.id_item','left');
+//        if(!empty($total_sales_id)){
+//            $this->db->where('id_total_sales',$total_sales_id);
+//        }
+//        if(!empty($id_customer)){
+//            $this->db->where('sales_total_sales.id_customer',$id_customer);
+//        }
         $rows = $this->db->query($sql)->result_array();
         $total_quantity = 0;
         $total_price = 0;
@@ -161,12 +181,16 @@ class Sales_model extends CI_Model {
         return $this->table->generate();
     }
 
-    function get_total_sales_info($from, $to) {
+    function get_total_sales_info($from = false, $to, $id_customer) {
         $this->db->select('*');
         $this->db->from('sales_total_sales');
         $this->db->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
-        $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
-        $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
+        if (!empty($id_customer)) {
+            $this->db->where('sales_total_sales.id_customer', $id_customer);
+        }if ($from != '1970-01-01') {
+            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
+            $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
+        }
         $this->db->order_by('sales_total_sales.issue_date');
         $query = $this->db->get();
         return $query->result();
