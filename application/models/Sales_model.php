@@ -32,7 +32,7 @@ class Sales_model extends CI_Model {
         foreach ($customers as $customer) {
             $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
         }
-        return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
+        return form_dropdown('id_customer', $data, NULL, ' class="select2"');
     }
 
     function get_party_due() {

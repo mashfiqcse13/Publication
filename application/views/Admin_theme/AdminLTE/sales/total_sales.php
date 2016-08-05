@@ -24,18 +24,7 @@
 
                 <div class="box only_print">
                     <div class="box-body">
-                        <div class="form-group col-md-2 text-left">
-                            <label>Search with Date Range:</label>
-                        </div>
                         <form action="<?= $base_url ?>index.php/sales/tolal_sales" method="get">
-                            <div class="form-group col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                                </div><!-- /.input group -->
-                            </div><!-- /.form group -->
                             <div class="form-group col-md-2 text-left">
 
                                 <label>Search By Party Id or Name:</label>
@@ -46,8 +35,19 @@
 
 
                             </div><!-- /.form group -->
+                            <div class="form-group col-md-2 text-left">
+                                <label>Search with Date Range:</label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
                             <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?php echo anchor(site_url('stock/stock_perpetual'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                            <?php echo anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                         </form>
 
                     </div>
@@ -114,7 +114,7 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-<!--                                        <th></th>-->
+    <!--                                        <th></th>-->
                                         <th>Customer Name</th>
                                         <th>Sub Total</th>
                                         <th>Total Amount</th>
