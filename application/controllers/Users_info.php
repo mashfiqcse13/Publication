@@ -221,7 +221,8 @@ class Users_info extends CI_Controller {
     function user_access_area() {
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
-        $crud->set_table('user_access_area');
+        $crud->set_table('user_access_area')
+                ->unset_add()->unset_delete();
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -238,11 +239,11 @@ class Users_info extends CI_Controller {
         $crud->set_table('user_group_elements')
                 ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
                 ->set_relation('id_user_access_area', 'user_access_area', 'user_access_area_title')
-                ->display_as('id_user_access_group','User Group Name')
-                ->display_as('id_user_access_area','User Access Area Name')
-                ->unset_add();
+                ->display_as('id_user_access_group','User Group Name')->order_by('id_user_access_group')
+//                ->unset_add()
                 //->unset_edit()
-                //->unset_delete();
+                //->unset_delete()
+                ->display_as('id_user_access_area','User Access Area Name');
 
         $output = $crud->render();
         $data['glosary'] = $output;

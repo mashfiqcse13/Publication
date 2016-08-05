@@ -14,43 +14,39 @@
 class User_access_model extends ci_model {
 
 //put your code here
-    private $user_access_buffer = array();
+    private $user_access_buffer = False;
 
     public function __construct() {
         parent::__construct();
+        if ($this->user_access_buffer == false) {
+            $this->generate_buffer();
+        }
+    }
+
+    function generate_buffer() {
         $this->db->select('*');
         $this->db->from('users');
         $this->db->join('user_access_area_permission', 'users.id = user_access_area_permission.user_id', 'left');
         $this->db->join('user_access_group', 'user_access_area_permission.id_user_access_group = user_access_group.id_user_access_group', 'left');
         $this->db->join('user_group_elements', 'user_access_group.id_user_access_group = user_group_elements.id_user_access_group', 'left');
         $this->db->join('user_access_area', 'user_group_elements.id_user_access_area = user_access_area.id_user_access_area', 'left');
-        $this->user_access_buffer = $this->db->get()->result();
-    }
-
-    function generate_buffer() {
-
-        $results = $this->user_access_buffer;
+        $results = $this->db->get()->result();
+        $this->user_access_buffe = array();
         foreach ($results as $result) {
-            $this->user_access_buffer['user_id'] = $result->user_id;
-            $this->user_access_buffer['access_area_id'] = $result->id_user_access_area;
+            $this->user_access_buffer['user_id']['access_area_id'] = TRUE;
         }
-
-//        $check = $this->generate_buffer($this->user_access_buffer['user_id'], $this->user_access_buffer['access_area_id']);
-//        if (isset($check)) {
-//            return true;
-//        } else {
-//            redirect('admin/memo_management');
-//        }
-//        return $this->user_access_buffer;
     }
 
-    function if_user_has_permission($access_id) {
-        $id = $_SESSION['user_id'];
-        $results = $this->user_access_buffer;
-        for ($i = 0; $i < count($results); $i++) {
-            if ($results[$i]->user_id == $id && $results[$i]->id_user_access_area == $access_id) {
-                return $results[$i];
-            }
+    function if_user_has_permission($id_user_access_area) {
+        if ($this->user_access_buffer == false) {
+            $this->generate_buffer();
+        }
+        $user_id = $_SESSION['user_id'];
+        $result = $this->user_access_buffer[$user_id][$id_user_access_area];
+        if ($result == TRUE) {
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 
