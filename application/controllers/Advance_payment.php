@@ -58,6 +58,8 @@ class Advance_payment extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance_payment_register')
+                ->columns('id_party_advance_payment_register', 'id_customer', 'id_payment_method', 'amount_paid', 'date_payment')
+                ->display_as('id_party_advance_payment_register',"Transaction ID")
                 ->set_subject('Payment Log')->display_as('id_customer','Customer name')->display_as('id_payment_method','Payment method')
                 ->set_relation('id_customer', 'customer', 'name')
                 ->set_relation('id_payment_method', 'payment_method', 'name_payment_method')
