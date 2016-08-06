@@ -17,7 +17,6 @@
             <li class="header">Advance payment</li>
 
             <li><?php echo anchor('advance_payment', '<i class="fa fa-plus-circle"></i>  <span>Dashboard</span>'); ?></li>
-            <li><?php echo anchor('advance_payment/payment_log', '<i class="fa fa-plus-circle"></i>  <span>Payment Log</span>'); ?></li>
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 

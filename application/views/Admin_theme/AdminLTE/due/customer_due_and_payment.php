@@ -33,11 +33,11 @@
                         <label class="col-md-3">Customer</label>
                         <div class="col-md-7">
                             <select class="form-control select2"style="width:100%;"  name="customer">
-                                <option>Select Customer</option>
+                                <option>Select Customer by Name or Code</option>
                                 <?php
                                 foreach ($customers as $customer) {
                                     ?>
-                                    <option value="<?php echo $customer->id_customer; ?>"><?php echo $customer->name; ?></option>
+                                    <option value="<?php echo $customer->id_customer; ?>"><?php echo $customer->id_customer." - ".$customer->name; ?></option>
                                     <?php
                                 }
                                 ?>
