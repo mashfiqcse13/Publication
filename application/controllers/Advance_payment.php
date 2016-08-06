@@ -30,7 +30,7 @@ class Advance_payment extends CI_Controller {
 //        print_r($amount);exit();
         if (!empty($id_customer) && !empty($amount)) {
             $this->Advance_payment_model->payment_add($id_customer, $amount,1) or die('failed');
-            redirect(current_url());
+            redirect("advance_payment/payment_log");
             die();
         }
 

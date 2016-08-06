@@ -92,7 +92,8 @@ class Due extends CI_Controller {
         if (!empty($amount) && $amount > 0) {
             $this->load->model('misc/Customer_payment');
             $this->Customer_payment->due_payment($customer_id, $amount);
-            redirect('due/make_payment/' . $customer_id);
+//            redirect('due/make_payment/' . $customer_id);
+            redirect("advance_payment/payment_log");
             die();
         }
 
