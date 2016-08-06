@@ -161,6 +161,7 @@
 
                                     <tr style="font-weight: bold">
                                         <td>Total :</td>
+                                        <td></td>
                                         <td><?php echo $sum_sub_total; ?></td>
                                         <td><?php echo $sum_total_amount; ?></td>
                                         <td></td>

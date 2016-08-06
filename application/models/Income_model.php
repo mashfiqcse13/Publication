@@ -8,10 +8,13 @@ class Income_model extends CI_Model {
     function income_report($date) {
         $date = $this->dateformatter($date);
 
-        $range_query = $this->db->query("SELECT name_expense,CONCAT('TK ',amount_income),DATE(date_income),description_income FROM `income` 
+//        $range_query = $this->db->query("SELECT name_expense,CONCAT('TK ',amount_income),DATE(date_income),description_income FROM `income` 
+//LEFT JOIN income_name on income_name.id_name_income=income.id_name_income 
+//WHERE date_income BETWEEN $date");
+        $range_query = $this->db->query("SELECT name_expense,amount_income,date_income,description_income FROM `income` 
 LEFT JOIN income_name on income_name.id_name_income=income.id_name_income 
 WHERE date_income BETWEEN $date");
-
+        return $range_query->result();
         $this->load->library('table');
         $this->table->set_heading(array('Income Name', 'Ammount', 'Date', 'Description'));
         $tmpl = array(
@@ -28,8 +31,15 @@ WHERE date_income BETWEEN $date");
             'row_alt_end' => '</tr>',
             'cell_alt_start' => '<td>',
             'cell_alt_end' => '</td>',
+            'tfoot_open' => '<tfoot class="ui-widget-header ui-priority-secondary">',
+            'footer_row_start' => '<tr>',
+            'footer_row_end' => '</tr>',
+            'footer_cell_start' => '<th>',
+            'footer_cell_end' => '</th>',
+            'tfoot_close' => '</tfoot>',
             'table_close' => '</table>'
         );
+        
 
         $this->table->set_template($tmpl);
         $this->table->set_caption('<h4><span class="pull-left">Date Range:' . $this->datereport($date) . '</span>'
