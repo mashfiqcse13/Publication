@@ -92,7 +92,7 @@
                     if (!isset($date_range)) {
                         ?>
                         <div class="box-header">
-                            <h3 class="box-title">Stock Perpitual Current View</h3>
+                            <h3 class="box-title">Sales Dashboard</h3>
                         </div><!-- /.box-header -->
 
                         <div class="box-body">
@@ -115,6 +115,7 @@
                                 <thead style="background: #DFF0D8;">
                                     <tr>
     <!--                                        <th></th>-->
+                                        <th>Memo No</th>
                                         <th>Customer Name</th>
                                         <th>Sub Total</th>
                                         <th>Total Amount</th>
@@ -144,6 +145,7 @@
                                         $sum_total_due += $sales->total_due;
                                         ?>
                                         <tr>
+                                            <td><?php echo $sales->id_total_sales; ?></td>
                                             <td><?php echo $sales->name; ?></td>
                                             <td><?php echo $sales->sub_total; ?></td>
                                             <td><?php echo $sales->total_amount; ?></td>
