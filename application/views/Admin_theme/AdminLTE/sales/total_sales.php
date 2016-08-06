@@ -18,7 +18,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="min-height: 1100px;">
         <div class="row">
             <div class="col-md-12">
 
@@ -120,8 +120,6 @@
                                         <th>Total Amount</th>
                                         <th>Discount Percentage</th>
                                         <th>Discount Amount</th>
-                                        <th>Cash</th>
-                                        <th>Bank Pay</th>
                                         <th>Total Paid</th>
                                         <th>Total Due</th>
                                         <th>Issue Date</th>
@@ -140,8 +138,8 @@
                                         $sum_sub_total += $sales->sub_total;
                                         $sum_total_amount += $sales->total_amount;
                                         $sum_discount_amount += $sales->discount_amount;
-                                        $sum_cash += $sales->cash;
-                                        $sum_bank_pay += $sales->bank_pay;
+//                                        $sum_cash += $sales->cash;
+//                                        $sum_bank_pay += $sales->bank_pay;
                                         $sum_total_paid += $sales->total_paid;
                                         $sum_total_due += $sales->total_due;
                                         ?>
@@ -151,8 +149,6 @@
                                             <td><?php echo $sales->total_amount; ?></td>
                                             <td><?php echo $sales->discount_percentage; ?></td>
                                             <td><?php echo $sales->discount_amount; ?></td>
-                                            <td><?php echo $sales->cash; ?></td>
-                                            <td><?php echo $sales->bank_pay; ?></td>
                                             <td><?php echo $sales->total_paid; ?></td>
                                             <td><?php echo $sales->total_due; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
@@ -167,8 +163,6 @@
                                         <td><?php echo $sum_total_amount; ?></td>
                                         <td></td>
                                         <td><?php echo $sum_discount_amount; ?></td>
-                                        <td><?php echo $sum_cash; ?></td>
-                                        <td><?php echo $sum_bank_pay; ?></td>
                                         <td><?php echo $sum_total_paid; ?></td>
                                         <td><?php echo $sum_total_due; ?></td>
                                         <td></td>

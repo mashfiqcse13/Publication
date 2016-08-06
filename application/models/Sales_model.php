@@ -32,6 +32,16 @@ class Sales_model extends CI_Model {
         foreach ($customers as $customer) {
             $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
         }
+        return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
+    }
+    function get_party_dropdown_as_customer() {
+        $customers = $this->db->get('customer')->result();
+
+        $data = array();
+        $data[''] = 'Select party by name or code';
+        foreach ($customers as $customer) {
+            $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
+        }
         return form_dropdown('id_customer', $data, NULL, ' class="select2"');
     }
 
@@ -182,16 +192,20 @@ class Sales_model extends CI_Model {
     }
 
     function get_total_sales_info($from, $to, $id_customer) {
+        $from = date('Y-m-d', strtotime($from));
+        $to = date('Y-m-d', strtotime($to));
         $this->db->select('*');
         $this->db->from('sales_total_sales');
         $this->db->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
         if (!empty($id_customer)) {
             $this->db->where('sales_total_sales.id_customer', $id_customer);
         }if ($from != '1970-01-01') {
-            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
-            $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
+            $condition = "DATE(sales_total_sales.issue_date) BETWEEN '$from' AND '$to'";
+            $this->db->where($condition);
+//            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
+//            $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
         }
-        $this->db->order_by('sales_total_sales.issue_date');
+        $this->db->order_by('sales_total_sales.issue_date','desc');
         $query = $this->db->get();
         return $query->result();
     }
