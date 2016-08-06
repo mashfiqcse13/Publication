@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-/** 
+/**
  * Description of Sales
  *
  * @author Rokibul Hasan
@@ -64,8 +64,7 @@ class Old_book_model extends CI_Model {
         }
         return $data;
     }
-    
-    
+
     function get_old_item_details() {
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_balance` 
             FROM `items` natural join `old_book_stock`
@@ -97,10 +96,10 @@ class Old_book_model extends CI_Model {
         //$dues_unpaid = $this->input->post('dues_unpaid');
         //$cash_payment = $this->input->post('cash_payment');
         //$bank_payment = $this->input->post('bank_payment');
-        
-        $payment_type=$this->input->post('payment');
 
-        
+        $payment_type = $this->input->post('payment');
+
+
 //        if($sub_total > $dues_unpaid){
 //            $total_amount = $sub_total - $dues_unpaid;
 //        }else{
@@ -108,15 +107,13 @@ class Old_book_model extends CI_Model {
 //        }
         $total_amount = $sub_total;
         $total_paid = $total_amount;
-        
+
 //        if( $dues_unpaid > $sub_total ){
 //            
 //            $total_due = $dues_unpaid - $sub_total;
 //        }else{
 //            $total_due = 0;
 //        }        
-        
-
 //        if ($cash_payment > 0) {
 //            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
 //        }
@@ -134,11 +131,11 @@ class Old_book_model extends CI_Model {
 //        
 //        
 //        advanced paymend update
-        if($payment_type == 2 && $total_paid > 0 ){
+        if ($payment_type == 2 && $total_paid > 0) {
             $this->load->model('advance_payment_model');
             $this->advance_payment_model->payment_add($id_customer, $total_paid, 4);
-                    
-                    
+
+
 //            
 //        $data = array(
 //            'id_customer' => $id_customer,
@@ -147,20 +144,13 @@ class Old_book_model extends CI_Model {
 //            'date_payment' => date('Y-m-d h:i:u'),          
 //            
 //        );
-                
-
-        //$this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
-
-
-            
-            
+            //$this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
         }
-        
+
         //cash payment
 //        if($payment_type == 1){
 //            
 //        }
-        
 //        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
 //            $due_payment_amount = $total_paid - $total_amount;
 //            $this->load->model('misc/Customer_payment');
@@ -171,27 +161,27 @@ class Old_book_model extends CI_Model {
 //        }
 
 
-        
+
         $data = array(
             'id_customer' => $id_customer,
             'issue_date' => date('Y-m-d h:i:u'),
             'sub_total' => $sub_total,
             'discount_percentage' => '',
-            'discount_amount' => '',            
-            'total_amount' => $total_amount,            
+            'discount_amount' => '',
+            'total_amount' => $total_amount,
             'payment_type' => $payment_type,
             'mamo_number' => ''
         );
-                
+
 
         $this->db->insert('old_book_return_total', $data) or die('failed to insert data on old_book_return_total');
 
 
         $id_old_book_return_total = $this->db->insert_id() or die('failed to insert data on old_book_return_total');
 
-        
+
 //        old_book_return_items
-        
+
         $item_selection = $this->input->post('item_selection');
         $data_return = array();
         foreach ($item_selection as $value) {
@@ -215,8 +205,8 @@ class Old_book_model extends CI_Model {
 
 
         $this->db->insert_batch('old_book_return_items', $data_return) or die('failed to insert data on old_book_return_items');
-        
-        
+
+
 //        old_stock_register
         $data_return_register = array();
         foreach ($item_selection as $value) {
@@ -230,14 +220,13 @@ class Old_book_model extends CI_Model {
                 'date_received' => date('Y-m-d h:i:u')
             );
             array_push($data_return_register, $tmp_return_book);
-           
         }
         $this->db->insert_batch('old_stock_register', $data_return_register) or die('failed to insert data on old_stock_register');
-        
-        
-        
-        
-        
+
+
+
+
+
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
@@ -251,8 +240,8 @@ class Old_book_model extends CI_Model {
         }
         echo json_encode($response);
     }
-    
-        function old_book_stock_add($id_item, $amount) {
+
+    function old_book_stock_add($id_item, $amount) {
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('old_book_stock')
@@ -270,8 +259,7 @@ class Old_book_model extends CI_Model {
         $this->db->query($sql);
         return TRUE;
     }
-    
-    
+
     function old_book_stock_reduce($id_item, $amount) {
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
@@ -296,9 +284,8 @@ class Old_book_model extends CI_Model {
             return FALSE;
         }
     }
-    
-    
-        function current_stock_info($id_item) {
+
+    function current_stock_info($id_item) {
         $current = $this->db->select('*')
                 ->from('old_book_stock')
                 ->where('id_item', $id_item)
@@ -309,6 +296,7 @@ class Old_book_model extends CI_Model {
         }
         return $current[0];
     }
+
 //            function stock_add($id_item, $amount) {
 //        // cheching if there is a row , otherwise creating it
 //        $this->db->select('*')
@@ -327,7 +315,7 @@ class Old_book_model extends CI_Model {
 //        $this->db->query($sql);
 //        return TRUE;
 //    }
-    
+
     function memo_header_details($total_sales_id) {
         $sql = "SELECT customer.name as party_name,
             customer.district as district,
@@ -342,14 +330,15 @@ class Old_book_model extends CI_Model {
         $data = $this->db->query($sql)->result_array();
         Return $data[0];
     }
-    function current_advanced_balance($id_customer){
-         $balance=$this->db->query("SELECT balance FROM `party_advance` WHERE `id_customer`=$id_customer");
-         foreach($balance->result_array() as $row){
-             $advanced_balance=$row['balance'];
-         }
-         return $advanced_balance;
+
+    function current_advanced_balance($id_customer) {
+        $balance = $this->db->query("SELECT balance FROM `party_advance` WHERE `id_customer`=$id_customer");
+        foreach ($balance->result_array() as $row) {
+            $advanced_balance = $row['balance'];
+        }
+        return $advanced_balance;
     }
-    
+
     function memo_body_table($total_sales_id) {
         $this->load->library('table');
         // setting up the table design
@@ -393,26 +382,26 @@ class Old_book_model extends CI_Model {
         $sql = "SELECT * FROM `old_book_return_total` WHERE `id_old_book_return_total` = $total_sales_id";
         $total_sales_details = $this->db->query($sql)->result();
         $total_sales_details = $total_sales_details[0];
-       
-        
-        
+
+
+
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
-        
+
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
             'colspan' => 1
                 ), $this->Common->taka_format($total_price));
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
-        
+
         $this->table->add_row(array(
             'data' => 'Advanced Balance Added',
             'colspan' => 2
-        ),array(
+                ), array(
             'data' => $this->Common->taka_format($total_price),
             'colspan' => 2
         ));
-        
+
 //        $this->table->add_row(array(
 //            'data' => 'Total Advanced Balance',
 //            'colspan' => 2
@@ -420,74 +409,70 @@ class Old_book_model extends CI_Model {
 //            'data' => $this->Common->taka_format($total_price),
 //            'colspan' => 2
 //        ));
-        
+
         return $this->table->generate();
     }
-    
-    function old_book_sale_or_rebind(){
+
+    function old_book_sale_or_rebind() {
         $this->load->model('misc/Cash');
         $this->load->model('misc/Stock_perpetual');
         $this->load->model('Stock_model');
 
         $id_customer = $this->input->post('id_customer');
         $sub_total = $this->input->post('price');
-        $transfer_type=$this->input->post('process');
+        $transfer_type = $this->input->post('process');
         $item_selection = $this->input->post('item_selection');
 
         $total_amount = $sub_total;
-        
-        
- //        add income and cash
-        if($transfer_type == 1){
-            $this->load->model('Income_model');            
-            $this->Income_model->add_income('1',$total_amount);
-            $this->Cash->add($total_amount);       
-        
+
+
+        //        add income and cash
+        if ($transfer_type == 1) {
+            $this->load->model('Income_model');
+            $this->Income_model->add_income('1', $total_amount);
+            $this->Cash->add($total_amount);
         }
-        
+
 //          send rebind        
-        if($transfer_type == 2){
-            
+        if ($transfer_type == 2) {
+
             $data_return = array();
             foreach ($item_selection as $value) {
                 if (empty($value)) {
                     continue;
                 }
                 $tmp_return_book = array(
-
                     'id_item' => $value['item_id'],
                     'id_process_type' => 1,
                     'order_quantity' => $value['item_quantity'],
-                    'date_created'  => date('Y-m-d h:i:u')
+                    'date_created' => date('Y-m-d h:i:u')
                 );
                 array_push($data_return, $tmp_return_book);
                 //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
                 //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
 //                $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
-            }   
+            }
 
             $this->db->insert_batch('processes', $data_return) or die('failed to insert data on processes');
-
-       
         }
-        
+
 //        old book transfer total              
-            
-            $data_total = array(
-                'type_transfer' => $transfer_type,
-                'date_transfer' => date('Y-m-d h:i:u'),
-                'price' => $total_amount
-            );                
+
+        $data_total = array(
+            'type_transfer' => $transfer_type,
+            'date_transfer' => date('Y-m-d h:i:u'),
+            'price' => $total_amount
+        );
 
         $this->db->insert('old_book_transfer_total', $data_total) or die('failed to insert data on old_book_transfer_total');
         $id_old_book_transfer_total = $this->db->insert_id() or die('failed to insert data on old_book_return_total');
-    
 
- 
-       
+
+
+
 //        old_book_return_items
-        
-       
+
+
         $data_return = array();
         foreach ($item_selection as $value) {
             if (empty($value)) {
@@ -496,7 +481,6 @@ class Old_book_model extends CI_Model {
             $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
 
             $tmp_return_book = array(
-               
                 'id_item' => $value['item_id'],
                 'quantity_item' => $value['item_quantity'],
                 'id_old_book_transfer_total' => $id_old_book_transfer_total,
@@ -504,14 +488,13 @@ class Old_book_model extends CI_Model {
             array_push($data_return, $tmp_return_book);
             //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
             //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
-            
-        }   
-        
+        }
+
         $this->db->insert_batch('old_book_transfer_items', $data_return) or die('failed to insert data on id_old_book_transfer_items');
-        
-       
-        
-        
+
+
+
+
         $action = $this->input->post('action');
         if ($action == 'save_and_reset') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_transfer_total";
@@ -519,11 +502,79 @@ class Old_book_model extends CI_Model {
         } else if ($action == 'save_and_back_to_list') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_transfer_total";
             $response['next_url'] = site_url('old_book/return_book_sale_list');
-        } 
+        } else if ($action == 'save_and_print') {
+            $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_transfer_total";
+            $response['next_url'] = site_url('old_book/rebind_transfer_slip/' . $id_old_book_transfer_total);
+        }
         echo json_encode($response);
     }
-    
 
+    function old_book_rebind_table($id_old_book_transfer_total) {
+        $this->load->library('table');
+        // setting up the table design
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped text-right-for-money">',
+            'heading_row_start' => '<tr class="success">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td >',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td >',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+        $this->table->set_template($tmpl);
+        $sql = "SELECT old_book_transfer_total.id_old_book_transfer_total,items.id_item,items.name,quantity_item,type_transfer,date_transfer,price 
+                    FROM  `old_book_transfer_items` 
+                    join items on items.id_item = old_book_transfer_items.id_item
+                    join old_book_transfer_total on old_book_transfer_total.id_old_book_transfer_total = old_book_transfer_items.id_old_book_transfer_total
+                    where old_book_transfer_total.id_old_book_transfer_total = $id_old_book_transfer_total";
+        $results = $this->db->query($sql)->result();
+        if (empty($results)) {
+            die("No match found");
+        }
+        $this->table->add_row("ID", $results[0]->id_old_book_transfer_total, "Date", $results[0]->date_transfer);
+        $output = $this->table->generate();
+        $total_quantity = 0;
+        $this->table->set_heading("#", "Book ID", 'Book Name', 'Quantity');
+        $counter = 1;
+        foreach ($results as $row) {
+            $this->table->add_row($counter++, $row->id_item, $row->name, $row->quantity_item);
+            $total_quantity+=$row->quantity_item;
+        }
 
+        // Showing total book amount
+        $separator_row = array(
+            'class' => 'separator'
+        );
+        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+        $output .= $this->table->generate();
+        $this->table->add_row(array(
+            'data' => 'Total Book',
+            'class' => 'Bold',
+                ), $total_quantity);
+        if ($results[0]->type_transfer == 2) {
+            $this->table->add_row(array(
+                'data' => "Process Type",
+                'class' => 'Bold'
+                    ), 'Send To Rebind');
+        } else {
+            $this->table->add_row(array(
+                'data' => "Process Type",
+                'class' => 'Bold'
+                    ), 'Sell');
+            $this->table->add_row(array(
+                'data' => 'Total Price',
+                'class' => 'Bold'
+                    ), $this->Common->taka_format($results[0]->price));
+        }
+        $output .= $this->table->generate();
+        return $output;
+    }
 
 }

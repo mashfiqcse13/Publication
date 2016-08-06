@@ -117,10 +117,10 @@ class Old_book extends CI_Controller {
                 ->columns('id_old_book_transfer_total','type_transfer','date_transfer','price')
                 ->unset_edit()
                 ->unset_delete()
-                ->unset_add();
-//                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
-//                    return site_url('old_book/memo/' . $primary_key);
-//                });
+                ->unset_add()
+                ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
+                    return site_url('old_book/rebind_transfer_slip/' . $primary_key);
+                });
         
                 
                 $crud->callback_column('type_transfer', function($value){
@@ -243,6 +243,15 @@ class Old_book extends CI_Controller {
         $data['table2'] = $this->table->generate();
 
         return $data;
+    }
+    
+    function rebind_transfer_slip($id_old_book_transfer_total){
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['Title'] = 'Memo Generation';
+        $data['base_url'] = base_url();
+        $data['old_book_rebind_table'] = $this->Old_book_model->old_book_rebind_table($id_old_book_transfer_total);
+
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/rebind_transfer_slip', $data);
     }
 
 }

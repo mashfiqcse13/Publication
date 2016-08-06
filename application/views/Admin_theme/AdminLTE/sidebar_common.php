@@ -17,7 +17,7 @@
     <li><?php echo anchor('due', '<i class="fa fa-plus-circle"></i>  <span>Customer Due</span>'); ?></li>
     <li><?php echo anchor('advance_payment', '<i class="fa fa-plus-circle"></i>  <span>Advance Payment</span>'); ?></li>
     <li><?php echo anchor('old_book', '<i class="fa fa-plus-circle"></i>  <span>Old Book Section</span>'); ?></li>
-    <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production process</span>'); ?></li>
+    <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production Process</span>'); ?></li>
     <li><?php echo anchor('stock', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
     <li><?php echo anchor('items', '<i class="fa fa-plus-circle"></i>  <span>Items</span>'); ?></li>
     <li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Contacts</span>'); ?></li>

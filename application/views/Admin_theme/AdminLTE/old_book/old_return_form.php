@@ -148,11 +148,11 @@
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
                             </div>
-                            <div class="form-group col-lg-2">
+                            <div class="form-group col-lg-3">
                                 <label for="price">Price</label>
                                 <input type="number" name="price" id="price" class="form-control" />
                             </div>
-                            <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-3">
                                 <label for="int_id_contact">Quantity</label>
                                 <div class="input-group input-group-sm">
                                     <input type="number" placeholder="Quantity" id="item_quantity" class="form-control">

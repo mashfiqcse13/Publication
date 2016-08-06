@@ -200,8 +200,8 @@
                     <div class="box-footer">
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_reset">Save and Reset</button>
                         <button type="button" class="btn btn-success submit_btn" data-action="save_and_back_to_list">Save and Back to list</button>
-<!--                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
-                    -->
+                        <button type="button" class="btn btn-success submit_btn" data-action="save_and_print">Save and Print</button>
+                    
                     </div>
                 </div>
             </div>

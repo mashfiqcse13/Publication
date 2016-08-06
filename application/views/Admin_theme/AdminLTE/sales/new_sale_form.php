@@ -111,6 +111,9 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
                             </div>
+                            <div class="form-group col-lg-12" id="customer_current_balance">
+                                <label for="discount_percentage">Previously paid :</label> <span>0</span> Tk
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
@@ -120,13 +123,11 @@
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
+
                             <div class="form-group col-lg-6">
-                                <div id="customer_current_balance">
-                                    <label for="discount_percentage">Previously paid :</label> <span>0</span> Tk
-                                </div>
                                 <div id="bank_payment">
-                                    <label for="discount_percentage">Bank payment :</label> <span>0</span> Tk 
-                                    <button type="button" class="btn btn-primary btn-xs  pull-right" data-toggle="modal" data-target="#bankTransactionForm">
+                                    <label for="discount_percentage">Bank payment :</label> <span>0</span> Tk <br>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#bankTransactionForm">
                                         <i class="fa fa-plus"></i> Add
                                     </button>
                                     <!-- Modal -->
@@ -168,13 +169,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="total_paid">
-                                    <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
-                                </div>
                             </div>
                         </div>
 
                         <div class="row">
+                            <div class="form-group col-lg-6" id="total_paid">
+                                <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
+                            </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
                             </div>

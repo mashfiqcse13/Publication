@@ -17,7 +17,7 @@
             <li class="header">LOAN CRUD s</li>
 
             <li><?php echo anchor('due/customer_due', '<i class="fa fa-plus-circle"></i>  <span>Due & Payment</span>'); ?></li>
-            <li><?php echo anchor('due/customer_payment', '<i class="fa fa-plus-circle"></i>  <span>Due Payment log</span>'); ?></li>
+            <li><?php echo anchor('due/customer_payment', '<i class="fa fa-plus-circle"></i>  <span>Due Payment Log</span>'); ?></li>
             
 
 

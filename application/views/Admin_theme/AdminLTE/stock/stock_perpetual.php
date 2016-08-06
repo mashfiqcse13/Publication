@@ -86,7 +86,7 @@
                                     <th>Receive Amount</th>
                                     <th>Sales Amount</th>
                                     <th>Specimen</th>
-                                    <th>Return Amount Reject</th>
+                                    <th>Sales Return Amount</th>
                                     <th>Closing Stock</th>
                                     <th>Date</th>
                                 </tr>
