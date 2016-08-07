@@ -38,6 +38,7 @@ class Expense extends CI_Controller {
         $crud->fields('id_name_expense','amount_expense','date_expense','stock_memo','stock_quantity','description_expense');
         $crud->display_as('id_name_expense','Expense Name');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
+        $crud->display_as('id_name_expense','Expense Name');
        
         
         $crud->callback_before_insert(array($this,'callback_before_insert_or_update_extra_field'));
@@ -64,6 +65,8 @@ class Expense extends CI_Controller {
         
         $this->load->model('expense_model');
         $date_range = $this->input->post('date_range');
+        $data['date_range'] = $date_range;
+        $btn = $this->input->post('btn_submit');
         
         if (isset($btn)) {
             $data['report']=$this->expense_model->expense_report($date_range);
@@ -140,8 +143,10 @@ class Expense extends CI_Controller {
     function expense_name() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense_name');
-        $crud->display_as('id_category_expense','Expense category');
+        $crud->display_as('id_category_expense','Expense Category');
         $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
+        $crud->display_as('is_stock_item','Stock Item');
+        $crud->display_as('name_expense','Name Expense');
         
         $crud->field_type('status_name_expense', 'hidden');
         
@@ -186,6 +191,8 @@ class Expense extends CI_Controller {
     function expense_category() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense_category');
+        $crud->display_as('name_category_expense','Name Category Expense');
+        $crud->display_as('description_category_expense','Description Category Expense');
         $output = $crud->render();
         $data['glosary'] = $output;
         

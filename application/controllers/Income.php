@@ -36,6 +36,9 @@ class Income extends CI_Controller {
         $crud->set_table('income');
         $crud->display_as('id_name_income','Income Name');
         $crud->set_relation('id_name_income', 'income_name', 'name_expense');
+        $crud->display_as('amount_income','Amount Income');
+        $crud->display_as('date_income','Date Income');
+        $crud->display_as('description_income','Description Income');
          //$crud->field_type('date_income', 'hidden');
         $crud->callback_add_field('date_income', function () {
             return '<input id="field-date_income" name="date_income" type="text" value="'.date('Y-m-d h:i:u').'" >'
@@ -111,6 +114,8 @@ class Income extends CI_Controller {
     function income_name() {
         $crud = new grocery_CRUD();
         $crud->set_table('income_name');
+        $crud->display_as('name_expense','Name Expense');
+        $crud->display_as('status_name_expense','Status Name Expense');
         
          $crud->callback_add_field('status_name_expense', function () {
         return '<input type="radio" value="1" name="status_name_expense" checked> Yes '
