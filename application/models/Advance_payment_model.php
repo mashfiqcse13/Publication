@@ -96,6 +96,7 @@ class Advance_payment_model extends CI_Model {
         $items = $this->db->get('payment_method')->result();
 
         $data = array();
+        $data[''] = 'Select Payment Method';
         foreach ($items as $item) {
             $data[$item->id_payment_method] = $item->name_payment_method;
         }
@@ -136,8 +137,8 @@ class Advance_payment_model extends CI_Model {
             return $result[0]->today_collection;
         }
     }
-    
-    function total_advance_payment_balance(){
+
+    function total_advance_payment_balance() {
         $sql = "SELECT sum(`balance`) as total_advance_payment_balance FROM `party_advance`";
         $result = $this->db->query($sql)->result();
         if (empty($result[0]->total_advance_payment_balance)) {
@@ -145,6 +146,29 @@ class Advance_payment_model extends CI_Model {
         } else {
             return $result[0]->total_advance_payment_balance;
         }
+    }
+
+    function get_search_report($date_range, $customer_id, $payment_method_id) {
+        $dates = explode(' - ', $date_range);
+        $dates[0] = '';
+        $dates[1] = '';
+        if ($dates[0] != '') {
+            $from = date('Y-m-d', strtotime($dates[0]));
+            $to = date('Y-m-d', strtotime($dates[1]) . ' +1 day');
+        }
+        $this->db->select('*');
+        $this->db->from('party_advance_payment_register');
+        $this->db->join('customer', 'party_advance_payment_register.id_customer = customer.id_customer', 'left');
+        $this->db->join('payment_method', 'party_advance_payment_register.id_payment_method = payment_method.id_payment_method', 'left');
+        if ($dates[0] != '') {
+            $condition = "DATE(party_advance_payment_register.date_payment) BETWEEN '$from' AND '$to'";
+            $this->db->where($condition);
+        }if (!empty($customer_id)) {
+            $this->db->where('party_advance_payment_register.id_customer', $customer_id);
+        }if (!empty($payment_method_id)) {
+            $this->db->where('party_advance_payment_register.id_payment_method', $payment_method_id);
+        }
+        return $this->db->get()->result();
     }
 
 }

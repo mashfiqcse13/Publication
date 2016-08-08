@@ -18,7 +18,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="min-height: 1100px;">
         <div class="row">
             <div class="col-md-12">
                 <div class="box only_print">
@@ -32,7 +32,7 @@
                             <div class="form-group col-md-3">
                                 <label>Search by payment method:</label>
 
-                                <input type="text" name="payment_method" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right"  title="This is not a date"/>
+                                <?php echo $method_dropdown; ?>
                                 <!-- /.input group -->
                             </div>
                             <div class="form-group col-md-3">
@@ -57,10 +57,67 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="box">
-
+                <div class="box" id="block">
                     <?php
-                    echo $glosary->output;
+                    if (!isset($search_report)) {
+                        ?>
+                        <div class="box-body">
+                            <?php
+                            echo $glosary->output;
+                            ?>
+                        </div><!-- /.box-body -->
+                        <?php
+                    }if (isset($search_report)) {
+                        ?>
+                        <div class="box-header">
+                            <p class="text-center"><strong>Advance payment log Report</strong></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                        </div>
+                        <div class="box-body">
+                            <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                <thead style="background: #DFF0D8;">
+                                    <tr>
+    <!--                                        <th></th>-->
+                                        <th>Transection Id</th>
+                                        <th>Customer Name</th>
+                                        <th>Payment Method</th>
+                                        <th>Amount Paid</th>
+                                        <th>Date Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sum_total_paid = 0;
+                                    foreach ($search_report as $sales) {
+                                        $sum_total_paid += $sales->amount_paid;
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $sales->id_party_advance_payment_register; ?></td>
+                                            <td><?php echo $sales->name; ?></td>
+                                            <td><?php echo $sales->name_payment_method; ?></td>
+                                            <td><?php echo 'TK '.$sales->amount_paid; ?></td>
+                                            <td><?php echo date('d/m/Y', strtotime($sales->date_payment)); ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+
+                                    <tr style="font-weight: bold">
+                                        <td>Total :</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><?php echo 'TK '.$sum_total_paid; ?></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <?php
+                    }
                     ?>
 
                 </div>
@@ -75,3 +132,6 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    $('#reservation').datepicker();
+</script>

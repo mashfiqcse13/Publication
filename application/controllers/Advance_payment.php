@@ -55,6 +55,7 @@ class Advance_payment extends CI_Controller {
     
     function payment_log(){
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
+        $data['method_dropdown'] = $this->Advance_payment_model->get_payment_method_dropdown();
 
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance_payment_register')
@@ -69,6 +70,15 @@ class Advance_payment extends CI_Controller {
                 ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
+        
+        $data['date_range'] = $this->input->get('date_range');
+        $customer_id = $this->input->get('id_customer');
+        $payment_method_id = $this->input->get('id_payment_method');
+        $btn = $this->input->get('btn_submit');
+        
+        if($data['date_range']!='' || !empty($customer_id)  || !empty($payment_method_id)){
+            $data['search_report'] = $this->Advance_payment_model->get_search_report($data['date_range'],$customer_id,$payment_method_id);
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
