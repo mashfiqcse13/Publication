@@ -55,13 +55,22 @@ class Old_book extends CI_Controller {
                     }
                     
                 });
-        $data['date_range'] = $this->input->get('date_range');
-        $date = explode('-', $data['date_range']);
-        if ($data['date_range'] != '') {
+        $date_range = $this->input->post('date_range');         
+        
+        
+        
+        $btn=$this->input->post('btn_submit');
+        
+        $id_customer=$this->input->post('id_customer');
+        
+        if (isset($btn)) {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
-            $data['total_sales'] = $this->Sales_model->get_total_sales_info($date[0], $date[1]);
+            $data['return_book'] = $this->Old_book_model->get_total_sales_info($id_customer,$date_range);
+            $data['date_range']=$date_range;
+            
         }
+        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
 
         $output = $crud->render();
         $data['glosary'] = $output;

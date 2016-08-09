@@ -34,6 +34,16 @@ class Old_book_model extends CI_Model {
         }
         return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
     }
+    function get_party_dropdown_search() {
+        $customers = $this->db->get('customer')->result();
+
+        $data = array();
+        $data[''] = 'Select party by name or code';
+        foreach ($customers as $customer) {
+            $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
+        }
+        return form_dropdown('id_customer', $data, NULL, ' class="select2"');
+    }
 
     function get_party_due() {
         $customers = $this->db->query("SELECT id_customer,total_due
@@ -576,5 +586,46 @@ class Old_book_model extends CI_Model {
         $output .= $this->table->generate();
         return $output;
     }
+    //SELECT name,sum(quantity),sum(old_book_return_total.total_amount) FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+//LEFT JOIN items ON items.id_item=old_book_return_items.id_item GROUP BY name
+    
+    function get_total_sales_info( $id_customer='' , $date_range='') {
+        if($date_range==''){
+            $date_range='';
+        }else{
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range=" AND  DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+        }
+        
+        if($id_customer == '' && $date_range == ''){
+            
+            $con = ' ';
+        }
+        
+        if ($id_customer !='') {
+            
+            $con=" where old_book_return_total.id_customer = $id_customer ";    
+            
+        }
+        if ($date_range != '') {            
+            
+            $con = " where  $date_range";
+            
+        }
+        
+        if ($date_range != '' && $id_customer !='') {
+            $con = " where old_book_return_total.id_customer = $id_customer $date_range";
+            
+        }       
+        
+        $query=$this->db->query("SELECT name,sum(quantity) as total_quantity,sum(old_book_return_total.total_amount) as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY name");
+        return $query->result();
+    }
+    
+     
 
 }
