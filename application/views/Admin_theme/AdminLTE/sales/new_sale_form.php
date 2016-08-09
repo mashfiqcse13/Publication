@@ -154,7 +154,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="check_no" class="col-sm-4 control-label">Check No</label>
+                                                            <label for="check_no" class="col-sm-4 control-label">Check/DD/TT No</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control" id="check_no" name="check_no" placeholder="Check No">
                                                             </div>
