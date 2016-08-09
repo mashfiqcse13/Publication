@@ -118,7 +118,7 @@
 
             <?php echo $memo_body_table; ?>
 
-            <h2>Returned Book Value : <strong> <?php echo $balance; ?></strong></h2>
+<!--            <h2>Returned Book Value : <strong> <?php echo $balance; ?></strong></h2>-->
 
         </div>
 

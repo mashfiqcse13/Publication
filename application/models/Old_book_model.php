@@ -405,7 +405,7 @@ class Old_book_model extends CI_Model {
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
 
         $this->table->add_row(array(
-            'data' => 'Advanced Balance Added',
+            'data' => 'ফেরত বই এর মূল্য',
             'colspan' => 2
                 ), array(
             'data' => $this->Common->taka_format($total_price),
