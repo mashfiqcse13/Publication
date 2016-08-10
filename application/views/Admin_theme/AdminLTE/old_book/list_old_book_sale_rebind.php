@@ -121,7 +121,7 @@
                                         <tr>
                                             <td><?php echo $list->name; ?></td>
                                             <td><?php echo $list->quantity; ?></td>
-                                            <td><?php echo $list->price; ?></td>
+                                            <td class="pull-right"> TK <?php echo $list->price; ?></td>
                                         </tr>
                                         <?php
                                     }
