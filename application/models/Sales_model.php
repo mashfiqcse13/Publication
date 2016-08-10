@@ -221,7 +221,7 @@ class Sales_model extends CI_Model {
             $date = explode('-', $date_range);
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
-            $date_range=" DATE(sales_total_sales.date) BETWEEN '$from' AND '$to'";
+            $date_range="  DATE(sales_total_sales.issue_date) BETWEEN '$from' AND '$to'";
         }
         
         if($id_customer == '' && $date_range == ''){
@@ -231,31 +231,29 @@ class Sales_model extends CI_Model {
         
         if ($id_customer !='') {
             
-            $con=" AND sales_total_sales.id_customer = $id_customer ";    
+            $con=" where sales_total_sales.id_customer = $id_customer ";    
             
         }
         if ($date_range != '') {            
             
-            $con = " AND  $date_range";
+            $con = " where  $date_range";
             
         }
         
         if ($date_range != '' && $id_customer !='') {
-            $con = " AND sales_total_sales.id_customer = $id_customer AND $date_range";
+            $con = " where sales_total_sales.id_customer = $id_customer AND $date_range";
             
         }       
         
         $query=$this->db->query("SELECT items.name as name,
-                        sum(sales.quantity) - sum(sales_current_sales_return.quantity) as accurate_sale
-                        FROM `sales_current_sales_return`,sales_total_sales,sales,items
-                        WHERE
-                        sales_current_sales_return.memo_ID=sales_total_sales.id_total_sales
-                        and 
-                        sales_total_sales.id_total_sales=sales.id_total_sales
-                        and items.id_item=sales.id_item $con
-                        GROUP BY items.id_item
+            sum(sales.quantity) as sales_quantity,sum(sales_current_sales_return.quantity) as return_quantity
+            FROM sales_total_sales left JOIN sales ON sales.id_total_sales=sales_total_sales.id_total_sales
+            LEFT JOIN items ON items.id_item=sales.id_item
+            left JOIN sales_current_sales_return ON sales_current_sales_return.memo_ID=sales_total_sales.id_total_sales 
+            $con
+            GROUP BY items.id_item
                         ");
-        
+         
         return $query->result();
     }
 

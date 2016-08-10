@@ -64,7 +64,7 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                    if (!isset($return_book)) {
+                    if (isset($return_book)) {
                         ?>
                         <div class="box-header">
                             <h3 class="box-title">Old Book Return</h3>
@@ -98,7 +98,7 @@
                                 <thead style="background: #DFF0D8;">
                                     <tr>
                                         <th>Book Name</th>
-                                        <th>Quantity</th>
+                                        <th>Accurate Sale Quantity</th> 
                                         
                                     </tr>
                                 </thead>
@@ -111,7 +111,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $return->name; ?></td>
-                                            <td ><?php echo $return->accurate_sale; ?></td>
+                                            <td ><?php echo $return->sales_quantity-$return->return_quantity; ?></td>
                                             
                                         </tr>
                                         <?php

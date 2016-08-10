@@ -32,7 +32,7 @@ class Sold_book_info extends CI_Controller {
         
         if (isset($btn)) {
             $data['sold_info'] = $this->Sales_model->accurate_sale( $id_customer,$date_range);
-           
+         
 //            if($id_type!=''){
 //                $data['id_type']=$id_type;
 //            }
