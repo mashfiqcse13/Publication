@@ -106,7 +106,7 @@
                                         <tr>
                                             <td><?php echo $return->name; ?></td>
                                             <td ><?php echo $return->total_quantity; ?></td>
-                                            <td class="text-right">TK <?php echo $return->total_ammount ?></td>
+                                            <td class="text-right taka_formate">TK <?php echo $return->total_ammount ?></td>
                                         </tr>
                                         <?php
                                     }
@@ -115,7 +115,7 @@
                                     <tr style="font-weight: bold">
                                         <td>Total Returned Book :</td>
                                         <td > <?php echo $sum_total_quantity; ?></td>
-                                        <td class="text-right">TK <?php echo $sum_total_amount; ?></td>
+                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount; ?></td>
 
                                     </tr>
                                 </tbody>

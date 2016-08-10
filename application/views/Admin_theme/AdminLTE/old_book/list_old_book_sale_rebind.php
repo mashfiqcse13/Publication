@@ -121,7 +121,7 @@
                                         <tr>
                                             <td><?php echo $list->name; ?></td>
                                             <td><?php echo $list->quantity; ?></td>
-                                            <td class="text-right"> TK <?php echo $list->price; ?></td>
+                                            <td class="text-right taka_formate"> TK <?php echo $list->price; ?></td>
                                         </tr>
                                         <?php
                                     }
@@ -130,7 +130,7 @@
                                     <tr style="font-weight: bold">                                        
                                         <td>Total : </td>
                                         <td><?php echo $sum_quantity; ?></td>
-                                        <td class="text-right"> TK <?php echo $sum_total_amount; ?></td>
+                                        <td class="text-right taka_formate"> TK <?php echo $sum_total_amount; ?></td>
                                         
 
 
