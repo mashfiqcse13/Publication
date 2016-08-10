@@ -84,29 +84,9 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-<!--                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Discount percentage :</label>
-                                <div class="input-group">
-                                    <input type="email" name="discount_percentage" class="form-control" id="discount_percentage" value="0" min="0" max="100">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Discount amount :</label>
-                                <div class="input-group">
-                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="0" min="0">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                        </div>-->
+
                         <div class="row">
-<!--                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
-                            </div>-->
-<!--                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
-                            </div>-->
+
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
@@ -117,35 +97,15 @@
                                     <option value="1">Sale</option>
                                     
                                 </select>
-<!--                                <input type="radio" name="payment" value="1" /> Cash Payment &nbsp;&nbsp; 
-                                 <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced
-                                -->
+
                             </div>
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6 set_price" >
                                 <label for="id_contact">Total Sale Price</label>
                                 <input type="number" name="price" class="form-control" />
                             </div>
-<!--                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Cash payment :</label>
-                                <div class="input-group">
-                                    <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Bank payment :</label>
-                                <div class="input-group">
-                                    <input type="text" name="discount_amount" disabled="" class="form-control" id="discount_amount" placeholder="Password">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>-->
+
                         </div>
 
-<!--                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
-                            </div>
-                        </div>-->
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -217,6 +177,23 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
 <script type="text/javascript">
+    
+    $('.set_price').hide();
+    
+    $('[name="process"]').change(function(){
+       $value=$('[name="process"').val();
+       if($value==1){
+           $('.set_price').show();
+           $('.set_price').addClass('price');
+       }
+       if($value==2 || $value==0){
+           $('.set_price').hide();
+           
+           $('.set_price').removeClass('price');
+       }
+        
+    });
+    
     $('#massage_box').hide();
 
     function string_to_int(input_field_value) {
@@ -347,6 +324,8 @@
         data_to_post.price = $('[name="price"]').val();
         data_to_post.quantity = $('#quantity').html();
         
+        var price=$('.price').html();
+        
         if (data_to_post.process == 0) {
             alert('Please Select Any Process.');
             return;
@@ -355,6 +334,12 @@
         if (!data_to_post.quantity) {
             alert('No item selected . Please select one');
             return;
+        }
+        if(price){
+            if (!data_to_post.price) {
+                alert('Please set the price');
+                return;
+            }
         }
         
         $(' #massage_box').show();

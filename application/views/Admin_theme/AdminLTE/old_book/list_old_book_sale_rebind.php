@@ -22,28 +22,52 @@
         <div class="row">
             <div class="col-md-12">
 
-<!--                <div class="box only_print">
+                 <div class="box only_print">
                     <div class="box-body">
-                        <div class="form-group col-md-3 text-left">
-                            <label>Search with Date Range:</label>
-                        </div>
-                        <form action="<?= $base_url ?>index.php/sales/tolal_sales" method="get">
-                            <div class="form-group col-md-7">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
+                        
+                       
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group col-md-4">
+                                        <label>Transfer Type : </label>
                                     </div>
-                                    <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                                </div> /.input group 
-                            </div> /.form group 
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?php echo anchor(site_url('stock/stock_perpetual'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                        </form>
+                                    <div class="col-md-6">
+                                        <select name="process" id="process" class="form-control select2">
+                                            <option value="">Select Process Type</option>
+                                            <option value="2">Send to Rebind</option>
+                                            <option value="1">Sale</option>
+
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group col-md-3 text-left">
+                                        <label>Search with Date Range:</label>
+                                    </div>
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" name="date_range" value="" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                        </div> 
+                                    </div>
+                                    
+                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    <?php echo anchor(site_url('old_book/return_book_sale_list'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                        
+                                </div>
+                                 
+                            </div>
+                             
+                           </form>
 
                     </div>
-                </div>-->
+                </div>
 
-                <div class="box" id="block">
+                <div class="box" id="block" style="min-height:900px">
                     <?php
                     if (!isset($date_range)) {
                         ?>
@@ -60,73 +84,54 @@
                     }if (isset($date_range)) {
                         ?>
                         <div class="box-header">
-                            <p class="text-center"><strong>Old Book Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                            <p class="text-center"><strong>Old Book send to rebind or sale ( <?php
+                            if(isset($id_type) && $id_type==2){
+                                echo 'Report on Send to Rebind';
+                                
+                                
+                            }
+                            if(isset($id_type) && $id_type==1){
+                                echo 'Report on Sale';
+                            }
+                            
+                            ?> )</strong></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) : </strong> <?php echo $date_range; ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                            
                         </div>
                         <div class="box-body">
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th>Customer Name</th>
-                                        <th>Sub Total</th>
-                                        <th>Total Amount</th>
-                                        <th>Discount Percentage</th>
-                                        <th>Discount Amount</th>
-                                        <th>Cash</th>
-                                        <th>Bank Pay</th>
-                                        <th>Total Paid</th>
-                                        <th>Total Due</th>
-                                        <th>Issue Date</th>
+                                        <th>Book Name</th>
+                                        <th>Quantity</th>
+                                        <th class="pull-right">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sum_sub_total = 0;
+                                    $sum_quantity = 0;
                                     $sum_total_amount = 0;
-                                    $sum_discount_amount = 0;
-                                    $sum_cash = 0;
-                                    $sum_bank_pay = 0;
-                                    $sum_total_paid = 0;
-                                    $sum_total_due = 0;
-                                    foreach ($total_sales as $sales) {
-                                        $sum_sub_total += $sales->sub_total;
-                                        $sum_total_amount += $sales->total_amount;
-                                        $sum_discount_amount += $sales->discount_amount;
-                                        $sum_cash += $sales->cash;
-                                        $sum_bank_pay += $sales->bank_pay;
-                                        $sum_total_paid += $sales->total_paid;
-                                        $sum_total_due += $sales->total_due;
+                                    foreach ($return_list as $list) {
+                                        $sum_quantity += $list->quantity;
+                                        $sum_total_amount += $list->price;
                                         ?>
                                         <tr>
-                                            <td><?php echo $sales->name; ?></td>
-                                            <td><?php echo $sales->sub_total; ?></td>
-                                            <td><?php echo $sales->total_amount; ?></td>
-                                            <td><?php echo $sales->discount_percentage; ?></td>
-                                            <td><?php echo $sales->discount_amount; ?></td>
-                                            <td><?php echo $sales->cash; ?></td>
-                                            <td><?php echo $sales->bank_pay; ?></td>
-                                            <td><?php echo $sales->total_paid; ?></td>
-                                            <td><?php echo $sales->total_due; ?></td>
-                                            <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
+                                            <td><?php echo $list->name; ?></td>
+                                            <td><?php echo $list->quantity; ?></td>
+                                            <td><?php echo $list->price; ?></td>
                                         </tr>
                                         <?php
                                     }
                                     ?>
 
-                                    <tr style="font-weight: bold">
-                                        <td>Total :</td>
-                                        <td><?php echo $sum_sub_total; ?></td>
-                                        <td><?php echo $sum_total_amount; ?></td>
-                                        <td></td>
-                                        <td><?php echo $sum_discount_amount; ?></td>
-                                        <td><?php echo $sum_cash; ?></td>
-                                        <td><?php echo $sum_bank_pay; ?></td>
-                                        <td><?php echo $sum_total_paid; ?></td>
-                                        <td><?php echo $sum_total_due; ?></td>
-                                        <td></td>
+                                    <tr style="font-weight: bold">                                        
+                                        <td>Total : </td>
+                                        <td><?php echo $sum_quantity; ?></td>
+                                        <td class="text-right"> TK <?php echo $sum_total_amount; ?></td>
+                                        
 
 
                                     </tr>

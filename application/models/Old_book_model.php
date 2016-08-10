@@ -589,7 +589,7 @@ class Old_book_model extends CI_Model {
     //SELECT name,sum(quantity),sum(old_book_return_total.total_amount) FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
 //LEFT JOIN items ON items.id_item=old_book_return_items.id_item GROUP BY name
     
-    function get_total_sales_info( $id_customer='' , $date_range='') {
+    function get_total_return_info( $id_customer='' , $date_range='') {
         if($date_range==''){
             $date_range='';
         }else{
@@ -597,7 +597,7 @@ class Old_book_model extends CI_Model {
             $date = explode('-', $date_range);
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
-            $date_range=" AND  DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+            $date_range=" DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
         }
         
         if($id_customer == '' && $date_range == ''){
@@ -617,7 +617,7 @@ class Old_book_model extends CI_Model {
         }
         
         if ($date_range != '' && $id_customer !='') {
-            $con = " where old_book_return_total.id_customer = $id_customer $date_range";
+            $con = " where old_book_return_total.id_customer = $id_customer AND $date_range";
             
         }       
         
@@ -626,6 +626,52 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY na
         return $query->result();
     }
     
-     
-
+     //SELECT sum(quantity_item),date_transfer,sum(price) FROM `old_book_transfer_total` 
+     //left JOIN old_book_transfer_items ON 
+     //old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total
+     // where type_transfer=2 GROUP BY id_item
+    
+    function get_sale_rebind( $id_type='' , $date_range='') {
+        if($date_range==''){
+            $date_range='';
+        }else{
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range=" DATE(date_transfer) BETWEEN '$from' AND '$to'";
+        }
+        
+        if($id_type == '' && $date_range == ''){
+            
+            $con = ' ';
+        }
+        
+        if ($id_type !='') {
+            
+            $con=" where type_transfer = $id_type ";    
+            
+        }
+        if ($date_range != '') {            
+            
+            $con = " where  $date_range";
+            
+        }
+        
+        if ($date_range != '' && $id_type !='') {
+            $con = " where type_transfer = $id_type AND $date_range";
+            
+        }       
+        
+        $query=$this->db->query("SELECT name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
+            FROM `old_book_transfer_total` left JOIN old_book_transfer_items ON 
+            old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total 
+            left JOIN items ON items.id_item=old_book_transfer_items.id_item 
+            $con GROUP BY old_book_transfer_items.id_item");
+        
+        return $query->result();
+    }
+    
+    
+    
 }

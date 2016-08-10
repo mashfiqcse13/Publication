@@ -105,7 +105,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $return->name; ?></td>
-                                            <td class="text-right">TK <?php echo $return->total_quantity; ?></td>
+                                            <td ><?php echo $return->total_quantity; ?></td>
                                             <td class="text-right">TK <?php echo $return->total_ammount ?></td>
                                         </tr>
                                         <?php
@@ -114,7 +114,7 @@
 
                                     <tr style="font-weight: bold">
                                         <td>Total Returned Book :</td>
-                                        <td class="text-right">TK <?php echo $sum_total_quantity; ?></td>
+                                        <td > <?php echo $sum_total_quantity; ?></td>
                                         <td class="text-right">TK <?php echo $sum_total_amount; ?></td>
 
                                     </tr>
