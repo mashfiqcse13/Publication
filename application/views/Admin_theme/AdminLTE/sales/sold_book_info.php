@@ -64,30 +64,49 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                    if (isset($return_book)) {
+                    if (isset($sold_info_today)) {
                         ?>
-                        <div class="box-header">
-                            <h3 class="box-title">Old Book Return</h3>
-                        </div><!-- /.box-header -->
-
+                    
+                    <div class="box-header">
+                            <p class="text-center"><strong>আজকের বিক্রীত বইসমূহ</strong></p>
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                        </div>
                         <div class="box-body">
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
                                         <th>Book Name</th>
-                                        <th>Accurate Sale</th>                                        
+                                        <th>Accurate Sale Quantity</th> 
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                       
+                                    foreach ($sold_info_today as $return) {
+                                        
+                                       
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $return->name; ?></td>
+                                            <td ><?php echo $return->sales_quantity-$return->return_quantity; ?></td>
+                                            
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+
                                     
                                 </tbody>
                             </table>
-                        </div><!-- /.box-body -->
+
+                        </div>
                         <?php
                     }if (isset($sold_info)) {
                         ?>
                         <div class="box-header">
-                            <p class="text-center"><strong>Old Book Report</strong></p>
+                            <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>

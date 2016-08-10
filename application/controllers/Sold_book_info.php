@@ -38,6 +38,10 @@ class Sold_book_info extends CI_Controller {
 //            }
             $data['date_range']=$date_range;
             
+        }else{
+            $date_range=date('m/d/Y').' - '.date('m/d/Y');
+            
+            $data['sold_info_today'] = $this->Sales_model->accurate_sale( $id_customer,$date_range);
         }
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown_as_customer();
 
