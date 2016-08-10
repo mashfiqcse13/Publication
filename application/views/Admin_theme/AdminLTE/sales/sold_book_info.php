@@ -76,7 +76,7 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th>Book Name</th>
+                                        <th width="50%">Book Name</th>
                                         <th>Accurate Sale Quantity</th> 
                                         
                                     </tr>
@@ -116,7 +116,7 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th>Book Name</th>
+                                        <th width="50%">Book Name</th>
                                         <th>Accurate Sale Quantity</th> 
                                         
                                     </tr>
