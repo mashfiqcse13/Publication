@@ -88,8 +88,7 @@
                                     <th>Specimen</th>
                                     <th>Sales Return Amount</th>
                                     <th>Accurate Sale</th>
-                                    <th>Closing Stock</th>
-                                    
+                                    <th>Closing Stock</th>                                    
                                     <th>Date</th>
                                 </tr>
                             </thead>

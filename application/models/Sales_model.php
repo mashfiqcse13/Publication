@@ -34,6 +34,7 @@ class Sales_model extends CI_Model {
         }
         return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
     }
+    
     function get_party_dropdown_as_customer() {
         $customers = $this->db->get('customer')->result();
 
@@ -207,6 +208,54 @@ class Sales_model extends CI_Model {
         }
         $this->db->order_by('sales_total_sales.issue_date','desc');
         $query = $this->db->get();
+        return $query->result();
+    }
+    
+    
+    
+    function accurate_sale( $id_customer='' , $date_range='') {
+        if($date_range==''){
+            $date_range='';
+        }else{
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range=" DATE(sales_total_sales.date) BETWEEN '$from' AND '$to'";
+        }
+        
+        if($id_customer == '' && $date_range == ''){
+            
+            $con = ' ';
+        }
+        
+        if ($id_customer !='') {
+            
+            $con=" AND sales_total_sales.id_customer = $id_customer ";    
+            
+        }
+        if ($date_range != '') {            
+            
+            $con = " AND  $date_range";
+            
+        }
+        
+        if ($date_range != '' && $id_customer !='') {
+            $con = " AND sales_total_sales.id_customer = $id_customer AND $date_range";
+            
+        }       
+        
+        $query=$this->db->query("SELECT items.name as name,
+                        sum(sales.quantity) - sum(sales_current_sales_return.quantity) as accurate_sale
+                        FROM `sales_current_sales_return`,sales_total_sales,sales,items
+                        WHERE
+                        sales_current_sales_return.memo_ID=sales_total_sales.id_total_sales
+                        and 
+                        sales_total_sales.id_total_sales=sales.id_total_sales
+                        and items.id_item=sales.id_item $con
+                        GROUP BY items.id_item
+                        ");
+        
         return $query->result();
     }
 
