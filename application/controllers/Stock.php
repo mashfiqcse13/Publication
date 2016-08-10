@@ -47,7 +47,10 @@ class Stock extends CI_Controller {
         if ($data['date_range'] != '') {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
-            $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]);
+            $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]); 
+            echo '<pre>';
+            print_r($data);
+            
         }
 
         $output = $crud->render();

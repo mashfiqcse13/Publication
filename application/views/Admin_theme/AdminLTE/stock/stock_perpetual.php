@@ -87,13 +87,16 @@
                                     <th>Sales Amount</th>
                                     <th>Specimen</th>
                                     <th>Sales Return Amount</th>
+                                    <th>Accurate Sale</th>
                                     <th>Closing Stock</th>
+                                    
                                     <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($stock_perpetual as $stock) {
+                                    
                                     ?>
                                     <tr>
                                         <td><?php echo $stock->name; ?></td>
@@ -102,7 +105,9 @@
                                         <td><?php echo $stock->sales_amount; ?></td>
                                         <td><?php echo $stock->specimen; ?></td>
                                         <td><?php echo $stock->return_amountreject; ?></td>
+                                        <td><?php echo $stock->sales_amount - $stock->return_amountreject; ?></td>
                                         <td><?php echo $stock->closing_stock; ?></td>
+                                        
                                         <td><?php echo $date = date('d/m/Y', strtotime($stock->date)); ?></td>
 
 
