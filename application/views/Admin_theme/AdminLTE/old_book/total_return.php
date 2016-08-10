@@ -112,7 +112,7 @@
                                     }
                                     ?>
 
-                                    <tr style="font-weight: bold">
+                                    <tr style="font-weight: bold"> 
                                         <td>Total Returned Book :</td>
                                         <td > <?php echo $sum_total_quantity; ?></td>
                                         <td class="text-right taka_formate">TK <?php echo $sum_total_amount; ?></td>

@@ -163,7 +163,7 @@ $.fn.digits = function(){
         $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
     })
 }
-$('.taka_formate').digits();
+$('.taka_formate').digits(); 
 </script>
 
 </body>

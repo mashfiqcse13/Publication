@@ -86,8 +86,7 @@
                         <div class="box-header">
                             <p class="text-center"><strong>Old Book send to rebind or sale ( <?php
                             if(isset($id_type) && $id_type==2){
-                                echo 'Report on Send to Rebind';
-                                
+                                echo 'Report on Send to Rebind';                              
                                 
                             }
                             if(isset($id_type) && $id_type==1){
@@ -155,7 +154,6 @@
 </div><!-- /.content-wrapper -->
 
 <!-- insert book -->
-
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
