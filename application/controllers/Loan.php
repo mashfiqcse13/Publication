@@ -43,11 +43,11 @@ class Loan extends CI_Controller {
                 ->set_relation('id_employee', 'employee', "name_employee")
                 ->unset_fields('installments_loan')
                 ->unset_columns('installments_loan')
-                ->callback_add_field('date_taken_loan', function () {
+                ->callback_edit_field('date_taken_loan', function () {
                     return '<input id="field-date_taken_loan" name="date_taken_loan" type="text" value="' . date('Y-m-d H:i:s') . '" >'
                             . '<style>div#date_taken_loan_field_box{display: none;}</style>';
                 })
-                ->callback_add_field('status', function () {
+                ->callback_edit_field('status', function () {
                     return '<select id="field-status" name="status" >'
                             .'<option value ="Paid">Paid</option>'
                             .'<option value ="Not_Paid">Not Paid</option>'
@@ -58,6 +58,15 @@ class Loan extends CI_Controller {
 
         $output = $crud->render();
         $data['glosary'] = $output;
+        
+        $data['employee_name'] = $this->Loan_model->get_employee_dropdown();
+        $btn = $this->input->post('btn_submit');
+        if (isset($btn)) {
+            $this->Loan_model->save_loan($_POST);
+            $sdata['message'] = '<div class = "alert alert-success" id="message"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Data is Successfully Updated!</p></div>';
+            $this->session->set_userdata($sdata);
+            redirect('loan/loan');
+        }
 //        date range
         $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');

@@ -203,14 +203,14 @@
                                                     <td><?php echo set_month($value->month_salary_payment); ?></td>
                                                     <td><?php echo $value->year_salary_payment; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($value->issue_salary_payment)); ?></td>
-                                                    <td><?php echo $value->amount_salary_payment; ?></td>
-                                                    <td><?php echo $value->amount_salary_bonus; ?></td>
-                                                    <td><?php echo $value->amount_loan; ?></td>
-                                                    <td><?php echo $value->installment_amount_loan; ?></td>
+                                                    <td class="taka_formate"><?php echo $value->amount_salary_payment; ?></td>
+                                                    <td class="taka_formate"><?php echo $value->amount_salary_bonus; ?></td>
+                                                    <td class="taka_formate"><?php echo $value->amount_loan; ?></td>
+                                                    <td class="taka_formate"><?php echo $value->installment_amount_loan; ?></td>
                                                     <?php
                                                     if ($value->status_salary_advance == 1) {
                                                         ?>
-                                                        <td><?php echo $advance; ?></td>
+                                                        <td class="taka_formate"><?php echo $advance; ?></td>
                                                         <?php
                                                     } else {
                                                         ?>
@@ -218,7 +218,7 @@
                                                         <?php
                                                     }
                                                     ?>
-                                                    <td><?php echo $total; ?></td>
+                                                    <td class="taka_formate"><?php echo $total; ?></td>
                                                     <td style="display: none;">
                                                         <input type="hidden" name="id_employee[<?php echo $sl; ?>]" value="<?php echo $value->id_employee; ?>"/>
                                                         <input type="hidden" name="id_loan[<?php echo $sl; ?>]" value="<?php echo $value->id_loan; ?>"/>

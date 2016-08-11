@@ -57,33 +57,12 @@ class Salary_model extends CI_Model {
         $this->db->select('*', 'employee.id_employee');
         $this->db->from('employee');
         $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
-//        $this->db->join('salary_advance_total', 'employee.id_employee = salary_advance_total.id_employee', 'left');
         $this->db->join('loan', 'employee.id_employee = loan.id_employee', 'left');
         $this->db->join('salary_payment', 'employee.id_employee = salary_payment.id_employee', 'left');
         $this->db->join('salary_bonus', 'salary_payment.id_salary_payment = salary_bonus.id_salary_payment', 'left');
         $this->db->where('salary_payment.status_salary_payment !=', null);
         $this->db->where('salary_payment.month_salary_payment', $current);
-//        $this->db->where('salary_advance.amount_paid_salary_advance', 0);
-//        if (!empty('salary_advance')) {
-        $this->db->where('MONTH(salary_advance.date_given_salary_advance)', $current_month);
-        $this->db->where('YEAR(salary_advance.date_given_salary_advance)', $current_year);
-//        }
-        $query = $this->db->get()->result();
-        for ($i = 0; $i < count($query); $q++) {
-            $employee_id = $query[$i]->id_employee;
-            $sql = 'SELECT * FROM salary_advance WHERE id_employee = ' . $employee_id;
-            if ($sql != FALSE) {
-                $this->db->where('MONTH(salary_advance.date_given_salary_advance)', $current_month);
-                $this->db->where('YEAR(salary_advance.date_given_salary_advance)', $current_year); //        }
-               return $query = $this->db->get()->result();
-            } else {
-               return $query = $this->db->get()->result();
-            }
-//            echo'<pre>';print_r($query[$i]->id_employee);exit();
-        }
-        echo'<pre>';
-        print_r($query);
-        exit();
+        return $query = $this->db->get()->result();
     }
 
     function select_all_info_by_month($month, $year) {

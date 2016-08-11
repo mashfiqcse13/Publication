@@ -94,5 +94,40 @@ class Loan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    function get_employee_dropdown() {
+        $items = $this->db->get('employee')->result();
+
+        $data = array();
+        $data[''] = 'Select Employee name';
+        foreach ($items as $item) {
+            $data[$item->id_employee] = $item->name_employee;
+        }
+        return form_dropdown('id_employee', $data, '', ' class="select2" ');
+    }
+    
+    function save_loan($post_array){
+         $current_month = date('m');
+        $current_year = date('Y');
+        $data['id_employee'] = $post_array['id_employee'];
+        $data['title_loan'] = $post_array['title_loan'];
+        $data['amount_loan'] = $post_array['amount_loan'];
+        $amount = $data['amount_loan'];
+        $data['date_taken_loan'] = date('Y-m-d H:i:s');
+        $data['installment_amount_loan'] = $post_array['installment_amount_loan'];
+        $data['status'] = 'not_paid';
+        $data['dead_line_loan'] = date('Y-m-d H:i:s',strtotime($post_array['dead_line_loan']));
+        $sql = 'SELECT * FROM `loan` WHERE `id_employee`= ' . $data['id_employee'] . ' AND MONTH(date_taken_loan) = ' . $current_month . ' AND YEAR(date_taken_loan) = ' . $current_year;
+        $result = $this->db->query($sql)->result();
+        if (empty($result)) {
+            $this->db->insert('loan', $data);
+            return true;
+        } else {
+            $id = $result[0]->id_loan;
+            $update = "UPDATE `loan` SET `amount_loan` = `amount_loan` + $amount  WHERE `id_loan` = $id";
+            $this->db->query($update);
+            return true;
+        }
+    }
 
 }

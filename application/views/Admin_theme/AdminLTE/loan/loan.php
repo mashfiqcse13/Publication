@@ -114,61 +114,61 @@
                 if (!isset($date_range) && !isset($status) && !isset($employee_info)) {
                     ?>
                     <div class="col-md-12" style="background: #fff;">
-                        <?php echo $glosary->output;?>
-<!--                        <div>
-                            <div class="box-header" >
-                                <h1 class="text-center">Loan List</h1>
-                            </div>
-                            <div class="box-body">
-                                <a href="<?php echo site_url('/loan/loan/add'); ?>" class="btn btn-primary" style="margin:5px;">Add Loan</a>
-                                <table id="example1" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Loan Title</th>
-                                            <th>Amount of Loan</th>
-                                            <th>Date of Loan</th>
-                                            <th>Loan Status</th>
-                                            <th>Dead Line</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach ($loans as $loan) {
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $loan->name_employee; ?></td>
-                                                <td><?php echo $loan->title_loan; ?></td>
-                                                <td><?php echo $loan->amount_loan; ?></td>
-                                                <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
-                                                <td><?php echo $loan->status; ?></td>
-                                                <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
-                                                <td>
-                                                    <a href="<?php echo base_url(); ?>index.php/loan/loan/edit/<?php echo $loan->id_loan; ?>" class="btn btn-success"><span class="glyphicon glyphicon-edit" ></span></a>
-                                                    <a href="<?php echo base_url(); ?>index.php/loan/loan/loan_delete/<?php echo $loan->id_loan; ?>" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash" ></span></a>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Loan Title</th>
-                                            <th>Amount of Loan</th>
-                                            <th>Date of Loan</th>
-                                            <th>Loan Status</th>
-                                            <th>Dead Line</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-
-                        </div>-->
+                        <?php echo $glosary->output; ?>
+                        <!--                        <div>
+                                                    <div class="box-header" >
+                                                        <h1 class="text-center">Loan List</h1>
+                                                    </div>
+                                                    <div class="box-body">
+                                                        <a href="<?php echo site_url('/loan/loan/add'); ?>" class="btn btn-primary" style="margin:5px;">Add Loan</a>
+                                                        <table id="example1" class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Employee Name</th>
+                                                                    <th>Loan Title</th>
+                                                                    <th>Amount of Loan</th>
+                                                                    <th>Date of Loan</th>
+                                                                    <th>Loan Status</th>
+                                                                    <th>Dead Line</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                        <?php
+                        foreach ($loans as $loan) {
+                            ?>
+                                                                                    <tr>
+                                                                                        <td><?php echo $loan->name_employee; ?></td>
+                                                                                        <td><?php echo $loan->title_loan; ?></td>
+                                                                                        <td><?php echo $loan->amount_loan; ?></td>
+                                                                                        <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
+                                                                                        <td><?php echo $loan->status; ?></td>
+                                                                                        <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
+                                                                                        <td>
+                                                                                            <a href="<?php echo base_url(); ?>index.php/loan/loan/edit/<?php echo $loan->id_loan; ?>" class="btn btn-success"><span class="glyphicon glyphicon-edit" ></span></a>
+                                                                                            <a href="<?php echo base_url(); ?>index.php/loan/loan/loan_delete/<?php echo $loan->id_loan; ?>" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash" ></span></a>
+                                                                                        </td>
+                                                                                    </tr>
+                            <?php
+                        }
+                        ?>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th>Employee Name</th>
+                                                                    <th>Loan Title</th>
+                                                                    <th>Amount of Loan</th>
+                                                                    <th>Date of Loan</th>
+                                                                    <th>Loan Status</th>
+                                                                    <th>Dead Line</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
                         
+                                                </div>-->
+
                     </div>
                     <?php
                 }
@@ -243,7 +243,56 @@
                 <div class="box">
 
                     <?php
-                    if ($this->uri->segment(3) === 'add' || $this->uri->segment(3) === 'edit' || $this->uri->segment(3) === 'success') {
+                    if ($this->uri->segment(3) === 'add') {
+                        $attributes = array(
+                            'class' => 'form-horizontal',
+                            'name' => 'form',
+                            'method' => 'post');
+                        echo form_open('', $attributes)
+                        ?>
+                        <div class="box-header">
+                            <h2>Add Loan</h2>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Employee Name:</label>
+                                        <div class="col-md-9">
+                                            <?php echo $employee_name; ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Title Loan:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="Title Loan" class="form-control" name="title_loan"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Amount Loan:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="Amount Loan" class="form-control" name="amount_loan"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Installment Amount Loan:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="Installment Amount Loan" class="form-control" name="installment_amount_loan"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Dead Line Loan:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="Dead Amount Loan" class="form-control" id="date" name="dead_line_loan"/>
+                                        </div>
+                                    </div>  
+                                    <button type="submit" name="btn_submit" value="true" class="btn btn-success pull-right">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?= form_close(); ?>
+                        <?php
+                    } else if ($this->uri->segment(3) === 'edit' || $this->uri->segment(3) === 'success') {
                         echo $glosary->output;
                     }
                     ?>
@@ -267,3 +316,6 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    $('#date').datepicker();
+</script>

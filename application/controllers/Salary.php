@@ -287,16 +287,19 @@ class Salary extends CI_Controller {
                 ->set_subject('Salary Advanced')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                ->callback_add_field('date_given_salary_advance', function () {
+                ->callback_edit_field('date_given_salary_advance', function () {
                     return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
                             . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
+                })->callback_edit_field('status_salary_advance', function () {
+                    return '<select name="status_salary_advance">'
+                            . '<option value="1">Active</option>'
+                            . '<option value="2">Inactive</option>'
+                            . '</select>';
+//                    return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
+//                            . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
                 })->callback_column('status_salary_advance', array($this, 'set_status_advance_salary'))
-                ->callback_after_insert(array($this, 'salary_advance_add'))
-//                        ->callback_after_update(array($this, 'salary_advance_reduce'))
-                ->callback_after_delete(array($this, 'salary_advance_reduce'))
                 ->order_by('id_salary_advance', 'desc')
-                ->unset_fields('amount_paid_salary_advance')
-                ->unset_edit();
+                ->unset_fields('amount_paid_salary_advance');
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -336,21 +339,6 @@ class Salary extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Advance';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_advanced', $data);
-    }
-
-    function salary_advance_add($post_array, $primary_key) {
-//        echo '<pre>'; print_r($post_array);exit();
-        $employee_id = $post_array['id_employee'];
-        $amount = $post_array['amount_given_salary_advance'];
-        $this->Salary_model->advance_add($amount, $employee_id);
-        return true;
-    }
-
-    function salary_advance_reduce($post_array, $primary_key) {
-        $employee_id = $post_array['id_employee'];
-        $amount = $post_array['amount_given_salary_advance'];
-        $this->Salary_model->advance_reduce($amount, $employee_id);
-        return true;
     }
 
     function salary_bonus_type() {
