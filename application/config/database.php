@@ -97,7 +97,7 @@ if ($_SERVER['HTTP_HOST'] == "thejamunapub.com") {
     $db['default']['username'] = 'thejamun_publication_fit';
     $db['default']['password'] = '1Uz1U3+7;3f0';
     $db['default']['database'] = 'thejamun_publication_fit';
-} else if($_SERVER['HTTP_HOST'] == "103.225.95.72:8080" || $_SERVER['HTTP_HOST'] == "localhost:8080") {
+} else if($_SERVER['HTTP_HOST'] == "103.225.95.72:8080" || $_SERVER['HTTP_HOST'] == "localhost:8080" || "10.10.10.2:8080") {
     $db['default']['username'] = 'root';
     $db['default']['password'] = 'advanced@hunki_punki16';
     $db['default']['database'] = 'Publication';
