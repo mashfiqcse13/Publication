@@ -158,15 +158,46 @@
                             total_payment = total_payment + Number(loan['paid_amount_loan_payment']);
                             remain_amount = sum - total_payment;
                             date = loan['date_taken_loan'];
+                            
+                            function given_loan(){
+                                if(loan['paid_amount_loan_payment']== null){
+                                    return '0';
+                                }else{
+                                    return loan['paid_amount_loan_payment'];
+                                }
+                            }
+                            function taken_loan(){
+                                if(loan['amount_loan']== null){
+                                    return '0';
+                                }else{
+                                    return loan['amount_loan'];
+                                }
+                            }
+                            function taken_loan_date(){
+                                if(loan['date_taken_loan']== null){
+                                    return '0000-00-00 00:00:00';
+                                }else{
+                                    return loan['date_taken_loan'];
+                                }
+                            }
+                            function given_loan_date(){
+                                if(loan['payment_date_loan_payment']== null){
+                                    return '0000-00-00 00:00:00';
+                                }else{
+                                    return loan['payment_date_loan_payment'];
+                                }
+                            }
+                            
+                            
 
 //                        
                             $('#employee_name').html(loan['name_employee']);
                             $('#total_loan').html(sum);
-                            $('#loan_history').prepend('<p>' + loan['date_taken_loan'] + '  ' + '(' + loan['amount_loan'] + ')' + ' Taken' + '<br/>' + loan['payment_date_loan_payment'] + '  ' + '(' + loan['paid_amount_loan_payment'] + ')' + ' Given' + '<br/>' + '</p>');
+                            $('#loan_history').prepend('<p>' + taken_loan_date() + '  ' + '(' + taken_loan() + ')' + ' Taken' + '<br/>' + given_loan_date() + '  ' + '(' + given_loan() + ')' + ' Given' + '<br/>' + '</p>');
                             $('#loan_status').html((loan['status']=='paid'?'Paid':'Not Paid'));
                             $('#loan_payment').html(total_payment);
                             $('#remain_loan').html(remain_amount);
-                            $('#loan_payment_date').prepend('<p>' + loan['payment_date_loan_payment'] + '</p>');
+                            $('#loan_payment_date').prepend('<p>' + given_loan_date() + '</p>');
 
                          
                         ++j;

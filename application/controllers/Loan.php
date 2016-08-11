@@ -53,7 +53,7 @@ class Loan extends CI_Controller {
                             .'<option value ="Not_Paid">Not Paid</option>'
                             .'</select>'
                             . '<style>div#status_field_box{display: none;}</style>';
-                })
+                })->callback_column('status',array($this,'paid_or_not'))
                 ->order_by('id_loan','desc');
 
         $output = $crud->render();
@@ -96,7 +96,13 @@ class Loan extends CI_Controller {
         $data['Title'] = 'Loan';
         $this->load->view($this->config->item('ADMIN_THEME') . 'loan/loan', $data);
     }
-
+    function paid_or_not($value,$row){
+        if($value == 'paid'){
+            return 'Paid';
+        }if($value == 'not_paid'){
+            return 'Not Paid';
+        }
+    }
 //                ->set_relation_n_n('Employee Name', 'loan', 'employee','id_loan_payment','id_employee','name_employee')
     function loan_payment() {
         $crud = new grocery_CRUD();

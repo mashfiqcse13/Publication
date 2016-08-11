@@ -115,7 +115,7 @@ class Loan_model extends CI_Model {
         $amount = $data['amount_loan'];
         $data['date_taken_loan'] = date('Y-m-d H:i:s');
         $data['installment_amount_loan'] = $post_array['installment_amount_loan'];
-        $data['status'] = 'not_paid';
+        $data['status'] = 'paid';
         $data['dead_line_loan'] = date('Y-m-d H:i:s',strtotime($post_array['dead_line_loan']));
         $sql = 'SELECT * FROM `loan` WHERE `id_employee`= ' . $data['id_employee'] . ' AND MONTH(date_taken_loan) = ' . $current_month . ' AND YEAR(date_taken_loan) = ' . $current_year;
         $result = $this->db->query($sql)->result();
