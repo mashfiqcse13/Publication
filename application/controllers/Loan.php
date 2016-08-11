@@ -41,10 +41,18 @@ class Loan extends CI_Controller {
         $crud->set_table('loan')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                ->unset_fields('installments_loan', 'status')
+                ->unset_fields('installments_loan')
+                ->unset_columns('installments_loan')
                 ->callback_add_field('date_taken_loan', function () {
-                    return '<input id="field-date_taken_loan" name="date_income" type="text" value="' . date('Y-m-d h:i:u',now()) . '" >'
+                    return '<input id="field-date_taken_loan" name="date_taken_loan" type="text" value="' . date('Y-m-d H:i:s') . '" >'
                             . '<style>div#date_taken_loan_field_box{display: none;}</style>';
+                })
+                ->callback_add_field('status', function () {
+                    return '<select id="field-status" name="status" >'
+                            .'<option value ="Paid">Paid</option>'
+                            .'<option value ="Not_Paid">Not Paid</option>'
+                            .'</select>'
+                            . '<style>div#status_field_box{display: none;}</style>';
                 })
                 ->order_by('id_loan','desc');
 

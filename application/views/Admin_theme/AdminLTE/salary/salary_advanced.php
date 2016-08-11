@@ -141,33 +141,75 @@
                             </div>
                         </div>
                         <?php
-                    }if (!isset($date_range))
-                         {
-                            if (!isset($employee_info) || $this->uri->segment(3) === 'add' || $this->uri->segment(3) === 'edit') {
-                                echo $glosary->output;
-                            }
+                    }if (!isset($date_range)) {
+                        if ($this->uri->segment(3) === 'add') {
+                            $attributes = array(
+                                'class' => 'form-horizontal',
+                                'name' => 'form',
+                                'method' => 'post');
+                            echo form_open('', $attributes)
+                            ?>
+                            <div class="box-header">
+                                <h2>Add Salary Advance</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group ">
+                                            <label class="col-md-3">Amount Given Salary Advance:</label>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="Amount" class="form-control" name="amount_given_salary_advance"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group ">
+                                            <label class="col-md-3">Employee Name:</label>
+                                            <div class="col-md-9">
+                                                <?php echo $employee_name; ?>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group ">
+                                            <label class="col-md-3">Status salary advance :</label>
+                                            <div class="col-md-9">
+                                                <select name="status_salary_advance" id="" class="form-control select2">
+                                                    <option value="1">Active</option>
+                                                    <option value="2">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" name="btn_submit" value="true" class="btn btn-success pull-right">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?= form_close(); ?>
+                            <?php
+                        } else if (!isset($employee_info) || $this->uri->segment(3) === 'edit') {
+                            echo $glosary->output;
                         }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
-
-
-
             </div>
 
-    </div>
+
+
+        </div>
+
+</div>
 
 
 
 
-    </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
+</section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
-    <!-- insert book -->
+<!-- insert book -->
 
 
 
-    <?php include_once __DIR__ . '/../footer.php'; ?>
+<?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
     document.forms['form'].elements['employee'].value = "<?php echo $employee_info; ?>";
 </script>

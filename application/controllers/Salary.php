@@ -198,6 +198,8 @@ class Salary extends CI_Controller {
                             $update_advance['amount_paid_salary_advance'] = $advance_amount[$j];
                             $update_advance['status_salary_advance'] = '2';
                             $this->Salary_model->update_advance($update_advance, $advance_amount[$j], $advance_id[$j]);
+
+                            $this->Salary_model->advance_reduce($advance_amount[$j], $id[$j]);
                         }
 
                         if (empty($loan_payment[$j]) || empty($advance_id[$j])) {
@@ -288,19 +290,24 @@ class Salary extends CI_Controller {
                 ->callback_add_field('date_given_salary_advance', function () {
                     return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
                             . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
-                })
-                ->callback_add_field('status_salary_advance', function () {
-                    return '<select name="status_salary_advance">'
-                            . '<option value="1">Active</option>'
-                            . '<option value="2">Inactive</option>'
-                            . '</select>';
-//                    return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
-//                            . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
                 })->callback_column('status_salary_advance', array($this, 'set_status_advance_salary'))
+                ->callback_after_insert(array($this, 'salary_advance_add'))
+//                        ->callback_after_update(array($this, 'salary_advance_reduce'))
+                ->callback_after_delete(array($this, 'salary_advance_reduce'))
                 ->order_by('id_salary_advance', 'desc')
-                ->unset_fields('amount_paid_salary_advance');
+                ->unset_fields('amount_paid_salary_advance')
+                ->unset_edit();
         $output = $crud->render();
         $data['glosary'] = $output;
+
+        $data['employee_name'] = $this->Salary_model->get_employee_dropdown();
+        $btn = $this->input->post('btn_submit');
+        if (isset($btn)) {
+            $this->Salary_model->save_advance($_POST);
+            $sdata['message'] = '<div class = "alert alert-success" id="message"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Data is Successfully Updated!</p></div>';
+            $this->session->set_userdata($sdata);
+            redirect('salary/salary_advanced');
+        }
 
 //        employee search
         $employee = $this->input->get('employee');
@@ -329,6 +336,21 @@ class Salary extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Salary Advance';
         $this->load->view($this->config->item('ADMIN_THEME') . 'salary/salary_advanced', $data);
+    }
+
+    function salary_advance_add($post_array, $primary_key) {
+//        echo '<pre>'; print_r($post_array);exit();
+        $employee_id = $post_array['id_employee'];
+        $amount = $post_array['amount_given_salary_advance'];
+        $this->Salary_model->advance_add($amount, $employee_id);
+        return true;
+    }
+
+    function salary_advance_reduce($post_array, $primary_key) {
+        $employee_id = $post_array['id_employee'];
+        $amount = $post_array['amount_given_salary_advance'];
+        $this->Salary_model->advance_reduce($amount, $employee_id);
+        return true;
     }
 
     function salary_bonus_type() {

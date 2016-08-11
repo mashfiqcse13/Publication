@@ -65,15 +65,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Loan History  :</label>
-                                        <div class="col-md-9" id="loan_history">
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-md-3 control-label">Last Loan Status  :</label>
                                         <div class="col-md-9">
                                             <p id="loan_status"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Loan History  :</label>
+                                        <div class="col-md-9" id="loan_history">
+
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -83,15 +83,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Remaining Loan Amount :</label>
-                                        <div class="col-md-9">
-                                            <p  id="remain_loan"></p>
+                                        <label class="col-md-3 control-label">Last Loan Payment Date :</label>
+                                        <div class="col-md-9" id="loan_payment_date">
+
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label"> Loan Payment Date :</label>
-                                        <div class="col-md-9" id="loan_payment_date">
-
+                                        <label class="col-md-3 control-label">Remaining Loan Amount :</label>
+                                        <div class="col-md-9">
+                                            <p  id="remain_loan"></p>
                                         </div>
                                     </div>
 

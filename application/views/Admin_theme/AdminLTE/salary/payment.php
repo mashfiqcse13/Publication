@@ -210,7 +210,7 @@
                                                     <?php
                                                     if ($value->status_salary_advance == 1) {
                                                         ?>
-                                                        <td><?php echo $value->amount_given_salary_advance; ?></td>
+                                                        <td><?php echo $advance; ?></td>
                                                         <?php
                                                     } else {
                                                         ?>
