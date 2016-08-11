@@ -76,8 +76,11 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th width="50%">Book Name</th>
-                                        <th>Accurate Sale Quantity</th> 
+                                        <th>Book Name</th>
+                                        <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
+                                        <th>Old Book Return</th>
+                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
+                                        
                                         
                                     </tr>
                                 </thead>
@@ -90,7 +93,20 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $return->name; ?></td>
-                                            <td ><?php echo $return->sales_quantity-$return->return_quantity; ?></td>
+                                            <td ><?php echo $val = $return->sales_quantity-$return->return_quantity; ?></td>
+                                            <td><?php 
+                                            foreach ($old_book as $row){
+                                            if($return->id_item==$row->id_item){
+                                                echo $row->old_quantity;
+                                            }}
+                                            ?></td> 
+                                            
+                                            <td><?php 
+                                            foreach ($old_book as $row){
+                                            if($return->id_item==$row->id_item){
+                                                echo $val - $row->old_quantity;
+                                            }}
+                                            ?></td> 
                                             
                                         </tr>
                                         <?php
@@ -116,21 +132,38 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th width="50%">Book Name</th>
-                                        <th>Accurate Sale Quantity</th> 
+                                        <th>Book Name</th>
+                                        <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
+                                        <th>Old Book Return</th>
+                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
                                         
-                                    </tr>
+                                    </tr> 
                                 </thead>
                                 <tbody>
                                     <?php
                                        
                                     foreach ($sold_info as $return) {
                                         
+                                        
+                                        
                                        
                                         ?>
                                         <tr>
                                             <td><?php echo $return->name; ?></td>
-                                            <td ><?php echo $return->sales_quantity-$return->return_quantity; ?></td>
+                                            <td ><?php echo $val = $return->sales_quantity-$return->return_quantity; ?></td>
+                                            <td><?php 
+                                            foreach ($old_book as $row){
+                                            if($return->id_item==$row->id_item){
+                                                echo $row->old_quantity;
+                                            }}
+                                            ?></td> 
+                                            
+                                            <td><?php 
+                                            foreach ($old_book as $row){
+                                            if($return->id_item==$row->id_item){
+                                                echo $val - $row->old_quantity;
+                                            }}
+                                            ?></td> 
                                             
                                         </tr>
                                         <?php

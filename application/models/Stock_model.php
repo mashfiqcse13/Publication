@@ -88,17 +88,47 @@ class Stock_model extends CI_Model {
         }
     }
     
-    
+//    $query = $this->db->select('stock_perpetual_stock_register.id_item as id_item,name,sum(receive_amount) as receive_amount,
+//                sum(sales_amount) sales_amount,sum(specimen) as specimen,sum(return_amountreject) as return_amountreject')
+//                ->from('stock_perpetual_stock_register')
+//                ->join('items','stock_perpetual_stock_register.id_item = items.id_item','left')
+//                ->where('stock_perpetual_stock_register.date >= ',date('Y-m-d', strtotime($from)))
+//                ->where('stock_perpetual_stock_register.date <= ',date('Y-m-d', strtotime($to)))
+//                ->order_by('stock_perpetual_stock_register.date')
+//                ->group_by('id_item')
+//                ->get()->result();
+//                
+//                
 //    get perpatual search info
     function get_perpetual_info($from, $to){
-        $this->db->select('*');
-        $this->db->from('stock_perpetual_stock_register');
-        $this->db->join('items','stock_perpetual_stock_register.id_item = items.id_item','left');
-        $this->db->where('stock_perpetual_stock_register.date >= ',date('Y-m-d', strtotime($from)));
-        $this->db->where('stock_perpetual_stock_register.date <= ',date('Y-m-d', strtotime($to)));
-        $this->db->order_by('stock_perpetual_stock_register.date');
-        $query = $this->db->get();
-        return $query->result();
+            $query = $this->db->select('stock_perpetual_stock_register.id_item as id_item,name,opening_amount,
+                sum(receive_amount) as receive_amount,
+                sum(sales_amount) sales_amount,sum(specimen) as specimen,sum(return_amountreject) as return_amountreject')
+                ->from('stock_perpetual_stock_register')
+                ->join('items','stock_perpetual_stock_register.id_item = items.id_item','left')
+                ->where('stock_perpetual_stock_register.date >= ',date('Y-m-d', strtotime($from)))
+                ->where('stock_perpetual_stock_register.date <= ',date('Y-m-d', strtotime($to)))
+                ->order_by('stock_perpetual_stock_register.date')
+                ->group_by('id_item')
+                ->get()->result();
+       
+        return $query;
     }
+    
+    function old_book_quantity($from, $to){
+        
+        $query = $this->db->select('id_item,sum(old_book_return_items.quantity) as old_quantity')
+                ->from('old_book_return_items')
+                ->join('old_book_return_total','old_book_return_total.id_old_book_return_total = old_book_return_items.id_old_book_return_total','left')
+                ->where('old_book_return_total.issue_date >= ',date('Y-m-d', strtotime($from)))
+                ->where('old_book_return_total.issue_date <= ',date('Y-m-d', strtotime($to)))
+                ->order_by('old_book_return_total.issue_date')
+                ->group_by('id_item')
+                ->get()->result();
+        
+        return $query;
+    }
+    
+    
 
 }

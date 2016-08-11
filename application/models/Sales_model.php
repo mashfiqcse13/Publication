@@ -245,7 +245,7 @@ class Sales_model extends CI_Model {
             
         }       
         
-        $query=$this->db->query("SELECT items.name as name,
+        $query=$this->db->query("SELECT sales.id_item as id_item,items.name as name,
             sum(sales.quantity) as sales_quantity,sum(sales_current_sales_return.quantity) as return_quantity
             FROM sales_total_sales left JOIN sales ON sales.id_total_sales=sales_total_sales.id_total_sales
             LEFT JOIN items ON items.id_item=sales.id_item
@@ -254,6 +254,52 @@ class Sales_model extends CI_Model {
             GROUP BY items.id_item
                         ");
          
+        return $query->result();
+    }
+    
+    function old_book_quantity( $id_customer='' , $date_range=''){
+        
+        if($date_range==''){
+            $date_range='';
+        }else{
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range="  DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+        }
+        
+        if($id_customer == '' && $date_range == ''){
+            
+            $con = ' ';
+        }
+        
+        if ($id_customer !='') {
+            
+            $con=" where old_book_return_total.id_customer = $id_customer ";    
+            
+        }
+        if ($date_range != '') {            
+            
+            $con = " where  $date_range";
+            
+        }
+        
+        if ($date_range != '' && $id_customer !='') {
+            $con = " where old_book_return_total.id_customer = $id_customer AND $date_range";
+            
+        } 
+        
+        
+        $query = $this->db->query("SELECT `id_item`, 
+                sum(old_book_return_items.quantity) as old_quantity 
+                FROM `old_book_return_items` 
+                LEFT JOIN `old_book_return_total` 
+                ON `old_book_return_total`.`id_old_book_return_total` = `old_book_return_items`.`id_old_book_return_total`
+                $con
+                GROUP BY `id_item` 
+                ");
+        
         return $query->result();
     }
 

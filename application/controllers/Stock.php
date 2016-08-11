@@ -38,6 +38,7 @@ class Stock extends CI_Controller {
         $crud->set_table('stock_perpetual_stock_register')
                 ->set_subject('Stock Perpitual')->display_as('return_amountreject', 'Sales Return Amount')->display_as('id_item', 'Item Name')
                 ->set_relation('id_item', 'items', 'name')->unset_columns('reject_amount')
+                ->order_by('id_perpetual_stock_register','desc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
@@ -48,8 +49,7 @@ class Stock extends CI_Controller {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
             $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]); 
-            echo '<pre>';
-            print_r($data);
+            $data['old_info'] = $this->Stock_model->old_book_quantity($date[0],$date[1]);
             
         }
 

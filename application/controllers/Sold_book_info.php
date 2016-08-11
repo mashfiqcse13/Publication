@@ -32,16 +32,23 @@ class Sold_book_info extends CI_Controller {
         
         if (isset($btn)) {
             $data['sold_info'] = $this->Sales_model->accurate_sale( $id_customer,$date_range);
-         
-//            if($id_type!=''){
-//                $data['id_type']=$id_type;
-//            }
+            $data['old_book'] = $this->Sales_model->old_book_quantity($id_customer,$date_range);
+
+            if($id_customer!=''){
+                $data['id_customer']=$id_customer;
+            }
             $data['date_range']=$date_range;
             
         }else{
             $date_range=date('m/d/Y').' - '.date('m/d/Y');
             
             $data['sold_info_today'] = $this->Sales_model->accurate_sale( $id_customer,$date_range);
+            $data['old_book'] = $this->Sales_model->old_book_quantity($id_customer,$date_range);
+//            echo '<pre>';
+//            print_r($data['old_book']);
+//            print_r($data['sold_info_today']);
+            
+            
         }
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown_as_customer();
 
