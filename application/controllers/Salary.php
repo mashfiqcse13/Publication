@@ -286,6 +286,7 @@ class Salary extends CI_Controller {
         $crud->set_table('salary_advance')
                 ->set_subject('Salary Advanced')
                 ->display_as("id_employee", 'Employee Name')
+                ->display_as("status_salary_advance", 'Status of Salary')
                 ->set_relation('id_employee', 'employee', "name_employee")
                 ->callback_edit_field('date_given_salary_advance', function () {
                     return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
