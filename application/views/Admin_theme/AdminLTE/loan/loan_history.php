@@ -61,13 +61,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Total Amount of Loan Taken :</label>
                                         <div class="col-md-9">
-                                            <p  id="total_loan"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Loan History  :</label>
-                                        <div class="col-md-9" id="loan_history">
-
+                                            <p  id="total_loan" class="taka_formate"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -77,21 +71,27 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">Loan History  :</label>
+                                        <div class="col-md-9" id="loan_history">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-md-3 control-label">Total Loan Payment :</label>
                                         <div class="col-md-9">
-                                            <p  id="loan_payment"></p>
+                                            <p  id="loan_payment" class="taka_formate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Last Loan Payment Date :</label>
+                                        <div class="col-md-9" id="loan_payment_date">
+
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Remaining Loan Amount :</label>
                                         <div class="col-md-9">
-                                            <p  id="remain_loan"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label"> Loan Payment Date :</label>
-                                        <div class="col-md-9" id="loan_payment_date">
-
+                                            <p  id="remain_loan" class="taka_formate"></p>
                                         </div>
                                     </div>
 
@@ -163,7 +163,7 @@
                             $('#employee_name').html(loan['name_employee']);
                             $('#total_loan').html(sum);
                             $('#loan_history').prepend('<p>' + loan['date_taken_loan'] + '  ' + '(' + loan['amount_loan'] + ')' + ' Taken' + '<br/>' + loan['payment_date_loan_payment'] + '  ' + '(' + loan['paid_amount_loan_payment'] + ')' + ' Given' + '<br/>' + '</p>');
-                            $('#loan_status').html(loan['status']);
+                            $('#loan_status').html((loan['status']=='paid'?'Paid':'Not Paid'));
                             $('#loan_payment').html(total_payment);
                             $('#remain_loan').html(remain_amount);
                             $('#loan_payment_date').prepend('<p>' + loan['payment_date_loan_payment'] + '</p>');

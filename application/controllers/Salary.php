@@ -198,6 +198,8 @@ class Salary extends CI_Controller {
                             $update_advance['amount_paid_salary_advance'] = $advance_amount[$j];
                             $update_advance['status_salary_advance'] = '2';
                             $this->Salary_model->update_advance($update_advance, $advance_amount[$j], $advance_id[$j]);
+
+                            $this->Salary_model->advance_reduce($advance_amount[$j], $id[$j]);
                         }
 
                         if (empty($loan_payment[$j]) || empty($advance_id[$j])) {
@@ -285,11 +287,10 @@ class Salary extends CI_Controller {
                 ->set_subject('Salary Advanced')
                 ->display_as("id_employee", 'Employee Name')
                 ->set_relation('id_employee', 'employee', "name_employee")
-                ->callback_add_field('date_given_salary_advance', function () {
+                ->callback_edit_field('date_given_salary_advance', function () {
                     return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
                             . '<style>div#date_given_salary_advance_field_box{display: none;}</style>';
-                })
-                ->callback_add_field('status_salary_advance', function () {
+                })->callback_edit_field('status_salary_advance', function () {
                     return '<select name="status_salary_advance">'
                             . '<option value="1">Active</option>'
                             . '<option value="2">Inactive</option>'
@@ -301,6 +302,15 @@ class Salary extends CI_Controller {
                 ->unset_fields('amount_paid_salary_advance');
         $output = $crud->render();
         $data['glosary'] = $output;
+
+        $data['employee_name'] = $this->Salary_model->get_employee_dropdown();
+        $btn = $this->input->post('btn_submit');
+        if (isset($btn)) {
+            $this->Salary_model->save_advance($_POST);
+            $sdata['message'] = '<div class = "alert alert-success" id="message"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Data is Successfully Updated!</p></div>';
+            $this->session->set_userdata($sdata);
+            redirect('salary/salary_advanced');
+        }
 
 //        employee search
         $employee = $this->input->get('employee');
