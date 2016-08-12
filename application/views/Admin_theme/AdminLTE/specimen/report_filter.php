@@ -14,7 +14,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><?=$Title ?></li>
+            <li class="active"><?= $Title ?></li>
         </ol>
     </section>
 
@@ -30,22 +30,25 @@
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form class="form-horizontal" method="post">
-                        <div class="box-body"><div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="exampleInputEmail1" class="col-md-3  control-label">Agent/Marketing Officer Name</label>
-                                    <div class="col-sm-9">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="exampleInputEmail1" class="col-md-4  control-label">Agent/Marketing Officer Name</label>
+                                    <div class="col-md-8">
                                         <?php echo $agent_dropdown ?>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="col-md-3  control-label" for="exampleInputEmail1">Item Name</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-md-4  control-label" for="exampleInputEmail1">Item Name</label>
+                                    <div class="col-md-8">
                                         <?php echo $item_dropdown ?>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="exampleInputEmail1" class="col-md-3 control-label">Date Range</label>
-                                    <div class="col-sm-9">
+                                    <label for="exampleInputEmail1" class="col-md-4 control-label">Date Range</label>
+                                    <div class="col-md-8">
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
@@ -55,8 +58,8 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="report_asked" value="true">
-                                <div class="form-group col-md-3 pull-right">
-                                    <button type="submit" class="btn btn-primary" name="get_report" value="all">Generate Report</button> 
+                                <div class="form-group col-md-4 text-right">
+                                    <button type="submit" class="btn btn-primary" name="get_report" value="all">Search Information</button> 
                                     <a href="<?php echo site_url('specimen/report') ?>" class="btn btn-success">Reset filter</a>
                                 </div>
                             </div>
