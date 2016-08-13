@@ -60,6 +60,9 @@
                 border-radius: 0;
                 height: 35px;
             }
+            body {
+                text-transform: capitalize;
+            }
 
             .form-input-box {
                 min-width: 200px;

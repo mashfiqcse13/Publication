@@ -17,7 +17,8 @@ class Sales_return_m extends CI_Model {
               $this->load->model('misc/customer_due');  
               $this->load->model('misc/Stock_perpetual'); 
               $this->load->model('Stock_model');
-              $this->load->model('advance_payment_model');       
+              $this->load->model('advance_payment_model');
+              //$this->load->libraty('session');
     }
 
     
@@ -45,7 +46,8 @@ class Sales_return_m extends CI_Model {
     
     function memo_dropdown() {
         $this->db->select('*')
-                ->from('sales_total_sales');
+                ->from('sales_total_sales')
+                ->order_by('id_total_sales','desc');
         $sql=$this->db->get()->result();
         $data = array();
         $data = '<select id="field-id_account" name="memo_id" class="select2 chosen-select chzn-done" data-placeholder="Select Memo Number" required>';
@@ -119,6 +121,7 @@ class Sales_return_m extends CI_Model {
                 $id=array();
                 foreach($memo_ID as $key => $val){
                            if($quantity[$key]!= 0){ 
+                               $date_now=date('Y-m-d');
 
                             $data_add=array(
                                 'memo_ID' => $memo_ID[$key],
@@ -126,8 +129,11 @@ class Sales_return_m extends CI_Model {
 //                                'stock_ID' => $stock_ID[$key],
                                 'quantity' => $quantity[$key],
                                 'price_per_book' => $price_per_book[$key],
-                                'total' => $quantity[$key]*$price_per_book[$key]
+                                'total' => $quantity[$key]*$price_per_book[$key],
+                                'date_current_sales_return' => $date_now,
+                                
                             );
+                            
                             
                             $this->db->insert('sales_current_sales_return',$data_add);  
                             $id[] = $this->db->insert_id();
@@ -165,7 +171,7 @@ class Sales_return_m extends CI_Model {
                       . " WHERE id_total_sales=$memo_id");
                 
                 $this->customer_due->reduce($contact_ID,$values);
-              
+                $this->session->set_userdata('only_due_clear',$values);
 
                 }else{
                     $update_value=$values-$memo_due;
@@ -177,7 +183,11 @@ class Sales_return_m extends CI_Model {
                       . " total_paid = total_paid-$update_value, "
                       . " total_due = total_due-$memo_due"
                       . " WHERE id_total_sales=$memo_id");
-                    
+                        
+                        $this->session->set_userdata('only_due_clear',$memo_due);
+                        $this->session->set_userdata('add_to_advanced',$update_value);
+                        
+                        
                          $this->customer_due->reduce($contact_ID,$memo_due);
                          if($update_value > 0){
                             $this->advance_payment_model->payment_add($contact_ID, $update_value, 2);
@@ -265,8 +275,32 @@ class Sales_return_m extends CI_Model {
             $this->table->clear();
             $this->table->set_template($tmpl);
             $cell1 = array('data' => 'Total: ', 'class' => 'text-right');
-            $cell2 = array('data' => 'TK '.$total_price, 'class' => 'text-right');
+            $cell2 = array('data' => 'TK '.$total_price, 'class' => 'text-right taka_formate');
+            
+                  
+                    
+            if($this->session->userdata('only_due_clear')){
+                $due_paid=$this->session->userdata('only_due_clear');
+                $this->session->unset_userdata('only_due_clear');
+            }else{
+                $due_paid=0;
+            } 
+            
+            if($this->session->userdata('add_to_advanced')){
+                $add_to_advanced=$this->session->userdata('add_to_advanced');
+                $this->session->unset_userdata('add_to_advanced');
+            }else{
+                $add_to_advanced=0;
+            }
+            
+            
+            
+            $cell_due=array('data' => 'Due Reduced = TK '.$due_paid,'class' => 'text-right taka_fomrate','colspan'=> 2 );
+            $cell_adv=array('data' => 'Add To Advanced = TK '.$add_to_advanced,'class' => 'text-right taka_fomrate','colspan'=> 2 );
+                    
             $this->table->add_row($cell1,$cell2);
+            $this->table->add_row($cell_due);
+            $this->table->add_row($cell_adv);
             $data['table2']=$this->table->generate();
             
             
