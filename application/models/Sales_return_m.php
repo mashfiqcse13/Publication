@@ -10,6 +10,15 @@ if (!defined('BASEPATH'))
  */
 
 class Sales_return_m extends CI_Model {
+    
+    
+    function __construct() {
+              $this->load->model('misc/cash');
+              $this->load->model('misc/customer_due');  
+              $this->load->model('misc/Stock_perpetual'); 
+              $this->load->model('Stock_model');
+              $this->load->model('advance_payment_model');       
+    }
 
     
     function get_memos($id){
@@ -68,15 +77,16 @@ class Sales_return_m extends CI_Model {
 
             return $this->table->generate($query);
     }
+      function current_memo_due($memo_id){
+          $query=$this->db->query("SELECT total_due FROM `sales_total_sales` WHERE id_total_sales=$memo_id");
+          $due=0;
+          foreach($query->result() as $row){
+              $due=$row->total_due;
+          }
+          return $due;
+      }
 
-      function insert_return_item($post){
-          
-              $this->load->model('misc/cash');
-              $this->load->model('misc/customer_due');  
-              $this->load->model('misc/Stock_perpetual'); 
-              $this->load->model('Stock_model');
-              $this->load->model('advance_payment_model');
-                
+      function insert_return_item($post){   
               
                 $memo_ID = $this->input->post('id_total_sales');
                 $book_ID= $this->input->post('id_item');
@@ -106,8 +116,12 @@ class Sales_return_m extends CI_Model {
                             $this->db->insert('sales_current_sales_return',$data_add);  
                             $id[] = $this->db->insert_id();
                             $values+=$data_add['total'];
+                            
+                            
                            }
                            
+                           
+                           //update sales table
                            $this->db->query("UPDATE `sales` "
                                             . "SET `quantity`=quantity-$quantity[$key],"
                                             . "`total_cost`=total_cost-$quantity[$key]*$price_per_book[$key],"
@@ -116,23 +130,47 @@ class Sales_return_m extends CI_Model {
                                             . " id_item=$book_ID[$key]");
                                                       
 
-                }//insert sales_current_sales_return table
+                }
                 
+               foreach($memo_ID as $key => $val){
+                   $memo_id=$memo_ID[$key];
+               }
                 
+               $memo_due=$this->current_memo_due($memo_id);
+                           
+                if($memo_due >= $values){
+               
+                    
+                    //update sales total sales table
+                $this->db->query("UPDATE `sales_total_sales` "
+                      . "SET `sub_total`=sub_total-$values, "
+                      . "`total_amount`=total_amount-$values, "
+                      . " total_due = total_due-$values"
+                      . " WHERE id_total_sales=$memo_id");
                 
-                //update_sales_table
-                
-//            $tmp_data_sales = array(
-//                'id_total_sales' => $id_total_sales,
-//                'id_item' => $value['item_id'],
-//                'quantity' => $value['item_quantity'],
-//                'price' => $value['sale_price'],
-//                'total_cost' => $value['total'],
-//                'discount' => 0,
-//                'sub_total' => $value['total'],
-//            );
-//            array_push($data_sales, $tmp_data_sales);
-            
+                $this->customer_due->reduce($contact_ID,$values);
+              
+
+                }else{
+                    $update_value=$values-$memo_due;
+                    
+                    //update sales total sales table
+                     $this->db->query("UPDATE `sales_total_sales` "
+                      . "SET `sub_total`=sub_total-$values, "
+                      . "`total_amount`=total_amount-$values, "
+                      . " total_paid = total_paid-$update_value, "
+                      . " total_due = total_due-$memo_due"
+                      . " WHERE id_total_sales=$memo_id");
+                    
+                         $this->customer_due->reduce($contact_ID,$memo_due);
+                         if($update_value > 0){
+                            $this->advance_payment_model->payment_add($contact_ID, $update_value, 2);
+                            $this->cash->reduce($update_value);
+                         }
+                     
+                } 
+              
+              
             
                 
                 $stock_add=array(); 
@@ -147,10 +185,8 @@ class Sales_return_m extends CI_Model {
                         $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount, $type_code = 3) ;
                         $this->Stock_model->stock_add($id_item, $amount);                        
                         
-                    }
-   
-                    //update stock,stock_perpetual_register section end
-//                    if($pre_quantity[$key]>=$quantity[$key] && $pre_quantity[$key]=!0){
+                    }  
+
                         $data_delete=array(
                                     'quantity' =>$pre_quantity[$key]-$quantity[$key],                                
                                     'total_cost' =>($pre_quantity[$key]-$quantity[$key])*$price_per_book[$key]
@@ -159,19 +195,10 @@ class Sales_return_m extends CI_Model {
                         $this->db->where('id_total_sales', $memo_ID[$key]);
                         $this->db->where('id_item',$book_ID[$key]);
                         $this->db->update('sales', $data_delete);
-                   //}
+                   
                 }
                
-               
-              $this->db->query("UPDATE `sales_total_sales` "
-                      . "SET `sub_total`=sub_total-$values,"
-                      . "`total_amount`=total_amount-$values, "
-                      . " total_paid = total_paid-$values"
-                      . " WHERE id_total_sales=$memo_ID_update");
               
-              $this->customer_due->reduce($contact_ID,$values);
-              $this->advance_payment_model->payment_add($contact_ID, $values, 2);
-              $this->cash->reduce($values);
               
 
               return $id;
