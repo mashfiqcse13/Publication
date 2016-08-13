@@ -121,7 +121,7 @@ class Sales_return_m extends CI_Model {
                 $id=array();
                 foreach($memo_ID as $key => $val){
                            if($quantity[$key]!= 0){ 
-                               $date_now=date('Y-m-d');
+                               $date_now=date('Y-m-d H:i:s');
 
                             $data_add=array(
                                 'memo_ID' => $memo_ID[$key],
