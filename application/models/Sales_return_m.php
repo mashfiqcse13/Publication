@@ -41,6 +41,22 @@ class Sales_return_m extends CI_Model {
         
     }
     
+
+    
+    function memo_dropdown() {
+        $this->db->select('*')
+                ->from('sales_total_sales');
+        $sql=$this->db->get()->result();
+        $data = array();
+        $data = '<select id="field-id_account" name="memo_id" class="select2 chosen-select chzn-done" data-placeholder="Select Memo Number" required>';
+        $data.='<option value="">Select Memo Number</option>';
+        foreach ($sql as $row) {
+            $data.='<option value="' . $row->id_total_sales . '">' . $row->id_total_sales . '</option>';
+        }
+        $data.='</select>';
+        return $data;
+    }
+    
     function get_all_return_item(){
        
         $this->load->library('table');

@@ -38,12 +38,13 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label>Memo Id:</label>
+                                                <label>Select Memo Number:</label>
                                             </div>
-                                            <div class="col-md-8">
-                                                <input type="text" name="memo_id" class="form-control">
+                                            <div class="col-md-4">
+                                                 <?=$memo_dropdown;?>
                                             </div>
                                         </div>
+                                       
                                    
                                     </div>
                                     
