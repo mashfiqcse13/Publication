@@ -31,6 +31,7 @@ class Customer_payment extends CI_Model {
             $data_to_insert_in_due_payment[$key]['payment_date'] = date('Y-m-d h:i:u');
             $data_to_insert_in_due_payment[$key]['paid_amount'] = $payment_amount;
             $data_to_insert_in_due_payment[$key]['id_payment_method'] = $id_payment_method;      //cash only
+            $data_to_insert_in_due_payment[$key]['due_payment_status'] = 1;
 
             if ($payment_amount > $row->total_due) {
                 // transfering total due to cash and total_paid
