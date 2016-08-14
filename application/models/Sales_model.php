@@ -101,7 +101,31 @@ class Sales_model extends CI_Model {
 //        print_r($data);exit();
         Return $data[0];
     }
-
+    function memo_previous_due($customer_id,$memo_date){
+        //left join payment_method ON payment_method.id_payment_method=customer_payment.id_payment_method
+        //SELECT sum(paid_amount) as due_payment FROM `customer_payment` WHERE due_payment_status=1 group BY id_payment_method
+        $this->db->select('payment_method.name_payment_method as payment_method,sum(paid_amount) as due_payment')
+                ->from('customer_payment')
+                ->join('payment_method','payment_method.id_payment_method=customer_payment.id_payment_method','left')
+                ->where('due_payment_status','1')
+                ->where('id_customer',$customer_id)
+                ->where('payment_date',$memo_date)
+                ->group_by('payment_method.id_payment_method');
+        
+        $sql=$this->db->get()->result();       
+        
+        return $sql;        
+    }
+    
+    function get_memo_customer_id($id){
+        $query=$this->db->select('*')
+                ->from('sales_total_sales')
+                ->where('id_total_sales',$id)
+                ->get()->result();
+        return $query;
+    }
+    
+    
     function memo_body_table($total_sales_id) {
         $this->load->library('table');
         // setting up the table design
@@ -155,17 +179,43 @@ class Sales_model extends CI_Model {
         $total_sales_details = $this->db->query($sql)->result();
         $total_sales_details = $total_sales_details[0];
 
+        //্ get due payment info
+        $customer_id=0;
+        $memo_date='';
+        $memo_details=$this->get_memo_customer_id($total_sales_id);
+            foreach($memo_details as $row){
+                $customer_id=$row->id_customer;
+                $memo_date="$row->issue_date";
+            }
+           
+         $due_pay = $this->memo_previous_due($customer_id,$memo_date);
+         $total_due_pay=0;
+        foreach($due_pay as $row){
+            $due["$row->payment_method"]=$row->due_payment;
+            $total_due_pay+=$row->due_payment;
+        }
+        $due['total_due_pay']=$total_due_pay;
+        
+            
+        
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
             'colspan' => 2
                 ), $this->Common->taka_format($total_price));
+        
         $this->table->add_row('', '', array(
             'data' => 'ছাড় : ',
-            'class' => 'left_separator',
+            'class' => 'left_separator taka_formate',
             'colspan' => 2
                 ), $total_sales_details->discount_amount);
+        
+        $this->table->add_row('', '', array(
+            'data' => 'পূর্বের বাকি : ',
+            'class' => 'left_separator taka_foramte',
+            'colspan' => 2
+                ), $due['total_due_pay']);
         $this->table->add_row(array(
             'data' => '<strong>কথায় : </strong>',
             'colspan' => 2
@@ -173,7 +223,27 @@ class Sales_model extends CI_Model {
             'data' => '	সর্বমোট : ',
             'class' => 'left_separator',
             'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->total_amount));
+                ), $this->Common->taka_format($total_sales_details->total_amount + $due['total_due_pay']));
+        
+        $this->table->add_row('', '', array(
+            'data' => 'পূর্বের জমা : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $total_sales_details->discount_amount);
+        
+        $this->table->add_row('', '', array(
+            'data' => 'নগদ জমা : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $total_sales_details->discount_amount + isset($due['Cash'])?$due['Cash']:0);
+        
+        $this->table->add_row('', '', array(
+            'data' => 'ব্যাংক জমা : ',
+            'class' => 'left_separator',
+            'colspan' => 2
+                ), $total_sales_details->discount_amount+isset($due['Bank'])?$due['Bank']:0);
+        
+          
         $this->table->add_row(array(
             'data' => $this->Common->convert_number($total_sales_details->total_amount),
             'colspan' => 2,
@@ -182,11 +252,11 @@ class Sales_model extends CI_Model {
             'data' => '	মোট জমা : ',
             'class' => 'left_separator',
             'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->total_paid));
+                ), $this->Common->taka_format($total_sales_details->total_paid + $due['total_due_pay'] ));
         $this->load->model('misc/Customer_due');
         $this->table->add_row(array(
             'data' => '	সর্বশেষ বাকি : ',
-            'class' => 'left_separator',
+            'class' => 'left_separator text-right',
             'colspan' => 2
                 ), $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)));
         return $this->table->generate();
