@@ -1,0 +1,66 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Case_to_bank_model
+ *
+ * @author sonjoy
+ */
+class Cash_to_bank_model extends CI_Model{
+    //put your code here
+    function get_all_bank_info(){
+        $this->db->select('*');
+        $this->db->from('bank');
+        $this->db->join('bank_account','bank.id_bank = bank_account.id_bank','left');
+        return $this->db->get()->result();
+        
+    }
+    function bank_name($value){
+        $this->db->select('name_bank');
+        $this->db->from('bank');
+        $this->db->join('bank_account','bank.id_bank = bank_account.id_bank','left');
+        $this->db->where('id_bank_account',$value);
+        return $this->db->get()->row();
+        
+    }
+    function get_all_cash_info(){
+        $this->db->select('*');
+        $this->db->from('cash');
+        return $this->db->get()->result();
+    }
+    
+    function save_info($post_array){
+        $this->load->model('misc/cash','cash');
+        $this->load->model('misc/bank_balance','bank');
+        $amount = $post_array['transfered_amount'];
+        $id_acount = $post_array['id_bank_account'];
+        $data['id_bank_account'] = $id_acount;
+        $data['transfered_amount'] = $amount;
+        $data['date'] = date('Y-m-d H:i:s');
+        $this->db->insert('cash_to_bank_register',$data);
+//        bank Management
+        $bank['id_account'] = $id_acount;
+        $bank['id_transaction_type'] = 1;
+        $bank['transaction_date'] = date('Y-m-d H:i:s');
+        $bank['amount_transaction'] = $amount;
+        $bank['id_user'] = $this->session->userdata('user_id');
+        $this->db->insert('bank_management',$bank);
+        $id_bank_management = $this->db->insert_id();
+        
+//        bank management status
+        
+        $status['approval_status'] = 3;
+        $status['id_bank_management'] = $id_bank_management;
+        $this->db->insert('bank_management_status',$status);
+        
+        $this->cash->reduce($amount);
+        $this->bank->add($id_acount,$amount);
+        
+        return true;
+    }
+}
