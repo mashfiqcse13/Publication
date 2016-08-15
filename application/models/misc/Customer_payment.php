@@ -11,9 +11,24 @@ if (!defined('BASEPATH')) {
  */
 class Customer_payment extends CI_Model {
 
+    private $combine_due_payment_register = FALSE;
+    private $combine_id_customer_due_payment_register = FALSE;
+
+    function set_combine_due_payment_register() {
+        $this->combine_due_payment_register = TRUE;
+    }
+
+    function unset_combine_due_payment_register($id_total_sales) {
+        $this->combine_due_payment_register = FALSE;
+        if ($this->combine_id_customer_due_payment_register > 0) {
+            $sql = "UPDATE  `customer_due_payment_register` SET  `id_total_sales` = $id_total_sales  WHERE `id_customer_due_payment_register` ={$this->combine_id_customer_due_payment_register};";
+            $this->db->query($sql);
+        }
+    }
+
     function due_payment($customer_id, $payment_amount, $id_payment_method = 1) {
         $this->load->model('misc/Customer_due');
-        $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed');
+        $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed'.". Customer ammount = $payment_amount");
         if ($id_payment_method == 1) {
             $this->load->model('misc/Cash');
             $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
@@ -70,15 +85,28 @@ class Customer_payment extends CI_Model {
     }
 
     function customer_due_payment_register($id_customer, $tatal_paid_amount) {
-        $data_to_insert = array(
-            'id_customer' => $id_customer,
-            'tatal_paid_amount' => $tatal_paid_amount,
-            'payment_date' => date('Y-m-d h:i:u')
-        );
-        $this->db->insert('customer_due_payment_register', $data_to_insert);
-        $sql = "SELECT MAX(id_customer_due_payment_register) as last_id_customer_due_payment_register FROM customer_due_payment_register WHERE id_customer = $id_customer";
-        $result = $this->db->query($sql)->result();
-        return $result[0]->last_id_customer_due_payment_register;
+        if ($this->combine_due_payment_register == TRUE && $this->combine_id_customer_due_payment_register > 0) {
+            $this->customer_due_payment_register_addition($this->combine_id_customer_due_payment_register, $tatal_paid_amount);
+            return $this->combine_id_customer_due_payment_register;
+        } else {
+            $data_to_insert = array(
+                'id_customer' => $id_customer,
+                'tatal_paid_amount' => $tatal_paid_amount,
+                'payment_date' => date('Y-m-d h:i:u')
+            );
+            $this->db->insert('customer_due_payment_register', $data_to_insert);
+            $sql = "SELECT MAX(id_customer_due_payment_register) as last_id_customer_due_payment_register FROM customer_due_payment_register WHERE id_customer = $id_customer";
+            $result = $this->db->query($sql)->result();
+            if ($this->combine_due_payment_register == TRUE) {
+                $this->combine_id_customer_due_payment_register = $result[0]->last_id_customer_due_payment_register;
+            }
+            return $result[0]->last_id_customer_due_payment_register;
+        }
+    }
+
+    function customer_due_payment_register_addition($previous_id_customer_due_payment_register, $tatal_paid_amount) {
+        $sql = "UPDATE  `customer_due_payment_register` SET  `tatal_paid_amount` = `tatal_paid_amount` + $tatal_paid_amount  WHERE `id_customer_due_payment_register` =$previous_id_customer_due_payment_register;";
+        $this->db->query($sql);
     }
 
     /*

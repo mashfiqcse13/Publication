@@ -94,6 +94,7 @@ class Sales_processing_model extends CI_Model {
 
     function ExecuteCaseType1() {
         $this->load->model('Bank_model');
+        $this->Customer_payment->set_combine_due_payment_register();
         $this->Bank_model->bank_transection($this->bank_account_id, 1, $this->bank_payment, $this->bank_check_no, 1);       //accepting bank payment
         if ($this->dues_unpaid > 0 && $this->bank_payment > 0) {
             if ($this->bank_payment >= $this->dues_unpaid) {
@@ -102,8 +103,8 @@ class Sales_processing_model extends CI_Model {
                 $this->dues_unpaid = 0;
             } else {
                 $this->Customer_payment->due_payment($this->id_customer, $this->bank_payment, 3);
-                $this->bank_payment = 0;
                 $this->dues_unpaid = $this->dues_unpaid - $this->bank_payment;
+                $this->bank_payment = 0;
             }
         }
         if ($this->dues_unpaid > 0 && $this->cash_payment > 0) {
@@ -113,8 +114,8 @@ class Sales_processing_model extends CI_Model {
                 $this->dues_unpaid = 0;
             } else {
                 $this->Customer_payment->due_payment($this->id_customer, $this->cash_payment, 1);
-                $this->cash_payment = 0;
                 $this->dues_unpaid = $this->dues_unpaid - $this->cash_payment;
+                $this->cash_payment = 0;
             }
         }
         $total_paid = $this->bank_payment + $this->cash_payment;
@@ -124,6 +125,7 @@ class Sales_processing_model extends CI_Model {
             $this->Customer_payment->payment_register($this->id_customer, $this->bank_payment, $this->id_total_sales, 3);
         }
         $this->accepting_payments($this->id_customer, $this->id_total_sales, 0, $this->cash_payment, 0, 0, 0);
+        $this->Customer_payment->unset_combine_due_payment_register($this->id_total_sales);
     }
 
     function ExecuteCaseType2() {
