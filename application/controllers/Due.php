@@ -103,12 +103,13 @@ class Due extends CI_Controller {
         $data['due_detail_table'] = $this->Customer_due->due_detail_table($customer_id);
         $data['customer_name'] = $this->db->select('name')->where('id_customer', $customer_id)->get('customer')->result();
         $data['customer_name'] = $data['customer_name'][0]->name;
+        $data['customer_code']=$customer_id;
         $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
 
 //        if ($data['customer_total_due'] < 1) {
 //            redirect('due');
 //            die();
-//        }
+//        } 
 
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

@@ -71,7 +71,7 @@ class Customer_payment extends CI_Model {
         $this->db->update_batch('sales_total_sales', $data_to_update_in_total_sales, 'id_total_sales');
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
         return $last_id_customer_due_payment_register;
-    }
+    } 
     
     function generate_due_report($last_id_customer_due_payment_register){
 //        SELECT * FROM `customer_due_payment_register` LEFT JOIN customer_payment ON customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register

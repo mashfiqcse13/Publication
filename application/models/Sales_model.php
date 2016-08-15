@@ -138,6 +138,16 @@ class Sales_model extends CI_Model {
         return $query;
     }
     
+    function generate_due_report_by_memo($memo_id){        
+              $this->db->select('customer_payment.id_total_sales,payment_method.name_payment_method,customer_payment.paid_amount')
+                ->from('customer_due_payment_register')
+                ->join('customer_payment','customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register' , 'left')
+                ->join('payment_method' , ' payment_method.id_payment_method=customer_payment.id_payment_method' , 'left')
+                ->where('customer_due_payment_register.id_total_sales' , $memo_id);
+               $query=$this->db->get()->result_array();
+        
+               return $query;       
+        }
     
     function memo_body_table($total_sales_id) {
         $this->load->library('table');
@@ -211,6 +221,13 @@ class Sales_model extends CI_Model {
         $cash_pay=isset($pay['Cash'])?$pay['Cash']:0;
          $bank_pay=isset($pay['Bank'])?$pay['Bank']:0;
          $pay_from_advanced=isset($pay['Customer advance'])?$pay['Customer advance']:0;
+        $current_due = $total_sales_details->total_amount - $total_pay;
+        if($current_due>0){
+            $current_due_status='<div class="text-memo-special-formate">DUE</div>';
+        }else{
+            $current_due_status='';
+        }
+        
         
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
@@ -236,41 +253,67 @@ class Sales_model extends CI_Model {
                 ), $this->Common->taka_format($total_sales_details->total_amount));
         
       
-        $this->table->add_row('', '', array(
+        $this->table->add_row(array(
+            'data' => $current_due_status ,
+            'class' => 'text-danger ',
+            'colspan' => 2,
+            'rowspan' => 4
+        ), array(
             'data' => 'নগদ জমা : ',
             'class' => 'left_separator',
             'colspan' => 2
                 ), $cash_pay );
         
-        $this->table->add_row('', '', array(
+        $this->table->add_row( array(
             'data' => 'ব্যাংক জমা : ',
             'class' => 'left_separator',
             'colspan' => 2
-                ), $bank_pay);
+                ),array(
+                'data' => $bank_pay,
+                'class' => 'text-right taka_formate'
+                ) );
         
-        $this->table->add_row('', '', array(
+        $this->table->add_row(array(
             'data' => 'পূর্বের জমা কর্তন : ',
             'class' => 'left_separator',
             'colspan' => 2
-                ), $pay_from_advanced);
+                ), array(
+                'data' => $pay_from_advanced,
+                'class' => 'text-right taka_formate'
+                ) );
         
           
 
         $this->load->model('misc/Customer_due');
         $this->table->add_row(array(
-            'data' => 'সর্বশেষ বাকি : '.$this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)),
-            'class' => '',
-            'colspan' => 2
-                ),array(
                     'data' => ' মোট জমা :',
                     'class' => 'left_separator', 
                     'colspan' => 2
-                ),$total_pay
-                );
+                ),array(
+                'data' => $total_pay,
+                'class' => 'text-right taka_formate'
+                ));
         
-       
+        $this->table->add_row(array(
+            'data' => 'সর্বশেষ বাকি : '.$this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)),
+            'class' => '',
+            'colspan' => 2
+                ), array(
+            'data' => 'বাকি : ',
+            'class' => 'left_separator z-index-top',
+            'colspan' => 2
+                ), $current_due );
         
-        return $this->table->generate();
+        $data['memo'] = $this->table->generate();
+        
+        $generate_due_report_by_memo =$this->generate_due_report_by_memo($total_sales_id);
+        if(!empty($generate_due_report_by_memo)){
+                $this->table->clear();
+                $this->table->set_template($tmpl);                
+                $this->table->set_heading('Memo No', 'Payment Method', 'Payment Amount');       
+                $data['due_report'] = $this->table->generate($generate_due_report_by_memo);
+        }
+        return $data;
     }
     
 

@@ -115,8 +115,64 @@
 
         <div class="row" style="font-size:16px;">
 
+            
+            <?php echo $memo_body_table['memo']; 
+            
+            if(isset($memo_body_table['due_report'])){
+                echo '<div style="page-break-before: always">';
+                echo '<h2 class="text-center">Due\'s Payment Report</h2>';
+                ?>
+            
+                
+            <table class="table table_custom" style="font-size:13px">
 
-            <?php echo $memo_body_table; ?>
+                <tr>
+
+                    <td><strong>Name:</strong></td>
+
+                    <td><?= $memo_header_details['party_name'] ?></td>
+
+
+
+                    <td><strong>Code No:</strong></td>
+
+                    <td><?= $memo_header_details['code'] ?></td>
+
+
+
+                    <td><strong>Memo No:</strong></td>
+
+                    <td><?= $memo_header_details['memoid'] ?></td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Mobile:</strong></td>
+
+                    <td> <?= $memo_header_details['phone'] ?></td>
+
+
+
+                    <td><strong>District:</strong></td>
+
+                    <td><?= $memo_header_details['district'] ?></td>
+
+
+
+                    <td><strong>Date:</strong></td>
+
+                    <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
+
+                </tr>
+
+            </table>
+        
+            <?php
+                echo $memo_body_table['due_report'];
+                echo '</div>';
+            }
+            ?>
 
 
 

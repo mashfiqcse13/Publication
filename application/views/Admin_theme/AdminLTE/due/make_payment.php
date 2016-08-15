@@ -55,23 +55,35 @@
                 </div>
             </div>
         </div>
+        
+        
         <?php if(isset($due_report_list)){ ?>
         <div class="row">
                         <div class="box col-md-12" id="block">             
                     <div class="box-header">
                         
-                        <p class="text-center"> Due Payment Report</p>
-                        <h4 class="text-center">Report on  <strong>"<?php echo $customer_name; ?>"</strong></h4>
-                        <div style="margin-bottom: 60px;">
+                        <p class="text-center"> Due Payment Report</p>                        
+                          <div style="margin-bottom: 60px;">
                            
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                         </div>
                         <div style="color: #777777;"> 
                             
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
+                            <table class="table table-bordered">
+                            <tr>
+                                <td>Customer Name: </td>
+                                <td><?php echo $customer_name; ?></td>
+                                <td>Customer Code</td>
+                                <td><?php echo $customer_code; ?></td>
+                                   
+                            </tr>
+                        </table>
                         </div>
                     </div>
                     <div class="box-body">
+                        
+                        
                         <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <tr>
                                 <th>Memo No:</th>
@@ -93,7 +105,7 @@
                                     <td class="text-right taka_formate">TK <?=$row->paid_amount;?></td>
                                 
                                  </tr>
-                                <?php } ?>
+                                <?php } ?> 
                            
                             
                             <tr>

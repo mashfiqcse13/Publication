@@ -63,6 +63,19 @@
             body {
                 text-transform: capitalize;
             }
+            .text-memo-special-formate {
+                font-size: 55px;
+                text-align: center;
+                -ms-transform: rotate(-18deg); /* IE 9 */
+                -webkit-transform: rotate(-18deg); /* Safari */
+                transform: rotate(-18deg);
+                position: relative;
+                top: 20px;
+                z-index: 0;
+            }
+            .z-index-top{
+                z-index: 9999;
+            }
 
             .form-input-box {
                 min-width: 200px;
