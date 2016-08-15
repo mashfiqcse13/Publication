@@ -32,7 +32,7 @@ class Cash_to_bank_model extends CI_Model{
     }
     
     function bank_name($value){
-        $this->db->select('name_bank');
+        $this->db->select('*');
         $this->db->from('bank');
         $this->db->join('bank_account','bank.id_bank = bank_account.id_bank','left');
         $this->db->where('id_bank_account',$value);
