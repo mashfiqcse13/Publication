@@ -18,6 +18,9 @@ class Customer_payment extends CI_Model {
             $this->load->model('misc/Cash');
             $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
         }
+
+        $last_id_customer_due_payment_register = $this->customer_due_payment_register($customer_id, $payment_amount);
+
         $result_total_sates_details = $this->Customer_due->details_from_total_sales($customer_id);
         $data_to_update_in_total_sales = array();
         $data_to_insert_in_due_payment = array();
@@ -32,6 +35,7 @@ class Customer_payment extends CI_Model {
             $data_to_insert_in_due_payment[$key]['paid_amount'] = $payment_amount;
             $data_to_insert_in_due_payment[$key]['id_payment_method'] = $id_payment_method;      //cash only
             $data_to_insert_in_due_payment[$key]['due_payment_status'] = 1;
+            $data_to_insert_in_due_payment[$key]['id_customer_due_payment_register'] = $last_id_customer_due_payment_register;
 
             if ($payment_amount > $row->total_due) {
                 // transfering total due to cash and total_paid
@@ -51,6 +55,7 @@ class Customer_payment extends CI_Model {
         }
         $this->db->update_batch('sales_total_sales', $data_to_update_in_total_sales, 'id_total_sales');
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
+        return $last_id_customer_due_payment_register;
     }
 
     function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method) {
@@ -62,6 +67,18 @@ class Customer_payment extends CI_Model {
             'id_payment_method' => $id_payment_method
         );
         $this->db->insert('customer_payment', $data_to_insert);
+    }
+
+    function customer_due_payment_register($id_customer, $tatal_paid_amount) {
+        $data_to_insert = array(
+            'id_customer' => $id_customer,
+            'tatal_paid_amount' => $tatal_paid_amount,
+            'payment_date' => date('Y-m-d h:i:u')
+        );
+        $this->db->insert('customer_due_payment_register', $data_to_insert);
+        $sql = "SELECT MAX(id_customer_due_payment_register) as last_id_customer_due_payment_register FROM customer_due_payment_register WHERE id_customer = $id_customer";
+        $result = $this->db->query($sql)->result();
+        return $result[0]->last_id_customer_due_payment_register;
     }
 
     /*
