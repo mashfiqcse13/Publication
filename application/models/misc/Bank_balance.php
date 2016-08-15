@@ -112,10 +112,10 @@ class Bank_balance extends CI_Model {
     function record_count() {
         return $this->db->count_all("bank_management_status");
     }
-
+ 
     function list_bank_status($limit, $start) {
         $query = $this->db->query("select 
-                transaction_date,name_bank, account_number,CONCAT('TK ',amount_transaction) as amount_transaction,amount_transaction as amount,
+                transaction_date,name_bank, account_number,id_bank_account,CONCAT('TK ',amount_transaction) as amount_transaction,amount_transaction as amount,
                 name_trnsaction_type,id_trnsaction_type, username,action_date,approval_status,id_bank_management_status,bank_management.id_bank_management as id_manage,
                 (select username from users where id=bank_management_status.approved_by) as approved_by
                  from 
