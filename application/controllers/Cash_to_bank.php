@@ -30,6 +30,7 @@ class Cash_to_bank extends CI_Controller{
         $crud = new grocery_CRUD();
         $crud->set_table('cash_to_bank_register')
                 ->set_subject('Cash to Bank Transaction')
+                ->display_as('id_bank_account','Bank Account')
                 ->callback_column('id_bank_account',array($this,'bank_name'))
                 ->unset_edit()
                 ->unset_delete()
@@ -47,6 +48,11 @@ class Cash_to_bank extends CI_Controller{
             $this->session->set_userdata($sdata);
             redirect('cash_to_bank');
         } 
+        $data['date_range'] = $this->input->get('date_range');
+        $date = explode('-', $data['date_range']);
+        if ($data['date_range'] != '') {
+            $data['get_all_cash_to_bank_info'] = $this->Cash_to_bank_model->get_all_cash_to_bank_info_by_date($date[0], $date[1]);
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -56,7 +62,8 @@ class Cash_to_bank extends CI_Controller{
     
     function bank_name($value){
        $bank = $this->Cash_to_bank_model->bank_name($value);
-       return $bank->name_bank;
+//       print_r($bank);exit();
+       return $bank->name_bank. ' - ' . $bank->account_number;
     }
     function cash_transfer(){
 //        $crud = new grocery_CRUD();

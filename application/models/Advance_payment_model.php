@@ -148,27 +148,32 @@ class Advance_payment_model extends CI_Model {
         }
     }
 
-    function get_search_report($date_range, $customer_id, $payment_method_id) {
-        $dates = explode(' - ', $date_range);
-        $dates[0] = '';
-        $dates[1] = '';
-        if ($dates[0] != '') {
-            $from = date('Y-m-d', strtotime($dates[0]));
-            $to = date('Y-m-d', strtotime($dates[1]) . ' +1 day');
-        }
+    function get_search_report($from, $to, $customer_id, $payment_method_id) {
+        
+//        $dates[0] = '';
+//        $dates[1] = '';
+//        if ($dates[0] != '') {
+            $date_from = date('Y-m-d', strtotime($from));
+            $date_to = date('Y-m-d', strtotime($to));
+//        }
+//        echo $date_from;exit();
         $this->db->select('*');
         $this->db->from('party_advance_payment_register');
         $this->db->join('customer', 'party_advance_payment_register.id_customer = customer.id_customer', 'left');
         $this->db->join('payment_method', 'party_advance_payment_register.id_payment_method = payment_method.id_payment_method', 'left');
-        if ($dates[0] != '') {
-            $condition = "DATE(party_advance_payment_register.date_payment) BETWEEN '$from' AND '$to'";
-            $this->db->where($condition);
-        }if (!empty($customer_id)) {
+        if (!empty($customer_id)) {
             $this->db->where('party_advance_payment_register.id_customer', $customer_id);
         }if (!empty($payment_method_id)) {
             $this->db->where('party_advance_payment_register.id_payment_method', $payment_method_id);
+        }if ($date_from != '') {
+            $condition = "DATE(party_advance_payment_register.date_payment) BETWEEN '$date_from'  AND  '$date_to'";
+            $this->db->where($condition);
         }
-        return $this->db->get()->result();
+         return $this->db->get()->result();
+    }
+    
+    function get_all_party_advance_register_info($from, $to,$customer_id){
+        
     }
 
 }

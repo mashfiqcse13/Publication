@@ -27,7 +27,7 @@
                     if ($this->uri->segment(3) == 'add') {
                         ?>
                         <div class="box-header">
-                            <h1>Cash Transfer</h1>
+                            <h1>Cash Transfer</h1>                        
                         </div>
                         <div class="box-body">
                             <?php
@@ -60,8 +60,7 @@
                                                 foreach ($get_all_bank_info as $bank) {
                                                     ?>
                                                     <option value="<?php echo $bank->id_bank_account ?>"><?php
-                                                        echo $bank->name_bank;
-                                                        - $bank->account_number;
+                                                        echo $bank->name_bank;echo ' -' . $bank->account_number;
                                                         ?></option>
                                                     <?php
                                                 }
@@ -78,15 +77,95 @@
                                     <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
                                 </div>
                             </div>
-                        <?= form_close(); ?>
+                            <?= form_close(); ?>
                         </div>
                         <?php
                     } else {
+                        ?>
+                        <div class="box-header">
+                            <?php
+                            $attributes = array(
+                                'class' => 'form-horizontal',
+                                'name' => 'form',
+                                'method' => 'get');
+                            echo form_open('', $attributes)
+                            ?>
+                            <div class="row col-md-offset-2">
+                                <div class="col-md-8 ">
+                                    <div class="form-group ">
+                                        <label class="col-md-3">Search with Date Range:</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                            </div><!-- /.input group -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                </div>
+                            </div>
 
-                        echo $glosary->output;
-                    }
-                    ?>
+                            <?= form_close(); ?>
+                        </div>
+                        <?php
+                        if (!isset($date_range)) {
+                            echo $glosary->output;
+                        } else if (isset($date_range)) {
+                            ?>
+                            <div id="block">
+                                <div class="box-header">
+                                    <p class="text-center"><strong>Cash To Bank Report</strong></p>
+                                    <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
+                                    <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                    <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                                </div>
+                                <div class="box-body">
+                                    <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                        <thead style="background: #DFF0D8;">
+                                            <tr>
+            <!--                                        <th></th>-->
+                                                <th>Bank Name</th>
+                                                <th>Transfer Amount</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $sum_total_amount = 0;
+                                            foreach ($get_all_cash_to_bank_info as $rep) {
+                                                $sum_total_amount += $rep->transfered_amount;
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $rep->name_bank;echo ' - ' . $rep->account_number ?></td>
+                                                    <td><?php echo 'TK ' . $rep->transfered_amount; ?></td>
+                                                    <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
+
+                                            <tr style="font-weight: bold">
+                                                <td>Total :</td>
+                                                <td><?php echo $sum_total_amount; ?></td>
+                                                <td></td>
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
                 </div>
 
             </div>
@@ -106,18 +185,22 @@
 <script type="text/javascript">
 
     var html = $('#cash').html();
-    $('#amount').attr("placeholder", "Transfer Maximum "+ html +"tk");
+    $('#amount').attr("placeholder", "Transfer Maximum " + html + "tk");
 
     $('#amount').keyup(function () {
         var cash = Number(html);
         var amount = $('#amount').val();
         if (amount > cash) {
             alert('You Have Crossed The Limit!!');
-            $('#amount').click(function (e) {
-                e.preventDefault();
+            $('#submit').click(function (e) {
+                e.preventDefault();                
             });
+            
             $('#amount').css("border", "1px solid red");
-        }
+            return false;
+        }else if(amount <= cash){
+                $('#submit').submit();
+            }
     });
 
 </script>

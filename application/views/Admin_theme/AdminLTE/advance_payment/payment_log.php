@@ -44,8 +44,10 @@
                                     <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?php echo anchor(site_url('advance_payment/payment_log'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                            <div class="form-group col-md-2" style="margin-top: 25px;">
+                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <?php echo anchor(site_url('advance_payment/payment_log'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                            </div>
                         </form>
 
                     </div>
@@ -70,7 +72,7 @@
                     }if (isset($search_report)) {
                         ?>
                         <div class="box-header">
-                            <p class="text-center"><strong>Advance payment log Report</strong></p>
+                            <p class="text-center"><strong>Payment Log Report</strong></p>
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
@@ -98,7 +100,7 @@
                                             <td><?php echo $sales->id_party_advance_payment_register; ?></td>
                                             <td><?php echo $sales->name; ?></td>
                                             <td><?php echo $sales->name_payment_method; ?></td>
-                                            <td><?php echo 'TK '.$sales->amount_paid; ?></td>
+                                            <td><?php echo 'TK ' . $sales->amount_paid; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->date_payment)); ?></td>
                                         </tr>
                                         <?php
@@ -109,7 +111,7 @@
                                         <td>Total :</td>
                                         <td></td>
                                         <td></td>
-                                        <td><?php echo 'TK '.$sum_total_paid; ?></td>
+                                        <td><?php echo 'TK ' . $sum_total_paid; ?></td>
                                         <td></td>
                                     </tr>
                                 </tbody>
