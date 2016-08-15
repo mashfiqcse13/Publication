@@ -58,9 +58,11 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="report_asked" value="true">
-                                <div class="form-group col-md-4 text-right">
-                                    <button type="submit" class="btn btn-primary" name="get_report" value="all">Search Information</button> 
-                                    <a href="<?php echo site_url('specimen/report') ?>" class="btn btn-success">Reset filter</a>
+                                <div class="form-group col-md-6 text-right">
+                                    <div class="col-md-12" style="margin: 0;">
+                                        <button type="submit" class="btn btn-primary" name="get_report" value="all">Search Information</button> 
+                                        <a href="<?php echo site_url('specimen/report') ?>" class="btn btn-success">Reset filter</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
