@@ -17,9 +17,20 @@ class Cash_to_bank_model extends CI_Model{
         $this->db->select('*');
         $this->db->from('bank');
         $this->db->join('bank_account','bank.id_bank = bank_account.id_bank','left');
-        return $this->db->get()->result();
-        
+        return $this->db->get()->result();        
     }
+    function get_all_cash_to_bank_info_by_date($from, $to){
+        $date_from = date('Y-m-d H:i:s', strtotime($from));
+        $date_to = date('Y-m-d H:i:s', strtotime($to));
+        $this->db->select('*');
+        $this->db->from('cash_to_bank_register');
+        $this->db->join('bank_account','bank_account.id_bank_account = cash_to_bank_register.id_bank_account','left');
+        $this->db->join('bank','bank.id_bank = bank_account.id_bank','left');
+        $date_range = "DATE(cash_to_bank_register.date) BETWEEN '$date_from' AND '$date_to'";
+        $this->db->where($date_range);
+        return $this->db->get()->result();  
+    }
+    
     function bank_name($value){
         $this->db->select('name_bank');
         $this->db->from('bank');

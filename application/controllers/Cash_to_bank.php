@@ -47,6 +47,11 @@ class Cash_to_bank extends CI_Controller{
             $this->session->set_userdata($sdata);
             redirect('cash_to_bank');
         } 
+        $data['date_range'] = $this->input->get('date_range');
+        $date = explode('-', $data['date_range']);
+        if ($data['date_range'] != '') {
+            $data['get_all_cash_to_bank_info'] = $this->Cash_to_bank_model->get_all_cash_to_bank_info_by_date($date[0], $date[1]);
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
