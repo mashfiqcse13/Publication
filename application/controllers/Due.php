@@ -91,10 +91,12 @@ class Due extends CI_Controller {
         $amount = $this->input->post('amount');
         if (!empty($amount) && $amount > 0) {
             $this->load->model('misc/Customer_payment');
-            $this->Customer_payment->due_payment($customer_id, $amount);
+            $last_id_customer_due_payment_register=$this->Customer_payment->due_payment($customer_id, $amount);
+            $data['due_report_list']=$this->Customer_payment->generate_due_report($last_id_customer_due_payment_register);
+            
 //            redirect('due/make_payment/' . $customer_id);
-            redirect("advance_payment/payment_log");
-            die();
+//            redirect("advance_payment/payment_log");
+//            die();
         }
 
         $this->load->model('misc/Customer_due');
@@ -103,10 +105,10 @@ class Due extends CI_Controller {
         $data['customer_name'] = $data['customer_name'][0]->name;
         $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
 
-        if ($data['customer_total_due'] < 1) {
-            redirect('due');
-            die();
-        }
+//        if ($data['customer_total_due'] < 1) {
+//            redirect('due');
+//            die();
+//        }
 
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

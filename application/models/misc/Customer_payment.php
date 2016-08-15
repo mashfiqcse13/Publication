@@ -57,6 +57,23 @@ class Customer_payment extends CI_Model {
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
         return $last_id_customer_due_payment_register;
     }
+    
+    function generate_due_report($last_id_customer_due_payment_register){
+//        SELECT * FROM `customer_due_payment_register` LEFT JOIN customer_payment ON customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register
+//LEFT JOIN payment_method ON payment_method.id_payment_method=customer_payment.id_payment_method
+//where customer_due_payment_register.id_customer_due_payment_register=4
+        
+        $this->db->select('customer_payment.id_total_sales,customer_payment.paid_amount,payment_method.name_payment_method,customer_payment.payment_date')
+                ->from('customer_due_payment_register')
+                ->join('customer_payment','customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register' , 'left')
+                ->join('payment_method' , ' payment_method.id_payment_method=customer_payment.id_payment_method' , 'left')
+                ->where('customer_due_payment_register.id_customer_due_payment_register' , $last_id_customer_due_payment_register);
+               $query=$this->db->get()->result();
+        
+               return $query;       
+        }
+    
+    
 
     function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method) {
         $data_to_insert = array(

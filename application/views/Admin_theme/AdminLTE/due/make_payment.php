@@ -26,10 +26,11 @@
                     <div class="box-header">
                         <h3 class="box-title">Memo haveing due for <strong>"<?php echo $customer_name; ?>"</strong></h3>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body first_table">
                         <?php
                         echo $due_detail_table;
                         ?>
+                        
 
                     </div>
 
@@ -54,6 +55,55 @@
                 </div>
             </div>
         </div>
+        <?php if(isset($due_report_list)){ ?>
+        <div class="row">
+                        <div class="box col-md-12" id="block">             
+                    <div class="box-header">
+                        
+                        <p class="text-center"> Due Payment Report</p>
+                        <h4 class="text-center">Report on  <strong>"<?php echo $customer_name; ?>"</strong></h4>
+                        <div style="margin-bottom: 60px;">
+                           
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                        </div>
+                        <div style="color: #777777;"> 
+                            
+                            <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
+                            <tr>
+                                <th>Memo No:</th>
+                                
+                                <th>Payment Method</th>
+                                <th>Payment Date</th>
+                                <th>Paid Amount</th>
+                            </tr>
+                           
+                                <?php 
+                                $total_amount=0;
+                                foreach($due_report_list as $row) { 
+                                $total_amount+=$row->paid_amount;
+                                ?>
+                                <tr>
+                                    <td><?=$row->id_total_sales;?></td>
+                                    <td><?=$row->name_payment_method;?></td>
+                                    <td><?=$row->payment_date;?></td>
+                                    <td class="text-right taka_formate">TK <?=$row->paid_amount;?></td>
+                                
+                                 </tr>
+                                <?php } ?>
+                           
+                            
+                            <tr>
+                                <td colspan="3" class="text-center">Total Paid Amount = </td>
+                                <td class="text-right taka_formate">TK <?=$total_amount;?></td>
+                            </tr>
+                        </table>
+            </div>
+        </div>
+        <?php } ?>
 
 
 
@@ -66,5 +116,5 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script>
-    $('.table tbody').append('<tr style="border-top: 3px solid #d5d5d5;"><td colspan="6" class="text-center">Total Due =</td><td><?php echo $customer_total_due ?></td></tr>');
+    $('.first_table .table tbody').append('<tr style="border-top: 3px solid #d5d5d5;"><td colspan="6" class="text-center">Total Due =</td><td><?php echo $customer_total_due ?></td></tr>');
 </script>
