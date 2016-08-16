@@ -317,7 +317,13 @@ class Sales_model extends CI_Model {
         }
         return $data;
     }
-    
+    function get_customer_name($id_customer){
+        $quer=$this->db->where('id_customer',$id_customer)->get('customer')->result();
+        foreach($quer as $row){
+            $name=$row->name;
+        }
+        return $name;
+   }
 
 
     function get_total_sales_info($from, $to, $id_customer) {
@@ -374,16 +380,62 @@ class Sales_model extends CI_Model {
         }       
         
         $query=$this->db->query("SELECT sales.id_item as id_item,items.name as name,
-            sum(sales.quantity) as sales_quantity,sum(sales_current_sales_return.quantity) as return_quantity
+            sum(sales.quantity) as sales_quantity
             FROM sales_total_sales left JOIN sales ON sales.id_total_sales=sales_total_sales.id_total_sales
             LEFT JOIN items ON items.id_item=sales.id_item
-            left JOIN sales_current_sales_return ON sales_current_sales_return.memo_ID=sales_total_sales.id_total_sales 
             $con
             GROUP BY items.id_item
                         ");
          
         return $query->result();
     }
+    
+      function return_book( $id_customer='' , $date_range='') {
+        if($date_range==''){
+            $date_range='';
+        }else{
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range="  DATE(sales_current_sales_return.date_current_sales_return) BETWEEN '$from' AND '$to'";
+        }
+        
+        if($id_customer == '' && $date_range == ''){
+            
+            $con = ' ';
+        }
+        
+        if ($id_customer !='') {
+            
+            $con=" where sales_total_sales.id_customer = $id_customer ";    
+            
+        }
+        if ($date_range != '') {            
+            
+            $con = " where  $date_range";
+            
+        }
+        
+        if ($date_range != '' && $id_customer !='') {
+            $con = " where sales_total_sales.id_customer = $id_customer AND $date_range";
+            
+        }       
+        
+        $query=$this->db->query("SELECT items.id_item as id_item,items.name as name,
+            sum(sales_current_sales_return.quantity) as return_quantity
+            FROM 
+            sales_current_sales_return left JOIN items ON sales_current_sales_return.book_ID=items.id_item
+            LEFT JOIN sales_total_sales ON sales_total_sales.id_total_sales=sales_current_sales_return.memo_ID
+            $con
+            GROUP BY items.id_item
+                        ");
+         
+        return $query->result();
+    }
+    
+    
+    
     
     function old_book_quantity( $id_customer='' , $date_range=''){
         
@@ -430,5 +482,7 @@ class Sales_model extends CI_Model {
         
         return $query->result();
     }
+    
+    
 
 }

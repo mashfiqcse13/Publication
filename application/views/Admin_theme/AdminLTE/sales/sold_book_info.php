@@ -64,8 +64,8 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                    if (isset($sold_info_today)) {
-                        ?>
+                    if (isset($table_today)) {
+                        ?> 
                     
                     <div class="box-header">
                             <p class="text-center"><strong>আজকের বিক্রীত বইসমূহ</strong></p>
@@ -79,37 +79,25 @@
                                         <th>Book Name</th>
                                         <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
                                         <th>Old Book Return</th>
-                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
+                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return ) </span></th>
                                         
                                         
                                     </tr>
                                 </thead>
-                                <tbody>
+                               <tbody>
                                     <?php
                                        
-                                    foreach ($sold_info_today as $return) {
-                                        
-                                       
+                                    foreach ($table_today as $key => $return) {                                       
                                         ?>
                                         <tr>
-                                            <td><?php echo $return->name; ?></td>
-                                            <td ><?php echo $val = $return->sales_quantity-$return->return_quantity; ?></td>
-                                            <td><?php 
-                                            foreach ($old_book as $row){
-                                            if($return->id_item==$row->id_item){
-                                                echo $row->old_quantity;
-                                            }}
-                                            ?></td> 
-                                            
-                                            <td><?php 
-                                            foreach ($old_book as $row){
-                                            if($return->id_item==$row->id_item){
-                                                echo $val - $row->old_quantity;
-                                            }}
-                                            ?></td> 
+                                            <td><?php echo $return['name'] ?></td>
+                                            <td ><?php  echo $return['sale_quantity'] - $return['return_quantity'];    ?></td>
+                                            <td><?php echo $return['old_quantity'];   ?></td> 
+                                            <td><?php echo  $return['sale_quantity'] - $return['return_quantity']-$return['old_quantity'] ?></td>
                                             
                                         </tr>
                                         <?php
+                                        
                                     }
                                     ?>
 
@@ -119,12 +107,14 @@
 
                         </div>
                         <?php
-                    }if (isset($sold_info)) {
+                    }if (isset($table)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
+                             <?php if(isset($name)){ echo '<p class="text-center">Customer Name:'.$name.'</p>'; }?>
+                            
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
-
+                           
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
                         </div>
@@ -142,31 +132,17 @@
                                 <tbody>
                                     <?php
                                        
-                                    foreach ($sold_info as $return) {
-                                        
-                                        
-                                        
-                                       
+                                    foreach ($table as $key => $return) {                                       
                                         ?>
                                         <tr>
-                                            <td><?php echo $return->name; ?></td>
-                                            <td ><?php echo $val = $return->sales_quantity-$return->return_quantity; ?></td>
-                                            <td><?php 
-                                            foreach ($old_book as $row){
-                                            if($return->id_item==$row->id_item){
-                                                echo $row->old_quantity;
-                                            }}
-                                            ?></td> 
-                                            
-                                            <td><?php 
-                                            foreach ($old_book as $row){
-                                            if($return->id_item==$row->id_item){
-                                                echo $val - $row->old_quantity;
-                                            }}
-                                            ?></td> 
+                                            <td><?php echo $return['name'] ?></td>
+                                            <td ><?php  echo $return['sale_quantity'] - $return['return_quantity'];    ?></td>
+                                            <td><?php echo $return['old_quantity'];   ?></td> 
+                                            <td><?php echo  $return['sale_quantity'] - $return['return_quantity']-$return['old_quantity'] ?></td>
                                             
                                         </tr>
                                         <?php
+                                        
                                     }
                                     ?>
 
