@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
  *
  * @author MD. Mashfiq
  */
-class Sales_model extends CI_Model {
+class Sales_model extends CI_Model { 
 
     function get_available_item_dropdown() {
 
@@ -58,7 +58,9 @@ class Sales_model extends CI_Model {
         return $data;
     }
 
-    function get_item_details() {
+    
+    
+     function get_item_details() {
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
             FROM `items` natural join `stock_final_stock`
             WHERE `total_in_hand` > 0 ")->result();

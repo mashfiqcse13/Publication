@@ -17,8 +17,11 @@
             <li class="header">Specimen</li>
 
             <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>New Specimen Entry</span>'); ?></li>
-            <!--<li><?php echo anchor('specimen/items', '<i class="fa fa-plus-circle"></i>  <span>Specimen Items</span>'); ?></li>-->
             <li><?php echo anchor('specimen/tolal', '<i class="fa fa-plus-circle"></i>  <span>Specimen Dashboard</span>'); ?></li>
+             <li><?php echo anchor('specimen/specimen_return', '<i class="fa fa-plus-circle"></i>  <span>New Specimen Return</span>'); ?></li>
+            <!--<li><?php echo anchor('specimen/items', '<i class="fa fa-plus-circle"></i>  <span>Specimen Items</span>'); ?></li>-->
+            
+             <li><?php echo anchor('specimen/specimen_return_list', '<i class="fa fa-plus-circle"></i>  <span>Specimen Return Dashboard</span>'); ?></li>
             <li><?php echo anchor('specimen/report', '<i class="fa fa-plus-circle"></i>  <span>Specimen Issue Report</span>'); ?></li>
 
 
