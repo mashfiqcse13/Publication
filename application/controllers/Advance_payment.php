@@ -29,8 +29,8 @@ class Advance_payment extends CI_Controller {
         $amount = $this->input->post('amount');
 //        print_r($amount);exit();
         if (!empty($id_customer) && !empty($amount)) {
-            $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
-            redirect("advance_payment/payment_log");
+            $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
+            redirect("advance_payment/add_advance_payment/".$id);
             die();
         }
 
@@ -53,8 +53,9 @@ class Advance_payment extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/dashboard', $data);
     }
 
-    function add_advance_payment() {
-        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
+    function add_advance_payment($id) {
+        $data['party_advance'] = $this->Advance_payment_model->get_all_party_advance_register_info($id);
+//        print_r($data);exit();
         $current = date('Y-m-d');
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance_payment_register')
@@ -116,7 +117,7 @@ class Advance_payment extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Payment Log';
+        $data['Title'] = 'Advance Payment Log';
         $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/payment_log', $data);
     }
 

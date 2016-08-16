@@ -33,7 +33,7 @@
                             <div class="col-md-6">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-3 control-label">Cutomer</label>
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Customer</label>
                                         <div class="col-sm-9">
                                             <?php echo $customer_dropdown ?>
                                         </div>
@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputEmail3">Quantity</label>
+                                        <label class="col-sm-2 control-label" for="inputEmail3">Amount</label>
 
                                         <div class="col-sm-10">
                                             <div class="input-group input-group-sm">

@@ -24,18 +24,18 @@
                 <div class="box only_print">
                     <div class="box-body">
                         <form class="fo" action="<?= $base_url ?>index.php/advance_payment/payment_log" method="get">
-                            <div class="form-group col-md-4 text-left">
+                            <div class="form-group col-md-5 text-left">
 
                                 <label>Search By Party Id or Name:</label>
                                 <?php echo $customer_dropdown; ?>
                             </div>
-                            <div class="form-group col-md-3">
+<!--                            <div class="form-group col-md-3">
                                 <label>Search by payment method:</label>
 
-                                <?php echo $method_dropdown; ?>
-                                <!-- /.input group -->
-                            </div>
-                            <div class="form-group col-md-3">
+                                <?php // echo $method_dropdown; ?>
+                                 /.input group 
+                            </div>-->
+                            <div class="form-group col-md-5">
                                 <label>Search with Date Range:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">

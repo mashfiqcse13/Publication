@@ -41,8 +41,9 @@ class Advance_payment_model extends CI_Model {
         $this->db->query($sql);
 
         $this->payment_register($id_customer, $id_payment_method, $amount);
-
-        return TRUE;
+        $insert_id = $this->db->insert_id();
+        
+        return $insert_id;
     }
 
     function payment_reduce($id_customer, $amount) {
@@ -172,8 +173,13 @@ class Advance_payment_model extends CI_Model {
          return $this->db->get()->result();
     }
     
-    function get_all_party_advance_register_info($from, $to,$customer_id){
-        
+    function get_all_party_advance_register_info($party_id){
+        $this->db->select('*');
+        $this->db->from('party_advance_payment_register');
+        $this->db->join('party_advance','party_advance_payment_register.id_customer = party_advance.id_customer','left');
+        $this->db->join('customer','party_advance.id_customer = customer.id_customer','left');
+        $this->db->where('party_advance_payment_register.id_party_advance_payment_register',$party_id);
+        return $this->db->get()->result();
     }
 
 }
