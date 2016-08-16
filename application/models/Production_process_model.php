@@ -230,7 +230,7 @@ class Production_process_model extends CI_Model {
             } else if ($next_process_step_id != FALSE) {
                 $link_step_id = $this->next_process_step_id($each_step->id_process_steps);
             }
-            $action_btn = implode("<br>", $action_btn);
+            $action_btn = implode("<br><br>", $action_btn);
             $process_status = $this->get_process_status_by_process_id($id_processes);
             if ($process_status == 1) {
                 $this->table->add_row(
@@ -260,9 +260,9 @@ class Production_process_model extends CI_Model {
         );
         $this->table->set_template($tmpl);
         if ($process_status == 1) {
-            $this->table->set_heading("ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID', 'Action');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID', 'Action');
         } else {
-            $this->table->set_heading("ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID');
         }
         return $this->table->generate();
     }
@@ -379,7 +379,7 @@ class Production_process_model extends CI_Model {
         $this->table->set_template($tmpl);
 
         $this->table->add_row($process_details->id_processes, $process_details->process_type, $process_details->item_name, $process_details->date_created, $process_details->date_finished);
-        $this->table->set_heading('ID', 'Process type', 'Item name', 'Creating Date', 'Finishing Date');
+        $this->table->set_heading('Order ID', 'Process type', 'Item name', 'Creating Date', 'Finishing Date');
         $output .= $this->table->generate();
         $this->table->add_row($process_details->order_quantity, $process_details->actual_quantity, $process_details->total_damaged_item, $process_details->total_reject_item, $process_details->total_missing_item);
         $this->table->set_heading('Ordered', 'Found', 'Damaged', 'Rejected', 'Missing');
