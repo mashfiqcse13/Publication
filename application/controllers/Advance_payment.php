@@ -30,7 +30,7 @@ class Advance_payment extends CI_Controller {
 //        print_r($amount);exit();
         if (!empty($id_customer) && !empty($amount)) {
             $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
-            redirect("advance_payment/add_advance_payment/".$id);
+            redirect("advance_payment/add_advance_payment/" . $id);
             die();
         }
 
@@ -73,12 +73,12 @@ class Advance_payment extends CI_Controller {
                 ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
-        
+
         $data['date_range'] = $this->input->get('date_range');
         $customer_id = $this->input->get('id_customer');
         $date = explode('-', $data['date_range']);
         if ($data['date_range'] != '' || !empty($customer_id)) {
-            $data['get_all_cash_to_bank_info'] = $this->Advance_payment_model->get_all_party_advance_register($date[0], $date[1],$customer_id);
+            $data['get_all_cash_to_bank_info'] = $this->Advance_payment_model->get_all_party_advance_register($date[0], $date[1], $customer_id);
         }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -106,13 +106,18 @@ class Advance_payment extends CI_Controller {
         $data['glosary'] = $output;
 
         $data['date_range'] = $this->input->get('date_range');
+
         $dates = explode(' - ', $data['date_range']);
+        if ($data['date_range'] == '') {
+            $dates[0] = '';
+            $dates[1] = '';
+        }
         $customer_id = $this->input->get('id_customer');
         $payment_method_id = $this->input->get('id_payment_method');
         $btn = $this->input->get('btn_submit');
 
         if ($data['date_range'] != '' || !empty($customer_id) || !empty($payment_method_id)) {
-            $data['search_report'] = $this->Advance_payment_model->get_search_report($dates[0],$dates[1], $customer_id, $payment_method_id);
+            $data['search_report'] = $this->Advance_payment_model->get_search_report($dates[0], $dates[1], $customer_id, $payment_method_id);
         }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
