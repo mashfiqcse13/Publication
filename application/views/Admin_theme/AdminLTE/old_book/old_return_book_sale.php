@@ -116,7 +116,7 @@
                 <div class="box box-warning">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-8">
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
                             </div>
@@ -261,7 +261,7 @@
     });
     
     $('[name="id_item"]').change(function () {
-        $('#item_quantity').val('0');
+        $('#item_quantity').val("");
         var id_item = $('[name="id_item"]').val();
         var this_item_details = item_details[id_item];
         $('#total_in_hand').html(this_item_details.total_balance);
