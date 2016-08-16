@@ -29,21 +29,33 @@
 //                    echo form_open('', $attributes)
                 ?>
                 <form action="<?= site_url('/due/customer_payment') ?>" method="get">
-                    <div class="form-group ">
-                        <label class="col-md-3">Customer</label>
-                        <div class="col-md-7">
-                            <select class="form-control select2"style="width:100%;"  name="customer">
-                                <option>Select Customer</option>
+                    <div class="form-group col-md-5">
+                        <label>Customer Name or Code</label>
+                        <div class="input-group">
+                            <select class="form-control select2" style="width:100%;"  name="customer">
+                                <option value="">Select Customer Name Or Code</option>
                                 <?php
                                 foreach ($customers as $customer) {
                                     ?>
-                                    <option value="<?php echo $customer->id_customer; ?>"><?php echo $customer->name; ?></option>
+                                    <option value="<?php echo $customer->id_customer; ?>"><?php echo $customer->id_customer.' - '. $customer->name; ?></option>
                                     <?php
                                 }
                                 ?>
                             </select>
                         </div>
-                        <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                       
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>Date Range:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+                    <div class="form-group col-md-2" style="margin-top: 25px;">
+                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <?= anchor(current_url() . '/due/customer_due', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     </div>
                 </form>
@@ -54,7 +66,7 @@
 
                 <div class="box">
                     <?php
-                    if (!isset($customer_id)) {
+                    if (!isset($customer_due_payment)) {
                         ?>
                         <div class="box-header">
                             <h3 class="box-title">Customer Due Current View</h3>
@@ -66,7 +78,8 @@
                             ?>
                         </div><!-- /.box-body -->
                         <?php
-                    }if (isset($customer_id)) {
+                        
+                    }if (isset($customer_due_payment)) {
                         ?>
                         <div class="box-header">
                             <h3 class="text-center"><?= $this->config->item('SITE')['name'] ?></h3>
@@ -92,17 +105,27 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $total_payment = 0;
                                     foreach ($customer_due_payment as $due_payment) {
+                                        $total_payment += $due_payment->paid_amount;
                                         ?>
                                         <tr>
                                             <td><?php echo $due_payment->name; ?></td>
                                             <td><?php echo $due_payment->paid_amount; ?></td>
                                             <td><?php echo $due_payment->id_total_sales; ?></td>
-                                            <td><?php echo $due_payment->payment_date; ?></td>
+                                            <td><?php echo date('d/m/Y', strtotime($due_payment->payment_date)); ?></td>
                                         </tr>
+                                        
+                                        
                                         <?php
                                     }
                                     ?>
+                                        <tr>
+                                            <td>Total: </td>
+                                            <td><?php echo $total_payment;?></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                 </tbody>
                             </table>
 

@@ -106,7 +106,6 @@ class Advance_payment extends CI_Controller {
         $data['glosary'] = $output;
 
         $data['date_range'] = $this->input->get('date_range');
-
         $dates = explode(' - ', $data['date_range']);
         if ($data['date_range'] == '') {
             $dates[0] = '';
