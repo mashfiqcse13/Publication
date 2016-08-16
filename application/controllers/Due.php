@@ -61,26 +61,33 @@ class Due extends CI_Controller {
 
     function customer_payment() {
         $data['customer_id'] = $this->input->get('customer');
-        if ($data['customer_id'] != '') {
-            $data['customer_due_payment'] = $this->Due_model->get_customer_due_payment_info($data['customer_id']);
-        } else {
-            $crud = new grocery_CRUD();
-            $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
-                    ->display_as('id_customer', 'Customer Name')->set_subject('Customer Payment')
-                    ->set_relation('id_customer', 'customer', 'name')
-                    ->columns('Customer ID', 'id_customer', 'paid_amount', 'id_total_sales', 'payment_date')
-                    ->unset_edit()->unset_delete()->unset_add()->unset_read()
-                    ->callback_column('Customer ID', function ($value, $row) {
-                        return $row->id_customer;
-                    });
-            $output = $crud->render();
-            $data['glosary'] = $output;
+        $data['date_range'] = $this->input->get('date_range');
+//        print_r($data);exit();
+        $dates = explode(' - ', $data['date_range']);
+        if ($data['date_range'] == '') {
+            $dates[0] = '';
+            $dates[1] = '';
         }
+        if ($data['date_range'] != '' || $data['customer_id'] != '') {
+            $data['customer_due_payment'] = $this->Due_model->get_customer_due_payment_info($dates[0], $dates[1], $data['customer_id']);
+            print_r($data);exit();
+        } 
+        $crud = new grocery_CRUD();
+        $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
+                ->display_as('id_customer', 'Customer Name')->set_subject('Customer Payment')
+                ->set_relation('id_customer', 'customer', 'name')
+                ->columns('Customer ID', 'id_customer', 'paid_amount', 'id_total_sales', 'payment_date')
+                ->unset_edit()->unset_delete()->unset_add()->unset_read()
+                ->callback_column('Customer ID', function ($value, $row) {
+                    return $row->id_customer;
+                });
+        $output = $crud->render();
+        $data['glosary'] = $output;
 
         $data['customers'] = $this->Due_model->get_all_customers();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Customer Payment';
+        $data['Title'] = 'Customer Due Payment';
         $this->load->view($this->config->item('ADMIN_THEME') . 'due/customer_due_payment_log', $data);
     }
 
@@ -91,9 +98,9 @@ class Due extends CI_Controller {
         $amount = $this->input->post('amount');
         if (!empty($amount) && $amount > 0) {
             $this->load->model('misc/Customer_payment');
-            $last_id_customer_due_payment_register=$this->Customer_payment->due_payment($customer_id, $amount);
-            $data['due_report_list']=$this->Customer_payment->generate_due_report($last_id_customer_due_payment_register);
-            
+            $last_id_customer_due_payment_register = $this->Customer_payment->due_payment($customer_id, $amount);
+            $data['due_report_list'] = $this->Customer_payment->generate_due_report($last_id_customer_due_payment_register);
+
 //            redirect('due/make_payment/' . $customer_id);
 //            redirect("advance_payment/payment_log");
 //            die();
@@ -103,7 +110,7 @@ class Due extends CI_Controller {
         $data['due_detail_table'] = $this->Customer_due->due_detail_table($customer_id);
         $data['customer_name'] = $this->db->select('name')->where('id_customer', $customer_id)->get('customer')->result();
         $data['customer_name'] = $data['customer_name'][0]->name;
-        $data['customer_code']=$customer_id;
+        $data['customer_code'] = $customer_id;
         $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
 
 //        if ($data['customer_total_due'] < 1) {

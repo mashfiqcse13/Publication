@@ -166,7 +166,7 @@ class Advance_payment_model extends CI_Model {
             $this->db->where('party_advance_payment_register.id_customer', $customer_id);
         }if (!empty($payment_method_id)) {
             $this->db->where('party_advance_payment_register.id_payment_method', $payment_method_id);
-        }if ($date_from != '') {
+        }if ($date_from != '1970-01-01') {
             $condition = "DATE(party_advance_payment_register.date_payment) BETWEEN '$date_from'  AND  '$date_to'";
             $this->db->where($condition);
         }
