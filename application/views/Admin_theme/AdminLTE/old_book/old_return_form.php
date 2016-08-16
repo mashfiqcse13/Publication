@@ -285,8 +285,8 @@
     });
     
     $('[name="id_item"]').change(function () {
-        $('#item_quantity').val('0');
-        $('#price').val('0');
+        $('#item_quantity').val("");
+        $('#price').val('');
         var id_item = $('[name="id_item"]').val();
     });
     

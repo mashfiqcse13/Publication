@@ -203,7 +203,7 @@
         update_cart();
     });
     $('[name="id_item"]').change(function () {
-        $('#item_quantity').val('0');
+        $('#item_quantity').val("");
         var id_item = $('[name="id_item"]').val();
         var this_item_details = item_details[id_item];
         $('#total_in_hand').html(this_item_details.total_in_hand);
