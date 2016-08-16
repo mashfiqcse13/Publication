@@ -116,7 +116,7 @@
                 <div class="box box-warning">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-8">
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
                             </div>
