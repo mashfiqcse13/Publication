@@ -38,7 +38,7 @@
                 <div class="box  box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Process Steps Details &nbsp; 
-                            <?php if ($process_status == 1) { ?>
+                            <?php if ($process_steps_table == FALSE) { ?>
                                 <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#modalAddStep" >Add step</button>
                             <?php } ?>
                         </h3>
@@ -77,6 +77,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="<?php echo site_url('production_process/add_step'); ?>" method="post">
                     <input type="hidden" name="id_processes" value="<?php echo $id_processes ?>">
+                    <input type="hidden" name="id_process_step_from">
                     <div class="row">
                         <div class="col-md-12">
 
@@ -192,6 +193,44 @@
 
                         </div>
                     </div>
+                    <script>var vendor_dropdown_used_only_list = <?php echo json_encode($vendor_dropdown_used_only_list); ?>;</script>
+                    <div class="row" id="id_process_step_to_box">
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Vendor Name</label>
+
+                                <div class="col-sm-9" id="vendor_dropdown_used_only_list">
+                                </div>
+                            </div>
+                            <h4 style="text-align: center">--------------- OR --------------------</h4>
+                        </div>
+                    </div>
+                    <div class="row" id="add_step_box">
+                        <div class="col-md-12">
+
+                            <h4>Create a new step</h4>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Vendor Name</label>
+
+                                <div class="col-sm-9">
+                                    <?php echo $vendor_dropdown ?>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Step Name</label>
+
+                                <div class="col-sm-9">
+                                    <?php echo $step_name_dropdown ?>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-outline">Transfer</button>
@@ -223,16 +262,34 @@
         console.log(transferable_amount);
         $('[name="id_process_step_from"]').val(id_process_steps);
         if ($(this).html() == "Final Transfer") {
+            $('#add_step_box').hide();
+            $('#id_process_step_to_box').hide();
             $('#modalStepToStepTransfer .modal-title').html("Finsih this process by inputing last transfer details");
             $('#modalStepToStepTransfer [type="submit"]').html("Transfer to the final stock");
             $('#modalStepToStepTransfer').removeClass('modal-success');
             $('#modalStepToStepTransfer').addClass('modal-danger');
         } else {
+            $('#add_step_box').show();
             $('#modalStepToStepTransfer .modal-title').html("Transfer");
             $('#modalStepToStepTransfer [type="submit"]').html("Transfer");
             $('#modalStepToStepTransfer').removeClass('modal-danger');
             $('#modalStepToStepTransfer').addClass('modal-success');
+            if (vendor_dropdown_used_only_list[id_process_steps] != null) {
+                $('#id_process_step_to_box').show();
+                $('#vendor_dropdown_used_only_list').html(vendor_dropdown_used_only_list[id_process_steps]);
+                $(".select2").select2({
+                    'width': '100%'
+                });
+            } else {
+                $('#id_process_step_to_box').hide();
+            }
         }
+    });
+
+    $('.btnAddStepFromStep').click(function () {
+        var id_process_steps = $(this).data('id_process_steps');
+        console.log(id_process_steps);
+        $('[name="id_process_step_from"]').val(id_process_steps);
     });
 
     $('input[type="number"]').change(function () {
