@@ -117,7 +117,7 @@ class Advance_payment extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Payment Log';
+        $data['Title'] = 'Advance Payment Log';
         $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/payment_log', $data);
     }
 
