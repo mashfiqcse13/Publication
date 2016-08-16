@@ -124,4 +124,3 @@
 
 <!-- insert book -->
 <?php include_once __DIR__ . '/../footer.php'; ?>
-<script>jQuery('.add_payment').html("Add Payment");</script>

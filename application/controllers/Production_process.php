@@ -35,7 +35,7 @@ class Production_process extends CI_Controller {
                 ->set_relation('id_item', 'items', 'name')->set_relation('id_process_type', 'process_type', 'process_type')->order_by('id_processes', 'desc')
                 ->add_fields('id_item', 'order_quantity', "id_vendor")->required_fields('id_process_type', 'id_item', 'order_quantity')
                 ->field_type('id_vendor', 'dropdown', $this->Production_process_model->get_vendor_dropdown(true, "Printing Press"))
-                ->add_action('Steps', '', '#', 'btn show_step', function ($primary_key, $row) {
+                ->add_action('Steps', base_url() . "asset/img/button/steps btn.png", '#', '', function ($primary_key, $row) {
                     return site_url('production_process/steps/' . $primary_key);
                 })->callback_before_insert(array($this->Production_process_model, 'callback_process_before_process_insert'))
                 ->callback_after_insert(array($this->Production_process_model, 'callback_process_after_process_insert'))

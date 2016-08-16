@@ -19,6 +19,7 @@
 
 
             <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production Process</span>'); ?></li>
+            <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production Report</span>'); ?></li>
             <li><?php echo anchor('production_process/type', '<i class="fa fa-plus-circle"></i>  <span>Process type</span>'); ?></li>
             <li><?php echo anchor('production_process/vendor', '<i class="fa fa-plus-circle"></i>  <span>Vendor</span>'); ?></li>
 

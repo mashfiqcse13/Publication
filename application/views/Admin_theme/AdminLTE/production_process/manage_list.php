@@ -44,4 +44,3 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
-<script>jQuery('.show_step').html("Steps");</script> 

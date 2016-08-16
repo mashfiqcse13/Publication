@@ -34,7 +34,7 @@ class Due extends CI_Controller {
                 ->columns('Customer ID', 'id_customer', 'total_due_billed', 'total_paid', 'total_due')
                 ->callback_column('Customer ID', function ($value, $row) {
                     return $row->id_customer;
-                })->add_action('Add payment', '', '#', 'btn btn-xs btn-default add_payment', function ($primary_key, $row) {
+                })->add_action('Add payment', base_url() . "asset/img/button/add payment btn.png", '#', '', function ($primary_key, $row) {
             if ($row->total_due > 0) {
                 return site_url('due/make_payment/' . $row->id_customer);
             } else {
@@ -70,8 +70,9 @@ class Due extends CI_Controller {
         }
         if ($data['date_range'] != '' || $data['customer_id'] != '') {
             $data['customer_due_payment'] = $this->Due_model->get_customer_due_payment_info($dates[0], $dates[1], $data['customer_id']);
-            print_r($data);exit();
-        } 
+            print_r($data);
+            exit();
+        }
         $crud = new grocery_CRUD();
         $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
                 ->display_as('id_customer', 'Customer Name')->set_subject('Customer Payment')
