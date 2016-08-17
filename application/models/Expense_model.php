@@ -1,16 +1,15 @@
 <?php
 
-
 class Expense_model extends CI_Model {
 
-        function expense_report($date){
-        $date=$this->dateformatter($date);
-        
-        $range_query=$this->db->query("SELECT name_expense,amount_expense,date_expense,description_expense FROM expense
+    function expense_report($date) {
+        $date = $this->dateformatter($date);
+
+        $range_query = $this->db->query("SELECT name_expense,amount_expense,date_expense,description_expense FROM expense
 LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
 WHERE DATE(date_expense) BETWEEN $date");
         return $range_query->result();
-        
+
 //        $range_query=$this->db->query("SELECT name_expense,CONCAT('TK ',amount_expense),DATE(date_expense),description_expense FROM expense
 //LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
 //WHERE date_expense BETWEEN $date");
@@ -44,10 +43,7 @@ WHERE DATE(date_expense) BETWEEN $date");
 //                . '<style>td:nth-child(2) {    text-align: right;}</style>');
 //        return $this->table->generate($range_query);
 //        
-        
     }
-
-    
 
     function dateformatter($range_string, $formate = 'Mysql') {
         $date = explode(' - ', $range_string);
@@ -60,10 +56,20 @@ WHERE DATE(date_expense) BETWEEN $date");
             return $date;
     }
 
-       function datereport($date){
-        $date= str_replace("'", ' ', $date);
-        $date=  str_replace('and', 'to', $date);
+    function datereport($date) {
+        $date = str_replace("'", ' ', $date);
+        $date = str_replace('and', 'to', $date);
         return $date;
+    }
+
+    function expense_register($id_name_expense, $amount_expense, $description_expense = "") {
+        $data_to_insert_on_expense = array(
+            'id_name_expense' => $id_name_expense,
+            'amount_expense' => $amount_expense,
+            'date_expense' => date('Y-m-d h:i:u'),
+            'description_expense' => $description_expense
+        );
+        $this->db->insert('expense', $data_to_insert_on_expense);
     }
 
 }

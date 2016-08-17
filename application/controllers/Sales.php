@@ -31,7 +31,7 @@ class Sales extends CI_Controller {
     function tolal_sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales_total_sales')
-                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'total_paid', 'total_due')
+                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'total_paid', 'total_due', 'number_of_packet', 'bill_for_packeting')
                 ->display_as('id_total_sales', 'Memo No')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')
                 ->set_subject('Total sales')
@@ -46,7 +46,8 @@ class Sales extends CI_Controller {
         $data['date_range'] = $this->input->get('date_range');
         $id_customer = $this->input->get('id_customer');
         $date = explode('-', $data['date_range']);
-        $from = '';$to = '';
+        $from = '';
+        $to = '';
         if ($data['date_range'] != '') {
             $from = $date[0];
             $to = $date[1];
@@ -57,7 +58,7 @@ class Sales extends CI_Controller {
             $data['total_sales'] = $this->Sales_model->get_total_sales_info($from, $to, $id_customer);
 //             print_r($data['total_sales']);exit();
         }
-       
+
 
         $output = $crud->render();
         $data['glosary'] = $output;

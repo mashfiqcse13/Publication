@@ -20,7 +20,9 @@
         'bank_check_no': '',
         'total_paid': 0,
         'total_due': 0,
-        'item_selection': ''
+        'item_selection': '',
+        'number_of_packet': 0,
+        'bill_for_packeting': 0
     };
     var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
 </script>
@@ -92,7 +94,7 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Discount percentage :</label>
                                 <div class="input-group">
-                                    <input type="email" name="discount_percentage" class="form-control" id="discount_percentage" value="0" min="0" max="100">
+                                    <input type="number" name="discount_percentage" class="form-control" id="discount_percentage" value="0" min="0" max="100">
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
@@ -100,6 +102,19 @@
                                 <label for="discount_amount">Discount amount :</label>
                                 <div class="input-group">
                                     <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="0" min="0">
+                                    <span class="input-group-addon">Tk</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="discount_percentage">Number of packet :</label>
+                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" value="" min="0" max="100">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="discount_amount">Bill for packeting :</label>
+                                <div class="input-group">
+                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting"  value="" min="0">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
@@ -321,6 +336,14 @@
             'total': item_details[item_id].sale_price * item_quantity
         };
         update_cart();
+    });
+    $('[name="number_of_packet"]').change(function () {
+        data_to_post.number_of_packet = string_to_int($('[name="number_of_packet"]').val());
+        console.log(data_to_post.number_of_packet);
+    });
+    $('[name="bill_for_packeting"]').change(function () {
+        data_to_post.bill_for_packeting = string_to_int($('[name="bill_for_packeting"]').val());
+        console.log(data_to_post.bill_for_packeting);
     });
     $('[name="id_item"]').change(function () {
         $('#item_quantity').val("");

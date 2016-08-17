@@ -28,6 +28,8 @@ class Sales_processing_model extends CI_Model {
     private $dues_unpaid;
     private $total_amount;
     private $id_total_sales;
+    private $number_of_packet;
+    private $bill_for_packeting;
 
     function initiate() {
         $this->loading_models_and_response_values();
@@ -67,6 +69,8 @@ class Sales_processing_model extends CI_Model {
         $this->bank_account_id = $this->input->post('bank_account_id');
         $this->bank_check_no = $this->input->post('bank_check_no');
         $this->item_selection = $this->input->post('item_selection');
+        $this->number_of_packet = $this->input->post('number_of_packet');
+        $this->bill_for_packeting = $this->input->post('bill_for_packeting');
         $this->advance_payment_balance = $this->Advance_payment_model->get_advance_payment_balance_by($this->id_customer);
         $this->total_amount = $this->sub_total - $this->discount_amount;
     }
@@ -159,11 +163,17 @@ class Sales_processing_model extends CI_Model {
             'sub_total' => $this->sub_total,
             'total_amount' => $this->total_amount,
             'total_paid' => $total_paid,
-            'total_due' => $total_due
+            'total_due' => $total_due,
+            'number_of_packet' => $this->number_of_packet,
+            'bill_for_packeting' => $this->bill_for_packeting
         );
         $this->db->insert('sales_total_sales', $data) or $this->exception_handler('failed to insert data on sales_total_sales');
         $this->Master_reconcillation_model->add_total_sale($this->total_amount);
         $this->id_total_sales = $this->max_id_total_sales();
+        if ($this->bill_for_packeting > 0) {
+            $this->load->model('Expense_model');
+            $this->Expense_model->expense_register(1, $this->bill_for_packeting, "Memo No : {$this->id_total_sales}");
+        }
         return $this->id_total_sales;
     }
 
@@ -186,7 +196,7 @@ class Sales_processing_model extends CI_Model {
                 'price' => $value['sale_price'],
                 'total_cost' => $value['total'],
                 'discount' => 0,
-                'sub_total' => $value['total'],
+                'sub_total' => $value['total']
             );
             array_push($data_sales, $tmp_data_sales);
             $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
