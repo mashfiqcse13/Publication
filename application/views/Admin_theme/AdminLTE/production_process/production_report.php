@@ -58,7 +58,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_all_production_process as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processess.' - '. $item->name_process_type; ?></option>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes.' - '. $item->name_process_type; ?></option>
                                                 <?php
                                             }
                                             ?>
