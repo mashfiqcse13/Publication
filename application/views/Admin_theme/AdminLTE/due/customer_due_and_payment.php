@@ -105,7 +105,7 @@
                                     ?>
                                 </tbody>
                             </table>
-
+                            <a href="<?php echo site_url('due/make_payment/'.$customer_id) ?>" class="btn btn-info pull-right only_print">Pay Due</a>
                         </div>
                         <?php
                     }

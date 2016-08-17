@@ -100,7 +100,7 @@
                             <tbody>
                                 <?php
                                 foreach ($stock_perpetual as $stock) {
-                                     foreach($old_info as $row){
+                                    
                                     ?>
                                     <tr>
                                         <td><?php echo $stock->name; ?></td>
@@ -111,14 +111,31 @@
                                         <td><?php echo $stock->return_amountreject; ?></td>
                                         <td><?php echo $acturatesale=$stock->sales_amount - $stock->return_amountreject; ?></td>
                                         <td><?php 
-                                        if($stock->id_item==$row->id_item){
-                                            echo $row->old_quantity;
+                                        if(!empty($old_info)){
+                                                foreach($old_info as $row){
+                                               if($stock->id_item==$row->id_item){
+                                                   echo $row->old_quantity;
+                                               }
                                         }
+                                        }else{
+                                             echo 0;
+                                         }
                                         ?></td>
                                         
                                         <td><?php 
-                                        $val = ( $stock->id_item==$row->id_item )? $row->old_quantity : 0 ;
-                                        echo $acturatesale - $val ?>
+                                        
+                                         if(!empty($old_info)){
+                                                foreach($old_info as $row){
+                                                    $val = ( $stock->id_item==$row->id_item )? $row->old_quantity : 0 ;
+                                                    echo $acturatesale - $val;
+                                        }
+                                        }else{
+                                             echo $acturatesale;
+                                         }
+                                         
+                                         
+                                        
+                                        ?>
                                         </td>
                                         <td><?php echo 
                                         ($stock->opening_amount+$stock->receive_amount+$stock->return_amountreject)-
@@ -130,7 +147,7 @@
 
                                     </tr>
                                     <?php
-                                }}
+                                }
                                 ?>
                             </tbody>
                         </table>
