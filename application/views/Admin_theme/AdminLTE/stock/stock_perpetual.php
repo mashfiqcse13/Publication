@@ -75,7 +75,7 @@
                         <div style="color: #777777;">
                             <p class="pull-left" > <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
                             <br>
-                            <p class="alert-info pull-left">Closing Stock = (Opening Stock + Receive) - (Accurate Sale + Specimen )  </p>
+                            <p class="alert-info pull-left">Closing Stock = (Opening Stock + Receive) - (Accurate Sale + Accurate Specimen )  </p>
                             
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
                         </div>
@@ -88,7 +88,7 @@
                                     <th>Opening</th>
                                     <th>Receive </th>
                                     <th>Sale</th>
-                                    <th>Specimen</th>
+                                    <th>Accurate Specimen <br><span style="font-size:10px"> (Accurate Specimen = Specimen - Specimen Return ) </span></th>
                                     <th>Sale Return</th>
                                     <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span></th>
                                     <th>Old Book Return</th>

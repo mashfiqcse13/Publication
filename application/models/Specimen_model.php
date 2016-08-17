@@ -262,7 +262,7 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item WHERE specimen_items.id_
 
         $items = $this->db->query("SELECT specimen_items.id_item as id_item, name ,amount_copy FROM `specimen_items` LEFT JOIN specimen_total ON specimen_total.id_specimen_total=specimen_items.id_specimen_total
 LEFT JOIN items ON items.id_item=specimen_items.id_item
-            WHERE `amount_copy` > 0 AND id_agent=$id")->result(); 
+            WHERE `amount_copy` > 0 AND specimen_total.id_specimen_total=$id  ")->result(); 
 
         $data = array();
         $data[''] = 'Select items by name or code';

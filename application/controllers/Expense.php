@@ -53,14 +53,14 @@ class Expense extends CI_Controller {
 
         $crud->unset_edit();
         //$crud->unset_delete();
-        $crud->callback_after_insert(array($this, 'cash_delete'));
-        $crud->callback_before_delete(array($this, 'cash_add'));
-        //$crud->callback_before_update(array($this,'cash_update'));
-
-
-        $crud->order_by('id_name_expense', 'desc');
-
-
+           // $crud->callback_after_insert(array($this, 'cash_delete'));
+           // $crud->callback_before_delete(array($this,'cash_add'));
+            
+            
+          
+        $crud->order_by('id_name_expense','desc');
+        
+        
         $this->load->model('expense_model');
         $date_range = $this->input->post('date_range');
         $data['date_range'] = $date_range;
