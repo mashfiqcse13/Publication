@@ -277,17 +277,45 @@ class Production_process_model extends CI_Model {
             return $result[0];
         }
     }
-    
+
     function get_process_details_for_report() {
-        $result = $this->db->select("view_process_step_transfer_log_with_details.`id_processes`, `process_type`, processes.id_item, `name` as item_name, `from_name`,`from_type`,`to_name`,`to_type`,`amount_transfered`,`amount_billed`,`date_transfered`,`amount_paid`")
-                        ->from('view_process_step_transfer_log_with_details')->join('processes','processes.id_processes = view_process_step_transfer_log_with_details.id_processes')
-                        ->join('items', 'items.id_item = view_process_step_transfer_log_with_details.id_item')->join('process_type', 'process_type.id_process_type = processes.id_process_type')
+        $result = $this->db->select("*")
+                        ->from('view_process_step_transfer_log_with_details')
                         ->get()->result();
-        if (empty($result[0])) {
-            return FALSE;
-        } else {
-            return $result[0];
+//        
+        return $result;
+    }
+
+    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $date) {
+        $dates = explode('-', $date);
+//        print_r($dates);exit();
+        if ($dates[0] != '') {
+            $date_from = date('Y-m-d', strtotime($dates[0]));
+            $date_to = date('Y-m-d', strtotime($dates[1]));
         }
+        $this->db->select("*");
+        $this->db->from('view_process_step_transfer_log_with_details');
+        if (!empty($id_processes)) {
+            $this->db->where('id_processes', $id_processes);
+        }if (!empty($from_id_vendor)) {
+            $this->db->where('from_id_vendor', $from_id_vendor);
+        }if (!empty($id_item)) {
+            $this->db->where('id_item', $id_item);
+        }if (!empty($to_id_vendor)) {
+            $this->db->where('to_id_vendor', $to_id_vendor);
+        }if ($dates[0] != '') {
+            
+            $condition = "DATE(date_transfered) BETWEEN '$date_from'  AND  '$date_to'";
+//            echo $condition; exit();
+            $this->db->where($condition);
+        }
+        return $this->db->get()->result();
+    }
+
+    function select_all($table_name) {
+        $this->db->select('*');
+        $this->db->from($table_name);
+        return $this->db->get()->result();
     }
 
     function get_process_status_by_process_step_id($id_process_steps) {
@@ -537,9 +565,8 @@ class Production_process_model extends CI_Model {
         $this->db->query("UPDATE `processes` SET id_process_type = 2 , `date_created` = '$date_created' WHERE `processes`.`id_processes` = $primary_key;");
         $this->add_process_step($primary_key, $this->callback_process_buffer_id_vendor, 1);
     }
-    
-    
-    function production_report(){
+
+    function production_report() {
         $this->load->library('table');
         $process_details = $this->get_process_details_for_report();
         $tmpl = array(
@@ -561,12 +588,12 @@ class Production_process_model extends CI_Model {
         $output = '';
         $this->table->set_template($tmpl);
 
-        $this->table->add_row($process_details->id_processes, $process_details->process_type, $process_details->item_name, $process_details->from_name.' '.$process_details->from_type, $process_details->to_name.' '.$process_details->to_type, $process_details->amount_transfered, $process_details->amount_billed, $process_details->amount_paid, $process_details->date_transfered);
-        $this->table->set_heading('Order ID', 'Process Type', 'Item Name', 'Vendor From', 'Vendor To', 'Transfer Amount', 'Amount Billed','Amount Paid', 'Transfer Date');
+        $this->table->add_row($process_details->id_processes, $process_details->process_type, $process_details->item_name, $process_details->from_name . ' ' . $process_details->from_type, $process_details->to_name . ' ' . $process_details->to_type, $process_details->amount_transfered, $process_details->amount_billed, $process_details->amount_paid, $process_details->date_transfered);
+        $this->table->set_heading('Order ID', 'Process Type', 'Item Name', 'Vendor From', 'Vendor To', 'Transfer Amount', 'Amount Billed', 'Amount Paid', 'Transfer Date');
 //        $output .= $this->table->generate();
 //        $this->table->add_row($process_details->order_quantity, $process_details->actual_quantity, $process_details->total_damaged_item, $process_details->total_reject_item, $process_details->total_missing_item);
 //        $this->table->set_heading('Ordered', 'Found', 'Damaged', 'Rejected', 'Missing');
-        
+
         $output .= $this->table->generate();
         return $output;
     }
