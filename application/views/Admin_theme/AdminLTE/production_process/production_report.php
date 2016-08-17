@@ -58,7 +58,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_all_production_process as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->name_process_type; ?></option>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processess.' - '. $item->name_process_type; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -74,7 +74,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_all_production_process as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_name . '(' . $item->from_type . ')'; ?></option>
+                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_id_vendor.' - '. $item->from_name . '(' . $item->from_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -92,7 +92,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_all_production_process as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->item_name; ?></option>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item.' - '. $item->item_name; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -108,7 +108,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_all_production_process as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_name . '(' . $item->to_type . ')'; ?></option>
+                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor.' - '.$item->to_name . '(' . $item->to_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>
