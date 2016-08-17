@@ -30,7 +30,7 @@ class Production_process extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('processes')
                 ->set_subject('Production Process')->display_as('id_process_type', 'Process type')->display_as('id_processes', 'Order ID')
-                ->display_as('id_item', 'Item Name')->display_as('id_vendor', 'Vendor Name')
+                ->display_as('id_item', 'Item Name')->display_as('id_vendor', 'Vendor Name')->display_as('actual_quantity', 'Total Received By S. Store')
                 ->columns('id_processes', 'id_process_type', 'id_item', 'date_created', 'date_finished', 'order_quantity', 'actual_quantity', 'total_damaged_item', 'total_reject_item', 'total_missing_item', 'process_status')
                 ->set_relation('id_item', 'items', 'name')->set_relation('id_process_type', 'process_type', 'process_type')->order_by('id_processes', 'desc')
                 ->add_fields('id_item', 'order_quantity', "id_vendor")->required_fields('id_process_type', 'id_item', 'order_quantity')
@@ -65,7 +65,7 @@ class Production_process extends CI_Controller {
     function vendor() {
         $crud = new grocery_CRUD();
         $crud->set_table('contact_vendor')
-                ->set_subject('Vendor')->callback_add_field('division', array($this->Common, 'dropdown_division'))
+                ->set_subject('Vendor')->callback_add_field('division', array($this->Common, 'dropdown_division'))->order_by('id_vendor', 'desc')
                 ->callback_edit_field('division', array($this->Common, 'dropdown_division'))
                 ->callback_add_field('district', array($this->Common, 'dropdown_district'))
                 ->callback_edit_field('district', array($this->Common, 'dropdown_district'))

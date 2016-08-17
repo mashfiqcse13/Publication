@@ -234,11 +234,11 @@ class Production_process_model extends CI_Model {
             $process_status = $this->get_process_status_by_process_id($id_processes);
             if ($process_status == 1) {
                 $this->table->add_row(
-                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created, $link_step_id, $action_btn
+                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount,$each_step->transferable_amount, $each_step->date_created, $link_step_id, $action_btn
                 );
             } else {
                 $this->table->add_row(
-                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->date_created, $link_step_id
+                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount,$each_step->transferable_amount, $each_step->date_created, $link_step_id
                 );
             }
         }
@@ -260,9 +260,9 @@ class Production_process_model extends CI_Model {
         );
         $this->table->set_template($tmpl);
         if ($process_status == 1) {
-            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID', 'Action');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing','Remaining', 'Date Created', 'Linked Step ID', 'Action');
         } else {
-            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Date Created', 'Linked Step ID');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing','Remaining', 'Date Created', 'Linked Step ID');
         }
         return $this->table->generate();
     }
