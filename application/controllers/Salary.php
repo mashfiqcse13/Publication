@@ -170,7 +170,7 @@ class Salary extends CI_Controller {
                         $data['status_salary_payment'] = 2;
                         $amount_salary = $salary[$j];
                         $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id[$j], $amount_salary, 'amount_salary_payment', 'id_salary_payment');
-                        $this->cash_model->add_revert($amount_salary);
+//                        $this->cash_model->add_revert($amount_salary);
 //        bonus update
                         $bonus['status_bonus_payment'] = 2;
                         $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
