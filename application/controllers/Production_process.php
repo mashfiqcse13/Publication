@@ -146,5 +146,15 @@ class Production_process extends CI_Controller {
         $this->Production_process_model->process_status_change($id_processes, $status_code);
         redirect('production_process/steps/' . $id_processes);
     }
+    
+    
+    function production_report(){
+        $data['get_all_production_process'] = $this->Production_process_model->production_report();
+        
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Process Reports';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report', $data);
+    }
 
 }

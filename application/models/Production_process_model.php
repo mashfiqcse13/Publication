@@ -277,6 +277,18 @@ class Production_process_model extends CI_Model {
             return $result[0];
         }
     }
+    
+    function get_process_details_for_report() {
+        $result = $this->db->select("view_process_step_transfer_log_with_details.`id_processes`, `process_type`, processes.id_item, `name` as item_name, `from_name`,`from_type`,`to_name`,`to_type`,`amount_transfered`,`amount_billed`,`date_transfered`,`amount_paid`")
+                        ->from('view_process_step_transfer_log_with_details')->join('processes','processes.id_processes = view_process_step_transfer_log_with_details.id_processes')
+                        ->join('items', 'items.id_item = view_process_step_transfer_log_with_details.id_item')->join('process_type', 'process_type.id_process_type = processes.id_process_type')
+                        ->get()->result();
+        if (empty($result[0])) {
+            return FALSE;
+        } else {
+            return $result[0];
+        }
+    }
 
     function get_process_status_by_process_step_id($id_process_steps) {
         $process_step_details = $this->get_step_info_by($id_process_steps);
@@ -524,6 +536,39 @@ class Production_process_model extends CI_Model {
         $date_created = date('Y-m-d h:i:u');
         $this->db->query("UPDATE `processes` SET id_process_type = 2 , `date_created` = '$date_created' WHERE `processes`.`id_processes` = $primary_key;");
         $this->add_process_step($primary_key, $this->callback_process_buffer_id_vendor, 1);
+    }
+    
+    
+    function production_report(){
+        $this->load->library('table');
+        $process_details = $this->get_process_details_for_report();
+        $tmpl = array(
+            'table_open' => '<table id="process_detail_table" class="table table-hover table-bordered">',
+            'heading_row_start' => '<tr>',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td>',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td>',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
+        $output = '';
+        $this->table->set_template($tmpl);
+
+        $this->table->add_row($process_details->id_processes, $process_details->process_type, $process_details->item_name, $process_details->from_name.' '.$process_details->from_type, $process_details->to_name.' '.$process_details->to_type, $process_details->amount_transfered, $process_details->amount_billed, $process_details->amount_paid, $process_details->date_transfered);
+        $this->table->set_heading('Order ID', 'Process Type', 'Item Name', 'Vendor From', 'Vendor To', 'Transfer Amount', 'Amount Billed','Amount Paid', 'Transfer Date');
+//        $output .= $this->table->generate();
+//        $this->table->add_row($process_details->order_quantity, $process_details->actual_quantity, $process_details->total_damaged_item, $process_details->total_reject_item, $process_details->total_missing_item);
+//        $this->table->set_heading('Ordered', 'Found', 'Damaged', 'Rejected', 'Missing');
+        
+        $output .= $this->table->generate();
+        return $output;
     }
 
 }
