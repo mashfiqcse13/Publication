@@ -136,7 +136,7 @@ class Specimen extends CI_Controller {
                 $id=$row['id_agent'];
             }
              $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_by_id($id);
-             $data['item_dropdown'] = $this->Specimen_model->get_available_specimen_item_dropdown($id);
+             $data['item_dropdown'] = $this->Specimen_model->get_available_specimen_item_dropdown($memo_id);
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
