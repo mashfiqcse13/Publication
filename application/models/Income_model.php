@@ -13,7 +13,7 @@ class Income_model extends CI_Model {
 //WHERE date_income BETWEEN $date");
         $range_query = $this->db->query("SELECT name_expense,amount_income,date_income,description_income FROM `income` 
 LEFT JOIN income_name on income_name.id_name_income=income.id_name_income 
-WHERE date_income BETWEEN $date");
+WHERE DATE(date_income) BETWEEN $date");
         return $range_query->result();
         $this->load->library('table');
         $this->table->set_heading(array('Income Name', 'Ammount', 'Date', 'Description'));
