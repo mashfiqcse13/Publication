@@ -1,3 +1,4 @@
+
 <aside class="main-sidebar only_print">
     <section class="sidebar">
         <div class="user-panel">
@@ -27,3 +28,5 @@
         </ul>
     </section>
 </aside>
+
+    

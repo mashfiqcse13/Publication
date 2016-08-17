@@ -142,6 +142,8 @@ var baseURL = "<?php echo base_url(); ?>";
     });
     
     
+   
+    
     
 </script>
 <?php if (isset($scriptInline)) echo $scriptInline; ?>
@@ -152,6 +154,9 @@ if (isset($script)) {
 }
 ?>
 <script>
+   
+    
+    
 var url=window.location;
 var value = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 if(value=='add' || value=='edit'){
@@ -164,6 +169,14 @@ $.fn.digits = function(){
     })
 }
 $('.taka_formate').digits(); 
+</script>
+
+<script>
+    
+            $('.sidebar-toggle').click(function(){
+                  $('body').toggleClass('sidebar-open');
+            });
+   
 </script>
 
 </body>
