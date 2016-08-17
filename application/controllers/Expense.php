@@ -55,9 +55,9 @@ class Expense extends CI_Controller {
        
         $crud->unset_edit();
         //$crud->unset_delete();
-            $crud->callback_after_insert(array($this, 'cash_delete'));
-            $crud->callback_before_delete(array($this,'cash_add'));
-            //$crud->callback_before_update(array($this,'cash_update'));
+           // $crud->callback_after_insert(array($this, 'cash_delete'));
+           // $crud->callback_before_delete(array($this,'cash_add'));
+            
             
           
         $crud->order_by('id_name_expense','desc');

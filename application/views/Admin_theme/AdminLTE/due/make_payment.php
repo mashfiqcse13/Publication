@@ -20,7 +20,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
 
                 <div class="box box-danger">
                     <div class="box-header">
@@ -36,30 +36,68 @@
 
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Due Payment Amount (Cash Only )</h3>
-                    </div>
+                    
                     <div class="box-body">
                         <?php echo form_open(); ?>
-                        <div class="input-group input-group-lg">
-                            <input type="number" class="form-control" name="amount" value="0" min='1' max="<?php echo $customer_total_due; ?>">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-info btn-flat">Pay</button>
-                            </span>
+                        <div class="box-header with-border">
+                                <h3 class="box-title text-center text-bold">Due Payment Amount (Bank )</h3>
+                                <p class="btn btn-info bank_add">Bank Pay</p>
                         </div>
+                        <div class="bank_hide">
+                        <p><strong>Note :</strong> If you use this form , this balance will be added to the account balance automatically as an approved transaction .</p>
+                                          
+                            <div class="form-group" style="padding: 15px">
+                                    <label for="bank_account" class="col-sm-4 control-label">Receiving Account</label>
+                                    <div class="col-sm-8">
+                                        <?php echo $bank_account_dropdown ?>
+                                    </div>
+                                </div>
+                                <div class="form-group"style="padding: 15px">
+                                    <label for="bank_payment" class="col-sm-4 control-label">Amount</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="bank_payment" name="bank_payment" placeholder="Amount" max="<?php echo $customer_total_due; ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group"style="padding: 15px">
+                                    <label for="check_no" class="col-sm-4 control-label">Check/DD/TT No</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="check_no" name="check_no" placeholder="Check No">
+                                    </div>
+                                </div>
+                        </div>
+                        <hr>
+                        <div class="box-header with-borde r">
+                        <h3 class="box-title text-center text-bold">Due Payment Amount (Cash )</h3>
+                    </div>
+                        
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="amount" value="" min='1' max="<?php echo $customer_total_due; ?>">                           
+                                
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                               
+                                <input  id="btn_submit" name="btn_submit" type="submit" class="btn btn-info btn-block submit_btn" value="Pay">
+                            </div>
+                            <div class="col-md-6">
+                                <a href="<?php echo site_url('due/make_payment') ?>" class=" btn btn-primary btn-block "> Reset </a>
+                            </div>
+                        </div>
+                        
+                               
+                            </div>
                         <?php echo form_close(); ?>
                     </div>
                     <!-- /.box-body -->
                 </div>
+                
             </div>
-        </div>
-        
-        
-        <?php if(isset($due_report_list)){ ?>
-        <div class="row">
-                        <div class="box col-md-12" id="block">             
+             <?php if(isset($due_report_list)){ ?>
+<div class="row" style="width:585px;z-index: 9999;margin: 0 auto">
+                        <div class="box col-md-12" id="block" style="width:585px;z-index: 9999;margin: 0 auto">             
                     <div class="box-header">
                         
                         <p class="text-center"> Due Payment Report</p>                        
@@ -115,7 +153,18 @@
                         </table>
             </div>
         </div>
-        <?php } ?>
+</div>
+        <?php } elseif(isset($report_message)){
+            echo $report_message;
+        }
+?>
+        
+    </section>
+                       
+        </div>
+        
+        
+       
 
 
 
@@ -129,4 +178,28 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script>
     $('.first_table .table tbody').append('<tr style="border-top: 3px solid #d5d5d5;"><td colspan="6" class="text-center">Total Due =</td><td><?php echo $customer_total_due ?></td></tr>');
+    $('.bank_hide').hide();
+    $('.bank_add').click(function(){
+       $('.bank_hide').toggle(); 
+    });
+
+
+    $('[name="id_account"]').change(function(){
+       $('[name="bank_payment"]').val(' ');
+       $('[name="check_no"]').val(' ');
+    });
+    
+    $('#btn_submit').click(function(){
+        
+       if($('[name="bank_payment"]').val() == ' ' ){
+           alert('Please Select Bank Payment');
+           return;
+       } 
+       if($('[name="check_no"]').val() == ' '){
+           alert('Please give check number');
+           return;
+       }
+       
+       
+    });
 </script>

@@ -35,7 +35,7 @@ class Bank_model extends CI_Model {
     function get_account_dropdown() {
         $sql = $this->db->query("SELECT id_bank_account, name_bank, account_number FROM `bank_account` LEFT JOIN bank ON bank.id_bank = bank_account.id_bank");
         $data = array();
-        $data = '<select id="field-id_account" name="id_account" class="select2 chosen-select chzn-done" data-placeholder="Select Account Name" required>';
+        $data = '<select id="field-id_account" name="id_account" class="select2 chosen-select chzn-done" data-placeholder="Select Account Name" >';
         $data.='<option value="">Select Account Name</option>';
         foreach ($sql->result() as $row) {
             $data.='<option value="' . $row->id_bank_account . '">' . $row->name_bank . '-' . $row->account_number . '</option>';

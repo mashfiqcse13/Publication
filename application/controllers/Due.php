@@ -20,6 +20,7 @@ class Due extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Due_model');
         $this->load->model('Common');
+        $this->load->model('Bank_model');
     }
 
     function index() {
@@ -60,6 +61,7 @@ class Due extends CI_Controller {
     }
 
     function customer_payment() {
+        
         $data['customer_id'] = $this->input->get('customer');
         $data['date_range'] = $this->input->get('date_range');
 //        print_r($data);exit();
@@ -97,17 +99,43 @@ class Due extends CI_Controller {
             redirect('due/customer_due');
         }
         $amount = $this->input->post('amount');
-        if (!empty($amount) && $amount > 0) {
+        $bank_account_id=$this->input->post('id_account');
+        $bank_amount=$this->input->post('bank_payment');
+        $bank_check_no=$this->input->post("check_no");
+        
+        $btn=$this->input->post('btn_submit');
+        if(isset($btn)){
             $this->load->model('misc/Customer_payment');
-            $last_id_customer_due_payment_register = $this->Customer_payment->due_payment($customer_id, $amount);
-            $data['due_report_list'] = $this->Customer_payment->generate_due_report($last_id_customer_due_payment_register);
-
-//            redirect('due/make_payment/' . $customer_id);
-//            redirect("advance_payment/payment_log");
-//            die();
+        
+                $id_cash=0;
+                $id_bank=0;
+                
+                if (!empty($amount) && $amount > 0) {
+                    
+                    $id_cash = $this->Customer_payment->due_payment($customer_id, $amount);
+                    
+                }
+                 if (!empty($bank_amount) && $bank_amount > 0) {
+                     
+                    $this->Bank_model->bank_transection($bank_account_id, 1, $bank_amount, $bank_check_no, 1);
+                    
+                    $id_bank = $this->Customer_payment->due_payment($customer_id, $bank_amount, 3);
+                    
+                }
+                
+                if($id_bank!=0 || $id_cash!=0){
+                
+                         $data['due_report_list'] = $this->Customer_payment->generate_due_report($id_cash,$id_bank);
+                }else{
+                    $data['report_message'] = 'Please Select All Field Carefully';
+                }
+                
+                
+                
         }
 
         $this->load->model('misc/Customer_due');
+        $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
         $data['due_detail_table'] = $this->Customer_due->due_detail_table($customer_id);
         $data['customer_name'] = $this->db->select('name')->where('id_customer', $customer_id)->get('customer')->result();
         $data['customer_name'] = $data['customer_name'][0]->name;
