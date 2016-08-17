@@ -146,11 +146,21 @@ class Production_process extends CI_Controller {
         $this->Production_process_model->process_status_change($id_processes, $status_code);
         redirect('production_process/steps/' . $id_processes);
     }
-    
-    
-    function production_report(){
-        $data['get_all_production_process'] = $this->Production_process_model->production_report();
-        
+
+    function production_report() {
+        $id_processes = $this->input->get('id_processes');
+        $from_id_vendor = $this->input->get('from_id_vendor');
+        $id_item = $this->input->get('id_item');
+        $to_id_vendor = $this->input->get('to_id_vendor');
+        $data['date_range'] = $this->input->get('date_range');
+        $btn = $this->input->get('btn');
+        if (isset($btn)) {
+            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes,$from_id_vendor,$id_item,$to_id_vendor,$data['date_range']);
+//            print_r($data);exit();
+        } else {
+            $data['get_all_production_process'] = $this->Production_process_model->get_process_details_for_report();
+        }
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Process Reports';
