@@ -117,7 +117,7 @@ class Income extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('income_name');
         $crud->display_as('name_expense','Name Income');
-        $crud->display_as('status_name_expense','Status Name Expense');
+        $crud->display_as('status_name_expense','Status Name Income');
         
          $crud->callback_add_field('status_name_expense', function () {
         return '<input type="radio" value="1" name="status_name_expense" checked> Yes '
