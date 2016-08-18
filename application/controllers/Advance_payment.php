@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Description of Advance_payment
  *
- * @author MD. Mashfiq
+ * @author MD. Mashfiq 
  */
 class Advance_payment extends CI_Controller {
 
@@ -36,7 +36,7 @@ class Advance_payment extends CI_Controller {
         if(isset($btn)){
 //       echo '<pre>';
 //       print_r($_POST);
-          if(!empty($amount) && !empty($bank_account_id)){
+          if(empty($amount) && empty($bank_account_id)){
                  $data['report_message']= '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
           }else{
               if (!empty($id_customer) && !empty($amount)) {
