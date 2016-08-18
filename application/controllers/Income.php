@@ -46,6 +46,8 @@ class Income extends CI_Controller {
         
         $crud->order_by('id_income','desc');
         
+        $crud->order_by('id_income','desc');
+        
         $crud->callback_before_insert(array($this, 'cash_add'));
         $crud->callback_before_delete(array($this, 'cash_delete'));
         //$crud->callback_before_update(array($this, 'cash_update'));
