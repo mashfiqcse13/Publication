@@ -22,7 +22,8 @@
         'total_due': 0,
         'item_selection': '',
         'number_of_packet': 0,
-        'bill_for_packeting': 0
+        'bill_for_packeting': 0,
+        'slip_expense_amount': 0
     };
     var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
 </script>
@@ -108,19 +109,6 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Number of packet :</label>
-                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" value="" min="0" max="100">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Bill for packeting :</label>
-                                <div class="input-group">
-                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting"  value="" min="0">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
                             </div>
                             <div class="form-group col-lg-6">
@@ -193,6 +181,28 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="discount_percentage">Number of packet :</label>
+                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" placeholder="Number of packet" value="" min="0" max="100">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="discount_amount">Bill for packeting :</label>
+                                <div class="input-group">
+                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting" placeholder="Bill for packeting"  value="" min="0">
+                                    <span class="input-group-addon">Tk</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="slip_expense_amount">Slip expense amount:</label>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <div class="input-group">
+                                    <input type="number" name="slip_expense_amount" class="form-control" id="slip_expense_amount" placeholder="Slip expense amount"  value="" min="0">
+                                    <span class="input-group-addon">Tk</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -337,13 +347,14 @@
         };
         update_cart();
     });
+    $('[name="slip_expense_amount"]').change(function () {
+        data_to_post.slip_expense_amount = string_to_int($('[name="slip_expense_amount"]').val());
+    });
     $('[name="number_of_packet"]').change(function () {
         data_to_post.number_of_packet = string_to_int($('[name="number_of_packet"]').val());
-        console.log(data_to_post.number_of_packet);
     });
     $('[name="bill_for_packeting"]').change(function () {
         data_to_post.bill_for_packeting = string_to_int($('[name="bill_for_packeting"]').val());
-        console.log(data_to_post.bill_for_packeting);
     });
     $('[name="id_item"]').change(function () {
         $('#item_quantity').val("");

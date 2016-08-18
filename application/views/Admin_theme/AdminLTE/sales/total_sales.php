@@ -119,10 +119,13 @@
                                         <th>Customer Name</th>
                                         <th>Sub Total</th>
                                         <th>Total Amount</th>
-                                        <th>Discount Percentage</th>
                                         <th>Discount Amount</th>
+                                        <th>Cash Paid</th>
+                                        <th>Bank Paid</th>
                                         <th>Total Paid</th>
                                         <th>Total Due</th>
+                                        <th>Packeting Cost Paid</th>
+                                        <th>Slip Expense</th>
                                         <th>Issue Date</th>
                                     </tr>
                                 </thead>
@@ -131,28 +134,35 @@
                                     $sum_sub_total = 0;
                                     $sum_total_amount = 0;
                                     $sum_discount_amount = 0;
-                                    $sum_cash = 0;
-                                    $sum_bank_pay = 0;
+                                    $sum_cash_paid = 0;
+                                    $sum_bank_paid = 0;
                                     $sum_total_paid = 0;
                                     $sum_total_due = 0;
+                                    $sum_bill_for_packeting = 0;
+                                    $sum_slip_expense_amount = 0;
                                     foreach ($total_sales as $sales) {
                                         $sum_sub_total += $sales->sub_total;
                                         $sum_total_amount += $sales->total_amount;
                                         $sum_discount_amount += $sales->discount_amount;
-//                                        $sum_cash += $sales->cash;
-//                                        $sum_bank_pay += $sales->bank_pay;
+                                        $sum_cash_paid += $sales->cash_paid;
+                                        $sum_bank_paid += $sales->bank_paid;
                                         $sum_total_paid += $sales->total_paid;
                                         $sum_total_due += $sales->total_due;
+                                        $sum_bill_for_packeting += $sales->bill_for_packeting;
+                                        $sum_slip_expense_amount += $sales->slip_expense_amount;
                                         ?>
                                         <tr>
                                             <td><?php echo $sales->id_total_sales; ?></td>
                                             <td><?php echo $sales->name; ?></td>
                                             <td><?php echo $sales->sub_total; ?></td>
                                             <td><?php echo $sales->total_amount; ?></td>
-                                            <td><?php echo $sales->discount_percentage; ?></td>
                                             <td><?php echo $sales->discount_amount; ?></td>
+                                            <td><?php echo $sales->cash_paid; ?></td>
+                                            <td><?php echo $sales->bank_paid; ?></td>
                                             <td><?php echo $sales->total_paid; ?></td>
                                             <td><?php echo $sales->total_due; ?></td>
+                                            <td><?php echo $sales->bill_for_packeting; ?></td>
+                                            <td><?php echo $sales->slip_expense_amount; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
                                         </tr>
                                         <?php
@@ -160,14 +170,16 @@
                                     ?>
 
                                     <tr style="font-weight: bold">
-                                        <td>Total :</td>
-                                        <td></td>
+                                        <td colspan="2">Total :</td>
                                         <td><?php echo $sum_sub_total; ?></td>
                                         <td><?php echo $sum_total_amount; ?></td>
-                                        <td></td>
                                         <td><?php echo $sum_discount_amount; ?></td>
+                                        <td><?php echo $sum_cash_paid; ?></td>
+                                        <td><?php echo $sum_bank_paid; ?></td>
                                         <td><?php echo $sum_total_paid; ?></td>
                                         <td><?php echo $sum_total_due; ?></td>
+                                        <td><?php echo $sum_bill_for_packeting; ?></td>
+                                        <td><?php echo $sum_slip_expense_amount; ?></td>
                                         <td></td>
 
 
