@@ -98,13 +98,23 @@ class Due extends CI_Controller {
         if (!$customer_id) {
             redirect('due/customer_due');
         }
+         $this->load->model('misc/Customer_due');
+        $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
+        
         $amount = $this->input->post('amount');
         $bank_account_id=$this->input->post('id_account');
         $bank_amount=$this->input->post('bank_payment');
         $bank_check_no=$this->input->post("check_no");
         
+        $total_amount=$amount+$bank_amount;
+        
         $btn=$this->input->post('btn_submit');
         if(isset($btn)){
+            
+            if($total_amount > $data['customer_total_due']){
+                $data['report_message'] = '<p class="alert alert-danger">Customer Due is lase then Total Amoutn(Bank+ Cash)</p>'; 
+            }else{
+            
             $this->load->model('misc/Customer_payment');
         
                 $id_cash=0;
@@ -115,7 +125,7 @@ class Due extends CI_Controller {
                     $id_cash = $this->Customer_payment->due_payment($customer_id, $amount);
                     
                 }
-                 if (!empty($bank_amount) && $bank_amount > 0) {
+                 if (!empty($bank_amount) && $bank_amount > 0 && !empty($bank_check_no)) {
                      
                     $this->Bank_model->bank_transection($bank_account_id, 1, $bank_amount, $bank_check_no, 1);
                     
@@ -127,20 +137,21 @@ class Due extends CI_Controller {
                 
                          $data['due_report_list'] = $this->Customer_payment->generate_due_report($id_cash,$id_bank);
                 }else{
-                    $data['report_message'] = 'Please Select All Field Carefully';
+                    $data['report_message'] = '<p class="alert alert-danger">Please Pay Using Cash or Bank otpion Carefully</p>';
                 }
+            }
                 
                 
                 
         }
 
-        $this->load->model('misc/Customer_due');
+       
         $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
         $data['due_detail_table'] = $this->Customer_due->due_detail_table($customer_id);
         $data['customer_name'] = $this->db->select('name')->where('id_customer', $customer_id)->get('customer')->result();
         $data['customer_name'] = $data['customer_name'][0]->name;
         $data['customer_code'] = $customer_id;
-        $data['customer_total_due'] = $this->Customer_due->current_total_due($customer_id);
+        
 
 //        if ($data['customer_total_due'] < 1) {
 //            redirect('due');
