@@ -16,8 +16,8 @@
             
             <li class="header">Stationary Stock</li>
             
-            <li><?php echo anchor('stationary_stock/stationary_stock_register/', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock Register</span>'); ?></li>           
-            <li><?php echo anchor('stationary_stock', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock</span>'); ?></li>           
+            <li><?php echo anchor('stationary_stock/', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock Register</span>'); ?></li>           
+            <li><?php echo anchor('stationary_stock/stationary_stock', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock</span>'); ?></li>           
                 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
            
