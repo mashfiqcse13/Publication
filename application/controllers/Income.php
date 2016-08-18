@@ -46,6 +46,8 @@ class Income extends CI_Controller {
             
         });
         
+        $crud->order_by('id_income','desc');
+        
         $crud->callback_before_insert(array($this, 'cash_add'));
         $crud->callback_before_delete(array($this, 'cash_delete'));
         //$crud->callback_before_update(array($this, 'cash_update'));
@@ -114,7 +116,7 @@ class Income extends CI_Controller {
     function income_name() {
         $crud = new grocery_CRUD();
         $crud->set_table('income_name');
-        $crud->display_as('name_expense','Name Expense');
+        $crud->display_as('name_expense','Name Income');
         $crud->display_as('status_name_expense','Status Name Expense');
         
          $crud->callback_add_field('status_name_expense', function () {
@@ -122,7 +124,7 @@ class Income extends CI_Controller {
             . '<input type="radio" value="2" name="status_name_expense"> No'
             .  '<style>div#status_name_expense_field_box {display: none;}</style>'  ;
         });
-    
+        $crud->order_by('id_name_income','desc');
         $crud->callback_column('status_name_expense',array($this,'_yes_no_for_income_name'));
         $output = $crud->render();
         $data['glosary'] = $output;

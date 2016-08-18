@@ -22,16 +22,42 @@ class Advance_payment extends CI_Controller {
         $this->load->model('Advance_payment_model');
         //$this->load->library('session');
         $this->load->library("pagination");
+        $this->load->model('Bank_model'); 
     }
 
     function index() {
         $id_customer = $this->input->post('id_customer');
         $amount = $this->input->post('amount');
-//        print_r($amount);exit();
-        if (!empty($id_customer) && !empty($amount)) {
-            $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
-            redirect("advance_payment/add_advance_payment/" . $id);
-            die();
+        $bank_account_id=$this->input->post('id_account');
+        $bank_amount=$this->input->post('bank_payment');
+        $bank_check_no=$this->input->post("check_no");
+        $btn=$this->input->post('btn_submit');
+        
+        if(isset($btn)){
+//       echo '<pre>';
+//       print_r($_POST);
+          if(!empty($amount) && !empty($bank_account_id)){
+                 $data['report_message']= '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
+          }else{
+              if (!empty($id_customer) && !empty($amount)) {
+                    $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
+                    
+                }
+                 if (!empty($id_customer) && !empty($bank_account_id) && !empty($bank_amount) && $bank_amount > 0 && !empty($bank_check_no)) {
+                      $this->Bank_model->bank_transection($bank_account_id, 1, $bank_amount, $bank_check_no, 1);
+                      $id = $this->Advance_payment_model->payment_add($id_customer, $bank_amount, 3) or die('failed');
+                     
+                 }else{
+                     $data['report_message']= '<p class="alert alert-danger">Please Select All field for Bank Payment.</p>';
+                 }
+                 
+                 if(isset($id)){
+                     redirect("advance_payment/add_advance_payment/" . $id);
+                    die();
+                 }
+             
+          }
+                
         }
 
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
@@ -46,7 +72,7 @@ class Advance_payment extends CI_Controller {
                 ->unset_add();
         $output = $crud->render();
         $data['glosary'] = $output;
-
+         $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Advance Payment';
