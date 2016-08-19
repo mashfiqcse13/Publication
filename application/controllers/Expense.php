@@ -54,14 +54,14 @@ class Expense extends CI_Controller {
        
         $crud->unset_edit();
         //$crud->unset_delete();
-           // $crud->callback_after_insert(array($this, 'cash_delete'));
-           // $crud->callback_before_delete(array($this,'cash_add'));
-            
-            
-          
-        $crud->order_by('id_expense','desc');
-        
-        
+        // $crud->callback_after_insert(array($this, 'cash_delete'));
+        // $crud->callback_before_delete(array($this,'cash_add'));
+
+
+
+        $crud->order_by('id_name_expense', 'desc');
+
+
         $this->load->model('expense_model');
         $date_range = $this->input->post('date_range');
         $data['date_range'] = $date_range;
@@ -144,9 +144,13 @@ class Expense extends CI_Controller {
         $crud->set_table('expense_name');
         $crud->display_as('id_category_expense','Expense Category');
         $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
-        $crud->display_as('is_stock_item','Stock Item');
-        $crud->display_as('name_expense','Name Expense');
-        
+        $crud->display_as('is_stock_item', 'Stock Item');
+        $crud->display_as('name_expense', 'Name Expense');
+
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 4) {
+            $crud->unset_delete()->unset_edit();
+        }
+
         $crud->field_type('status_name_expense', 'hidden');
         
         $crud->callback_add_field('is_stock_item', function () {
@@ -196,7 +200,11 @@ class Expense extends CI_Controller {
         
         $output = $crud->render();
         $data['glosary'] = $output;
-        
+
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 4) {
+            $crud->unset_delete()->unset_edit();
+        }
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Expense Category';
