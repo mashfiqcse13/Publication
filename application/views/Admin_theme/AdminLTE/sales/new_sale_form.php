@@ -174,15 +174,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="form-group col-lg-6" id="total_paid">
-                                <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Number of packet :</label>
@@ -195,6 +186,18 @@
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-6" id="total_paid">
+                                <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="slip_expense_amount">Slip expense amount:</label>
                             </div>
@@ -355,6 +358,7 @@
     });
     $('[name="bill_for_packeting"]').change(function () {
         data_to_post.bill_for_packeting = string_to_int($('[name="bill_for_packeting"]').val());
+        update_total_amount_and_total_due();
     });
     $('[name="id_item"]').change(function () {
         $('#item_quantity').val("");
@@ -427,7 +431,7 @@
         data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
         $('#total_due').html(data_to_post.total_due);
-        $('#total_paid > span').html(data_to_post.total_paid);
+        $('#total_paid > span').html(data_to_post.total_paid + data_to_post.bill_for_packeting);
     }
 
     $('.submit_btn').click(function () {

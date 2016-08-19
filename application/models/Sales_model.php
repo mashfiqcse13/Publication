@@ -253,7 +253,7 @@ class Sales_model extends CI_Model {
         
         
         $this->table->add_row(array(
-            'data' => '<strong>কথায় : </strong>',
+            'data' => '<strong>কথায় : </strong><span style="font-size:12px">'.$this->Common->convert_number($total_sales_details->total_amount).'</span>',
             'colspan' => 2
                 ), array(
             'data' => 'সর্বমোট : ',
@@ -305,11 +305,11 @@ class Sales_model extends CI_Model {
         
         $this->table->add_row(array(
             'data' => 'সর্বশেষ বাকি : '.$this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)),
-            'class' => '',
+            'class' => 'text-bold',
             'colspan' => 2
                 ), array(
             'data' => 'বাকি : ',
-            'class' => 'left_separator z-index-top',
+            'class' => 'left_separator z-index-top text-bold',
             'colspan' => 2
                 ), $current_due );
         
@@ -320,7 +320,7 @@ class Sales_model extends CI_Model {
                 ));
         
         $this->table->add_row(array(
-            'data' => 'প্যাকেট খরচ : ',
+            'data' => 'প্যাকেটিং খরচ : ',
             'class' => '',
             'colspan' => 2
                 ), array(
@@ -340,12 +340,12 @@ class Sales_model extends CI_Model {
                 ));
         
         $this->table->add_row(array(
-            'data' => 'নগদ গ্রহন : ',
-            'class' => '',
+            'data' => 'সর্বমোট  গ্রহন ( প্যাকেটিং সহ) : ',
+            'class' => 'text-bold',
             'colspan' => 2
                 ), array(
             'data' => $total_sales_details->bill_for_packeting +  $bank_pay + $cash_pay + $current_due_amount,
-            'class' => 'text-right taka_formate',
+            'class' => 'text-right taka_formate text-bold',
             'colspan' => 3
                 ));
         

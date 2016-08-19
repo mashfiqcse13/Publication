@@ -150,8 +150,8 @@
                                         <?php foreach($get_book_list as $row) {?>
                                         <tr>
                                             <td><?=$row['item_name']?><input type="hidden" name="id_item[]" class="form-control"  value="<?=$row['id_item']?>"></td>
-                                            <td><?=$row['regular_price']?></td>
-                                            <td><?=$row['sale_price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['sale_price']?>"></td>
+                                            <td class="text-right faka_formate"><?=$row['regular_price']?></td>
+                                            <td class="text-right faka_formate"><?=$row['sale_price']?><input type="hidden" name="price[]" class="form-control"  value="<?=$row['sale_price']?>"></td>
                                             <td>
                                                 <input type="number" class="form-control" name="quantity[]" min="0" max="<?=$row['quantity']?>"  placeholder="<?=$row['quantity']?>" required>
                                                 <input type="hidden" name="id_total_sales[]" class="form-control"  value="<?=$row['id_total_sales']?>">                                                

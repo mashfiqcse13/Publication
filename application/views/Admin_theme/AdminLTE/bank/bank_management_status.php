@@ -112,7 +112,7 @@
                                    <td><?php echo $row->transaction_date; ?></td>
                                    <td><?php echo $row->name_bank; ?></td>
                                    <td><?php echo $row->account_number; ?></td>
-                                   <td style="text-align:right"><?php echo $row->amount_transaction; ?></td>
+                                   <td class="text-right faka_formate"><?php echo $row->amount_transaction; ?></td>
                                    <td><?php echo $row->name_trnsaction_type; ?></td>
                                    <td><?php echo $row->username; ?></td>
                                    <td><?php echo $row->approved_by; ?></td>

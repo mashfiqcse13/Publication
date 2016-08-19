@@ -20,7 +20,7 @@
     }
     #table_custom .table td.left_separator {
         border-left: 2px solid;
-        font-weight: bold;
+        font-weight: normal;
         text-align: right;
     }
 </style>

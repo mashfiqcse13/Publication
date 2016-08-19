@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * and open the template in the editor.
  */
 
-/**
+/** 
  * Description of Accounting
  *
  * @author MD. Mashfiq

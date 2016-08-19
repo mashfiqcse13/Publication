@@ -111,7 +111,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $due_payment->name; ?></td>
-                                            <td><?php echo $due_payment->paid_amount; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $due_payment->paid_amount; ?></td>
                                             <td><?php echo $due_payment->id_total_sales; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($due_payment->payment_date)); ?></td>
                                         </tr>
@@ -122,7 +122,7 @@
                                     ?>
                                         <tr>
                                             <td>Total: </td>
-                                            <td><?php echo $total_payment;?></td>
+                                            <td class="text-right faka_formate"><?php echo $total_payment;?></td>
                                             <td></td>
                                             <td></td>
                                         </tr>

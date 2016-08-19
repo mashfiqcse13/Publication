@@ -157,7 +157,7 @@
         <?php } elseif(isset($report_message)){
             echo $report_message;
         }
-?>
+?> 
         
     </section>
                        

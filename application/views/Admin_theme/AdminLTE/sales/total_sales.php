@@ -154,15 +154,15 @@
                                         <tr>
                                             <td><?php echo $sales->id_total_sales; ?></td>
                                             <td><?php echo $sales->name; ?></td>
-                                            <td><?php echo $sales->sub_total; ?></td>
-                                            <td><?php echo $sales->total_amount; ?></td>
-                                            <td><?php echo $sales->discount_amount; ?></td>
-                                            <td><?php echo $sales->cash_paid; ?></td>
-                                            <td><?php echo $sales->bank_paid; ?></td>
-                                            <td><?php echo $sales->total_paid; ?></td>
-                                            <td><?php echo $sales->total_due; ?></td>
-                                            <td><?php echo $sales->bill_for_packeting; ?></td>
-                                            <td><?php echo $sales->slip_expense_amount; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->sub_total; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->total_amount; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->discount_amount; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->cash_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->bank_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->total_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->total_due; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->slip_expense_amount; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
                                         </tr>
                                         <?php
@@ -171,15 +171,15 @@
 
                                     <tr style="font-weight: bold">
                                         <td colspan="2">Total :</td>
-                                        <td><?php echo $sum_sub_total; ?></td>
-                                        <td><?php echo $sum_total_amount; ?></td>
-                                        <td><?php echo $sum_discount_amount; ?></td>
-                                        <td><?php echo $sum_cash_paid; ?></td>
-                                        <td><?php echo $sum_bank_paid; ?></td>
-                                        <td><?php echo $sum_total_paid; ?></td>
-                                        <td><?php echo $sum_total_due; ?></td>
-                                        <td><?php echo $sum_bill_for_packeting; ?></td>
-                                        <td><?php echo $sum_slip_expense_amount; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_sub_total; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_total_amount; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_discount_amount; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_cash_paid; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_bank_paid; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_total_paid; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_total_due; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_slip_expense_amount; ?></td>
                                         <td></td>
 
 

@@ -6,7 +6,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper only_print">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header"> 
         <h1>
             <?= $Title ?>
             <small> <?= $Title ?></small>
@@ -60,9 +60,7 @@
                     <?php
                     if (!isset($date_range)) {
                         ?>
-                        <div class="box-header">
-                            <h3 class="box-title">Income</h3>
-                        </div><!-- /.box-header -->
+                        
 
                         <div class="box-body">
                             <?php

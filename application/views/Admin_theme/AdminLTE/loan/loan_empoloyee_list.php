@@ -72,7 +72,7 @@
                                         <tr>
                                             <td><?php echo $loan->name_employee; ?></td>
                                             <td><?php echo $loan->title_loan; ?></td>
-                                            <td><?php echo $loan->amount_loan; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $loan->amount_loan; ?></td>
                                             <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
                                             <td><?php echo $loan->status; ?></td>
                                         </tr>
@@ -127,7 +127,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $loan->name_employee; ?></td>
-                                            <td><?php echo $loan->amount_loan; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $loan->amount_loan; ?></td>
                                             <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
                                             <td><?php echo $loan->status; ?></td>
                                         </tr>
