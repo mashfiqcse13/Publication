@@ -169,6 +169,9 @@ $.fn.digits = function(){
     })
 }
 $('.taka_formate').digits(); 
+
+
+
 </script>
 
 <script>
@@ -178,6 +181,13 @@ $('.taka_formate').digits();
             });
    
 </script>
+<script>
+    
+       // $('td div').digits();        
+    
+</script>
 
 </body>
 </html>
+
+    
