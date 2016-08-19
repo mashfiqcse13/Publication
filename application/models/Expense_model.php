@@ -1,16 +1,27 @@
 <?php
 
-
 class Expense_model extends CI_Model {
 
-        function expense_report($date){
-        $date=$this->dateformatter($date);
-        
-        $range_query=$this->db->query("SELECT name_expense,amount_expense,date_expense,description_expense FROM expense
-LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
-WHERE DATE(date_expense) BETWEEN $date");
-        return $range_query->result();
-        
+    function expense_report($date) {
+        if ($date != '') {
+            $date = $this->dateformatter($date);
+        }
+
+        $this->db->select('name_expense,amount_expense,date_expense,description_expense');
+        $this->db->from('expense');
+        $this->db->join('expense_name', 'expense_name.id_name_expense=expense.id_name_expense', 'left');
+        $this->db->order_by('expense.id_expense', 'desc');
+        if ($date != '') {
+            $condition = "DATE(date_expense) BETWEEN $date";
+            $this->db->where($condition);
+        }
+
+        return $results = $this->db->get()->result();
+
+//        $range_query = $this->db->query("SELECT name_expense,amount_expense,date_expense,description_expense FROM expense
+//LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
+//WHERE DATE(date_expense) BETWEEN $date");
+//        return $range_query->result();
 //        $range_query=$this->db->query("SELECT name_expense,CONCAT('TK ',amount_expense),DATE(date_expense),description_expense FROM expense
 //LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
 //WHERE date_expense BETWEEN $date");
@@ -44,19 +55,40 @@ WHERE DATE(date_expense) BETWEEN $date");
 //                . '<style>td:nth-child(2) {    text-align: right;}</style>');
 //        return $this->table->generate($range_query);
 //        
-        
-    }
-    
-    function expense_sort_report($date){
-        $date=$this->dateformatter($date);
-        
-        $range_query=$this->db->query("SELECT expense_name.id_name_expense as id_name,expense.id_name_expense as name_id, name_expense,amount_expense,date_expense,description_expense FROM expense
-LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
-WHERE DATE(date_expense) BETWEEN $date");
-        return $range_query->result();
     }
 
-    
+    function expense_sort_report($date) {
+        if ($date != '') {
+            $date = $this->dateformatter($date);
+        }
+
+
+        $this->db->select('expense.id_name_expense ,expense.id_expense, name_expense,amount_expense,date_expense,description_expense');
+        $this->db->from('expense');
+        $this->db->join('expense_name', 'expense_name.id_name_expense=expense.id_name_expense', 'left');
+        $this->db->order_by('expense.id_expense', 'desc');
+        if ($date != '') {
+            $condition = "DATE(date_expense) BETWEEN $date";
+            $this->db->where($condition);
+        }
+        $results = $this->db->get()->result();
+//        $range_query=$this->db->query("SELECT expense_name.id_name_expense as id_name,expense.id_name_expense as name_id, name_expense,amount_expense,date_expense,description_expense FROM expense
+//LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
+//WHERE DATE(date_expense) BETWEEN $date And expense_name.id_name_expense = expense.id_name_expense");
+//        $result =  $range_query->result();
+        $data = array();
+        foreach ($results as $result) {
+            $report = $this->db->query('SELECT *,SUM(amount_expense) AS amount_expense,name_expense FROM expense LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense WHERE expense.id_name_expense =' . $result->id_name_expense)->result();
+            $data[$result->id_name_expense] = $report;
+        }
+//        echo '<pre>';print_r($results);exit();
+        return $data;
+    }
+
+    function get_max_expense_name() {
+        $this->db->select_max('id_name_expense');
+        return $query = $this->db->get('expense_name')->row();
+    }
 
     function dateformatter($range_string, $formate = 'Mysql') {
         $date = explode(' - ', $range_string);
@@ -69,21 +101,10 @@ WHERE DATE(date_expense) BETWEEN $date");
             return $date;
     }
 
-       function datereport($date){
-        $date= str_replace("'", ' ', $date);
-        $date=  str_replace('and', 'to', $date);
+    function datereport($date) {
+        $date = str_replace("'", ' ', $date);
+        $date = str_replace('and', 'to', $date);
         return $date;
     }
 
-    function expense_register($id_name_expense, $amount_expense, $description_expense = "") {
-        $data_to_insert_on_expense = array(
-            'id_name_expense' => $id_name_expense,
-            'amount_expense' => $amount_expense,
-            'date_expense' => date('Y-m-d h:i:u'),
-            'description_expense' => $description_expense
-        );
-        $this->db->insert('expense', $data_to_insert_on_expense);
-    }
 }
-
-
