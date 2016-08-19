@@ -107,13 +107,4 @@ class Expense_model extends CI_Model {
         return $date;
     }
 
-    function expense_register($id_name_expense, $amount_expense, $description_expense = "") {
-        $data_to_insert_on_expense = array(
-            'id_name_expense' => $id_name_expense,
-            'amount_expense' => $amount_expense,
-            'date_expense' => date('Y-m-d h:i:u'),
-            'description_expense' => $description_expense
-        );
-        $this->db->insert('expense', $data_to_insert_on_expense);
-    }
 }
