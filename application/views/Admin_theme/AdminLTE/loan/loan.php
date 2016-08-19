@@ -64,12 +64,12 @@
                                     <label class="col-md-3">Payment Status</label>
                                     <div class="col-md-7">
                                         <select class="form-control select2"style="width:100%;"  name="payment_status">
-                                            <option>Select Payment</option>
+                                            <option value="">Select Payment</option>
                                             <option value="paid">Paid</option>
                                             <option value="not_paid">Not paid</option>
                                         </select>
                                     </div>
-                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    <button type="submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
 
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                     <label class="col-md-3">Employee</label>
                                     <div class="col-md-7">
                                         <select class="form-control select2"style="width:100%;"  name="employee">
-                                            <option>Select Employee</option>
+                                            <option value="">Select Employee</option>
                                             <?php
                                             foreach ($employees as $employee) {
                                                 ?>
@@ -99,7 +99,7 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    <button type="submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
 

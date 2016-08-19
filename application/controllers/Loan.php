@@ -80,11 +80,10 @@ class Loan extends CI_Controller {
         } else if ($employee != null) {
             $data['loans_search'] = $this->Loan_model->loan_info_by_employee($employee);
         } else if ($from != "1970-01-01") {
-
             $data['loans_search'] = $this->Loan_model->loan_info_by_date($from, $to);
 ////            print_r($data);
         } else {
-            $data['loans'] = $this->Loan_model->employee_loan();
+            $data['loans_search'] = $this->Loan_model->employee_loan();
         }
 
         $data['date_range'] = $range;
@@ -139,21 +138,23 @@ class Loan extends CI_Controller {
 
     function loan_employee_list() {
         $range = $this->input->get('date_range');
+//       
         $part = explode("-", $range . '-');
 //        print_r($part);
         $from = date('Y-m-d', strtotime($part[0]));
+//         print_r($from);exit();
 //        echo $from;
         $to = date('Y-m-d', strtotime($part[1]));
         $date = array(
             'date1' => $from,
             'date2' => $to
         );
-        if ($from == "1970-01-01") {
+        if ($from == "1970-01-01" || empty($from)) {
             $data['employees_loan'] = $this->Loan_model->employee_loan();
 
 //            echo '<pre>'; print_r($data);
         } else {
-            $data['employees_loan_date'] = $this->Loan_model->employee_loan_by_range($date);
+            $data['employees_loan'] = $this->Loan_model->employee_loan_by_range($date);
 //            echo '<pre>'; print_r($_POST);
         }
         $data['date_range'] = $range;

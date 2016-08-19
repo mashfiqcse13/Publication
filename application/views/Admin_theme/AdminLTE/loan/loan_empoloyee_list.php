@@ -96,6 +96,7 @@
                 </div>
                 <?php
             }if (isset($date_range)) {
+                
                 ?>
                 <div class="col-md-12">
                     <div class="box">
@@ -123,7 +124,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($employees_loan_date as $loan) {
+                                    foreach ($employees_loan as $loan) {
                                         ?>
                                         <tr>
                                             <td><?php echo $loan->name_employee; ?></td>

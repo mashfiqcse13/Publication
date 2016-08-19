@@ -58,7 +58,7 @@ class Stationary_stock extends CI_Controller {
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Stationary Stock';
+        $data['Title'] = 'Stationary Stock Register';
         
         $this->load->view($this->config->item('ADMIN_THEME').'stationary/stationary_stock_register', $data);
     }
