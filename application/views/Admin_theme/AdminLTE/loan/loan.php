@@ -265,25 +265,25 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Title Loan:</label>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Title Loan" class="form-control" name="title_loan"/>
+                                            <input type="text" placeholder="Title Loan" class="form-control" name="title_loan" required=""/>
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Amount Loan:</label>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Amount Loan" class="form-control" name="amount_loan"/>
+                                            <input type="text" placeholder="Amount Loan" class="form-control" name="amount_loan" required=""/>
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Installment Amount Loan:</label>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Installment Amount Loan" class="form-control" name="installment_amount_loan"/>
+                                            <input type="text" placeholder="Installment Amount Loan" class="form-control" name="installment_amount_loan" required=""/>
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Dead Line Loan:</label>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Dead Amount Loan" class="form-control" id="date" name="dead_line_loan"/>
+                                            <input type="text" placeholder="Dead Amount Loan" class="form-control" id="date" name="dead_line_loan" required=""/>
                                         </div>
                                     </div>  
                                     <button type="submit" name="btn_submit" value="true" class="btn btn-success pull-right">Save</button>

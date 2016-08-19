@@ -156,7 +156,10 @@ class Salary extends CI_Controller {
         $loan_payment = $this->input->post('paid_amount_loan_payment');
         $advance_amount = $this->input->post('amount_paid_salary_advance');
 
-
+        
+        $total = 0;
+        
+        
         $id = $this->input->post('id_employee');
 //         echo '<pre>'; print_r($status);exit();
         for ($i = 0; $i <= $count; $i++) {
@@ -169,6 +172,7 @@ class Salary extends CI_Controller {
                         $data['date_salary_payment'] = date('Y-m-d H:i:s', now());
                         $data['status_salary_payment'] = 2;
                         $amount_salary = $salary[$j];
+                        $total += $amount_salary;
                         $payment_id = $this->Salary_model->deduction_update('salary_payment', 'id_employee', $data, $id[$j], $amount_salary, 'amount_salary_payment', 'id_salary_payment');
 //                        $this->cash_model->add_revert($amount_salary);
 //        bonus update
@@ -176,7 +180,7 @@ class Salary extends CI_Controller {
                         $bonus_id = $this->Salary_model->update_info('salary_bonus', 'id_salary_payment', $bonus, $payment_id->id_salary_payment, 'id_salary_bonus');
 //        loan payment insert
 //                     echo '<pre>'; print_r($loan_payment[$j]);exit();
-
+                        
 
                         if (!empty($loan_payment[$j])) {
                             $loan['id_loan'] = $loan_id[$j];
@@ -210,6 +214,13 @@ class Salary extends CI_Controller {
                 }
             }
         }
+        
+        $expense['id_name_expense'] = 2;
+        $expense['amount_expense'] = $total;
+        $expense['date_expense'] = date('Y-m-d H:i:s');
+        $expense['description_expense'] = 'Employee Salary ';
+        
+        $this->db->insert('expense',$expense);
 
         redirect('Salary/salary_payment');
     }
@@ -287,6 +298,7 @@ class Salary extends CI_Controller {
                 ->set_subject('Salary Advanced')
                 ->display_as("id_employee", 'Employee Name')
                 ->display_as("status_salary_advance", 'Status of Salary')
+                ->display_as("amount_paid_salary_advance", 'Amount Deducted From Salary')
                 ->set_relation('id_employee', 'employee', "name_employee")
                 ->callback_edit_field('date_given_salary_advance', function () {
                     return '<input id="field-date_given_salary_advance" name="date_given_salary_advance" type="text" value="' . date('Y-m-d h:i:u', now()) . '" >'
@@ -304,7 +316,7 @@ class Salary extends CI_Controller {
         $output = $crud->render();
         $data['glosary'] = $output;
 
-        $data['employee_name'] = $this->Salary_model->get_employee_dropdown();
+        $data['employee_name'] = $this->Salary_model->select_all('employee');
         $btn = $this->input->post('btn_submit');
         if (isset($btn)) {
             $this->Salary_model->save_advance($_POST);
@@ -320,16 +332,12 @@ class Salary extends CI_Controller {
         $range = $this->input->get('date_range');
         $part = explode("-", $range . '-');
         $from = date('Y-m-d', strtotime($part[0]));
-        $to = date('Y-m-d', strtotime($part[1]));
+        $to = date('Y-m-d', strtotime($part[1] ));
 //        ---------------
 
-        if ($employee != null) {
-            $data['salaries_search'] = $this->Salary_model->salary_advance_by_employee_id($employee);
-        } else if ($from != "1970-01-01") {
-
-            $data['salaries_search'] = $this->Salary_model->Salary_advance_by_date($from, $to);
-////            print_r($data);
-        } else {
+        if ($employee != '' || $from != "1970-01-01") {
+            $data['salaries_search'] = $this->Salary_model->salary_advance_by_employee_id($employee,$from, $to);
+        }else {
             $data['salaries'] = $this->Salary_model->salary_advance_with_employee();
         }
 

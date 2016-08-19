@@ -28,7 +28,7 @@ class Stationary_stock extends CI_Controller {
     }
     
     function index(){
-        $this->stationary_stock_register();
+        $this->stationary_stock();
     }
     
     function stationary_stock_register(){

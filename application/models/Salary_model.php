@@ -32,11 +32,12 @@ class Salary_model extends CI_Model {
         $items = $this->db->get('employee')->result();
 
         $data = array();
-        $data[''] = 'Select Employee name';
+        $data['blank'] = 'Select Employee name';
         foreach ($items as $item) {
             $data[$item->id_employee] = $item->name_employee;
         }
-        return form_dropdown('id_employee', $data, '', ' class="select2" ');
+        $js = 'id="shirts"';
+        return form_dropdown('id_employee', $data, 'required', ' class="select2" required');
     }
 
     function select_salary_payment_by_salary_id($id) {
@@ -82,8 +83,8 @@ class Salary_model extends CI_Model {
     function select_employee_salary_advance() {
         $this->db->select('*');
         $this->db->from('employee');
-        $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
-        $this->db->where('status_salary_advance', 1);
+//        $this->db->join('salary_advance', 'employee.id_employee = salary_advance.id_employee', 'left');
+//        $this->db->where('status_salary_advance', 1);
         $query = $this->db->get();
         return $query->result();
     }
@@ -236,8 +237,17 @@ class Salary_model extends CI_Model {
         $data['id_employee'] = $post_array['id_employee'];
         $data['status_salary_advance'] = $post_array['status_salary_advance'];
         $data['date_given_salary_advance'] = date('Y-m-d H:i:s');
+
+        $expense['id_name_expense'] = 3;
+        $expense['amount_expense'] = $amount;
+        $expense['date_expense'] = date('Y-m-d H:i:s');
+        $expense['description_expense'] = 'Employee Salary Advance';
+
+        $this->db->insert('expense', $expense);
+
         $sql = 'SELECT * FROM `salary_advance` WHERE `id_employee`= ' . $data['id_employee'] . ' AND MONTH(date_given_salary_advance) = ' . $current_month . ' AND YEAR(date_given_salary_advance) = ' . $current_year;
         $result = $this->db->query($sql)->result();
+
         if (empty($result)) {
             $this->db->insert('salary_advance', $data);
             $this->advance_add($amount, $data['id_employee']);
@@ -252,24 +262,21 @@ class Salary_model extends CI_Model {
     }
 
 //    search employee
-    function salary_advance_by_employee_id($employee) {
+    function salary_advance_by_employee_id($employee,$from, $to) {
         $this->db->select('*');
         $this->db->from('salary_advance');
         $this->db->join('employee', 'employee.id_employee = salary_advance.id_employee', 'left');
-        $this->db->where('salary_advance.id_employee', $employee);
+        if(!empty($employee)) {
+            $this->db->where('salary_advance.id_employee', $employee);
+        }if($from != "1970-01-01"){            
+            $condition = "DATE(date_given_salary_advance) BETWEEN '$from' AND '$to'";
+            $this->db->where($condition);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function Salary_advance_by_date($from, $to) {
-        $this->db->select('*');
-        $this->db->from('salary_advance');
-        $this->db->join('employee', 'employee.id_employee = salary_advance.id_employee', 'left');
-        $this->db->where('date_given_salary_advance >=', $from);
-        $this->db->where('date_given_salary_advance <=', $to);
-        $query = $this->db->get();
-        return $query->result();
-    }
+    
 
     function select_all_paid_salary() {
         $sql = $this->db->query('SELECT *, SUM(`amount_salary_payment`) AS total FROM `salary_payment` LEFT JOIN `employee`
