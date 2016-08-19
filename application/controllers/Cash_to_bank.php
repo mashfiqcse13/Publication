@@ -32,6 +32,7 @@ class Cash_to_bank extends CI_Controller{
                 ->set_subject('Cash to Bank Transaction')
                 ->display_as('id_bank_account','Bank Account')
                 ->callback_column('id_bank_account',array($this,'bank_name'))
+                 ->order_by('id_cash_to_bank_register','desc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_read();

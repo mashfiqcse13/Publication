@@ -117,6 +117,14 @@ class Loan_model extends CI_Model {
         $data['installment_amount_loan'] = $post_array['installment_amount_loan'];
         $data['status'] = 'paid';
         $data['dead_line_loan'] = date('Y-m-d H:i:s',strtotime($post_array['dead_line_loan']));
+        
+        
+        $expense['id_name_expense'] = 1;
+        $expense['amount_expense'] = $post_array['amount_loan'];
+        $expense['date_expense'] = date('Y-m-d H:i:s');
+        $expense['description_expense'] = 'Employee Salary Loan';
+        
+        $this->db->insert('expense',$expense);
         $sql = 'SELECT * FROM `loan` WHERE `id_employee`= ' . $data['id_employee'] . ' AND MONTH(date_taken_loan) = ' . $current_month . ' AND YEAR(date_taken_loan) = ' . $current_year;
         $result = $this->db->query($sql)->result();
         if (empty($result)) {

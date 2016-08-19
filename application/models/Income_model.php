@@ -6,46 +6,18 @@ if (!defined('BASEPATH'))
 class Income_model extends CI_Model {
 
     function income_report($date) {
-        $date = $this->dateformatter($date);
-
-//        $range_query = $this->db->query("SELECT name_expense,CONCAT('TK ',amount_income),DATE(date_income),description_income FROM `income` 
-//LEFT JOIN income_name on income_name.id_name_income=income.id_name_income 
-//WHERE date_income BETWEEN $date");
+        if($date==''){
+            $con='';
+        }else{
+             $date = $this->dateformatter($date);
+             $con="WHERE DATE(date_income) BETWEEN $date";
+        }
+       
+  
         $range_query = $this->db->query("SELECT name_expense,amount_income,date_income,description_income FROM `income` 
-LEFT JOIN income_name on income_name.id_name_income=income.id_name_income 
-WHERE DATE(date_income) BETWEEN $date");
+LEFT JOIN income_name on income_name.id_name_income=income.id_name_income $con ");
         return $range_query->result();
-        $this->load->library('table');
-        $this->table->set_heading(array('Income Name', 'Ammount', 'Date', 'Description'));
-        $tmpl = array(
-            'table_open' => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
-            'heading_row_start' => '<tr>',
-            'heading_row_end' => '</tr>',
-            'heading_cell_start' => '<th class="text-center">',
-            'heading_cell_end' => '</th>',
-            'row_start' => '<tr>',
-            'row_end' => '</tr>',
-            'cell_start' => '<td>',
-            'cell_end' => '</td>',
-            'row_alt_start' => '<tr>',
-            'row_alt_end' => '</tr>',
-            'cell_alt_start' => '<td>',
-            'cell_alt_end' => '</td>',
-            'tfoot_open' => '<tfoot class="ui-widget-header ui-priority-secondary">',
-            'footer_row_start' => '<tr>',
-            'footer_row_end' => '</tr>',
-            'footer_cell_start' => '<th>',
-            'footer_cell_end' => '</th>',
-            'tfoot_close' => '</tfoot>',
-            'table_close' => '</table>'
-        );
         
-
-        $this->table->set_template($tmpl);
-        $this->table->set_caption('<h4><span class="pull-left">Date Range:' . $this->datereport($date) . '</span>'
-                . '<span class="pull-right">Report Date: ' . date('Y-m-d h:i') . '</span></h4>'
-                . '<style>td:nth-child(2) {    text-align: right;}</style>');
-        return $this->table->generate($range_query);
     }
 
     function add_income($id, $amount) {
@@ -75,5 +47,111 @@ WHERE DATE(date_income) BETWEEN $date");
         $date = str_replace('and', 'to', $date);
         return $date;
     }
+    
+    function sale_report($date){
+        //SELECT id_payment_method,sum(paid_amount) as due_payment FROM `customer_payment` WHERE `due_payment_status`=1 GROUP BY id_payment_method
+         if($date==''){
+            $con='1=1';
+        }else{
+             $date = $this->dateformatter($date);
+             $con=" DATE(payment_date) BETWEEN $date";
+        }
+        
+        $query = $this->db->select('id_payment_method,sum(paid_amount) as payment')
+                ->from('customer_payment')
+                ->where('due_payment_status IS NULL')
+                ->where(" $con ")
+                ->group_by('id_payment_method')
+                ->get()->result();
+        
+        foreach($query as $row){
+                    $sale[$row->id_payment_method]=$row->payment;
+                }
+                
+                if(!empty($sale[1])){
+                        $data['cash'] = $sale[1];
+                    }else{
+                        $data['cash'] = 0;
+                    }
+                     if(!empty($sale[3])){
+                        $data['bank'] = $sale[3];
+                    }else{
+                        $data['bank'] = 0;
+                    }
+                    
+                    $data['total'] = $data['cash'] + $data['bank'];
+                    
+        return $data;
+    }
+    
+     function customer_due_report($date){
+        //SELECT id_payment_method,sum(paid_amount) as due_payment FROM `customer_payment` WHERE `due_payment_status`=1 GROUP BY id_payment_method
+         if($date==''){
+            $con='1=1';
+        }else{
+             $date = $this->dateformatter($date);
+             $con=" DATE(payment_date) BETWEEN $date";
+        }
+        
+        $query = $this->db->select('id_payment_method,sum(paid_amount) as due_payment')
+                ->from('customer_payment')
+                ->where('due_payment_status','1')
+                ->where(" $con ")
+                ->group_by('id_payment_method')
+                ->get()->result();
+        
+        foreach($query as $row){
+                    $due[$row->id_payment_method]=$row->due_payment;
+                }
+                
+                if(!empty($due[1])){
+                        $data['due_cash'] = $due[1];
+                    }else{
+                        $data['due_cash'] = 0;
+                    }
+                     if(!empty($due[3])){
+                        $data['due_bank'] = $due[3];
+                    }else{
+                        $data['due_bank'] = 0;
+                    }
+                    
+                    $data['due_total'] = $data['due_cash'] + $data['due_bank'];
+                    
+        return $data;
+    }
+    
+     function old_report($date){ 
+        //SELECT id_payment_method,sum(paid_amount) as due_payment FROM `customer_payment` WHERE `due_payment_status`=1 GROUP BY id_payment_method
+         if($date==''){
+            $con='1=1';
+        }else{
+             $date = $this->dateformatter($date);
+             $con=" DATE(date_transfer) BETWEEN $date";
+        }
+        
+        $query = $this->db->select('type_transfer,sum(price) as payment')
+                ->from('old_book_transfer_total')
+                ->where('type_transfer','1')
+                ->where(" $con ")
+                ->get()->result();
+        
+        foreach($query as $row){
+                    $old[$row->type_transfer]=$row->payment;
+                }
+                
+                if(!empty($old[1])){
+                        $data['cash'] = $old[1];
+                    }else{
+                        $data['cash'] = 0;
+                    }
+                     
+                        $data['bank'] = 0;
+                   
+                    
+                    $data['total'] = $data['cash'] + $data['bank'];
+                    
+        return $data;
+    }
+    
 
 }
