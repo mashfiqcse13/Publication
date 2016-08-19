@@ -163,13 +163,15 @@ if(value=='add' || value=='edit'){
 $('.box.only_print form').hide();
 }
 
+
 $.fn.digits = function(){ 
     return this.each(function(){       
        $(this).text( $(this).text().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,") ); 
     })
 }
 $('.taka_formate').digits(); 
-
+ $('td div').not('div.tools').digits(); 
+ 
 
 
 </script>
@@ -181,11 +183,7 @@ $('.taka_formate').digits();
             });
    
 </script>
-<script>
-    
-       // $('td div').digits();        
-    
-</script>
+
 
 </body>
 </html>
