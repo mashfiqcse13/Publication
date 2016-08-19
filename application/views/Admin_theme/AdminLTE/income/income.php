@@ -51,11 +51,66 @@
                     <?= form_close(); ?>
                     <?php ?>
                 </div>
-            </div>
+            </div> 
 
                     <div class="box" id="block">
                     <?php
-                    if (!isset($date_range)) {
+                    if (isset($due)) {
+                        ?>
+                        <div class="box-header">
+                            <p class="text-center"><strong>Income Report</strong></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php if(isset($date_range)){ echo $date_range;} ?></p>
+
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                        </div>
+                        <div class="box-body">
+                            <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                <thead style="background: #DFF0D8;">
+                                    <tr>
+    <!--                                        <th></th>-->
+                                        <th>Ledger Name</th>
+                                        <th>Cash</th>
+                                        <th>Bank</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Due Collection</td>
+                                        <td class="text-right taka_formate"><?=$due['due_cash'];?></td>
+                                        <td class="text-right taka_formate"><?=$due['due_bank'];?></td>
+                                        <td class="text-right taka_formate"><?=$due['due_total'];?></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Sell Collection</td>
+                                        <td class="text-right taka_formate"><?=$sale_report['cash']?></td>
+                                        <td class="text-right taka_formate"><?=$sale_report['bank']?></td>
+                                        <td class="text-right taka_formate"><?=$sale_report['total']?></td> 
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Old Book Sale</td>
+                                        <td class="text-right taka_formate"><?=$old_report['cash']?></td>
+                                        <td class="text-right taka_formate"><?=$old_report['bank']?></td>
+                                        <td class="text-right taka_formate"><?=$old_report['total']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold">Sub Total</td>
+                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_cash']+$sale_report['cash']+$old_report['cash']?></td>
+                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_bank']+$sale_report['bank']+$old_report['bank']?></td>
+                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_total']+$sale_report['total']+$old_report['total']?></td>
+                                    </tr>
+                                    
+                                    
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <?php
+                    }else{
+                       
                         ?>
                         <div class="box-header">
                             <h3 class="box-title">Income</h3>
@@ -67,75 +122,13 @@
                             ?>
                         </div><!-- /.box-body -->
                         <?php
-                    }if (isset($date_range)) {
-                        ?>
-                        <div class="box-header">
-                            <p class="text-center"><strong>Income Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
-
-                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
-                        </div>
-                        <div class="box-body">
-                            <table  class ="table table-bordered table-hover" style="background: #fff;">
-                                <thead style="background: #DFF0D8;">
-                                    <tr>
-    <!--                                        <th></th>-->
-                                        <th>Income Name</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Description</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    
-                                    $sum_total_amount = 0;
-                                    foreach ($report as $rep) {
-                                        $sum_total_amount += $rep->amount_income;
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $rep->name_expense; ?></td>
-                                            <td><?php echo 'TK '.$rep->amount_income; ?></td>
-                                            <td><?php echo date('d/m/Y', strtotime($rep->date_income)); ?></td>
-                                            <td><?php echo $rep->description_income; ?></td>
-                                            <td><?php echo $sum_total_amount; ?></td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-
-                                    <tr style="font-weight: bold">
-                                        <td>Total :</td>
-                                        <td><?php echo $sum_total_amount; ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><?php echo $sum_total_amount; ?></td>
-
-
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <?php
+                  
                     }
                     ?>
                     
                 </div>
             </div>
-            <div class="row">
-<!--                <div class="panel-body">
-                   
-                    <?php if(isset($report)){ ?>
-                    <h3 class="text-center"><?=$this->config->item('SITE')['name'] ?></h3>
-                    <p class="text-center"> <?=$Title ?> Report</p>
-                    <p>Report Generated by: <?php echo $_SESSION['username'] ?></p>
-                     <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print Report"/>
-                    <?php  echo $report;   }?> 
-                </div>-->
-            </div>
+            
          
 
 
@@ -143,13 +136,6 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
-      <!-- insert book -->
 
-<!--      <div class="report-logo-for-print">
-          <h3 class="text-center"><?=$this->config->item('SITE')['name'] ?></h3>
-          <p class="text-center"> <?=$Title ?> Report</p>
-          <p>Report Generated by: <?php echo $_SESSION['username'] ?></p>
-          <?php if(isset($report)){echo $report; }?> 
-      </div>-->
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
