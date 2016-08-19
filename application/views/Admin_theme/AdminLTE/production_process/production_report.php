@@ -33,7 +33,7 @@
                         echo form_open('', $attributes)
                         ?>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="col-md-3">Search with Date Range:</label>
                                     <div class="col-md-9">
@@ -43,6 +43,24 @@
                                             </div>
                                             <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                         </div><!-- /.input group -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="col-md-3">Process Type:</label>
+                                    <div class="col-md-9">
+                                        <select name="id_process_type" id="" class="form-control select2">
+                                            <option value="">Select Process Type</option>
+                                            <?php
+//                                            print_r($get_all_production_process);exit();
+                                            foreach ($get_process_type as $item) {
+                                                ?>
+                                                <option value="<?php echo $item->id_process_type; ?>"><?php echo $item->name_process_type; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -56,9 +74,9 @@
                                             <option value="">Select Order ID</option>
                                             <?php
 //                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_all_production_process as $item) {
+                                            foreach ($get_order_id as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes.' - '. $item->name_process_type; ?></option>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes ; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -72,9 +90,9 @@
                                             <option value="">Select Vendor From</option>
                                             <?php
 //                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_all_production_process as $item) {
+                                            foreach ($get_vendor_from as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_id_vendor.' - '. $item->from_name . '(' . $item->from_type . ')'; ?></option>
+                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_id_vendor . ' - ' . $item->from_name . '(' . $item->from_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -90,9 +108,9 @@
                                             <option value="">Select Item Name</option>
                                             <?php
 //                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_all_production_process as $item) {
+                                            foreach ($get_item as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item.' - '. $item->item_name; ?></option>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -106,9 +124,9 @@
                                             <option value="">Select Vendor To</option>
                                             <?php
 //                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_all_production_process as $item) {
+                                            foreach ($get_vendor_to as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor.' - '.$item->to_name . '(' . $item->to_type . ')'; ?></option>
+                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor . ' - ' . $item->to_name . '(' . $item->to_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>

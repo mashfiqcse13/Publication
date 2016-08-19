@@ -152,10 +152,18 @@ class Production_process extends CI_Controller {
         $from_id_vendor = $this->input->get('from_id_vendor');
         $id_item = $this->input->get('id_item');
         $to_id_vendor = $this->input->get('to_id_vendor');
+        $id_process_type = $this->input->get('id_process_type');
         $data['date_range'] = $this->input->get('date_range');
+        
+        $data['get_process_type'] = $this->Production_process_model->get_process_type();
+        $data['get_order_id'] = $this->Production_process_model->get_order_id();
+        $data['get_vendor_from'] = $this->Production_process_model->get_vendor_from();
+        $data['get_vendor_to'] = $this->Production_process_model->get_vendor_to();
+        $data['get_item'] = $this->Production_process_model->get_item();
+        
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes,$from_id_vendor,$id_item,$to_id_vendor,$data['date_range']);
+            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes,$from_id_vendor,$id_item,$to_id_vendor,$id_process_type,$data['date_range']);
 //            print_r($data);exit();
         } else {
             $data['get_all_production_process'] = $this->Production_process_model->get_process_details_for_report();

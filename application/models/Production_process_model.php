@@ -285,8 +285,34 @@ class Production_process_model extends CI_Model {
 //        
         return $result;
     }
+    
+    function get_process_type(){
+        $result = $this->db->query('SELECT DISTINCT id_process_type,name_process_type
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
+    function get_order_id(){
+        $result = $this->db->query('SELECT DISTINCT id_processes,name_process_type
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
+    function get_vendor_from(){
+        $result = $this->db->query('SELECT DISTINCT from_id_vendor,from_name,from_type
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
+    function get_vendor_to(){
+        $result = $this->db->query('SELECT DISTINCT to_id_vendor,to_name,to_type
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
+    function get_item(){
+        $result = $this->db->query('SELECT DISTINCT id_item,item_name
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
 
-    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $date) {
+    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor,$id_process_type, $date) {
         $dates = explode('-', $date);
 //        print_r($dates);exit();
         if ($dates[0] != '') {
@@ -303,6 +329,8 @@ class Production_process_model extends CI_Model {
             $this->db->where('id_item', $id_item);
         }if (!empty($to_id_vendor)) {
             $this->db->where('to_id_vendor', $to_id_vendor);
+        }if (!empty($id_process_type)) {
+            $this->db->where('id_process_type', $id_process_type);
         }if ($dates[0] != '') {
             
             $condition = "DATE(date_transfered) BETWEEN '$date_from'  AND  '$date_to'";
