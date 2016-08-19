@@ -97,7 +97,7 @@
                                         <td class="text-right taka_formate"><?=$old_report['total']?></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-bold">Sub Total</td>
+                                        <td class="text-bold">Total</td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_cash']+$sale_report['cash']+$old_report['cash']?></td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_bank']+$sale_report['bank']+$old_report['bank']?></td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_total']+$sale_report['total']+$old_report['total']?></td>

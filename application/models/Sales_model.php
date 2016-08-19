@@ -203,6 +203,13 @@ class Sales_model extends CI_Model {
         $sql = "SELECT * FROM `sales_total_sales` WHERE `id_total_sales` = $total_sales_id";
         $total_sales_details = $this->db->query($sql)->result();
         $total_sales_details = $total_sales_details[0];
+        
+        $generate_due_report_by_memo =$this->generate_due_report_by_memo($total_sales_id);
+        $current_due_amount = 0;
+        foreach($generate_due_report_by_memo as $due){
+            $current_due_amount+=$due['paid_amount'];
+        }
+       
 
         //্ get due payment info
 //        $customer_id=0;
@@ -225,14 +232,14 @@ class Sales_model extends CI_Model {
          $pay_from_advanced=isset($pay['Customer advance'])?$pay['Customer advance']:0;
         $current_due = $total_sales_details->total_amount - $total_pay;
         if($current_due>0){
-            $current_due_status='<div class="text-memo-special-formate">DUE</div>';
+            $current_due_status='<div class="text-memo-special-formate text-danger">DUE</div>';
         }else{
-            $current_due_status='';
+            $current_due_status='<div class="text-memo-special-formate text-success">PAID</div>';
         }
         
         
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
-        $this->table->add_row($total_quantity, '(Total Book ) ', array(
+        $this->table->add_row($total_quantity, '(মোট বই ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
             'colspan' => 2
@@ -257,7 +264,7 @@ class Sales_model extends CI_Model {
       
         $this->table->add_row(array(
             'data' => $current_due_status ,
-            'class' => 'text-danger ',
+            'class' => ' ',
             'colspan' => 2,
             'rowspan' => 4
         ), array(
@@ -306,9 +313,45 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), $current_due );
         
+        $this->table->add_row(array(
+            'data' => '',
+            'class' => '',
+            'colspan' => 5
+                ));
+        
+        $this->table->add_row(array(
+            'data' => 'প্যাকেট খরচ : ',
+            'class' => '',
+            'colspan' => 2
+                ), array(
+            'data' => $total_sales_details->bill_for_packeting,
+            'class' => 'text-right taka_formate',
+            'colspan' => 3
+                ));
+        
+        $this->table->add_row(array(
+            'data' => ' স্লিপ খরচ : ',
+            'class' => '',
+            'colspan' => 2
+                ), array(
+            'data' => $total_sales_details->slip_expense_amount,
+            'class' => 'text-right taka_formate',
+            'colspan' => 3
+                ));
+        
+        $this->table->add_row(array(
+            'data' => 'নগদ গ্রহন : ',
+            'class' => '',
+            'colspan' => 2
+                ), array(
+            'data' => $total_sales_details->bill_for_packeting +  $bank_pay + $cash_pay + $current_due_amount,
+            'class' => 'text-right taka_formate',
+            'colspan' => 3
+                ));
+        
         $data['memo'] = $this->table->generate();
         
-        $generate_due_report_by_memo =$this->generate_due_report_by_memo($total_sales_id);
+        
         if(!empty($generate_due_report_by_memo)){
                 $this->table->clear();
                 $this->table->set_template($tmpl);                
@@ -341,7 +384,7 @@ class Sales_model extends CI_Model {
 //            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
 //            $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
         }
-        $this->db->order_by('sales_total_sales.issue_date','desc');
+        $this->db->order_by('sales_total_sales.id_total_sales','desc');
         $query = $this->db->get();
         return $query->result();
     }
