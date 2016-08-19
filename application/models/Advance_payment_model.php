@@ -42,7 +42,7 @@ class Advance_payment_model extends CI_Model {
 
         $this->payment_register($id_customer, $id_payment_method, $amount);
         $insert_id = $this->db->insert_id();
-        
+
         return $insert_id;
     }
 
@@ -150,12 +150,12 @@ class Advance_payment_model extends CI_Model {
     }
 
     function get_search_report($from, $to, $customer_id, $payment_method_id) {
-        
+
 //        $dates[0] = '';
 //        $dates[1] = '';
 //        if ($dates[0] != '') {
-            $date_from = date('Y-m-d', strtotime($from));
-            $date_to = date('Y-m-d', strtotime($to));
+        $date_from = date('Y-m-d', strtotime($from));
+        $date_to = date('Y-m-d', strtotime($to));
 //        }
 //        echo $date_from;exit();
         $this->db->select('*');
@@ -170,16 +170,36 @@ class Advance_payment_model extends CI_Model {
             $condition = "DATE(party_advance_payment_register.date_payment) BETWEEN '$date_from'  AND  '$date_to'";
             $this->db->where($condition);
         }
-         return $this->db->get()->result();
+        return $this->db->get()->result();
     }
-    
-    function get_all_party_advance_register_info($party_id){
+
+    function get_all_party_advance_register_info($party_id) {
         $this->db->select('*');
         $this->db->from('party_advance_payment_register');
-        $this->db->join('party_advance','party_advance_payment_register.id_customer = party_advance.id_customer','left');
-        $this->db->join('customer','party_advance.id_customer = customer.id_customer','left');
-        $this->db->where('party_advance_payment_register.id_party_advance_payment_register',$party_id);
+        $this->db->join('party_advance', 'party_advance_payment_register.id_customer = party_advance.id_customer', 'left');
+        $this->db->join('customer', 'party_advance.id_customer = customer.id_customer', 'left');
+        $this->db->where('party_advance_payment_register.id_party_advance_payment_register', $party_id);
         return $this->db->get()->result();
+    }
+
+    function today_customer_advance_payment_bank() {
+        $sql = "SELECT sum(`amount_paid`) as today_customer_advance_payment_bank FROM `party_advance_payment_register` WHERE `id_payment_method` = 3 and date(`date_payment`) = date(now())";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_customer_advance_payment_bank)) {
+            return 0;
+        } else {
+            return $result[0]->today_customer_advance_payment_bank;
+        }
+    }
+
+    function today_customer_advance_payment__cash() {
+        $sql = "SELECT sum(`amount_paid`) as today_customer_advance_payment__cash FROM `party_advance_payment_register` WHERE `id_payment_method` = 1 and date(`date_payment`) = date(now())";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_customer_advance_payment__cash)) {
+            return 0;
+        } else {
+            return $result[0]->today_customer_advance_payment__cash;
+        }
     }
 
 }

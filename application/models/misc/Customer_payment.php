@@ -146,5 +146,26 @@ class Customer_payment extends CI_Model {
             return $result[0]->today_collection;
         }
     }
+    
+    
+    function today_customer_due_bank() {
+        $sql = "SELECT sum(`paid_amount`) as today_customer_due_bank FROM `customer_payment` WHERE `id_payment_method` = 3 and `due_payment_status` = 1 and date(`payment_date`) = date(now())";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_customer_due_bank)) {
+            return 0;
+        } else {
+            return $result[0]->today_customer_due_bank;
+        }
+    }
+
+    function today_customer_due_cash() {
+        $sql = "SELECT sum(`paid_amount`) as today_customer_due_cash FROM `customer_payment` WHERE `id_payment_method` = 1 and `due_payment_status` = 1 and date(`payment_date`) = date(now())";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_customer_due_cash)) {
+            return 0;
+        } else {
+            return $result[0]->today_customer_due_cash;
+        }
+    }
 
 }

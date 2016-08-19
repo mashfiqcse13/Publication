@@ -138,7 +138,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate">0 TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_customer_due_cash; ?> TK</h3>
                         <p>Today Due Collection Cash</p>
                     </div>
                     <div class="icon">
@@ -151,7 +151,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate">0 TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_customer_due_bank; ?> TK</h3>
                         <p>Today Due Collection Bank</p>
                     </div>
                     <div class="icon">
@@ -164,7 +164,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate">0 TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_customer_advance_payment__cash; ?> TK</h3>
                         <p>Today Advance Collection Cash</p>
                     </div>
                     <div class="icon">
@@ -177,7 +177,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate">0 TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_customer_advance_payment_bank; ?> TK</h3>
                         <p>Today Advance Collection Bank</p>
                     </div>
                     <div class="icon">
