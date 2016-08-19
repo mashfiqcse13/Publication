@@ -341,7 +341,7 @@ class Sales_model extends CI_Model {
 //            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
 //            $this->db->where('sales_total_sales.issue_date <= ', date('Y-m-d', strtotime($to)));
         }
-        $this->db->order_by('sales_total_sales.issue_date','desc');
+        $this->db->order_by('sales_total_sales.id_total_sales','desc');
         $query = $this->db->get();
         return $query->result();
     }
