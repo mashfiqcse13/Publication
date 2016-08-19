@@ -45,7 +45,7 @@
                                 <h3 class="box-title text-center text-bold">Due Payment Amount (Bank )</h3>
                                 <p class="btn btn-info bank_add">Bank Pay</p>
                         </div>
-                        <div class="bank_hide">
+                        <div class="bank_hide" style="display:none">
                         <p><strong>Note :</strong> If you use this form , this balance will be added to the account balance automatically as an approved transaction .</p>
                                           
                             <div class="form-group" style="padding: 15px">
