@@ -96,9 +96,9 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $due->name; ?></td>
-                                            <td><?php echo $due->total_due_billed; ?></td>
-                                            <td><?php echo $due->total_paid; ?></td>
-                                            <td><?php echo $due->total_due; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $due->total_due_billed; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $due->total_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $due->total_due; ?></td>
                                         </tr>
                                         <?php
                                     }

@@ -143,7 +143,7 @@
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $rep->name_bank;echo ' - ' . $rep->account_number ?></td>
-                                                    <td><?php echo 'TK ' . $rep->transfered_amount; ?></td>
+                                                    <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
                                                 </tr>
                                                 <?php

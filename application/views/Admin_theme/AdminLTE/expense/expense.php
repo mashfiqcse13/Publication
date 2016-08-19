@@ -6,7 +6,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper only_print">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header"> 
         <h1>
             <?= $Title ?>
             <small> <?= $Title ?></small>
