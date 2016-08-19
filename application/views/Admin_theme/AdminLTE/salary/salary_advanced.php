@@ -18,57 +18,43 @@
     </section>
 
     <!-- Main content -->
-    <section class="content" style="min-height: 1050px;">
+    <section class="content" style="min-height: 1450px;">
         <div class="row">
             <div class="col-md-12">
 
                 <div class="box">
                     <?php
                     if ($this->uri->segment(3) == '') {
-                        if (!isset($employee_info)) {
-                            ?>
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <?php
-                                $attributes = array(
-                                    'clase' => 'form-inline',
-                                    'method' => 'get');
-                                echo form_open('', $attributes)
-                                ?>
-                                <div class="form-group col-md-3 text-left">
-                                    <label>Search with Date Range:</label>
-                                </div>
-                                <div class="form-group col-md-7">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                                    </div><!-- /.input group -->
-                                </div><!-- /.form group -->
-                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-
-                                <?= form_close(); ?>
-                            </div>
+                        ?>
+                    <div class="row" style="margin: 20px 0;">
                             <?php
-                        }
-                        if (!isset($date_range)) {
+                            $attributes = array(
+                                'clase' => 'form-inline',
+                                'method' => 'get');
+                            echo form_open('', $attributes)
                             ?>
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <?php
-                                $attributes = array(
-                                    'class' => 'form-inline',
-                                    'name' => 'form',
-                                    'method' => 'get');
-                                echo form_open('', $attributes)
-                                ?>
-                                <div class="form-group col-md-3 text-left">
+                            <div class="col-md-5">
+                                <div class="form-group ">
+                                        <label class="col-md-3">Search with Date Range:</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                            </div><!-- /.input group -->
+                                        </div>
+                                    </div>
+                            </div>
+
+
+                            <div class = "col-md-5">
+                                <div class = "form-group col-md-3 text-left">
                                     <label>Employee</label>
                                 </div>
-                                <div class="form-group col-md-7">
-                                    <select class="form-control select2"style="width:100%;"  name="employee">
-                                        <option>Select Employee</option>
+                                <div class = "form-group col-md-7">
+                                    <select class = "form-control select2"style = "width:100%;" name = "employee">
+                                        <option value="">Select Employee</option>
                                         <?php
                                         foreach ($employees as $employee) {
                                             ?>
@@ -77,13 +63,16 @@
                                         }
                                         ?>
                                     </select>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-2">
                                 <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                 <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                                <?= form_close(); ?>
                             </div>
-                            <?php
-                        }
+
+                            <?= form_close(); ?>
+                        </div>
+                        <?php
                     }
                     if (isset($employee_info) || isset($date_range)) {
                         ?>
@@ -101,11 +90,7 @@
                                         ?>
                                         <p class="pull-left" style="margin-left:5px"> <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
                                         <?php
-                                    } if (isset($employee_info)) {
-                                        ?>
-                                        <p class="pull-left" style="margin-left:5px"> <strong>Employee Id:  </strong> <?php echo $employee_info; ?></p>
-                                        <?php
-                                    }
+                                    } 
                                     ?>
                                     <div class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></div>
                                 </div>
@@ -115,7 +100,7 @@
                                             <tr style="background:#ddd">
                                                 <th>Employee Name</th>
                                                 <th>Amount Given Salary Advance</th>
-                                                <th>Amount Paid Salary Advance</th>
+                                                <th>Amount Deducted From Salary</th>
                                                 <th>Salary Advance Given Date</th>
                                                 <th>Status of Salary Advance</th>
                                             </tr>
@@ -165,7 +150,15 @@
                                         <div class="form-group ">
                                             <label class="col-md-3">Employee Name:</label>
                                             <div class="col-md-9">
-                                                <?php echo $employee_name; ?>
+                                                <select name="id_employee" class="form-control">
+                                                    <option value="blank">Select Employee Name</option>
+                                                    <?php
+                                                    foreach ($employee_name as $employee) {
+                                                        ?><option value="<?php echo $employee->id_employee; ?>"><?php echo $employee->name_employee; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
 
                                         </div>
@@ -179,7 +172,7 @@
                                             </div>
 
                                         </div>
-                                        <button type="submit" name="btn_submit" value="true" class="btn btn-success pull-right">Save</button>
+                                        <button type="submit" id="save" name="btn_submit" value="true" class="btn btn-success pull-right">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -211,5 +204,13 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-    document.forms['form'].elements['employee'].value = "<?php echo $employee_info; ?>";
+
+//    var text = document.getElementsByName('id_employee').value;
+//    alert(text);
+    $('#save').click(function () {
+        if (document.getElementsByName('id_employee')[0].value == 'blank') {
+            alert('Please Select Employee Name !');
+            return false;
+        }
+    });
 </script>

@@ -14,13 +14,13 @@ class Stationary_model extends CI_Model {
         $item=$item;
     
     if(!empty($date)){
-        $condition="date_received BETWEEN $date";
+        $condition="DATE(date_received) BETWEEN $date";
            
-    }elseif(!empty($item)){
+    }if(!empty($item)){
        $condition="stationary_stock_register.id_name_expense=$item";
         
-    }elseif(!empty($date) && !empty($item)){
-        $condition="date_received BETWEEN $date and stationary_stock_register.id_name_expense=$item";
+    }if(!empty($date) && !empty($item)){
+        $condition="DATE(date_received) BETWEEN $date and stationary_stock_register.id_name_expense=$item";
         
         
     }else{
