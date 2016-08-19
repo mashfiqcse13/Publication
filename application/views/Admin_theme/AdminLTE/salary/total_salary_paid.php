@@ -112,7 +112,7 @@
                                                         <td><?php echo date('d/m/Y', strtotime($total->date_salary_payment));
                                                             ?></td>
                                                         <td><?php echo $total->year_salary_payment; ?></td>
-                                                        <td class="taka_formate"><?php echo $total->total; ?></td>
+                                                        <td  class="text-right faka_formate"><?php echo $total->total; ?></td>
                                                     </tr>
                                                     <?php
                                                     $sl++;
@@ -207,7 +207,7 @@
                                     </td>
                                     <td><?php echo date('d/m/Y', strtotime($total->date_salary_payment));
                                         ?></td>
-                                    <td><?php echo $total->total; ?></td>
+                                    <td class="text-right faka_formate"><?php echo $total->total; ?></td>
                                 </tr>
                                 <?php
                                 $sl++;

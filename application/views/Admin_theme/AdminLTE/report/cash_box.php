@@ -72,7 +72,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $today_sales; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_sales; ?> TK</h3>
                         <p>Today Total Sales</p>
                     </div>
                     <div class="icon">
@@ -85,7 +85,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $today_due; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_due; ?> TK</h3>
                         <p>Today Total Due</p>
                     </div>
                     <div class="icon">
@@ -98,7 +98,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $today_cash; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_cash; ?> TK</h3>
                         <p>Today Total Cash Payment</p>
                     </div>
                     <div class="icon">
@@ -112,7 +112,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $today_bank; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $today_bank; ?> TK</h3>
                         <p>Today Total Bank Payment</p>
                     </div>
                     <div class="icon">
@@ -125,7 +125,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $advance_payment_balance; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $advance_payment_balance; ?> TK</h3>
                         <p>Party Total Advance Payment</p>
                     </div>
                     <div class="icon">

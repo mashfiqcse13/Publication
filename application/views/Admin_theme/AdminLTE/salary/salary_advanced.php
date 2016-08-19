@@ -111,9 +111,9 @@
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $salary->name_employee; ?></td>
-                                                    <td><?php echo $salary->amount_given_salary_advance; ?></td>
-                                                    <td><?php echo $salary->amount_paid_salary_advance; ?></td>
-                                                    <td><?php echo $date = date('d/m/Y', strtotime($salary->date_given_salary_advance)); ?></td>
+                                                    <td class="text-right faka_formate"><?php echo $salary->amount_given_salary_advance; ?></td>
+                                                    <td class="text-right faka_formate"><?php echo $salary->amount_paid_salary_advance; ?></td>
+                                                    <td class="text-right faka_formate"><?php echo $date = date('d/m/Y', strtotime($salary->date_given_salary_advance)); ?></td>
                                                     <td><?php echo ($salary->status_salary_advance == 1) ? ("Partially Paid") : ("full_paid"); ?></td>
 
                                                 </tr>

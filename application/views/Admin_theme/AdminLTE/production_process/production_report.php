@@ -155,9 +155,9 @@
                                             <td><?php echo $process_details->id_process_step_from; ?></td>
                                             <td><?php echo $process_details->to_name . '(' . $process_details->to_type . ')'; ?></td>
                                             <td><?php echo $process_details->id_process_step_to; ?></td>
-                                            <td><?php echo $process_details->amount_transfered; ?></td>
-                                            <td><?php echo $process_details->amount_billed; ?></td>
-                                            <td><?php echo $process_details->amount_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $process_details->amount_transfered; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $process_details->amount_billed; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $process_details->amount_paid; ?></td>
                                             <td><?php echo $process_details->date_transfered; ?></td>
                                         </tr>
                                         <?php
@@ -210,9 +210,9 @@
                                                 <td><?php echo $process_details->id_process_step_from; ?></td>
                                                 <td><?php echo $process_details->to_name . '(' . $process_details->to_type . ')'; ?></td>
                                                 <td><?php echo $process_details->id_process_step_to; ?></td>
-                                                <td><?php echo $process_details->amount_transfered; ?></td>
-                                                <td><?php echo $process_details->amount_billed; ?></td>
-                                                <td><?php echo $process_details->amount_paid; ?></td>
+                                                <td class="text-right faka_formate"><?php echo $process_details->amount_transfered; ?></td>
+                                                <td class="text-right faka_formate"><?php echo $process_details->amount_billed; ?></td>
+                                                <td class="text-right faka_formate"><?php echo $process_details->amount_paid; ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($process_details->date_transfered)); ?></td>
                                             </tr>
                                             <?php
@@ -227,9 +227,9 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td><?php echo $sum_total_amount_transfered; ?></td>
-                                            <td><?php echo $sum_total_amount_billed; ?></td>
-                                            <td><?php echo $sum_total_amount_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
                                             <td></td>
 
 

@@ -59,7 +59,7 @@
                                             <tr>
                                                 <td><?php echo $sl; ?></td>
                                                 <td><?php echo $total->name_employee; ?></td>
-                                                <td><?php echo $sum; ?></td>
+                                                <td class="text-right faka_formate"><?php echo $sum; ?></td>
                                             </tr>
                                             <?php
                                             $sl++;
