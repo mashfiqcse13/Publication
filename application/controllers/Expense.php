@@ -58,26 +58,28 @@ class Expense extends CI_Controller {
         //$crud->callback_before_update(array($this,'cash_update'));
 
 
-        $crud->order_by('id_name_expense', 'desc');
+        $crud->order_by('id_expense', 'desc');
 
 
         $this->load->model('expense_model');
         $date_range = $this->input->post('date_range');
         $data['short_form'] = $this->input->post('short_form');
         $data['date_range'] = $date_range;
+        $data['max_expense_name'] = $this->expense_model->get_max_expense_name();
         $btn = $this->input->post('btn_submit');
 
         if (isset($btn)) {
 
             if (isset($data['short_form'])) {
-                $data['report'] = $this->expense_model->expense_sort_report($date_range);
+                $data['report']= $this->expense_model->expense_sort_report($date_range);
+//                echo '<pre>';print_r($data);exit();
             }else {
                 $data['report'] = $this->expense_model->expense_report($date_range);
             }
-        } else {
+        } 
             $output = $crud->render();
             $data['glosary'] = $output;
-        }
+        
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -147,6 +149,7 @@ class Expense extends CI_Controller {
         $crud->set_relation('id_category_expense', 'expense_category', 'name_category_expense');
         $crud->display_as('is_stock_item', 'Stock Item');
         $crud->display_as('name_expense', 'Name Expense');
+        $crud->order_by('id_name_expense', 'desc');
 
         $crud->field_type('status_name_expense', 'hidden');
 
@@ -192,6 +195,7 @@ class Expense extends CI_Controller {
         $crud->set_table('expense_category');
         $crud->display_as('name_category_expense', 'Name Category Expense');
         $crud->display_as('description_category_expense', 'Description Category Expense');
+        $crud->order_by('id_category_expense', 'desc');
         $output = $crud->render();
         $data['glosary'] = $output;
 
