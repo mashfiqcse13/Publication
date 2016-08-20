@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -31,7 +30,7 @@ class Sales extends CI_Controller {
     function tolal_sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales_total_sales')
-                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'total_paid', 'total_due', 'number_of_packet', 'bill_for_packeting','slip_expense_amount')
+                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'total_paid', 'total_due', 'number_of_packet', 'bill_for_packeting', 'slip_expense_amount')
                 ->display_as('id_total_sales', 'Memo No')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')
                 ->set_subject('Total sales')
@@ -45,6 +44,16 @@ class Sales extends CI_Controller {
                 });
         $data['date_range'] = $this->input->get('date_range');
         $id_customer = $this->input->get('id_customer');
+
+        if (empty($id_customer) && empty($data['date_range']) && !empty($this->input->get('btn_submit'))) {
+            ?><script>
+                alert("Please select any customer or date range");
+                window.history.back();
+            </script>
+            <?php
+            die();
+        }
+        
         $date = explode('-', $data['date_range']);
         $from = '';
         $to = '';
@@ -130,6 +139,14 @@ class Sales extends CI_Controller {
     function memo_report() {
         $data['memo_list'] = $this->memo_list();
         $total_sales_id = $this->input->post('id_total_sales');
+        if (empty($total_sales_id)) {
+            ?><script>
+                alert("Please select memo ID");
+                window.history.back();
+            </script>
+            <?php
+            die();
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
