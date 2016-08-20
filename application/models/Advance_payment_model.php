@@ -16,11 +16,13 @@ class Advance_payment_model extends CI_Model {
         $current_total_due = $this->Customer_due->current_total_due($id_customer);
         if ($current_total_due > 0) {
             if ($current_total_due >= $amount) {
-                $this->Customer_payment->due_payment($id_customer, $amount,$id_payment_method); 
+                $id=$this->Customer_payment->due_payment($id_customer, $amount,$id_payment_method); 
+                $this->session->set_userdata('advanced_due_pay_last_id',$id);
                 return TRUE;
             } else {
                 $amount -= $current_total_due;
-                $this->Customer_payment->due_payment($id_customer, $current_total_due);
+                $id=$this->Customer_payment->due_payment($id_customer, $current_total_due,$id_payment_method);
+                $this->session->set_userdata('advanced_due_pay_last_id',$id);
             }
         }
 
