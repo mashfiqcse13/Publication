@@ -122,6 +122,7 @@
                                         <th>Discount Amount</th>
                                         <th>Cash Paid</th>
                                         <th>Bank Paid</th>
+                                        <th>Advance Deduction</th>
                                         <th>Total Paid</th>
                                         <th>Total Due</th>
                                         <th>Packeting Cost Paid</th>
@@ -136,6 +137,7 @@
                                     $sum_discount_amount = 0;
                                     $sum_cash_paid = 0;
                                     $sum_bank_paid = 0;
+                                    $sum_customer_advance_paid = 0;
                                     $sum_total_paid = 0;
                                     $sum_total_due = 0;
                                     $sum_bill_for_packeting = 0;
@@ -146,6 +148,7 @@
                                         $sum_discount_amount += $sales->discount_amount;
                                         $sum_cash_paid += $sales->cash_paid;
                                         $sum_bank_paid += $sales->bank_paid;
+                                        $sum_customer_advance_paid += $sales->customer_advance_paid;
                                         $sum_total_paid += $sales->total_paid;
                                         $sum_total_due += $sales->total_due;
                                         $sum_bill_for_packeting += $sales->bill_for_packeting;
@@ -159,6 +162,7 @@
                                             <td class="text-right faka_formate"><?php echo $sales->discount_amount; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->cash_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->bank_paid; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->customer_advance_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->total_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->total_due; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting; ?></td>
@@ -176,6 +180,7 @@
                                         <td class="text-right faka_formate"><?php echo $sum_discount_amount; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_cash_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_bank_paid; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_customer_advance_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_total_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_total_due; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting; ?></td>
