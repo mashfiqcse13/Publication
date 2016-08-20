@@ -16,13 +16,13 @@ class Advance_payment_model extends CI_Model {
         $current_total_due = $this->Customer_due->current_total_due($id_customer);
         if ($current_total_due > 0) {
             if ($current_total_due >= $amount) {
-                $id=$this->Customer_payment->due_payment($id_customer, $amount,$id_payment_method); 
-                $this->session->set_userdata('advanced_due_pay_last_id',$id);
+                $id = $this->Customer_payment->due_payment($id_customer, $amount, $id_payment_method);
+                $this->session->set_userdata('advanced_due_pay_last_id', $id);
                 return TRUE;
             } else {
                 $amount -= $current_total_due;
-                $id=$this->Customer_payment->due_payment($id_customer, $current_total_due,$id_payment_method);
-                $this->session->set_userdata('advanced_due_pay_last_id',$id);
+                $id = $this->Customer_payment->due_payment($id_customer, $current_total_due, $id_payment_method);
+                $this->session->set_userdata('advanced_due_pay_last_id', $id);
             }
         }
 
@@ -81,6 +81,16 @@ class Advance_payment_model extends CI_Model {
             (`id_customer`, `id_payment_method`, `amount_paid`, `date_payment`)
             VALUES ('$id_customer','$id_payment_method','$amount_paid','$current_date')";
         $this->db->query($register);
+    }
+
+    function last_id_party_advance_payment_register() {
+        $sql = "SELECT max(`id_party_advance_payment_register`) as last_id_party_advance_payment_register FROM `party_advance_payment_register`";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]) || $result[0]->last_id_party_advance_payment_register == '') {
+            return 0;
+        } else {
+            return $result[0]->last_id_party_advance_payment_register;
+        }
     }
 
     // get current customer due all data as a db row object
