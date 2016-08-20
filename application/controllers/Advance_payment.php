@@ -81,6 +81,18 @@ class Advance_payment extends CI_Controller {
 
     function add_advance_payment($id) {
         $data['party_advance'] = $this->Advance_payment_model->get_all_party_advance_register_info($id);
+        
+        
+        $due_id=$this->session->userdata('advanced_due_pay_last_id');
+        $this->session->unset_userdata('advanced_due_pay_last_id');
+        
+        if(isset($due_id))
+        {
+             $this->load->model('misc/Customer_payment');
+        $data['due_report_list'] = $this->Customer_payment->generate_due_report($due_id,$id_bank=0);
+        } 
+       
+        
 //        print_r($data);exit();
         $current = date('Y-m-d');
         $crud = new grocery_CRUD();
