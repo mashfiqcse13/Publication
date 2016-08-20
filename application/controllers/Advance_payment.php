@@ -124,7 +124,7 @@ class Advance_payment extends CI_Controller {
                 ->set_subject('Payment Log')->display_as('id_customer', 'Customer name')->display_as('id_payment_method', 'Payment method')
                 ->set_relation('id_customer', 'customer', 'name')
                 ->set_relation('id_payment_method', 'payment_method', 'name_payment_method')
-                ->order_by('id_customer', 'asc')
+                ->order_by('id_party_advance_payment_register', 'desc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
