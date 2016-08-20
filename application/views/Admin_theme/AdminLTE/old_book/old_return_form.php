@@ -149,7 +149,7 @@
                                 <?php echo $item_dropdown ?>
                             </div>
                             <div class="form-group col-lg-3">
-                                <label for="price">Price</label>
+                                <label for="price">Price Per Book</label>
                                 <input type="number" name="price" id="price" class="form-control" />
                             </div>
                             <div class="form-group col-lg-3">
