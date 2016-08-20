@@ -72,8 +72,8 @@ class Due extends CI_Controller {
         }
         if ($data['date_range'] != '' || $data['customer_id'] != '') {
             $data['customer_due_payment'] = $this->Due_model->get_customer_due_payment_info($dates[0], $dates[1], $data['customer_id']);
-            print_r($data);
-            exit();
+//            print_r($data);
+//            exit();
         }
         $crud = new grocery_CRUD();
         $crud->set_table('customer_payment')->display_as('id_total_sales', 'Memo No')
@@ -83,7 +83,9 @@ class Due extends CI_Controller {
                 ->unset_edit()->unset_delete()->unset_add()->unset_read()
                 ->callback_column('Customer ID', function ($value, $row) {
                     return $row->id_customer;
-                });
+                })
+                ->where('due_payment_status',1)
+                ->order_by('id_customer_payment','desc');
         $output = $crud->render();
         $data['glosary'] = $output;
 
