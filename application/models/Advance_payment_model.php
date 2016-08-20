@@ -43,6 +43,7 @@ class Advance_payment_model extends CI_Model {
         $this->db->query($sql);
 
         $this->payment_register($id_customer, $id_payment_method, $amount);
+        
         $insert_id = $this->db->insert_id();
 
         return $insert_id;
