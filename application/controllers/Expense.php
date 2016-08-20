@@ -170,6 +170,9 @@ class Expense extends CI_Controller {
         $crud->unset_columns('status_name_expense');
 
 
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 4) {
+            $crud->unset_delete()->unset_edit();
+        }
 
 
         $output = $crud->render();
@@ -198,6 +201,10 @@ class Expense extends CI_Controller {
         $crud->order_by('id_category_expense', 'desc');
         $output = $crud->render();
         $data['glosary'] = $output;
+        
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 4) {
+            $crud->unset_delete()->unset_edit();
+        }
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
