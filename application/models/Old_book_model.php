@@ -548,13 +548,13 @@ class Old_book_model extends CI_Model {
         if (empty($results)) {
             die("No match found");
         }
-        $this->table->add_row("ID", $results[0]->id_old_book_transfer_total, "Date", $results[0]->date_transfer);
+        $this->table->add_row("Slip Number ", $results[0]->id_old_book_transfer_total, "Date", $results[0]->date_transfer);
         $output = $this->table->generate();
         $total_quantity = 0;
-        $this->table->set_heading("#", "Book ID", 'Book Name', 'Quantity');
+        $this->table->set_heading( "Book ID", 'Book Name', 'Quantity');
         $counter = 1;
         foreach ($results as $row) {
-            $this->table->add_row($counter++, $row->id_item, $row->name, $row->quantity_item);
+            $this->table->add_row( $row->id_item, $row->name, $row->quantity_item);
             $total_quantity+=$row->quantity_item;
         }
 

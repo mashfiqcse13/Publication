@@ -71,7 +71,7 @@
 
 
 
-                    <td><strong>Memo No:</strong></td>
+                    <td><strong>Slip Number:</strong></td>
 
                     <td><?= $memo_header_details['memoid'] ?></td>
 
