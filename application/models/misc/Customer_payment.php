@@ -24,7 +24,7 @@ class Customer_payment extends CI_Model {
             $sql = "UPDATE  `customer_due_payment_register` SET  `id_total_sales` = $id_total_sales  WHERE `id_customer_due_payment_register` ={$this->combine_id_customer_due_payment_register};";
             $this->db->query($sql);
         }
-    }
+    } 
 
     function due_payment($customer_id, $payment_amount, $id_payment_method = 1) {
         $this->load->model('misc/Customer_due');

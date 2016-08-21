@@ -15,15 +15,19 @@ class Advance_payment_model extends CI_Model {
         $this->load->model('misc/Customer_payment');
         $current_total_due = $this->Customer_due->current_total_due($id_customer);
         if ($current_total_due > 0) {
-            if ($current_total_due >= $amount) {
-                $id = $this->Customer_payment->due_payment($id_customer, $amount, $id_payment_method);
-                $this->session->set_userdata('advanced_due_pay_last_id', $id);
-                return TRUE;
-            } else {
-                $amount -= $current_total_due;
-                $id = $this->Customer_payment->due_payment($id_customer, $current_total_due, $id_payment_method);
-                $this->session->set_userdata('advanced_due_pay_last_id', $id);
-            }
+            
+            $data['due']= 'due_request';
+            return $data;
+            exit();
+//            if ($current_total_due >= $amount) {
+//                $id = $this->Customer_payment->due_payment($id_customer, $amount, $id_payment_method);
+//                $this->session->set_userdata('advanced_due_pay_last_id', $id);
+//                return TRUE;
+//            } else {
+//                $amount -= $current_total_due;
+//                $id = $this->Customer_payment->due_payment($id_customer, $current_total_due, $id_payment_method);
+//                $this->session->set_userdata('advanced_due_pay_last_id', $id);
+//            }
         }
 
         // cheching if there is a row , otherwise creating it

@@ -36,22 +36,29 @@ class Advance_payment extends CI_Controller {
         if(isset($btn)){
 //       echo '<pre>';
 //       print_r($_POST);
-          if(empty($amount) && empty($bank_account_id)){
+//       exit();
+          if(!empty($amount) && !empty($bank_account_id)){
                  $data['report_message']= '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
           }else{
               if (!empty($id_customer) && !empty($amount)) {
                     $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
                     
-                }
+                }else{
                  if (!empty($id_customer) && !empty($bank_account_id) && !empty($bank_amount) && $bank_amount > 0 && !empty($bank_check_no)) {
                       $this->Bank_model->bank_transection($bank_account_id, 1, $bank_amount, $bank_check_no, 1);
                       $id = $this->Advance_payment_model->payment_add($id_customer, $bank_amount, 3) or die('failed');
                      
                  }else{
-                     $data['report_message']= '<p class="alert alert-danger">Please Select All field for Bank Payment.</p>';
+                     $id =  'bank_error';
+                     
                  }
+                }
                  
-                 if(isset($id)){
+                 if( isset($id['due']) && $id['due'] == 'due_request' ){
+                      $data['due_request'] = '<p class="alert alert-danger" >Please Pay Previous Due From Due Payment. Then Make Advanced Payment.</p>';
+                  }elseif($id=='bank_error'){
+                      $data['report_message']= '<p class="alert alert-danger">Please Select All field for Bank Payment.</p>';
+                  }else{
                      redirect("advance_payment/add_advance_payment/" . $id);
                     die();
                  }

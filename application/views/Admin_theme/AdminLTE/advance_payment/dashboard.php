@@ -113,7 +113,12 @@
                                 </div>
                             </div>
                         <div class="row" style="padding:0 30px;padding-bottom: 15px;">
-                            <?php if(isset($report_message)){         echo $report_message;        } ?>
+                            <?php if(isset($report_message)){         echo $report_message;        } 
+                            if(isset($due_request)){         echo $due_request;        } 
+                            
+                            
+                            
+                             ?>
                             <hr>
                             <a href="<?=site_url('Advance_payment') ?>" class="btn btn-primary pull-right" style="margin-right:5px;margin-left: 5px;">Refresh</a>
                             <input type="submit"  class="btn btn-primary pull-right" value="Add Payment" name="btn_submit"/>
