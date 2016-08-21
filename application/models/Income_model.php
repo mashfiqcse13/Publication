@@ -73,13 +73,18 @@ LEFT JOIN income_name on income_name.id_name_income=income.id_name_income $con "
                     }else{
                         $data['cash'] = 0;
                     }
+                    if(!empty($sale['2'])){
+                        $data['advanced']=$sale['2'];
+                    }else{
+                        $data['advanced']=0;
+                    }
                      if(!empty($sale[3])){
                         $data['bank'] = $sale[3];
                     }else{
                         $data['bank'] = 0;
                     }
                     
-                    $data['total'] = $data['cash'] + $data['bank'];
+                    $data['total'] = $data['cash'] + $data['bank']+$data['advanced'];
                     
         return $data;
     }

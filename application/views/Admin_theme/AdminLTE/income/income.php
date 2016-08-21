@@ -72,6 +72,7 @@
                                         <th>Ledger Name</th>
                                         <th>Cash</th>
                                         <th>Bank</th>
+                                        <th>Advanced</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -80,6 +81,7 @@
                                         <td>Due Collection</td>
                                         <td class="text-right taka_formate"><?=$due['due_cash'];?></td>
                                         <td class="text-right taka_formate"><?=$due['due_bank'];?></td>
+                                        <td class="text-right taka_formate">0</td>
                                         <td class="text-right taka_formate"><?=$due['due_total'];?></td>
                                     </tr>
                                     
@@ -87,6 +89,7 @@
                                         <td>Sell Collection</td>
                                         <td class="text-right taka_formate"><?=$sale_report['cash']?></td>
                                         <td class="text-right taka_formate"><?=$sale_report['bank']?></td>
+                                         <td class="text-right taka_formate"><?=$sale_report['advanced']?></td>
                                         <td class="text-right taka_formate"><?=$sale_report['total']?></td> 
                                     </tr>
                                     
@@ -94,12 +97,14 @@
                                         <td>Old Book Sale</td>
                                         <td class="text-right taka_formate"><?=$old_report['cash']?></td>
                                         <td class="text-right taka_formate"><?=$old_report['bank']?></td>
+                                         <td class="text-right taka_formate">0</td>
                                         <td class="text-right taka_formate"><?=$old_report['total']?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Total</td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_cash']+$sale_report['cash']+$old_report['cash']?></td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_bank']+$sale_report['bank']+$old_report['bank']?></td>
+                                         <td class="text-right taka_formate text-bold">TK <?=$sale_report['advanced']?></td>
                                         <td class="text-right taka_formate text-bold">TK <?= $due['due_total']+$sale_report['total']+$old_report['total']?></td>
                                     </tr>
                                     
