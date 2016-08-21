@@ -191,7 +191,7 @@ class Sales_return_m extends CI_Model {
                          $this->customer_due->reduce($contact_ID,$memo_due);
                          if($update_value > 0){
                             $this->advance_payment_model->payment_add($contact_ID, $update_value, 2);
-                            $this->cash->reduce($update_value);
+                            //$this->cash->reduce($update_value);
                          }
                      
                 } 
@@ -223,7 +223,7 @@ class Sales_return_m extends CI_Model {
                         $this->db->update('sales', $data_delete);
                    
                 }
-               
+                
               
               
 
