@@ -44,7 +44,7 @@ class Payment_log_model extends CI_Model {
             $condition = "DATE(customer_payment.payment_date) BETWEEN $date";
             $this->db->where($condition);
         }
-        return $this->db->get()->result();
+        return $this->db->order_by("id_customer_payment",'desc')->get()->result();
     }
     
     function dateformatter($range_string, $formate = 'Mysql') {
