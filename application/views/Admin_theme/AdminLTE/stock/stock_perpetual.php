@@ -63,7 +63,7 @@
                         ?>
                     </div><!-- /.box-body -->
                     <?php
-                }if (isset($date_range)) {
+                }if (isset($stock_perpetual)) {
                     ?>
                     <div class="box-header">
                         <h3 class="text-center"><?= $this->config->item('SITE')['name'] ?></h3>

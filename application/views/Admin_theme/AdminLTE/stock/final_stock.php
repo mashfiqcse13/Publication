@@ -68,31 +68,60 @@
 
                     </form>
                 </div>
-                <!-- /.box -->
 
-                <!-- Form Element sizes -->
-
-                <!-- /.box -->
-
-
-                <!-- /.box -->
-
-                <!-- Input addon -->
-
-                <!-- /.box -->
 
             </div>
-            <div class="col-md-12">
-
-                <div class="box">
-
+                       <div class="box" id="block">
                     <?php
-                    echo $glosary->output;
-                    ?>
+//                    if (isset($due)) {
+                        ?>
+                        <div class="box-header">
+                            <p class="text-center"><strong>Income Report</strong></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php if(isset($date_range)){ echo $date_range;} ?></p>
 
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                        </div>
+                        <div class="box-body">
+                            <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                <thead style="background: #DFF0D8;">
+                                    <tr>
+    <!--                                        <th></th>-->
+                                        <th>Item ID</th>
+                                        <th>Item Name</th>
+                                        <th>Issue Amount</th>
+                                        <th>Return Amount</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach($report1 as $row){
+                                    ?>
+                                    <tr>
+                                       
+                                        <td ><?=$row->id_item;?></td>
+                                        <td ><?=$row->item_name;?></td>
+                                        <td ><?=$row->issue_quantity;?></td>
+                                        <td><?php
+                                        if(!empty($report2)){
+                                                foreach($report2 as $return){
+                                               if($row->id_item==$return->id_item){
+                                                   echo $return->return_quantity;
+                                               }
+                                        }
+                                        }else{
+                                             echo 0;
+                                         }
+                                            
+                                            ?></td>
+                                    </tr>
+                                    
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
-
-            </div>
         </div>
 
 
