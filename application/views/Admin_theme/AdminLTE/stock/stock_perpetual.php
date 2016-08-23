@@ -107,7 +107,20 @@
                                         <td><?php echo $stock->opening_amount; ?></td>
                                         <td><?php echo $stock->receive_amount; ?></td>
                                         <td><?php echo $stock->sales_amount; ?></td>
-                                        <td><?php echo $stock->specimen; ?></td>
+                                        <td><?php
+                                        $accurate_specimen= 0;
+                                        if(!empty($return_specimen)){
+                                            foreach($return_specimen as $sp){
+                                                if($stock->id_item==$sp->id_item){
+                                                    echo $accurate_specimen= $stock->specimen - $sp->return_quantity;
+                                                }
+                                            }
+                                        }else{
+                                             echo $accurate_specimen= $stock->specimen; 
+                                        }
+                                       
+                                        
+                                        ?></td>
                                         <td><?php echo $stock->return_amountreject; ?></td>
                                         <td><?php echo $acturatesale=$stock->sales_amount - $stock->return_amountreject; ?></td>
                                         <td><?php 
@@ -124,10 +137,11 @@
                                         
                                         <td><?php 
                                         
-                                         if(!empty($old_info)){
+                                        if(!empty($old_info)){
                                                 foreach($old_info as $row){
-                                                    $val = ( $stock->id_item==$row->id_item )? $row->old_quantity : 0 ;
-                                                    echo $acturatesale - $val;
+                                               if($stock->id_item==$row->id_item){
+                                                   echo $acturatesale- $row->old_quantity;
+                                               }
                                         }
                                         }else{
                                              echo $acturatesale;
@@ -139,7 +153,7 @@
                                         </td>
                                         <td><?php echo 
                                         ($stock->opening_amount+$stock->receive_amount+$stock->return_amountreject)-
-                                        $stock->sales_amount-$stock->specimen; 
+                                        $stock->sales_amount-$accurate_specimen; 
                                         ?></td>
                                         
                                         

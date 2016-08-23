@@ -50,6 +50,9 @@ class Stock extends CI_Controller {
 //            $crud->where($get_where_clause);
             $data['stock_perpetual'] = $this->Stock_model->get_perpetual_info($date[0], $date[1]); 
             $data['old_info'] = $this->Stock_model->old_book_quantity($date[0],$date[1]);
+            $this->load->model('Specimen_model');
+            $data['return_specimen'] = $this->Specimen_model->get_report_table_return($data['id_agent']='', $data['id_item']='', $data['date_range']);
+            //print_r($data['report2']  );
             
         }
 
