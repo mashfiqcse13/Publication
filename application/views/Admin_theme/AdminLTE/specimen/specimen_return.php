@@ -1,10 +1,12 @@
 <!--add header -->
 <script type="text/javascript">
     var item_details = <?php echo json_encode($item_details) ?>;
+    
     var item_selection = new Array();
     var data_to_post = {
         'action': null,
         'id_agent': 0,
+        'memo_id': 0,
         'item_selection': ''
     };
     var ajax_url = '<?php echo site_url('specimen/specimen_return_ajax_url') ?>';
@@ -67,7 +69,9 @@
                                 </div>
 
                                 <div class="form-group col-lg-4">
+                                    
                                     <input type="submit" name="memo_search" class="btn btn-primary" value="Search Memo">
+                                    
                                     <a href="" class="btn btn-primary" >reset</a>
                                 </div>
                                 
@@ -90,6 +94,7 @@
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
+                                <input type="hidden" name="memo_id" value="<?php if(isset($memo_id)){echo $memo_id; } ?>" />
                                 <input type="text" disabled="" value="<?php echo date("m/d/Y"); ?>" class="form-control" id="int_id_contact" placeholder="Password">
                             </div>
 
@@ -231,6 +236,7 @@
     });
    
         data_to_post.id_agent = $('[name="id_agent"]').val();
+        data_to_post.memo_id=$('[name="memo_id"]').val();
      
     function remove_from_cart(item_to_remove) {
         delete item_selection[item_to_remove];

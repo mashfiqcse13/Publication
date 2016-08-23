@@ -94,8 +94,8 @@ class Specimen_model extends CI_Model {
         }
         echo json_encode($response);
     }
-
-    function get_report_table($id_agent = '', $id_item = '', $date_range = '') {
+    
+    function get_report_table_issue($id_agent = '', $id_item = '', $date_range = ''){
         $where = array();
         if (!empty($id_agent)) {
             array_push($where, "specimen_total.id_agent = $id_agent");
@@ -111,39 +111,41 @@ class Specimen_model extends CI_Model {
         } else {
             $where = implode(' AND ', $where);
         }
-        $sql = "SELECT 
-                    id_item,
-                    item_name,
-                    SUM(amount_copy) as total_quantity
-                    FROM(
-                            SELECT specimen_total.id_agent, specimen_agent.name as agent_name, specimen_items.id_item,
-                            items.name as item_name, amount_copy, date_entry
-                            FROM  `specimen_total`  NATURAL JOIN  `specimen_items` NATURAL JOIN  `items` 
-                            JOIN  `specimen_agent` on specimen_total.id_agent= specimen_agent.id_agent
-                            where $where
-                    ) AS report
-                    GROUP BY id_item ORDER BY  `id_item` ASC  ";
-        $this->table->set_heading(array('Item ID', 'Item Name', 'Total Amount'));
-        $tmpl = array(
-            'table_open' => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
-            'heading_row_start' => '<tr style="background:#ddd">',
-            'heading_row_end' => '</tr>',
-            'heading_cell_start' => '<th>',
-            'heading_cell_end' => '</th>',
-            'row_start' => '<tr>',
-            'row_end' => '</tr>',
-            'cell_start' => '<td>',
-            'cell_end' => '</td>',
-            'row_alt_start' => '<tr>',
-            'row_alt_end' => '</tr>',
-            'cell_alt_start' => '<td>',
-            'cell_alt_end' => '</td>',
-            'table_close' => '</table>'
-        );
-        $this->table->set_template($tmpl);
-        $table_data = $this->db->query($sql)->result_array();
-        return $this->table->generate($table_data);
+        $sql = $this->db->query("SELECT items.id_item as id_item,items.name as item_name,sum(amount_copy) as issue_quantity FROM specimen_total
+                                            left JOIN specimen_items ON specimen_total.id_specimen_total=specimen_items.id_specimen_total
+                                            left JOIN specimen_agent ON specimen_agent.id_agent=specimen_total.id_agent
+                                            left JOIN items ON specimen_items.id_item=items.id_item 
+                                            where $where
+                                            GROUP BY items.id_item order by  items.id_item ASC")->result();
+        return $sql;
     }
+    function get_report_table_return($id_agent = '', $id_item = '', $date_range = '') {
+        $where = array();
+        if (!empty($id_agent)) {
+            array_push($where, "specimen_return_total.id_agent = $id_agent");
+        }
+        if (!empty($id_item)) {
+            array_push($where, "specimen_return_items.id_item = $id_item");
+        }
+        if (!empty($date_range)) {
+            array_push($where, "date(date_entry) BETWEEN" . $this->Common->convert_date_range_to_mysql_between($date_range));
+        }
+        if (empty($where) && sizeof($where) == 0) {
+            $where = 1;
+        } else {
+            $where = implode(' AND ', $where);
+        }
+        
+         $sql= $this->db->query("SELECT items.id_item as id_item,items.name as item_name,sum(amount_copy) as return_quantity FROM specimen_return_total
+                    left JOIN specimen_return_items ON specimen_return_total.id_specimen_total=specimen_return_items.specimen_return_items_id
+                    left JOIN specimen_agent ON specimen_agent.id_agent=specimen_return_total.id_agent
+                    left JOIN items ON specimen_return_items.id_item=items.id_item 
+                    where $where 
+                    GROUP BY items.id_item order by  items.id_item ASC  ")->result();
+        return $sql;
+    }
+    
+ 
 
     function get_agent_name_by($id_agent) {
         if (empty($id_agent)) {
@@ -278,6 +280,7 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item
         $this->load->model('Stock_model');
 
         $id_agent = $this->input->post('id_agent');
+        $memo_id = $this->input->post('memo_id');
 
         $data = array(
             'id_agent' => $id_agent,
@@ -304,10 +307,10 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item
             
             //update 
             $this->db->query("UPDATE `specimen_items` SET `amount_copy`=amount_copy - ".$value['item_quantity']." 
-                                            WHERE id_item = ".$value['item_id']);
+                                            WHERE id_item = ".$value['item_id']. " AND id_specimen_total=$memo_id " );
             
             array_push($data_sales, $tmp_data_sales);
-            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'], 3);
+            //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'], 3);
             $this->Stock_model->stock_add($value['item_id'], $value['item_quantity']);
         }
 

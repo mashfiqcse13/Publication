@@ -109,14 +109,19 @@ class Specimen extends CI_Controller {
         $data['report_asked'] = $this->input->post('report_asked');
 
         if (!empty($data['report_asked'])) {
-            $data['report'] = $this->Specimen_model->get_report_table($data['id_agent'], $data['id_item'], $data['date_range']);
+            $data['report1'] = $this->Specimen_model->get_report_table_issue($data['id_agent'], $data['id_item'], $data['date_range']);
+            $data['report2'] = $this->Specimen_model->get_report_table_return($data['id_agent'], $data['id_item'], $data['date_range']);
+            
             $data['agent_name'] = $this->Specimen_model->get_agent_name_by($data['id_agent']) or
                     $data['agent_name'] = 'Any';
             $data['item_name'] = $this->Common->get_item_name_by($data['id_item']) or
                     $data['item_name'] = 'Any';
-            $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_page', $data);
+//            echo '<pre>';
+//            print_r($data);
+            $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
         } else {
             $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
+            
         }
     }
     
@@ -137,6 +142,7 @@ class Specimen extends CI_Controller {
             }
              $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_by_id($id);
              $data['item_dropdown'] = $this->Specimen_model->get_available_specimen_item_dropdown($memo_id);
+             $data['memo_id']=$memo_id;
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
