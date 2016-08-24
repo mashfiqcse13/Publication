@@ -93,7 +93,7 @@
                 
            
             if (isset($total_book_return_section)) { ?>
-                
+                <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  style="margin: 29px 0;" value="Print Report"/>
             
                 <div class="col-md-3">
                     <label>Select Book Name :</label>

@@ -38,7 +38,7 @@
                             <div class="form-group col-md-2 text-left">
                                 <label>Search with Date Range:</label>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -46,8 +46,10 @@
                                     <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
+                            <div class="col-md-2">
                             <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             <?php echo anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                            </div>
                         </form>
 
                     </div>
@@ -73,10 +75,10 @@
 
 
                             </div><!-- /.form group -->
-
+                            <div class="col-md-2">
                             <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-
+                            </div>
 
 
                             <?= form_close(); ?>

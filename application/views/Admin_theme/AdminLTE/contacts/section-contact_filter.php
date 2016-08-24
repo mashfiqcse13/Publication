@@ -47,7 +47,7 @@
         <div class="form-group col-lg-2">
             <?php  if ($this->uri->segment(3) !== 'read' && $this->uri->segment(3) !== 'add' && $this->uri->segment(3) !== 'edit' )   { ?>
 
-                 <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  style="margin: 29px 0;" value="Print Report"/>
+                 
         
             <?php  }     ?>
            </div> 

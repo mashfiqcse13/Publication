@@ -27,14 +27,18 @@
                     <div class="box-header">
                         <?php
                         $attributes = array(
-                            'clase' => 'form-inline',
+                            'clase' => 'form',
                             'method' => 'get');
                         echo form_open('', $attributes)
                         ?>
-
-                        <div class="form-group col-md-3">
-                            <label>Party Name or Code</label>
-                            <div class="input-group">
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Party Name or Code</label>
+                                </div>
+                                
+                                <div class="form-group">
                                 <select class="form-control select2" style="width:100%;"  name="customer">
                                     <option value="">Select Party Name Or Code</option>
                                     <?php
@@ -46,33 +50,37 @@
                                     ?>
                                 </select>
                             </div>
-
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Payment Method</label>
-                            <div class="input-group">
-                                <select class="form-control select2" style="width:100%;"  name="payment_method">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                </div>
+                                <div class="form-group">
+                                <select class="form-control select2" name="payment_method">
                                     <option value="">Select Payment Method</option>
                                     <option value="1">Cash</option>
                                     <option value="2">Advance Payment</option>
                                     <option value="3">Bank</option>
                                 </select>
                             </div>
-
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Date Range:</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Date Range:</label>
                                 </div>
-                                <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                            </div><!-- /.input group -->
-                        </div><!-- /.form group -->
-                        <div class="form-group col-md-2" style="margin-top: 25px;">
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                             
+                            <div class="col-md-3" style="margin-top:40px" >
+                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             <?= anchor(current_url(), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                        </div>
+                            </div>
+                        </div> 
                         </form>
                     </div>
                 </div>
