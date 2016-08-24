@@ -171,7 +171,7 @@ class Production_process extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Process Reports';
+        $data['Title'] = 'Order Transfer Report';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report', $data);
     }
 
@@ -196,7 +196,7 @@ class Production_process extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Process First Steps';
+        $data['Title'] = 'Order Starting Report';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report_first_step_only', $data);
     }
 

@@ -22,7 +22,7 @@
             <li class="header">Bank Setting</li>
             <li><?php echo anchor('bank/bank', '<i class="fa fa-plus-circle"></i>  <span>Bank Name</span>'); ?></li>
             <li><?php echo anchor('bank/bank_account', '<i class="fa fa-plus-circle"></i>  <span>Bank Account No.</span>'); ?></li>
-            <li><?php echo anchor('bank/bank_account_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Account Type</span>'); ?></li>
+            <!--<li><?php echo anchor('bank/bank_account_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Account Type</span>'); ?></li>-->
            
             <!--            <li><?php echo anchor('bank/bank_transaction_type', '<i class="fa fa-plus-circle"></i>  <span>Bank Transaction Type</span>'); ?></li>-->
 
