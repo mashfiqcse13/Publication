@@ -309,9 +309,9 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), array(
             'data' => 'বাকি : ',
-            'class' => 'left_separator z-index-top text-bold',
+            'class' => 'left_separator z-index-top text-bold ',
             'colspan' => 2
-                ), $current_due );
+                ), $this->Common->taka_format($current_due) );
         
         $this->table->add_row(array(
             'data' => '',

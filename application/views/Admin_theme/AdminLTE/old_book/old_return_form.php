@@ -110,7 +110,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <label for="cost">Transport Cost :</label>
+                                <label for="cost">Courier Cost Deduction :</label>
                                 <div class="input-group">
                                     <input type="number" name="cost" class="form-control" id="cash_payment" placeholder="Aamount">
                                     

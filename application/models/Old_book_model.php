@@ -434,6 +434,15 @@ class Old_book_model extends CI_Model {
             'colspan' => 2,
             'class' => 'taka_formate text-right'
         ));
+          $this->table->add_row(array(
+            'data' => 'অবশিষ্ট',
+            'colspan' => 2,
+              'class' => 'text-bold'
+                ), array(
+            'data' => $return_total,
+            'colspan' => 2,
+            'class' => 'text-right text-bold taka_formate'
+        ));
         
         
 

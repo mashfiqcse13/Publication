@@ -79,7 +79,12 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
+                    <td><?php 
+                    $old = $memo_header_details['issue_date'];
+                    $new=date('d-m-Y H:i:s', strtotime($old));
+                    echo " " .  $new;
+                    
+                    ?></td>
 
                 </tr>
 
@@ -148,7 +153,12 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
+                    <td><?php 
+                    $old = $memo_header_details['issue_date'];
+                    $new=date('d-m-Y H:i:s', strtotime($old));
+                    echo " " .  $new;
+                    
+                    ?></td>
 
                 </tr>
 
@@ -189,5 +199,5 @@
 
 </div>
 
-
+<?php include_once __DIR__ . '/../footer.php'; ?>
 

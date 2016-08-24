@@ -170,7 +170,7 @@ $.fn.digits = function(){
     })
 }
 $('.taka_formate').digits(); 
- $('td div').not('div.tools').digits(); 
+$('td div').not('div.tools').digits(); 
  
 
 
