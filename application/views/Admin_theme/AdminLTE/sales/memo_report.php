@@ -236,6 +236,7 @@
 
 
                     <td><strong>Date:</strong></td>
+                    
 
                     <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
 

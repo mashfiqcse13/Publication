@@ -73,7 +73,7 @@
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                         </div>
                         <div style="color: #777777;">
-                            <p class="pull-left" > <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                            <p class="pull-left" > <strong>Date Range: (From - To) </strong> <?= isset($date_range) ? $date_range : ''; ?></p>
                             <br>
                             <p class="alert-info pull-left">Closing Stock = (Opening Stock + Receive) - (Accurate Sale + Accurate Specimen )  </p>
                             

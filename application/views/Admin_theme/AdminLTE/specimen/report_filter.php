@@ -86,7 +86,7 @@
     <!--                                        <th></th>-->
                                         <th>Item ID</th>
                                         <th>Item Name</th>
-                                        <th>Issue Amount</th>
+                                        <th>Accurate Specimen Issue = <br> (Issue Amount - Return Amount) </th>
                                         <th>Return Amount</th>
                                         
                                     </tr>

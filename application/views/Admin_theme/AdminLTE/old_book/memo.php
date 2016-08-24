@@ -92,8 +92,9 @@
 
 
                     <td><strong>Date:</strong></td>
-
-                    <td><?php echo " " . $memo_header_details['issue_date'] ?></td>
+                    
+                    <td><?php echo " " . date('d-m-Y H:i:s', strtotime($memo_header_details['issue_date'])) ?></td>
+                   
 
                 </tr>
 
@@ -143,6 +144,7 @@
     </div>
 
 </div>
+<?php include_once __DIR__ . '/../footer.php'; ?>
 
 
 

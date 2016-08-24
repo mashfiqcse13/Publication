@@ -94,8 +94,5 @@ class Stock extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'stock/final_stock', $data);
     }
 
-    function stock_perpetual_report() {
-        
-    }
 
 }
