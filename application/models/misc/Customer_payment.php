@@ -24,11 +24,11 @@ class Customer_payment extends CI_Model {
             $sql = "UPDATE  `customer_due_payment_register` SET  `id_total_sales` = $id_total_sales  WHERE `id_customer_due_payment_register` ={$this->combine_id_customer_due_payment_register};";
             $this->db->query($sql);
         }
-    } 
+    }
 
     function due_payment($customer_id, $payment_amount, $id_payment_method = 1) {
         $this->load->model('misc/Customer_due');
-        $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed'.". Customer ammount = $payment_amount");
+        $this->Customer_due->reduce($customer_id, $payment_amount) or die('Addtional ammount can not be processed' . ". Customer ammount = $payment_amount");
         if ($id_payment_method == 1) {
             $this->load->model('misc/Cash');
             $this->Cash->add($payment_amount) or die('Failed to add cash to the cash box');
@@ -71,31 +71,29 @@ class Customer_payment extends CI_Model {
         $this->db->update_batch('sales_total_sales', $data_to_update_in_total_sales, 'id_total_sales');
         $this->db->insert_batch('customer_payment', $data_to_insert_in_due_payment);
         return $last_id_customer_due_payment_register;
-    } 
-    
-    function generate_due_report($id_cash,$id_bank){
-        if($id_cash != 0){
-            $con=" customer_due_payment_register.id_customer_due_payment_register = $id_cash ";
+    }
+
+    function generate_due_report($id_cash, $id_bank) {
+        if ($id_cash != 0) {
+            $con = " customer_due_payment_register.id_customer_due_payment_register = $id_cash ";
         }
-        if($id_bank != 0){
-            $con=" customer_due_payment_register.id_customer_due_payment_register = $id_bank ";
+        if ($id_bank != 0) {
+            $con = " customer_due_payment_register.id_customer_due_payment_register = $id_bank ";
         }
-        
-        if($id_bank !=0 && $id_cash != 0){
-            $con=" customer_due_payment_register.id_customer_due_payment_register BETWEEN $id_cash AND  $id_bank ";
+
+        if ($id_bank != 0 && $id_cash != 0) {
+            $con = " customer_due_payment_register.id_customer_due_payment_register BETWEEN $id_cash AND  $id_bank ";
         }
-        
+
         $this->db->select('customer_payment.id_total_sales,customer_payment.paid_amount,payment_method.name_payment_method,customer_payment.payment_date')
                 ->from('customer_due_payment_register')
-                ->join('customer_payment','customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register' , 'left')
-                ->join('payment_method' , ' payment_method.id_payment_method=customer_payment.id_payment_method' , 'left')
+                ->join('customer_payment', 'customer_due_payment_register.id_customer_due_payment_register=customer_payment.id_customer_due_payment_register', 'left')
+                ->join('payment_method', ' payment_method.id_payment_method=customer_payment.id_payment_method', 'left')
                 ->where(" $con ");
-               $query=$this->db->get()->result();
-        
-               return $query;       
-        }
-    
-    
+        $query = $this->db->get()->result();
+
+        return $query;
+    }
 
     function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method) {
         $data_to_insert = array(
@@ -146,8 +144,7 @@ class Customer_payment extends CI_Model {
             return $result[0]->today_collection;
         }
     }
-    
-    
+
     function today_customer_due_bank() {
         $sql = "SELECT sum(`paid_amount`) as today_customer_due_bank FROM `customer_payment` WHERE `id_payment_method` = 3 and `due_payment_status` = 1 and date(`payment_date`) = date(now())";
         $result = $this->db->query($sql)->result();
@@ -166,6 +163,30 @@ class Customer_payment extends CI_Model {
         } else {
             return $result[0]->today_customer_due_cash;
         }
+    }
+
+    function today_total_payment_against_sale() {
+        $sql = "SELECT sum(`cash_paid`)as today_total_cash_paid_against_sale,
+            sum(`bank_paid`)as today_total_bank_paid_against_sale,
+            sum(`customer_advance_paid`)as today_total_advance_deduction_against_sale
+            FROM `view_customer_paid_marged` WHERE `id_total_sales` in (SELECT `id_total_sales` FROM `sales_total_sales` WHERE Date(`issue_date`) = Date(now())  )";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_total_cash_paid_against_sale)) {
+            $date['today_total_cash_paid_against_sale'] = 0;
+        } else {
+            $date['today_total_cash_paid_against_sale'] = $result[0]->today_total_cash_paid_against_sale;
+        }
+        if (empty($result[0]->today_total_bank_paid_against_sale)) {
+            $date['today_total_bank_paid_against_sale'] = 0;
+        } else {
+            $date['today_total_bank_paid_against_sale'] = $result[0]->today_total_bank_paid_against_sale;
+        }
+        if (empty($result[0]->today_total_advance_deduction_against_sale)) {
+            $date['today_total_advance_deduction_against_sale'] = 0;
+        } else {
+            $date['today_total_advance_deduction_against_sale'] = $result[0]->today_total_advance_deduction_against_sale;
+        }
+        return $date;
     }
 
 }

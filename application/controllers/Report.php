@@ -45,11 +45,16 @@ class Report extends CI_Controller {
         $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
         $data['advance_payment_balance'] = $this->Advance_payment_model->total_advance_payment_balance();
 
+        $today_total_payment_against_sale = $this->Customer_payment->today_total_payment_against_sale();
+        $data['today_total_cash_paid_against_sale'] = $today_total_payment_against_sale['today_total_cash_paid_against_sale'];
+        $data['today_total_bank_paid_against_sale'] = $today_total_payment_against_sale['today_total_bank_paid_against_sale'];
+        $data['today_total_advance_deduction_against_sale'] = $today_total_payment_against_sale['today_total_advance_deduction_against_sale'];
+        
         $data['today_customer_due_bank'] = $this->Customer_payment->today_customer_due_bank();
         $data['today_customer_due_cash'] = $this->Customer_payment->today_customer_due_cash();
         $data['today_customer_advance_payment_bank'] = $this->Advance_payment_model->today_customer_advance_payment_bank();
         $data['today_customer_advance_payment__cash'] = $this->Advance_payment_model->today_customer_advance_payment__cash();
-        
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Cash in Hand';
