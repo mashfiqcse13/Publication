@@ -37,14 +37,14 @@ class Contacts extends CI_Controller {
                 ->display_as('id_customer', 'ID')->order_by('id_customer', 'desc')->display_as('name', 'Customer Name')->set_subject('Customer');
 
         $crud->callback_add_field('division', function () {
-            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division"');
         })->callback_edit_field('division', function ($value, $primary_key) {
-            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division" ');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" id="dist"','equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" id="dist" ','equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -52,6 +52,10 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
         });
+        
+        $crud->unset_add_fields('upazila');
+        $crud->unset_edit_fields('upazila');
+        $crud->unset_columns('upazila');
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -68,14 +72,14 @@ class Contacts extends CI_Controller {
                 ->display_as('id_contact_teacher', 'ID')->order_by('id_contact_teacher', 'desc')->set_subject('Teachers');
 
         $crud->callback_add_field('division', function () {
-            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division" ');
         })->callback_edit_field('division', function ($value, $primary_key) {
-            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -90,6 +94,10 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('subject', function ($value, $primary_key) {
             return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
         });
+        
+        $crud->unset_add_fields('upazila');
+        $crud->unset_edit_fields('upazila');
+        $crud->unset_columns('upazila');
 
 
         $crud = $this->Contacts_model->set_filter($crud);
@@ -114,14 +122,14 @@ class Contacts extends CI_Controller {
 
 
         $crud->callback_add_field('division', function () {
-            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division"');
         })->callback_edit_field('division', function ($value, $primary_key) {
-            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -133,6 +141,9 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Agent";
         });
+        $crud->unset_add_fields('upazila');
+        $crud->unset_edit_fields('upazila');
+        $crud->unset_columns('upazila');
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -150,14 +161,14 @@ class Contacts extends CI_Controller {
                 ->callback_before_update(array($this->Contacts_model,'marketing_officer_type_setter_post_array'));
 
         $crud->callback_add_field('division', function () {
-            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division"');
         })->callback_edit_field('division', function ($value, $primary_key) {
-            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -169,6 +180,9 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Marketing Office";
         });
+        $crud->unset_add_fields('upazila');
+        $crud->unset_edit_fields('upazila');
+        $crud->unset_columns('upazila');
 
         $output = $crud->render();
         $data['glosary'] = $output;
