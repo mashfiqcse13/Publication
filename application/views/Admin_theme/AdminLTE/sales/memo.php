@@ -39,23 +39,9 @@
 
 
 
-        <div class="row" style="padding-top:50px">
+        <div class="row" style="padding-top:100px"> 
 
-<!--            <div class="text-center" style="display:none">
-
-                <h6>বিসমিল্লাহির রহমানির রহিম</h6>
-
-                <h1>দি যমুনা পাবলিশার্স</h1>
-
-                <p>৩৮,বাংলাবাজার(১ম তলা) ঢাকা-১১০০ । ফোন- ৭১১৬০৬৯  </p>
-
-                <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
-
-            </div>-->
-
-
-
-            <table class="table table_custom" style="font-size:13px">
+            <table class="table table_custom text-bold" style="font-size:13px">
 
                 <tr>
 
