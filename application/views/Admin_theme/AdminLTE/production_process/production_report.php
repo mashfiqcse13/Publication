@@ -76,7 +76,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_order_id as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes ; ?></option>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes; ?></option>
                                                 <?php
                                             }
                                             ?>
