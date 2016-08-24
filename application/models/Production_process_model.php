@@ -680,4 +680,23 @@ FROM view_process_step_transfer_log_with_details;')->result();
         return $output;
     }
 
+    function get_process_details_for_report_by_step_from($id_process_step_from) {
+        $this->db->select('*');
+        $this->db->from('view_process_step_transfer_log_with_details');
+        $this->db->where('id_process_step_from', $id_process_step_from);
+        return $this->db->get()->result();
+    }
+
+    function get_process_details_for_row($id_process_step_from) {
+        $result = $this->db->query('SELECT DISTINCT id_processes,id_process_type,id_item,item_name,name_process_type,from_id_vendor,from_name,from_type
+FROM view_process_step_transfer_log_with_details;')->row();
+        return $result;
+    }
+
+    function get_id_process_step_from() {
+        $result = $this->db->query('SELECT DISTINCT id_process_step_from
+FROM view_process_step_transfer_log_with_details;')->result();
+        return $result;
+    }
+
 }

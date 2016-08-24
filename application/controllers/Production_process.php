@@ -200,4 +200,19 @@ class Production_process extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report_first_step_only', $data);
     }
 
+    function process_transection() {
+        $id_process_step_from = $this->input->get('id_process_step_from');
+        $btn = $this->input->get('btn');
+        if (isset($btn)) {
+            $data['get_process_details_for_report_by_step_from'] = $this->Production_process_model->get_process_details_for_report_by_step_from($id_process_step_from);
+            $data['get_process_details_for_row'] = $this->Production_process_model->get_process_details_for_row($id_process_step_from);
+//            print_r($data);exit();
+        }
+        
+        $data['get_id_process_step_from'] = $this->Production_process_model->get_id_process_step_from();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Process Transection';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/process_transfer', $data);
+    }
 }
