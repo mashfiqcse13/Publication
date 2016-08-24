@@ -64,7 +64,8 @@
                     <td><strong>District:</strong></td>
                     <td><?= $memo_header_details['district'] ?></td>
                     <td><strong>Date:</strong></td>
-                    <td><?php echo " " . $memo_header_details['date_entry'] ?></td>
+                    <td><?php echo " " . date('d-m-Y H:i:s', strtotime($memo_header_details['date_entry'])) ?></td>
+                    
                 </tr>
             </table>
         </div>

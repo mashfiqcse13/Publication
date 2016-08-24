@@ -79,12 +79,7 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php 
-                    $old = $memo_header_details['issue_date'];
-                    $new=date('d-m-Y H:i:s', strtotime($old));
-                    echo " " .  $new;
-                    
-                    ?></td>
+                    <td><?php echo " " . date('d-m-Y H:i:s', strtotime($memo_header_details['issue_date'])) ?></td>
 
                 </tr>
 
