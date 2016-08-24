@@ -27,6 +27,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
+            <!--Total Cash In-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -40,6 +41,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Total Cash Out-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
@@ -53,6 +55,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Cash In Hand-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -68,6 +71,7 @@
             </div>
         </div>
         <div class="row">
+            <!--Today Total Sales-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -81,7 +85,9 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
+        </div>
+        <div class="row">
+            <!--Today Cash Collection Against Salem-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -95,6 +101,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Today Bank Collection Against Sale-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -108,6 +115,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Today Advance Deduction Against Sale-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -121,7 +129,9 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
+        </div>
+        <div class="row">
+            <!--oday Total Cash Collection-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -135,7 +145,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
+            <!--Today Total Bank Collection-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -149,6 +159,9 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <!--Today Total Due-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -162,21 +175,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!--            <div class="col-lg-3 col-xs-6">
-                             small box 
-                            <div class="small-box bg-green">
-                                <div class="inner">
-                                    <h3 class="text-right faka_formate"><?php echo $advance_payment_balance; ?> TK</h3>
-                                    <p>Party Total Advance Collection</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-ios-pricetag-outline"></i>
-                                </div>
-                                <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>-->
-        </div>
-        <div class="row">
+            <!--Today Due Collection Cash-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -190,6 +189,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Today Due Collection Bank-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -203,6 +203,9 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <!--Today Advance Collection Cash-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -216,12 +219,27 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <!--Today Advance Collection Bank-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $today_customer_advance_payment_bank; ?> TK</h3>
                         <p>Today Advance Collection Bank</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-pricetag-outline"></i>
+                    </div>
+                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!--Party Total Advance Collection-->
+            <div class="col-lg-3 col-xs-6">
+                 <!--small box--> 
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 class="text-right faka_formate"><?php echo $advance_payment_balance; ?> TK</h3>
+                        <p>Party Total Advance Collection</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
