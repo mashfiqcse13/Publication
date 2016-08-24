@@ -234,11 +234,11 @@ class Production_process_model extends CI_Model {
             $process_status = $this->get_process_status_by_process_id($id_processes);
             if ($process_status == 1) {
                 $this->table->add_row(
-                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount,$each_step->transferable_amount, $each_step->date_created, $link_step_id, $action_btn
+                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->transferable_amount, $each_step->date_created, $link_step_id, $action_btn
                 );
             } else {
                 $this->table->add_row(
-                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount,$each_step->transferable_amount, $each_step->date_created, $link_step_id
+                        $each_step->id_process_steps, $each_step->vendor_name, $each_step->step_name, $each_step->order_amount, $each_step->transfered_amount, $each_step->reject_amount, $each_step->damaged_amount, $each_step->missing_amount, $each_step->transferable_amount, $each_step->date_created, $link_step_id
                 );
             }
         }
@@ -260,9 +260,9 @@ class Production_process_model extends CI_Model {
         );
         $this->table->set_template($tmpl);
         if ($process_status == 1) {
-            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing','Remaining', 'Date Created', 'Linked Step ID', 'Action');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Remaining', 'Date Created', 'Linked Step ID', 'Action');
         } else {
-            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing','Remaining', 'Date Created', 'Linked Step ID');
+            $this->table->set_heading("Step ID", 'Vendor Name', 'Step Name', "Order amount", 'Transfered', 'Rejected', 'Damaged', 'Missing', 'Remaining', 'Date Created', 'Linked Step ID');
         }
         return $this->table->generate();
     }
@@ -285,34 +285,38 @@ class Production_process_model extends CI_Model {
 //        
         return $result;
     }
-    
-    function get_process_type(){
+
+    function get_process_type() {
         $result = $this->db->query('SELECT DISTINCT id_process_type,name_process_type
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
-    function get_order_id(){
+
+    function get_order_id() {
         $result = $this->db->query('SELECT DISTINCT id_processes,name_process_type
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
-    function get_vendor_from(){
+
+    function get_vendor_from() {
         $result = $this->db->query('SELECT DISTINCT from_id_vendor,from_name,from_type
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
-    function get_vendor_to(){
+
+    function get_vendor_to() {
         $result = $this->db->query('SELECT DISTINCT to_id_vendor,to_name,to_type
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
-    function get_item(){
+
+    function get_item() {
         $result = $this->db->query('SELECT DISTINCT id_item,item_name
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
 
-    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor,$id_process_type, $date) {
+    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $id_process_type, $date) {
         $dates = explode('-', $date);
 //        print_r($dates);exit();
         if ($dates[0] != '') {
@@ -332,10 +336,60 @@ FROM view_process_step_transfer_log_with_details;')->result();
         }if (!empty($id_process_type)) {
             $this->db->where('id_process_type', $id_process_type);
         }if ($dates[0] != '') {
-            
+
             $condition = "DATE(date_transfered) BETWEEN '$date_from'  AND  '$date_to'";
 //            echo $condition; exit();
             $this->db->where($condition);
+        }
+        return $this->db->get()->result();
+    }
+
+    function get_process_details_for_report_first_step_only() {
+        $result = $this->db->select("*")
+                        ->from('view_process_step_first_entry')
+                        ->get()->result();
+        return $result;
+    }
+
+    function get_process_type_first_step_only() {
+        $result = $this->db->query('SELECT DISTINCT id_process_type,name_process_type FROM view_process_step_first_entry;')->result();
+        return $result;
+    }
+
+    function get_order_id_first_step_only() {
+        $result = $this->db->query('SELECT DISTINCT id_processes,name_process_type FROM view_process_step_first_entry;')->result();
+        return $result;
+    }
+
+    function get_vendor_first_step_only() {
+        $result = $this->db->query('SELECT DISTINCT id_vendor,vendor_name,vendor_type FROM view_process_step_first_entry;')->result();
+        return $result;
+    }
+
+    function get_item_first_step_only() {
+        $result = $this->db->query('SELECT DISTINCT id_item,item_name FROM view_process_step_first_entry;')->result();
+        return $result;
+    }
+
+    function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $date) {
+        $this->db->select("*");
+        $this->db->from('view_process_step_first_entry');
+        if (!empty($id_processes)) {
+            $this->db->where('id_processes', $id_processes);
+        }if (!empty($id_vendor)) {
+            $this->db->where('id_vendor', $id_vendor);
+        }if (!empty($id_item)) {
+            $this->db->where('id_item', $id_item);
+        }if (!empty($id_process_type)) {
+            $this->db->where('id_process_type', $id_process_type);
+        }if (!empty($date)) {
+            $dates = explode('-', $date);
+            if ($dates[0] != '') {
+                $date_from = date('Y-m-d', strtotime($dates[0]));
+                $date_to = date('Y-m-d', strtotime($dates[1]));
+                $condition = "DATE(date_created) BETWEEN '$date_from'  AND  '$date_to'";
+                $this->db->where($condition);
+            }
         }
         return $this->db->get()->result();
     }

@@ -154,16 +154,16 @@ class Production_process extends CI_Controller {
         $to_id_vendor = $this->input->get('to_id_vendor');
         $id_process_type = $this->input->get('id_process_type');
         $data['date_range'] = $this->input->get('date_range');
-        
+
         $data['get_process_type'] = $this->Production_process_model->get_process_type();
         $data['get_order_id'] = $this->Production_process_model->get_order_id();
         $data['get_vendor_from'] = $this->Production_process_model->get_vendor_from();
         $data['get_vendor_to'] = $this->Production_process_model->get_vendor_to();
         $data['get_item'] = $this->Production_process_model->get_item();
-        
+
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes,$from_id_vendor,$id_item,$to_id_vendor,$id_process_type,$data['date_range']);
+            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $id_process_type, $data['date_range']);
 //            print_r($data);exit();
         } else {
             $data['get_all_production_process'] = $this->Production_process_model->get_process_details_for_report();
@@ -173,6 +173,31 @@ class Production_process extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Process Reports';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report', $data);
+    }
+
+    function production_report_first_step_only() {
+        $id_processes = $this->input->get('id_processes');
+        $id_vendor = $this->input->get('id_vendor');
+        $id_item = $this->input->get('id_item');
+        $id_process_type = $this->input->get('id_process_type');
+        $data['date_range'] = $this->input->get('date_range');
+
+        $data['get_process_type'] = $this->Production_process_model->get_process_type_first_step_only();
+        $data['get_order_id'] = $this->Production_process_model->get_order_id_first_step_only();
+        $data['get_vendor'] = $this->Production_process_model->get_vendor_first_step_only();
+        $data['get_item'] = $this->Production_process_model->get_item_first_step_only();
+
+        $btn = $this->input->get('btn');
+        if (isset($btn)) {
+            $data['all_production_process_first_step_info_by_search'] = $this->Production_process_model->get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $data['date_range']);
+        } else {
+            $data['all_production_process_first_step_info'] = $this->Production_process_model->get_process_details_for_report_first_step_only();
+        }
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Process First Steps';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_report_first_step_only', $data);
     }
 
 }
