@@ -14,7 +14,7 @@
         'cash_payment': 0,
         'bank_payment': 0,
         'total_paid': 0,
-        'total_due': 0,
+        'cost': 0,
         'payment': 0,
         'item_selection': ''
     };
@@ -109,7 +109,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-6">
+                                <label for="cost">Transport Cost :</label>
+                                <div class="input-group">
+                                    <input type="number" name="cost" class="form-control" id="cash_payment" placeholder="Aamount">
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-lg-6">
                                 <label for="payment_type">Payment Type: </label> 
                                 
                                 <select name="payment" id="payment" class="form-control select disabled" >
@@ -120,13 +128,7 @@
                                  <input type="radio" name="payment" value="2" checked="checked" /> Add to Advanced
                                 -->
                             </div>
-<!--                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Cash payment :</label>
-                                <div class="input-group">
-                                    <input type="number" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>-->
+                            
                         </div>
 
                         <div class="row">
@@ -290,6 +292,9 @@
         var id_item = $('[name="id_item"]').val();
     });
     
+    $('[name="cost"]').change(function(){
+       data_to_post.cost = $('[name="cost"]').val(); 
+    });
 
     
     $('[name="id_customer"]').change(function () {

@@ -106,6 +106,7 @@ class Old_book_model extends CI_Model {
         //$dues_unpaid = $this->input->post('dues_unpaid');
         //$cash_payment = $this->input->post('cash_payment');
         //$bank_payment = $this->input->post('bank_payment');
+        $cost=$this->input->post('cost');
 
         $payment_type = $this->input->post('payment');
 
@@ -115,9 +116,15 @@ class Old_book_model extends CI_Model {
 //        }else{
 //            $total_amount = 0;
 //        }
-        $total_amount = $sub_total;
+        $total_amount = $sub_total-$cost;
         $total_paid = $total_amount;
-
+        
+        if($cost>0){
+            $this->load->model('expense_model');
+            $id_name_expense=5;
+            $amount_expense=$cost;
+            $this->expense_model->expense_register($id_name_expense, $amount_expense, $description_expense = "Customer Send book without transport fees. so we deduct cost from advanced");
+        }
 //        if( $dues_unpaid > $sub_total ){
 //            
 //            $total_due = $dues_unpaid - $sub_total;
@@ -391,7 +398,14 @@ class Old_book_model extends CI_Model {
         // setting up the footer options of the memo
         $sql = "SELECT * FROM `old_book_return_total` WHERE `id_old_book_return_total` = $total_sales_id";
         $total_sales_details = $this->db->query($sql)->result();
+         $return_total=0;
+          foreach($total_sales_details as $return){
+            $return_total=$return->total_amount;
+        }
+        
         $total_sales_details = $total_sales_details[0];
+       
+      
 
 
 
@@ -409,8 +423,19 @@ class Old_book_model extends CI_Model {
             'colspan' => 2
                 ), array(
             'data' => $this->Common->taka_format($total_price),
-            'colspan' => 2
+            'colspan' => 2,
+            'class' => 'text-right'
         ));
+        $this->table->add_row(array(
+            'data' => 'কুরিয়ার খরচ',
+            'colspan' => 2
+                ), array(
+            'data' => $total_price - $return_total,
+            'colspan' => 2,
+            'class' => 'taka_formate text-right'
+        ));
+        
+        
 
 //        $this->table->add_row(array(
 //            'data' => 'Total Advanced Balance',
