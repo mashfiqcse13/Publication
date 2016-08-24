@@ -72,7 +72,7 @@ echo $glosary->output;
             ];
         }else if(value == 'Khulna'){
             var district = ["|","Bagerhat|Bagerhat","Chuadanga|Chuadanga", "Jessore|Jessore", "Jhenaidah|Jhenaidah", "Khulna |Khulna ", "Kushtia |Kushtia ", "Magura|Magura", "Meherpur|Meherpur"
-            ,"Narail|Narail","Satkhira |Satkhira ];
+            ,"Narail|Narail","Satkhira |Satkhira " ];
          }else if(value == 'Mymensingh'){
             var district = ["|", "Mymensingh|Mymensingh","Netrakona |Netrakona ", "Sherpur |Sherpur"];
         }else if(value == 'Rajshahi'){
