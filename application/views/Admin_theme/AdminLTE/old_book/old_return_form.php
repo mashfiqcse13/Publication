@@ -59,7 +59,7 @@
         <div ID="massage_box"><h1 class="msg_body">Processing......</h1></div>
         <!--massge box ended-->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="row">
@@ -141,12 +141,12 @@
                 </div>
                 <!-- /.box -->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <!-- general form elements -->
                 <div class="box box-warning">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-5">
                                 <label for="id_contact">Select Item</label>
                                 <?php echo $item_dropdown ?>
                             </div>
@@ -154,7 +154,7 @@
                                 <label for="price">Price Per Book</label>
                                 <input type="number" name="price" id="price" class="form-control" />
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Quantity</label>
                                 <div class="input-group input-group-sm">
                                     <input type="number" placeholder="Quantity" id="item_quantity" class="form-control">
