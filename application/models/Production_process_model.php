@@ -698,5 +698,19 @@ FROM view_process_step_transfer_log_with_details;')->row();
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
+    
+    
+    function first_step_report($id){
+       $sql= $this->db->get_where('view_process_step_first_entry',array('id_process_steps' => $id) )->result();
+        
+       
+        return $sql;
+    }
+    
+    function transfer_step_report($id){
+         $sql= $this->db->get_where('view_process_step_transfer_log_with_details',array('id_process_step_transfer_log' => $id) )->result();        
+       
+        return $sql;
+    }
 
 }
