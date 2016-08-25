@@ -212,7 +212,7 @@ class Production_process extends CI_Controller {
         $data['get_id_process_step_from'] = $this->Production_process_model->get_id_process_step_from();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Process Transection';
+        $data['Title'] = 'Process Transfer Slip';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/process_transfer', $data);
     }
 }
