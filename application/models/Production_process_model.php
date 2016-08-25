@@ -635,6 +635,16 @@ FROM view_process_step_transfer_log_with_details;')->result();
         }
     }
 
+    function get_first_step_id_by($id_processes) {
+        $sql = "SELECT `id_process_steps` FROM `process_steps` where `id_previous_step` = 0 and `id_processes` = $id_processes";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->id_process_steps)) {
+            return 0;
+        } else {
+            return $result[0]->id_process_steps;
+        }
+    }
+
     function get_step_name_dropdown() {
         $items = $this->db->get('process_step_name')->result();
 

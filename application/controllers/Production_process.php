@@ -27,6 +27,9 @@ class Production_process extends CI_Controller {
     }
 
     function process() {
+        if ($this->uri->segment(3) == 'success') {
+            redirect("Production_process/first_step_slip/".$this->Production_process_model->get_first_step_id_by($this->uri->segment(4))); 
+        }
         $crud = new grocery_CRUD();
         $crud->set_table('processes')
                 ->set_subject('Production Process')->display_as('id_process_type', 'Process type')->display_as('id_processes', 'Order ID')
