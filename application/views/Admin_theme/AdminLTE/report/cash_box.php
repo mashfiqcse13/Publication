@@ -27,50 +27,6 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <!--Total Cash In-->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3><?php echo $cash->total_in; ?> TK</h3>
-                        <p>Total Cash In</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!--Total Cash Out-->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3><?php echo $cash->total_out; ?> TK</h3>
-                        <p>Total Cash Out</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-pricetag-outline"></i>
-                    </div>
-                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!--Cash In Hand-->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3><?php echo $cash->balance; ?> TK</h3>
-                        <p>Cash In Hand</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-pricetag-outline"></i>
-                    </div>
-                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <!--Today Total Sales-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
