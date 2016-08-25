@@ -19,7 +19,7 @@ class Report extends CI_Controller {
         }
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
-//        $this->load->model('Report_model');
+        $this->load->model('Report_model');
     }
 
     function index() {
@@ -49,7 +49,7 @@ class Report extends CI_Controller {
         $data['today_total_cash_paid_against_sale'] = $today_total_payment_against_sale['today_total_cash_paid_against_sale'];
         $data['today_total_bank_paid_against_sale'] = $today_total_payment_against_sale['today_total_bank_paid_against_sale'];
         $data['today_total_advance_deduction_against_sale'] = $today_total_payment_against_sale['today_total_advance_deduction_against_sale'];
-        
+
         $data['today_customer_due_bank'] = $this->Customer_payment->today_customer_due_bank();
         $data['today_customer_due_cash'] = $this->Customer_payment->today_customer_due_cash();
         $data['today_customer_advance_payment_bank'] = $this->Advance_payment_model->today_customer_advance_payment_bank();
@@ -120,6 +120,22 @@ class Report extends CI_Controller {
 
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/master_reconcillation', $data);
+    }
+
+    function total_report() {
+        $btn = $this->input->get('btn_submit');
+        $data['date_range'] = $this->input->get('date_range');
+        $date = explode('-', $data['date_range']);
+        if ($btn) {
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $data['total'] = $this->Report_model->total_sales($from, $to);
+//            print_r($data);exit();
+        }
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Customer Payment';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'report/total_report', $data);
     }
 
 }
