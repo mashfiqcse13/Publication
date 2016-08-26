@@ -130,6 +130,12 @@ class Report extends CI_Controller {
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
             $data['total'] = $this->Report_model->total_sales($from, $to);
+            $data['cutomer_due'] = $this->Report_model->customer_payemnt($from, $to);
+            $data['advance'] = $this->Report_model->advance_payment($from, $to);
+            $data['due'] = $this->Report_model->due_payment($from, $to);
+            $data['bank'] = $this->Report_model->bank_payment($from, $to);
+            $data['opening'] = $this->Report_model->opening($from, $to);
+            $data['closing'] = $this->Report_model->closing($from, $to);
 //            print_r($data);exit();
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
