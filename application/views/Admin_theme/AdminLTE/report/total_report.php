@@ -69,27 +69,27 @@
                             <tbody>
                                 <tr>
                                     <th>Total Sales</th>
-                                    <td><?php echo $total->total_amount;?></td>                              
+                                    <td><?php echo (!empty($total->total_amount))?$total->total_amount: 0;?></td>                              
                                 </tr>
                                 <tr>
                                     <th>Total Due</th>
-                                    <td><?php echo $total->total_due;?></td>
+                                    <td><?php echo (!empty($total->total_due))?$total->total_amount: 0;?></td>
                                 </tr>
                                 <tr>
                                     <th>Sale Against Cash Collection</th>
-                                    <td></td>
+                                    <td><?php echo (!empty($cutomer_due->paid_amount))?$cutomer_due->paid_amount    : 0;?></td>
                                 </tr>
                                 <tr>
                                     <th>Sale Against Bank Collection</th>
-                                    <td></td>
+                                    <td><?php echo (!empty($bank->paid_amount))?$bank->paid_amount: 0;?></td>
                                 </tr>
                                 <tr>
                                     <th>Sale Against Advance Deduction</th>
-                                    <td></td>
+                                    <td><?php echo (!empty($advance->paid_amount))?$advance->paid_amount: 0;?></td>
                                 </tr>
                                 <tr>                     
                                     <th>Sale Against Due Collection</th>
-                                    <td></td>
+                                    <td><?php echo (!empty($due->paid_amount))?$due->paid_amount: 0;?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -98,21 +98,21 @@
                             
                             <tr>
                                 <th>Opening Cash:</th>
-                                <th></th>
+                                <th><?php echo (!empty($opening->opening_cash))?$opening->opening_cash: 0;?></th>
                                 <th>Closing Cash:</th>
-                                <th></th>
+                                <th><?php echo (!empty($closing->ending_cash))?$closing->ending_cash: 0;?></th>
                             </tr>
                             <tr>
                                 <th>Opening Bank:</th>
-                                <th></th>
+                                <th><?php echo (!empty($opening->opening_bank_balance))?$opening->opening_bank_balance: 0;?></th>
                                 <th>Closing Bank:</th>
-                                <th></th>
+                                <th><?php echo (!empty($closing->closing_bank_balance))?$closing->closing_bank_balance: 0;?></th>
                             </tr>
                             <tr>
                                 <th>Opening Due:</th>
-                                <th></th>
+                                <th><?php echo (!empty($opening->opening_due))?$opening->opening_due: 0;?></th>
                                 <th>Closing Due:</th>
-                                <th></th>
+                                <th><?php echo (!empty($closing->ending_due))?$closing->ending_due: 0;?></th>
                             </tr>
                             
                         </table>
