@@ -25,7 +25,7 @@
 
                 <div class="box">
                     <div class="box-body">
-                        <a href="<?php echo site_url('production_process/add_processes');?>" class="btn bg-purple btn-flat" style="margin-bottom: 20px;"><i class="fa fa-plus-circle"></i> Add Production Process</a>
+                        <a href="<?php echo site_url('production_process/add_processes');?>" class="btn bg-primary" style="margin-bottom: 20px;"><i class="fa fa-plus-circle"></i> Add Production Process</a>
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
