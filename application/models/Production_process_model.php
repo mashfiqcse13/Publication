@@ -380,6 +380,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $result = $this->db->query('SELECT DISTINCT id_item,item_name FROM view_process_step_first_entry;')->result();
         return $result;
     }
+    
+    
 
     function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $date) {
         $this->db->select("*");
@@ -661,6 +663,18 @@ FROM view_process_step_transfer_log_with_details;')->result();
         unset($post_array['id_vendor']);
         return $post_array;
     }
+    
+    function save_processes($data){
+        $process['id_item']=$data['id_item'];
+        $this->callback_process_buffer_id_vendor =$data['id_vendor'];
+        $process['date_created'] = date('Y-m-d H:i:s');
+        $process['order_quantity']=$data['order_quantity'];
+        $process['process_status'] = 1;
+        $this->db->insert('processes',$process);
+        $id = $this->db->insert_id();
+        $this->callback_process_after_process_insert('', $id);
+        return true;        
+    }
 
     function callback_process_after_process_insert($post_array, $primary_key) {
         $date_created = date('Y-m-d h:i:u');
@@ -731,5 +745,28 @@ FROM view_process_step_transfer_log_with_details;')->result();
 
         return $sql;
     }
+
+    function get_all_production_process() {
+        $this->db->select('*');
+        $this->db->from('processes');
+        $this->db->join('items','processes.id_item = items.id_item','left');
+        $this->db->join('process_type','processes.id_process_type = process_type.id_process_type','left');
+        $this->db->order_by('id_processes', 'desc');
+        return $this->db->get()->result();
+    }
+    
+    function get_items(){
+        $this->db->select('id_item,name');
+        $this->db->from('items');
+        return $this->db->get()->result();
+    }
+    
+    function get_vendor(){
+        $this->db->select('*');
+        $this->db->from('contact_vendor');
+        return $this->db->get()->result();
+    }
+    
+    
 
 }
