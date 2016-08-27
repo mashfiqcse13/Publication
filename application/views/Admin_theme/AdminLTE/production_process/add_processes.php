@@ -72,6 +72,7 @@
 
                                 </div>
                                 <button type="submit" name="btn_submit" value="true" class="btn btn-primary">Save</button>
+                                <button type="submit" name="print" value="true" class="btn btn-primary">Save and Print</button>
                                 <input value="Save and go back to list"  class="btn btn-info" type="submit" name="btn">
                                 <input value="Cancel" class="btn btn-danger" id="cancel" type="button">
                                 <?= form_close(); ?>

@@ -673,6 +673,9 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $this->db->insert('processes',$process);
         $id = $this->db->insert_id();
         $this->callback_process_after_process_insert('', $id);
+        if($data['print']){
+            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($id));
+        }
         return true;        
     }
 

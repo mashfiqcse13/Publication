@@ -26,7 +26,7 @@
                 <div class="box">
                     <div class="box-body">
                         <a href="<?php echo site_url('production_process/add_processes');?>" class="btn bg-purple btn-flat" style="margin-bottom: 20px;"><i class="fa fa-plus-circle"></i> Add Production Process</a>
-                        <table id="example1" class="table table-bordered table-hover">
+                        <table id="example3" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
@@ -34,6 +34,7 @@
                                     <th>Item Name</th>
                                     <th>Date Created</th>
                                     <th>Date Finished</th>
+                                    <th>Order Amount</th>
                                     <th>Total Received By S. Store </th>
                                     <th>Total damaged item </th>
                                     <th>Total reject item </th>
@@ -52,6 +53,7 @@
                                         <td><?php echo $process->name;?></td>
                                         <td><?php echo $process->date_created;?></td>
                                         <td><?php echo $process->date_finished;?></td>
+                                        <td><?php echo $process->order_quantity;?></td>
                                         <td><?php echo $process->actual_quantity;?></td>
                                         <td><?php echo $process->total_damaged_item;?></td>
                                         <td><?php echo $process->total_reject_item;?></td>
@@ -88,3 +90,9 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    $('#example3').DataTable({
+        bFilter: false,
+        "order": [[1, "desc"]],
+    });
+</script>

@@ -66,6 +66,11 @@ class Production_process extends CI_Controller {
         
         $btn = $this->input->post('btn_submit');
         $list = $this->input->post('btn');
+        $print = $this->input->post('print');
+        if($print){
+            $this->Production_process_model->save_processes($_POST);
+            redirect('production_process/new_process');
+        }
         if($list){
             $this->Production_process_model->save_processes($_POST);
             redirect('production_process/new_process');
