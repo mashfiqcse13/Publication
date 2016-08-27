@@ -92,6 +92,7 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
     $('#example3').DataTable({
+        "scrollX": true,
         bFilter: false,
         "order": [[1, "desc"]],
     });
