@@ -767,6 +767,7 @@ FROM view_process_step_transfer_log_with_details;')->result();
     function get_vendor(){
         $this->db->select('*');
         $this->db->from('contact_vendor');
+        $this->db->where('type','Printing Press');
         return $this->db->get()->result();
     }
     
