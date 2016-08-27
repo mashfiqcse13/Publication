@@ -26,7 +26,7 @@ class Production_process extends CI_Controller {
         $this->process();
     }
 
-    function process() {
+    function old_process() {
         if ($this->uri->segment(3) == 'success') {
             redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($this->uri->segment(4)));
         }
@@ -51,7 +51,7 @@ class Production_process extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
     }
 
-    function new_process() {
+    function process() {
         $data['production_process'] = $this->Production_process_model->get_all_production_process();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -69,15 +69,14 @@ class Production_process extends CI_Controller {
         $print = $this->input->post('print');
         if($print){
             $this->Production_process_model->save_processes($_POST);
-            redirect('production_process/new_process');
         }
         if($list){
             $this->Production_process_model->save_processes($_POST);
-            redirect('production_process/new_process');
+            redirect('production_process');
         }
-        if($btn){
-            $this->Production_process_model->save_processes($_POST);
-        }
+//        if($btn){
+//            $this->Production_process_model->save_processes($_POST);
+//        }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Production process';

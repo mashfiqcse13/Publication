@@ -18,7 +18,7 @@
 
 
 
-            <li><?php echo anchor('production_process/new_process', '<i class="fa fa-plus-circle"></i>  <span>Production Process</span>'); ?></li>
+            <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production Process</span>'); ?></li>
             <li><?php echo anchor('production_process/production_report_first_step_only', '<i class="fa fa-plus-circle"></i>  <span>Order Starting Report</span>'); ?></li>
             <li><?php echo anchor('production_process/production_report', '<i class="fa fa-plus-circle"></i>  <span>Order Transfer Report</span>'); ?></li>
             <!--<li><?php echo anchor('production_process/process_transection', '<i class="fa fa-plus-circle"></i>  <span>Print Transfer Slip</span>'); ?></li>-->
