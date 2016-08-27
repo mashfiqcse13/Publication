@@ -28,7 +28,7 @@ class Production_process extends CI_Controller {
 
     function process() {
         if ($this->uri->segment(3) == 'success') {
-            redirect("Production_process/first_step_slip/".$this->Production_process_model->get_first_step_id_by($this->uri->segment(4))); 
+            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($this->uri->segment(4)));
         }
         $crud = new grocery_CRUD();
         $crud->set_table('processes')
@@ -49,6 +49,34 @@ class Production_process extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Production process';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
+    }
+
+    function new_process() {
+        $data['production_process'] = $this->Production_process_model->get_all_production_process();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Production process';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_list', $data);
+    }
+    
+    function add_processes(){
+//        echo'<pre>';print_r($_POST);exit();
+        $data['get_item'] = $this->Production_process_model->get_items();
+        $data['get_vendor'] = $this->Production_process_model->get_vendor();
+        
+        $btn = $this->input->post('btn_submit');
+        $list = $this->input->post('btn');
+        if($list){
+            $this->Production_process_model->save_processes($_POST);
+            redirect('production_process/new_process');
+        }
+        if($btn){
+            $this->Production_process_model->save_processes($_POST);
+        }
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Production process';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/add_processes', $data);
     }
 
     function type() {
