@@ -144,7 +144,7 @@ class Production_process_model extends CI_Model {
             $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, 0, $amount_transfered);
         }
         $this->add_step_transfer_billing($id_process_step_transfer_log, $id_process_step_from, $amount_billed, $amount_paid);
-        return TRUE;
+        return $id_process_step_transfer_log;
     }
 
     function add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered) {
@@ -203,6 +203,11 @@ class Production_process_model extends CI_Model {
         }
         foreach ($process_steps as $index => $each_step) {
             $action_btn = array();
+            if (empty($each_step->id_previous_step)) {
+                $delet_url = site_url('production_process/first_step_slip/' . $each_step->id_process_steps);
+                $tmp_action_btn = "<a href=\"$delet_url\" class=\"btn btn-xs btn-info\" data-id_process_steps=\"{$each_step->id_process_steps}\">Print Slip</a>";
+                array_push($action_btn, $tmp_action_btn);
+            }
             if ($each_step->order_amount == 0 && $this->next_process_step_id($each_step->id_process_steps) == FALSE) {
                 $delet_url = site_url('production_process/delete_step/' . $each_step->id_processes . '/' . $each_step->id_process_steps);
                 $tmp_action_btn = "<a href=\"$delet_url\" class=\"btn btn-xs btn-warning\" data-id_process_steps=\"{$each_step->id_process_steps}\">Delete</a>";
@@ -230,6 +235,11 @@ class Production_process_model extends CI_Model {
             } else if ($next_process_step_id != FALSE) {
                 $link_step_id = $this->next_process_step_id($each_step->id_process_steps);
             }
+
+            $delet_url = site_url('production_process/transfer_slip/' . $each_step->id_process_steps);
+            $tmp_action_btn = "<a href=\"$delet_url\" class=\"btn btn-xs btn-warning\" data-id_process_steps=\"{$each_step->id_process_steps}\">Transfer History</a>";
+            array_push($action_btn, $tmp_action_btn);
+
             $action_btn = implode("<br><br>", $action_btn);
             $process_status = $this->get_process_status_by_process_id($id_processes);
             if ($process_status == 1) {
@@ -370,6 +380,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $result = $this->db->query('SELECT DISTINCT id_item,item_name FROM view_process_step_first_entry;')->result();
         return $result;
     }
+    
+    
 
     function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $date) {
         $this->db->select("*");
@@ -625,6 +637,16 @@ FROM view_process_step_transfer_log_with_details;')->result();
         }
     }
 
+    function get_first_step_id_by($id_processes) {
+        $sql = "SELECT `id_process_steps` FROM `process_steps` where `id_previous_step` = 0 and `id_processes` = $id_processes";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->id_process_steps)) {
+            return 0;
+        } else {
+            return $result[0]->id_process_steps;
+        }
+    }
+
     function get_step_name_dropdown() {
         $items = $this->db->get('process_step_name')->result();
 
@@ -640,6 +662,21 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $this->callback_process_buffer_id_vendor = $post_array['id_vendor'];
         unset($post_array['id_vendor']);
         return $post_array;
+    }
+    
+    function save_processes($data){
+        $process['id_item']=$data['id_item'];
+        $this->callback_process_buffer_id_vendor =$data['id_vendor'];
+        $process['date_created'] = date('Y-m-d H:i:s');
+        $process['order_quantity']=$data['order_quantity'];
+        $process['process_status'] = 1;
+        $this->db->insert('processes',$process);
+        $id = $this->db->insert_id();
+        $this->callback_process_after_process_insert('', $id);
+        if($data['print']){
+            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($id));
+        }
+        return true;        
     }
 
     function callback_process_after_process_insert($post_array, $primary_key) {
@@ -698,19 +735,42 @@ FROM view_process_step_transfer_log_with_details;')->row();
 FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
-    
-    
-    function first_step_report($id){
-       $sql= $this->db->get_where('view_process_step_first_entry',array('id_process_steps' => $id) )->result();
-        
-       
+
+    function first_step_report($id) {
+        $sql = $this->db->get_where('view_process_step_first_entry', array('id_process_steps' => $id))->result();
+
+
         return $sql;
     }
-    
-    function transfer_step_report($id){
-         $sql= $this->db->get_where('view_process_step_transfer_log_with_details',array('id_process_step_transfer_log' => $id) )->result();        
-       
+
+    function transfer_step_report($id) {
+        $sql = $this->db->get_where('view_process_step_transfer_log_with_details', array('id_process_step_transfer_log' => $id))->result();
+
         return $sql;
     }
+
+    function get_all_production_process() {
+        $this->db->select('*');
+        $this->db->from('processes');
+        $this->db->join('items','processes.id_item = items.id_item','left');
+        $this->db->join('process_type','processes.id_process_type = process_type.id_process_type','left');
+        $this->db->order_by('id_processes', 'desc');
+        return $this->db->get()->result();
+    }
+    
+    function get_items(){
+        $this->db->select('id_item,name');
+        $this->db->from('items');
+        return $this->db->get()->result();
+    }
+    
+    function get_vendor(){
+        $this->db->select('*');
+        $this->db->from('contact_vendor');
+        $this->db->where('type','Printing Press');
+        return $this->db->get()->result();
+    }
+    
+    
 
 }

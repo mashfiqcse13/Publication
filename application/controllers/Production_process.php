@@ -26,7 +26,10 @@ class Production_process extends CI_Controller {
         $this->process();
     }
 
-    function process() {
+    function old_process() {
+        if ($this->uri->segment(3) == 'success') {
+            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($this->uri->segment(4)));
+        }
         $crud = new grocery_CRUD();
         $crud->set_table('processes')
                 ->set_subject('Production Process')->display_as('id_process_type', 'Process type')->display_as('id_processes', 'Order ID')
@@ -46,6 +49,38 @@ class Production_process extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Production process';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
+    }
+
+    function process() {
+        $data['production_process'] = $this->Production_process_model->get_all_production_process();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Production process';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_list', $data);
+    }
+    
+    function add_processes(){
+//        echo'<pre>';print_r($_POST);exit();
+        $data['get_item'] = $this->Production_process_model->get_items();
+        $data['get_vendor'] = $this->Production_process_model->get_vendor();
+        
+        $btn = $this->input->post('btn_submit');
+        $list = $this->input->post('btn');
+        $print = $this->input->post('print');
+        if($print){
+            $this->Production_process_model->save_processes($_POST);
+        }
+        if($list){
+            $this->Production_process_model->save_processes($_POST);
+            redirect('production_process');
+        }
+//        if($btn){
+//            $this->Production_process_model->save_processes($_POST);
+//        }
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Production process';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/add_processes', $data);
     }
 
     function type() {
@@ -134,12 +169,12 @@ class Production_process extends CI_Controller {
         }
         if (!empty($id_process_step_from)) {
             if (!empty($id_process_step_to)) {
-                $this->Production_process_model->step_transfer($id_process_step_from, $id_process_step_to, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount, $amount_billed, $amount_paid);
+                $id_process_step_transfer_log = $this->Production_process_model->step_transfer($id_process_step_from, $id_process_step_to, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount, $amount_billed, $amount_paid);
             } else {
-                $this->Production_process_model->step_transfer($id_process_step_from, FALSE, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount, $amount_billed, $amount_paid);
+                $id_process_step_transfer_log = $this->Production_process_model->step_transfer($id_process_step_from, FALSE, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount, $amount_billed, $amount_paid);
             }
         }
-        redirect('production_process/steps/' . $id_processes);
+        $this->transfer_step_slip($id_process_step_transfer_log);
     }
 
     function change_status($id_processes, $status_code) {
@@ -208,34 +243,54 @@ class Production_process extends CI_Controller {
             $data['get_process_details_for_row'] = $this->Production_process_model->get_process_details_for_row($id_process_step_from);
 //            print_r($data);exit();
         }
-        
+
         $data['get_id_process_step_from'] = $this->Production_process_model->get_id_process_step_from();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Process Transection';
+        $data['Title'] = 'Process Transfer Slip';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/process_transfer', $data);
     }
-    
-    function first_step_slip($id_process_steps){        
-        
+
+    function first_step_slip($id_process_steps) {
+
         $data['first_step_report'] = $this->Production_process_model->first_step_report($id_process_steps);
-       // print_r($data['first_step_report'] );
-        
+        // print_r($data['first_step_report'] );
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Process Transection';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/process_detail_report', $data);
     }
-    
-    
-    function transfer_step_slip($id_process_step_transfer_log){
+
+    function transfer_step_slip($id_process_step_transfer_log) {
         $data['transfer_step'] = $this->Production_process_model->transfer_step_report($id_process_step_transfer_log);
 //       echo '<pre>';
 //        print_r($data['transfer_step'] );
-        
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Process Transection';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/process_detail_report', $data);
     }
+
+    function transfer_slip($id_process_step_transfer_log) {
+        $data['get_process_details_for_report_by_step_from'] = $this->Production_process_model->get_process_details_for_report_by_step_from($id_process_step_transfer_log);
+        $data['get_process_details_for_row'] = $this->Production_process_model->get_process_details_for_row($id_process_step_transfer_log);
+        if (empty($data['get_process_details_for_report_by_step_from'])) {
+            ?>
+            <script>
+                alert("No transaction found");
+                window.history.back();
+            </script>
+            <?php
+
+        }
+
+        $data['get_id_process_step_from'] = $this->Production_process_model->get_id_process_step_from();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Process Transfer Slip';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/transfer_slip', $data);
+    }
+
 }
