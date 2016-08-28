@@ -28,7 +28,7 @@ class Report_model extends CI_Model {
     function customer_payemnt($from, $to){
         $this->db->select('paid_amount');
         $this->db->from('customer_payment');
-        $this->db->where('due_payment_status',2);
+        $this->db->where('due_payment_status IS NULL');
         $this->db->where('id_payment_method',1);
         if ($from != '') {
             $condition = "DATE(payment_date) BETWEEN '$from' AND '$to'";
@@ -40,7 +40,7 @@ class Report_model extends CI_Model {
     function bank_payment($from, $to){
         $this->db->select('paid_amount');
         $this->db->from('customer_payment');
-        $this->db->where('due_payment_status',2);
+        $this->db->where('due_payment_status IS NULL');
         $this->db->where('id_payment_method',3);
         if ($from != '') {
             $condition = "DATE(payment_date) BETWEEN '$from' AND '$to'";
@@ -63,7 +63,7 @@ class Report_model extends CI_Model {
     function advance_payment($from, $to){
         $this->db->select('paid_amount');
         $this->db->from('customer_payment');
-        $this->db->where('due_payment_status',2);
+        $this->db->where('due_payment_status IS NULL');
         $this->db->where('id_payment_method',2);
         if ($from != '') {
             $condition = "DATE(payment_date) BETWEEN '$from' AND '$to'";

@@ -41,8 +41,20 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            <!--Today Total Due againest sell-->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 class="text-right faka_formate"><?php echo $today_due; ?> TK</h3>
+                        <p>Today Total Due againest sell</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-pricetag-outline"></i>
+                    </div>
+                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
             <!--Today Cash Collection Against Salem-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -57,6 +69,8 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <!--Today Bank Collection Against Sale-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -85,9 +99,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <!--oday Total Cash Collection-->
+            <!--Today Total Cash Collection-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -117,20 +129,6 @@
             </div>
         </div>
         <div class="row">
-            <!--Today Total Due-->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3 class="text-right faka_formate"><?php echo $today_due; ?> TK</h3>
-                        <p>Today Total Due</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-ios-pricetag-outline"></i>
-                    </div>
-                    <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
             <!--Today Due Collection Cash-->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
