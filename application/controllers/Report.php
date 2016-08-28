@@ -144,6 +144,14 @@ class Report extends CI_Controller {
             $data['advance'] = $this->Report_model->advance_payment($from, $to);
             $data['due'] = $this->Report_model->due_payment($from, $to);
             $data['bank'] = $this->Report_model->bank_payment($from, $to);
+            $data['total_due'] = $this->Report_model->total_due($from, $to);
+            $data['totla_cash_collection'] = $this->Report_model->total_cash_collection($from, $to);
+            $data['total_bank_collection'] = $this->Report_model->total_bank_collection($from, $to);
+            $data['total_expence'] = $this->Report_model->total_expence($from, $to);
+            $data['total_advance'] = $this->Report_model->total_advance($from, $to);
+            $data['total_cash_bank'] = $this->Report_model->total_cash_bank($from, $to);
+            
+            
             $data['opening'] = $this->Report_model->opening($from, $to);
             $data['closing'] = $this->Report_model->closing($from, $to);
 //            print_r($data);exit();

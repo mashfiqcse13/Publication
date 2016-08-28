@@ -52,74 +52,105 @@
                         <?php ?> 
                     </div>
                 </div>
-               <?php
-                if(isset($date_range)){
-               ?>
-                <div class="box" id="block">
-                    <div class="box-body">
-                        <h3 class="text-center">Total Report</h3>
-                        <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                        <table  class="table table-bordered report">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>Total Sales</th>
-                                    <td><?php echo (!empty($total->total_amount))?$total->total_amount: 0;?></td>                              
-                                </tr>
-                                <tr>
-                                    <th>Total Due</th>
-                                    <td><?php echo (!empty($total->total_due))?$total->total_due: 0;?></td>
-                                </tr>
-                                <tr>
-                                    <th>Sale Against Cash Collection</th>
-                                    <td><?php echo (!empty($cutomer_due->paid_amount))?$cutomer_due->paid_amount    : 0;?></td>
-                                </tr>
-                                <tr>
-                                    <th>Sale Against Bank Collection</th>
-                                    <td><?php echo (!empty($bank->paid_amount))?$bank->paid_amount: 0;?></td>
-                                </tr>
-                                <tr>
-                                    <th>Sale Against Advance Deduction</th>
-                                    <td><?php echo (!empty($advance->paid_amount))?$advance->paid_amount: 0;?></td>
-                                </tr>
-                                <tr>                     
-                                    <th>Sale Against Due Collection</th>
-                                    <td><?php echo (!empty($due->paid_amount))?$due->paid_amount: 0;?></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <?php
+                if (isset($date_range)) {
+                    ?>
+                    <div class="box" id="block">
+                        <div class="box-body">
+                            <h3 class="text-center">Total Report</h3>
+                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <table  class="table table-bordered report">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Total Sales</th>
+                                        <td><?php echo (!empty($total->total_amount)) ? $total->total_amount : 0; ?></td>                              
+                                    </tr>
+                                    <tr>
+                                        <th>Total Due</th>
+                                        <td><?php echo (!empty($total->total_due)) ? $total->total_amount : 0; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sale Against Cash Collection</th>
+                                        <td><?php echo (!empty($cutomer_due->paid_amount)) ? $cutomer_due->paid_amount : 0; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sale Against Bank Collection</th>
+                                        <td><?php echo (!empty($bank->paid_amount)) ? $bank->paid_amount : 0; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sale Against Advance Deduction</th>
+                                        <td><?php echo (!empty($advance->paid_amount)) ? $advance->paid_amount : 0; ?></td>
+                                    </tr>
+                                    <tr>                     
+                                        <th>Sale Against Due Collection</th>
+                                        <td><?php echo (!empty($due->paid_amount)) ? $due->paid_amount : 0; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                        <table class="table table-bordered new" style="margin-top: 50px;">
-                            
-                            <tr>
-                                <th>Opening Cash:</th>
-                                <th><?php echo (!empty($opening->opening_cash))?$opening->opening_cash: 0;?></th>
-                                <th>Closing Cash:</th>
-                                <th><?php echo (!empty($closing->ending_cash))?$closing->ending_cash: 0;?></th>
-                            </tr>
-                            <tr>
-                                <th>Opening Bank:</th>
-                                <th><?php echo (!empty($opening->opening_bank_balance))?$opening->opening_bank_balance: 0;?></th>
-                                <th>Closing Bank:</th>
-                                <th><?php echo (!empty($closing->closing_bank_balance))?$closing->closing_bank_balance: 0;?></th>
-                            </tr>
-                            <tr>
-                                <th>Opening Due:</th>
-                                <th><?php echo (!empty($opening->opening_due))?$opening->opening_due: 0;?></th>
-                                <th>Closing Due:</th>
-                                <th><?php echo (!empty($closing->ending_due))?$closing->ending_due: 0;?></th>
-                            </tr>
-                            
-                        </table>
+                            <table class="table table-bordered report" style="margin-top: 50px;">
+                                <tr>
+                                    <th>Total Due Collection</th>
+                                    <th><?php echo (!empty($totla_due->paid_amount)) ? $totla_due->paid_amount : 0; ?></th>
+                                </tr>
+                                <tr>
+                                    <th>Total Advance Collection (Without Book Sale)</th>
+                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered report" style="margin-top: 50px;">
+                                <tr>
+                                    <th>Total Cash Collection</th>
+                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                </tr>
+                                <tr>
+                                    <th>Total Bank Collection</th>
+                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered report" style="margin-top: 50px;">
+                                <tr>
+                                    <th>Total Collection(Cash +Bank)</th>
+                                    <th><?php echo (!empty($total_cash_bank)) ? $total_cash_bank : 0; ?></th>
+                                </tr>
+                                <tr>
+                                    <th>Total Expense</th>
+                                    <th><?php echo (!empty($totla_expence->amount_paid)) ? $totla_expence->amount_paid : 0; ?></th>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered new" style="margin-top: 50px;">
+
+                                <tr>
+                                    <th>Opening Cash:</th>
+                                    <th><?php echo (!empty($opening->opening_cash)) ? $opening->opening_cash : 0; ?></th>
+                                    <th>Closing Cash:</th>
+                                    <th><?php echo (!empty($closing->ending_cash)) ? $closing->ending_cash : 0; ?></th>
+                                </tr>
+                                <tr>
+                                    <th>Opening Bank:</th>
+                                    <th><?php echo (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance : 0; ?></th>
+                                    <th>Closing Bank:</th>
+                                    <th><?php echo (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : 0; ?></th>
+                                </tr>
+                                <tr>
+                                    <th>Opening Due:</th>
+                                    <th><?php echo (!empty($opening->opening_due)) ? $opening->opening_due : 0; ?></th>
+                                    <th>Closing Due:</th>
+                                    <th><?php echo (!empty($closing->ending_due)) ? $closing->ending_due : 0; ?></th>
+                                </tr>
+
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <?php }?>
-                
+                <?php } ?>
+
             </div>
         </div>
 
