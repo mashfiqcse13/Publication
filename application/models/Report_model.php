@@ -15,7 +15,7 @@ class Report_model extends CI_Model {
 
     //put your code here
     function total_sales($from, $to) {
-        $this->db->select('total_amount,total_paid,total_due');
+        $this->db->select('sum(total_amount) as total_amount,sum(total_paid) as total_paid,sum(total_due) as total_due');
         $this->db->from('sales_total_sales');
         if ($from != '') {
             $condition = "DATE(issue_date) BETWEEN '$from' AND '$to'";

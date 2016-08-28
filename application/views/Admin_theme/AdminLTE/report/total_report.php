@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Due</th>
-                                    <td><?php echo (!empty($total->total_due))?$total->total_amount: 0;?></td>
+                                    <td><?php echo (!empty($total->total_due))?$total->total_due: 0;?></td>
                                 </tr>
                                 <tr>
                                     <th>Sale Against Cash Collection</th>
