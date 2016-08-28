@@ -188,5 +188,45 @@ class Customer_payment extends CI_Model {
         }
         return $date;
     }
-
+    
+    function totay_total_advance_collection_without_book_sale() {
+        $sql = "SELECT sum(`amount_paid`)as amount_paid
+                    FROM `party_advance_payment_register` WHERE `id_payment_method` in (1,3)
+                    AND Date(`date_payment`) = Date(now()) ";
+        $result = $this->db->query($sql)->result();
+        
+        if (empty($result[0]->amount_paid)) {
+            $date['amount_paid'] = 0;
+        } else {
+            $date['amount_paid'] = $result[0]->amount_paid;
+        }
+        return $date['amount_paid'] ;
+    }
+    
+    function today_total_due_collection(){
+         $sql = "SELECT sum(`paid_amount`) as amount_paid FROM `customer_payment` WHERE `due_payment_status`=1 AND Date(`payment_date`) = Date(now())";
+        $result = $this->db->query($sql)->result();
+        
+        if (empty($result[0]->amount_paid)) {
+            $date['amount_paid'] = 0;
+        } else {
+            $date['amount_paid'] = $result[0]->amount_paid;
+        }
+        return $date['amount_paid'] ;
+        
+    }
+    
+    function today_total_expesne(){
+         $sql = "SELECT sum(`paid_amount`) as paid_amount FROM `customer_payment` WHERE `due_payment_status`=1 AND Date(`payment_date`) = Date(now())";
+        $result = $this->db->query($sql)->result();
+        
+        if (empty($result[0]->amount_paid)) {
+            $date['amount_paid'] = 0;
+        } else {
+            $date['amount_paid'] = $result[0]->amount_paid;
+        }
+        return $date['amount_paid'] ;
+        
+    }
+  
 }

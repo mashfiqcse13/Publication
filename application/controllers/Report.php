@@ -49,11 +49,21 @@ class Report extends CI_Controller {
         $data['today_total_cash_paid_against_sale'] = $today_total_payment_against_sale['today_total_cash_paid_against_sale'];
         $data['today_total_bank_paid_against_sale'] = $today_total_payment_against_sale['today_total_bank_paid_against_sale'];
         $data['today_total_advance_deduction_against_sale'] = $today_total_payment_against_sale['today_total_advance_deduction_against_sale'];
+        
+        
+        
+        $data['today_due_collection_against_sale'] =  $this->Customer_payment->today_customer_due_bank() +  $this->Customer_payment->today_customer_due_cash() ;
+        
+        $data['today_total_due_collection'] =  $this->Customer_payment->today_total_due_collection();
+        
+        $data['totay_total_advance_collection_without_book_sale'] =  $this->Customer_payment->totay_total_advance_collection_without_book_sale();
 
-        $data['today_customer_due_bank'] = $this->Customer_payment->today_customer_due_bank();
-        $data['today_customer_due_cash'] = $this->Customer_payment->today_customer_due_cash();
-        $data['today_customer_advance_payment_bank'] = $this->Advance_payment_model->today_customer_advance_payment_bank();
-        $data['today_customer_advance_payment__cash'] = $this->Advance_payment_model->today_customer_advance_payment__cash();
+        $data['$totay_total_collection_cash_bank'] =
+        
+        $data['totay_total_expense'] = $this->Customer_payment->today_total_expesne();
+        
+//        $data['today_customer_advance_payment_bank'] = $this->Advance_payment_model->today_customer_advance_payment_bank();
+//        $data['totay_total_cash_collection'] = $this->Advance_payment_model->today_customer_advance_payment__cash();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
