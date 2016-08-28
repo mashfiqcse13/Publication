@@ -62,10 +62,10 @@
             }
             body {
                 text-transform: capitalize;
-            }
-            .box-body {
+            } 
+/*            .box-body {
                 overflow-x: scroll;
-            }
+            }*/
             .text-memo-special-formate {
                 font-size: 55px;
                 text-align: center;
