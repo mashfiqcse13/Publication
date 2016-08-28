@@ -97,3 +97,8 @@
         "order": [[1, "desc"]],
     });
 </script>
+<style>
+    .box-body {
+                overflow-x: hidden!important;
+            }
+</style>
