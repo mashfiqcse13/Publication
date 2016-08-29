@@ -58,7 +58,7 @@ class Report extends CI_Controller {
         
         $data['totay_total_advance_collection_without_book_sale'] =  $this->Customer_payment->totay_total_advance_collection_without_book_sale();
 
-        $data['$totay_total_collection_cash_bank'] =
+        //$data['$totay_total_collection_cash_bank'] =
         
         $data['totay_total_expense'] = $this->Customer_payment->today_total_expesne();
         

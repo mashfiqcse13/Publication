@@ -217,15 +217,15 @@ class Customer_payment extends CI_Model {
     }
     
     function today_total_expesne(){
-         $sql = "SELECT sum(`paid_amount`) as paid_amount FROM `customer_payment` WHERE `due_payment_status`=1 AND Date(`payment_date`) = Date(now())";
+         $sql = "SELECT sum(`amount_expense`) as amount_expense FROM `expense` WHERE  Date(`date_expense`) = Date(now())";
         $result = $this->db->query($sql)->result();
         
-        if (empty($result[0]->amount_paid)) {
-            $date['amount_paid'] = 0;
+        if (empty($result[0]->amount_expense)) {
+            $date['amount_expense'] = 0;
         } else {
-            $date['amount_paid'] = $result[0]->amount_paid;
+            $date['amount_expense'] = $result[0]->amount_expense;
         }
-        return $date['amount_paid'] ;
+        return $date['amount_expense'] ;
         
     }
   
