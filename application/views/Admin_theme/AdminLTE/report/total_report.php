@@ -60,12 +60,7 @@
                             <h3 class="text-center">Total Report</h3>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <table  class="table table-bordered report">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+
                                 <tbody>
                                     <tr>
                                         <th>Total Sales</th>
@@ -95,14 +90,16 @@
                             </table>
 
                             <table class="table table-bordered report" style="margin-top: 50px;">
-                                <tr>
-                                    <th>Total Due Collection</th>
-                                    <td class="taka_formate"><?php echo $total_due_collection; ?></td>
-                                </tr>
-                                <tr>
-                                    <th>Total Advance Collection (Without Book Sale)</th>
-                                    <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <th>Total Due Collection</th>
+                                        <th class="taka_formate"><?php echo $total_due_collection; ?></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Advance Collection (Without Book Sale)</th>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
+                                    </tr>
+                                </tbody>
                             </table>
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
