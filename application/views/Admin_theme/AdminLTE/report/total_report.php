@@ -73,7 +73,7 @@
                                     </tr>
                                     <tr>
                                         <th>Total Due</th>
-                                        <td><?php echo (!empty($total->total_due)) ? $total->total_amount : 0; ?></td>
+                                    <td><?php echo (!empty($total->total_due))?$total->total_due: 0;?></td>
                                     </tr>
                                     <tr>
                                         <th>Sale Against Cash Collection</th>
@@ -97,21 +97,21 @@
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
                                     <th>Total Due Collection</th>
-                                    <th><?php echo (!empty($totla_due->paid_amount)) ? $totla_due->paid_amount : 0; ?></th>
+                                    <th><?php echo (!empty($total_due->paid_amount)) ? $total_due->paid_amount : 0; ?></th>
                                 </tr>
                                 <tr>
                                     <th>Total Advance Collection (Without Book Sale)</th>
-                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
                                 </tr>
                             </table>
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
                                     <th>Total Cash Collection</th>
-                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
                                 </tr>
                                 <tr>
                                     <th>Total Bank Collection</th>
-                                    <th><?php echo (!empty($totla_cash_collection->paid_amount)) ? $totla_cash_collection->paid_amount : 0; ?></th>
+                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
                                 </tr>
                             </table>
                             <table class="table table-bordered report" style="margin-top: 50px;">
@@ -121,7 +121,7 @@
                                 </tr>
                                 <tr>
                                     <th>Total Expense</th>
-                                    <th><?php echo (!empty($totla_expence->amount_paid)) ? $totla_expence->amount_paid : 0; ?></th>
+                                    <th><?php echo (!empty($total_expence->amount_paid)) ? $total_expence->amount_paid : 0; ?></th>
                                 </tr>
                             </table>
 
