@@ -140,17 +140,25 @@ class Report extends CI_Controller {
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
             $data['total'] = $this->Report_model->total_sales($from, $to);
-            $data['cutomer_due'] = $this->Report_model->customer_payemnt($from, $to);
-            $data['advance'] = $this->Report_model->advance_payment($from, $to);
-            $data['due'] = $this->Report_model->due_payment($from, $to);
-            $data['bank'] = $this->Report_model->bank_payment($from, $to);
-            $data['total_due'] = $this->Report_model->total_due($from, $to);
-            $data['totla_cash_collection'] = $this->Report_model->total_cash_collection($from, $to);
-            $data['total_bank_collection'] = $this->Report_model->total_bank_collection($from, $to);
-            $data['total_expence'] = $this->Report_model->total_expence($from, $to);
-            $data['total_advance'] = $this->Report_model->total_advance($from, $to);
-            $data['total_cash_bank'] = $this->Report_model->total_cash_bank($from, $to);
             
+            $data['total_sale_against_cash_collection'] = $this->Report_model->total_sale_against_cash_collection($from, $to);
+            $data['total_sale_against_bank_collection'] = $this->Report_model->total_sale_against_bank_collection($from, $to);
+            $data['total_sale_against_advance_deduction'] = $this->Report_model->total_sale_against_advance_deduction($from, $to);
+            $data['total_sale_against_due_collection'] = $this->Report_model->total_sale_against_due_collection($from, $to);
+            
+            $data['total_due_collection'] = $this->Report_model->total_due_collection($from, $to);
+            $data['total_advance_collection_without_book_sale'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
+            
+            $data['total_cash_collection_from_customer_payment'] = $this->Report_model->total_cash_collection_from_customer_payment($from, $to);
+            $data['total_bank_collection_from_customer_payment'] = $this->Report_model->total_bank_collection_from_customer_payment($from, $to);
+            $data['total_cash_collection_from_advance_payment'] = $this->Report_model->total_cash_collection_from_advance_payment($from, $to);
+            $data['total_bank_collection_from_advance_payment'] = $this->Report_model->total_bank_collection_from_advance_payment($from, $to);
+            
+            $data['total_cash_collection'] = $data['total_cash_collection_from_customer_payment']+$data['total_cash_collection_from_advance_payment'] ;
+            $data['total_bank_collection'] = $data['total_bank_collection_from_customer_payment']+$data['total_bank_collection_from_advance_payment'] ;
+            $data['total_collection_cash_bank'] = $data['total_cash_collection']+$data['total_bank_collection'] ;
+            
+            $data['total_expence'] = $this->Report_model->total_expence($from, $to);
             
             $data['opening'] = $this->Report_model->opening($from, $to);
             $data['closing'] = $this->Report_model->closing($from, $to);
