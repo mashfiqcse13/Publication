@@ -50,9 +50,13 @@ class Report extends CI_Controller {
         $data['today_total_bank_paid_against_sale'] = $today_total_payment_against_sale['today_total_bank_paid_against_sale'];
         $data['today_total_advance_deduction_against_sale'] = $today_total_payment_against_sale['today_total_advance_deduction_against_sale'];
         
+        $from = date('Y-m-d', now());
+        $to = date('Y-m-d', now());
         
+                
+        $data['today_due_collection_against_sale'] = $this->Report_model->total_sale_against_due_collection($from, $to);
         
-        $data['today_due_collection_against_sale'] =  $this->Customer_payment->today_customer_due_bank() +  $this->Customer_payment->today_customer_due_cash() ;
+        //$data['today_due_collection_against_sale'] =  $this->Customer_payment->today_customer_due_bank() +  $this->Customer_payment->today_customer_due_cash() ;
         
         $data['today_total_due_collection'] =  $this->Customer_payment->today_total_due_collection();
         
