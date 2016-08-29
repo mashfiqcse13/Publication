@@ -73,23 +73,23 @@
                                     </tr>
                                     <tr>
                                         <th>Total Due</th>
-                                    <td><?php echo (!empty($total->total_due))?$total->total_due: 0;?></td>
+                                        <td><?php echo (!empty($total->total_due)) ? $total->total_due : 0; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Sale Against Cash Collection</th>
-                                        <td><?php echo (!empty($cutomer_due->paid_amount)) ? $cutomer_due->paid_amount : 0; ?></td>
+                                        <td><?php echo $total_sale_against_cash_collection; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Sale Against Bank Collection</th>
-                                        <td><?php echo (!empty($bank->paid_amount)) ? $bank->paid_amount : 0; ?></td>
+                                        <td><?php echo $total_sale_against_bank_collection; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Sale Against Advance Deduction</th>
-                                        <td><?php echo (!empty($advance->paid_amount)) ? $advance->paid_amount : 0; ?></td>
+                                        <td><?php echo $total_sale_against_advance_deduction; ?></td>
                                     </tr>
                                     <tr>                     
                                         <th>Sale Against Due Collection</th>
-                                        <td><?php echo (!empty($due->paid_amount)) ? $due->paid_amount : 0; ?></td>
+                                        <td><?php echo $total_sale_against_due_collection; ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -97,31 +97,31 @@
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
                                     <th>Total Due Collection</th>
-                                    <th><?php echo (!empty($total_due->paid_amount)) ? $total_due->paid_amount : 0; ?></th>
+                                    <td><?php echo $total_due_collection; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Total Advance Collection (Without Book Sale)</th>
-                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
+                                    <th><?php echo $total_advance_collection_without_book_sale; ?></th>
                                 </tr>
                             </table>
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
-                                    <th>Total Cash Collection</th>
-                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
+                                    <th>Total Cash Collection (Customer payment + Advance Payment)</th>
+                                    <th><?php echo "$total_cash_collection_from_customer_payment + $total_cash_collection_from_advance_payment = $total_cash_collection"; ?></th>
                                 </tr>
                                 <tr>
-                                    <th>Total Bank Collection</th>
-                                    <th><?php echo (!empty($total_cash_collection->paid_amount)) ? $total_cash_collection->paid_amount : 0; ?></th>
+                                    <th>Total Bank Collection (Customer payment + Advance Payment)</th>
+                                    <th><?php echo "$total_bank_collection_from_customer_payment + $total_bank_collection_from_advance_payment = $total_bank_collection"; ?></th>
                                 </tr>
                             </table>
                             <table class="table table-bordered report" style="margin-top: 50px;">
                                 <tr>
                                     <th>Total Collection(Cash +Bank)</th>
-                                    <th><?php echo (!empty($total_cash_bank)) ? $total_cash_bank : 0; ?></th>
+                                    <th><?php echo $total_collection_cash_bank; ?></th>
                                 </tr>
                                 <tr>
                                     <th>Total Expense</th>
-                                    <th><?php echo (!empty($total_expence->amount_paid)) ? $total_expence->amount_paid : 0; ?></th>
+                                    <th><?php echo $total_expence; ?></th>
                                 </tr>
                             </table>
 
