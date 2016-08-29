@@ -310,7 +310,7 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item
                                             WHERE id_item = ".$value['item_id']. " AND id_specimen_total=$memo_id " );
             
             array_push($data_sales, $tmp_data_sales);
-            //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'], 3);
+            $this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity'], 5);
             $this->Stock_model->stock_add($value['item_id'], $value['item_quantity']);
         }
 
