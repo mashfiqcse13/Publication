@@ -52,6 +52,7 @@
                                         
                                         <div class="col-md-7">
                                             <div class="form-group">
+                                                <input type="checkbox" id="select_all" /> Select All
                                                 <?php echo $access_area;?> 
                                             </div>
                                         </div>
@@ -88,3 +89,19 @@
 
 <!-- insert book -->
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    $('#select_all').change(function(){
+        var status = this.checked;
+        $('.check').each(function(){
+           this.checked = status; 
+        });
+    });
+    $('.check').change(function(){
+        if(this.checked == false){
+            $('#selec_all')[0].checked = false;
+        }
+        if($('.check:checked').length == $('.checkbox').length){
+            $('#select_all')[0].checked = true;
+        }
+    });
+</script>

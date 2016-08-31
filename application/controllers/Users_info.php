@@ -14,6 +14,7 @@ class Users_info extends CI_Controller {
         $this->load->helper('security');
         $this->load->library('tank_auth');
         $this->load->model('tank_auth/users', 'users');
+        $this->load->model('user_access_model');
         $this->lang->load('tank_auth');
     }
 
@@ -180,44 +181,59 @@ class Users_info extends CI_Controller {
         $this->email->set_alt_message($this->load->view('email/' . $type . '-txt', $data, TRUE));
         $this->email->send();
     }
-    
-    function user_access_group(){
-        
+
+    function user_access_group() {
+
         $this->load->model('user_access_model');
-        $data['access_area']=$this->user_access_model->get_user_access_area();
-        $btn=$this->input->post('btn_submit');
-        if($btn){
-            
-            $data['insert']=$this->user_access_model->insert_access_group($_POST);
+        $data['access_area'] = $this->user_access_model->get_user_access_area();
+        $btn = $this->input->post('btn_submit');
+        if ($btn) {
+
+            $data['insert'] = $this->user_access_model->insert_access_group($_POST);
             //$access_area=$this->input->post('access_area');
-            
-  
-        
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'User Access Group';
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group', $data);
-        
     }
-    
-    function user_access_group_list(){
+
+    function user_access_group_list() {
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
         $crud->set_table('user_access_group')
                 ->unset_add()
-                ->unset_edit()
                 ->unset_delete();
 
         $output = $crud->render();
         $data['glosary'] = $output;
 
+
+        $data['access_area'] = $this->user_access_model->get_user_access_area();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'User Access Group List';
+        if ($this->uri->segment(3) == 'edit') {
+            $data['Title'] = 'User Access Group Edit';
+        }
+
+        $btn = $this->input->post('btn_submit');
+        if ($btn) {
+
+            $data['update'] = $this->user_access_model->update_access_group($_POST);
+            //$access_area=$this->input->post('access_area');
+        }
+
+        if ($this->uri->segment(3) == 'edit') {
+            $update_id = $this->uri->segment(4);
+            $data['get_all_group_info'] = $this->user_access_model->get_all_group_info_by_id($update_id);
+            $id_user_group = $data['get_all_group_info'][0]->id_user_access_group;
+            $data['get_all_access_area'] = $this->user_access_model->get_all_access_area_by_access_id($id_user_group);
+        }
+//        print_r($data['get_all_access_area_max']);exit();
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_list', $data);
     }
-    
+
     function user_access_area() {
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
@@ -232,18 +248,18 @@ class Users_info extends CI_Controller {
         $data['Title'] = 'User Access';
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_area', $data);
     }
-    
-    function user_group_element(){
+
+    function user_group_element() {
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
         $crud->set_table('user_group_elements')
                 ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
                 ->set_relation('id_user_access_area', 'user_access_area', 'user_access_area_title')
-                ->display_as('id_user_access_group','User Group Name')->order_by('id_user_access_group')
+                ->display_as('id_user_access_group', 'User Group Name')->order_by('id_user_access_group')
 //                ->unset_add()
                 //->unset_edit()
                 //->unset_delete()
-                ->display_as('id_user_access_area','User Access Area Name');
+                ->display_as('id_user_access_area', 'User Access Area Name');
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -253,14 +269,15 @@ class Users_info extends CI_Controller {
         $data['Title'] = 'User Access element';
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_element', $data);
     }
-    function user_group_assign_to_user(){
+
+    function user_group_assign_to_user() {
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
         $crud->set_table('user_access_area_permission')
                 ->set_relation('id_user_access_group', 'user_access_group', 'user_access_group_title')
                 ->set_relation('user_id', 'users', 'username')
-                ->display_as('id_user_access_group','User Group Name')
-                ->display_as('user_id','User Name')->order_by('id_user_access_group');
+                ->display_as('id_user_access_group', 'User Group Name')
+                ->display_as('user_id', 'User Name')->order_by('id_user_access_group');
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -270,4 +287,5 @@ class Users_info extends CI_Controller {
         $data['Title'] = 'User Group Allocation';
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_element', $data);
     }
+
 }
