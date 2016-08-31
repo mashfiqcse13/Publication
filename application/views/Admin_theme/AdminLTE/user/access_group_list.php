@@ -44,8 +44,9 @@
                                 //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                                 ?>
                                 <?php
+                                
                                 foreach ($get_all_group_info as $info) {
-                                    $id = 1;
+                                    
                                     ?>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -53,9 +54,12 @@
                                                 <label for="">Access Group Title : </label>
                                                 <input type="text" class="form-control" name="access_group_title" value="<?php echo $info->user_access_group_title; ?>"/>
                                                 <input type="hidden"  name="id_user_access_group" value="<?php echo $info->id_user_access_group; ?>"/>
-                                                <?php foreach ($get_all_access_area as $check) { ?>
+                                                <?php 
+                                                $id = 1;
+                                                foreach ($get_all_access_area as $check) { ?>
                                                     <input type="hidden" name="id_user_group_elements[<?php echo $id; ?>]" value="<?php echo $check->id_user_group_elements; ?>" />
                                                     <?php
+                                                    $id++;
                                                 }
                                                 ?>
                                             </div>
@@ -94,7 +98,7 @@
 
                                     </div>
                                     <?php
-                                    $id++;
+                                    
                                 }
                                 ?>
 
@@ -139,8 +143,7 @@
 <!-- insert book -->
 <?php include_once __DIR__ . '/../footer.php'; ?>
 <script type="text/javascript">
-    var i= 3;
-    $('input[name = "access_area['+i+']"]').each(function () {
+    $('input[name = "access_area[]"]').each(function () {
         var test = $(this).val()
 <?php foreach ($get_all_access_area as $check) { ?>
             var value = <?php echo $check->id_user_access_area; ?>;
