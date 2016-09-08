@@ -27,6 +27,11 @@ class Bank extends CI_Controller {
         $this->load->model('Bank_model');
         //$this->load->library('session');
         $this->load->library("pagination");
+        $super_user_id = $this->config->item('super_user_id');
+        if($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission(3)){
+            redirect();
+            return 0;
+        }
     }
 
     function index() {

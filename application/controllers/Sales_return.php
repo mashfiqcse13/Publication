@@ -28,6 +28,11 @@ class Sales_return extends CI_Controller {
         $this->load->model('Memo');
         $this->load->model('Sales_model');
         $this->load->library('session');
+        $super_user_id = $this->config->item('super_user_id');
+        if($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission(19)){
+            redirect();
+            return 0;
+        }
         
         
         

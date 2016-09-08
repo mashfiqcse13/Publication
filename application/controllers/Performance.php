@@ -18,6 +18,7 @@ class Performance extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('performance_model');
         
+        
     }
 
     public function index() {
