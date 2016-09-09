@@ -28,6 +28,7 @@ class Sales_return extends CI_Controller {
         $this->load->model('Memo');
         $this->load->model('Sales_model');
         $this->load->library('session');
+        $this->load->model('User_access_model');
         $this->User_access_model->check_user_access(19);
     }
 
