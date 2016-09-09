@@ -17,11 +17,7 @@ class Users_info extends CI_Controller {
         $this->load->model('user_access_model');
         $this->lang->load('tank_auth');
         $this->load->model('User_access_model');
-        $super_user_id = $this->config->item('super_user_id');
-        if($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission(24)){
-            redirect();
-            return 0;
-        }
+        $this->User_access_model->check_user_access(24);
     }
 
     function index() {
