@@ -22,6 +22,7 @@ class Stock extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
         $this->load->model('Stock_model');
+        $this->load->model('User_access_model');
         $super_user_id = $this->config->item('super_user_id');
         if($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission(23)){
             redirect();
