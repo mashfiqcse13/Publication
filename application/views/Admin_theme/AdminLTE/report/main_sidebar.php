@@ -18,7 +18,7 @@
 
             <li><?php echo anchor('report/cash_box', '<i class="fa fa-plus-circle"></i>  <span>Cash Box</span>'); ?></li>
             <li><?php echo anchor('report/master_reconcillation', '<i class="fa fa-plus-circle"></i>  <span>Master reconcillation</span>'); ?></li>
-            <li><?php echo anchor('report/total_report', '<i class="fa fa-plus-circle"></i>  <span>Total Report</span>'); ?></li>
+            <li><?php echo anchor('report/total_report', '<i class="fa fa-plus-circle"></i>  <span>Final Report</span>'); ?></li>
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 

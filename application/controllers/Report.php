@@ -73,7 +73,7 @@ class Report extends CI_Controller {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Cash in Hand';
+        $data['Title'] = 'Cash box';
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/cash_box', $data);
     }
 
@@ -172,7 +172,7 @@ class Report extends CI_Controller {
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Total Report';
+        $data['Title'] = 'Final Report';
         $this->load->view($this->config->item('ADMIN_THEME') . 'report/total_report', $data);
     }
 
