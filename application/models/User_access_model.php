@@ -220,4 +220,13 @@ class User_access_model extends ci_model {
         return $this->db->get()->result();
     }
 
+    function check_user_access($id_user_access_area) {
+        return 0;
+        $super_user_id = $this->config->item('super_user_id');
+        if ($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission($id_user_access_area)) {
+            redirect();
+            return 0;
+        }
+    }
+
 }
