@@ -62,7 +62,7 @@
                             <h4><strong>Search Range: (From - To)  : </strong> <?php echo $date_range; ?></h4>
 
                             <br>
-                            <h3 class="table_title">Sale Info</h3>
+                            <h3 class="text-center">Sale Info</h3>
                             <table  class="table table-bordered report">
 
                                 <tbody>
@@ -89,7 +89,7 @@
                                 </tbody>
                             </table>
 
-                            <h3 class="table_title">Due & advance collection</h3>
+                            <h3 class="text-center">Due & advance collection</h3>
                             <table class="table table-bordered report">
                                 <tbody>
                                     <tr>                     
@@ -107,7 +107,7 @@
                                 </tbody>
                             </table>
 
-                            <h3 class="table_title">Collections</h3>
+                            <h3 class="text-center">Collections</h3>
                             <table class="table table-bordered report">
                                 <tr>
                                     <th>Total Cash Collection (General payment + Advance Payment)</th>
@@ -120,7 +120,7 @@
                             </table>
 
 
-                            <h3 class="table_title">Master Reconcilation</h3>
+                            <h3 class="text-center">Master Reconcilation</h3>
                             <table class="table table-bordered report">
                                 <tr>
                                     <th>Total Collection(Cash +Bank)</th>
