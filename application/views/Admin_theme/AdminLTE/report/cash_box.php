@@ -202,7 +202,7 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $today_total_due_collection; ?> TK</h3>
-                        <p>Today Total Due Collection</p>
+                        <p>Today Total Due Collection<br>(Previous due + Sale against due)</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>

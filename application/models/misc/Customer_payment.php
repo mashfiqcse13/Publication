@@ -167,8 +167,7 @@ class Customer_payment extends CI_Model {
 
     function today_total_payment_against_sale() {
         $sql = "SELECT sum(`cash_paid`)as today_total_cash_paid_against_sale,
-            sum(`bank_paid`)as today_total_bank_paid_against_sale,
-            sum(`customer_advance_paid`)as today_total_advance_deduction_against_sale
+            sum(`bank_paid`)as today_total_bank_paid_against_sale,sum(`customer_advance_paid`)as today_total_advance_deduction_against_sale
             FROM `view_customer_paid_marged` WHERE `id_total_sales` in (SELECT `id_total_sales` FROM `sales_total_sales` WHERE Date(`issue_date`) = Date(now())  )";
         $result = $this->db->query($sql)->result();
         if (empty($result[0]->today_total_cash_paid_against_sale)) {
@@ -188,45 +187,66 @@ class Customer_payment extends CI_Model {
         }
         return $date;
     }
-    
+
+    function total_payments_against_sale($from, $to) {
+        $sql = "SELECT sum(`cash_paid`)as today_total_cash_paid_against_sale,
+            sum(`bank_paid`)as today_total_bank_paid_against_sale,sum(`customer_advance_paid`)as today_total_advance_deduction_against_sale
+            FROM `view_customer_paid_marged` WHERE `id_total_sales` in (SELECT `id_total_sales` FROM `sales_total_sales` WHERE Date(`issue_date`) BETWEEN '$from' AND '$to'  )";
+        $result = $this->db->query($sql)->result();
+        if (empty($result[0]->today_total_cash_paid_against_sale)) {
+            $date['today_total_cash_paid_against_sale'] = 0;
+        } else {
+            $date['today_total_cash_paid_against_sale'] = $result[0]->today_total_cash_paid_against_sale;
+        }
+        if (empty($result[0]->today_total_bank_paid_against_sale)) {
+            $date['today_total_bank_paid_against_sale'] = 0;
+        } else {
+            $date['today_total_bank_paid_against_sale'] = $result[0]->today_total_bank_paid_against_sale;
+        }
+        if (empty($result[0]->today_total_advance_deduction_against_sale)) {
+            $date['today_total_advance_deduction_against_sale'] = 0;
+        } else {
+            $date['today_total_advance_deduction_against_sale'] = $result[0]->today_total_advance_deduction_against_sale;
+        }
+        return $date;
+    }
+
     function totay_total_advance_collection_without_book_sale() {
         $sql = "SELECT sum(`amount_paid`)as amount_paid
                     FROM `party_advance_payment_register` WHERE `id_payment_method` in (1,3)
                     AND Date(`date_payment`) = Date(now()) ";
         $result = $this->db->query($sql)->result();
-        
+
         if (empty($result[0]->amount_paid)) {
             $date['amount_paid'] = 0;
         } else {
             $date['amount_paid'] = $result[0]->amount_paid;
         }
-        return $date['amount_paid'] ;
+        return $date['amount_paid'];
     }
-    
-    function today_total_due_collection(){
-         $sql = "SELECT sum(`paid_amount`) as amount_paid FROM `customer_payment` WHERE `due_payment_status`=1 AND Date(`payment_date`) = Date(now())";
+
+    function today_total_due_collection() {
+        $sql = "SELECT sum(`paid_amount`) as amount_paid FROM `customer_payment` WHERE `due_payment_status`=1 AND Date(`payment_date`) = Date(now())";
         $result = $this->db->query($sql)->result();
-        
+
         if (empty($result[0]->amount_paid)) {
             $date['amount_paid'] = 0;
         } else {
             $date['amount_paid'] = $result[0]->amount_paid;
         }
-        return $date['amount_paid'] ;
-        
+        return $date['amount_paid'];
     }
-    
-    function today_total_expesne(){
-         $sql = "SELECT sum(`amount_expense`) as amount_expense FROM `expense` WHERE  Date(`date_expense`) = Date(now())";
+
+    function today_total_expesne() {
+        $sql = "SELECT sum(`amount_expense`) as amount_expense FROM `expense` WHERE  Date(`date_expense`) = Date(now())";
         $result = $this->db->query($sql)->result();
-        
+
         if (empty($result[0]->amount_expense)) {
             $date['amount_expense'] = 0;
         } else {
             $date['amount_expense'] = $result[0]->amount_expense;
         }
-        return $date['amount_expense'] ;
-        
+        return $date['amount_expense'];
     }
-  
+
 }

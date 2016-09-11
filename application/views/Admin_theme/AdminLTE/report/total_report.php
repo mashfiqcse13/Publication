@@ -41,7 +41,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                <input type="text" required="true" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                 <br>
                             </div><!-- /.input group -->
                         </div><!-- /.form group -->
@@ -57,13 +57,17 @@
                     ?>
                     <div class="box" id="block">
                         <div class="box-body">
-                            <h3 class="text-center">Total Report</h3>
+                            <h3 class="text-center">Final Report</h3>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                            <h4><strong>Search Range: (From - To)  : </strong> <?php echo $date_range; ?></h4>
+
+                            <br>
+                            <h3 class="table_title">Sale Info</h3>
                             <table  class="table table-bordered report">
 
                                 <tbody>
                                     <tr>
-                                        <th>Total Sales</th>
+                                        <th>Total Sale</th>
                                         <td class="taka_formate"><?php echo (!empty($total->total_amount)) ? $total->total_amount : 0; ?></td>                              
                                     </tr>
                                     <tr>
@@ -82,36 +86,42 @@
                                         <th>Sale Against Advance Deduction</th>
                                         <td class="taka_formate"><?php echo $total_sale_against_advance_deduction; ?></td>
                                     </tr>
-                                    <tr>                     
-                                        <th>Sale Against Due Collection</th>
-                                        <td class="taka_formate"><?php echo $total_sale_against_due_collection; ?></td>
-                                    </tr>
                                 </tbody>
                             </table>
 
-                            <table class="table table-bordered report" style="margin-top: 50px;">
+                            <h3 class="table_title">Due & advance collection</h3>
+                            <table class="table table-bordered report">
                                 <tbody>
+                                    <tr>                     
+                                        <th>Sale Against Due Collection</th>
+                                        <th class="taka_formate"><?php echo $total_sale_against_due_collection; ?></th>
+                                    </tr>
                                     <tr>
-                                        <th>Total Due Collection</th>
+                                        <th>Total Due Collection (Previous due + Sale against due)</th>
                                         <th class="taka_formate"><?php echo $total_due_collection; ?></th>
                                     </tr>
                                     <tr>
-                                        <th>Total Advance Collection (Without Book Sale)</th>
+                                        <th>Total Advance Collection ( Without returned book value )</th>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table table-bordered report" style="margin-top: 50px;">
+
+                            <h3 class="table_title">Collections</h3>
+                            <table class="table table-bordered report">
                                 <tr>
-                                    <th>Total Cash Collection (Customer payment + Advance Payment)</th>
+                                    <th>Total Cash Collection (General payment + Advance Payment)</th>
                                     <th class="taka_formate"><?php echo "$total_cash_collection_from_customer_payment + $total_cash_collection_from_advance_payment = $total_cash_collection"; ?></th>
                                 </tr>
                                 <tr>
-                                    <th>Total Bank Collection (Customer payment + Advance Payment)</th>
+                                    <th>Total Bank Collection (General payment + Advance Payment)</th>
                                     <th class="taka_formate"><?php echo "$total_bank_collection_from_customer_payment + $total_bank_collection_from_advance_payment = $total_bank_collection"; ?></th>
                                 </tr>
                             </table>
-                            <table class="table table-bordered report" style="margin-top: 50px;">
+
+
+                            <h3 class="table_title">Master Reconcilation</h3>
+                            <table class="table table-bordered report">
                                 <tr>
                                     <th>Total Collection(Cash +Bank)</th>
                                     <th class="taka_formate"><?php echo $total_collection_cash_bank; ?></th>
@@ -122,7 +132,7 @@
                                 </tr>
                             </table>
 
-                            <table class="table table-bordered new" style="margin-top: 50px;">
+                            <table class="table table-bordered new" style="margin-top: 10px;">
 
                                 <tr>
                                     <th>Opening Cash:</th>
@@ -178,5 +188,9 @@
         text-align: center;
         background: #fff!important;
 
+    }
+    .table_title{text-align: center; margin-top: 20px}
+    @media print{
+        .table_title{text-align: center; margin-top: 20px}
     }
 </style>
