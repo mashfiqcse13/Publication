@@ -65,7 +65,7 @@ class Cash_to_bank_model extends CI_Model{
         
 //        bank management status
         
-        $status['approval_status'] = 3;
+        $status['approval_status'] = 1;
         $status['id_bank_management'] = $id_bank_management;
         $this->db->insert('bank_management_status',$status);
         
