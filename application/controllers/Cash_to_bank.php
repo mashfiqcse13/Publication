@@ -86,4 +86,37 @@ class Cash_to_bank extends CI_Controller{
         $data['Title'] = 'Cash to Bank Transfer';
         $this->load->view($this->config->item('ADMIN_THEME') . 'cash_to_bank/cash_transfer', $data);
     }
+    
+    function expense_adjustment(){
+        $crud = new grocery_CRUD();
+        $crud->set_table('cash_to_expense_adjustment')
+                ->set_subject('Cash to Expense Adjustment Transaction')
+                 ->order_by('id_cash_to_expense_adjustment','desc')
+                ->unset_edit()
+                ->unset_delete()
+                ->unset_read();
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        
+        $data['get_all_expense_info'] = $this->Cash_to_bank_model->get_all_expense_info();
+        $data['get_all_cash_info'] = $this->Cash_to_bank_model->get_all_cash_info();
+        $btn = $this->input->post('submit');
+        if($btn){
+            $this->Cash_to_bank_model->save_expense_info($_POST);
+            $sdata['message'] = '<div class = "alert alert-success" id="message"><button type = "button" class = "close" data-dismiss = "alert"><i class = " fa fa-times"></i></button><p><strong><i class = "ace-icon fa fa-check"></i></strong> Data is Successfully Inserted!</p></div>';
+            $this->session->set_userdata($sdata);
+            redirect('cash_to_bank/expense_adjustment');
+        } 
+        $data['date_range'] = $this->input->get('date_range');
+        $date = explode('-', $data['date_range']);
+        if ($data['date_range'] != '') {
+            $data['get_all_cash_to_bank_info'] = $this->Cash_to_bank_model->get_all_cash_to_expense_info_by_date($date[0], $date[1]);
+        }
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Cash to Bank Dashboard';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'cash_to_bank/expense_adjustment', $data);
+    }
 }

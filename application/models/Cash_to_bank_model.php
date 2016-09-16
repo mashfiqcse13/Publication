@@ -19,6 +19,12 @@ class Cash_to_bank_model extends CI_Model{
         $this->db->join('bank_account','bank.id_bank = bank_account.id_bank','left');
         return $this->db->get()->result();        
     }
+    
+    function get_all_expense_info(){
+        $this->db->select_sum('amount_expense');
+        $this->db->from('expense');
+        return $this->db->get()->row();        
+    }
     function get_all_cash_to_bank_info_by_date($from, $to){
         $date_from = date('Y-m-d H:i:s', strtotime($from));
         $date_to = date('Y-m-d H:i:s', strtotime($to));
@@ -27,6 +33,15 @@ class Cash_to_bank_model extends CI_Model{
         $this->db->join('bank_account','bank_account.id_bank_account = cash_to_bank_register.id_bank_account','left');
         $this->db->join('bank','bank.id_bank = bank_account.id_bank','left');
         $date_range = "DATE(cash_to_bank_register.date) BETWEEN '$date_from' AND '$date_to'";
+        $this->db->where($date_range);
+        return $this->db->get()->result();  
+    }
+    function get_all_cash_to_expense_info_by_date($from, $to){
+        $date_from = date('Y-m-d H:i:s', strtotime($from));
+        $date_to = date('Y-m-d H:i:s', strtotime($to));
+        $this->db->select('*');
+        $this->db->from('cash_to_expense_adjustment');
+        $date_range = "DATE(date) BETWEEN '$date_from' AND '$date_to'";
         $this->db->where($date_range);
         return $this->db->get()->result();  
     }
@@ -72,6 +87,17 @@ class Cash_to_bank_model extends CI_Model{
         $this->cash->reduce($amount);
         $this->bank->add($id_acount,$amount);
         
+        return true;
+    }
+    
+    function save_expense_info($post_array){
+        $this->load->model('misc/cash','cash');
+        $amount = $post_array['transfered_amount'];
+        $data['transfered_amount'] = $amount;
+        $data['date'] = date('Y-m-d H:i:s');
+        $this->db->insert('cash_to_expense_adjustment',$data);
+        
+        $this->cash->reduce($amount);
         return true;
     }
 }

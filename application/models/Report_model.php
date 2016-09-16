@@ -203,5 +203,29 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
+    
+    
+    function total_cash_2_bank_trasfer($from, $to){
+        $this->db->select_sum('transfered_amount');
+        $this->db->from('cash_to_bank_register');
+        if ($from != '') {
+            $condition = "DATE(date) BETWEEN '$from' AND '$to'";
+//            echo $condition; exit();
+            $this->db->where($condition);
+        }
+        $result = $this->db->get()->row();
+        return empty($result->transfered_amount) ? 0 : $result->transfered_amount;
+    }
+    function total_cash_2_expense_adjustment($from, $to){
+        $this->db->select_sum('transfered_amount');
+        $this->db->from('cash_to_expense_adjustment');
+        if ($from != '') {
+            $condition = "DATE(date) BETWEEN '$from' AND '$to'";
+//            echo $condition; exit();
+            $this->db->where($condition);
+        }
+        $result = $this->db->get()->row();
+        return empty($result->transfered_amount) ? 0 : $result->transfered_amount;
+    }
 
 }
