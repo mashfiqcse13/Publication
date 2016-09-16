@@ -23,7 +23,7 @@
     <li><?php echo anchor('stock', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
     <li><?php echo anchor('items', '<i class="fa fa-plus-circle"></i>  <span>Items</span>'); ?></li>
     <li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Contact</span>'); ?></li>
-    <li><?php echo anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash To Bank</span>'); ?></li>
+    <li><?php echo anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash To Bank/Expence</span>'); ?></li>
     <li><?php echo anchor('bank', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
     <li><?php echo anchor('income', '<i class="fa fa-plus-circle"></i>  <span>Income</span>'); ?></li>
     <li><?php echo anchor('expense', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
