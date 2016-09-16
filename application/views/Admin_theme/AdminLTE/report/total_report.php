@@ -59,7 +59,7 @@
                         <div class="box-body">
                             <h3 class="text-center">Final Report</h3>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <h4><strong>Search Range: (From - To)  : </strong> <?php echo $date_range; ?></h4>
+                            <h5><strong>Search Range: (From - To)  : </strong> <?php echo $date_range; ?></h5>
 
                             <br>
                             <h3 class="text-center">Sale Info</h3>
@@ -124,11 +124,11 @@
                             <table class="table table-bordered report">
                                 <tr>
                                     <td width="50%">Total Cash Collection</td>
-                                    <th class="taka_formate"><?php echo ($closing->ending_cash - $opening->opening_cash); ?></th>
+                                    <th class="taka_formate"><?php echo ($total_cash_2_bank_trasfer + $total_cash_2_expense_adjustment + $closing->ending_cash - $opening->opening_cash); ?></th>
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Bank Collection</td>
-                                    <th class="taka_formate"><?php echo ($closing->closing_bank_balance - $opening->opening_bank_balance); ?></th>
+                                    <th class="taka_formate"><?php echo ($total_bank_withdraw + $closing->closing_bank_balance - $opening->opening_bank_balance); ?></th>
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Collection(Cash +Bank)</td>
@@ -168,17 +168,24 @@
                             <table class="table table-bordered report" style="margin-top: 10px;">
                                 <tr>
                                     <td width="50%">Total Cash to Bank Transfer</td>
-                                    <th class="taka_formate">0</th>
+                                    <th class="taka_formate"><?php echo $total_cash_2_bank_trasfer; ?></th>
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Cash to Expense Adjustment</td>
-                                    <th class="taka_formate">0</th>
+                                    <th class="taka_formate"><?php echo $total_cash_2_expense_adjustment; ?></th>
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Bank Withdraw</td>
-                                    <th class="taka_formate">0</th>
+                                    <th class="taka_formate"><?php echo $total_bank_withdraw; ?></th>
                                 </tr>
                             </table>
+                            <br>
+                            <strong>Notes :</strong>
+                            <ol>
+                                <li>Total expense adjustment amount should not be greater than total expense amount</li>
+                                <li>Total Cash Collection = ( Closing Cash - Opening Cash ) + Total Cash to Bank Transfer + Total Cash to Expense Adjustment</li>
+                                <li>Total Bank Collection = ( Closing Bank - Opening Bank ) + Total Bank Withdraw</li>
+                            </ol>
                         </div>
                     </div>
                 <?php } ?>

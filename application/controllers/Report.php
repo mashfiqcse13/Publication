@@ -171,6 +171,11 @@ class Report extends CI_Controller {
 
             $data['opening'] = $this->Report_model->opening($from, $to);
             $data['closing'] = $this->Report_model->closing($from, $to);
+
+
+            $data['total_cash_2_bank_trasfer'] = 0;
+            $data['total_cash_2_expense_adjustment'] = 0;
+            $data['total_bank_withdraw'] = 0;
 //            print_r($data);exit();
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
