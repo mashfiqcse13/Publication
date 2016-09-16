@@ -25,7 +25,6 @@ class Report_model extends CI_Model {
         return $this->db->get()->row();
     }
 
-
     function opening($from, $to) {
         $this->db->select('*');
         $this->db->from('master_reconcillation');
@@ -34,7 +33,11 @@ class Report_model extends CI_Model {
 //            echo $condition; exit();
             $this->db->where($condition);
         }
-        return $this->db->get()->row();
+        $opening = $this->db->get()->row();
+        $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : 0;
+        $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance : 0;
+        $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : 0;
+        return $opening;
     }
 
     function closing($from, $to) {
@@ -46,7 +49,11 @@ class Report_model extends CI_Model {
 //            echo $condition; exit();
             $this->db->where($condition);
         }
-        return $this->db->get()->row();
+        $closing = $this->db->get()->row();
+        $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : 0;
+        $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : 0;
+        $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : 0;
+        return $closing;
     }
 
     function total_due_collection($from, $to) {
@@ -116,7 +123,7 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->paid_amount) ? 0 : $result->paid_amount;
     }
-    
+
     function total_cash_collection_from_customer_payment($from, $to) {
         $this->db->select_sum('paid_amount');
         $this->db->from('customer_payment');
@@ -155,7 +162,6 @@ class Report_model extends CI_Model {
         return empty($result->amount_expense) ? 0 : $result->amount_expense;
     }
 
-
     function total_cash_collection_from_advance_payment($from, $to) {
         $this->db->select_sum('amount_paid');
         $this->db->from('party_advance_payment_register');
@@ -181,7 +187,6 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
-    
 
     function total_advance_collection_without_book_sale($from, $to) {
         $this->db->select_sum('amount_paid');
@@ -195,4 +200,5 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
+
 }
