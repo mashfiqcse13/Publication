@@ -47,8 +47,8 @@
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                             <div class="col-md-2">
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?php echo anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <?php echo anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                             </div>
                         </form>
 
@@ -76,8 +76,8 @@
 
                             </div><!-- /.form group -->
                             <div class="col-md-2">
-                            <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                            <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                             </div>
 
 
@@ -112,7 +112,7 @@
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body" style="overflow: auto;">
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>

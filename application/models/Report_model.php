@@ -26,14 +26,16 @@ class Report_model extends CI_Model {
     }
 
     function opening($from, $to) {
-        $this->db->select('*');
-        $this->db->from('master_reconcillation');
+        $this->db->select('*')->from('master_reconcillation');
         if ($from != '') {
             $condition = "DATE(date) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
             $this->db->where($condition);
         }
         $opening = $this->db->get()->row();
+        if (empty($opening)) {
+            $opening = new stdClass();
+        }
         $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : 0;
         $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance : 0;
         $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : 0;
@@ -41,15 +43,16 @@ class Report_model extends CI_Model {
     }
 
     function closing($from, $to) {
-        $this->db->select('*');
-        $this->db->from('master_reconcillation');
-        $this->db->order_by('id_master_reconcillation', 'desc');
+        $this->db->select('*')->from('master_reconcillation')->order_by('id_master_reconcillation', 'desc');
         if ($from != '') {
             $condition = "DATE(date) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
             $this->db->where($condition);
         }
         $closing = $this->db->get()->row();
+        if (empty($closing)) {
+            $closing = new stdClass();
+        }
         $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : 0;
         $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : 0;
         $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : 0;

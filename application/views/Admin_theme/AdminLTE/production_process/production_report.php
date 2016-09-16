@@ -141,7 +141,7 @@
                         <?= form_close(); ?>       
                     </div>
 
-                    <div class="box-body">
+                    <div class="box-body" style="overflow: auto;">
                         <?php
                         if (!isset($get_process_details_for_report_by_search)) {
                             ?>

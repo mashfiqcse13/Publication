@@ -125,7 +125,7 @@
                     <?= form_close(); ?>       
                 </div>
 
-                <div class="box">
+                <div class="box"  style="overflow: auto;">
                     <?php
                     if (!isset($all_production_process_first_step_info_by_search)) {
                         ?>
