@@ -174,12 +174,14 @@
 <script type="text/javascript">
 
     var html = $('#expense').html();
+    var cash = $('#cash').html();
     $('#amount').attr("placeholder", "Transfer Maximum " + html + "tk");
 
     $('#amount').keyup(function () {
         var expense = Number(html);
+        var cash_amount = Number(cash);
         var amount = $('#amount').val();
-        if (amount > (expense - amount)) {
+        if (amount > (expense - amount) || amount > cash_amount) {
             alert('You Have Crossed The Limit!!');
             $('#submit').click(function (e) {
                 e.preventDefault();
@@ -187,7 +189,7 @@
 
             $('#amount').css("border", "1px solid red");
             return false;
-        } else if (amount <= (expense - amount)) {
+        } else if (amount <= (expense - amount) && amount <= cash_amount) {
             $('#submit').submit();
         }
     });

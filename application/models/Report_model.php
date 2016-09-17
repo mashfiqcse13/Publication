@@ -227,5 +227,18 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->transfered_amount) ? 0 : $result->transfered_amount;
     }
+    
+    function total_bank_withdraw($from, $to){
+        $this->db->select_sum('amount_transaction');
+        $this->db->from('bank_management');
+        $this->db->where('id_transaction_type',2);
+        if ($from != '') {
+            $condition = "DATE(transaction_date) BETWEEN '$from' AND '$to'";
+//            echo $condition; exit();
+            $this->db->where($condition);
+        }
+        $result = $this->db->get()->row();
+        return empty($result->amount_transaction) ? 0 : $result->amount_transaction;
+    }
 
 }

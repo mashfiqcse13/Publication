@@ -175,7 +175,7 @@ class Report extends CI_Controller {
 
             $data['total_cash_2_bank_trasfer'] = $this->Report_model->total_cash_2_bank_trasfer($from, $to);
             $data['total_cash_2_expense_adjustment'] = $this->Report_model->total_cash_2_expense_adjustment($from, $to);
-            $data['total_bank_withdraw'] = 0;
+            $data['total_bank_withdraw'] = $this->Report_model->total_bank_withdraw($from, $to);
 //            print_r($data);exit();
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');

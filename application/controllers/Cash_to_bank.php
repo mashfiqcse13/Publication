@@ -116,7 +116,7 @@ class Cash_to_bank extends CI_Controller{
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Cash to Bank Dashboard';
+        $data['Title'] = 'Cash to Expense Adjustment Transaction';
         $this->load->view($this->config->item('ADMIN_THEME') . 'cash_to_bank/expense_adjustment', $data);
     }
 }
