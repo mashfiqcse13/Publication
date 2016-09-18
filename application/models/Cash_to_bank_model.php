@@ -23,7 +23,8 @@ class Cash_to_bank_model extends CI_Model{
     function get_all_expense_info(){
         $this->db->select_sum('amount_expense');
         $this->db->from('expense');
-        return $this->db->get()->row();        
+        $result = $this->db->get()->row();        
+         return empty($result->amount_expense) ? 0 : $result->amount_expense;
     }
     function get_all_cash_to_bank_info_by_date($from, $to){
         $date_from = date('Y-m-d H:i:s', strtotime($from));
@@ -57,7 +58,7 @@ class Cash_to_bank_model extends CI_Model{
     function get_all_cash_info(){
         $this->db->select('*');
         $this->db->from('cash');
-        return $this->db->get()->result();
+        return $this->db->get()->row();
     }
     
     function save_info($post_array){
@@ -82,6 +83,8 @@ class Cash_to_bank_model extends CI_Model{
         
         $status['approval_status'] = 1;
         $status['id_bank_management'] = $id_bank_management;
+        $status['approved_by'] = $_SESSION['user_id'];
+        $status['action_date'] = date('Y-m-d H:i:s');
         $this->db->insert('bank_management_status',$status);
         
         $this->cash->reduce($amount);

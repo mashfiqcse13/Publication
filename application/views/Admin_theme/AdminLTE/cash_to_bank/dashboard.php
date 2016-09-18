@@ -42,25 +42,20 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Available Cash:</label>
                                         <div class="col-md-9" >
-                                            <?php
-                                            foreach ($get_all_cash_info as $cash) {
-                                                ?>
-                                                <p id="cash"><?php echo $cash->balance; ?></p>
-                                                <?php
-                                            }
-                                            ?>
+                                            <p id="cash"><?php echo $get_all_cash_info->balance; ?></p>
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Available Bank Accounts:</label>
                                         <div class="col-md-9" >
-                                            <select name="id_bank_account" id="" class="form-control select2">
+                                            <select name="id_bank_account" id="" class="form-control select2" required="">
                                                 <option value="0">Select Bank Account</option>
                                                 <?php
                                                 foreach ($get_all_bank_info as $bank) {
                                                     ?>
                                                     <option value="<?php echo $bank->id_bank_account ?>"><?php
-                                                        echo $bank->name_bank;echo ' -' . $bank->account_number;
+                                                        echo $bank->name_bank;
+                                                        echo ' -' . $bank->account_number;
                                                         ?></option>
                                                     <?php
                                                 }
@@ -71,13 +66,26 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Transfer Amount:</label>
                                         <div class="col-md-9" >
-                                            <input type="" id="amount" class="form-control" name="transfered_amount"/>
+                                             <?php
+                                            $data = array(
+                                                'name' => 'transfered_amount',
+                                                'type' => 'number',
+                                                'class' => 'form-control',
+                                                'placeholder' => 'Transfer Maximum '.$get_all_cash_info->balance,
+                                                'max' => $get_all_cash_info->balance,
+                                                'min' => '0',
+                                                
+                                            );
+
+                                            echo form_input($data);
+                                            ?>
+                                            <!--<input type="" id="amount" class="form-control" name="transfered_amount"/>-->
                                         </div>
                                     </div>
                                     <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
                                 </div>
                             </div>
-                            <?= form_close(); ?>
+                        <?= form_close(); ?>
                         </div>
                         <?php
                     } else {
@@ -106,11 +114,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                    <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+    <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                 </div>
                             </div>
 
-                            <?= form_close(); ?>
+                        <?= form_close(); ?>
                         </div>
                         <?php
                         if (!isset($date_range)) {
@@ -142,7 +150,8 @@
                                                 $sum_total_amount += $rep->transfered_amount;
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $rep->name_bank;echo ' - ' . $rep->account_number ?></td>
+                                                    <td><?php echo $rep->name_bank;
+                                                echo ' - ' . $rep->account_number ?></td>
                                                     <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
                                                 </tr>
@@ -193,14 +202,14 @@
         if (amount > cash) {
             alert('You Have Crossed The Limit!!');
             $('#submit').click(function (e) {
-                e.preventDefault();                
+                e.preventDefault();
             });
-            
+
             $('#amount').css("border", "1px solid red");
             return false;
-        }else if(amount <= cash){
-                $('#submit').submit();
-            }
+        } else if (amount <= cash) {
+            $('#submit').submit();
+        }
     });
 
 </script>

@@ -42,25 +42,35 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Available Cash:</label>
                                         <div class="col-md-9" >
-                                            <?php
-                                            foreach ($get_all_cash_info as $cash) {
-                                                ?>
-                                                <p id="cash"><?php echo $cash->balance; ?></p>
-                                                <?php
-                                            }
-                                            ?>
+
+                                            <p id="cash"><?php echo $get_all_cash_info->balance; ?></p>
+
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Available Expense:</label>
                                         <div class="col-md-9" >
-                                            <p id="expense"><?php echo (empty($get_all_expense_info->amount_expense))?0:$get_all_expense_info->amount_expense; ?></p>                                               
+                                            <p id="expense"><?php echo $get_all_expense_info; ?></p>                                               
                                         </div>
                                     </div>
                                     <div class="form-group ">
                                         <label class="col-md-3">Transfer Amount:</label>
                                         <div class="col-md-9" >
-                                            <input type="" id="amount" class="form-control" name="transfered_amount"/>
+                                            <?php
+                                            $data = array(
+                                                'name' => 'transfered_amount',
+                                                'type' => 'number',
+                                                'class' => 'form-control',
+                                                'placeholder' => 'Transfer Maximum '.$get_all_cash_info->balance,
+                                                'max' => $get_all_cash_info->balance,
+                                                'min' => '0',
+                                                
+                                            );
+
+                                            echo form_input($data);
+                                            ?>
+                                            <!--<input type="number"  max="<?php echo $get_all_cash_info->balance; ?>" placeholder="Transfer Maximum <?php echo $get_all_cash_info->balance; ?>" class="form-control" name="transfered_amount" />-->
+                                            <!--<span>* Maximum value <?php echo $get_all_cash_info->balance; ?></span>-->
                                         </div>
                                     </div>
                                     <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
@@ -131,8 +141,10 @@
                                                 $sum_total_amount += $rep->transfered_amount;
                                                 ?>
                                                 <tr>
-<!--                                                    <td><?php echo $rep->name_bank;
-                                    echo ' - ' . $rep->account_number ?></td>-->
+            <!--                                                    <td><?php
+                                                    echo $rep->name_bank;
+                                                    echo ' - ' . $rep->account_number
+                                                    ?></td>-->
                                                     <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
                                                 </tr>
@@ -171,13 +183,13 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
     var html = $('#expense').html();
     var cash = $('#cash').html();
-    $('#amount').attr("placeholder", "Transfer Maximum " + html + "tk");
+    $('#amount').attr("placeholder", "Transfer Maximum " + cash + "tk");
 
-    $('#amount').keyup(function () {
+    $('#amount').keyup(function (event) {
         var expense = Number(html);
         var cash_amount = Number(cash);
         var amount = $('#amount').val();
@@ -194,4 +206,4 @@
         }
     });
 
-</script>
+</script>-->
