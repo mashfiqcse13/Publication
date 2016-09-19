@@ -225,10 +225,16 @@
                                         $sum_total_amount_transfered = 0;
                                         $sum_total_amount_billed = 0;
                                         $sum_total_amount_paid = 0;
+                                        $sum_total_rejected=0;
+                                        $sum_total_damaged=0;
+                                        $sum_total_missing=0;
                                         foreach ($get_process_details_for_report_by_search as $process_details) {
                                             $sum_total_amount_transfered += $process_details->amount_transfered;
                                             $sum_total_amount_billed += $process_details->amount_billed;
                                             $sum_total_amount_paid += $process_details->amount_paid;
+                                            $sum_total_rejected+=$process_details->amount_rejected;
+                                            $sum_total_damaged+=$process_details->amount_damaged;
+                                            $sum_total_missing+=$process_details->amount_missing;
                                             ?>
                                             <tr>
                                                 <td><?php echo $process_details->id_processes; ?></td>
@@ -258,9 +264,12 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
+                                            <td ><?php echo $sum_total_amount_transfered; ?></td>
+                                            <td ><?php echo $sum_total_amount_billed; ?></td>
+                                            <td ><?php echo $sum_total_amount_paid; ?></td>
+                                            <td ><?php echo $sum_total_rejected; ?></td>
+                                            <td ><?php echo $sum_total_damaged; ?></td>
+                                            <td ><?php echo $sum_total_missing; ?></td>
                                             <td></td>
 
 
