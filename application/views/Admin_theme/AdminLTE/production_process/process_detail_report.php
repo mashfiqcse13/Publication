@@ -142,6 +142,9 @@
                                                     <th class="col-md-4">Amount Transfered</th>
                                                     <th class="col-md-4">Amount Billed</th>
                                                     <th class="col-md-4">Amount Paid</th>
+                                                    <th class="col-md-4">Amount Reject</th>
+                                                    <th class="col-md-4">Amount Damaged</th>
+                                                    <th class="col-md-4">Amount Missing</th>
                                                     
                                                     
                                                         
@@ -150,6 +153,9 @@
                                                     <td><?=$row->amount_transfered;?></td>
                                                     <td><?=$row->amount_billed;?></td>
                                                     <td><?=$row->amount_paid;?></td>
+                                                    <td><?=$row->amount_rejected;?></td>
+                                                    <td><?=$row->amount_damaged;?></td>
+                                                    <td><?=$row->amount_missing;?></td>
                                                     
                                                     
                                                 </tr>

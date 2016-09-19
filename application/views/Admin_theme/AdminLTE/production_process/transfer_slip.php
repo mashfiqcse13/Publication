@@ -63,6 +63,9 @@
                                         <th class="text-right">Amount Transfer</th>
                                         <th class="text-right">Amount Billed</th>
                                         <th class="text-right">Amount Paid</th>
+                                        <th class="text-right">Reject</th>
+                                        <th class="text-right">Damage</th>
+                                        <th class="text-right">Missing</th>
                                         <th>Date Transfer</th>
                                     </tr>
                                 </thead>
@@ -70,17 +73,26 @@
                                 $sum_total_amount_transfered = 0;
                                 $sum_total_amount_billed = 0;
                                 $sum_total_amount_paid = 0;
+                                $sum_total_amount_rejected= 0;
+                                $sum_total_amount_damaged = 0;
+                                        $sum_total_amount_missing = 0;
                                 foreach ($get_process_details_for_report_by_step_from as $step_info) {
                                     $sum_total_amount_transfered += $step_info->amount_transfered;
                                     $sum_total_amount_billed += $step_info->amount_billed;
                                     $sum_total_amount_paid += $step_info->amount_paid;
+                                    $sum_total_amount_rejected += $step_info->amount_rejected;
+                                    $sum_total_amount_damaged += $step_info->amount_damaged;
+                                    $sum_total_amount_missing += $step_info->amount_missing;
                                     ?>
                                     <tbody>
                                         <tr>
                                             <td><?php echo $step_info->to_name . " ( " . $step_info->to_type . " )"; ?></td>
-                                            <td class="text-right taka_formate">TK <?php echo $step_info->amount_transfered; ?></td>
-                                            <td class="text-right taka_formate">TK <?php echo $step_info->amount_billed; ?></td>
-                                            <td class="text-right taka_formate">TK <?php echo $step_info->amount_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_transfered; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_billed; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_rejected; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_damaged; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $step_info->amount_missing; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($step_info->date_transfered)); ?></td>
                                         </tr>
                                     </tbody>
@@ -92,6 +104,9 @@
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
+                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_rejected; ?></td>
+                                      <td class="text-right faka_formate"><?php echo $sum_total_amount_damaged; ?></td>
+                                       <td class="text-right faka_formate"><?php echo $sum_total_amount_missing; ?></td>
                                     <td></td>
 
 
