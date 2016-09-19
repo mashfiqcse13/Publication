@@ -70,7 +70,7 @@
                                 <div class="form-group ">
                                     <label class="col-md-3">Transfer Amount:</label>
                                     <div class="col-md-9" >
-                                        <input type="" id="amount" class="form-control" name="transfered_amount"  placeholder="Transfer Maximum 1000 tk"/>
+                                        <input type="" id="amount" class="form-control" min="0" name="transfered_amount"  placeholder="Transfer Maximum 1000 tk"/>
                                     </div>
                                 </div>
                                 <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
