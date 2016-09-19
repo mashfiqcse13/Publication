@@ -136,7 +136,7 @@ class Production_process_model extends CI_Model {
             SET `order_amount` = `order_amount` + $amount_transfered
             WHERE `id_process_steps` = $id_process_step_to";
             $this->db->query($sql);
-            $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered);
+            $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount);
             $this->update_process_total_production_fault($id_processes);
         } else {
             $process_step_details = $this->get_step_info_by($id_process_step_from);
@@ -147,11 +147,14 @@ class Production_process_model extends CI_Model {
         return $id_process_step_transfer_log;
     }
 
-    function add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered) {
+    function add_transfer_log($id_process_step_from, $id_process_step_to, $amount_transfered, $amount_rejected, $amount_damaged, $amount_missing) {
         $data = array(
             'id_process_step_from' => $id_process_step_from,
             'id_process_step_to' => $id_process_step_to,
             'amount_transfered' => $amount_transfered,
+            'amount_rejected' => $amount_rejected,
+            'amount_damaged' => $amount_damaged,
+            'amount_missing' => $amount_missing,
             'date_transfered' => date('Y-m-d h:i:u')
         );
         $this->db->insert('process_step_transfer_log', $data);
@@ -380,8 +383,6 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $result = $this->db->query('SELECT DISTINCT id_item,item_name FROM view_process_step_first_entry;')->result();
         return $result;
     }
-    
-    
 
     function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $date) {
         $this->db->select("*");
@@ -663,20 +664,20 @@ FROM view_process_step_transfer_log_with_details;')->result();
         unset($post_array['id_vendor']);
         return $post_array;
     }
-    
-    function save_processes($data){
-        $process['id_item']=$data['id_item'];
-        $this->callback_process_buffer_id_vendor =$data['id_vendor'];
+
+    function save_processes($data) {
+        $process['id_item'] = $data['id_item'];
+        $this->callback_process_buffer_id_vendor = $data['id_vendor'];
         $process['date_created'] = date('Y-m-d H:i:s');
-        $process['order_quantity']=$data['order_quantity'];
+        $process['order_quantity'] = $data['order_quantity'];
         $process['process_status'] = 1;
-        $this->db->insert('processes',$process);
+        $this->db->insert('processes', $process);
         $id = $this->db->insert_id();
         $this->callback_process_after_process_insert('', $id);
-        if($data['print']){
+        if ($data['print']) {
             redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($id));
         }
-        return true;        
+        return true;
     }
 
     function callback_process_after_process_insert($post_array, $primary_key) {
@@ -752,25 +753,23 @@ FROM view_process_step_transfer_log_with_details;')->result();
     function get_all_production_process() {
         $this->db->select('*');
         $this->db->from('processes');
-        $this->db->join('items','processes.id_item = items.id_item','left');
-        $this->db->join('process_type','processes.id_process_type = process_type.id_process_type','left');
+        $this->db->join('items', 'processes.id_item = items.id_item', 'left');
+        $this->db->join('process_type', 'processes.id_process_type = process_type.id_process_type', 'left');
         $this->db->order_by('id_processes', 'desc');
         return $this->db->get()->result();
     }
-    
-    function get_items(){
+
+    function get_items() {
         $this->db->select('id_item,name');
         $this->db->from('items');
         return $this->db->get()->result();
     }
-    
-    function get_vendor(){
+
+    function get_vendor() {
         $this->db->select('*');
         $this->db->from('contact_vendor');
-        $this->db->where('type','Printing Press');
+        $this->db->where('type', 'Printing Press');
         return $this->db->get()->result();
     }
-    
-    
 
 }

@@ -19,7 +19,7 @@
 
 
             <li><?php echo anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash to Bank</span>'); ?></li>
-            <li><?php echo anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash to Expense Adjustment</span>'); ?></li>
+            <li><?php echo anchor('cash_to_bank/expense_adjustment', '<i class="fa fa-plus-circle"></i>  <span>Cash to Expense Adjustment</span>'); ?></li>
             
 
 
