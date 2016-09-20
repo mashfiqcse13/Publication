@@ -107,36 +107,36 @@
                                 <tbody>
                                     <tr>
                                         <td>Order Id</td>
-                                        <td colspan="3" ><?=$row->id_processes;?></td>
+                                        <td colspan="5" ><?=$row->id_processes;?></td>
                                     </tr>
                                      <tr>
                                         <td>Step Id</td>
-                                        <td colspan="3" ><?=$row->id_process_step_transfer_log;?></td>
+                                        <td colspan="5" ><?=$row->id_process_step_transfer_log;?></td>
                                     </tr>
                                     <tr>
                                         <td>Process Type</td>
-                                        <td colspan="3" ><?=$row->name_process_type;?></td>
+                                        <td colspan="5" ><?=$row->name_process_type;?></td>
                                     </tr>
                                     
                                     <tr>
                                         <td>From</td>
-                                        <td colspan="3" ><?=$row->from_name;?> <strong>(<?=$row->from_type;?> )</strong> </td>
+                                        <td colspan="5" ><?=$row->from_name;?> <strong>(<?=$row->from_type;?> )</strong> </td>
                                     </tr>
                                     
                                     <tr>
                                         <td>To</td>
-                                        <td colspan="3" ><?=$row->to_name;?><strong> ( <?=$row->to_type;?> )</strong> </td>
+                                        <td colspan="5" ><?=$row->to_name;?><strong> ( <?=$row->to_type;?> )</strong> </td>
                                     </tr>
                                     <tr>
                                         <td>Book Name</td>
-                                        <td colspan="3" ><?=$row->item_name;?></td>
+                                        <td colspan="5" ><?=$row->item_name;?></td>
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td colspan="3" ><?=$row->date_transfered;?></td>
+                                        <td colspan="5" ><?=$row->date_transfered;?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" class="text-center text-bold">Amount Info</td>
+                                        <td colspan="6" class="text-center text-bold">Amount Info</td>
                                     </tr>
                                     <tr>
                                                     <th class="col-md-4">Amount Transfered</th>
