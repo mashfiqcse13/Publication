@@ -57,7 +57,7 @@
                                                 <?php 
                                                 $id = 1;
                                                 foreach ($get_all_access_area as $check) { ?>
-                                                    <input type="hidden" name="id_user_group_elements[<?php echo $id; ?>]" value="<?php echo $check->id_user_group_elements; ?>" />
+                                                    <input type="text" name="id_user_group_elements[<?php echo $id; ?>]" value="<?php echo $check->id_user_group_elements; ?>" />
                                                     <?php
                                                     $id++;
                                                 }

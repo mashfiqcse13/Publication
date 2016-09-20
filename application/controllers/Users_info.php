@@ -221,7 +221,6 @@ class Users_info extends CI_Controller {
 
         $btn = $this->input->post('btn_submit');
         if ($btn) {
-
             $data['update'] = $this->user_access_model->update_access_group($_POST);
             //$access_area=$this->input->post('access_area');
         }

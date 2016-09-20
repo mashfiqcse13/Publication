@@ -51,8 +51,10 @@ class User_access_model extends ci_model {
     function get_user_access_area() {
         $query = $this->db->get('user_access_area')->result();
         $check = '<table class="">';
+//        $i = 1;
         foreach ($query as $row) {
             $check.="<tr><td><div class='checkbox'><label><input type='checkbox' name='access_area[]' value='" . $row->id_user_access_area . "' class='check'>" . $row->user_access_area_title . "</label></div></td></tr>";
+//            $i++;
         }
         $check.="</table>";
         return $check;
@@ -140,7 +142,7 @@ class User_access_model extends ci_model {
 
         $id_user_group_elements = $this->input->post('id_user_group_elements');
 
-//        print_r($id_user_group_elements);
+//        print_r($update_id);
 //        exit();
         if (empty($id_user_group_elements)) {
             $this->insert_group_element($update_id, $access_area);
@@ -156,6 +158,8 @@ class User_access_model extends ci_model {
 //                print_r($max_access_area);
 //        exit();
                 for ($key = 0; $key < count($max_access_area->id_user_access_area); $key++) {
+//                    print_r($access_area[$key]);
+//                    exit();
 //                foreach ($access_area as $key => $val) {
                     $data = array(
                         'id_user_access_group' => $update_id,
@@ -166,31 +170,55 @@ class User_access_model extends ci_model {
                         $this->db->delete('user_group_elements');
                     }
 
-                    $this->db->select('*');
-                    $this->db->from('user_group_elements');
-                    $this->db->where('id_user_access_area', $access_area[$key]);
-                    $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-                    $result = $this->db->get()->result();
+//                    $this->db->select('*');
+//                    $this->db->from('user_group_elements');
+//                    $this->db->where('id_user_access_group', $update_id);
+//                    $this->db->where('id_user_access_area', $access_area[$key]);
+//                    $result1 = $this->db->get()->result();
+//                    $this->db->select('*');
+//                    $this->db->from('user_group_elements');
+//                    $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
+//                    $result2 = $this->db->get()->result();
 
-                    If (!empty($result)) {
-                        $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-                        $this->db->update('user_group_elements', $data);
-                    }
+//                    print_r($result1);
+//                    exit();
+
+//                    If (!empty($result1) && !empty($result2)) {
+//                        $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
+////                        $this->db->update('user_group_elements', $data);
+//                        $this->db->delete('user_group_elements');
+//                    }
+                    $this->db->query('INSERT INTO user_group_elements (id_user_access_group, id_user_access_area)
+SELECT * FROM (SELECT ' . $update_id . ', ' . $access_area[$key] . ') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM user_group_elements WHERE id_user_access_group = ' . $update_id . ' and id_user_access_area = ' . $access_area[$key] . '
+) LIMIT 1;');
+
+//                    If (empty($result3) && empty($result4)) {
+//                        $this->db->insert('user_group_elements', $data);
+//                    }
+//                    If (empty($result1)) {
+//                        $this->db->insert('user_group_elements', $data);
+//                    }
+//                    If (!empty($access_area[$key]) && empty($result3) && empty($result4)) {
+////                        print_r($access_area[$key]);exit();
+//                        $this->db->insert('user_group_elements', $data);
+//                    }
+
 //                    If (empty($result)) {
 //                    print_r($access_area[$key]);
 //                    exit();
-                    $this->db->select('*');
-                    $this->db->from('user_group_elements');
-                    $this->db->where('id_user_access_area !=', $access_area[$key]);
-                    $this->db->where('id_user_group_elements!=', $id_user_group_elements[$element]);
-                    $result2 = $this->db->get()->result();
+//                    $this->db->select('*');
+//                    $this->db->from('user_group_elements');
+//                    $this->db->where('id_user_access_area !=', $access_area[$key]);
+//                    $this->db->where('id_user_group_elements!=', $id_user_group_elements[$element]);
+//                    $result2 = $this->db->get()->result();
 ////                    print_r($result2);
 ////                    exit();
-                    if (empty($result2)) {
-//                            if (empty($id_user_group_elements[$element])) {
-                        $this->db->insert('user_group_elements', $data);
-                    }
-
+//                    if (empty($result2)) {
+////                            if (empty($id_user_group_elements[$element])) {
+//                        $this->db->insert('user_group_elements', $data);
+//                    }
 //                        $this->db->insert('user_group_elements', $data);
 //                        $this->insert_group_element($update_id, $access_area);
 //                    return false;
