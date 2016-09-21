@@ -33,7 +33,7 @@
 
         <link href="<?php echo $theme_asset_url ?>plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 
-        
+
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -51,7 +51,7 @@
                 window.print();
 
                 document.body.innerHTML = originalContents;
-            } 
+            }
         </script>
         <style type="text/css">
             .select2-container--default .select2-selection--single {
@@ -63,7 +63,7 @@
             body {
                 text-transform: capitalize;
             } 
-            
+
             .text-memo-special-formate {
                 font-size: 55px;
                 text-align: center;
@@ -83,13 +83,6 @@
             }
             #test{visibility: hidden;}
 
-            @media print{
-                .only_print{display: none;}
-                .memo_print_option{margin:0 auto;width:100%;}
-                #print { visibility: hidden;}
-                #test{visibility: visible;}
-
-            }
             .margin-10{margin:0 10px;}
             .margin-top-10{margin-top:10px;}
             .form-horizontal .control-label {
@@ -153,6 +146,13 @@
                 position: relative;
                 z-index: 999;
             }
+            @media print{
+                .only_print{display: none;}
+                .memo_print_option{margin:0 auto;width:100%;}
+                #print { visibility: hidden;}
+                #test{visibility: visible;}
+
+            }
             @media only print{
                 .report-logo-for-print{
                     display: block;
@@ -164,6 +164,7 @@
                 footer.main-footer {
                     display:none;
                 }
+                .page_break_after{page-break-after: always;}
             }
         </style>
 

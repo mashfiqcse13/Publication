@@ -108,7 +108,7 @@
                             </table>
 
                             <h3 class="text-center">Collections</h3>
-                            <table class="table table-bordered report">
+                            <table class="table table-bordered report page_break_after">
                                 <tr>
                                     <td width="50%">Total Cash Collection (General payment + Advance Payment)</td>
                                     <th class="taka_formate"><?php echo "$total_cash_collection_from_customer_payment + $total_cash_collection_from_advance_payment = $total_cash_collection"; ?></th>
@@ -139,31 +139,32 @@
                                     <th class="taka_formate"><?php echo $total_expence; ?></th>
                                 </tr>
                             </table>
+                            <div style="overflow: auto">
+                                <table class="table table-bordered new table-hover" style="margin-top: 10px;">
 
-                            <table class="table table-bordered new table-hover" style="margin-top: 10px;">
+                                    <tr>
+                                        <td width="34%"></td>
+                                        <td width="33%" style="text-align: center">Opening (TK)</td>
+                                        <td width="33%" style="text-align: center">Closing (TK)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">Cash:</td>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash; ?></th>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $closing->ending_cash; ?></th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">Bank:</td>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance; ?></th>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $closing->closing_bank_balance; ?></th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">Due:</td>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_due; ?></th>
+                                        <th class="taka_formate" style="text-align: center"><?php echo $closing->ending_due; ?></th>
+                                    </tr>
 
-                                <tr>
-                                    <th width="34%"></th>
-                                    <th width="33%" style="text-align: center">Opening (TK)</th>
-                                    <th width="33%" style="text-align: center">Closing (TK)</th>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: left">Cash:</th>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash; ?></td>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $closing->ending_cash; ?></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: left">Bank:</th>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance; ?></td>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $closing->closing_bank_balance; ?></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: left">Due:</th>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $opening->opening_due; ?></td>
-                                    <td class="taka_formate" style="text-align: center"><?php echo $closing->ending_due; ?></td>
-                                </tr>
-
-                            </table>
+                                </table>
+                            </div>
 
                             <table class="table table-bordered report" style="margin-top: 10px;">
                                 <tr>
@@ -224,5 +225,8 @@
     .table_title{text-align: center; margin-top: 20px}
     @media print{
         .table_title{text-align: center; margin-top: 20px}
+    }
+    @media only print{
+        #page_break_after{page-break-after: always;color: red}
     }
 </style>

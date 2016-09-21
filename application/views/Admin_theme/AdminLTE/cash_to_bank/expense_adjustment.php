@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label class="col-md-3">Available Expense:</label>
+                                        <label class="col-md-3">Today Expense:</label>
                                         <div class="col-md-9" >
                                             <p id="expense"><?php echo $get_all_expense_info; ?></p>                                               
                                         </div>
@@ -61,10 +61,9 @@
                                                 'name' => 'transfered_amount',
                                                 'type' => 'number',
                                                 'class' => 'form-control',
-                                                'placeholder' => 'Transfer Maximum '.$get_all_cash_info->balance,
+                                                'placeholder' => 'Transfer Maximum ' . $get_all_cash_info->balance,
                                                 'max' => $get_all_cash_info->balance,
                                                 'min' => '0',
-                                                
                                             );
 
                                             echo form_input($data);
@@ -142,9 +141,9 @@
                                                 ?>
                                                 <tr>
             <!--                                                    <td><?php
-                                                    echo $rep->name_bank;
-                                                    echo ' - ' . $rep->account_number
-                                                    ?></td>-->
+                                    echo $rep->name_bank;
+                                    echo ' - ' . $rep->account_number
+                                                ?></td>-->
                                                     <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
                                                 </tr>
