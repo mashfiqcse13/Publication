@@ -52,50 +52,38 @@
                                                 <label for="">Access Group Title : </label>
                                                 <input type="text" class="form-control" name="access_group_title" value="<?php echo $info->user_access_group_title; ?>"/>
                                                 <input type="hidden"  name="id_user_access_group" value="<?php echo $info->id_user_access_group; ?>"/>
-                                                <?php
-                                                $id = 1;
-                                                foreach ($get_all_access_area as $check) {
-                                                    ?>
-                                                    <input type="text" name="id_user_group_elements[<?php echo $id; ?>]" value="<?php echo $check->id_user_group_elements; ?>" />
-                                                    <?php
-                                                    $id++;
-                                                }
-                                                ?>
                                             </div>
                                             <br><br>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <div class="form-group">
-                                                        <label for="">Select Access Area : </label>                                        
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-7">
-                                                    <div class="form-group">
-                                                        <input type="checkbox" id="select_all" /> Select All
-                                                        <?php
-                                                        echo $access_area;
-                                                        ?> 
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-
-
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Description :</label>
-                                                <textarea name="description" id="" class="textarea"><?php echo $info->user_access_group_description; ?></textarea>
+                                                <textarea name="description" id="" class="form-control textarea"><?php echo $info->user_access_group_description; ?></textarea>
                                             </div>
-
                                         </div>
-
-
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <label for="">Select Access Area : </label>                                        
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="form-group">
+                                                <label><input type="checkbox" id="select_all" /> Select All</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-lg-offset-2">
+                                            <div class="form-group">
+                                                <div class="checkbox"></div>
+                                                <?php
+                                                echo $access_area;
+                                                ?> 
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <?php
                                 }
                                 ?>

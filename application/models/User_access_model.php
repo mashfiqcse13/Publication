@@ -50,13 +50,11 @@ class User_access_model extends ci_model {
 
     function get_user_access_area() {
         $query = $this->db->get('user_access_area')->result();
-        $check = '<table class="">';
+        $check = '';
 //        $i = 1;
         foreach ($query as $row) {
-            $check.="<tr><td><div class='checkbox'><label><input type='checkbox' name='access_area[]' value='" . $row->id_user_access_area . "' class='check'>" . $row->user_access_area_title . "</label></div></td></tr>";
-//            $i++;
+            $check.="<div class='checkbox col-lg-4'><label title=\"" . $row->user_access_area_description . "\"><input type='checkbox' name='access_area[]' value='" . $row->id_user_access_area . "' class='check'>" . $row->user_access_area_title . "</label></div>";
         }
-        $check.="</table>";
         return $check;
     }
 
@@ -136,9 +134,15 @@ class User_access_model extends ci_model {
         foreach ($rows as $row) {
             array_push($current_selected_id_user_access_area, $row->id_user_access_area);
         }
-        $unchangeable_id_user_access_area = array_intersect($current_selected_id_user_access_area, $user_selected_id_user_access_area);
-        $deletable_id_user_access_area = array_diff($current_selected_id_user_access_area, $unchangeable_id_user_access_area);
-        $insertable_id_user_access_area = array_diff($user_selected_id_user_access_area, $unchangeable_id_user_access_area);
+        if (empty($user_selected_id_user_access_area) > 0) {
+            $unchangeable_id_user_access_area = array();
+            $deletable_id_user_access_area = $current_selected_id_user_access_area;
+            $insertable_id_user_access_area = array();
+        } else {
+            $unchangeable_id_user_access_area = array_intersect($current_selected_id_user_access_area, $user_selected_id_user_access_area);
+            $deletable_id_user_access_area = array_diff($current_selected_id_user_access_area, $unchangeable_id_user_access_area);
+            $insertable_id_user_access_area = array_diff($user_selected_id_user_access_area, $unchangeable_id_user_access_area);
+        }
         if (sizeof($deletable_id_user_access_area) > 0) {
             $where = " `id_user_access_group` = $id_user_access_group and `id_user_access_area` in (" . implode(',', $deletable_id_user_access_area) . ")";
             $this->db->where($where)->delete('user_group_elements');
