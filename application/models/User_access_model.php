@@ -92,7 +92,7 @@ class User_access_model extends ci_model {
 //        print_r($data);exit();
         $this->load->library('session');
 
-        $id = $this->input->post('id_user_access_group');
+        $id_user_access_group = $this->input->post('id_user_access_group');
         $group_title = $this->input->post('access_group_title');
         $group_description = $this->input->post('description');
         if (!empty($group_title)) {
@@ -100,16 +100,10 @@ class User_access_model extends ci_model {
                 'user_access_group_title' => $group_title,
                 'user_access_group_description' => $group_description
             );
-            $this->db->where('id_user_access_group', $id);
+            $this->db->where('id_user_access_group', $id_user_access_group);
             $this->db->update('user_access_group', $data);
-            $this->db->select('id_user_access_group');
-            $this->db->from('user_access_group');
-            $this->db->where('id_user_access_group', $id);
-            $query = $this->db->get();
-            $update_id = $query->row();
-//            print_r($update_id->id_user_access_group);exit();
-            $message = $this->update_group_element($update_id->id_user_access_group, $_POST);
 
+            $message = $this->update_group_element($id_user_access_group, $this->input->post('access_area'));
             if ($message == true) {
                 $this->session->set_userdata('user_access_message', '<p class="text-green">Data Update Success</p>');
                 redirect('Users_info/user_access_group_list');
@@ -136,102 +130,30 @@ class User_access_model extends ci_model {
         return true;
     }
 
-    function update_group_element($update_id, $access_area) {
-        $id_user_group_elements = array();
-        $access_area = $this->input->post('access_area');
-
-        $id_user_group_elements = $this->input->post('id_user_group_elements');
-
-//        print_r($update_id);
-//        exit();
-        if (empty($id_user_group_elements)) {
-            $this->insert_group_element($update_id, $access_area);
+    function update_group_element($id_user_access_group, $user_selected_id_user_access_area) {
+        $rows = $this->db->select('id_user_access_area')->from('user_group_elements')->where('id_user_access_group', $id_user_access_group)->get()->result();
+        $current_selected_id_user_access_area = array();
+        foreach ($rows as $row) {
+            array_push($current_selected_id_user_access_area, $row->id_user_access_area);
         }
-
-        foreach ($id_user_group_elements as $element => $value) {
-            if (empty($access_area)) {
-                $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-                $this->db->delete('user_group_elements');
-            }
-            if (!empty($access_area)) {
-                $max_access_area = $this->db->query('SELECT MAX(`id_user_access_area`) AS id_user_access_area FROM `user_access_area` ')->row();
-//                print_r($max_access_area);
-//        exit();
-                for ($key = 0; $key < count($max_access_area->id_user_access_area); $key++) {
-//                    print_r($access_area[$key]);
-//                    exit();
-//                foreach ($access_area as $key => $val) {
-                    $data = array(
-                        'id_user_access_group' => $update_id,
-                        'id_user_access_area' => $access_area[$key]
-                    );
-                    if (empty($access_area[$key])) {
-                        $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-                        $this->db->delete('user_group_elements');
-                    }
-
-//                    $this->db->select('*');
-//                    $this->db->from('user_group_elements');
-//                    $this->db->where('id_user_access_group', $update_id);
-//                    $this->db->where('id_user_access_area', $access_area[$key]);
-//                    $result1 = $this->db->get()->result();
-//                    $this->db->select('*');
-//                    $this->db->from('user_group_elements');
-//                    $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-//                    $result2 = $this->db->get()->result();
-
-//                    print_r($result1);
-//                    exit();
-
-//                    If (!empty($result1) && !empty($result2)) {
-//                        $this->db->where('id_user_group_elements', $id_user_group_elements[$element]);
-////                        $this->db->update('user_group_elements', $data);
-//                        $this->db->delete('user_group_elements');
-//                    }
-                    $this->db->query('INSERT INTO user_group_elements (id_user_access_group, id_user_access_area)
-SELECT * FROM (SELECT ' . $update_id . ', ' . $access_area[$key] . ') AS tmp
-WHERE NOT EXISTS (
-    SELECT * FROM user_group_elements WHERE id_user_access_group = ' . $update_id . ' and id_user_access_area = ' . $access_area[$key] . '
-) LIMIT 1;');
-
-//                    If (empty($result3) && empty($result4)) {
-//                        $this->db->insert('user_group_elements', $data);
-//                    }
-//                    If (empty($result1)) {
-//                        $this->db->insert('user_group_elements', $data);
-//                    }
-//                    If (!empty($access_area[$key]) && empty($result3) && empty($result4)) {
-////                        print_r($access_area[$key]);exit();
-//                        $this->db->insert('user_group_elements', $data);
-//                    }
-
-//                    If (empty($result)) {
-//                    print_r($access_area[$key]);
-//                    exit();
-//                    $this->db->select('*');
-//                    $this->db->from('user_group_elements');
-//                    $this->db->where('id_user_access_area !=', $access_area[$key]);
-//                    $this->db->where('id_user_group_elements!=', $id_user_group_elements[$element]);
-//                    $result2 = $this->db->get()->result();
-////                    print_r($result2);
-////                    exit();
-//                    if (empty($result2)) {
-////                            if (empty($id_user_group_elements[$element])) {
-//                        $this->db->insert('user_group_elements', $data);
-//                    }
-//                        $this->db->insert('user_group_elements', $data);
-//                        $this->insert_group_element($update_id, $access_area);
-//                    return false;
-//                    }
-//                        }
-//                if(empty($id_user_group_elements[$element])){
-//                    $this->db->insert('user_group_elements', $data);
-//                    }
-                }
-            }
+        $unchangeable_id_user_access_area = array_intersect($current_selected_id_user_access_area, $user_selected_id_user_access_area);
+        $deletable_id_user_access_area = array_diff($current_selected_id_user_access_area, $unchangeable_id_user_access_area);
+        $insertable_id_user_access_area = array_diff($user_selected_id_user_access_area, $unchangeable_id_user_access_area);
+        if (sizeof($deletable_id_user_access_area) > 0) {
+            $where = " `id_user_access_group` = $id_user_access_group and `id_user_access_area` in (" . implode(',', $deletable_id_user_access_area) . ")";
+            $this->db->where($where)->delete('user_group_elements');
         }
-
-        return true;
+        if (sizeof($insertable_id_user_access_area) > 0) {
+            $data_to_insert = array();
+            foreach ($insertable_id_user_access_area as $value) {
+                array_push($data_to_insert, array(
+                    'id_user_access_group' => $id_user_access_group,
+                    'id_user_access_area' => $value
+                ));
+            }
+            $this->db->insert_batch('user_group_elements', $data_to_insert);
+        }
+        return TRUE;
     }
 
     function get_all_group_info_by_id($id) {
@@ -249,11 +171,11 @@ WHERE NOT EXISTS (
     }
 
     function check_user_access($id_user_access_area) {
-        return 0;
+        return TRUE;
         $super_user_id = $this->config->item('super_user_id');
         if ($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission($id_user_access_area)) {
             redirect();
-            return 0;
+            return TRUE;
         }
     }
 
