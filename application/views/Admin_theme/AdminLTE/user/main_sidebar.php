@@ -18,9 +18,9 @@
             
            
             
-            <li><?php echo anchor('users_info/user_list', '<i class="fa fa-plus-circle"></i>  <span>Users List</span>'); ?></li>
-           <li><?php echo anchor('users_info/user_access_group_list', '<i class="fa fa-plus-circle"></i>  <span>Users Access Group List</span>'); ?></li>
+            <li><?php echo anchor('users_info/user_list', '<i class="fa fa-plus-circle"></i>  <span>Users</span>'); ?></li>
            <li><?php echo anchor('users_info/user_group_assign_to_user', '<i class="fa fa-plus-circle"></i>  <span>Group Allocation To User</span>'); ?></li>
+           <li><?php echo anchor('users_info/user_access_group_list', '<i class="fa fa-plus-circle"></i>  <span>Users Access Group</span>'); ?></li>
            
            
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>

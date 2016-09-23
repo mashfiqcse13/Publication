@@ -219,7 +219,7 @@ class Users_info extends CI_Controller {
         $data['access_area'] = $this->user_access_model->get_user_access_area();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'User Access Group List';
+        $data['Title'] = 'User Access Group';
         if ($this->uri->segment(3) == 'edit') {
             $data['Title'] = 'User Access Group Edit';
         }
