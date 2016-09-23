@@ -174,12 +174,37 @@ class User_access_model extends ci_model {
         return $this->db->get()->result();
     }
 
+    function get_all_access_area_by_user_id($user_id = "from_session") {
+        if ($this->user_access_buffer == false) {
+            $this->generate_buffer();
+        }
+        if ($user_id == 'from_session') {
+            $user_id = $_SESSION['user_id'];
+        }
+
+        $sql = "SELECT `id_user_access_area` 
+                    FROM  `user_access_area_permission` 
+                    NATURAL JOIN  `user_group_elements` 
+                    where user_id = $user_id";
+        $results = $this->db->query($sql)->result();
+        $returning_array = array();
+        foreach ($results as $result) {
+            array_push($returning_array, $result->id_user_access_area);
+        }
+        return $returning_array;
+    }
+
     function check_user_access($id_user_access_area) {
-        return TRUE;
         $super_user_id = $this->config->item('super_user_id');
-        if ($super_user_id != $_SESSION['user_id'] || $this->User_access_model->if_user_has_permission($id_user_access_area)) {
-            redirect();
-            return TRUE;
+        if ($super_user_id == $_SESSION['user_id']) {
+            //Let it go
+        } else if ($this->User_access_model->if_user_has_permission($id_user_access_area)) {
+            //Let it go
+        } else {
+            $all_allowed_access_area_coma_separated = implode(",", $this->User_access_model->get_all_access_area_by_user_id());
+            $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
+            $top_menu_item = $this->db->query($sql)->result();
+            redirect($top_menu_item[0]->ci_url);
         }
     }
 

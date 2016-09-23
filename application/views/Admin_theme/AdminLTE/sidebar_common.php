@@ -1,38 +1,16 @@
 <li class="header">MAIN NAVIGATION</li>
-    <?php if ($_SESSION['user_id'] == 3) { ?>
-
-    <li><?php echo anchor('sales', '<i class="fa fa-plus-circle"></i>  <span>Sale</span>'); ?></li>
-    <li><?php echo anchor('sales_return', '<i class="fa fa-plus-circle"></i>  <span>Sale Return</span>'); ?></li>
-    <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>Specimen</span>'); ?></li>
-    <li><?php echo anchor('due', '<i class="fa fa-plus-circle"></i>  <span>Customer Due</span>'); ?></li>
-    <li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Contacts</span>'); ?></li>
-    <li><?php echo anchor('items', '<i class="fa fa-plus-circle"></i>  <span>Items</span>'); ?></li>
-    <li><?php echo anchor('stock', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
-    <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i> <span>Log Out</span>'); ?></li>
-
-<?php } else { ?>
-    <li><?php echo anchor('sales', '<i class="fa fa-plus-circle"></i>  <span>Sale</span>'); ?></li>
-    <li><?php echo anchor('sales_return', '<i class="fa fa-plus-circle"></i>  <span>Sale Return</span>'); ?></li>
-    <li><?php echo anchor('specimen', '<i class="fa fa-plus-circle"></i>  <span>Specimen</span>'); ?></li>
-    <li><?php echo anchor('due', '<i class="fa fa-plus-circle"></i>  <span>Customer Due</span>'); ?></li>
-    <li><?php echo anchor('advance_payment', '<i class="fa fa-plus-circle"></i>  <span>Advance Payment</span>'); ?></li>
-    <li><?php echo anchor('payment_log', '<i class="fa fa-plus-circle"></i>  <span>Payment Log</span>'); ?></li>
-    <li><?php echo anchor('sold_book_info', '<i class="fa fa-plus-circle"></i>  <span>Sold Book Info</span>'); ?></li>
-    <li><?php echo anchor('old_book', '<i class="fa fa-plus-circle"></i>  <span>Old Book Section</span>'); ?></li>
-    <li><?php echo anchor('production_process', '<i class="fa fa-plus-circle"></i>  <span>Production Process</span>'); ?></li>
-    <li><?php echo anchor('stock', '<i class="fa fa-plus-circle"></i>  <span>Stock</span>'); ?></li>
-    <li><?php echo anchor('items', '<i class="fa fa-plus-circle"></i>  <span>Items</span>'); ?></li>
-    <li><?php echo anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Contact</span>'); ?></li>
-    <li><?php echo anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash To Bank/Expence</span>'); ?></li>
-    <li><?php echo anchor('bank', '<i class="fa fa-plus-circle"></i>  <span>Bank</span>'); ?></li>
-    <li><?php echo anchor('income', '<i class="fa fa-plus-circle"></i>  <span>Income</span>'); ?></li>
-    <li><?php echo anchor('expense', '<i class="fa fa-plus-circle"></i>  <span>Expense</span>'); ?></li>
-    <li><?php echo anchor('stationary_stock', '<i class="fa fa-plus-circle"></i>  <span>Stationary Stock</span>'); ?></li>
-    <li><?php echo anchor('employee', '<i class="fa fa-plus-circle"></i>  <span>Employee</span>'); ?></li>
-    <li><?php echo anchor('loan', '<i class="fa fa-plus-circle"></i>  <span>Loan</span>'); ?></li>
-    <li><?php echo anchor('salary', '<i class="fa fa-plus-circle"></i>  <span>Salary</span>'); ?></li>
-    <li><?php echo anchor('report', '<i class="fa fa-plus-circle"></i>  <span>Accounts Info</span>'); ?></li>
-    <li><?php echo anchor('users_info', '<i class="fa fa-plus-circle"></i>   <span>Users</span>'); ?></li>
-    <!--<li><?php echo anchor('admin', '<i class="fa fa-plus-circle"></i>  <span>Old system</span>'); ?></li>-->
-    <li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
-<?php } ?>
+    <?php
+    $super_user_id = $this->config->item('super_user_id');
+    if ($super_user_id == $_SESSION['user_id']) {
+        $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` !=0 ORDER BY  `serial_id` ASC ";
+    } else {
+        $this->load->model('User_access_model');
+        $all_allowed_access_area_coma_separated = implode(",", $this->User_access_model->get_all_access_area_by_user_id());
+        $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
+    }
+    $all_menu_items = $this->db->query($sql)->result();
+    foreach ($all_menu_items as $menu_item) {
+        echo "<li>" . anchor($menu_item->ci_url, $menu_item->main_menu_item_content) . "</li>";
+    }
+    ?>
+<li><?php echo anchor('login/logout', '<i class="fa fa-sign-out"></i>     <span>Log Out</span>'); ?></li>
