@@ -49,7 +49,7 @@ class User_access_model extends ci_model {
     }
 
     function get_user_access_area() {
-        $query = $this->db->get('user_access_area')->result();
+        $query = $this->db->where('serial_id != 0')->get('user_access_area')->result();
         $check = '';
 //        $i = 1;
         foreach ($query as $row) {
