@@ -26,11 +26,7 @@ class Users_info extends CI_Controller {
     }
 
     function index() {
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Users';
-
-        $this->load->view($this->config->item('ADMIN_THEME') . 'user/user_dashboard', $data);
+        redirect('users_info/user_list');
     }
 
     function success() {
