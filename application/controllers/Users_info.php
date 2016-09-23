@@ -7,12 +7,17 @@ class Users_info extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        date_default_timezone_set('Asia/Dhaka');
 
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('form');
         $this->load->helper('security');
         $this->load->library('tank_auth');
+        if (!$this->tank_auth->is_logged_in()) {         //not logged in
+            redirect('login');
+            return 0;
+        }
         $this->load->model('tank_auth/users', 'users');
         $this->load->model('user_access_model');
         $this->lang->load('tank_auth');

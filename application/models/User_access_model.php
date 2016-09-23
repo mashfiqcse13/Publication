@@ -201,11 +201,15 @@ class User_access_model extends ci_model {
         } else if ($this->User_access_model->if_user_has_permission($id_user_access_area)) {
             //Let it go
         } else {
-            $all_allowed_access_area_coma_separated = implode(",", $this->User_access_model->get_all_access_area_by_user_id());
-            $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
-            $top_menu_item = $this->db->query($sql)->result();
-            redirect($top_menu_item[0]->ci_url);
+            $this->go_home();
         }
+    }
+
+    function go_home() {
+        $all_allowed_access_area_coma_separated = implode(",", $this->User_access_model->get_all_access_area_by_user_id());
+        $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
+        $top_menu_item = $this->db->query($sql)->result();
+        redirect($top_menu_item[0]->ci_url);
     }
 
 }
