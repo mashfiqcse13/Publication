@@ -175,9 +175,6 @@ class User_access_model extends ci_model {
     }
 
     function get_all_access_area_by_user_id($user_id = "from_session") {
-        if ($this->user_access_buffer == false) {
-            $this->generate_buffer();
-        }
         if ($user_id == 'from_session') {
             $user_id = $_SESSION['user_id'];
         }

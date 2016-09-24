@@ -19,7 +19,6 @@ class Users_info extends CI_Controller {
             return 0;
         }
         $this->load->model('tank_auth/users', 'users');
-        $this->load->model('user_access_model');
         $this->lang->load('tank_auth');
         $this->load->model('User_access_model');
         $this->User_access_model->check_user_access(24);
