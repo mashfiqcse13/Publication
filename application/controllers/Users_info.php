@@ -186,12 +186,12 @@ class Users_info extends CI_Controller {
 
     function user_access_group() {
 
-        $this->load->model('user_access_model');
-        $data['access_area'] = $this->user_access_model->get_user_access_area();
+        $this->load->model('User_access_model');
+        $data['access_area'] = $this->User_access_model->get_user_access_area();
         $btn = $this->input->post('btn_submit');
         if ($btn) {
 
-            $data['insert'] = $this->user_access_model->insert_access_group($_POST);
+            $data['insert'] = $this->User_access_model->insert_access_group($_POST);
             //$access_area=$this->input->post('access_area');
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -211,7 +211,7 @@ class Users_info extends CI_Controller {
         $data['glosary'] = $output;
 
 
-        $data['access_area'] = $this->user_access_model->get_user_access_area();
+        $data['access_area'] = $this->User_access_model->get_user_access_area();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'User Access Group';
@@ -221,15 +221,15 @@ class Users_info extends CI_Controller {
 
         $btn = $this->input->post('btn_submit');
         if ($btn) {
-            $data['update'] = $this->user_access_model->update_access_group($_POST);
+            $data['update'] = $this->User_access_model->update_access_group($_POST);
             //$access_area=$this->input->post('access_area');
         }
 
         if ($this->uri->segment(3) == 'edit') {
             $update_id = $this->uri->segment(4);
-            $data['get_all_group_info'] = $this->user_access_model->get_all_group_info_by_id($update_id);
+            $data['get_all_group_info'] = $this->User_access_model->get_all_group_info_by_id($update_id);
             $id_user_group = $data['get_all_group_info'][0]->id_user_access_group;
-            $data['get_all_access_area'] = $this->user_access_model->get_all_access_area_by_access_id($id_user_group);
+            $data['get_all_access_area'] = $this->User_access_model->get_all_access_area_by_access_id($id_user_group);
         }
 //        print_r($data['get_all_access_area_max']);exit();
         $this->load->view($this->config->item('ADMIN_THEME') . 'user/access_group_list', $data);

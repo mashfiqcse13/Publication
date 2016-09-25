@@ -30,10 +30,24 @@ class Contacts extends CI_Controller {
     }
 
     function index() {
-        $this->customer();
+        $super_user_id = $this->config->item('super_user_id');
+        if ($super_user_id == $_SESSION['user_id']) {
+            redirect('contacts/customer');
+        } else if ($this->User_access_model->if_user_has_permission(29)) {
+            redirect('contacts/customer');
+        } else if ($this->User_access_model->if_user_has_permission(28)) {
+            redirect('contacts/teacher');
+        } else if ($this->User_access_model->if_user_has_permission(30)) {
+            redirect('contacts/agents');
+        } else if ($this->User_access_model->if_user_has_permission(31)) {
+            redirect('contacts/marketing_officer');
+        } else {
+            redirect();
+        }
     }
 
     function customer() {
+        $this->User_access_model->check_user_access(29, 'contacts');
         $crud = new grocery_CRUD();
         $crud->set_table('customer')->columns('id_customer', 'name', 'division', 'district', 'upazila', 'address', 'phone')
                 ->display_as('id_customer', 'ID')->order_by('id_customer', 'desc')->display_as('name', 'Customer Name')->set_subject('Customer');
@@ -44,9 +58,9 @@ class Contacts extends CI_Controller {
             return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division" ');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" id="dist"','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" id="dist"', 'equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" id="dist" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" id="dist" ', 'equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -54,7 +68,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
         });
-        
+
         $crud->unset_add_fields('upazila');
         $crud->unset_edit_fields('upazila');
         $crud->unset_columns('upazila');
@@ -69,6 +83,7 @@ class Contacts extends CI_Controller {
     }
 
     function teacher() {
+        $this->User_access_model->check_user_access(28, 'contacts');
         $crud = new grocery_CRUD();
         $crud->set_table('contact_teacher')->columns('id_contact_teacher', 'name', 'division', 'district', 'upazila', 'address', 'designation', 'institute_name', 'subject', 'phone')
                 ->display_as('id_contact_teacher', 'ID')->order_by('id_contact_teacher', 'desc')->set_subject('Teachers');
@@ -79,9 +94,9 @@ class Contacts extends CI_Controller {
             return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -96,7 +111,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('subject', function ($value, $primary_key) {
             return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
         });
-        
+
         $crud->unset_add_fields('upazila');
         $crud->unset_edit_fields('upazila');
         $crud->unset_columns('upazila');
@@ -105,8 +120,8 @@ class Contacts extends CI_Controller {
         $crud = $this->Contacts_model->set_filter($crud);
         $data['filter_elements'] = $this->Contacts_model->filter_elements();
 
-        
-        
+
+
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -116,11 +131,12 @@ class Contacts extends CI_Controller {
     }
 
     function agents() {
+        $this->User_access_model->check_user_access(30, 'contacts');
         $crud = new grocery_CRUD();
-        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type','Agent')
+        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type', 'Agent')
                 ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Agents')->order_by('id_agent', 'desc')
-                ->callback_before_insert(array($this->Contacts_model,'agent_type_setter_post_array'))
-                ->callback_before_update(array($this->Contacts_model,'agent_type_setter_post_array'));
+                ->callback_before_insert(array($this->Contacts_model, 'agent_type_setter_post_array'))
+                ->callback_before_update(array($this->Contacts_model, 'agent_type_setter_post_array'));
 
 
         $crud->callback_add_field('division', function () {
@@ -129,9 +145,9 @@ class Contacts extends CI_Controller {
             return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {
@@ -156,11 +172,12 @@ class Contacts extends CI_Controller {
     }
 
     function marketing_officer() {
+        $this->User_access_model->check_user_access(31, 'contacts');
         $crud = new grocery_CRUD();
-        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type','Marketing Officer')
+        $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type', 'Marketing Officer')
                 ->display_as('id_agent', 'ID')->display_as('name', 'Officer Name')->set_subject('Officer')->order_by('id_agent', 'desc')
-                ->callback_before_insert(array($this->Contacts_model,'marketing_officer_type_setter_post_array'))
-                ->callback_before_update(array($this->Contacts_model,'marketing_officer_type_setter_post_array'));
+                ->callback_before_insert(array($this->Contacts_model, 'marketing_officer_type_setter_post_array'))
+                ->callback_before_update(array($this->Contacts_model, 'marketing_officer_type_setter_post_array'));
 
         $crud->callback_add_field('division', function () {
             return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division"');
@@ -168,9 +185,9 @@ class Contacts extends CI_Controller {
             return form_dropdown('division', $this->config->item('division'), $value, 'class="form-control select2 dropdown-width" id="division"');
         });
         $crud->callback_add_field('district', function () {
-            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), '', 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         })->callback_edit_field('district', function ($value, $primary_key) {
-            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ','equip_status_id');
+            return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         });
 
         $crud->callback_add_field('upazila', function () {

@@ -49,7 +49,7 @@ class User_access_model extends ci_model {
     }
 
     function get_user_access_area() {
-        $query = $this->db->where('serial_id != 0')->get('user_access_area')->result();
+        $query = $this->db->order_by('user_access_area_title', 'ASC')->get('user_access_area')->result();
         $check = '';
 //        $i = 1;
         foreach ($query as $row) {
@@ -191,14 +191,18 @@ class User_access_model extends ci_model {
         return $returning_array;
     }
 
-    function check_user_access($id_user_access_area) {
+    function check_user_access($id_user_access_area, $redirection_url = FALSE) {
         $super_user_id = $this->config->item('super_user_id');
         if ($super_user_id == $_SESSION['user_id']) {
             //Let it go
         } else if ($this->User_access_model->if_user_has_permission($id_user_access_area)) {
             //Let it go
         } else {
-            $this->go_home();
+            if ($redirection_url) {
+                redirect($redirection_url);
+            } else {
+                $this->go_home();
+            }
         }
     }
 
