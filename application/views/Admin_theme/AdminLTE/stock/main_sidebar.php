@@ -15,9 +15,20 @@
 
 
             <li class="header">STOCK CRUD s</li>
-
-            <li><?php echo anchor('stock/final_stock', '<i class="fa fa-plus-circle"></i>  <span>Add New Stock</span>'); ?></li>
-            <li><?php echo anchor('stock/stock_perpetual', '<i class="fa fa-plus-circle"></i>  <span>Stock Perpetual</span>'); ?></li>
+                <?php
+                $super_user_id = $this->config->item('super_user_id');
+                if ($super_user_id == $_SESSION['user_id']) {
+                    echo "<li>" . anchor('stock/final_stock', '<i class="fa fa-plus-circle"></i>  <span>Add New Stock</span>') . "</li>";
+                    echo "<li>" . anchor('stock/stock_perpetual', '<i class="fa fa-plus-circle"></i>  <span>Stock Perpetual</span>') . "</li>";
+                } else {
+                    if ($this->User_access_model->if_user_has_permission(35)) {
+                        echo "<li>" . anchor('stock/final_stock', '<i class="fa fa-plus-circle"></i>  <span>Add New Stock</span>') . "</li>";
+                    }
+                    if ($this->User_access_model->if_user_has_permission(36)) {
+                        echo "<li>" . anchor('stock/stock_perpetual', '<i class="fa fa-plus-circle"></i>  <span>Stock Perpetual</span>') . "</li>";
+                    }
+                }
+                ?>
 
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
 
