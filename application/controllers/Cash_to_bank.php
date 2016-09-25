@@ -26,9 +26,26 @@ class Cash_to_bank extends CI_Controller {
         $this->load->model('Common');
         $this->load->model('Cash_to_bank_model');
         $this->load->library('form_validation');
+        $this->load->model('User_access_model');
+        $this->User_access_model->check_user_access(27);
+    }
+    
+    
+    function path_selector() {
+        $super_user_id = $this->config->item('super_user_id');
+        if ($super_user_id == $_SESSION['user_id']) {
+            redirect('cash_to_bank');
+        } else if ($this->User_access_model->if_user_has_permission(32)) {
+            redirect('cash_to_bank');
+        } else if ($this->User_access_model->if_user_has_permission(33)) {
+            redirect('cash_to_bank/expense_adjustment');
+        } else {
+            redirect();
+        }
     }
 
     function index() {
+        $this->User_access_model->check_user_access(32, 'cash_to_bank/path_selector');
         $crud = new grocery_CRUD();
         $crud->set_table('cash_to_bank_register')
                 ->set_subject('Cash to Bank Transaction')
@@ -92,6 +109,7 @@ class Cash_to_bank extends CI_Controller {
     }
 
     function expense_adjustment() {
+        $this->User_access_model->check_user_access(33, 'cash_to_bank/path_selector');
         $crud = new grocery_CRUD();
         $crud->set_table('cash_to_expense_adjustment')
                 ->set_subject('Cash To Expense Adjustment')
