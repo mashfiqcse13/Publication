@@ -25,6 +25,8 @@ class Payment_log extends CI_Controller {
         $this->load->library('grocery_CRUD');
         $this->load->model('Common');
         $this->load->model('Payment_log_model');
+        $this->load->model('User_access_model');
+        $this->User_access_model->check_user_access(25);
     }
 
     function index() {
