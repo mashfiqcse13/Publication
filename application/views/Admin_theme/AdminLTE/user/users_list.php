@@ -22,14 +22,14 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="box">
+                <div class="box" style="overflow: auto">
 
                     <div class="box-header">
-                        <a href="<?php echo base_url();?>index.php/users_info/add_user" class="btn btn-success">Add User</a>
+                        <a href="<?php echo base_url(); ?>index.php/users_info/add_user" class="btn btn-success">Add User</a>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <table id="example2" class="table table-bordered table-hover">
-                            
+
                             <thead>
                                 <tr>
                                     <th>Username</th>
@@ -43,23 +43,22 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    foreach ($user_info as $user) {
-                                        
-                                ?>
-                                <tr>
-                                    <td><?php echo $user->username;?></td>
-                                    <td><?php echo $user->email;?></td>
-                                    <td><?php echo ($user->activated)?'active':'inactive';?></td>
-                                    <td><?php echo $user->banned;?></td>
-                                    <td><?php echo $user->ban_reason;?></td>
-                                    <td><?php echo $user->last_login;?></td>
-                                    <td>
-                                        <a href="<?php echo base_url()?>index.php/users_info/update_user/<?php echo $user->id;?>" class="primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a href="<?php echo base_url()?>index.php/users_info/delete_user/<?php echo $user->id;?>" class="danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
-                                    </td>
-                                </tr>
-                                <?php                                        
-                                    }
+                                foreach ($user_info as $user) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $user->username; ?></td>
+                                        <td><?php echo $user->email; ?></td>
+                                        <td><?php echo ($user->activated) ? 'active' : 'inactive'; ?></td>
+                                        <td><?php echo $user->banned; ?></td>
+                                        <td><?php echo $user->ban_reason; ?></td>
+                                        <td><?php echo $user->last_login; ?></td>
+                                        <td>
+                                            <a href="<?php echo base_url() ?>index.php/users_info/update_user/<?php echo $user->id; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a href="<?php echo base_url() ?>index.php/users_info/delete_user/<?php echo $user->id; ?>" class="btn btn-danger" onclick="return check();"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
                                 ?>
                             </tbody>
                         </table>

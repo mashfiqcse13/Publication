@@ -241,5 +241,6 @@
 <script type="text/javascript">
     $('.data').DataTable({
         bFilter: false,
+        order: [[0, "desc"]]
     });
 </script>
