@@ -320,7 +320,7 @@ class Sales_model extends CI_Model {
                 ));
         
         $this->table->add_row(array(
-            'data' => 'প্যাকেটিং খরচ : ',
+            'data' => 'প্যাকেটিং খরচ বাকি: ',
             'class' => '',
             'colspan' => 2
                 ), array(
@@ -340,11 +340,11 @@ class Sales_model extends CI_Model {
                 ));
         
         $this->table->add_row(array(
-            'data' => 'সর্বমোট  গ্রহন ( প্যাকেটিং সহ) : ',
+            'data' => 'সর্বমোট  গ্রহন  : ',
             'class' => 'text-bold',
             'colspan' => 2
                 ), array(
-            'data' => $total_sales_details->bill_for_packeting +  $bank_pay + $cash_pay + $current_due_amount,
+            'data' => /*$total_sales_details->bill_for_packeting + */ $bank_pay + $cash_pay + $current_due_amount,
             'class' => 'text-right taka_formate text-bold',
             'colspan' => 3
                 ));
