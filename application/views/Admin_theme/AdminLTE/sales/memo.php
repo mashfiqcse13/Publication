@@ -105,49 +105,30 @@
             <?php echo $memo_body_table['memo']; 
             
             if(isset($memo_body_table['due_report'])){
-                echo '<div style="page-break-before: always">';
+                echo '<hr>';
+                echo '<div style="page-break-before: always;margin-top:120px">';
                 echo '<h2 class="text-center">Due\'s Payment Report</h2>';
                 ?>
             
                 
-            <table class="table table_custom" style="font-size:13px">
-
+            <table class="table table_custom" style="font-size:13px;margin-top:50px">
+                <thead>
                 <tr>
-
                     <td><strong>Name:</strong></td>
-
                     <td><?= $memo_header_details['party_name'] ?></td>
-
-
-
                     <td><strong>Code No:</strong></td>
-
                     <td><?= $memo_header_details['code'] ?></td>
-
-
-
                     <td><strong>Memo No:</strong></td>
-
                     <td><?= $memo_header_details['memoid'] ?></td>
-
                 </tr>
-
+                </thead>
+                <tbody>
                 <tr>
-
                     <td><strong>Mobile:</strong></td>
-
                     <td> <?= $memo_header_details['phone'] ?></td>
-
-
-
                     <td><strong>District:</strong></td>
-
                     <td><?= $memo_header_details['district'] ?></td>
-
-
-
                     <td><strong>Date:</strong></td>
-
                     <td><?php 
                     $old = $memo_header_details['issue_date'];
                     $new=date('d-m-Y H:i:s', strtotime($old));
@@ -156,10 +137,12 @@
                     ?></td>
 
                 </tr>
+                </tbody>
 
             </table>
         
             <?php
+                
                 echo $memo_body_table['due_report'];
                 echo '</div>';
             }
@@ -196,3 +179,15 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
+<style>
+    
+    table,tr,td{
+        border:1px solid #ddd!important;
+    }
+    table td{
+        font-size: 14px;
+    }
+thead {
+    display: table-row-group;
+}
+    </style>
