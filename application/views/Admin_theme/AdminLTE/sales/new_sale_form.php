@@ -431,7 +431,7 @@
         data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
         $('#total_due').html(data_to_post.total_due);
-        $('#total_paid > span').html(data_to_post.total_paid + data_to_post.bill_for_packeting);
+        $('#total_paid > span').html(data_to_post.total_paid);
     }
 
     $('.submit_btn').click(function () {
