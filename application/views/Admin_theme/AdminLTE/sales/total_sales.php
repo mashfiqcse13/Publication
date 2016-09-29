@@ -127,7 +127,8 @@
                                         <th>Advance Deduction</th>
                                         <th>Total Paid</th>
                                         <th>Total Due</th>
-                                        <th>Packeting Cost Paid</th>
+                                        <th>Packeting Cost On Due</th>
+                                        <th>Accurate Due</th>
                                         <th>Slip Expense</th>
                                         <th>Issue Date</th>
                                     </tr>
@@ -168,6 +169,7 @@
                                             <td class="text-right faka_formate"><?php echo $sales->total_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->total_due; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting + $sales->total_due; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->slip_expense_amount; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
                                         </tr>
@@ -186,6 +188,7 @@
                                         <td class="text-right faka_formate"><?php echo $sum_total_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_total_due; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting+$sum_total_due; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_slip_expense_amount; ?></td>
                                         <td></td>
 
