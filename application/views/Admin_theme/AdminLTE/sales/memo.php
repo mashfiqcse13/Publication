@@ -104,8 +104,8 @@
             
             <?php echo $memo_body_table['memo']; 
             
-            if(isset($memo_body_table['due_report'])){
-                echo '<hr>';
+            if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
+               
                 echo '<div style="page-break-before: always;margin-top:120px">';
                 echo '<h2 class="text-center">Due\'s Payment Report</h2>';
                 ?>
@@ -190,4 +190,5 @@
 thead {
     display: table-row-group;
 }
+
     </style>

@@ -165,6 +165,10 @@
                     display:none;
                 }
                 .page_break_after{page-break-after: always;}
+                
+                #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+                    border: 1px solid #222!important;
+                }
             }
         </style>
 
@@ -195,10 +199,8 @@
             {
                 text-decoration: underline;
             }
-            
-            table,tr,td,tbody,th{
-                border:1px solid #000!important;
-            }
+  
+
         </style>
 
     </head>
