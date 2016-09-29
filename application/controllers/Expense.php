@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * and open the template in the editor.
  */
 
-/** 
+/**
  * Description of Accounting
  *
  * @author MD. Mashfiq
@@ -37,7 +37,7 @@ class Expense extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('expense');
         $crud->fields('id_name_expense', 'amount_expense', 'date_expense', 'stock_memo', 'stock_quantity', 'description_expense');
-        $crud->display_as('id_name_expense', 'Expense Name');
+        $crud->display_as('id_name_expense', 'Expense Name')->display_as('stock_memo', 'Purchase Memo No')->display_as('stock_quantity', 'Item Quantity');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         $crud->display_as('id_name_expense', 'Expense Name');
 
@@ -73,15 +73,15 @@ class Expense extends CI_Controller {
         if (isset($btn)) {
 
             if (isset($data['short_form'])) {
-                $data['report']= $this->expense_model->expense_sort_report($date_range);
+                $data['report'] = $this->expense_model->expense_sort_report($date_range);
 //                echo '<pre>';print_r($data);exit();
-            }else {
+            } else {
                 $data['report'] = $this->expense_model->expense_report($date_range);
             }
-        } 
-            $output = $crud->render();
-            $data['glosary'] = $output;
-        
+        }
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -201,11 +201,11 @@ class Expense extends CI_Controller {
         $crud->display_as('name_category_expense', 'Name Category Expense');
         $crud->display_as('description_category_expense', 'Description Category Expense');
         $crud->order_by('id_category_expense', 'desc');
-        
+
         if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 5) {
             $crud->unset_delete()->unset_edit();
         }
-        
+
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
