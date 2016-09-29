@@ -214,9 +214,9 @@
                                             <th>Transferred Amount</th>
                                             <th>Amount Billed</th>
                                             <th>Amount Paid</th>                                            
-                                        <th>Amount Reject</th>
-                                        <th>Amount Damage</th>
-                                        <th>Amount Missing</th>
+                                            <th>Amount Reject</th>
+                                            <th>Amount Damage</th>
+                                            <th>Amount Missing</th>
                                             <th>Transfer Date</th>
                                         </tr>
                                     </thead>
@@ -225,9 +225,9 @@
                                         $sum_total_amount_transfered = 0;
                                         $sum_total_amount_billed = 0;
                                         $sum_total_amount_paid = 0;
-                                        $sum_total_rejected=0;
-                                        $sum_total_damaged=0;
-                                        $sum_total_missing=0;
+                                        $sum_total_rejected = 0;
+                                        $sum_total_damaged = 0;
+                                        $sum_total_missing = 0;
                                         foreach ($get_process_details_for_report_by_search as $process_details) {
                                             $sum_total_amount_transfered += $process_details->amount_transfered;
                                             $sum_total_amount_billed += $process_details->amount_billed;
@@ -300,5 +300,6 @@
 <script type="text/javascript">
     $('.data').DataTable({
         bFilter: false,
+        order: [[0, "desc"]]
     });
 </script>
