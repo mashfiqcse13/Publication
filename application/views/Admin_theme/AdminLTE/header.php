@@ -195,6 +195,10 @@
             {
                 text-decoration: underline;
             }
+            
+            table,tr,td,tbody,th{
+                border:1px solid #000!important;
+            }
         </style>
 
     </head>
