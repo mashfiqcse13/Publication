@@ -369,7 +369,7 @@ class Sales_model extends CI_Model {
    }
 
 
-    function get_total_sales_info($from, $to, $id_customer) {
+    function get_total_sales_info($from, $to, $id_customer,$filter_district) {
         $from = date('Y-m-d', strtotime($from));
         $to = date('Y-m-d', strtotime($to));
         $this->db->select('sales_total_sales.*,customer.*,view_customer_paid_marged.cash_paid,view_customer_paid_marged.bank_paid,view_customer_paid_marged.customer_advance_paid');
@@ -378,7 +378,11 @@ class Sales_model extends CI_Model {
                 ->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
         if (!empty($id_customer)) {
             $this->db->where('sales_total_sales.id_customer', $id_customer);
-        }if ($from != '1970-01-01') {
+        }
+        if (!empty($filter_district)) {
+            $this->db->where('customer.district', $filter_district);
+        }
+        if ($from != '1970-01-01') {
             $condition = "DATE(sales_total_sales.issue_date) BETWEEN '$from' AND '$to'";
             $this->db->where($condition);
 //            $this->db->where('sales_total_sales.issue_date >= ', date('Y-m-d', strtotime($from)));
