@@ -101,9 +101,9 @@
                             </div>
                         </div>-->
                         <div class="row">
-<!--                            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
-                            </div>-->
+                            </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
                             </div>
@@ -299,8 +299,8 @@
     
     $('[name="id_customer"]').change(function () {
         data_to_post.id_customer = $('[name="id_customer"]').val();
-        //data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
-        //$('#dues_unpaid').html(data_to_post.dues_unpaid);
+        data_to_post.dues_unpaid = string_to_int(customer_due[data_to_post.id_customer]);
+        $('#dues_unpaid').html(data_to_post.dues_unpaid);
         update_total_amount_and_total_due();
     });
 

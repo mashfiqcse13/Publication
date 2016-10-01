@@ -80,7 +80,7 @@
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body" style="overflow-x:scroll">
                         <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <thead>
                                 <tr style="background:#ddd">

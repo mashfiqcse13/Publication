@@ -98,12 +98,13 @@ class Old_book_model extends CI_Model {
         $this->load->model('misc/Customer_due');
         $this->load->model('misc/Stock_perpetual');
         $this->load->model('Stock_model');
+        $this->load->model('misc/Customer_payment');
 
         $id_customer = $this->input->post('id_customer');
         //$discount_percentage = $this->input->post('discount_percentage');
         //$discount_amount = $this->input->post('discount_amount');
         $sub_total = $this->input->post('sub_total');
-        //$dues_unpaid = $this->input->post('dues_unpaid');
+        $dues_unpaid = $this->input->post('dues_unpaid');
         //$cash_payment = $this->input->post('cash_payment');
         //$bank_payment = $this->input->post('bank_payment');
         $cost=$this->input->post('cost');
@@ -117,74 +118,50 @@ class Old_book_model extends CI_Model {
 //            $total_amount = 0;
 //        }
         $total_amount = $sub_total-$cost;
-        $total_paid = $total_amount;
         
-        if($cost>0){
+        
+         if($cost>0){
             $this->load->model('expense_model');
             $id_name_expense=5;
             $amount_expense=$cost;
             $this->expense_model->expense_register($id_name_expense, $amount_expense, $description_expense = "Customer Send book without transport fees. so we deduct cost from advanced");
         }
-//        if( $dues_unpaid > $sub_total ){
-//            
-//            $total_due = $dues_unpaid - $sub_total;
-//        }else{
-//            $total_due = 0;
-//        }        
-//        if ($cash_payment > 0) {
-//            $this->Cash->add($cash_payment) or die('Failed to put cash in cash box');
-//        }
-//        if ($total_due == 0 && $dues_unpaid =! 0) {
-//            $due_payment_amount = $dues_unpaid;
-//            $this->load->model('misc/Customer_payment');
-//            $this->Customer_payment->due_payment($id_customer, $due_payment_amount);
-//        }
-//        elseif ( $total_due > 0){
-//           
-//            $due_payment_amount = $dues_unpaid - $total_due;
-//            $this->load->model('misc/Customer_payment');
-//            $this->Customer_payment->due_payment($id_customer, $due_payment_amount);
-//        }
-//        
-//        
-//        advanced paymend update
+        
+        if($dues_unpaid>0){
+            if($total_amount <= $dues_unpaid ){
+                
+                 $id_duepayment = $this->Customer_payment->due_payment($id_customer, $total_amount, 4);
+                 $total_amount = 0;
+            }
+            if($total_amount > $dues_unpaid){
+                $id_duepayment = $this->Customer_payment->due_payment($id_customer, $dues_unpaid, 4);
+                
+                $total_amount = $total_amount - $dues_unpaid;
+                
+            }
+
+        }
+        
+        if(isset($id_duepayment)){
+            $this->session->set_userdata('due_payment',$id_duepayment);
+        }
+        
+        $total_paid = $total_amount;
+        
+
+
         if ($payment_type == 2 && $total_paid > 0) {
             $this->load->model('advance_payment_model');
             $this->advance_payment_model->payment_add($id_customer, $total_paid, 4);
 
-
-//            
-//        $data = array(
-//            'id_customer' => $id_customer,
-//            'id_payment_method' => '4',
-//            'amount_paid' => $total_amount,  
-//            'date_payment' => date('Y-m-d h:i:u'),          
-//            
-//        );
-            //$this->db->insert('party_advance_payment_register', $data) or die('failed to insert data on old_book_return_total');
         }
-
-        //cash payment
-//        if($payment_type == 1){
-//            
-//        }
-//        if ($dues_unpaid > 0 && $total_paid > $total_amount) {
-//            $due_payment_amount = $total_paid - $total_amount;
-//            $this->load->model('misc/Customer_payment');
-//            $this->Customer_payment->due_payment($id_customer, $due_payment_amount);
-//            $cash_payment = $total_amount;
-//            $total_paid = $cash_payment + $bank_payment;
-//            $total_due = 0;
-//        }
-
-
 
         $data = array(
             'id_customer' => $id_customer,
             'issue_date' => date('Y-m-d h:i:u'),
             'sub_total' => $sub_total,
             'discount_percentage' => '',
-            'discount_amount' => '',
+            'discount_amount' => $cost,
             'total_amount' => $total_amount,
             'payment_type' => $payment_type,
             'mamo_number' => ''
@@ -353,10 +330,25 @@ class Old_book_model extends CI_Model {
         foreach ($balance->result_array() as $row) {
             $advanced_balance = $row['balance'];
         }
-        return $advanced_balance;
+        
+        if(isset($advanced_balance)){
+            return $advanced_balance;
+        }else{
+            return 0;
+        }
+        
     }
-
+//    
+//    function due_payment_report_for_old_book($id){
+//        $sql="SELECT * FROM `customer_due_payment_register` WHERE `id_customer_due_payment_register`=$id";
+//        return $this->db->get($sql)->result();
+//    }
+    
+    
     function memo_body_table($total_sales_id) {
+        
+        
+        
         $this->load->library('table');
         // setting up the table design
         $tmpl = array(
@@ -401,6 +393,16 @@ class Old_book_model extends CI_Model {
          $return_total=0;
           foreach($total_sales_details as $return){
             $return_total=$return->total_amount;
+            $quriar_cost=$return->discount_amount;
+            $total_amount = $return->total_amount;
+            $sub_total = $return->sub_total;
+        }
+        
+        if($total_amount == 0 && $sub_total>0){
+            $due_payment = $sub_total - $quriar_cost + $total_amount;
+        }
+        if($total_amount > 0  ){
+            $due_payment = $sub_total - $quriar_cost - $total_amount;
         }
         
         $total_sales_details = $total_sales_details[0];
@@ -430,12 +432,23 @@ class Old_book_model extends CI_Model {
             'data' => 'কুরিয়ার খরচ',
             'colspan' => 2
                 ), array(
-            'data' => $total_price - $return_total,
+            'data' => $quriar_cost,
             'colspan' => 2,
             'class' => 'taka_formate text-right'
         ));
+        if(isset($due_payment)){
+        $this->table->add_row(array(
+            'data' => 'পূর্বের বাকি পরিশোধ',
+            'colspan' => 2,
+              'class' => 'text-bold'
+                ), array(
+            'data' => $due_payment,
+            'colspan' => 2,
+            'class' => 'text-right text-bold taka_formate'
+        ));
+          }
           $this->table->add_row(array(
-            'data' => 'অবশিষ্ট',
+            'data' => 'অবশিষ্ট জমা' ,
             'colspan' => 2,
               'class' => 'text-bold'
                 ), array(
@@ -443,8 +456,7 @@ class Old_book_model extends CI_Model {
             'colspan' => 2,
             'class' => 'text-right text-bold taka_formate'
         ));
-        
-        
+
 
 //        $this->table->add_row(array(
 //            'data' => 'Total Advanced Balance',

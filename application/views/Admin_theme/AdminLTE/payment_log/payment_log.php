@@ -61,6 +61,7 @@
                                     <option value="1">Cash</option>
                                     <option value="2">Advance Payment</option>
                                     <option value="3">Bank</option>
+                                    <option value="4">Old Book Sale</option>
                                 </select>
                             </div>
                             </div>
@@ -127,6 +128,8 @@
                                                     echo 'Advance Payment';
                                                 } elseif ($rep->id_payment_method == 3) {
                                                     echo 'Bank';
+                                                }elseif ($rep->id_payment_method == 4) {
+                                                    echo 'Old Book Sale';
                                                 }
                                                 ?></td>
                                             <td class="taka_formate text-right"><?php echo 'TK ' . $rep->paid_amount; ?></td>

@@ -37,8 +37,9 @@ class Old_book extends CI_Controller {
     function tolal_return_book() {
         $crud = new grocery_CRUD();
         $crud->set_table('old_book_return_total')
-                ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total','discount_percentage','	discount_amount', 'total_amount', 'payment_type')
+                ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total','discount_percentage','discount_amount', 'total_amount', 'payment_type')
                 ->display_as('id_old_book_return_total', 'Memo No')
+                ->display_as('discount_amount','Quriar Cost')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Return Price')
                 ->set_subject('Old Book Return')
                 ->set_relation('id_customer', 'customer', 'name')
@@ -96,6 +97,7 @@ class Old_book extends CI_Controller {
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
         $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Old_book_model->get_party_due();
+           
         $data['item_details'] = $this->Old_book_model->get_item_details();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -167,8 +169,13 @@ class Old_book extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/list_old_book_sale_rebind', $data);
     }
     
+    
+    
 
     function memo($total_sales_id) {
+        
+
+        
         
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
