@@ -413,7 +413,7 @@ class Old_book_model extends CI_Model {
 
         $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
 
-        $this->table->add_row($total_quantity, '(Total Book ) ', array(
+        $this->table->add_row($total_quantity, '(মোট বই ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
             'colspan' => 1
