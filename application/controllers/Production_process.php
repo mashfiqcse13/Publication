@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -60,19 +60,18 @@ class Production_process extends CI_Controller {
         $data['Title'] = 'Production process';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/production_list', $data);
     }
-    
-    function add_processes(){
+
+    function add_processes() {
 //        echo'<pre>';print_r($_POST);exit();
         $data['get_item'] = $this->Production_process_model->get_items();
         $data['get_vendor'] = $this->Production_process_model->get_vendor();
-        
+
         $btn = $this->input->post('btn_submit');
         $list = $this->input->post('btn');
         $print = $this->input->post('print');
-        if($print){
+        if (!empty($print)) {
             $this->Production_process_model->save_processes($_POST);
-        }
-        if($list){
+        } else if (!empty($list)) {
             $this->Production_process_model->save_processes($_POST);
             redirect('production_process');
         }

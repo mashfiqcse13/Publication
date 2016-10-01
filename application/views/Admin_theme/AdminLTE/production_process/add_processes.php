@@ -40,12 +40,25 @@
                                     <label class="col-md-3">Item Name* :</label>
                                     <div class="input-group col-md-9">
                                         <?php
-                                        $data[] = "Select Items";
+                                        $data[] = "Select Items By Name Or Code";
                                         foreach ($get_item as $item) {
 
-                                            $data[$item->id_item] = $item->name;
+                                            $data[$item->id_item] = $item->id_item." - ".$item->name;
                                         }
                                         echo form_dropdown('id_item', $data, '', ' class="form-control select2" ', 'required');
+                                        ?>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Item Type* :</label>
+                                    <div class="input-group col-md-9">
+                                        <?php
+                                        $data = array(
+                                            "1" => "Book",
+                                            "2" => "Cover",
+                                        );
+                                        echo form_dropdown('item_type', $data, '1', ' class="form-control select2" ', 'required');
                                         ?>
                                     </div>
 
