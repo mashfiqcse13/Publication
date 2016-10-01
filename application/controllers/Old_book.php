@@ -39,7 +39,7 @@ class Old_book extends CI_Controller {
         $crud->set_table('old_book_return_total')
                 ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total','discount_percentage','discount_amount', 'total_amount', 'payment_type')
                 ->display_as('id_old_book_return_total', 'Memo No')
-                ->display_as('discount_amount','Quriar Cost')
+                ->display_as('discount_amount','Courier Cost Deduction')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Return Price')
                 ->set_subject('Old Book Return')
                 ->set_relation('id_customer', 'customer', 'name')
