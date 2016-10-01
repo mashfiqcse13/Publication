@@ -28,6 +28,13 @@
                             <div class="row">
                                 <div class="form-group col-md-3 text-left">
 
+                                    <label>Search By District:</label>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <?php echo $district_dropdown; ?>
+                                </div><!-- /.form group -->
+                                <div class="form-group col-md-3 text-left">
+
                                     <label>Search By Party Id or Name:</label>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -36,6 +43,9 @@
 
 
                                 </div><!-- /.form group -->
+
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-3 text-left">
                                     <label>Search with Date Range:</label>
                                 </div>
@@ -46,16 +56,6 @@
                                         </div>
                                         <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                     </div><!-- /.input group -->
-                                </div><!-- /.form group -->
-
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-3 text-left">
-
-                                    <label>Search By District:</label>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <?php echo $district_dropdown; ?>
                                 </div><!-- /.form group -->
                                 <div class="col-md-2">
                                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -77,21 +77,23 @@
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                             ?>
 
-                            <div class="form-group col-md-3 text-left">
+                            <div class="row">
+                                <div class="form-group col-md-3 text-left">
 
-                                <label>Search By Memo:</label>
+                                    <label>Search By Memo:</label>
+                                </div>
+                                <div class="form-group col-md-3">
+
+                                    <?php echo $memo_list; ?>
+
+
+                                </div><!-- /.form group -->
+                                <div class="col-md-2">
+                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                </div>
+
                             </div>
-                            <div class="form-group col-md-3">
-
-                                <?php echo $memo_list; ?>
-
-
-                            </div><!-- /.form group -->
-                            <div class="col-md-2">
-                                <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                <?= anchor(site_url('sales/tolal_sales'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                            </div>
-
 
                             <?= form_close(); ?>
                             <?php ?>
@@ -115,11 +117,23 @@
                             ?>
                         </div><!-- /.box-body -->
                         <?php
-                    }if (isset($date_range)) {
+                    }
+                    if (!empty($this->input->get('btn_submit'))) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Total Sales Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                            <table style="margin: 0 auto">
+                                <?php
+                                if (!empty($this->input->get('filter_district'))) {
+                                    echo '<tr><td><strong>District Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $this->input->get('filter_district') . '</td></tr>';
+                                }
+                                ?>
+                            </table>
+                            <?php
+                            if (!empty($date_range)) {
+                                echo '<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> ' . $date_range . '</p>';
+                            }
+                            ?>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>

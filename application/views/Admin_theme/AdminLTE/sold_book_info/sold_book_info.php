@@ -22,23 +22,34 @@
         <div class="row">
             <div class="col-md-12">
 
-               <div class="box only_print">
+                <div class="box only_print">
                     <div class="box-body">
-                        
-                       
+
+
                         <form action="" method="post">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group col-md-4">
-                                        <label>Party Name : </label>
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-6 text-left">
+
+                                        <label>Search By District:</label>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <?php echo $district_dropdown; ?>
+                                    </div><!-- /.form group -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-6">
+                                        <label>Party Name or ID : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <?=$customer_dropdown;?>
+                                        <?= $customer_dropdown; ?>
                                     </div>
-                                    
+
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="form-group col-md-3 text-left">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group col-md-6 text-left">
                                         <label>Search with Date Range:</label>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -49,15 +60,17 @@
                                             <input type="text" name="date_range" value="" class="form-control pull-right" id="reservation"  title="This is not a date"/>
                                         </div> 
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="col-md-3">
                                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                         <?php echo anchor(site_url('sold_book_info'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                     </div>
                                 </div>
-                                 
+
                             </div>
-                             
-                           </form>
+
+                        </form>
 
                     </div>
                 </div>
@@ -66,8 +79,8 @@
                     <?php
                     if (isset($table_today)) {
                         ?> 
-                    
-                    <div class="box-header">
+
+                        <div class="box-header">
                             <p class="text-center"><strong>আজকের বিক্রীত বইসমূহ</strong></p>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
@@ -80,28 +93,26 @@
                                         <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
                                         <th>Old Book Return</th>
                                         <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return ) </span></th>
-                                        
-                                        
+
+
                                     </tr>
                                 </thead>
-                               <tbody>
+                                <tbody>
                                     <?php
-                                       
-                                    foreach ($table_today as $key => $return) {                                       
+                                    foreach ($table_today as $key => $return) {
                                         ?>
                                         <tr>
                                             <td><?php echo $return['name'] ?></td>
-                                            <td ><?php  echo $return['sale_quantity'] - $return['return_quantity'];    ?></td>
-                                            <td><?php echo $return['old_quantity'];   ?></td> 
-                                            <td><?php echo  $return['sale_quantity'] - $return['return_quantity']-$return['old_quantity'] ?></td>
-                                            
+                                            <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
+                                            <td><?php echo $return['old_quantity']; ?></td> 
+                                            <td><?php echo $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'] ?></td>
+
                                         </tr>
                                         <?php
-                                        
                                     }
                                     ?>
 
-                                    
+
                                 </tbody>
                             </table>
 
@@ -109,12 +120,21 @@
                         <?php
                     }if (isset($table)) {
                         ?>
-                        <div class="box-header">
+                    <div class="box-header">
                             <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
-                             <?php if(isset($name)){ echo '<p class="text-center">Customer Name:'.$name.'</p>'; }?>
-                            
+                            <table style="margin: 0 auto">
+                                <?php
+                                if (isset($name)) {
+                                    echo '<tr><td><strong>Customer Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $name . '</td></tr>';
+                                }
+                                if (!empty($this->input->post('filter_district'))) {
+                                    echo '<tr><td><strong>District Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $this->input->post('filter_district') . '</td></tr>';
+                                }
+                                ?>
+                            </table>
+
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
-                           
+
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
                         </div>
@@ -126,27 +146,25 @@
                                         <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
                                         <th>Old Book Return</th>
                                         <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
-                                        
+
                                     </tr> 
                                 </thead>
                                 <tbody>
                                     <?php
-                                       
-                                    foreach ($table as $key => $return) {                                       
+                                    foreach ($table as $key => $return) {
                                         ?>
                                         <tr>
                                             <td><?php echo $return['name'] ?></td>
-                                            <td ><?php  echo $return['sale_quantity'] - $return['return_quantity'];    ?></td>
-                                            <td><?php echo $return['old_quantity'];   ?></td> 
-                                            <td><?php echo  $return['sale_quantity'] - $return['return_quantity']-$return['old_quantity'] ?></td>
-                                            
+                                            <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
+                                            <td><?php echo $return['old_quantity']; ?></td> 
+                                            <td><?php echo $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'] ?></td>
+
                                         </tr>
                                         <?php
-                                        
                                     }
                                     ?>
 
-                                    
+
                                 </tbody>
                             </table>
 
