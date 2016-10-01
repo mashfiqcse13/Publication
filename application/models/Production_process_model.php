@@ -141,7 +141,7 @@ class Production_process_model extends CI_Model {
         } else {
             $process_step_details = $this->get_step_info_by($id_process_step_from);
             $this->step_transfer_to_final_process($id_processes, $amount_transfered);
-            $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, 0, $amount_transfered);
+            $id_process_step_transfer_log = $this->add_transfer_log($id_process_step_from, 0, $amount_transfered, $rejected_amount, $damaged_amount, $missing_amount);
         }
         $this->add_step_transfer_billing($id_process_step_transfer_log, $id_process_step_from, $amount_billed, $amount_paid);
         return $id_process_step_transfer_log;
@@ -281,7 +281,7 @@ class Production_process_model extends CI_Model {
     }
 
     function get_process_details($id_processes) {
-        $result = $this->db->select("`id_processes`, `process_type`, processes.id_item, `name` as item_name, `date_created`, `date_finished`, `order_quantity`, `actual_quantity`, `total_damaged_item`, `total_reject_item`, `total_missing_item`, `process_status`")
+        $result = $this->db->select("`id_processes`, `process_type`, processes.id_item, processes.item_type, `name` as item_name, `date_created`, `date_finished`, `order_quantity`, `actual_quantity`, `total_damaged_item`, `total_reject_item`, `total_missing_item`, `process_status`")
                         ->join('items', 'items.id_item = processes.id_item')->join('process_type', 'process_type.id_process_type = processes.id_process_type')
                         ->where('id_processes', $id_processes)->get('processes')->result();
         if (empty($result[0])) {
@@ -465,7 +465,9 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $this->load->model('Stock_model');
         $id_item = $process_details->id_item;
         $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount_transfered, 0);
-        $this->Stock_model->stock_add($id_item, $amount_transfered);
+        if ($process_details->item_type == 1) {
+            $this->Stock_model->stock_add($id_item, $amount_transfered);
+        }
 
         $sql = "UPDATE `processes` SET `actual_quantity` = `actual_quantity` +  '$amount_transfered',
             `total_damaged_item` = {$total_production_fault->total_damaged_item},
@@ -670,11 +672,12 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $this->callback_process_buffer_id_vendor = $data['id_vendor'];
         $process['date_created'] = date('Y-m-d H:i:s');
         $process['order_quantity'] = $data['order_quantity'];
+        $process['item_type'] = $data['item_type'];
         $process['process_status'] = 1;
         $this->db->insert('processes', $process);
         $id = $this->db->insert_id();
         $this->callback_process_after_process_insert('', $id);
-        if ($data['print']) {
+        if (!empty($data['print'])) {
             redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($id));
         }
         return true;

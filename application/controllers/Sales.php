@@ -46,16 +46,17 @@ class Sales extends CI_Controller {
                 });
         $data['date_range'] = $this->input->get('date_range');
         $id_customer = $this->input->get('id_customer');
+        $filter_district = $this->input->get('filter_district');
 
-        if (empty($id_customer) && empty($data['date_range']) && !empty($this->input->get('btn_submit'))) {
+        if (empty($id_customer) && empty($filter_district) && empty($data['date_range']) && !empty($this->input->get('btn_submit'))) {
             ?><script>
-                alert("Please select any customer or date range");
+                alert("Please select any customer or date range or party district");
                 window.history.back();
             </script>
             <?php
             die();
         }
-        
+
         $date = explode('-', $data['date_range']);
         $from = '';
         $to = '';
@@ -63,13 +64,16 @@ class Sales extends CI_Controller {
             $from = $date[0];
             $to = $date[1];
         }
-        if ($data['date_range'] != '' || !empty($id_customer)) {
+        if (!empty($data['date_range']) || !empty($id_customer) || !empty($filter_district)) {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
-            $data['total_sales'] = $this->Sales_model->get_total_sales_info($from, $to, $id_customer);
+            $data['total_sales'] = $this->Sales_model->get_total_sales_info($from, $to, $id_customer, $filter_district);
 //             print_r($data['total_sales']);exit();
         }
 
+        $districts = $this->config->item('districts_english');
+        $districts[''] = "Select a district";
+        $data['district_dropdown'] = form_dropdown('filter_district', $districts, $filter_district, 'class="form-control select2"');
 
         $output = $crud->render();
         $data['glosary'] = $output;

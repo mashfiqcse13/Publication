@@ -92,7 +92,7 @@
 //                                            print_r($all_production_process_first_step_info);exit();
                                             foreach ($get_vendor as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->vendor_name . ' - ' . $item->vendor_type; ?></option>
+                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->id_vendor." - ".$item->vendor_name . ' - ' . $item->vendor_type; ?></option>
                                                 <?php
                                             }
                                             ?>

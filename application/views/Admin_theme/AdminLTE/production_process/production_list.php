@@ -50,7 +50,12 @@
                                     <tr>
                                         <td><?php echo $process->id_processes; ?></td>
                                         <td><?php echo $process->process_type; ?></td>
-                                        <td><?php echo $process->name; ?></td>
+                                        <td><?php
+                                            echo $process->name;
+                                            if ($process->item_type == 2) {
+                                                echo " (Cover)";
+                                            }
+                                            ?></td>
                                         <td><?php echo $process->date_created; ?></td>
                                         <td><?php echo $process->date_finished; ?></td>
                                         <td><?php echo $process->order_quantity; ?></td>
