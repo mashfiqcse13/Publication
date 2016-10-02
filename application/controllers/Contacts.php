@@ -64,14 +64,14 @@ class Contacts extends CI_Controller {
         });
 
         $crud->callback_add_field('upazila', function () {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width upazila" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width upazila" ');
         });
 
-        $crud->unset_add_fields('upazila');
-        $crud->unset_edit_fields('upazila');
-        $crud->unset_columns('upazila');
+        //$crud->unset_add_fields('upazila');
+       // $crud->unset_edit_fields('upazila');
+//        $crud->unset_columns('upazila');
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -100,9 +100,9 @@ class Contacts extends CI_Controller {
         });
 
         $crud->callback_add_field('upazila', function () {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width upazila" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
-            return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width" ');
+            return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width upazila" ');
         });
 
 
@@ -112,9 +112,7 @@ class Contacts extends CI_Controller {
             return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
         });
 
-        $crud->unset_add_fields('upazila');
-        $crud->unset_edit_fields('upazila');
-        $crud->unset_columns('upazila');
+        
 
 
         $crud = $this->Contacts_model->set_filter($crud);
