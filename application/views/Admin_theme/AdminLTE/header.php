@@ -91,7 +91,7 @@
             }
             .table_custom tr td{line-height: 1}
             #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                border: 1px solid #ddd;
+                
                 line-height: .9;
                 padding:5px 4px;
                 vertical-align: top;
@@ -169,7 +169,19 @@
                 #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
                     border: 1px solid #222!important;
                 }
+               .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+
+                border:1px solid #222!important;
             }
+                body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
+                    border: 1px solid #222!important;
+                }
+                body .table-bordered{
+                    border:1px solid #222!important;
+                }
+           }
+           
+
         </style>
 
         <?php
