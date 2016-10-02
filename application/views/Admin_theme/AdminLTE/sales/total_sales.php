@@ -18,7 +18,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content" style="min-height: 1100px;">
+    <section class="content" style="min-height: 1100px;">-
         <div class="row">
             <div class="col-md-12">
 
@@ -146,8 +146,8 @@
                                         <th>Memo No</th>
                                         <th>Customer Name</th>
                                         <th>Sub Total</th>
-                                        <th>Total Amount</th>
                                         <th>Discount Amount</th>
+                                        <th>Total Amount</th>
                                         <th>Cash Paid</th>
                                         <th>Bank Paid</th>
                                         <th>Advance Deduction</th>
@@ -187,8 +187,8 @@
                                             <td><?php echo $sales->id_total_sales; ?></td>
                                             <td><?php echo $sales->name; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->sub_total; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->total_amount; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->discount_amount; ?></td>
+                                            <td class="text-right faka_formate"><?php echo $sales->total_amount; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->cash_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->bank_paid; ?></td>
                                             <td class="text-right faka_formate"><?php echo $sales->customer_advance_paid; ?></td>
@@ -206,8 +206,8 @@
                                     <tr style="font-weight: bold">
                                         <td colspan="2">Total :</td>
                                         <td class="text-right faka_formate"><?php echo $sum_sub_total; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_total_amount; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_discount_amount; ?></td>
+                                        <td class="text-right faka_formate"><?php echo $sum_total_amount; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_cash_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_bank_paid; ?></td>
                                         <td class="text-right faka_formate"><?php echo $sum_customer_advance_paid; ?></td>

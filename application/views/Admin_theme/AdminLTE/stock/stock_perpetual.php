@@ -49,7 +49,7 @@
 
 
 
-            <div class="box col-md-12" id="block">
+            <div class="box col-md-12" id="block" style="overflow-x:scroll">
                 <?php
                 if (!isset($date_range)) {
                     ?>
@@ -76,11 +76,11 @@
                             <p class="pull-left" > <strong>Date Range: (From - To) </strong> <?= isset($date_range) ? $date_range : ''; ?></p>
                             <br>
                             <p class="alert-info pull-left">Closing Stock = (Opening Stock + Receive) - (Accurate Sale + Accurate Specimen )  </p>
-                            
+
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
                         </div>
                     </div>
-                    <div class="box-body" style="overflow-x:scroll">
+                    <div class="box-body">
                         <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <thead>
                                 <tr style="background:#ddd">
@@ -94,13 +94,26 @@
                                     <th>Old Book Return</th>
                                     <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span> </th>
                                     <th>Closing Stock</th>                                    
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
+                                $total_Opening = 0;
+                                $total_Receive = 0;
+                                $total_Sale = 0;
+                                $total_Accurate_Specimen = 0;
+                                $total_Sale_Return = 0;
+                                $total_Accurate_Sale = 0;
+                                $total_Old_Book_Return = 0;
+                                $total_Actual_Sale = 0;
+                                $total_Closing_Stock = 0;
+
                                 foreach ($stock_perpetual as $stock) {
-                                    
+                                    $total_Opening += $stock->opening_amount;
+                                    $total_Receive += $stock->receive_amount;
+                                    $total_Sale += $stock->sales_amount;
+                                    $total_Sale_Return += $stock->return_amountreject;
                                     ?>
                                     <tr>
                                         <td><?php echo $stock->name; ?></td>
@@ -108,61 +121,84 @@
                                         <td><?php echo $stock->receive_amount; ?></td>
                                         <td><?php echo $stock->sales_amount; ?></td>
                                         <td><?php
-                                        $accurate_specimen= 0;
-                                        if(!empty($return_specimen)){
-                                            foreach($return_specimen as $sp){
-                                                if($stock->id_item==$sp->id_item){
-                                                    echo $accurate_specimen= $stock->specimen - $sp->return_quantity;
+                                            $accurate_specimen = 0;
+                                            if (!empty($return_specimen)) {
+                                                foreach ($return_specimen as $sp) {
+                                                    if ($stock->id_item == $sp->id_item) {
+                                                        echo $accurate_specimen = $stock->specimen - $sp->return_quantity;
+                                                    }
                                                 }
+                                            } else {
+                                                echo $accurate_specimen = $stock->specimen;
                                             }
-                                        }else{
-                                             echo $accurate_specimen= $stock->specimen; 
-                                        }
-                                       
-                                        
-                                        ?></td>
-                                        <td><?php echo $stock->return_amountreject; ?></td>
-                                        <td><?php echo $acturatesale=$stock->sales_amount - $stock->return_amountreject; ?></td>
-                                        <td><?php 
-                                        if(!empty($old_info)){
-                                                foreach($old_info as $row){
-                                               if($stock->id_item==$row->id_item){
-                                                   echo $row->old_quantity;
-                                               }
-                                        }
-                                        }else{
-                                             echo 0;
-                                         }
-                                        ?></td>
-                                        
-                                        <td><?php 
-                                        
-                                        if(!empty($old_info)){
-                                                foreach($old_info as $row){
-                                               if($stock->id_item==$row->id_item){
-                                                   echo $acturatesale- $row->old_quantity;
-                                               }
-                                        }
-                                        }else{
-                                             echo $acturatesale;
-                                         }
-                                         
-                                         
-                                        
-                                        ?>
+                                            $total_Accurate_Specimen += $accurate_specimen;
+                                            ?></td>
+                                        <td><?php echo $stock->return_amountreject;
+                                    $total_Sale_Return +=$stock->return_amountreject ?></td>
+                                        <td><?php
+                                            echo $acturatesale = $stock->sales_amount - $stock->return_amountreject;
+                                            $total_Accurate_Sale += $acturatesale;
+                                            ?></td>
+                                        <td><?php
+                                            $Old_Book_Return = 0;
+                                            if (!empty($old_info)) {
+                                                foreach ($old_info as $row) {
+                                                    if ($stock->id_item == $row->id_item) {
+                                                        echo $row->old_quantity;
+                                                        $Old_Book_Return+=$row->old_quantity;
+                                                    }
+                                                }
+                                            } else {
+                                                echo 0;
+                                            }
+
+                                            $total_Old_Book_Return += $Old_Book_Return;
+                                            ?></td>
+
+                                        <td><?php
+                                            $tmp_Actual_Sale = 0;
+                                            if (!empty($old_info)) {
+                                                foreach ($old_info as $row) {
+                                                    if ($stock->id_item == $row->id_item) {
+                                                        echo $acturatesale - $row->old_quantity;
+                                                        $tmp_Actual_Sale += ($acturatesale - $row->old_quantity);
+                                                    }
+                                                }
+                                            } else {
+                                                echo $acturatesale;
+                                                $tmp_Actual_Sale += $acturatesale;
+                                            }
+                                            $total_Actual_Sale += $tmp_Actual_Sale;
+                                            ?>
                                         </td>
-                                        <td><?php echo 
-                                        ($stock->opening_amount+$stock->receive_amount+$stock->return_amountreject)-
-                                        $stock->sales_amount-$accurate_specimen; 
-                                        ?></td>
-                                        
-                                        
+                                        <td><?php
+                                            echo
+                                            ($stock->opening_amount + $stock->receive_amount + $stock->return_amountreject) -
+                                            $stock->sales_amount - $accurate_specimen;
+
+                                            $total_Closing_Stock += (($stock->opening_amount + $stock->receive_amount + $stock->return_amountreject) - $stock->sales_amount - $accurate_specimen);
+                                            ?></td>
+
+
 
 
                                     </tr>
                                     <?php
                                 }
                                 ?>
+
+                                <tr>
+                                    <th>Total</th>
+                                    <th ><?php echo $total_Opening; ?></th>
+                                    <th><?php echo $total_Receive; ?></th> 
+                                    <th><?php echo $total_Sale ?></th>
+                                    <th><?php echo $total_Accurate_Specimen ?></th>
+                                    <th><?php echo $total_Sale_Return; ?></th> 
+                                    <th><?php echo $total_Accurate_Sale ?></th>
+                                    <th><?php echo $total_Old_Book_Return ?></th>
+                                    <th><?php echo $total_Actual_Sale ?></th>
+                                    <th><?php echo $total_Closing_Stock ?></th>
+                                </tr>
                             </tbody>
                         </table>
 

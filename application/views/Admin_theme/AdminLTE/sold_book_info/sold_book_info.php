@@ -120,7 +120,7 @@
                         <?php
                     }if (isset($table)) {
                         ?>
-                    <div class="box-header">
+                        <div class="box-header">
                             <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
                             <table style="margin: 0 auto">
                                 <?php
@@ -151,7 +151,13 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $total_accurate_sale = 0;
+                                    $total_old_book_return = 0;
+                                    $total_actual_return = 0;
                                     foreach ($table as $key => $return) {
+                                        $total_accurate_sale += ($return['sale_quantity'] - $return['return_quantity']);
+                                        $total_old_book_return+= $return['old_quantity'];
+                                        $total_actual_return += ($return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity']);
                                         ?>
                                         <tr>
                                             <td><?php echo $return['name'] ?></td>
@@ -164,6 +170,12 @@
                                     }
                                     ?>
 
+                                    <tr>
+                                        <th>Total</th>
+                                        <th ><?php echo $total_accurate_sale; ?></th>
+                                        <th><?php echo $total_old_book_return; ?></th> 
+                                        <th><?php echo $total_actual_return ?></th>
+                                    </tr>
 
                                 </tbody>
                             </table>
