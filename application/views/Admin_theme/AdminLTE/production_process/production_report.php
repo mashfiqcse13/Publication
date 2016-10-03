@@ -172,7 +172,10 @@
                                         <tr>
                                             <td><?php echo $process_details->id_processes; ?></td>
                                             <td><?php echo $process_details->name_process_type; ?></td>
-                                            <td><?php echo $process_details->item_name; ?></td>
+                                            <td><?php
+                                                $item_name = ($process_details->item_type == 2) ? $process_details->item_name . " (Cover)" : $process_details->item_name;
+                                                echo $item_name;
+                                                ?></td>
                                             <td><?php echo $process_details->from_name . '(' . $process_details->from_type . ')'; ?></td>
                                             <td><?php echo $process_details->id_process_step_from; ?></td>
                                             <td><?php echo $process_details->to_name . '(' . $process_details->to_type . ')'; ?></td>
@@ -239,7 +242,10 @@
                                             <tr>
                                                 <td><?php echo $process_details->id_processes; ?></td>
                                                 <td><?php echo $process_details->name_process_type; ?></td>
-                                                <td><?php echo $process_details->item_name; ?></td>
+                                                <td><?php
+                                                $item_name = ($process_details->item_type == 2) ? $process_details->item_name . " (Cover)" : $process_details->item_name;
+                                                echo $item_name;
+                                                ?></td>
                                                 <td><?php echo $process_details->from_name . '(' . $process_details->from_type . ')'; ?></td>
                                                 <td><?php echo $process_details->id_process_step_from; ?></td>
                                                 <td><?php echo $process_details->to_name . '(' . $process_details->to_type . ')'; ?></td>

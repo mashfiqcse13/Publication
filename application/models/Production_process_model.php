@@ -514,8 +514,10 @@ FROM view_process_step_transfer_log_with_details;')->result();
             'table_close' => '</table>'
         );
         $this->table->set_template($tmpl);
+        
+        $item_name = ($process_details->item_type == 2) ? $process_details->item_name." (Cover)" : $process_details->item_name;
 
-        $this->table->add_row($process_details->id_processes, $process_details->process_type, $process_details->item_name, $process_details->date_created, $process_details->date_finished);
+        $this->table->add_row($process_details->id_processes, $process_details->process_type, $item_name, $process_details->date_created, $process_details->date_finished);
         $this->table->set_heading('Order ID', 'Process type', 'Item name', 'Creating Date', 'Finishing Date');
         $output .= $this->table->generate();
         $this->table->add_row($process_details->order_quantity, $process_details->actual_quantity, $process_details->total_damaged_item, $process_details->total_reject_item, $process_details->total_missing_item);
@@ -729,8 +731,9 @@ FROM view_process_step_transfer_log_with_details;')->result();
     }
 
     function get_process_details_for_row($id_process_step_from) {
-        $result = $this->db->query('SELECT DISTINCT id_processes,id_process_type,id_item,item_name,name_process_type,from_id_vendor,from_name,from_type
-FROM view_process_step_transfer_log_with_details;')->row();
+        $result = $this->db->query("SELECT * 
+        FROM  `view_process_step_transfer_log_with_details` 
+        WHERE  `id_process_step_from` =$id_process_step_from")->row();
         return $result;
     }
 

@@ -72,7 +72,7 @@
                             <?php
                             $attributes = array(
                                 'clase' => 'form-inline',
-                                'method' => 'post');
+                                'method' => 'get');
                             echo form_open(site_url('sales/memo_report'), $attributes)
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                             ?>

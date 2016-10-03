@@ -144,7 +144,7 @@ class Sales extends CI_Controller {
 
     function memo_report() {
         $data['memo_list'] = $this->memo_list();
-        $total_sales_id = $this->input->post('id_total_sales');
+        $total_sales_id = $this->input->get('id_total_sales');
         if (empty($total_sales_id)) {
             ?><script>
                 alert("Please select memo ID");

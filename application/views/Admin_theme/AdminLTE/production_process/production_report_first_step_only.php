@@ -92,7 +92,7 @@
 //                                            print_r($all_production_process_first_step_info);exit();
                                             foreach ($get_vendor as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->id_vendor." - ".$item->vendor_name . ' - ' . $item->vendor_type; ?></option>
+                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->id_vendor . " - " . $item->vendor_name . ' - ' . $item->vendor_type; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -153,7 +153,10 @@
                                         <td><?php echo $first_step_details->id_process_steps; ?></td>
                                         <td><?php echo $first_step_details->id_processes; ?></td>
                                         <td><?php echo $first_step_details->name_process_type; ?></td>
-                                        <td><?php echo $first_step_details->item_name; ?></td>
+                                        <td><?php
+                                            $item_name = ($first_step_details->item_type == 2) ? $first_step_details->item_name . " (Cover)" : $first_step_details->item_name;
+                                            echo $item_name;
+                                            ?></td>
                                         <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
                                         <td><?php echo $first_step_details->order_amount; ?></td>
                                         <td><?php echo $first_step_details->transfered_amount; ?></td>
@@ -202,7 +205,10 @@
                                             <td><?php echo $first_step_details->id_process_steps; ?></td>
                                             <td><?php echo $first_step_details->id_processes; ?></td>
                                             <td><?php echo $first_step_details->name_process_type; ?></td>
-                                            <td><?php echo $first_step_details->item_name; ?></td>
+                                            <td><?php
+                                                $item_name = ($first_step_details->item_type == 2) ? $first_step_details->item_name . " (Cover)" : $first_step_details->item_name;
+                                                echo $item_name;
+                                                ?></td>
                                             <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
                                             <td><?php echo $first_step_details->order_amount; ?></td>
                                             <td><?php echo $first_step_details->transfered_amount; ?></td>

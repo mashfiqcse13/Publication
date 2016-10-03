@@ -29,7 +29,7 @@
                     <div class="box" id="block">
                         <div class="box-header">
                             <p class="text-center"><strong>Process Transection Report</strong></p>
-                            <!--<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php // echo $date_range;             ?></p>-->
+                            <!--<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php // echo $date_range;                  ?></p>-->
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
@@ -49,7 +49,10 @@
                                     <td><strong>Vendor From:</strong></td>
                                     <td><?php echo $get_process_details_for_row->from_name . " ( " . $get_process_details_for_row->from_type . " )"; ?></td>
                                     <td><strong>Item Name:</strong></td>
-                                    <td><?php echo $get_process_details_for_row->item_name; ?></td>
+                                    <td><?php
+                                        $item_name = ($get_process_details_for_row->item_type == 2) ? $get_process_details_for_row->item_name . " (Cover)" : $get_process_details_for_row->item_name;
+                                        echo $item_name;
+                                        ?></td>
                                 </tr>
 
                             </table>
@@ -73,9 +76,9 @@
                                 $sum_total_amount_transfered = 0;
                                 $sum_total_amount_billed = 0;
                                 $sum_total_amount_paid = 0;
-                                $sum_total_amount_rejected= 0;
+                                $sum_total_amount_rejected = 0;
                                 $sum_total_amount_damaged = 0;
-                                        $sum_total_amount_missing = 0;
+                                $sum_total_amount_missing = 0;
                                 foreach ($get_process_details_for_report_by_step_from as $step_info) {
                                     $sum_total_amount_transfered += $step_info->amount_transfered;
                                     $sum_total_amount_billed += $step_info->amount_billed;
@@ -104,9 +107,9 @@
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
-                                     <td class="text-right faka_formate"><?php echo $sum_total_amount_rejected; ?></td>
-                                      <td class="text-right faka_formate"><?php echo $sum_total_amount_damaged; ?></td>
-                                       <td class="text-right faka_formate"><?php echo $sum_total_amount_missing; ?></td>
+                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_rejected; ?></td>
+                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_damaged; ?></td>
+                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_missing; ?></td>
                                     <td></td>
 
 
