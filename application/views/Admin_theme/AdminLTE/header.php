@@ -146,40 +146,7 @@
                 position: relative;
                 z-index: 999;
             }
-            @media print{
-                .only_print{display: none;}
-                .memo_print_option{margin:0 auto;width:100%;}
-                #print { visibility: hidden;}
-                #test{visibility: visible;}
 
-            }
-            @media only print{
-                .report-logo-for-print{
-                    display: block;
-                }
-                aside.main-sidebar.only_print {
-                    display: none;
-                }
-                .table>tbody>tr>td{padding-bottom: 9px}
-                footer.main-footer {
-                    display:none;
-                }
-                .page_break_after{page-break-after: always;}
-                
-                #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                    border: 1px solid #222!important;
-                }
-               .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
-
-                border:1px solid #222!important;
-            }
-                body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
-                    border: 1px solid #222!important;
-                }
-                body .table-bordered{
-                    border:1px solid #222!important;
-                }
-           }
            
 
         </style>
@@ -211,7 +178,60 @@
             {
                 text-decoration: underline;
             }
-  
+                        @media print{
+                .only_print{display: none;}
+                .memo_print_option{margin:0 auto;width:100%;}
+                #print { visibility: hidden;}
+                #test{visibility: visible;}
+
+                .report-logo-for-print{
+                    display: block;
+                }
+                aside.main-sidebar.only_print {
+                    display: none;
+                }
+                .table>tbody>tr>td{padding-bottom: 9px}
+                footer.main-footer {
+                    display:none;
+                }
+                .page_break_after{page-break-after: always;}
+                
+                #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+                    border: 1px solid #222!important;
+                }
+               .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+
+                border:1px solid #222!important;
+            }
+                body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
+                    border: 1px solid #222!important;
+                }
+                body .table-bordered{
+                    border:1px solid #222!important;
+                }
+                
+                body table,body tr,body th,body td,body tbody,body thead{
+                    border:1px solid #222!important;
+                }
+                .flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
+                
+                border-left: 0px solid #222!important;
+                border-bottom: 0px solid #222!important;
+            }
+
+           .flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
+                 border:0px solid #222!important;
+            }
+             .flexigrid tr,.flexigrid td{
+               border: 0px!important;
+           }
+            .flexigrid div.bDiv td div {
+                border:1px solid #222!important;
+                width: 100%; 
+            }
+
+           }
+          
 
         </style>
 
