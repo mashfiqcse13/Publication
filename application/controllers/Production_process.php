@@ -187,6 +187,7 @@ class Production_process extends CI_Controller {
         $id_processes = $this->input->get('id_processes');
         $from_id_vendor = $this->input->get('from_id_vendor');
         $id_item = $this->input->get('id_item');
+        $item_type = $this->input->get('item_type');
         $to_id_vendor = $this->input->get('to_id_vendor');
         $id_process_type = $this->input->get('id_process_type');
         $data['date_range'] = $this->input->get('date_range');
@@ -199,7 +200,7 @@ class Production_process extends CI_Controller {
 
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $id_process_type, $data['date_range']);
+            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item,$item_type, $to_id_vendor, $id_process_type, $data['date_range']);
 //            print_r($data);exit();
         } else {
             $data['get_all_production_process'] = $this->Production_process_model->get_process_details_for_report();
@@ -215,6 +216,7 @@ class Production_process extends CI_Controller {
         $id_processes = $this->input->get('id_processes');
         $id_vendor = $this->input->get('id_vendor');
         $id_item = $this->input->get('id_item');
+        $item_type = $this->input->get('item_type');
         $id_process_type = $this->input->get('id_process_type');
         $data['date_range'] = $this->input->get('date_range');
 
@@ -225,7 +227,7 @@ class Production_process extends CI_Controller {
 
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['all_production_process_first_step_info_by_search'] = $this->Production_process_model->get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $data['date_range']);
+            $data['all_production_process_first_step_info_by_search'] = $this->Production_process_model->get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item,$item_type, $id_process_type, $data['date_range']);
         } else {
             $data['all_production_process_first_step_info'] = $this->Production_process_model->get_process_details_for_report_first_step_only();
         }

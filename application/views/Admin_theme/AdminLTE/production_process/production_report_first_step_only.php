@@ -117,6 +117,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <!--Item type-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Item type:</label>
+                                    <div class="col-md-9">
+                                        <select name="item_type" id="" class="form-control select2">
+                                            <option value="">Select Item type</option>
+                                            <option value="1">Book</option>
+                                            <option value="2">Cover</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
