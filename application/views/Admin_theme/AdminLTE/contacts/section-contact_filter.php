@@ -34,7 +34,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-lg-3">
+            <div class="form-group col-md-3">
                 <label for="dropdown_upazila">Upazila : &nbsp; </label>
                 <?= $filter_elements['dropdown_upazila'] ?>
             </div>
@@ -43,20 +43,31 @@
                 <?= $filter_elements['dropdown_subject'] ?>
             </div>
             <div class="form-group col-md-6">
-                <button type="submit" style="margin: 29px 0;" class="btn btn-success">Search Teacher Contact</button>
-<!--            </div>
-            <div class="form-group col-md-3">-->
-                <?= anchor("contacts/teacher/reset_filter", 'Click here for Reset Filter', 'class="btn btn-primary" title="Reset"'); ?>
-                <?php if ($this->uri->segment(3) !== 'read' && $this->uri->segment(3) !== 'add' && $this->uri->segment(3) !== 'edit') { ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" style="margin: 29px 0;" class="btn btn-success">Search Teacher Contact</button>
+                    </div>
+                    <div class="col-md-4">
+                        <?= anchor("contacts/teacher/reset_filter", 'Click here for Reset Filter', 'class="btn btn-primary" style="margin:29px 0" title="Reset"'); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php if ($this->uri->segment(3) !== 'read' && $this->uri->segment(3) !== 'add' && $this->uri->segment(3) !== 'edit') { ?>
+                        <input class="only_print btn btn-primary" type="button"  onClick="window.print()" style="margin:29px 0" value="Print Report"/>
+                        <?php } ?>
+                        </div>
+                    </div>
 
-<input class="only_print btn btn-primary" type="button"  onClick="window.print()" style="width: 32%!important"  value="Print Report"/>
 
 
-                <?php } ?>
-            </div>
-<!--            <div class="form-group col-md-3">
+
+                    
+
+
                 
-            </div> -->
+            </div>
+            <!--            <div class="form-group col-md-3">
+                            
+                        </div> -->
         </div>
     </form>
 </div>
