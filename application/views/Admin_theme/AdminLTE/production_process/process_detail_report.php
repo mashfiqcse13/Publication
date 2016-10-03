@@ -89,7 +89,8 @@
 
 
                                     </tbody>
-                                </table>
+                                </table><br>
+                                <?php echo anchor('production_process/steps/' . $row->id_processes, "Go To Process Details Page", array('class' => "only_print btn btn-primary")); ?>
 
                             </div>
                             <?php
@@ -168,7 +169,8 @@
 
 
                                     </tbody>
-                                </table>
+                                </table><br>
+                                <?php echo anchor('production_process/steps/' . $row->id_processes, "Go To Process Details Page", array('class' => "only_print btn btn-primary")); ?>
 
                             </div>
                             <?php

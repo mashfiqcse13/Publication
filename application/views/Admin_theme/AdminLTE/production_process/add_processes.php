@@ -43,7 +43,7 @@
                                         $data[] = "Select Items By Name Or Code";
                                         foreach ($get_item as $item) {
 
-                                            $data[$item->id_item] = $item->id_item." - ".$item->name;
+                                            $data[$item->id_item] = $item->id_item . " - " . $item->name;
                                         }
                                         echo form_dropdown('id_item', $data, '', ' class="form-control select2" ', 'required');
                                         ?>
