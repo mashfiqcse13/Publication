@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Stock extends CI_Controller {
 
-    //put your code here
+//put your code here
 
     public function __construct() {
         parent::__construct();
@@ -48,6 +48,10 @@ class Stock extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $crud->set_table('stock_perpetual_stock_register')
+                ->columns("Item_ID", "id_item", "opening_amount", "receive_amount", "sales_amount", "specimen", "specimen_returned", "return_amountreject", "reject_amount", "closing_stock", "date")
+                ->callback_column("Item_ID", function ($value, $row) {
+                    return $row->id_item;
+                })
                 ->set_subject('Stock Perpitual')->display_as('return_amountreject', 'Sales Return Amount')->display_as('id_item', 'Item Name')
                 ->set_relation('id_item', 'items', 'name')->unset_columns('reject_amount')
                 ->order_by('id_perpetual_stock_register', 'desc')
@@ -64,7 +68,7 @@ class Stock extends CI_Controller {
             $data['old_info'] = $this->Stock_model->old_book_quantity($date[0], $date[1]);
             $this->load->model('Specimen_model');
             $data['return_specimen'] = $this->Specimen_model->get_report_table_return($data['id_agent'] = '', $data['id_item'] = '', $data['date_range']);
-            //print_r($data['report2']  );
+//print_r($data['report2']  );
         }
 
         $output = $crud->render();
@@ -90,8 +94,10 @@ class Stock extends CI_Controller {
 
         $crud = new grocery_CRUD();
         $crud->set_table('stock_final_stock')
+                ->columns("Item_ID", "id_item", "total_in", "total_out", "total_in_hand")->callback_column("Item_ID", function ($value, $row) {
+                    return $row->id_item;
+                })
                 ->set_subject('Final stock')
-                ->set_relation('id_item', 'items', 'name')
                 ->set_relation('id_item', 'items', 'name')
                 ->order_by('id_item', 'desc')->display_as('id_item', 'Item Name')
                 ->unset_edit()
