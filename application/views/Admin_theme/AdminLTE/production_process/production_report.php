@@ -34,6 +34,7 @@
                         ?>
                         <div class="row">
                             <div class="col-md-6">
+                                <!--Search with Date Range-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Search with Date Range:</label>
                                     <div class="col-md-9">
@@ -47,6 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <!--Process Type-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Process Type:</label>
                                     <div class="col-md-9">
@@ -67,22 +69,41 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
+                                <!--Item Name-->
                                 <div class="form-group ">
-                                    <label class="col-md-3">Order ID:</label>
+                                    <label class="col-md-3">Item Name :</label>
                                     <div class="col-md-9">
-                                        <select name="id_processes" id="" class="form-control select2">
-                                            <option value="">Select Order ID</option>
+                                        <select name="id_item" id="" class="form-control select2">
+                                            <option value="">Select Item Name</option>
                                             <?php
 //                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_order_id as $item) {
+                                            foreach ($get_item as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes; ?></option>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
                                                 <?php
                                             }
                                             ?>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!--Item type-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Item type:</label>
+                                    <div class="col-md-9">
+                                        <select name="item_type" id="" class="form-control select2">
+                                            <option value="">Select Item type</option>
+                                            <option value="1">Book</option>
+                                            <option value="2">Cover</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Vendor From:-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Vendor From:</label>
                                     <div class="col-md-9">
@@ -101,22 +122,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="col-md-3">Item Name:</label>
-                                    <div class="col-md-9">
-                                        <select name="id_item" id="" class="form-control select2">
-                                            <option value="">Select Item Name</option>
-                                            <?php
-//                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_item as $item) {
-                                                ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
-                                                <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
+                                <!--Vendor To-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Vendor To:</label>
                                     <div class="col-md-9">
@@ -127,6 +133,25 @@
                                             foreach ($get_vendor_to as $item) {
                                                 ?>
                                                 <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor . ' - ' . $item->to_name . '(' . $item->to_type . ')'; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!--Order ID-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Order ID:</label>
+                                    <div class="col-md-9">
+                                        <select name="id_processes" id="" class="form-control select2">
+                                            <option value="">Select Order ID</option>
+                                            <?php
+//                                            print_r($get_all_production_process);exit();
+                                            foreach ($get_order_id as $item) {
+                                                ?>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -243,9 +268,9 @@
                                                 <td><?php echo $process_details->id_processes; ?></td>
                                                 <td><?php echo $process_details->name_process_type; ?></td>
                                                 <td><?php
-                                                $item_name = ($process_details->item_type == 2) ? $process_details->item_name . " (Cover)" : $process_details->item_name;
-                                                echo $item_name;
-                                                ?></td>
+                                                    $item_name = ($process_details->item_type == 2) ? $process_details->item_name . " (Cover)" : $process_details->item_name;
+                                                    echo $item_name;
+                                                    ?></td>
                                                 <td><?php echo $process_details->from_name . '(' . $process_details->from_type . ')'; ?></td>
                                                 <td><?php echo $process_details->id_process_step_from; ?></td>
                                                 <td><?php echo $process_details->to_name . '(' . $process_details->to_type . ')'; ?></td>

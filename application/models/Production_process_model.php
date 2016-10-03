@@ -329,7 +329,7 @@ FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
 
-    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $to_id_vendor, $id_process_type, $date) {
+    function get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $item_type, $to_id_vendor, $id_process_type, $date) {
         $dates = explode('-', $date);
 //        print_r($dates);exit();
         if ($dates[0] != '') {
@@ -344,6 +344,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
             $this->db->where('from_id_vendor', $from_id_vendor);
         }if (!empty($id_item)) {
             $this->db->where('id_item', $id_item);
+        }if (!empty($item_type)) {
+            $this->db->where('item_type', $item_type);
         }if (!empty($to_id_vendor)) {
             $this->db->where('to_id_vendor', $to_id_vendor);
         }if (!empty($id_process_type)) {
@@ -384,7 +386,7 @@ FROM view_process_step_transfer_log_with_details;')->result();
         return $result;
     }
 
-    function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $id_process_type, $date) {
+    function get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $item_type, $id_process_type, $date) {
         $this->db->select("*");
         $this->db->from('view_process_step_first_entry');
         if (!empty($id_processes)) {
@@ -393,6 +395,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
             $this->db->where('id_vendor', $id_vendor);
         }if (!empty($id_item)) {
             $this->db->where('id_item', $id_item);
+        }if (!empty($item_type)) {
+            $this->db->where('item_type', $item_type);
         }if (!empty($id_process_type)) {
             $this->db->where('id_process_type', $id_process_type);
         }if (!empty($date)) {
@@ -514,8 +518,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
             'table_close' => '</table>'
         );
         $this->table->set_template($tmpl);
-        
-        $item_name = ($process_details->item_type == 2) ? $process_details->item_name." (Cover)" : $process_details->item_name;
+
+        $item_name = ($process_details->item_type == 2) ? $process_details->item_name . " (Cover)" : $process_details->item_name;
 
         $this->table->add_row($process_details->id_processes, $process_details->process_type, $item_name, $process_details->date_created, $process_details->date_finished);
         $this->table->set_heading('Order ID', 'Process type', 'Item name', 'Creating Date', 'Finishing Date');

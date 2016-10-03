@@ -29,7 +29,7 @@
                     <div class="box" id="block">
                         <div class="box-header">
                             <p class="text-center"><strong>Process Transection Report</strong></p>
-                            <!--<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php // echo $date_range;                  ?></p>-->
+                            <!--<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php // echo $date_range;                             ?></p>-->
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
@@ -118,7 +118,9 @@
 
                         </div>
                     </div>
-                <?php }
+                    <?php
+                }
+                echo anchor('production_process/steps/' . $get_process_details_for_row->id_processes, "Go To Process Details Page", array('class' => "btn btn-primary"));
                 ?>
             </div>
         </div>
