@@ -5,6 +5,8 @@
         <title><?= $Title ?></title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <link rel="shortcut icon" type="image/png" href="<?= base_url() ?>/asset/img/<?= $this->config->item('SITE')['logo'] ?>"/>
         <!-- Bootstrap 3.3.4 -->
         <link href="<?php echo $theme_asset_url ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- FontAwesome 4.3.0 -->
@@ -91,7 +93,7 @@
             }
             .table_custom tr td{line-height: 1}
             #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                
+
                 line-height: .9;
                 padding:5px 4px;
                 vertical-align: top;
@@ -147,7 +149,7 @@
                 z-index: 999;
             }
 
-           
+
 
         </style>
 
@@ -178,7 +180,7 @@
             {
                 text-decoration: underline;
             }
-                        @media print{
+            @media print{
                 .only_print{display: none;}
                 .memo_print_option{margin:0 auto;width:100%;}
                 #print { visibility: hidden;}
@@ -195,43 +197,43 @@
                     display:none;
                 }
                 .page_break_after{page-break-after: always;}
-                
+
                 #table_custom .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
                     border: 1px solid #222!important;
                 }
-               .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+                .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
 
-                border:1px solid #222!important;
-            }
+                    border:1px solid #222!important;
+                }
                 body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
                     border: 1px solid #222!important;
                 }
                 body .table-bordered{
                     border:1px solid #222!important;
                 }
-                
+
                 body table,body tr,body th,body td,body tbody,body thead{
                     border:1px solid #222!important;
                 }
                 .flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
-                
-                border-left: 0px solid #222!important;
-                border-bottom: 0px solid #222!important;
+
+                    border-left: 0px solid #222!important;
+                    border-bottom: 0px solid #222!important;
+                }
+
+                .flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
+                    border:0px solid #222!important;
+                }
+                .flexigrid tr,.flexigrid td{
+                    border: 0px!important;
+                }
+                .flexigrid div.bDiv td div {
+                    border:1px solid #222!important;
+                    width: 100%; 
+                }
+
             }
 
-           .flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
-                 border:0px solid #222!important;
-            }
-             .flexigrid tr,.flexigrid td{
-               border: 0px!important;
-           }
-            .flexigrid div.bDiv td div {
-                border:1px solid #222!important;
-                width: 100%; 
-            }
-
-           }
-          
 
         </style>
 
