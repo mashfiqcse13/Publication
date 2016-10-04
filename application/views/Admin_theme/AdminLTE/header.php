@@ -148,7 +148,11 @@
                 position: relative;
                 z-index: 999;
             }
-
+            @media (max-width:960px){
+                .input-group {
+                    width: 100%;
+                }
+            }
 
 
         </style>
@@ -231,6 +235,7 @@
                     border:1px solid #222!important;
                     width: 100%; 
                 }
+                .page_break{page-break-after: always;}
 
             }
 

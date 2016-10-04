@@ -39,7 +39,7 @@
 
 
 
-        <div class="row" style="padding-top:100px"> 
+        <div class="row" style="padding-top:0px"> 
 
             <table class="table table_custom text-bold" style="font-size:13px">
 
@@ -190,5 +190,10 @@
 thead {
     display: table-row-group;
 }
+
+@page {       
+    margin: 45mm 5mm 10mm 5mm;  
+}
+
 
     </style>

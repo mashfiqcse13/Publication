@@ -85,13 +85,7 @@
         table tr td:nth-child(10) {
             display: none;
         }
-        .flexigrid div.bDiv td {
-            border: 1px solid #222;
-        }
-        table, tr, td, th, tbody, thead {
-            border: 1px solid #222!important;
-        }
-        
+
     } 
     
 

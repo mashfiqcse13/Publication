@@ -18,7 +18,7 @@
         </section>
         
         <!-- Main content -->
-        <section class="content">
+        <section class="content" >
             <div class="row">
                 <div class="col-md-12">
                      <div class="box only_print">
@@ -30,7 +30,7 @@
                     echo form_open('', $attributes)
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                     ?>
-                    <div class="row">
+                    <div class="row" >
 
                         <div class="col-md-6">
                             <div class="form-group col-md-4 text-left">
@@ -92,7 +92,7 @@
 
                     <div class="box">
                 <?php    if(isset($main_content)){ ?>
-                        <div class="panel-body">
+                        <div class="panel-body"  style="overflow-x:scroll">
                            
                            <table class="table table-bordered">
                                <tr style="background:#ddd;">
@@ -152,7 +152,7 @@
                 </div>
             </div>
          
-            <div class="row">
+            <div class="row" style="overflow-x:scroll">
                 
                     <?php if(isset($report)){ ?>
                         <div class="panel-body">
@@ -186,7 +186,7 @@
             </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
-
+      
 
 <script>
 

@@ -32,7 +32,7 @@
                     ?>
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="form-group col-md-4 text-left">
                                 <label>Account:</label>                        
                             </div>
@@ -44,7 +44,7 @@
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="form-group col-md-4 text-left">
                                 <label>User:</label>                        
                             </div>
@@ -61,24 +61,22 @@
                     </div>
                     
                     <div class="row">
-                    <div class="col-md-6">
-                          <div class="form-group col-md-4 text-left">
+                    <div class="col-lg-6">
+                          <div class="form-group col-sm-4 text-left">
                                 <label>Transaction Type:</label>                        
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-sm-6">
                                 <div class="input-group">
                                     <?php echo $transaction_type_dropdown; ?>
-
-                                    </select>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                     </div>
-                    <div class="col-md-6">
-                    <div class="form-group col-md-4 text-left">
+                    <div class="col-lg-6">
+                    <div class="form-group col-sm-4 text-left">
 
                         <label>Search Report With Date Range:</label>
                     </div>
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-sm-4">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -87,7 +85,7 @@
                             <br>
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-sm-3">
                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     <?= anchor(current_url() . '/', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                     </div></div></div>
@@ -141,6 +139,18 @@
       </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+      
+      <style type="text/css">
+          div#id_account_input_box {
+            width: 300px;
+        }
+        input#reservation {
+            width: 100%!important;
+        }
+        input {
+            width: 300px!important;
+        }
+      </style>
 
       <script>     
            

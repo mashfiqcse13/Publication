@@ -236,16 +236,16 @@ class Sales_model extends CI_Model {
         }
 
 
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
-        $this->table->add_row($total_quantity, '(মোট বই ) ', array(
+//        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+        $this->table->add_row('', ' ', array(
             'data' => 'বই মূল্য : ',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), $this->Common->taka_format($total_price));
 
-        $this->table->add_row('', '', array(
+        $this->table->add_row( '<strong>'.$total_quantity.'</strong>', ' <strong>(মোট বই )</strong> ', array(
             'data' => 'ছাড় : ',
-            'class' => 'left_separator taka_formate',
+            'class' => ' taka_formate',
             'colspan' => 2
                 ), $total_sales_details->discount_amount);
 
@@ -255,7 +255,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), array(
             'data' => 'সর্বমোট : ',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), $this->Common->taka_format($total_sales_details->total_amount));
 
@@ -267,13 +267,13 @@ class Sales_model extends CI_Model {
             'rowspan' => 4
                 ), array(
             'data' => 'নগদ জমা : ',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), $cash_pay);
 
         $this->table->add_row(array(
             'data' => 'ব্যাংক জমা : ',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), array(
             'data' => $bank_pay,
@@ -282,7 +282,7 @@ class Sales_model extends CI_Model {
 
         $this->table->add_row(array(
             'data' => 'পূর্বের জমা কর্তন : ',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), array(
             'data' => $pay_from_advanced,
@@ -294,7 +294,7 @@ class Sales_model extends CI_Model {
         $this->load->model('misc/Customer_due');
         $this->table->add_row(array(
             'data' => ' মোট জমা :',
-            'class' => 'left_separator',
+            'class' => '',
             'colspan' => 2
                 ), array(
             'data' => $total_pay,
@@ -307,15 +307,11 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), array(
             'data' => 'বাকি : ',
-            'class' => 'left_separator z-index-top text-bold ',
+            'class' => '  text-bold ',
             'colspan' => 2
                 ), $this->Common->taka_format($current_due));
 
-        $this->table->add_row(array(
-            'data' => '',
-            'class' => '',
-            'colspan' => 5
-        ));
+  
 
         $this->table->add_row(array(
             'data' => 'প্যাকেটিং খরচ বাকি: ',
