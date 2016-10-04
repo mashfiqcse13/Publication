@@ -109,7 +109,7 @@ class Stock_model extends CI_Model {
                 ->where('stock_perpetual_stock_register.date >= ',date('Y-m-d', strtotime($from)))
                 ->where('stock_perpetual_stock_register.date <= ',date('Y-m-d', strtotime($to)))
                 ->order_by('stock_perpetual_stock_register.date')
-                ->group_by('id_item')
+                ->group_by('id_item')->order_by('id_item')
                 ->get()->result();
        
         return $query;

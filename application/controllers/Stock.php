@@ -54,7 +54,7 @@ class Stock extends CI_Controller {
                 })
                 ->set_subject('Stock Perpitual')->display_as('return_amountreject', 'Sales Return Amount')->display_as('id_item', 'Item Name')
                 ->set_relation('id_item', 'items', 'name')->unset_columns('reject_amount')
-                ->order_by('id_perpetual_stock_register', 'desc')
+                ->order_by('id_perpetual_stock_register', 'asc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
@@ -99,7 +99,7 @@ class Stock extends CI_Controller {
                 })
                 ->set_subject('Final stock')
                 ->set_relation('id_item', 'items', 'name')
-                ->order_by('id_item', 'desc')->display_as('id_item', 'Item Name')
+                ->order_by('id_item', 'asc')->display_as('id_item', 'Item Name')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
