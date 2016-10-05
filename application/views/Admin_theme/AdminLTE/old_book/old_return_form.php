@@ -378,7 +378,7 @@
         data_to_post.action = $(this).data('action');
         $.post(ajax_url, data_to_post, function (data) {
             $(' #massage_box').fadeOut();
-            alert(data.msg);
+//            alert(data.msg);
             window.location = data.next_url;
         }, 'json');
     });

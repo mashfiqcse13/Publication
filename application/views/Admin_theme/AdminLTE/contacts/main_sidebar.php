@@ -31,6 +31,7 @@
                 }
                 if ($this->User_access_model->if_user_has_permission(28)) {
                     echo "<li>" . anchor('contacts/teacher', '<i class="fa fa-plus-circle"></i>  <span>Teachers</span>') . "</li>";
+                    echo "<li>" . anchor('contacts/teacher_sucject', '<i class="fa fa-plus-circle"></i>  <span>Teacher Subject</span>') . "</li>";
                 }
                 if ($this->User_access_model->if_user_has_permission(30)) {
                     echo "<li>" . anchor('contacts/agents', '<i class="fa fa-plus-circle"></i>  <span>Agents</span>') . "</li>";
