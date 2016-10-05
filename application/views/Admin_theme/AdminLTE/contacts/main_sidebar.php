@@ -23,7 +23,6 @@
             if ($super_user_id == $_SESSION['user_id']) {
                 echo "<li>" . anchor('contacts', '<i class="fa fa-plus-circle"></i>  <span>Customers</span>') . "</li>";
                 echo "<li>" . anchor('contacts/teacher', '<i class="fa fa-plus-circle"></i>  <span>Teachers</span>') . "</li>";
-                echo "<li>" . anchor('contacts/teacher_sucject', '<i class="fa fa-plus-circle"></i>  <span>Teacher Subject</span>') . "</li>";
                 echo "<li>" . anchor('contacts/agents', '<i class="fa fa-plus-circle"></i>  <span>Agents</span>') . "</li>";
                 echo "<li>" . anchor('contacts/marketing_officer', '<i class="fa fa-plus-circle"></i>  <span>Marketing Officer</span>') . "</li>";
             } else {
@@ -32,7 +31,6 @@
                 }
                 if ($this->User_access_model->if_user_has_permission(28)) {
                     echo "<li>" . anchor('contacts/teacher', '<i class="fa fa-plus-circle"></i>  <span>Teachers</span>') . "</li>";
-                    echo "<li>" . anchor('contacts/teacher_sucject', '<i class="fa fa-plus-circle"></i>  <span>Teacher Subject</span>') . "</li>";
                 }
                 if ($this->User_access_model->if_user_has_permission(30)) {
                     echo "<li>" . anchor('contacts/agents', '<i class="fa fa-plus-circle"></i>  <span>Agents</span>') . "</li>";
