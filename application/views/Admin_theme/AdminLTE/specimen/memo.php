@@ -40,7 +40,7 @@
 
 
         <div class="row" style="padding-top:0px">
-            <h5 class="text-center">সৌজন্য সংখ্যার স্লিপ</h5>
+            <h3 class="text-center">সৌজন্য সংখ্যার স্লিপ</h3>
 
             <table class="table table_custom" style="font-size:13px">
                 <tr>

@@ -124,6 +124,7 @@ class Bank extends CI_Controller {
         $crud->unset_add();
         $crud->unset_edit();
         $crud->unset_delete();
+        $crud->where('id_account != "" ');
 
         $crud->callback_column('id_account', array($this, '_bank_balance_name_id'));
         // $crud->set_relation('id_account', 'bank_account', $related_title_field)
