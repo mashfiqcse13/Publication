@@ -144,7 +144,12 @@ class Common extends CI_Model {
     }
 
     function dropdown_subject($value = '', $primary_key) {
-        return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
+        $results = $this->db->select("*")->get("contact_teacher_sucject")->result();
+        $teacher_subjects[''] = '';
+        foreach ($results as $value) {
+            $teacher_subjects[$value->id_contact_teacher_sucject] = $value->subject_name;
+        }
+        return form_dropdown('subject', $teacher_subjects, $value, 'class="form-control select2 dropdown-width" ');
     }
 
     function dropdown_upazila($value = '', $primary_key) {
