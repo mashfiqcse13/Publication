@@ -116,7 +116,7 @@ class Contacts_model extends CI_Model {
         return $filter_elements;
     }
 
-    function get_contact_teacher_sucject_dropdown($subject) {
+    function get_contact_teacher_sucject_dropdown($subject = "") {
         $results = $this->db->select("*")->get("contact_teacher_sucject")->result();
         $teacher_subjects[''] = '';
         foreach ($results as $value) {
