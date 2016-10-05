@@ -667,8 +667,8 @@ class Old_book_model extends CI_Model {
             
         }       
         
-        $query=$this->db->query("SELECT name,sum(quantity) as total_quantity,sum(old_book_return_total.total_amount) as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
-LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY name");
+        $query=$this->db->query("SELECT * ,id_old_book_return_items,name,sum(quantity) as total_quantity,sum(old_book_return_total.total_amount) as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY name ORDER BY id_old_book_return_items asc");
         return $query->result();
     }
     

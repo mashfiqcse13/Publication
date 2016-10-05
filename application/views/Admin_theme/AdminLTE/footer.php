@@ -170,7 +170,8 @@ $.fn.digits = function(){
     })
 }
 $('.taka_formate').digits(); 
-$('td div').not('div.tools , form div').digits();  
+$('td div').not('div.tools , form div,.nocoma td div').digits();  
+
  
 
 

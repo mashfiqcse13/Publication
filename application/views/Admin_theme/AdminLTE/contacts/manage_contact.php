@@ -68,7 +68,7 @@
     </scetion>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content nocoma">
         <div class="row">
             <?php
             if (empty($this->uri->segment(3))) {  

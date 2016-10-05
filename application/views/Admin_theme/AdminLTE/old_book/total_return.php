@@ -91,6 +91,7 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
+                                        <th>Item Id</th>
                                         <th>Book Name</th>
                                         <th>Quantity</th>
                                         <th>Total Price</th>
@@ -106,6 +107,7 @@
                                        
                                         ?>
                                         <tr>
+                                            <td><?=$return->id_old_book_return_items;?></td>
                                             <td><?php echo $return->name; ?></td>
                                             <td ><?php echo $return->total_quantity; ?></td>
                                             <td class="text-right taka_formate">TK <?php echo $return->total_ammount ?></td>

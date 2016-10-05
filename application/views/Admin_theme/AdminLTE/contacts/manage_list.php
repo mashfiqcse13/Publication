@@ -19,7 +19,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content nocoma">
         <div class="row">
             <div class="col-md-12">
 

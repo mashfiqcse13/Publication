@@ -68,6 +68,9 @@ class Old_book extends CI_Controller {
         
         if (isset($btn)) {
             $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer,$date_range);
+//            echo '<pre>';
+//            print_r($data['return_book']);
+            
             $data['date_range']=$date_range;
             
         }

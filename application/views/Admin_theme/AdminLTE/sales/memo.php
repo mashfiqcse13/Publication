@@ -29,11 +29,11 @@
 
 
 
-<div id="table_custom" style="background:#ddd">
+<div id="table_custom" style="background:#fff;padding: 20px 0">
 
 
 
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
+    <div class="container memo_print_option custom_memo"  >
 
 
 
@@ -190,9 +190,14 @@
 thead {
     display: table-row-group;
 }
-
-@page {       
-    margin: 45mm 5mm 10mm 5mm;  
+.custom_memo{
+    background:#fff;width:585px;min-height:793px;padding:5px 40px;margin-top:0px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;
+}
+@media only print{
+    .custom_memo{
+        padding-top:0px!important;
+    }
+    
 }
 
 

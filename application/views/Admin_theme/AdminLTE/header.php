@@ -238,6 +238,11 @@
                 .page_break{page-break-after: always;}
 
             }
+            
+            @page {       
+                margin: 45mm 5mm 15mm 5mm;  
+            }
+
 
 
         </style>
