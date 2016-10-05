@@ -6,7 +6,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header nocoma">
         <h1>
             <?= $Title ?>
             <small>Manage <?= $Title ?></small>
