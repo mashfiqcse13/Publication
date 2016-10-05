@@ -70,7 +70,7 @@ class Contacts extends CI_Controller {
         });
 
         //$crud->unset_add_fields('upazila');
-       // $crud->unset_edit_fields('upazila');
+        // $crud->unset_edit_fields('upazila');
 //        $crud->unset_columns('upazila');
 
         $output = $crud->render();
@@ -85,8 +85,9 @@ class Contacts extends CI_Controller {
     function teacher() {
         $this->User_access_model->check_user_access(28, 'contacts');
         $crud = new grocery_CRUD();
-        $crud->set_table('contact_teacher')->columns('id_contact_teacher', 'name', 'division', 'district', 'upazila', 'address', 'designation', 'institute_name', 'subject', 'phone')
-                ->display_as('id_contact_teacher', 'ID')->order_by('id_contact_teacher', 'desc')->set_subject('Teachers');
+        $crud->set_table('contact_teacher')->columns('id_contact_teacher', 'name', 'division', 'district', 'upazila', 'address', 'designation', 'institute_name', 'id_contact_teacher_sucject', 'phone')
+                ->set_relation('id_contact_teacher_sucject', 'contact_teacher_sucject', 'subject_name')
+                ->display_as('id_contact_teacher', 'ID')->display_as('id_contact_teacher_sucject', 'Subject')->order_by('id_contact_teacher', 'desc')->set_subject('Teachers');
 
         $crud->callback_add_field('division', function () {
             return form_dropdown('division', $this->config->item('division'), '', 'class="form-control select2 dropdown-width" id="division" ');
@@ -105,20 +106,8 @@ class Contacts extends CI_Controller {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width upazila" ');
         });
 
-
-        $crud->callback_add_field('subject', function () {
-            return form_dropdown('subject', $this->config->item('teacher_subject'), '', 'class="form-control select2 dropdown-width" ');
-        })->callback_edit_field('subject', function ($value, $primary_key) {
-            return form_dropdown('subject', $this->config->item('teacher_subject'), $value, 'class="form-control select2 dropdown-width" ');
-        });
-
-        
-
-
         $crud = $this->Contacts_model->set_filter($crud);
         $data['filter_elements'] = $this->Contacts_model->filter_elements();
-
-
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -126,6 +115,21 @@ class Contacts extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Teachers';
         $this->load->view($this->config->item('ADMIN_THEME') . 'contacts/manage_contact', $data);
+    }
+
+    function teacher_sucject() {
+        $this->User_access_model->check_user_access(28, 'contacts');
+        $crud = new grocery_CRUD();
+        $crud->set_table('contact_teacher_sucject')->set_subject('Teacher Subject');
+
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+        //$data['print']=$output;
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Manage Teacher Subject';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'contacts/manage_list', $data);
     }
 
     function agents() {
@@ -157,7 +161,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Agent";
         });
-        
+
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -195,7 +199,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Marketing Office";
         });
-        
+
 
         $output = $crud->render();
         $data['glosary'] = $output;

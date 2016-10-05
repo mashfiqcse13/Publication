@@ -69,7 +69,7 @@ class Contacts_model extends CI_Model {
         }
         if ($this->session->userdata('contact_subject') != '') {
             $subject = $this->session->userdata('contact_subject');
-            $grocery_crud->where('subject', $subject);
+            $grocery_crud->where('id_contact_teacher_sucject', $subject);
         }
         if ($this->session->userdata('contact_institute_name') != '') {
             $institute_name = $this->session->userdata('contact_institute_name');
@@ -111,16 +111,25 @@ class Contacts_model extends CI_Model {
         $filter_elements['dropdown_division'] = form_dropdown('filter_division', $this->config->item('division'), $division, 'class="form-control select2" style="width: 200px;"');
         $filter_elements['dropdown_district'] = form_dropdown('filter_district', $this->config->item('districts_english'), $district, 'class="form-control select2" style="width: 200px;"');
         $filter_elements['dropdown_upazila'] = form_dropdown('filter_upazila', $this->config->item('upazila_english'), $upazila, 'class="form-control select2" style="width: 200px;"');
-        $filter_elements['dropdown_subject'] = form_dropdown('filter_subject', $this->config->item('teacher_subject'), $subject, 'class="form-control select2" style="width: 200px;"');
+        $filter_elements['dropdown_subject'] = $this->get_contact_teacher_sucject_dropdown($subject);
 
         return $filter_elements;
+    }
+
+    function get_contact_teacher_sucject_dropdown($subject) {
+        $results = $this->db->select("*")->get("contact_teacher_sucject")->result();
+        $teacher_subjects[''] = '';
+        foreach ($results as $value) {
+            $teacher_subjects[$value->id_contact_teacher_sucject] = $value->subject_name;
+        }
+        return form_dropdown('filter_subject', $teacher_subjects, $subject, 'class="form-control select2" style="width: 200px;"');
     }
 
     function agent_type_setter_post_array($post_array) {
         $post_array['type'] = 'Agent';
         return $post_array;
     }
-    
+
     function marketing_officer_type_setter_post_array($post_array) {
         $post_array['type'] = 'Marketing Officer';
         return $post_array;
