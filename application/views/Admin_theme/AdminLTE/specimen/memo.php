@@ -33,21 +33,14 @@
 
 
 
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
+    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
+        
+    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;" >
 
 
 
-
-
-        <div class="row" style="padding-top:50px">
-
-            <div class="text-center">
-                <h6>বিসমিল্লাহির রহমানির রহিম</h6>
-                <h3><?= $this->config->item('SITE')['name'] ?></h3>
-                <p>Specimen Slip</p>
-            </div>
-
-
+        <div class="row" style="padding-top:0px">
+            <h5 class="text-center">সৌজন্য সংখ্যার স্লিপ</h5>
 
             <table class="table table_custom" style="font-size:13px">
                 <tr>
@@ -77,6 +70,7 @@
                 <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
             </div>
         </div>
+    </div>
     </div>
 
 
