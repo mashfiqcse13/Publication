@@ -227,7 +227,7 @@ class Old_book_model extends CI_Model {
             $response['next_url'] = site_url('old_book/return_book');
         } else if ($action == 'save_and_back_to_list') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
-            $response['next_url'] = site_url('old_book/return_book_total');
+            $response['next_url'] = site_url('old_book/old_book_dashboard');
         } else if ($action == 'save_and_print') {
             $response['msg'] = "The Return is successfully done . \n Memo No: $id_old_book_return_total";
             $response['next_url'] = site_url('old_book/memo/' . $id_old_book_return_total);
