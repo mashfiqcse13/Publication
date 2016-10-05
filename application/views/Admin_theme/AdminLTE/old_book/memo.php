@@ -32,31 +32,17 @@
 <div id="table_custom" style="background:#ddd">
 
 
-
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:0px 40px;margin-top:0px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
-
-
-
+    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
+        
+    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;" >
 
 
-        <div class="row" style="padding-top:50px">
-
-<!--            <div class="text-center" style="display:none">
-
-                <h6>বিসমিল্লাহির রহমানির রহিম</h6>
-
-                <h1>দি যমুনা পাবলিশার্স</h1>
-
-                <p>৩৮,বাংলাবাজার(১ম তলা) ঢাকা-১১০০ । ফোন- ৭১১৬০৬৯  </p>
-
-                <p style="font-size:10px">সাধারন তথ্য :- ০১৭১১-৮৯৮৮৮৭ । ব্যবসায়িক তথ্য :- ০১৭১৯-৭০৫৫৬৮ । বিক্রয় কেন্দ্র :- ০১৭২৮-৮৪৮৫২৩</p>
-
-            </div>-->
 
 
+
+        <div class="row" style="padding-top:0px">
 
             <table class="table table_custom" style="font-size:13px">
-
                 <tr>
 
                     <td><strong>Name:</strong></td>
@@ -100,30 +86,13 @@
 
             </table>
 
-
-
-
-
-
-
-
-
-
-
         </div>
-
-
-
         <div class="row" style="font-size:16px;">
-
-
             <?php echo $memo_body_table; ?>
 
 <!--            <h2>Returned Book Value : <strong> <?php echo $balance; ?></strong></h2>-->
 
         </div>
-
-
 
         <div class="margin-top-10">
 
@@ -135,14 +104,9 @@
 
         </div>
 
-
-
-
-
-
-
     </div>
 
+</div>
 </div>
 <?php include_once __DIR__ . '/../footer.php'; ?>
 

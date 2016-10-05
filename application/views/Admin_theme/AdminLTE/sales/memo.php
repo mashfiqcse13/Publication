@@ -32,7 +32,7 @@
 <div id="table_custom" style="background:#fff;padding: 20px 0">
 
 
-
+    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
     <div class="container memo_print_option custom_memo"  >
 
 
@@ -174,7 +174,7 @@
 
 
     </div>
-
+    </div>
 </div>
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
@@ -191,7 +191,7 @@ thead {
     display: table-row-group;
 }
 .custom_memo{
-    background:#fff;width:585px;min-height:793px;padding:5px 40px;margin-top:0px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;
+    background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;
 }
 @media only print{
     .custom_memo{
