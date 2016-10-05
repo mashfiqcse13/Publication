@@ -36,10 +36,11 @@ class Expense extends CI_Controller {
     function expense() {
         $crud = new grocery_CRUD();
         $crud->set_table('expense');
-        $crud->fields('id_name_expense', 'amount_expense', 'date_expense', 'stock_memo', 'stock_quantity', 'description_expense');
+        $crud->fields('id_name_expense', 'amount_expense', 'date_expense', 'stock_memo', 'stock_quantity', 'description_expense','expense_file');
         $crud->display_as('id_name_expense', 'Expense Name')->display_as('stock_memo', 'Purchase Memo No')->display_as('stock_quantity', 'Item Quantity');
         $crud->set_relation('id_name_expense', 'expense_name', 'name_expense');
         $crud->display_as('id_name_expense', 'Expense Name');
+        $crud->display_as('expense_file', 'Upload Document');
 
 
         $crud->callback_before_insert(array($this, 'callback_before_insert_or_update_extra_field'));
@@ -51,7 +52,7 @@ class Expense extends CI_Controller {
             return '<input id="field-date_expense" name="date_expense" type="text" value="' . date('Y-m-d h:i:u') . '" >'
                     . '<style>div#date_expense_field_box {display: none;}</style>';
         });
-
+         $crud->set_field_upload('expense_file', 'assets/uploads/files');
 
         $crud->unset_edit();
         //$crud->unset_delete();
