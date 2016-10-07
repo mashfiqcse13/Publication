@@ -709,7 +709,7 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY na
             
         }       
         
-        $query=$this->db->query("SELECT name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
+        $query=$this->db->query("SELECT *,name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
             FROM `old_book_transfer_total` left JOIN old_book_transfer_items ON 
             old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total 
             left JOIN items ON items.id_item=old_book_transfer_items.id_item 
