@@ -98,11 +98,12 @@
         <?php if (isset($due_report_list)) { ?>
 
         
+     
+        <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">
         
-        <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
-        
-                <div class="container memo_print_option" style="background:#fff;width:585px;min-height:493px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;" >
-                    
+                <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
+                    <div style="margin:0 20mm">
+                        
 
                         <p class="text-center"> Due Payment Slip</p>        
 
@@ -151,11 +152,11 @@
 
                 <div class="margin-top-10 only_print">
 
-                    <a href="<?php echo site_url('old_book/old_book_dashboard') ?>" class="only_print btn btn-primary "><i class="fa fa-dashboard"></i> Go Book Return Dashboard</a>
+                    
 
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="printDiv('block')"  value="Print This Page"/>
 
-                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
-
+                </div>
                 </div>
 
         </div>
@@ -178,6 +179,12 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+
+<style type="text/css">
+                @page {       
+                margin: 45mm 25mm 15mm 25mm!important;  
+            }
+</style>
 <script>
     $('.first_table .table tbody').append('<tr style="border-top: 3px solid #d5d5d5;"><td colspan="6" class="text-center">Total Due =</td><td><?php echo $customer_total_due ?></td></tr>');
     $('.bank_hide').hide();

@@ -41,9 +41,15 @@
 
         <div class="row" style="padding-top:0px"> 
 
-            <table class="table table_custom text-bold" style="font-size:13px">
+            <table class="font_12 table table_custom text-bold" style="font-size:12px">
 
                 <tr>
+                    
+                    <td><strong>Memo No:</strong></td>
+
+                    <td><?= $memo_header_details['memoid'] ?></td>
+                    
+                    
 
                     <td><strong>Name:</strong></td>
 
@@ -53,13 +59,7 @@
 
                     <td><strong>Code No:</strong></td>
 
-                    <td><?= $memo_header_details['code'] ?></td>
-
-
-
-                    <td><strong>Memo No:</strong></td>
-
-                    <td><?= $memo_header_details['memoid'] ?></td>
+                    <td><?= $memo_header_details['code'] ?></td>                    
 
                 </tr>
 
@@ -84,15 +84,6 @@
                 </tr>
 
             </table>
-
-
-
-
-
-
-
-
-
 
 
         </div>
@@ -187,11 +178,14 @@
     table td{
         font-size: 14px;
     }
+    .font_12 tr td{
+        font-size:12px!important;
+    }
 thead {
     display: table-row-group;
 }
 .custom_memo{
-    background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;
+    background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;margin:10px auto;
 }
 @media only print{
     .custom_memo{
