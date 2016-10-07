@@ -24,7 +24,7 @@
 
                 <div class="box box-danger">
                     <div class="box-header">
-                        <h3 class="box-title">Memo haveing due for <strong>"<?php echo $customer_name; ?>"</strong></h3>
+                        <h3 class="box-title">Memo having due for <strong>"<?php echo $customer_name; ?>"</strong></h3>
                     </div>
                     <div class="box-body first_table" style="overflow: auto">
                         <?php
@@ -78,7 +78,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin-bottom: 10px">
 
                                 <input  id="btn_submit" name="btn_submit" type="submit" class="btn btn-info btn-block submit_btn" value="Pay">
                             </div>
