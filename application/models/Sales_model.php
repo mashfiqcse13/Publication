@@ -264,7 +264,7 @@ class Sales_model extends CI_Model {
             'data' => $current_due_status,
             'class' => ' ',
             'colspan' => 2,
-            'rowspan' => 4
+            'rowspan' => 5
                 ), array(
             'data' => 'নগদ জমা : ',
             'class' => '',
@@ -300,6 +300,17 @@ class Sales_model extends CI_Model {
             'data' => $total_pay,
             'class' => 'text-right taka_formate'
         ));
+        
+         $this->table->add_row(array(
+            'data' => ' পূর্বের বকেয়া পরিশোধ  :',
+            'class' => '',
+            'colspan' => 2
+                ), array(
+            'data' => ( $bank_pay + $cash_pay + $current_due_amount ) - $total_pay ,
+            'class' => 'text-right taka_formate'
+        ));
+        
+
 
         $this->table->add_row(array(
             'data' => 'সর্বশেষ বাকি : ' . $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)),
@@ -342,7 +353,9 @@ class Sales_model extends CI_Model {
             'class' => 'text-right taka_formate text-bold',
             'colspan' => 3
         ));
+        
 
+                
         $data['memo'] = $this->table->generate();
 
 

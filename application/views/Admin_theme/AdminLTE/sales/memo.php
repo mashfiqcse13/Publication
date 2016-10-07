@@ -95,9 +95,10 @@
             
             <?php echo $memo_body_table['memo']; 
             
+            echo '<div class="hide_for_jamuna">';
             if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
                
-                echo '<div style="page-break-before: always;margin-top:120px">';
+                echo '<div  class="due_memo_part" style=" page-break-before: always;margin-top:120px">';
                 echo '<h2 class="text-center">Due\'s Payment Report</h2>';
                 ?>
             
@@ -137,6 +138,7 @@
                 echo $memo_body_table['due_report'];
                 echo '</div>';
             }
+            echo '</div>';
             ?>
 
 
@@ -191,8 +193,26 @@ thead {
     .custom_memo{
         padding-top:0px!important;
     }
+    .hideDueReport{
+        display: none;
+    }
     
 }
 
 
     </style>
+    
+    <script>
+        
+        var siteUrlForMemo = "<?= $this->config->item('DEVELOPER')['website'] ?>";
+        
+   
+                    if(siteUrlForMemo=='http://thejamunapub.com/'){
+                        $('.hide_for_jamuna').addClass('hideDueReport');
+                        $('.due_memo_part').removeAttr('style');
+                    }
+ 
+
+      
+        
+   </script>
