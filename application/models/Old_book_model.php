@@ -590,6 +590,7 @@ class Old_book_model extends CI_Model {
                     join items on items.id_item = old_book_transfer_items.id_item
                     join old_book_transfer_total on old_book_transfer_total.id_old_book_transfer_total = old_book_transfer_items.id_old_book_transfer_total
                     where old_book_transfer_total.id_old_book_transfer_total = $id_old_book_transfer_total";
+        
         $results = $this->db->query($sql)->result();
         if (empty($results)) {
             die("No match found");
@@ -634,17 +635,22 @@ class Old_book_model extends CI_Model {
     }
     //SELECT name,sum(quantity),sum(old_book_return_total.total_amount) FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
 //LEFT JOIN items ON items.id_item=old_book_return_items.id_item GROUP BY name
-    
-    function get_total_return_info( $id_customer='' , $date_range='') {
-        if($date_range==''){
-            $date_range='';
+    function get_date_range($date_range){
+         if($date_range==''){
+            return $date_range='';
         }else{
             $this->load->model('Common');
             $date = explode('-', $date_range);
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
             $date_range=" DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+            return $date_range;
         }
+    }
+    
+    function get_total_return_info( $id_customer='' , $date_range='') {
+        
+        $date_range = $this->get_date_range($date_range);
         
         if($id_customer == '' && $date_range == ''){
             
@@ -667,8 +673,8 @@ class Old_book_model extends CI_Model {
             
         }       
         
-        $query=$this->db->query("SELECT * ,id_old_book_return_items,name,sum(quantity) as total_quantity,sum(old_book_return_total.total_amount) as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
-LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY name ORDER BY id_old_book_return_items asc");
+        $query=$this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc");
         return $query->result();
     }
     
@@ -678,15 +684,8 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY na
      // where type_transfer=2 GROUP BY id_item
     
     function get_sale_rebind( $id_type='' , $date_range='') {
-        if($date_range==''){
-            $date_range='';
-        }else{
-            $this->load->model('Common');
-            $date = explode('-', $date_range);
-            $from = date('Y-m-d', strtotime($date[0]));
-            $to = date('Y-m-d', strtotime($date[1]));
-            $date_range=" DATE(date_transfer) BETWEEN '$from' AND '$to'";
-        }
+        
+       $date_range = $this->get_date_range($date_range);
         
         if($id_type == '' && $date_range == ''){
             
@@ -709,7 +708,7 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY na
             
         }       
         
-        $query=$this->db->query("SELECT *,name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
+        $query=$this->db->query("SELECT old_book_transfer_items.id_item as book_id,name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
             FROM `old_book_transfer_total` left JOIN old_book_transfer_items ON 
             old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total 
             left JOIN items ON items.id_item=old_book_transfer_items.id_item 
@@ -718,6 +717,7 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item  $con GROUP BY na
         return $query->result();
     }
     
-    
-    
+
+        
+
 }

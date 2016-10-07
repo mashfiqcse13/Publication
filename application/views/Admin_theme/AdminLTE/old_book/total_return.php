@@ -93,23 +93,26 @@
                                     <tr>
                                         <th>Item Id</th>
                                         <th>Book Name</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
+                                        <th>Quantity</th>                                       
+                                        <th>Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                         $sum_total_quantity=0;
                                         $sum_total_amount=0;
+                                        $curier = 0;
                                     foreach ($return_book as $return) {
                                         $sum_total_quantity += $return->total_quantity;
                                         $sum_total_amount += $return->total_ammount;
+                                        $curier += $return->curier;
                                        
                                         ?>
                                         <tr>
-                                            <td><?=$return->id_old_book_return_items;?></td>
+                                            <td><?=$return->book_id;?></td>
                                             <td><?php echo $return->name; ?></td>
                                             <td ><?php echo $return->total_quantity; ?></td>
+                                            
                                             <td class="text-right taka_formate">TK <?php echo $return->total_ammount ?></td>
                                         </tr>
                                         <?php
@@ -117,10 +120,23 @@
                                     ?>
 
                                     <tr style="font-weight: bold"> 
-                                        <td>Total Returned Book :</td>
+                                       
+                                        <td colspan="2" class="text-right">Total Returned Book </td>
                                         <td > <?php echo $sum_total_quantity; ?></td>
+                                        
                                         <td class="text-right taka_formate">TK <?php echo $sum_total_amount; ?></td>
 
+                                    </tr>
+                                    
+                                    <tr style="font-weight: bold"> 
+                                        <td colspan="2" rowspan="2"></td>
+                                        <td >Courier Cost</td>                                        
+                                        <td class="text-right taka_formate"> - TK  <?php echo $curier; ?></td>
+
+                                    </tr>
+                                    <tr style="font-weight: bold"> 
+                                        <td >Total</td>                                        
+                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount-$curier; ?></td>
                                     </tr>
                                 </tbody>
                             </table>

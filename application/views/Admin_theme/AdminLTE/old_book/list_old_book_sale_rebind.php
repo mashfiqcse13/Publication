@@ -33,8 +33,8 @@
                                         <label>Transfer Type : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <select name="process" id="process" class="form-control select2">
-                                            <option value="">Select Process Type</option>
+                                        <select name="process" id="process" class="form-control select2" required>
+                                            <option value="0">Select Process Type</option>
                                             <option value="2">Send to Rebind</option>
                                             <option value="1">Sale</option>
 
@@ -55,7 +55,7 @@
                                         </div> 
                                     </div>  
                                     <div class="col-md-3">
-                                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                        <input type="submit" id="submit_button" name="btn_submit" value="search" class="btn btn-success"/>
                                     <?php echo anchor(site_url('old_book/return_book_sale_list'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                     </div> 
                                 </div>
@@ -104,9 +104,12 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
+                                        <th>Item Id</th>
                                         <th>Book Name</th>
                                         <th>Quantity</th>
-                                        <th class="pull-right">Price</th>
+                                        <?php if($id_type==1){ ?>
+                                        <th class="text-right">Price</th>
+                                        <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,18 +121,24 @@
                                         $sum_total_amount += $list->price;
                                         ?>
                                         <tr>
+                                            <td><?=$list->book_id ?></td>
                                             <td><?php echo $list->name; ?></td>
                                             <td><?php echo $list->quantity; ?></td>
+                                            <?php if($id_type==1){ ?>
                                             <td class="text-right taka_formate"> TK <?php echo $list->price; ?></td>
+                                            <?php } ?>
                                         </tr>
                                         <?php
                                     }
                                     ?>
 
-                                    <tr style="font-weight: bold">                                        
+                                    <tr style="font-weight: bold">      
+                                        <td></td>
                                         <td>Total : </td>
                                         <td><?php echo $sum_quantity; ?></td>
+                                        <?php if($id_type==1){ ?>
                                         <td class="text-right taka_formate"> TK <?php echo $sum_total_amount; ?></td>
+                                        <?php } ?>
                                         
 
 
@@ -157,3 +166,19 @@
 
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+<script type="text/javascript">
+    var type = $('select[name="process"]').val();
+    
+    $('select[name="process"]').change(function(){
+        type = $('select[name="process"]').val();
+    });
+    
+    $('#submit_button').click(function(){
+          if(type < 1){
+              alert('Please Select Transfer type');
+              window.location="<?=site_url('old_book/return_book_sale_list')?>";
+          }
+    });
+
+    
+</script>

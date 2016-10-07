@@ -242,6 +242,19 @@
             @page {       
                 margin: 45mm 5mm 15mm 5mm;  
             }
+            
+            @media only screen and (max-width:600px){
+                .flexigrid div.form-div input[type=text]{
+                    width: 100%!important;
+                }
+                .flexigrid div.form-div textarea {
+                    width: 100%!important;
+                    margin: 0 auto;
+                }
+                div#address_input_box {
+                    width: 100%!important;
+                }
+            }
 
 
 

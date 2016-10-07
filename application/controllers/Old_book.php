@@ -68,6 +68,7 @@ class Old_book extends CI_Controller {
         
         if (isset($btn)) {
             $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer,$date_range);
+           // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
 //            echo '<pre>';
 //            print_r($data['return_book']);
             
@@ -156,6 +157,8 @@ class Old_book extends CI_Controller {
         
         if (isset($btn)) {
             $data['return_list'] = $this->Old_book_model->get_sale_rebind($id_type,$date_range);
+//            echo '<pre>';
+//            print_r($data['return_list']);
             if($id_type!=''){
                 $data['id_type']=$id_type;
             }
