@@ -69,40 +69,6 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <!--Item Name-->
-                                <div class="form-group ">
-                                    <label class="col-md-3">Item Name :</label>
-                                    <div class="col-md-9">
-                                        <select name="id_item" id="" class="form-control select2">
-                                            <option value="">Select Item Name</option>
-                                            <?php
-//                                            print_r($get_all_production_process);exit();
-                                            foreach ($get_item as $item) {
-                                                ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
-                                                <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <!--Item type-->
-                                <div class="form-group ">
-                                    <label class="col-md-3">Item type:</label>
-                                    <div class="col-md-9">
-                                        <select name="item_type" id="" class="form-control select2">
-                                            <option value="">Select Item type</option>
-                                            <option value="1">Book</option>
-                                            <option value="2">Cover</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
                                 <!--Vendor From:-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Vendor From:</label>
@@ -140,6 +106,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-6">
                                 <!--Order ID-->
                                 <div class="form-group ">
@@ -159,8 +128,37 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <!--Item Name-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Item Name :</label>
+                                    <div class="col-md-9">
+                                        <select name="id_item" id="" class="form-control select2">
+                                            <option value="">Select Item Name</option>
+                                            <?php
+//                                            print_r($get_all_production_process);exit();
+                                            foreach ($get_item as $item) {
+                                                ?>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--Item type-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Item type:</label>
+                                    <div class="col-md-9">
+                                        <select name="item_type" id="" class="form-control select2">
+                                            <option value="">Select Item type</option>
+                                            <option value="1">Book</option>
+                                            <option value="2">Cover</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                         <input type="submit" name="btn"  value="Search Information" class="btn btn-success" style="margin: 10px 0 ;"/>
                         <?= anchor(current_url() . '', 'Refresh', ' class="btn btn-primary"') ?>
                         <?= form_close(); ?>       

@@ -34,6 +34,7 @@
                         ?>
                         <div class="row">
                             <div class="col-md-6">
+                                <!--Search with Date Range-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Search with Date Range:</label>
                                     <div class="col-md-9">
@@ -47,6 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <!--Process Type-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Process Type:</label>
                                     <div class="col-md-9">
@@ -67,6 +69,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
+                                <!--Order ID-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Order ID:</label>
                                     <div class="col-md-9">
@@ -83,6 +86,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                <!--Vendor Name-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Vendor Name:</label>
                                     <div class="col-md-9">
@@ -101,6 +105,18 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <!--Item type-->
+                                <div class="form-group ">
+                                    <label class="col-md-3">Item type:</label>
+                                    <div class="col-md-9">
+                                        <select name="item_type" id="" class="form-control select2">
+                                            <option value="">Select Item type</option>
+                                            <option value="1">Book</option>
+                                            <option value="2">Cover</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--Item Name-->
                                 <div class="form-group ">
                                     <label class="col-md-3">Item Name:</label>
                                     <div class="col-md-9">
@@ -113,19 +129,6 @@
                                                 <?php
                                             }
                                             ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <!--Item type-->
-                                <div class="form-group ">
-                                    <label class="col-md-3">Item type:</label>
-                                    <div class="col-md-9">
-                                        <select name="item_type" id="" class="form-control select2">
-                                            <option value="">Select Item type</option>
-                                            <option value="1">Book</option>
-                                            <option value="2">Cover</option>
                                         </select>
                                     </div>
                                 </div>
