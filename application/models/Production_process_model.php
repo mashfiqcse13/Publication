@@ -468,8 +468,8 @@ FROM view_process_step_transfer_log_with_details;')->result();
         $this->load->model('misc/Stock_perpetual');
         $this->load->model('Stock_model');
         $id_item = $process_details->id_item;
-        $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount_transfered, 0);
         if ($process_details->item_type == 1) {
+            $this->Stock_perpetual->Stock_perpetual_register($id_item, $amount_transfered, 0);
             $this->Stock_model->stock_add($id_item, $amount_transfered);
         }
 

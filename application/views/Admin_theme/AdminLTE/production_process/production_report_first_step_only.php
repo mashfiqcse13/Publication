@@ -191,7 +191,7 @@
                         ?>
                         <div id="block">
                             <div class="box-header">
-                                <p class="text-center"><strong>Process Report</strong></p>
+                                <p class="text-center"><strong>Production Process Report</strong></p>
                                 <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
