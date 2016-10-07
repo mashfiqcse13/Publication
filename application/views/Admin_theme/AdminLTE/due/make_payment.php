@@ -96,8 +96,8 @@
 
         </div>
         <?php if (isset($due_report_list)) { ?>
-            <div class="row" style="width:585px;z-index: 9999;margin: 0 auto">
-                <div class="box col-md-12" id="block" style="width:585px;z-index: 9999;margin: 0 auto">             
+            <div class="row" style="width:630px;z-index: 9999;margin: 0 auto">
+                <div class="box col-md-12" id="block" style="width:630px;z-index: 9999;margin: 0 auto">             
                     <div class="box-header">
 
                         <p class="text-center"> Due Payment Report</p>                        
