@@ -142,7 +142,8 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th>Book Name</th>
+                                        <th>Item ID</th>
+                                        <th>Item Name</th>
                                         <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
                                         <th>Old Book Return</th>
                                         <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
@@ -160,6 +161,7 @@
                                         $total_actual_return += ($return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity']);
                                         ?>
                                         <tr>
+                                            <td><?php echo $return['id_item'] ?></td>
                                             <td><?php echo $return['name'] ?></td>
                                             <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
                                             <td><?php echo $return['old_quantity']; ?></td> 
@@ -171,7 +173,7 @@
                                     ?>
 
                                     <tr>
-                                        <th>Total</th>
+                                        <th colspan="2" class="text-center">Total</th>
                                         <th ><?php echo $total_accurate_sale; ?></th>
                                         <th><?php echo $total_old_book_return; ?></th> 
                                         <th><?php echo $total_actual_return ?></th>
