@@ -84,6 +84,7 @@
                         <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <thead>
                                 <tr style="background:#ddd">
+                                    <th>Item ID</th>
                                     <th>Item Name</th>
                                     <th>Opening</th>
                                     <th>Receive </th>
@@ -116,6 +117,7 @@
                                     $total_Sale_Return += $stock->return_amountreject;
                                     ?>
                                     <tr>
+                                        <td><?php echo $stock->id_item; ?></td>
                                         <td><?php echo $stock->name; ?></td>
                                         <td><?php //echo $stock->opening_amount; 
                                          echo $stock->opening_amount == 0 ? '' : $stock->opening_amount;
@@ -224,7 +226,7 @@
                                 ?>
 
                                 <tr>
-                                    <th>Total</th>
+                                    <th colspan="2" class="text-center">Total</th>
                                     <th ><?php echo $total_Opening == 0 ? '' : $total_Opening; ?></th>
                                     <th><?php echo $total_Receive == 0 ? '' : $total_Receive; ?></th> 
                                     <th><?php echo $total_Sale == 0 ? '' : $total_Sale; ?></th>

@@ -99,7 +99,7 @@ class Stock extends CI_Controller {
                 })
                 ->set_subject('Final stock')
                 ->set_relation('id_item', 'items', 'name')
-                ->order_by('id_item', 'asc')->display_as('id_item', 'Item Name')
+                ->order_by('stock_final_stock.id_item', 'ASC')->display_as('id_item', 'Item Name')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add();
