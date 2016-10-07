@@ -232,8 +232,14 @@
                     border: 0px!important;
                 }
                 .flexigrid div.bDiv td div {
-                    border:1px solid #222!important;
+                    border:0px solid #222!important;
                     width: 100%; 
+                }
+                .flexigrid td,.flexigrid th{
+                    border:1px solid #222!important;
+                }
+                .flexigrid tr td {
+                    border: 1px solid #222!important;
                 }
                 .page_break{page-break-after: always;}
 
@@ -253,6 +259,10 @@
                 }
                 div#address_input_box {
                     width: 100%!important;
+                }
+                
+                table.cke_editor {
+                    zoom: 70%;
                 }
             }
 
