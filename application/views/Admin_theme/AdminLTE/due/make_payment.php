@@ -6,7 +6,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header only_print">
         <h1>
             <?= $Title ?>
             <small> <?= $Title ?></small>
@@ -19,7 +19,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
+        <div class="row only_print">
             <div class="col-md-7">
 
                 <div class="box box-danger">
@@ -96,16 +96,15 @@
 
         </div>
         <?php if (isset($due_report_list)) { ?>
-            <div class="row" style="width:630px;z-index: 9999;margin: 0 auto">
-                <div class="box col-md-12" id="block" style="width:630px;z-index: 9999;margin: 0 auto">             
-                    <div class="box-header">
 
-                        <p class="text-center"> Due Payment Report</p>                        
-                        <div style="margin-bottom: 60px;">
+        
+        
+        <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
+        
+                <div class="container memo_print_option" style="background:#fff;width:585px;min-height:493px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;" >
+                    
 
-                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                        </div>
-                        <div style="color: #777777;"> 
+                        <p class="text-center"> Due Payment Slip</p>        
 
                             <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
                             <table class="table table-bordered">
@@ -117,15 +116,9 @@
 
                                 </tr>
                             </table>
-                        </div>
-                    </div>
-                    <div class="box-body">
-
-
                         <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <tr>
                                 <th>Memo No:</th>
-
                                 <th>Payment Method</th>
                                 <th>Payment Date</th>
                                 <th>Paid Amount</th>
@@ -151,9 +144,25 @@
                                 <td class="text-right taka_formate">TK <?= $total_amount; ?></td>
                             </tr>
                         </table>
-                    </div>
+               
+        
+
                 </div>
-            </div>
+
+                <div class="margin-top-10 only_print">
+
+                    <a href="<?php echo site_url('old_book/old_book_dashboard') ?>" class="only_print btn btn-primary "><i class="fa fa-dashboard"></i> Go Book Return Dashboard</a>
+
+
+                    <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
+
+                </div>
+
+        </div>
+
+
+        
+        
         <?php
         } elseif (isset($report_message)) {
             echo $report_message;
@@ -164,14 +173,6 @@
 
 </div>
 
-
-
-
-
-
-
-</section><!-- /.content -->
-</div><!-- /.content-wrapper -->
 
 <!-- insert book -->
 

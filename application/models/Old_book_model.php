@@ -635,7 +635,7 @@ class Old_book_model extends CI_Model {
     }
     //SELECT name,sum(quantity),sum(old_book_return_total.total_amount) FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
 //LEFT JOIN items ON items.id_item=old_book_return_items.id_item GROUP BY name
-    function get_date_range($date_range){
+    function get_date_range($date_range,$column){
          if($date_range==''){
             return $date_range='';
         }else{
@@ -643,14 +643,15 @@ class Old_book_model extends CI_Model {
             $date = explode('-', $date_range);
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
-            $date_range=" DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+            $date_range=" DATE(".$column.") BETWEEN '$from' AND '$to'";
             return $date_range;
         }
     }
     
     function get_total_return_info( $id_customer='' , $date_range='') {
+        $column = 'old_book_return_total.issue_date';
         
-        $date_range = $this->get_date_range($date_range);
+        $date_range = $this->get_date_range($date_range,$column);
         
         if($id_customer == '' && $date_range == ''){
             
@@ -685,7 +686,9 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
     
     function get_sale_rebind( $id_type='' , $date_range='') {
         
-       $date_range = $this->get_date_range($date_range);
+       $column = 'old_book_transfer_total.date_transfer';
+       
+       $date_range = $this->get_date_range($date_range,$column);
         
         if($id_type == '' && $date_range == ''){
             
