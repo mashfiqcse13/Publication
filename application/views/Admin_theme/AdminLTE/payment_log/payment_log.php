@@ -85,19 +85,19 @@
                         </form>
                     </div>
                 </div>
-                <div class="box">
+                <div class="box"  id="block">
 
                     <?php
                     if (isset($get_customer_payment_info)) {
                         ?>
                         <div class = "box-header">
                             <p class = "text-center"><strong>Payment Log Report</strong></p>
-                            <p class = "pull-left" style = "margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                            <p class = "pull-left" style = "margin-left:0px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
                         </div>
-                    <div class="box-body" id="block">
+                    <div class="box-body">
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
