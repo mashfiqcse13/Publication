@@ -91,7 +91,7 @@
                                     <label class="col-md-3">Vendor Name:</label>
                                     <div class="col-md-9">
                                         <select name="id_vendor" id="" class="form-control select2">
-                                            <option value="">Select Vendor From</option>
+                                            <option value="">Select Vendor Name</option>
                                             <?php
 //                                            print_r($all_production_process_first_step_info);exit();
                                             foreach ($get_vendor as $item) {
