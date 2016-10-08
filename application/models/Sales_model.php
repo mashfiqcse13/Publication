@@ -203,6 +203,7 @@ class Sales_model extends CI_Model {
         $total_sales_details = $total_sales_details[0];
 
         $generate_due_report_by_memo = $this->generate_due_report_by_memo($total_sales_id);
+        
         $current_due_amount = 0;
         foreach ($generate_due_report_by_memo as $due) {
             $current_due_amount+=$due['paid_amount'];
@@ -306,7 +307,7 @@ class Sales_model extends CI_Model {
             'class' => '',
             'colspan' => 2
                 ), array(
-            'data' => ( $bank_pay + $cash_pay + $current_due_amount ) - $total_pay ,
+            'data' => $current_due_amount ,
             'class' => 'text-right taka_formate'
         ));
         

@@ -32,7 +32,7 @@
 <div id="table_custom" style="background:#fff;padding: 20px 0">
 
 
-    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
+    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px ;">
     <div class="container memo_print_option custom_memo"  >
 
 
@@ -91,9 +91,11 @@
 
 
         <div class="row" style="font-size:16px;">
-
+            <?php echo $memo_body_table['memo']; ?>
+        </div>
+        <div class="due_payment_section">
             
-            <?php echo $memo_body_table['memo']; 
+            <?php 
             
             echo '<div class="hide_for_jamuna">';
             if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
@@ -187,7 +189,7 @@ thead {
     display: table-row-group;
 }
 .custom_memo{
-    background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;margin:10px auto;
+    background:#fff;width:585px;min-height:793px;padding:5px 20px;margin-top:0px;margin:10px auto;
 }
 @media only print{
     .custom_memo{
@@ -195,6 +197,7 @@ thead {
     }
     .hideDueReport{
         display: none;
+        visibility: hidden;
     }
     
 }
@@ -204,13 +207,17 @@ thead {
     
     <script>
         
-        var siteUrlForMemo = "<?= $this->config->item('DEVELOPER')['website'] ?>";
+        var siteUrlForMemo = "<?= $this->config->item('SITE')['website'] ?>";
         
-   
-                    if(siteUrlForMemo=='http://thejamunapub.com/'){
-                        $('.hide_for_jamuna').addClass('hideDueReport');
-                        $('.due_memo_part').removeAttr('style');
+ 
+
+        if(siteUrlForMemo=='http://thejamunapub.com/'){
+                        $('.due_payment_section').addClass('hideDueReport');
+                        //$('.due_memo_part').removeAttr('style');
                     }
+
+
+                    
  
 
       
