@@ -246,7 +246,7 @@
             }
             
             @page {       
-                margin: 45mm 10mm 15mm 10mm;  
+                margin: 15mm 10mm 15mm 10mm;  
             }
             
             @media only screen and (max-width:600px){
