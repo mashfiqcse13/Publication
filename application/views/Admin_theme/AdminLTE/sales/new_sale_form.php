@@ -72,8 +72,27 @@
                         <div class="row">
                             <div class="form-group col-lg-8">
                                 <label for="id_contact">Party name</label> 
-                                <a href="<?php echo site_url('contacts/index/add') ?>" class="btn btn-xs btn-default">Add New</a>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#AddCustomer">
+                                        <i class="fa fa-plus"></i> Add New
+                                    </button>
                                 <?php echo $customer_dropdown ?>
+                                
+                                <div class="modal modal-primary fade" id="AddCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Add New Customer</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <iframe src="<?php echo site_url('contacts/customer/add')?>" frameborder="0" width="100%" height="600"></iframe>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="" class="btn btn-outline pull-left">Close and Reload</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
