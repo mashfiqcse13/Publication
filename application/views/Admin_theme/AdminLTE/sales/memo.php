@@ -79,7 +79,7 @@
 
                     <td><strong>Date:</strong></td>
 
-                    <td><?php echo " " . date('d-m-Y H:i:s', strtotime($memo_header_details['issue_date'])) ?></td>
+                    <td><?php echo " " . date('d-M-Y H:i:s', strtotime($memo_header_details['issue_date'])) ?></td>
 
                 </tr>
 

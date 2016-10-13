@@ -93,7 +93,7 @@
                             </div>
                             <div style="color: #777777;">
                                 <p class="pull-left" style="margin-left:5px"> <strong>Customer Id: </strong> <?php echo $customer_id; ?></p>
-                                <div class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></div>
+                                <div class="pull-right">Report Date: <?php echo date('d-M-Y H:i:s', now()); ?></div>
                             </div>
                         </div>
                         <div class="box-body">

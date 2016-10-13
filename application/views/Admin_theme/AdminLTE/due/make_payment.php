@@ -107,7 +107,7 @@
 
                         <p class="text-center"> Due Payment Slip</p>        
 
-                            <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
+                            <p class="pull-right">Report Date: <?php echo date('d-M-Y H:i:s', now()); ?></p>
                             <table class="table table-bordered">
                                 <tr>
                                     <td>Customer Name: </td>

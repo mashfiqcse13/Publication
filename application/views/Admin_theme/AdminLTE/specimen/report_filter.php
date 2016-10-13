@@ -74,10 +74,10 @@
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Specimen Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php if(isset($date_range)){ echo $date_range;} ?></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php if(isset($date_range)){ echo $date_range . ' (m-d-Y) ';} ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                         </div>
                         <div class="box-body">
                             <table  class ="table table-bordered table-hover" style="background: #fff;">

@@ -90,7 +90,7 @@
                                     <div style="padding:0px 0px 10px 0px">
 
                                         <input class="only_print  btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
-                                        <p class="pull-right">Report Date :<?php echo date('Y:m:d') ?> </p>        
+                                        <p class="pull-right">Report Date :<?php echo date('d-M-Y') ?> </p>        
                                     </div>
                                     <table class="table table_custom" style="font-size:13px">
 
@@ -197,7 +197,7 @@
                     <div style="padding:0px 0px 10px 0px">
 
                         <input class="only_print  btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
-                        <p class="pull-right">Report Date :<?php echo date('Y:m:d') ?> </p>        
+                        <p class="pull-right">Report Date :<?php echo date('d-M-Y') ?> </p>        
                     </div>
                     <table class="table table_custom" style="font-size:13px">
 
