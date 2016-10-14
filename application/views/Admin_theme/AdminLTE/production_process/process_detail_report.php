@@ -33,7 +33,7 @@
                                 <h4 class="text-center text-bold">( Entry Stage )</h4>
 
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                                <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                                <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                             </div>
                             <div class="box-body">
                                 <table  class ="table table-bordered table-hover" style="background: #fff;">                                
@@ -103,7 +103,7 @@
 
 
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                                <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                                <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                             </div>
                             <div class="box-body">
                                 <table  class ="table table-bordered table-hover" style="background: #fff;">                                

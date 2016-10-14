@@ -94,10 +94,10 @@
                             }
                             
                             ?> )</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) : </strong> <?php echo $date_range; ?></p>
+                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) : </strong> <?php  if($date_range){  echo $date_range.' (M-D-Y)';} ?></p>
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
+                            <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                             
                         </div>
                         <div class="box-body">
