@@ -68,14 +68,17 @@
                         </div>
                     </form>
                 </div>
-                 <div class="box" id="block">
+                <div class="box" id="block">
                     <?php
                     if (isset($report1)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Specimen Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php if(isset($date_range)){ echo $date_range . ' (m-d-Y) ';} ?></p>
-
+                            <?php
+                            if (!empty($date_range)) {
+                                echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
+                            }
+                            ?>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                         </div>
@@ -88,33 +91,32 @@
                                         <th>Item Name</th>
                                         <th>Accurate Specimen Issue = <br> (Issue Amount - Return Amount) </th>
                                         <th>Return Amount</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach($report1 as $row){
-                                    ?>
-                                    <tr>
-                                       
-                                        <td ><?=$row->id_item;?></td>
-                                        <td ><?=$row->item_name;?></td>
-                                        <td ><?=$row->issue_quantity;?></td>
-                                        <td><?php
-                                        if(!empty($report2)){
-                                                foreach($report2 as $return){
-                                               if($row->id_item==$return->id_item){
-                                                   echo $return->return_quantity;
-                                               }
-                                        }
-                                        }else{
-                                             echo 0;
-                                         }
-                                            
-                                            ?></td>
-                                    </tr>
-                                    
-                    <?php } ?>
+                                    foreach ($report1 as $row) {
+                                        ?>
+                                        <tr>
+
+                                            <td ><?= $row->id_item; ?></td>
+                                            <td ><?= $row->item_name; ?></td>
+                                            <td ><?= $row->issue_quantity; ?></td>
+                                            <td><?php
+                                                if (!empty($report2)) {
+                                                    foreach ($report2 as $return) {
+                                                        if ($row->id_item == $return->id_item) {
+                                                            echo $return->return_quantity;
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo 0;
+                                                }
+                                                ?></td>
+                                        </tr>
+
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

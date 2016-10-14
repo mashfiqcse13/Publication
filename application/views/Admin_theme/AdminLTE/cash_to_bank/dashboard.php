@@ -66,15 +66,14 @@
                                     <div class="form-group ">
                                         <label class="col-md-3">Transfer Amount:</label>
                                         <div class="col-md-9" >
-                                             <?php
+                                            <?php
                                             $data = array(
                                                 'name' => 'transfered_amount',
                                                 'type' => 'number',
                                                 'class' => 'form-control',
-                                                'placeholder' => 'Transfer Maximum '.$get_all_cash_info->balance,
+                                                'placeholder' => 'Transfer Maximum ' . $get_all_cash_info->balance,
                                                 'max' => $get_all_cash_info->balance,
                                                 'min' => '0',
-                                                
                                             );
 
                                             echo form_input($data);
@@ -85,7 +84,7 @@
                                     <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
                                 </div>
                             </div>
-                        <?= form_close(); ?>
+                            <?= form_close(); ?>
                         </div>
                         <?php
                     } else {
@@ -114,11 +113,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-    <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                    <?= anchor(current_url() . '', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                 </div>
                             </div>
 
-                        <?= form_close(); ?>
+                            <?= form_close(); ?>
                         </div>
                         <?php
                         if (!isset($date_range)) {
@@ -128,7 +127,11 @@
                             <div id="block">
                                 <div class="box-header">
                                     <p class="text-center"><strong>Cash To Bank Report</strong></p>
-                                    <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                    <?php
+                                    if (!empty($date_range)) {
+                                        echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
+                                    }
+                                    ?>
 
                                     <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                                     <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
@@ -150,8 +153,10 @@
                                                 $sum_total_amount += $rep->transfered_amount;
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $rep->name_bank;
-                                                echo ' - ' . $rep->account_number ?></td>
+                                                    <td><?php
+                                                        echo $rep->name_bank;
+                                                        echo ' - ' . $rep->account_number
+                                                        ?></td>
                                                     <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
                                                 </tr>

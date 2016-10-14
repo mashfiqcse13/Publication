@@ -29,12 +29,12 @@
                                 <label>Search By Party Id or Name:</label>
                                 <?php echo $customer_dropdown; ?>
                             </div>
-<!--                            <div class="form-group col-md-3">
-                                <label>Search by payment method:</label>
-
-                                <?php // echo $method_dropdown; ?>
-                                 /.input group 
-                            </div>-->
+                            <!--                            <div class="form-group col-md-3">
+                                                            <label>Search by payment method:</label>
+                            
+                            <?php // echo $method_dropdown; ?>
+                                                             /.input group 
+                                                        </div>-->
                             <div class="form-group col-md-5">
                                 <label>Search with Date Range:</label>
                                 <div class="input-group">
@@ -73,8 +73,11 @@
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Advance Payment Log Report</strong></p>
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To)  </strong> <?php echo $date_range . ' (m-d-Y) '; ?></p>
-
+                            <?php
+                            if (!empty($date_range)) {
+                                echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
+                            }
+                            ?>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                         </div>
