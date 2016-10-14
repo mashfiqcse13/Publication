@@ -68,38 +68,67 @@
                                 <tbody>
                                     <tr>
                                         <td width="50%">Total Sale</td>
-                                        <th class="taka_formate"><?php echo (!empty($total->total_amount)) ? $total->total_amount : 0; ?></th>                              
-                                    </tr>
-                                    <tr>
-                                        <td width="50%">Total Due</td>
-                                        <th class="taka_formate"><?php echo (!empty($total->total_due)) ? $total->total_due : 0; ?></th>
+                                        <th class="taka_formate"><?php echo $total_sale; ?></th>  
+                                        <th></th>                            
                                     </tr>
                                     <tr>
                                         <td width="50%">Sale Against Cash Collection</td>
+                                        <th></th>                            
                                         <th class="taka_formate"><?php echo $total_sale_against_cash_collection; ?></th>
                                     </tr>
                                     <tr>
                                         <td width="50%">Sale Against Bank Collection</td>
+                                        <th></th>                            
                                         <th class="taka_formate"><?php echo $total_sale_against_bank_collection; ?></th>
                                     </tr>
                                     <tr>
                                         <td width="50%">Sale Against Advance Deduction</td>
+                                        <th></th>                            
                                         <th class="taka_formate"><?php echo $total_sale_against_advance_deduction; ?></th>
+                                    </tr>
+                                    <tr>                     
+                                        <td width="50%">Sale Against Due Collection</td>
+                                        <th></th>                            
+                                        <th class="taka_formate"><?php echo $total_sale_against_due_collection; ?></th>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black">
+                                        <td width="50%" class="text-center">Total :</td>
+                                        <th class="taka_formate"><?php echo $total_sale; ?></th>                            
+                                        <th class="taka_formate"><?php
+                                            $total_sale_collection = $total_sale_against_cash_collection + $total_sale_against_bank_collection + $total_sale_against_advance_deduction + $total_sale_against_due_collection;
+
+                                            echo $total_sale_collection;
+                                            ?></th>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <h3 class="text-center">Due & advance collection</h3>
+                            <h3 class="text-center">Due collection</h3>
                             <table class="table table-bordered report">
                                 <tbody>
-                                    <tr>                     
-                                        <td width="50%">Sale Against Due Collection</td>
-                                        <th class="taka_formate"><?php echo $total_sale_against_due_collection; ?></th>
+                                    <tr>
+                                        <td width="50%"></td>
+                                        <td>Cash</td>
+                                        <td>Bank</td>
+                                        <td>Total</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%">Previous Due collection</td>
+                                        <th class="taka_formate"><?php echo $previous_due_collection_cash; ?></th>
+                                        <th class="taka_formate"><?php echo $previous_due_collection_bank; ?></th>
+                                        <th class="taka_formate"><?php echo $previous_due_collection; ?></th>
                                     </tr>
                                     <tr>
                                         <td width="50%">Total Due Collection (Previous due + Sale against due)</td>
+                                        <th class="taka_formate"><?php echo $total_due_collection_cash; ?></th>
+                                        <th class="taka_formate"><?php echo $total_due_collection_bank; ?></th>
                                         <th class="taka_formate"><?php echo $total_due_collection; ?></th>
                                     </tr>
+                                </tbody>
+                            </table>
+                            <h3 class="text-center">Advance collection</h3>
+                            <table class="table table-bordered report">
+                                <tbody>
                                     <tr>
                                         <td width="50%">Total Advance Collection ( Without returned book value )</td>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
@@ -125,17 +154,21 @@
                                 <tr>
                                     <td width="50%">Total Cash Collection</td>
                                     <th class="taka_formate"><?php echo ($total_cash_2_bank_trasfer + $total_cash_2_expense_adjustment + $closing->ending_cash - $opening->opening_cash); ?></th>
+                                    <th></th>                            
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Bank Collection</td>
                                     <th class="taka_formate"><?php echo ($total_bank_withdraw + $closing->closing_bank_balance - $opening->opening_bank_balance); ?></th>
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Collection(Cash +Bank)</td>
-                                    <th class="taka_formate"><?php echo $total_collection_cash_bank; ?></th>
+                                    <th></th>                            
                                 </tr>
                                 <tr>
                                     <td width="50%">Total Expense</td>
+                                    <th></th>                            
+                                    <th class="taka_formate"><?php echo $total_expence; ?></th>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Total Collection</td>
+                                    <th class="taka_formate"><?php echo $total_collection_cash_bank; ?></th>
                                     <th class="taka_formate"><?php echo $total_expence; ?></th>
                                 </tr>
                             </table>
