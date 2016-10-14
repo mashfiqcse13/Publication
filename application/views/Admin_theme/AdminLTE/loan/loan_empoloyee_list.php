@@ -96,7 +96,6 @@
                 </div>
                 <?php
             }if (isset($date_range)) {
-                
                 ?>
                 <div class="col-md-12">
                     <div class="box">
@@ -108,7 +107,7 @@
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             </div>
                             <div style="color: #777777;">
-                                <p class="pull-left" style="margin-left:5px"> <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                <p class="pull-left" style="margin-left:5px"><?php echo $this->Common->date_range_formater_for_report($date_range); ?></p>
                                 <div class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></div>
                             </div>
                         </div>
