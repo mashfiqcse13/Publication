@@ -22,10 +22,10 @@
         <div class="row">
             <div class="col-md-12">
 
-               <div class="box only_print">
+                <div class="box only_print">
                     <div class="box-body">
-                        
-                       
+
+
                         <form action="" method="post">
                             <div class="row">
                                 <div class="col-md-5">
@@ -33,9 +33,9 @@
                                         <label>Party Name : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <?=$customer_dropdown;?>
+                                        <?= $customer_dropdown; ?>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-md-7">
                                     <div class="form-group col-md-3 text-left">
@@ -51,15 +51,15 @@
                                     </div>
                                     <div class="col-md-3"> 
                                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                         <?php echo anchor(site_url('old_book/tolal_return_book'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                                        <?php echo anchor(site_url('old_book/tolal_return_book'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                     </div>
-                                    
-                        
+
+
                                 </div>
-                                 
+
                             </div>
-                             
-                           </form>
+
+                        </form>
 
                     </div>
                 </div>
@@ -82,7 +82,15 @@
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Old Book Report</strong></p>
+
                             <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php  if($date_range){  echo $date_range.' (M-D-Y)';} ?></p>
+
+                            <?php
+                            if (!empty($date_range)) {
+                                echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
+                            }
+                            ?>
+
 
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                             <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
@@ -99,20 +107,19 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $sum_total_quantity=0;
-                                        $sum_total_amount=0;
-                                        $curier = 0;
+                                    $sum_total_quantity = 0;
+                                    $sum_total_amount = 0;
+                                    $curier = 0;
                                     foreach ($return_book as $return) {
                                         $sum_total_quantity += $return->total_quantity;
                                         $sum_total_amount += $return->total_ammount;
                                         $curier += $return->curier;
-                                       
                                         ?>
                                         <tr>
-                                            <td><?=$return->book_id;?></td>
+                                            <td><?= $return->book_id; ?></td>
                                             <td><?php echo $return->name; ?></td>
                                             <td ><?php echo $return->total_quantity; ?></td>
-                                            
+
                                             <td class="text-right taka_formate">TK <?php echo $return->total_ammount ?></td>
                                         </tr>
                                         <?php
@@ -120,14 +127,14 @@
                                     ?>
 
                                     <tr style="font-weight: bold"> 
-                                       
+
                                         <td colspan="2" class="text-right">Total Returned Book </td>
                                         <td > <?php echo $sum_total_quantity; ?></td>
-                                        
+
                                         <td class="text-right taka_formate">TK <?php echo $sum_total_amount; ?></td>
 
                                     </tr>
-                                    
+
                                     <tr style="font-weight: bold"> 
                                         <td colspan="2" rowspan="2"></td>
                                         <td >Courier Cost</td>                                        
@@ -136,7 +143,7 @@
                                     </tr>
                                     <tr style="font-weight: bold"> 
                                         <td >Total</td>                                        
-                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount-$curier; ?></td>
+                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount - $curier; ?></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -137,18 +137,18 @@
                         <?php
                         foreach ($loans as $loan) {
                             ?>
-                                                                                    <tr>
-                                                                                        <td><?php echo $loan->name_employee; ?></td>
-                                                                                        <td><?php echo $loan->title_loan; ?></td>
-                                                                                        <td><?php echo $loan->amount_loan; ?></td>
-                                                                                        <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
-                                                                                        <td><?php echo $loan->status; ?></td>
-                                                                                        <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
-                                                                                        <td>
-                                                                                            <a href="<?php echo base_url(); ?>index.php/loan/loan/edit/<?php echo $loan->id_loan; ?>" class="btn btn-success"><span class="glyphicon glyphicon-edit" ></span></a>
-                                                                                            <a href="<?php echo base_url(); ?>index.php/loan/loan/loan_delete/<?php echo $loan->id_loan; ?>" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash" ></span></a>
-                                                                                        </td>
-                                                                                    </tr>
+                                                                                        <tr>
+                                                                                            <td><?php echo $loan->name_employee; ?></td>
+                                                                                            <td><?php echo $loan->title_loan; ?></td>
+                                                                                            <td><?php echo $loan->amount_loan; ?></td>
+                                                                                            <td><?php echo $date = date('d/m/Y', strtotime($loan->date_taken_loan)); ?></td>
+                                                                                            <td><?php echo $loan->status; ?></td>
+                                                                                            <td><?php echo date('d/m/Y', strtotime($loan->dead_line_loan)); ?></td>
+                                                                                            <td>
+                                                                                                <a href="<?php echo base_url(); ?>index.php/loan/loan/edit/<?php echo $loan->id_loan; ?>" class="btn btn-success"><span class="glyphicon glyphicon-edit" ></span></a>
+                                                                                                <a href="<?php echo base_url(); ?>index.php/loan/loan/loan_delete/<?php echo $loan->id_loan; ?>" class="btn btn-danger" id="delete"><span class="glyphicon glyphicon-trash" ></span></a>
+                                                                                            </td>
+                                                                                        </tr>
                             <?php
                         }
                         ?>
@@ -187,7 +187,7 @@
                                     <?php
                                     if (isset($date_range)) {
                                         ?>
-                                        <p class="pull-left" style="margin-left:5px"> <strong>Date Range: (From - To) </strong> <?php echo $date_range; ?></p>
+                                        <p class="pull-left" style="margin-left:5px"><?php echo $this->Common->date_range_formater_for_report($date_range); ?></p>
                                         <?php
                                     } if (isset($employee_info)) {
                                         ?>

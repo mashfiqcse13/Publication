@@ -1,133 +1,114 @@
 <?php
 
-
 class Stationary_model extends CI_Model {
 
-   function stationary_report($date='',$item=''){
-       
-        $date=$date;
-        if($date==''){
-            $date='';
-        }else{
-            $date=$this->dateformatter($date);
+    function stationary_report($date = '', $item = '') {
+        $data_picker_date_range = $date;
+        $date = $date;
+        if ($date == '') {
+            $date = '';
+        } else {
+            $date = $this->dateformatter($date);
         }
-        $item=$item;
-    
-    if(!empty($date)){
-        $condition="DATE(date_received) BETWEEN $date";
-           
-    }if(!empty($item)){
-       $condition="stationary_stock_register.id_name_expense=$item";
-        
-    }if(!empty($date) && !empty($item)){
-        $condition="DATE(date_received) BETWEEN $date and stationary_stock_register.id_name_expense=$item";
-        
-        
-    }else{
-        $condition= '1=1';
-    }
-        
-            
+        $item = $item;
+
+        if (!empty($date)) {
+            $condition = "DATE(date_received) BETWEEN $date";
+        }if (!empty($item)) {
+            $condition = "stationary_stock_register.id_name_expense=$item";
+        }if (!empty($date) && !empty($item)) {
+            $condition = "DATE(date_received) BETWEEN $date and stationary_stock_register.id_name_expense=$item";
+        } else {
+            $condition = '1=1';
+        }
+
+
         //$condition="date_received BETWEEN $date";
-            
-        $range_query=$this->db->query("SELECT name_expense,DATE(date_received),memo_number,quantity FROM `stationary_stock_register` 
+
+        $range_query = $this->db->query("SELECT name_expense,DATE(date_received),memo_number,quantity FROM `stationary_stock_register` 
 LEFT JOIN expense_name ON expense_name.id_name_expense=stationary_stock_register.id_name_expense 
 WHERE $condition");
-        
+
         $this->load->library('table');
-        $this->table->set_heading(array('Stock Item Name', 'Date', 'Memo Number','Quantity'));
-        $tmpl = array (
-                    'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+        $this->table->set_heading(array('Stock Item Name', 'Date', 'Memo Number', 'Quantity'));
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+            'heading_row_start' => '<tr style="background:#ddd">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th class="text-center">',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td>',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td>',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
 
-                    'heading_row_start'   => '<tr style="background:#ddd">',
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th class="text-center">',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr>',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr>',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-                    'table_close'         => '</table>'
-              );
-        
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h4><span class="pull-left">Date Range:'.$this->datereport($date).'</span>'
-                . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>');
+        $this->table->set_caption('<h4><span class="pull-left">' . $this->Common->date_range_formater_for_report($data_picker_date_range) . '</span>'
+                . '<span class="pull-right">Report Date: ' . date('Y-m-d h:i') . '</span></h4>');
         return $this->table->generate($range_query);
-        
-        
     }
-    
-    
- function stationary_stock_report($item=''){
-       
-  
-    $item=$item;
 
-    if(empty($item) || $item==''){
-        
-        $condition=" 1";
-    }
-    if(!empty($item)){
-        
-        $condition="stationary_stock.id_name_expense=$item";
-    }
-        
-            
+    function stationary_stock_report($item = '') {
+
+
+        $item = $item;
+
+        if (empty($item) || $item == '') {
+
+            $condition = " 1";
+        }
+        if (!empty($item)) {
+
+            $condition = "stationary_stock.id_name_expense=$item";
+        }
+
+
         //$condition="date_received BETWEEN $date";
-            
-        $range_query=$this->db->query("SELECT name_expense,total_in,total_out,"
+
+        $range_query = $this->db->query("SELECT name_expense,total_in,total_out,"
                 . "total_balance FROM `stationary_stock` "
                 . "LEFT JOIN expense_name on "
                 . "expense_name.id_name_expense=stationary_stock.id_name_expense  WHERE $condition");
-        
+
         $this->load->library('table');
-        $this->table->set_heading(array('Stock Item Name', 'Total In', 'Total Out','Total Balance'));
-        $tmpl = array (
-                    'table_open'          => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+        $this->table->set_heading(array('Stock Item Name', 'Total In', 'Total Out', 'Total Balance'));
+        $tmpl = array(
+            'table_open' => '<table class="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0">',
+            'heading_row_start' => '<tr style="background:#ddd">',
+            'heading_row_end' => '</tr>',
+            'heading_cell_start' => '<th class="text-center">',
+            'heading_cell_end' => '</th>',
+            'row_start' => '<tr>',
+            'row_end' => '</tr>',
+            'cell_start' => '<td>',
+            'cell_end' => '</td>',
+            'row_alt_start' => '<tr>',
+            'row_alt_end' => '</tr>',
+            'cell_alt_start' => '<td>',
+            'cell_alt_end' => '</td>',
+            'table_close' => '</table>'
+        );
 
-                    'heading_row_start'   => '<tr style="background:#ddd">',
-                    'heading_row_end'     => '</tr>',
-                    'heading_cell_start'  => '<th class="text-center">',
-                    'heading_cell_end'    => '</th>',
-
-                    'row_start'           => '<tr>',
-                    'row_end'             => '</tr>',
-                    'cell_start'          => '<td>',
-                    'cell_end'            => '</td>',
-
-                    'row_alt_start'       => '<tr>',
-                    'row_alt_end'         => '</tr>',
-                    'cell_alt_start'      => '<td>',
-                    'cell_alt_end'        => '</td>',
-
-                    'table_close'         => '</table>'
-              );
-        
         $this->table->set_template($tmpl);
         $this->table->set_caption('<h4><span class="pull-left"></span>'
-                . '<span class="pull-right">Report Date: '.date('Y-m-d h:i').'</span></h4>');
+                . '<span class="pull-right">Report Date: ' . date('Y-m-d h:i') . '</span></h4>');
         return $this->table->generate($range_query);
-        
-        
     }
-    
 
     function expense_name_dropdown() {
-        
+
         $this->db->select('*');
         $this->db->from('expense_name');
         $this->db->order_by('name_expense', "asc");
         $query = $this->db->get();
         $db_rows = $query->result_array();
-        
+
         $options[''] = "All Selected ";
         foreach ($db_rows as $index => $row) {
             $options[$row['id_name_expense']] = $row['name_expense'];
@@ -156,9 +137,9 @@ WHERE $condition");
         }
     }
 
-       function datereport($date){
-        $date= str_replace("'", ' ', $date);
-        $date=  str_replace('and', 'to', $date);
+    function datereport($date) {
+        $date = str_replace("'", ' ', $date);
+        $date = str_replace('and', 'to', $date);
         return $date;
     }
 

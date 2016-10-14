@@ -59,7 +59,7 @@
                         <div class="box-body">
                             <h3 class="text-center">Final Account's Report</h3>
                             <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <h5><strong>Search Range: (From - To)  : </strong> <?php echo $date_range; ?></h5>
+                            <h5><?php echo $this->Common->date_range_formater_for_report($date_range); ?></h5>
 
                             <br>
                             <h3 class="text-center">Sale Info</h3>

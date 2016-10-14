@@ -29,8 +29,8 @@ class Bank_balance extends CI_Model {
                 `balance` = `balance`+'$amount' 
             WHERE `bank_balance`.`id_account` = $id_account;";
         $this->db->query($sql);
-            $this->load->model('misc/Master_reconcillation_model');
-            $this->Master_reconcillation_model->add_bank_balance($amount);
+        $this->load->model('misc/Master_reconcillation_model');
+        $this->Master_reconcillation_model->add_bank_balance($amount);
         return TRUE;
     }
 
@@ -112,7 +112,7 @@ class Bank_balance extends CI_Model {
     function record_count() {
         return $this->db->count_all("bank_management_status");
     }
- 
+
     function list_bank_status($limit, $start) {
         $query = $this->db->query("select 
                 transaction_date,name_bank, account_number,id_bank_account,CONCAT('TK ',amount_transaction) as amount_transaction,amount_transaction as amount,
@@ -133,7 +133,7 @@ class Bank_balance extends CI_Model {
     }
 
     function bank_report($date = '', $user_id = '', $bank_account = '', $transaction_type = '') {
-
+        $data_picker_date_range = $date;
         $date = $date;
         if ($date == '') {
             $date = '';
@@ -273,14 +273,14 @@ WHERE $condition");
         }
 
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h4><span class="pull-left">Date Range:' . $date_range . '</span>'
+        $this->table->set_caption('<h4><span class="pull-left">' . $this->Common->date_range_formater_for_report($data_picker_date_range) . '</span>'
                 . '<span class="pull-right">Report Date: ' . date('Y-m-d h:i') . '</span></h4>'
                 . '<style>td:nth-child(5) {    text-align: right;}</style>');
         return $this->table->generate($range_query);
     }
 
     function bank_status_report($date = '', $user_id = '', $status_type = '') {
-
+        $data_picker_date_range = $date;
         $date = $date;
         if ($date == '') {
             $date = '';
@@ -402,7 +402,7 @@ WHERE $condition");
         }
 
         $this->table->set_template($tmpl);
-        $this->table->set_caption('<h4><span class="pull-left">Date Range:' . $date_range . '</span>'
+        $this->table->set_caption('<h4><span class="pull-left">' . $this->Common->date_range_formater_for_report($data_picker_date_range) . '</span>'
                 . '<span class="pull-right">Report Date: ' . date('Y-m-d h:i') . '</span></h4>'
                 . '<style>td:nth-child(4) {    text-align: right;}</style>');
         return $this->table->generate($range_query);

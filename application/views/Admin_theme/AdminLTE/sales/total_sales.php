@@ -131,7 +131,7 @@
                             </table>
                             <?php
                             if (!empty($date_range)) {
-                                echo '<p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> ' . $date_range  . ' (m-d-Y)</p>';
+                                echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
                             }
                             ?>
 
@@ -156,7 +156,7 @@
                                         <th>Packeting Cost On Due</th>
                                         <th>Accurate Due</th>
                                         <th>Slip Expense</th>
-                                        <th>Issue Date</th>
+                                        <th>Issue Date  (D/M/Y)</th>
                                     </tr>
                                 </thead>
                                 <tbody>

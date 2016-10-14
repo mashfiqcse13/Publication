@@ -39,6 +39,15 @@ class Common extends CI_Model {
         return " '$from' and '$to' ";
     }
 
+    function date_range_formater_for_report($data_picker_date_range) {
+        if (!empty($data_picker_date_range)) {
+            $dates = explode(" - ", $data_picker_date_range);
+            $date_from = date('d-M-Y', strtotime($dates[0]));
+            $date_to = date('d-M-Y', strtotime($dates[1]));
+            return "<strong>Search Range: </strong>  (<strong>From :</strong> $date_from ) (<strong>To :</strong> $date_to )</p>";
+        }
+    }
+
     function convert_number($number) {
 
         if (($number < 0) || ($number > 999999999)) {
@@ -132,6 +141,7 @@ class Common extends CI_Model {
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
+
     function get_customer_dropdown() {
         $items = $this->db->get('customer')->result();
 

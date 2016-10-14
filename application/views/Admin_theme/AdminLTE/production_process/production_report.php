@@ -222,7 +222,15 @@
                             <div id="block">
                                 <div class="box-header">
                                     <p class="text-center"><strong>Production Process Report</strong></p>
+
                                     <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range .' (M-D-Y)'; ?></p>
+
+
+                                    <?php
+                                    if (!empty($date_range)) {
+                                        echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
+                                    }
+                                    ?>
 
                                     <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                                     <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
