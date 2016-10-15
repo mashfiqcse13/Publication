@@ -192,11 +192,26 @@
                 background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:0px ;
             }
             .custom_memo{
-                background:#fff;width:585px;min-height:793px;padding:0px 40px;margin-top:0px;margin:0px auto;
+                background:#fff;width:585px;min-height:793px;padding:0px 40px;margin-top:0px;margin:0px auto;font-size:12px!important;margin-bottom:50px;
             }
             .padding10{
                 padding-top:20px;
                 padding-bottom:20px;
+            }
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+                padding:5px;
+                line-height: 1;
+            }
+            footer.main-footer {
+                left: 0!important;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                margin-left: 0px;
+                text-align: center;
+            }
+            aside.main-sidebar.only_print {
+                z-index: 999;
             }
             @media print{
                 .only_print{display: none;}

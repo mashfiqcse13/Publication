@@ -96,7 +96,7 @@
                                             <td class="text-right taka_formate"><?php echo $step_info->amount_rejected; ?></td>
                                             <td class="text-right taka_formate"><?php echo $step_info->amount_damaged; ?></td>
                                             <td class="text-right taka_formate"><?php echo $step_info->amount_missing; ?></td>
-                                            <td><?php echo date('d/m/Y', strtotime($step_info->date_transfered)); ?></td>
+                                            <td><?php echo date('d-M-Y', strtotime($step_info->date_transfered)); ?></td>
                                         </tr>
                                     </tbody>
                                     <?php
