@@ -59,10 +59,15 @@ class Report_model extends CI_Model {
         return $closing;
     }
 
-    function total_due_collection($from, $to) {
+    function total_due_collection($from, $to, $payment_methode = "") {
         $this->db->select_sum('paid_amount');
         $this->db->from('customer_payment');
         $this->db->where('due_payment_status', 1);
+        if (!empty($payment_methode) && $payment_methode == "Cash") {
+            $this->db->where('id_payment_method', 1);
+        } else if (!empty($payment_methode) && $payment_methode == "Bank") {
+            $this->db->where('id_payment_method', 3);
+        }
         if ($from != '') {
             $condition = "DATE(payment_date) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
@@ -72,10 +77,15 @@ class Report_model extends CI_Model {
         return empty($result->paid_amount) ? 0 : $result->paid_amount;
     }
 
-    function total_sale_against_due_collection($from, $to) {
+    function total_sale_against_due_collection($from, $to, $payment_methode = "") {
         $this->db->select_sum('paid_amount');
         $this->db->from('customer_payment');
         $this->db->where('due_payment_status', 1);
+        if (!empty($payment_methode) && $payment_methode == "Cash") {
+            $this->db->where('id_payment_method', 1);
+        } else if (!empty($payment_methode) && $payment_methode == "Bank") {
+            $this->db->where('id_payment_method', 3);
+        }
         if ($from != '') {
             $condition = "`id_total_sales` in ( SELECT `id_total_sales` FROM `sales_total_sales` WHERE DATE(issue_date) BETWEEN '$from' AND '$to')";
 //            echo $condition; exit();
@@ -191,10 +201,16 @@ class Report_model extends CI_Model {
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
 
-    function total_advance_collection_without_book_sale($from, $to) {
+    function total_advance_collection_without_book_sale($from, $to, $payment_methode = "") {
         $this->db->select_sum('amount_paid');
         $this->db->from('party_advance_payment_register');
-        $this->db->where('id_payment_method !=', 4);
+        if (!empty($payment_methode) && $payment_methode == "Cash") {
+            $this->db->where('id_payment_method', 1);
+        } else if (!empty($payment_methode) && $payment_methode == "Bank") {
+            $this->db->where('id_payment_method', 3);
+        } else {
+            $this->db->where('id_payment_method !=', 4);
+        }
         if ($from != '') {
             $condition = "DATE(date_payment) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
@@ -203,9 +219,8 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
-    
-    
-    function total_cash_2_bank_trasfer($from, $to){
+
+    function total_cash_2_bank_trasfer($from, $to) {
         $this->db->select_sum('transfered_amount');
         $this->db->from('cash_to_bank_register');
         if ($from != '') {
@@ -216,7 +231,8 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->transfered_amount) ? 0 : $result->transfered_amount;
     }
-    function total_cash_2_expense_adjustment($from, $to){
+
+    function total_cash_2_expense_adjustment($from, $to) {
         $this->db->select_sum('transfered_amount');
         $this->db->from('cash_to_expense_adjustment');
         if ($from != '') {
@@ -227,11 +243,11 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->transfered_amount) ? 0 : $result->transfered_amount;
     }
-    
-    function total_bank_withdraw($from, $to){
+
+    function total_bank_withdraw($from, $to) {
         $this->db->select_sum('amount_transaction');
         $this->db->from('bank_management');
-        $this->db->where('id_transaction_type',2);
+        $this->db->where('id_transaction_type', 2);
         if ($from != '') {
             $condition = "DATE(transaction_date) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
