@@ -201,10 +201,16 @@ class Report_model extends CI_Model {
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
 
-    function total_advance_collection_without_book_sale($from, $to) {
+    function total_advance_collection_without_book_sale($from, $to, $payment_methode = "") {
         $this->db->select_sum('amount_paid');
         $this->db->from('party_advance_payment_register');
-        $this->db->where('id_payment_method !=', 4);
+        if (!empty($payment_methode) && $payment_methode == "Cash") {
+            $this->db->where('id_payment_method', 1);
+        } else if (!empty($payment_methode) && $payment_methode == "Bank") {
+            $this->db->where('id_payment_method', 3);
+        } else {
+            $this->db->where('id_payment_method !=', 4);
+        }
         if ($from != '') {
             $condition = "DATE(date_payment) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();

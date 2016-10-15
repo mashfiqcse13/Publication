@@ -168,6 +168,8 @@ class Report extends CI_Controller {
             $data['previous_due_collection_bank'] = $data['total_due_collection_bank'] - $data['total_sale_against_due_collection_bank'];
 
             $data['total_advance_collection_without_book_sale'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
+            $data['total_advance_collection_without_book_sale_cash'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Cash');
+            $data['total_advance_collection_without_book_sale_bank'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Bank');
 
             $data['total_cash_collection_from_customer_payment'] = $this->Report_model->total_cash_collection_from_customer_payment($from, $to);
             $data['total_bank_collection_from_customer_payment'] = $this->Report_model->total_bank_collection_from_customer_payment($from, $to);

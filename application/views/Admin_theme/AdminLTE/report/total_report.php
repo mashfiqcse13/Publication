@@ -130,7 +130,15 @@
                             <table class="table table-bordered report">
                                 <tbody>
                                     <tr>
+                                        <td width="50%"></td>
+                                        <td>Cash</td>
+                                        <td>Bank</td>
+                                        <td>Total</td>
+                                    </tr>
+                                    <tr>
                                         <td width="50%">Total Advance Collection ( Without returned book value )</td>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_cash; ?></th>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_bank; ?></th>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
                                     </tr>
                                 </tbody>
