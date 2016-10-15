@@ -85,7 +85,7 @@
                                                     <h4 class="modal-title" id="myModalLabel">Add New Customer</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <iframe src="<?php echo site_url('contacts/customer/add')?>" frameborder="0" width="100%" height="600"></iframe>
+                                                    <iframe src="<?php echo site_url('contacts/customer/add')?>" frameborder="0" width="100%" height="500"></iframe>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="" class="btn btn-outline pull-left">Close and Reload</a>
