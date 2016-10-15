@@ -1,6 +1,7 @@
 <!--add header -->
 <?php include_once __DIR__ . '/../header.php'; ?>
 
+
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
 <!-- Content Wrapper. Contains page content -->
@@ -139,7 +140,7 @@
                             <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                         </div>
                         <div class="box-body" style="overflow: auto;">
-                            <table  class ="table table-bordered table-hover" style="background: #fff;">
+                            <table  class ="table table-bordered table-hover print_small_font" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
     <!--                                        <th></th>-->
@@ -232,6 +233,7 @@
 
             </div>
         </div>
+
 
 
 

@@ -242,6 +242,11 @@
                     border: 1px solid #222!important;
                 }
                 .page_break{page-break-after: always;}
+                
+                .print_small_font th,.print_small_font td{
+                    font-size:11px!important;
+                    padding:5px!important;
+                }
 
             }
             

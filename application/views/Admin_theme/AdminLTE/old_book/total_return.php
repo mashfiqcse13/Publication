@@ -83,8 +83,7 @@
                         <div class="box-header">
                             <p class="text-center"><strong>Old Book Report</strong></p>
 
-                            <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php  if($date_range){  echo $date_range.' (M-D-Y)';} ?></p>
-
+                            
                             <?php
                             if (!empty($date_range)) {
                                 echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
