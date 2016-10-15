@@ -77,7 +77,7 @@
                             <br>
                             <p class="alert-info pull-left">Closing Stock = (Opening Stock + Receive) - (Accurate Sale + Accurate Specimen )  </p>
 
-                            <p class="pull-right">Report Date: <?php echo date('Y-m-d H:i:s', now()); ?></p>
+                            <p class="pull-right">Report Date: <?php echo date('d-M-Y H:i:s', now()); ?></p>
                         </div>
                     </div>
                     <div class="box-body">

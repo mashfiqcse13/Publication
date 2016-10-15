@@ -15,7 +15,7 @@
 <style>
     #table_custom .table td.separator {
         background: black none repeat scroll 0 0;
-        height: 3px;
+        height: 1px;
         padding: 0;
     }
     #table_custom .table td.left_separator {
@@ -27,17 +27,9 @@
 
 
 
-
-
-<div id="table_custom" style="background:#fff;padding: 20px 0">
-
-
-    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px ;">
+    
     <div class="container memo_print_option custom_memo"  >
-
-
-
-
+        <div class="only_print padding10"></div>
 
         <div class="row" style="padding-top:0px"> 
 
@@ -88,24 +80,24 @@
 
         </div>
 
-
-
         <div class="row" style="font-size:16px;">
             <?php echo $memo_body_table['memo']; ?>
         </div>
+        
+        <div class="row">
         <div class="due_payment_section">
-            
+            <div class="only_print padding10"></div>
             <?php 
             
             echo '<div class="hide_for_jamuna">';
             if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
                
-                echo '<div  class="due_memo_part" style=" page-break-before: always;margin-top:120px">';
-                echo '<h2 class="text-center">Due\'s Payment Report</h2>';
+                echo '<div  class="due_memo_part" style=" page-break-before: always;padding-top:0px">';
+                echo '<h2 class="text-center top_margin_remove" >Due\'s Payment Report</h2>';
                 ?>
             
                 
-            <table class="table table_custom" style="font-size:13px;margin-top:50px">
+            <table class="table table_custom" style="font-size:13px;margin-top:0px">
                 <thead>
                 <tr>
                     <td><strong>Name:</strong></td>
@@ -146,8 +138,7 @@
 
 
         </div>
-
-
+        </div>
 
         <div class="margin-top-10">
 
@@ -161,16 +152,10 @@
             <?php } ?>
 
         </div>
-
-
-
-
-
-
-
+        
+        <div class="only_print padding10"></div>
     </div>
-    </div>
-</div>
+
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
@@ -188,13 +173,9 @@
 thead {
     display: table-row-group;
 }
-.custom_memo{
-    background:#fff;width:585px;min-height:793px;padding:5px 20px;margin-top:0px;margin:10px auto;
-}
+
 @media only print{
-    .custom_memo{
-        padding-top:0px!important;
-    }
+
     .hideDueReport{
         display: none;
         visibility: hidden;

@@ -26,28 +26,12 @@
 </style>
 
 
+       
+    <div class="container memo_print_option custom_memo" >
 
+        <div class="row" style="padding-top:0px">
 
-
-<div id="table_custom" style="background:#ddd">
-
-
-
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
-
-
-
-
-
-        <div class="row" style="padding-top:50px">
-
-            <div class="text-center">
-                <h6>বিসমিল্লাহির রহমানির রহিম</h6>
-                <h3><?= $this->config->item('SITE')['name'] ?></h3>
-                <p>Specimen Return Slip</p>
-            </div>
-
-
+            <h3 class="text-center top_margin_remover">Specimen Return Slip</h3>
 
             <table class="table table_custom" style="font-size:13px">
                 <tr>
@@ -64,7 +48,8 @@
                     <td><strong>District:</strong></td>
                     <td><?= $memo_header_details['district'] ?></td>
                     <td><strong>Date:</strong></td>
-                    <td><?php echo " " . $memo_header_details['date_entry'] ?></td>
+                    <!--<td><?php echo " " . $memo_header_details['date_entry'] ?></td>-->
+                    <td><?php echo " " . date('d-M-Y H:i:s', strtotime($memo_header_details['date_entry'])) ?></td>
                 </tr>
             </table>
         </div>
@@ -77,6 +62,4 @@
             </div>
         </div>
     </div>
-
-
 

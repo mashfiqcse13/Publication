@@ -214,7 +214,7 @@ class Specimen_model extends CI_Model {
             'class' => 'separator'
         );
 
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+        
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
@@ -386,7 +386,7 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item
             'class' => 'separator'
         );
 
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+   
         $this->table->add_row($total_quantity, '(Total Book ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',

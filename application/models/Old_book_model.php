@@ -411,14 +411,13 @@ class Old_book_model extends CI_Model {
 
 
 
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
 
         $this->table->add_row($total_quantity, '(মোট বই ) ', array(
             'data' => 'বই মূল্য : ',
             'class' => 'left_separator',
             'colspan' => 1
                 ), $this->Common->taka_format($total_price));
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row);
+        
 
         $this->table->add_row(array(
             'data' => 'ফেরত বই এর মূল্য',
@@ -595,7 +594,7 @@ class Old_book_model extends CI_Model {
         if (empty($results)) {
             die("No match found");
         }
-        $this->table->add_row("Slip Number ", $results[0]->id_old_book_transfer_total, "Date", $results[0]->date_transfer);
+        $this->table->add_row("Slip Number ", $results[0]->id_old_book_transfer_total, "Date", date('d-M-Y H:i:s', strtotime($results[0]->date_transfer)));
         $output = $this->table->generate();
         $total_quantity = 0;
         $this->table->set_heading( "Book ID", 'Book Name', 'Quantity');
@@ -609,7 +608,7 @@ class Old_book_model extends CI_Model {
         $separator_row = array(
             'class' => 'separator'
         );
-        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
+        
         $output .= $this->table->generate();
         $this->table->add_row(array(
             'data' => 'Total Book',

@@ -27,21 +27,15 @@
 
 
 
-
-
-<div id="table_custom" style="background:#ddd">
-
-
-    <div style="background:#fff;width:630px;margin:0 auto;min-height:800px;box-shadow:0px -1px 8px #000;padding:20px;">
         
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:5px;margin-top:0px;font-size:15px;margin:10px auto;" >
-
+    <div class="container memo_print_option custom_memo"  >
+        <div class="only_print padding10"></div>
 
 
 
 
         <div class="row" style="padding-top:0px">
-            <h3 class="text-center">পুরাতন বই ফেরত স্লিপ</h3>
+            <h3 class="text-center top_margin_remover">পুরাতন বই ফেরত স্লিপ</h3>
 
             <table class="table table_custom" style="font-size:13px">
                 <tr>
@@ -88,7 +82,7 @@
             </table>
 
         </div>
-        <div class="row" style="font-size:16px;">
+        <div class="row" style="font-size:14px;">
             <?php echo $memo_body_table; ?>
 
 <!--            <h2>Returned Book Value : <strong> <?php echo $balance; ?></strong></h2>-->
@@ -104,11 +98,10 @@
 
 
         </div>
+        <div class="only_print padding10"></div>
 
     </div>
 
-</div>
-</div>
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
 

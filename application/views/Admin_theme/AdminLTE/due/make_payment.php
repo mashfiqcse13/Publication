@@ -102,7 +102,7 @@
         <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">
         
                 <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
-                    <div style="margin:0 20mm">
+                    <div style="margin:0 7mm">
                         
 
                         <p class="text-center"> Due Payment Slip</p>        

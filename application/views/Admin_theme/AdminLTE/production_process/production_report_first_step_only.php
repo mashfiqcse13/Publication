@@ -174,12 +174,12 @@
                                             echo $item_name;
                                             ?></td>
                                         <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
-                                        <td><?php echo $first_step_details->order_amount; ?></td>
-                                        <td><?php echo $first_step_details->transfered_amount; ?></td>
-                                        <td><?php echo $first_step_details->reject_amount; ?></td>
-                                        <td><?php echo $first_step_details->damaged_amount; ?></td>
-                                        <td><?php echo $first_step_details->missing_amount; ?></td>
-                                        <td><?php echo $first_step_details->date_created; ?></td>
+                                        <td  class="taka_formate"><?php echo $first_step_details->order_amount; ?></td>
+                                        <td  class="taka_formate"><?php echo $first_step_details->transfered_amount; ?></td>
+                                        <td  class="taka_formate"><?php echo $first_step_details->reject_amount; ?></td>
+                                        <td  class="taka_formate"><?php echo $first_step_details->damaged_amount; ?></td>
+                                        <td  class="taka_formate"><?php echo $first_step_details->missing_amount; ?></td>
+                                        <td><?php echo date('d-M-Y', strtotime( $first_step_details->date_created)); ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -190,9 +190,10 @@
                     }if (isset($all_production_process_first_step_info_by_search)) {
                         ?>
                         <div id="block">
-                            <div class="box-header">
+                            <div style="margin:0 10mm">
+                            <div class="box-header" >
                                 <p class="text-center"><strong>Production Process Report</strong></p>
-                                <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range .' (M-D-Y)'; ?></p>
+                                <p class="pull-left" style="margin-left:0px"> <?php echo $this->Common->date_range_formater_for_report($date_range); ?></p>
 
                                 <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
                                 <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
@@ -226,18 +227,19 @@
                                                 echo $item_name;
                                                 ?></td>
                                             <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
-                                            <td><?php echo $first_step_details->order_amount; ?></td>
-                                            <td><?php echo $first_step_details->transfered_amount; ?></td>
-                                            <td><?php echo $first_step_details->reject_amount; ?></td>
-                                            <td><?php echo $first_step_details->damaged_amount; ?></td>
-                                            <td><?php echo $first_step_details->missing_amount; ?></td>
-                                            <td><?php echo $first_step_details->date_created; ?></td>
+                                            <td class="taka_formate"><?php echo $first_step_details->order_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $first_step_details->transfered_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $first_step_details->reject_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $first_step_details->damaged_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $first_step_details->missing_amount; ?></td>
+                                            <td><?php echo date('d-M-Y', strtotime( $first_step_details->date_created)); ?></td>
                                         </tr>
                                         <?php
                                     }
                                     ?>
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                         <?php
                     }
@@ -249,6 +251,7 @@
         </div>
     </section>
 </div>
+
 
 
 

@@ -28,32 +28,13 @@
 
 
 
+    <div class="container memo_print_option custom_memo" >
 
-<div id="table_custom" style="background:#ddd">
+     <div class="only_print padding10"></div>
 
-
-
-    <div class="container memo_print_option" style="background:#fff;width:585px;min-height:793px;padding:25px 40px;margin-top:30px;font-size:15px;margin:10px auto;box-shadow:0px -1px 8px #000;" >
-
-
-
-
-
-        <div class="row" style="padding-top:50px">
-        </div>
-
-
-
-        <div class="row" style="font-size:16px;">
-
-
+        <div class="row" style="font-size:14px;">
             <?php echo $old_book_rebind_table; ?>
-
-
-
         </div>
-
-
 
         <div class="margin-top-10">
 
@@ -64,12 +45,7 @@
             <input class="only_print pull-right btn btn-primary" type="button"  onClick="window.print()"  value="Print This Page"/>
 
         </div>
-
-
-
-
-
-
+     <div class="only_print padding10"></div>
 
     </div>
 

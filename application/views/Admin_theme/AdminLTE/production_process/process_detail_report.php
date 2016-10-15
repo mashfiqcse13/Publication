@@ -78,11 +78,11 @@
 
                                     </tr>
                                     <tr>
-                                        <td><?= $row->order_amount; ?></td>
-                                        <td><?= $row->transfered_amount; ?></td>
-                                        <td><?= $row->reject_amount; ?></td>
-                                        <td><?= $row->damaged_amount; ?></td>
-                                        <td><?= $row->missing_amount; ?></td>
+                                        <td class="taka_formate"><?= $row->order_amount; ?></td>
+                                        <td class="taka_formate"><?= $row->transfered_amount; ?></td>
+                                        <td class="taka_formate"><?= $row->reject_amount; ?></td>
+                                        <td class="taka_formate"><?= $row->damaged_amount; ?></td>
+                                        <td class="taka_formate"><?= $row->missing_amount; ?></td>
 
                                     </tr>
 
@@ -156,12 +156,12 @@
 
                                         </tr>
                                         <tr>
-                                            <td><?= $row->amount_transfered; ?></td>
-                                            <td><?= $row->amount_billed; ?></td>
-                                            <td><?= $row->amount_paid; ?></td>
-                                            <td><?= $row->amount_rejected; ?></td>
-                                            <td><?= $row->amount_damaged; ?></td>
-                                            <td><?= $row->amount_missing; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_transfered; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_billed; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_paid; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_rejected; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_damaged; ?></td>
+                                            <td class="taka_formate"><?= $row->amount_missing; ?></td>
 
 
                                         </tr>

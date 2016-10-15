@@ -171,7 +171,9 @@ $.fn.digits = function(){
 }
 $('.taka_formate').digits(); 
 $('td div').not('div.tools , form div,.nocoma td div').digits();  
-$('.special_process_for_coma td,.special_process_for_coma th').digits();
+$('.special_process_for_coma td,.special_process_for_coma td').digits();
+$('.special_process_for_coma_production td').not('.special_process_for_coma_production td:last-child()').digits();
+
 
  
 

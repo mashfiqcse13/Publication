@@ -17,7 +17,7 @@
             <li><a href="<?= $base_url ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active">Customer section</li>
         </ol>
-    </section>
+    </section> 
 
     <!-- Main content -->
     <section class="content">

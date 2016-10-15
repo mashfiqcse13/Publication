@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Description of Production_process_model
  *
  * @author MD. Mashfiq
- */
+ */ 
 class Production_process_model extends CI_Model {
 
     private $callback_process_buffer_id_vendor;
@@ -256,7 +256,7 @@ class Production_process_model extends CI_Model {
             }
         }
         $tmpl = array(
-            'table_open' => '<table class="table table-hover table-bordered special_process_for_coma">',
+            'table_open' => '<table class="table table-hover table-bordered special_process_for_coma_production">',
             'heading_row_start' => '<tr>',
             'heading_row_end' => '</tr>',
             'heading_cell_start' => '<th>',

@@ -223,9 +223,7 @@
                                 <div class="box-header">
                                     <p class="text-center"><strong>Production Process Report</strong></p>
 
-                                    <p class="pull-left" style="margin-left:20px"> <strong>Search Range: (From - To) </strong> <?php echo $date_range .' (M-D-Y)'; ?></p>
-
-
+                                   
                                     <?php
                                     if (!empty($date_range)) {
                                         echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
@@ -287,7 +285,7 @@
                                                 <td class="taka_formate" ><?php echo $process_details->amount_rejected; ?></td>
                                                 <td  class="taka_formate"><?php echo $process_details->amount_damaged; ?></td>
                                                 <td  class="taka_formate"><?php echo $process_details->amount_missing; ?></td>
-                                                <td><?php echo date('d/m/Y', strtotime($process_details->date_transfered)); ?></td>
+                                                <td><?php echo date('d-M-Y', strtotime($process_details->date_transfered)); ?></td>
                                             </tr>
                                             <?php
                                         }
