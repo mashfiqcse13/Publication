@@ -101,7 +101,7 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $rep->name_expense; ?></td>
-                                                <td><?php echo 'TK ' . $rep->amount_expense; ?></td>
+                                                <td class="taka_formate"><?php echo 'TK ' . $rep->amount_expense; ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($rep->date_expense)); ?></td>
                                                 <td><?php echo $rep->description_expense; ?></td>
                                                 <td><?php echo $sum_total_amount; ?></td>
@@ -112,10 +112,10 @@
 
                                         <tr style="font-weight: bold">
                                             <td>Total :</td>
-                                            <td><?php echo $sum_total_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $sum_total_amount; ?></td>
                                             <td></td>
                                             <td></td>
-                                            <td><?php echo $sum_total_amount; ?></td>
+                                            <td class="taka_formate"><?php echo $sum_total_amount; ?></td>
 
 
                                         </tr>

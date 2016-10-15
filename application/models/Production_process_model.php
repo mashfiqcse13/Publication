@@ -256,7 +256,7 @@ class Production_process_model extends CI_Model {
             }
         }
         $tmpl = array(
-            'table_open' => '<table class="table table-hover table-bordered">',
+            'table_open' => '<table class="table table-hover table-bordered special_process_for_coma">',
             'heading_row_start' => '<tr>',
             'heading_row_end' => '</tr>',
             'heading_cell_start' => '<th>',

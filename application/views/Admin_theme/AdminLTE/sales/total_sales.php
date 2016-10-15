@@ -140,7 +140,7 @@
                             <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
                         </div>
                         <div class="box-body" style="overflow: auto;">
-                            <table  class ="table table-bordered table-hover print_small_font" style="background: #fff;">
+                            <table  class ="table table-bordered table-hover print_small_font " style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
     <!--                                        <th></th>-->
@@ -187,17 +187,17 @@
                                         <tr>
                                             <td><?php echo $sales->id_total_sales; ?></td>
                                             <td><?php echo $sales->name; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->sub_total; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->discount_amount; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->total_amount; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->cash_paid; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->bank_paid; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->customer_advance_paid; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->total_paid; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->total_due; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->bill_for_packeting + $sales->total_due; ?></td>
-                                            <td class="text-right faka_formate"><?php echo $sales->slip_expense_amount; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->sub_total; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->discount_amount; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->total_amount; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->cash_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->bank_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->customer_advance_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->total_paid; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->total_due; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->bill_for_packeting; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->bill_for_packeting + $sales->total_due; ?></td>
+                                            <td class="text-right taka_formate"><?php echo $sales->slip_expense_amount; ?></td>
                                             <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
                                         </tr>
                                         <?php
@@ -206,17 +206,17 @@
 
                                     <tr style="font-weight: bold">
                                         <td colspan="2">Total :</td>
-                                        <td class="text-right faka_formate"><?php echo $sum_sub_total; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_discount_amount; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_total_amount; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_cash_paid; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_bank_paid; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_customer_advance_paid; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_total_paid; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_total_due; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_bill_for_packeting + $sum_total_due; ?></td>
-                                        <td class="text-right faka_formate"><?php echo $sum_slip_expense_amount; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_sub_total; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_discount_amount; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_total_amount; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_cash_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_bank_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_customer_advance_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_total_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_total_due; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting + $sum_total_due; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_slip_expense_amount; ?></td>
                                         <td></td>
 
 

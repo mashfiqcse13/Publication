@@ -104,12 +104,12 @@
                                 ?>
                                 <tr style="font-weight: bold">
                                     <td>Total :</td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_rejected; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_damaged; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_missing; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_transfered; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_billed; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_paid; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_rejected; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_damaged; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_missing; ?></td>
                                     <td></td>
 
 

@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
+                        <table  class ="table table-bordered table-striped special_process_for_coma" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
                             <thead>
                                 <tr style="background:#ddd">
                                     <th>Item ID</th>
@@ -119,11 +119,11 @@
                                     <tr>
                                         <td><?php echo $stock->id_item; ?></td>
                                         <td><?php echo $stock->name; ?></td>
-                                        <td><?php
+                                        <td class="taka_formate"><?php
                                             //echo $stock->opening_amount; 
                                             echo $stock->opening_amount == 0 ? '' : $stock->opening_amount;
                                             ?></td>
-                                        <td><?php
+                                        <td class="taka_formate"><?php
                                             //echo $stock->receive_amount;
                                             echo $stock->receive_amount == 0 ? '' : $stock->receive_amount;
                                             ?></td>

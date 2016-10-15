@@ -58,11 +58,11 @@
                                             ?></td>
                                         <td><?php echo $process->date_created; ?></td>
                                         <td><?php echo $process->date_finished; ?></td>
-                                        <td><?php echo $process->order_quantity; ?></td>
-                                        <td><?php echo $process->actual_quantity; ?></td>
-                                        <td><?php echo $process->total_damaged_item; ?></td>
-                                        <td><?php echo $process->total_reject_item; ?></td>
-                                        <td><?php echo $process->total_missing_item; ?></td>
+                                        <td class="taka_formate"><?php echo $process->order_quantity; ?></td>
+                                        <td class="taka_formate"><?php echo $process->actual_quantity; ?></td>
+                                        <td class="taka_formate"><?php echo $process->total_damaged_item; ?></td>
+                                        <td class="taka_formate"><?php echo $process->total_reject_item; ?></td>
+                                        <td class="taka_formate"><?php echo $process->total_missing_item; ?></td>
                                         <td><?php
                                             if ($process->process_status == 1) {
                                                 echo '<span class="label label-warning">Ongoing</span>';

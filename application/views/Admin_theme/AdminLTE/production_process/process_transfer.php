@@ -154,9 +154,9 @@
                                 <tr style="font-weight: bold">
                                     <td>Total :</td>
                                     <td></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_transfered; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_billed; ?></td>
-                                    <td class="text-right faka_formate"><?php echo $sum_total_amount_paid; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_transfered; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_billed; ?></td>
+                                    <td class="text-right taka_formate"><?php echo $sum_total_amount_paid; ?></td>
                                     <td></td>
 
 
