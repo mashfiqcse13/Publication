@@ -27,7 +27,7 @@
                         <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <form id="secondform1" class="form" action="<?php echo site_url('sales_return/sales_current_sales_return'); ?>" method="post">
+                                <form id="secondform1" class="form" action="<?php echo site_url('sales_return/sales_current_sales_return'); ?>" method="get">
                                  
                                 <?php 
 //                                $attributes = array(

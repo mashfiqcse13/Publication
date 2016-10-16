@@ -41,6 +41,9 @@ class Sales extends CI_Controller {
                 ->unset_edit()->unset_delete()->unset_add()->unset_read()
                 ->add_action('Print Memo', base_url() . 'asset/img/button/Print Memo.png', '', '', function ($primary_key, $row) {
                     return site_url('sales/memo/' . $primary_key);
+                })
+                ->add_action('Sales Return', base_url() . 'asset/img/button/Sales Return.png', '', '', function ($primary_key, $row) {
+                    return site_url("sales_return/sales_current_sales_return?memo_id=$primary_key&search_memo=Search+Memo");
                 });
         $data['date_range'] = $this->input->get('date_range');
         $id_customer = $this->input->get('id_customer');
@@ -48,8 +51,8 @@ class Sales extends CI_Controller {
 
         if (empty($id_customer) && empty($filter_district) && empty($data['date_range']) && !empty($this->input->get('btn_submit'))) {
             ?><script>
-                alert("Please select any customer or date range or party district");
-                window.history.back();
+                            alert("Please select any customer or date range or party district");
+                            window.history.back();
             </script>
             <?php
             die();
@@ -145,8 +148,8 @@ class Sales extends CI_Controller {
         $total_sales_id = $this->input->get('id_total_sales');
         if (empty($total_sales_id)) {
             ?><script>
-                alert("Please select memo ID");
-                window.history.back();
+                            alert("Please select memo ID");
+                            window.history.back();
             </script>
             <?php
             die();
