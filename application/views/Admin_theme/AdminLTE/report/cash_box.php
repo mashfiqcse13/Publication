@@ -72,9 +72,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-        </div>
-        <!-- end first row-->
-        <div class="row">
+            
             <!--Today Advance Deduction Against Sale-->
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
@@ -119,15 +117,13 @@
             </div>
 
 
-        </div>
-        <div class="row">
             <!--Today Total Advance Collection ( Without returned book value )-->
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $totay_total_advance_collection_without_book_sale; ?> TK</h3>
-                        <p> (Cash : Null ) ( Bank : Null )<br>Today Total Advance Collection <br> ( Without returned book value )</p>
+                        <p> (Cash : Null ) ( Bank : Null )<br>Today Total Advance Collection</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
@@ -164,11 +160,6 @@
                 </div>
             </div>
 
-        </div>
-
-
-
-        <div class="row">
 
             <!--Today Total Expense-->
             <div class="col-lg-4 col-xs-6 ">

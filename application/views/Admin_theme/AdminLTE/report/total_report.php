@@ -167,7 +167,7 @@
                                                 <th style="text-align: center">(-)<span class="taka_formate"><?php echo $total_cash_2_expense_adjustment ?></span></th>
                                             </tr>
                                             <tr style="border-top: 2px solid;">
-                                                <td>Cash Closeing</td>
+                                                <td>Cash Closing</td>
                                                 <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_cash + $total_cash_collection - $total_cash_2_bank_trasfer - $total_cash_2_expense_adjustment); ?></th>
                                             </tr>
                                         </table>
@@ -195,7 +195,7 @@
                                                 <th style="text-align: center">(-)<span class="taka_formate"><?php echo $total_bank_withdraw ?></span></th>
                                             </tr>
                                             <tr style="border-top: 2px solid;">
-                                                <td>Bank Closeing</td>
+                                                <td>Bank Closing</td>
                                                 <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_bank_balance + $total_bank_collection + $total_cash_2_bank_trasfer - $total_bank_withdraw); ?></th>
                                             </tr>
                                         </table>
