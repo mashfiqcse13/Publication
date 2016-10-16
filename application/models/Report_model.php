@@ -257,4 +257,17 @@ class Report_model extends CI_Model {
         return empty($result->amount_transaction) ? 0 : $result->amount_transaction;
     }
 
+    function total_old_book_transfer($from, $to) {
+        $this->db->select_sum('price');
+        $this->db->from('old_book_transfer_total');
+        $this->db->where('type_transfer', 1);
+        if ($from != '') {
+            $condition = "DATE(date_transfer) BETWEEN '$from' AND '$to'";
+//            echo $condition; exit();
+            $this->db->where($condition);
+        }
+        $result = $this->db->get()->row();
+        return empty($result->price) ? 0 : $result->price;
+    }
+
 }

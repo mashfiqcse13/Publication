@@ -87,15 +87,15 @@
                                         <th class="taka_formate"><?php echo $total_sale_against_advance_deduction; ?></th>
                                     </tr>
                                     <tr>                     
-                                        <td width="50%">Sale Against Due Collection</td>
+                                        <td width="50%">Sale Against Due</td>
                                         <th></th>                            
-                                        <th class="taka_formate"><?php echo $total_sale_against_due_collection; ?></th>
+                                        <th class="taka_formate"><?php echo $total_sale_against_due; ?></th>
                                     </tr>
                                     <tr style="border-top: 2px solid black">
                                         <td width="50%" class="text-center">Total :</td>
                                         <th class="taka_formate"><?php echo $total_sale; ?></th>                            
                                         <th class="taka_formate"><?php
-                                            $total_sale_collection = $total_sale_against_cash_collection + $total_sale_against_bank_collection + $total_sale_against_advance_deduction + $total_sale_against_due_collection;
+                                            $total_sale_collection = $total_sale_against_cash_collection + $total_sale_against_bank_collection + $total_sale_against_advance_deduction + $total_sale_against_due;
 
                                             echo $total_sale_collection;
                                             ?></th>
@@ -118,12 +118,6 @@
                                         <th class="taka_formate"><?php echo $previous_due_collection_bank; ?></th>
                                         <th class="taka_formate"><?php echo $previous_due_collection; ?></th>
                                     </tr>
-                                    <tr>
-                                        <td width="50%">Total Due Collection (Previous due + Sale against due)</td>
-                                        <th class="taka_formate"><?php echo $total_due_collection_cash; ?></th>
-                                        <th class="taka_formate"><?php echo $total_due_collection_bank; ?></th>
-                                        <th class="taka_formate"><?php echo $total_due_collection; ?></th>
-                                    </tr>
                                 </tbody>
                             </table>
                             <h3 class="text-center">Advance collection</h3>
@@ -144,40 +138,78 @@
                                 </tbody>
                             </table>
 
-                            <h3 class="text-center">Collections</h3>
-                            <table class="table table-bordered report page_break_after">
-                                <tr>
-                                    <td width="50%">Total Cash Collection (General payment + Advance Payment)</td>
-                                    <th class="taka_formate"><?php echo "$total_cash_collection_from_customer_payment + $total_cash_collection_from_advance_payment = $total_cash_collection"; ?></th>
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Bank Collection (General payment + Advance Payment)</td>
-                                    <th class="taka_formate"><?php echo "$total_bank_collection_from_customer_payment + $total_bank_collection_from_advance_payment = $total_bank_collection"; ?></th>
-                                </tr>
-                            </table>
 
 
                             <h3 class="text-center">Master Reconcilation</h3>
-                            <table class="table table-bordered report">
+
+                            <table width="100%">
                                 <tr>
-                                    <td width="50%">Total Cash Collection</td>
-                                    <th class="taka_formate"><?php echo ($total_cash_2_bank_trasfer + $total_cash_2_expense_adjustment + $closing->ending_cash - $opening->opening_cash); ?></th>
-                                    <th></th>                            
+                                    <td width="50%">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Cash Opening</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash; ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Cash Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_collection ?></th>
+                                            </tr>
+                                            <tr style="border-top: 2px solid;">
+                                                <td>Total</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash + $total_cash_collection ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Cash to Bank</td>
+                                                <th style="text-align: center">(-)<span class="taka_formate"><?php echo $total_cash_2_bank_trasfer ?></span></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Cash to Expense Adjustment</td>
+                                                <th style="text-align: center">(-)<span class="taka_formate"><?php echo $total_cash_2_expense_adjustment ?></span></th>
+                                            </tr>
+                                            <tr style="border-top: 2px solid;">
+                                                <td>Cash Closeing</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_cash + $total_cash_collection - $total_cash_2_bank_trasfer - $total_cash_2_expense_adjustment); ?></th>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="50%" style="border-left: 2px solid">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Bank Opening</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance; ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Bank Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_bank_collection ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Cash to Bank</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_2_bank_trasfer ?></th>
+                                            </tr>
+                                            <tr style="border-top: 2px solid;">
+                                                <td>Total</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance + $total_bank_collection + $total_cash_2_bank_trasfer ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Bank withdraw</td>
+                                                <th style="text-align: center">(-)<span class="taka_formate"><?php echo $total_bank_withdraw ?></span></th>
+                                            </tr>
+                                            <tr style="border-top: 2px solid;">
+                                                <td>Bank Closeing</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_bank_balance + $total_bank_collection + $total_cash_2_bank_trasfer - $total_bank_withdraw); ?></th>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
+                            </table>
+                            <br>
+                            <table width="100%">
                                 <tr>
-                                    <td width="50%">Total Bank Collection</td>
-                                    <th class="taka_formate"><?php echo ($total_bank_withdraw + $closing->closing_bank_balance - $opening->opening_bank_balance); ?></th>
-                                    <th></th>                            
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Expense</td>
-                                    <th></th>                            
-                                    <th class="taka_formate"><?php echo $total_expence; ?></th>
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Collection</td>
-                                    <th class="taka_formate"><?php echo $total_collection_cash_bank; ?></th>
-                                    <th class="taka_formate"><?php echo $total_expence; ?></th>
+                                    <td>Total Expence</td>
+                                    <th class="taka_formate" style="text-align: center"><?php echo $total_expence ?></th>
+                                    <td style="text-align: center">
+                                        ( <strong>Notes :</strong>Total expense adjustment amount should not be greater than total expense amount )
+                                    </td>
                                 </tr>
                             </table>
                             <div style="overflow: auto">
@@ -206,28 +238,6 @@
 
                                 </table>
                             </div>
-
-                            <table class="table table-bordered report" style="margin-top: 10px;">
-                                <tr>
-                                    <td width="50%">Total Cash to Bank Transfer</td>
-                                    <th class="taka_formate"><?php echo $total_cash_2_bank_trasfer; ?></th>
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Cash to Expense Adjustment</td>
-                                    <th class="taka_formate"><?php echo $total_cash_2_expense_adjustment; ?></th>
-                                </tr>
-                                <tr>
-                                    <td width="50%">Total Bank Withdraw</td>
-                                    <th class="taka_formate"><?php echo $total_bank_withdraw; ?></th>
-                                </tr>
-                            </table>
-                            <br>
-                            <strong>Notes :</strong>
-                            <ol>
-                                <li>Total expense adjustment amount should not be greater than total expense amount</li>
-                                <li>Total Cash Collection = ( Closing Cash - Opening Cash ) + Total Cash to Bank Transfer + Total Cash to Expense Adjustment</li>
-                                <li>Total Bank Collection = ( Closing Bank - Opening Bank ) + Total Bank Withdraw</li>
-                            </ol>
                         </div>
                     </div>
                 <?php } ?>

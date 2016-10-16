@@ -71,6 +71,10 @@ class Report extends CI_Controller {
 //        $data['today_customer_advance_payment_bank'] = $this->Advance_payment_model->today_customer_advance_payment_bank();
 //        $data['totay_total_cash_collection'] = $this->Advance_payment_model->today_customer_advance_payment__cash();
 
+
+        $data['today_total_cash_2_bank_trasfer'] = $this->Report_model->total_cash_2_bank_trasfer($from, $to);
+        $data['today_total_cash_2_expense_adjustment'] = $this->Report_model->total_cash_2_expense_adjustment($from, $to);
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Cash box';
@@ -148,6 +152,7 @@ class Report extends CI_Controller {
 
             $total = $this->Report_model->total_sales($from, $to);
             $data['total_sale'] = (!empty($total->total_amount)) ? $total->total_amount : 0;
+            $data['total_sale_against_due'] = (!empty($total->total_due)) ? $total->total_due : 0;
 
             $this->load->model('misc/Customer_payment');
             $total_payments_against_sale = $this->Customer_payment->total_payments_against_sale($from, $to);
@@ -176,7 +181,9 @@ class Report extends CI_Controller {
             $data['total_cash_collection_from_advance_payment'] = $this->Report_model->total_cash_collection_from_advance_payment($from, $to);
             $data['total_bank_collection_from_advance_payment'] = $this->Report_model->total_bank_collection_from_advance_payment($from, $to);
 
-            $data['total_cash_collection'] = $data['total_cash_collection_from_customer_payment'] + $data['total_cash_collection_from_advance_payment'];
+            $data['total_old_book_transfer'] = $this->Report_model->total_old_book_transfer($from, $to);
+
+            $data['total_cash_collection'] = $data['total_cash_collection_from_customer_payment'] + $data['total_cash_collection_from_advance_payment'] + $data['total_old_book_transfer'];
             $data['total_bank_collection'] = $data['total_bank_collection_from_customer_payment'] + $data['total_bank_collection_from_advance_payment'];
             $data['total_collection_cash_bank'] = $data['total_cash_collection'] + $data['total_bank_collection'];
 
