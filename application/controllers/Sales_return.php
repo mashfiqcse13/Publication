@@ -62,8 +62,8 @@ class Sales_return extends CI_Controller {
 
         $data['memo_dropdown'] = $this->Sales_return_m->memo_dropdown();
 
-        if ($this->input->post('search_memo') == true) {
-            $total_sales_id = $this->input->post('memo_id');
+        if ($this->input->get('search_memo') == true) {
+            $total_sales_id = $this->input->get('memo_id');
             $data['search_memo'] = $this->Sales_return_m->get_memos($total_sales_id);
 
             if ($data['search_memo'] == true) {
