@@ -204,7 +204,7 @@
             }
             footer.main-footer {
                 left: 0!important;
-                position: absolute;
+                position: fixed;
                 bottom: 0;
                 width: 100%;
                 margin-left: 0px;
