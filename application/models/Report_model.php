@@ -246,8 +246,8 @@ class Report_model extends CI_Model {
 
     function total_bank_withdraw($from, $to) {
         $this->db->select_sum('amount_transaction');
-        $this->db->from('bank_management');
-        $this->db->where('id_transaction_type', 2);
+        $this->db->from('bank_management')->join("bank_management_status","bank_management.id_bank_management = bank_management_status.id_bank_management","left");
+        $this->db->where('id_transaction_type', 2)->where('bank_management_status.approval_status', 1);
         if ($from != '') {
             $condition = "DATE(transaction_date) BETWEEN '$from' AND '$to'";
 //            echo $condition; exit();
