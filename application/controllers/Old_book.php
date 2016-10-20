@@ -85,6 +85,37 @@ class Old_book extends CI_Controller {
         $data['Title'] = 'Old Book Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_return', $data);
     }
+    
+    
+        function total_report() {
+            
+        $date_range = $this->input->post('date_range'); 
+        
+        $btn=$this->input->post('btn_submit');
+        
+        $id_customer=$this->input->post('id_customer');
+        
+        if (isset($btn)) {
+            
+            $data['report'] = $this->Old_book_model->get_total_info($date_range);
+            $data['items'] = $this->Old_book_model->get_all_item();
+           // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
+//            echo '<pre>';
+//            print_r($data['report']);
+//            exit();
+            
+            $data['date_range']=$date_range;
+            
+        }
+        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
+
+        
+        $data['memo_list'] = $this->memo_list();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Old Book Dashboard';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_report', $data);
+    }
 
     function ajax_url() {
 //        echo json_encode($_POST);

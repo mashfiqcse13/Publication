@@ -311,10 +311,10 @@ class Sales_model extends CI_Model {
             'class' => 'text-right taka_formate'
         ));
         
-
+         $last_due = $this->Customer_due->current_total_due($total_sales_details->id_customer) - $this->get_party_advanced_balance($total_sales_details->id_customer);
 
         $this->table->add_row(array(
-            'data' => 'সর্বশেষ বাকি : ' . $this->Common->taka_format($this->Customer_due->current_total_due($total_sales_details->id_customer)),
+            'data' => 'সর্বশেষ বাকি : ' . $this->Common->taka_format($last_due),
             'class' => 'text-bold',
             'colspan' => 2
                 ), array(
@@ -375,6 +375,13 @@ class Sales_model extends CI_Model {
             $name = $row->name;
         }
         return $name;
+    }
+    
+    function get_party_advanced_balance($id){
+        $sql = $this->db->get_where('party_advance','id_customer='.$id)->result();
+        foreach($sql as $row){
+            return $row->balance;
+        }
     }
 
     function get_total_sales_info($from, $to, $id_customer, $filter_district) {
