@@ -154,29 +154,37 @@ class Sales_return_m extends CI_Model {
 
                 }
                 
-               foreach($memo_ID as $key => $val){
-                   $memo_id=$memo_ID[$key];
-               }
+                foreach($memo_ID as $key => $val){
+                    $memo_id=$memo_ID[$key];
+                }
                 
-               $memo_due=$this->current_memo_due($memo_id);
-                           
-                if($memo_due >= $values){
-               
-                    
-                    //update sales total sales table
-                $this->db->query("UPDATE `sales_total_sales` "
-                      . "SET `sub_total`=sub_total-$values, "
-                      . "`total_amount`=total_amount-$values, "
-                      . " total_due = total_due-$values"
-                      . " WHERE id_total_sales=$memo_id");
+                  
                 
-                $this->customer_due->reduce($contact_ID,$values);
-                $this->session->set_userdata('only_due_clear',$values);
+                $memo_due=$this->current_memo_due($memo_id);
+
+                   if($memo_due >= $values){
+
+
+                             //update sales total sales table
+                         $this->db->query("UPDATE `sales_total_sales` "
+                               . "SET `sub_total`=sub_total-$values, "
+                               . "`total_amount`=total_amount-$values, "
+                               . " total_due = total_due-$values"
+                               . " WHERE id_total_sales=$memo_id");
+
+                         $this->customer_due->reduce($contact_ID,$values);                         
+                         $this->update_payment($memo_id,$values);
+                         $this->session->set_userdata('only_due_clear',$values);
 
                 }else{
+                    
+                    
                     $update_value=$values-$memo_due;
                     
+                    $this->session->set_userdata('due',$memo_due);
+                    
                     //update sales total sales table
+                    
                      $this->db->query("UPDATE `sales_total_sales` "
                       . "SET `sub_total`=sub_total-$values, "
                       . "`total_amount`=total_amount-$values, "
@@ -189,8 +197,9 @@ class Sales_return_m extends CI_Model {
                         
                         
                          $this->customer_due->reduce($contact_ID,$memo_due);
-                         if($update_value > 0){
-                            $this->advance_payment_model->payment_add($contact_ID, $update_value, 2);
+                         if($update_value > 0){    
+                             $this->advance_payment_model->payment_add($contact_ID, $update_value, 2);
+                             $this->update_payment($memo_id,$values,$contact_ID);
                             //$this->cash->reduce($update_value);
                          }
                      
@@ -222,13 +231,76 @@ class Sales_return_m extends CI_Model {
                         $this->db->where('id_item',$book_ID[$key]);
                         $this->db->update('sales', $data_delete);
                    
-                }
-                
-              
-              
+                }  
 
               return $id;
               
+      }
+      
+      function  update_payment($memo_id,$values,$contact_ID=''){
+          $value=$values;
+          
+          $list = $this->db->get_where("customer_payment" , "id_total_sales = $memo_id")->result();
+          
+          foreach($list as $row){
+              
+              if($row->id_payment_method==2){
+                  $value = $this->update_payment_log($memo_id,2,$value,$row->paid_amount,$contact_ID);                  
+              }
+              if($row->id_payment_method==1){
+                  $value = $this->update_payment_log($memo_id,1,$value,$row->paid_amount,$contact_ID);
+              }
+               if($row->id_payment_method==3){
+                  $value = $this->update_payment_log($memo_id,3,$value,$row->paid_amount,$contact_ID);
+              }
+              
+          }
+           
+              
+        return true;
+      }
+      
+      function update_payment_log($memo_id,$payment_method_id,$value,$paid_amount,$contact_ID){
+          
+//          if($this->session->userdata('due')){
+//              $due = $this->session->userdata('due');
+//          }else{
+//              $due = 0;
+//          }
+//          
+           
+          
+          if($paid_amount >= $value){
+              $value_update = $value;              
+              $value = 0;
+          }else{
+              $value_update = $paid_amount;
+              $value = $value - $paid_amount;
+          }
+          
+//          if($value_update == $due){
+//              $advanced_value = 0;
+//              $this->session->set_userdata('due',0);
+//              
+//          }elseif($value_update < $due ){
+//             $advanced_value = 0;
+//             $due  = $due - $value_update;
+//             $this->session->set_userdata('due',$due);
+//             
+//          }elseif($value_update > $due){
+//              $advanced_value = $value_update  - $due;
+//               $this->session->set_userdata('due',0);
+//          }
+//          
+          if($value_update > 0 ){
+                
+                $this->db->query("UPDATE `customer_payment` "
+                            . "SET `paid_amount`=paid_amount-$value_update "
+                            . " WHERE id_total_sales=$memo_id and id_payment_method = $payment_method_id");         
+                return $value;
+          }else{
+              return 0;
+          }
       }
       
       function list_return_item($start,$end){
