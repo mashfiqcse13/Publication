@@ -73,7 +73,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            
+
             <!--Today Advance Deduction Against Sale-->
             <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
@@ -117,12 +117,12 @@
                 </div>
             </div>
             <!--Today Previous Due Collection-->
-            <div class="col-lg-4 col-xs-6">
+            <div class="col-lg-4 col-xs-6" title="(Cash : <?php echo $previous_due_collection_by_cash; ?> TK ) ( Bank : <?php echo $previous_due_collection_by_bank; ?> TK ) ( Old Book Sell : <?php echo $previous_due_collection_by_old_book_sell; ?> TK )">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate"><?php echo $today_total_due_collection; ?> TK</h3>
-                        <p> (Cash : Null ) ( Bank : Null )<br>  Previous Due Collection </p>
+                        <h3 class="text-right faka_formate"><?php echo $previous_due_collection; ?> TK</h3>
+                        <p> Previous Due Collection </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
@@ -133,12 +133,12 @@
 
 
             <!--Today Total Advance Collection ( Without returned book value )-->
-            <div class="col-lg-4 col-xs-6">
+            <div class="col-lg-4 col-xs-6" title="(Cash : <?php echo $total_advance_collection_without_book_sale_cash; ?> TK ) ( Bank : <?php echo $total_advance_collection_without_book_sale_bank; ?> TK )">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $totay_total_advance_collection_without_book_sale; ?> TK</h3>
-                        <p> (Cash : Null ) ( Bank : Null )<br>Total Advance Collection</p>
+                        <p> Total Advance Collection</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
@@ -190,7 +190,7 @@
                     <a class="small-box-footer" href="#">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
- 
+
             <!--Today Total Expense-->
             <div class="col-lg-4 col-xs-6 ">
                 <!-- small box -->
