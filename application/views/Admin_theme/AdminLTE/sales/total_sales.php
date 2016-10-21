@@ -147,11 +147,12 @@
                                         <th>Memo No</th>
                                         <th>Customer Name</th>
                                         <th>Sub Total</th>
-                                        <th>Discount Amount</th>
+                                        <th>Discount</th>
                                         <th>Total Amount</th>
-                                        <th>Cash Paid</th>
-                                        <th>Bank Paid</th>
+                                        <th>Cash</th>
+                                        <th>Bank</th>
                                         <th>Advance Deduction</th>
+                                        <th>Due Paid by Old Book sale</th>
                                         <th>Total Paid</th>
                                         <th>Total Due</th>
                                         <th>Packeting Cost On Due</th>
@@ -168,6 +169,7 @@
                                     $sum_cash_paid = 0;
                                     $sum_bank_paid = 0;
                                     $sum_customer_advance_paid = 0;
+                                    $sum_customer_old_book_sell = 0;
                                     $sum_total_paid = 0;
                                     $sum_total_due = 0;
                                     $sum_bill_for_packeting = 0;
@@ -179,26 +181,28 @@
                                         $sum_cash_paid += $sales->cash_paid;
                                         $sum_bank_paid += $sales->bank_paid;
                                         $sum_customer_advance_paid += $sales->customer_advance_paid;
+                                        $sum_customer_old_book_sell += $sales->customer_old_book_sell;
                                         $sum_total_paid += $sales->total_paid;
                                         $sum_total_due += $sales->total_due;
                                         $sum_bill_for_packeting += $sales->bill_for_packeting;
                                         $sum_slip_expense_amount += $sales->slip_expense_amount;
                                         ?>
                                         <tr>
-                                            <td><?php echo $sales->id_total_sales; ?></td>
-                                            <td><?php echo $sales->name; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->sub_total; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->discount_amount; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->total_amount; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->cash_paid; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->bank_paid; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->customer_advance_paid; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->total_paid; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->total_due; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->bill_for_packeting; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->bill_for_packeting + $sales->total_due; ?></td>
-                                            <td class="text-right taka_formate"><?php echo $sales->slip_expense_amount; ?></td>
-                                            <td><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
+                                            <td title="Memo No"><?php echo $sales->id_total_sales; ?></td>
+                                            <td title="Customer Name" ><?php echo $sales->name; ?></td>
+                                            <td title="Sub Total" class="text-right taka_formate"><?php echo $sales->sub_total; ?></td>
+                                            <td title="Discount" class="text-right taka_formate"><?php echo $sales->discount_amount; ?></td>
+                                            <td title="Total Amount" class="text-right taka_formate"><?php echo $sales->total_amount; ?></td>
+                                            <td title="Cash" class="text-right taka_formate"><?php echo $sales->cash_paid; ?></td>
+                                            <td title="Bank"class="text-right taka_formate"><?php echo $sales->bank_paid; ?></td>
+                                            <td title="Advance Deduction"class="text-right taka_formate"><?php echo $sales->customer_advance_paid; ?></td>
+                                             <td title="Due Paid by Old Book sale"class="text-right taka_formate"><?php echo $sales->customer_old_book_sell; ?></td>
+                                             <td title="Total Paid"class="text-right taka_formate"><?php echo $sales->total_paid; ?></td>
+                                             <td title="Total Due"class="text-right taka_formate"><?php echo $sales->total_due; ?></td>
+                                             <td title="Packeting Cost On Due" class="text-right taka_formate"><?php echo $sales->bill_for_packeting; ?></td>
+                                             <td title="Accurate Due" class="text-right taka_formate"><?php echo $sales->bill_for_packeting + $sales->total_due; ?></td>
+                                            <td title="Slip Expense" class="text-right taka_formate"><?php echo $sales->slip_expense_amount; ?></td>
+                                            <td title="Issue Date  (D/M/Y)"><?php echo date('d/m/Y', strtotime($sales->issue_date)); ?></td>
                                         </tr>
                                         <?php
                                     }
@@ -212,7 +216,9 @@
                                         <td class="text-right taka_formate"><?php echo $sum_cash_paid; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_bank_paid; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_customer_advance_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_customer_old_book_sell; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_total_paid; ?></td>
+                                        <td class="text-right taka_formate"><?php echo $sum_customer_advance_paid; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_total_due; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting + $sum_total_due; ?></td>

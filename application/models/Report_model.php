@@ -246,7 +246,7 @@ class Report_model extends CI_Model {
 
     function total_bank_withdraw($from, $to) {
         $this->db->select_sum('amount_transaction');
-        $this->db->from('bank_management')->join("bank_management_status","bank_management.id_bank_management = bank_management_status.id_bank_management","left");
+        $this->db->from('bank_management')->join("bank_management_status", "bank_management.id_bank_management = bank_management_status.id_bank_management", "left");
         $this->db->where('id_transaction_type', 2)->where('bank_management_status.approval_status', 1);
         if ($from != '') {
             $condition = "DATE(transaction_date) BETWEEN '$from' AND '$to'";
@@ -268,6 +268,79 @@ class Report_model extends CI_Model {
         }
         $result = $this->db->get()->row();
         return empty($result->price) ? 0 : $result->price;
+    }
+
+    function previous_due_collection($from, $to) {
+        $sql = "SELECT sum(`paid_amount`) as previous_due_collection FROM `customer_payment` 
+            where DATE(`payment_date`) BETWEEN '$from' AND  '$to' 
+            and `due_payment_status` = 1
+            and `id_total_sales` NOT in ( 
+                    SELECT  `id_total_sales` 
+                    FROM  `sales_total_sales` 
+                    WHERE DATE(  `issue_date` ) BETWEEN '$from' AND  '$to' 
+            )";
+        $result = $this->db->query($sql)->row();
+        return empty($result->previous_due_collection) ? 0 : $result->previous_due_collection;
+    }
+
+    function previous_due_collection_by_cash($from, $to) {
+        $sql = "SELECT sum(`paid_amount`) as previous_due_collection_by_cash FROM `customer_payment` 
+            where DATE(`payment_date`) BETWEEN '$from' AND  '$to' 
+            and `due_payment_status` = 1 AND `id_payment_method` = 1
+            and `id_total_sales` NOT in ( 
+                    SELECT  `id_total_sales` 
+                    FROM  `sales_total_sales` 
+                    WHERE DATE(  `issue_date` ) BETWEEN '$from' AND  '$to' 
+            )";
+        $result = $this->db->query($sql)->row();
+        return empty($result->previous_due_collection_by_cash) ? 0 : $result->previous_due_collection_by_cash;
+    }
+
+    function previous_due_collection_by_bank($from, $to) {
+        $sql = "SELECT sum(`paid_amount`) as previous_due_collection_by_bank FROM `customer_payment` 
+            where DATE(`payment_date`) BETWEEN '$from' AND  '$to' 
+            and `due_payment_status` = 1 AND `id_payment_method` = 3
+            and `id_total_sales` NOT in ( 
+                    SELECT  `id_total_sales` 
+                    FROM  `sales_total_sales` 
+                    WHERE DATE(  `issue_date` ) BETWEEN '$from' AND  '$to' 
+            )";
+        $result = $this->db->query($sql)->row();
+        return empty($result->previous_due_collection_by_bank) ? 0 : $result->previous_due_collection_by_bank;
+    }
+
+    function previous_due_collection_by_old_book_sell($from, $to) {
+        $sql = "SELECT sum(`paid_amount`) as previous_due_collection_by_old_book_sell FROM `customer_payment` 
+            where DATE(`payment_date`) BETWEEN '$from' AND  '$to' 
+            and `due_payment_status` = 1 AND `id_payment_method` = 4
+            and `id_total_sales` NOT in ( 
+                    SELECT  `id_total_sales` 
+                    FROM  `sales_total_sales` 
+                    WHERE DATE(  `issue_date` ) BETWEEN '$from' AND  '$to' 
+            )";
+        $result = $this->db->query($sql)->row();
+        return empty($result->previous_due_collection_by_old_book_sell) ? 0 : $result->previous_due_collection_by_old_book_sell;
+    }
+
+    function sale_info($from, $to) {
+        $sql = "SELECT SUM(`total_amount`) as `total_sale`, 
+            SUM(`cash_paid`) as `sale_against_cash_collection`, 
+            SUM(`bank_paid`) as `sale_against_bank_collection`, 
+            SUM(`customer_advance_paid`) as `sale_against_advance_deduction`, 
+            SUM(`customer_old_book_sell`) as `sale_against_due_deduction_by_old_book_sell`, 
+            SUM(`total_due`) as `sale_against_due` 
+            FROM `view_sales_total_sales_with_payment_details`
+            WHERE DATE(  `issue_date` ) BETWEEN '$from' AND  '$to' ";
+        $result = $this->db->query($sql)->row();
+        $result->total_sale = empty($result->total_sale) ? 0 : $result->total_sale;
+        $result->sale_against_cash_collection = empty($result->sale_against_cash_collection) ? 0 : $result->sale_against_cash_collection;
+        $result->sale_against_bank_collection = empty($result->sale_against_bank_collection) ? 0 : $result->sale_against_bank_collection;
+        $result->sale_against_advance_deduction = empty($result->sale_against_advance_deduction) ? 0 : $result->sale_against_advance_deduction;
+        $result->sale_against_due_deduction_by_old_book_sell = empty($result->sale_against_due_deduction_by_old_book_sell) ? 0 : $result->sale_against_due_deduction_by_old_book_sell;
+        $result->sale_against_due = empty($result->sale_against_due) ? 0 : $result->sale_against_due;
+        $result->calculated_total_sale = $result->sale_against_cash_collection + $result->sale_against_bank_collection +
+                $result->sale_against_advance_deduction + $result->sale_against_due_deduction_by_old_book_sell + $result->sale_against_due;
+        return $result;
     }
 
 }

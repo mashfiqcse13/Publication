@@ -380,7 +380,7 @@ class Sales_model extends CI_Model {
     function get_total_sales_info($from, $to, $id_customer, $filter_district) {
         $from = date('Y-m-d', strtotime($from));
         $to = date('Y-m-d', strtotime($to));
-        $this->db->select('sales_total_sales.*,customer.*,view_customer_paid_marged.cash_paid,view_customer_paid_marged.bank_paid,view_customer_paid_marged.customer_advance_paid');
+        $this->db->select('sales_total_sales.*,customer.*,view_customer_paid_marged.cash_paid,view_customer_paid_marged.bank_paid,view_customer_paid_marged.customer_advance_paid,view_customer_paid_marged.customer_old_book_sell');
         $this->db->from('sales_total_sales');
         $this->db->join('view_customer_paid_marged', 'sales_total_sales.id_total_sales = view_customer_paid_marged.id_total_sales', 'left')
                 ->join('customer', 'sales_total_sales.id_customer = customer.id_customer', 'left');
