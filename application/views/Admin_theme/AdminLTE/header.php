@@ -62,6 +62,9 @@
                 border-radius: 0;
                 height: 35px;
             }
+            .wrapper{
+                padding-bottom:50px;
+            }
             body {
                 text-transform: capitalize;
             } 

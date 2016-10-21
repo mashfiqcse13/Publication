@@ -678,6 +678,55 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
         return $query->result();
     }
     
+    
+    function get_all_item(){
+        return $this->db->get("items")->result_array();
+    }
+     function get_total_info( $date_range='') {
+        $column = 'old_book_return_total.issue_date';
+        $rebind_date = 'old_book_transfer_total.date_transfer';
+        
+        $date_receive = $this->get_date_range($date_range,$column);
+        $date_rebind = $this->get_date_range($date_range,$rebind_date);
+        
+        if( $date_receive == ''){            
+            $con = ' 1=1 ';
+        }
+        
+        if($date_rebind==''){
+            $con1 = ' 1=1 ';
+        }
+        
+        if($date_rebind !=''){
+            $con1 = "  $date_rebind";
+        }
+        
+        if ($date_receive != '') {            
+            
+            $con = "  $date_receive";
+            
+        }
+        
+        $data['rebind'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
+                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                where type_transfer=2 AND $con1
+                                                group by id_item")->result_array();
+        
+        $data['sale'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
+                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                where type_transfer=1 AND $con1 
+                                                group by id_item")->result_array();
+        
+        
+        $data['receive'] = $this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+LEFT JOIN items ON items.id_item=old_book_return_items.id_item WHERE $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc")->result_array();
+        return $data;
+    }
+    
+//    function call_rebind_report($con){
+//        
+//    }
+    
      //SELECT sum(quantity_item),date_transfer,sum(price) FROM `old_book_transfer_total` 
      //left JOIN old_book_transfer_items ON 
      //old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total

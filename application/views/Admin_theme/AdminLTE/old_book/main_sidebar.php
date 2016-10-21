@@ -19,6 +19,7 @@
            <li><?php echo anchor('old_book/old_book_dashboard', '<i class="fa fa-plus-circle"></i>  <span>Old Book Dashboard</span>'); ?></li>
            <li><?php echo anchor('old_book/return_book_sale', '<i class="fa fa-plus-circle"></i>  <span>New Entry of Rebined/Sale</span>'); ?></li>
            <li><?php echo anchor('old_book/return_book_sale_list', '<i class="fa fa-plus-circle"></i>  <span>Rebine/Sale Dashboard</span>'); ?></li>
+           <li><?php echo anchor('old_book/total_report', '<i class="fa fa-plus-circle"></i>  <span>Total Report</span>'); ?></li>
 
             
             <?php $this->load->view($this->config->item('ADMIN_THEME') . 'sidebar_common'); ?>
