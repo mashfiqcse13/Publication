@@ -46,6 +46,7 @@ class Report extends CI_Controller {
         $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection();
         $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
         $data['advance_payment_balance'] = $this->Advance_payment_model->total_advance_payment_balance();
+        $data['due_payment_by_old_book']=$this->Advance_payment_model->due_payment_by_old_book();
 
         $today_total_payment_against_sale = $this->Customer_payment->today_total_payment_against_sale();
         $data['today_total_cash_paid_against_sale'] = $today_total_payment_against_sale['today_total_cash_paid_against_sale'];
