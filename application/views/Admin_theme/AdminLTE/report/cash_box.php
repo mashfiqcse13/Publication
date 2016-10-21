@@ -93,7 +93,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3 class="text-right faka_formate"><?php echo $due_payment_by_old_book; ?> TK</h3>
+                        <h3 class="text-right faka_formate"><?php echo $sale_info->sale_against_due_deduction_by_old_book_sell; ?> TK</h3>
                         <p> Due Payment By Old Book Sale </p>
                     </div>
                     <div class="icon">
