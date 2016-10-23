@@ -46,7 +46,7 @@ class Report extends CI_Controller {
         $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection();
         $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
         $data['advance_payment_balance'] = $this->Advance_payment_model->total_advance_payment_balance();
-        
+
 
         $today_total_payment_against_sale = $this->Customer_payment->today_total_payment_against_sale();
         $data['today_total_cash_paid_against_sale'] = $today_total_payment_against_sale['today_total_cash_paid_against_sale'];
@@ -55,9 +55,9 @@ class Report extends CI_Controller {
 
         $from = date('Y-m-d', now());
         $to = date('Y-m-d', now());
-        
-        
-        $data['sale_info'] = $this->Report_model->sale_info($from,$to);
+
+
+        $data['sale_info'] = $this->Report_model->sale_info($from, $to);
 //        foreach($old_book_sale->result() as $row){
 //            $data['due_payment_by_old_book']=$row->Sale_against_due_deduction_by_old_book_sell;
 //        }
@@ -69,7 +69,9 @@ class Report extends CI_Controller {
 
         $data['today_total_due_collection'] = $this->Customer_payment->today_total_due_collection();
 
-        $data['totay_total_advance_collection_without_book_sale'] = $this->Customer_payment->totay_total_advance_collection_without_book_sale();
+        $data['totay_total_advance_collection_without_book_sale'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
+        $data['total_advance_collection_without_book_sale_cash'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Cash');
+        $data['total_advance_collection_without_book_sale_bank'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Bank');
 
         //$data['$totay_total_collection_cash_bank'] =
 
@@ -81,6 +83,11 @@ class Report extends CI_Controller {
 
         $data['today_total_cash_2_bank_trasfer'] = $this->Report_model->total_cash_2_bank_trasfer($from, $to);
         $data['today_total_cash_2_expense_adjustment'] = $this->Report_model->total_cash_2_expense_adjustment($from, $to);
+
+        $data['previous_due_collection'] = $this->Report_model->previous_due_collection($from, $to);
+        $data['previous_due_collection_by_cash'] = $this->Report_model->previous_due_collection_by_cash($from, $to);
+        $data['previous_due_collection_by_bank'] = $this->Report_model->previous_due_collection_by_bank($from, $to);
+        $data['previous_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from, $to);
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
