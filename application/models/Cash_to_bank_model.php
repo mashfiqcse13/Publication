@@ -107,5 +107,22 @@ class Cash_to_bank_model extends CI_Model {
         $this->cash->reduce($amount);
         return true;
     }
+    
+    
+    
+    
+    function save_info_for_owner($post_array) {
+        $this->load->model('misc/cash', 'cash');
+        
+        $amount = $post_array['transfered_amount'];
+        $data['cash_amount'] = $amount;
+        $data['transfer_date'] = date('Y-m-d H:i:s');
+        $this->db->insert('cash_to_owner_register', $data);
+
+//        bank management status
+        $this->cash->reduce($amount);
+
+        return true;
+    }
 
 }
