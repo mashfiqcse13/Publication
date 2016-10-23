@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -208,9 +207,18 @@ class User_access_model extends ci_model {
 
     function go_home() {
         $all_allowed_access_area_coma_separated = implode(",", $this->User_access_model->get_all_access_area_by_user_id());
-        $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
-        $top_menu_item = $this->db->query($sql)->result();
-        redirect($top_menu_item[0]->ci_url);
+        if (empty($all_allowed_access_area_coma_separated)) {
+            ?>
+            <H1>
+                This user don't have sufficient permission to access this site. <?php echo anchor('login/logout', 'Click Here To Continue'); ?>
+            </H1>
+            <?php
+            die();
+        } else {
+            $sql = "SELECT * FROM  `user_access_area` WHERE  `serial_id` != 0 and `id_user_access_area` in ($all_allowed_access_area_coma_separated) ORDER BY  `serial_id` ASC ";
+            $top_menu_item = $this->db->query($sql)->result();
+            redirect($top_menu_item[0]->ci_url);
+        }
     }
 
 }
