@@ -47,8 +47,8 @@ class Cash_to_owner extends CI_Controller {
         $this->User_access_model->check_user_access(32, 'cash_to_bank/path_selector');
         $crud = new grocery_CRUD();
         $crud->set_table('cash_to_owner_register')
-                ->set_subject('Cash to owner')->display_as('cash_amount','Transfered Amount')
-                ->order_by('id_cash_to_owner', 'desc')
+                ->set_subject('Cash to owner')->display_as('cash_amount', 'Transfered Amount')
+                ->order_by('id_cash_to_owner_register', 'desc')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_read();

@@ -138,7 +138,7 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $totay_total_advance_collection_without_book_sale; ?> TK</h3>
-                        <p> Total Advance Collection</p>
+                        <p> Total Advance Collection (Without Book Sell)</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
