@@ -104,7 +104,7 @@
                                 </tbody>
                             </table>
 
-                            <h3 class="text-center">Due collection</h3>
+                            <h3 class="text-center">Due & Advance collection</h3>
                             <table class="table table-bordered report">
                                 <tbody>
                                     <tr>
@@ -121,26 +121,15 @@
                                         <th class="taka_formate"><?php echo $previous_due_collection_by_old_book_sell; ?></th>
                                         <th class="taka_formate"><?php echo $previous_due_collection; ?></th>
                                     </tr>
-                                </tbody>
-                            </table>
-                            <h3 class="text-center">Advance collection</h3>
-                            <table class="table table-bordered report">
-                                <tbody>
-                                    <tr>
-                                        <td width="50%"></td>
-                                        <td>Cash</td>
-                                        <td>Bank</td>
-                                        <td>Total</td>
-                                    </tr>
                                     <tr>
                                         <td width="50%">Total Advance Collection ( Without returned book value )</td>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_cash; ?></th>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_bank; ?></th>
+                                        <td>Not Applicable</td>
                                         <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
                                     </tr>
                                 </tbody>
                             </table>
-
 
 
                             <h3 class="text-center">Master Reconcilation</h3>
@@ -179,7 +168,7 @@
                                             </tr>
                                         </table>
                                     </td>
-                                    <td width="50%" style="border-left: 2px solid">
+                                    <td style="border-left: 2px solid">
                                         <table class="table">
                                             <tr>
                                                 <td>Bank Opening</td>
@@ -209,7 +198,6 @@
                                     </td>
                                 </tr>
                             </table>
-                            <br>
                             <table width="100%">
                                 <tr>
                                     <td>Total Expence</td>

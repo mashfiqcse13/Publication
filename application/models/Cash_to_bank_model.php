@@ -41,6 +41,16 @@ class Cash_to_bank_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    function get_all_cash_to_owner_info_by_date($from, $to) {
+        $date_from = date('Y-m-d H:i:s', strtotime($from));
+        $date_to = date('Y-m-d H:i:s', strtotime($to));
+        $this->db->select('*');
+        $this->db->from('cash_to_owner_register');
+        $date_range = "DATE(transfer_date) BETWEEN '$date_from' AND '$date_to'";
+        $this->db->where($date_range);
+        return $this->db->get()->result();
+    }
+
     function get_all_cash_to_expense_info_by_date($from, $to) {
         $date_from = date('Y-m-d H:i:s', strtotime($from));
         $date_to = date('Y-m-d H:i:s', strtotime($to));
@@ -107,13 +117,10 @@ class Cash_to_bank_model extends CI_Model {
         $this->cash->reduce($amount);
         return true;
     }
-    
-    
-    
-    
+
     function save_info_for_owner($post_array) {
         $this->load->model('misc/cash', 'cash');
-        
+
         $amount = $post_array['transfered_amount'];
         $data['cash_amount'] = $amount;
         $data['transfer_date'] = date('Y-m-d H:i:s');

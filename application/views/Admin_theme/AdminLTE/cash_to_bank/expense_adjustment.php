@@ -131,10 +131,8 @@
                                     <table  class ="table table-bordered table-hover" style="background: #fff;">
                                         <thead style="background: #DFF0D8;">
                                             <tr>
-            <!--                                        <th></th>-->
-                                                <!--<th>Bank Name</th>-->
-                                                <th>Transfer Amount</th>
                                                 <th>Date</th>
+                                                <th>Transfer Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -144,22 +142,16 @@
                                                 $sum_total_amount += $rep->transfered_amount;
                                                 ?>
                                                 <tr>
-            <!--                                                    <td><?php
-                                                    echo $rep->name_bank;
-                                                    echo ' - ' . $rep->account_number
-                                                    ?></td>-->
-                                                    <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                     <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
+                                                    <td  class=" taka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
                                                 </tr>
                                                 <?php
                                             }
                                             ?>
 
                                             <tr style="font-weight: bold">
-                                                <td class="text-right">Total : <?php echo $sum_total_amount; ?></td>
-                                                <td></td>
-
-
+                                                <td>Total : </td>
+                                                <td class="taka_formate"><?php echo $sum_total_amount; ?></td>
                                             </tr>
                                         </tbody>
                                     </table>

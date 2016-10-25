@@ -64,11 +64,11 @@
                                             <!--<input type="" id="amount" class="form-control" name="transfered_amount"/>-->
                                         </div>
                                     </div>
-                                    <?php if(isset($warning)){ ?>
-                                    <div class="alert alert-warning">
-                                        <p class="text-center text-info"><?=$warning?></p>
-                                    </div>
-                                    <?php }?>
+                                    <?php if (isset($warning)) { ?>
+                                        <div class="alert alert-warning">
+                                            <p class="text-center text-info"><?= $warning ?></p>
+                                        </div>
+                                    <?php } ?>
                                     <input type="submit"  value="Save" name="submit" id="submit" class="btn btn-success pull-right" style="margin-right: 10px"/>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                         </div>
                         <?php
                         if (!isset($date_range)) {
-                            if(isset($message)){
+                            if (isset($message)) {
                                 echo $success;
                             }
                             echo $glosary->output;
@@ -117,7 +117,7 @@
                             ?>
                             <div id="block">
                                 <div class="box-header">
-                                    <p class="text-center"><strong>Cash To Bank Report</strong></p>
+                                    <p class="text-center"><strong>Cash To Owner</strong></p>
                                     <?php
                                     if (!empty($date_range)) {
                                         echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
@@ -131,25 +131,19 @@
                                     <table  class ="table table-bordered table-hover" style="background: #fff;">
                                         <thead style="background: #DFF0D8;">
                                             <tr>
-            <!--                                        <th></th>-->
-                                                <th>Bank Name</th>
-                                                <th>Transfer Amount</th>
                                                 <th>Date</th>
+                                                <th>Transfer Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $sum_total_amount = 0;
-                                            foreach ($get_all_cash_to_bank_info as $rep) {
-                                                $sum_total_amount += $rep->transfered_amount;
+                                            foreach ($all_cash_to_owner_info_by_date as $rep) {
+                                                $sum_total_amount += $rep->cash_amount;
                                                 ?>
                                                 <tr>
-                                                    <td><?php
-                                                        echo $rep->name_bank;
-                                                        echo ' - ' . $rep->account_number
-                                                        ?></td>
-                                                    <td  class="text-right faka_formate"><?php echo 'TK ' . $rep->transfered_amount; ?></td>
-                                                    <td><?php echo date('d/m/Y', strtotime($rep->date)); ?></td>
+                                                    <td><?php echo date('d/m/Y', strtotime($rep->transfer_date)); ?></td>
+                                                    <td ><?php echo "<span class=\"taka_formate\">{$rep->cash_amount}</span> TK"; ?></td>
                                                 </tr>
                                                 <?php
                                             }
@@ -157,8 +151,7 @@
 
                                             <tr style="font-weight: bold">
                                                 <td>Total :</td>
-                                                <td><?php echo $sum_total_amount; ?></td>
-                                                <td></td>
+                                                <td  class="taka_formate"><?php echo $sum_total_amount; ?></td>
 
 
                                             </tr>
