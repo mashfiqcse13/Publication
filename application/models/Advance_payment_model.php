@@ -15,8 +15,8 @@ class Advance_payment_model extends CI_Model {
         $this->load->model('misc/Customer_payment');
         $current_total_due = $this->Customer_due->current_total_due($id_customer);
         if ($current_total_due > 0) {
-            
-            $data['due']= 'due_request';
+
+            $data['due'] = 'due_request';
             return $data;
             exit();
 //            if ($current_total_due >= $amount) {
@@ -47,7 +47,7 @@ class Advance_payment_model extends CI_Model {
         $this->db->query($sql);
 
         $this->payment_register($id_customer, $id_payment_method, $amount);
-        
+
         $insert_id = $this->db->insert_id();
 
         return $insert_id;
@@ -68,6 +68,29 @@ class Advance_payment_model extends CI_Model {
             $sql = "UPDATE `party_advance` SET 
                 `total_out` = `total_out`+'$amount', 
                 `balance` = `balance`- '$amount' 
+            WHERE `party_advance`.`id_customer` = $id_customer;";
+            $this->db->query($sql);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    function payment_revert($id_customer, $amount) {
+        // cheching if there is a row , otherwise creating it
+        $this->db->select('*')
+                        ->from('party_advance')
+                        ->where('id_customer', $id_customer)
+                        ->get()->result() or
+                $this->db->query("INSERT INTO `party_advance` 
+                    (`id_customer`, `total_in`, `total_out`, `balance`)
+                    VALUES ( '$id_customer', '0', '0', '0');");
+
+        $current = $this->current_payment_info($id_customer) or die("Failed to get current info");
+        if ($current->balance >= $amount) {
+            $sql = "UPDATE `party_advance` SET 
+                `total_in` = `total_in`- $amount, 
+                `balance` = `balance`- $amount 
             WHERE `party_advance`.`id_customer` = $id_customer;";
             $this->db->query($sql);
             return TRUE;
@@ -217,6 +240,26 @@ class Advance_payment_model extends CI_Model {
         } else {
             return $result[0]->today_customer_advance_payment__cash;
         }
+    }
+
+    function get_party_advance_payment_register_info($id_party_advance_payment_register) {
+        $party_advance_payment_register_info = $this->db->where('id_party_advance_payment_register', $id_party_advance_payment_register)->get('party_advance_payment_register')->result();
+
+        return (empty($party_advance_payment_register_info)) ? FALSE : $party_advance_payment_register_info[0];
+    }
+
+    function discard_advance_payment($id_party_advance_payment_register) {
+        $party_advance_payment_register_info = $this->get_party_advance_payment_register_info($id_party_advance_payment_register);
+        if ($party_advance_payment_register_info != FALSE) {
+            if ($this->payment_revert($party_advance_payment_register_info->id_customer, $party_advance_payment_register_info->amount_paid)) {
+                $query = "UPDATE `party_advance_payment_register` SET `amount_paid` = '0  WHERE `id_party_advance_payment_register`= $id_party_advance_payment_register '";
+                $this->db->query($query);
+                $this->load->model("misc/Master_reconcillation_model");
+                $this->Master_reconcillation_model->reduce_cash($party_advance_payment_register_info->amount_paid);
+                return true;
+            }
+        }
+        return FALSE;
     }
 
 }
