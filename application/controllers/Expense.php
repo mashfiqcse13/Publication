@@ -173,7 +173,7 @@ class Expense extends CI_Controller {
         $crud->unset_columns('status_name_expense');
 
 
-        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 5) {
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 6) {
             $crud->unset_delete()->unset_edit();
         }
 
@@ -203,7 +203,7 @@ class Expense extends CI_Controller {
         $crud->display_as('description_category_expense', 'Description Category Expense');
         $crud->order_by('id_category_expense', 'desc');
 
-        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 5) {
+        if ($this->uri->segment(4) >= 1 && $this->uri->segment(4) <= 6) {
             $crud->unset_delete()->unset_edit();
         }
 
