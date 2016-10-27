@@ -86,11 +86,10 @@
                                     <thead style="background: #DFF0D8;">
                                         <tr>
         <!--                                        <th></th>-->
+                                            <th>Expense Date</th>
                                             <th>Expense Name</th>
-                                            <th>Amount Expense</th>
-                                            <th>Date Expense</th>
-                                            <th>Description Expense</th>
-                                            <th>Total</th>
+                                            <th>Expense Description</th>
+                                            <th>Expense Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,21 +99,17 @@
                                             $sum_total_amount += $rep->amount_expense;
                                             ?>
                                             <tr>
-                                                <td><?php echo $rep->name_expense; ?></td>
-                                                <td class="taka_formate"><?php echo 'TK ' . $rep->amount_expense; ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($rep->date_expense)); ?></td>
+                                                <td><?php echo $rep->name_expense; ?></td>
                                                 <td><?php echo $rep->description_expense; ?></td>
-                                                <td><?php echo $sum_total_amount; ?></td>
+                                                <td class="taka_formate"><?php echo 'TK ' . $rep->amount_expense; ?></td>
                                             </tr>
                                             <?php
                                         }
                                         ?>
 
                                         <tr style="font-weight: bold">
-                                            <td>Total :</td>
-                                            <td class="taka_formate"><?php echo $sum_total_amount; ?></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="3" class="text-right">Total : </td>
                                             <td class="taka_formate"><?php echo $sum_total_amount; ?></td>
 
 
