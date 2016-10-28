@@ -55,6 +55,7 @@
                                             <label class="col-md-4 control-label" for="inputEmail3">Name :</label>
                                             <div class="col-md-8">
                                                 <p><?= $customer_details->name ?></p>
+                                                <input type="hidden" value="<?= $customer_details->id_customer ?>"/>
                                             </div>
                                         </div>                                        
 
@@ -82,7 +83,7 @@
                                                 <p><?= $customer_details->phone ?></p>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group  col-md-12">
                                             <label class="col-md-4 control-label" for="inputEmail3">Address :</label>
                                             <div class="col-md-8">
                                                 <p><?= $customer_details->address ?></p>
