@@ -261,5 +261,9 @@ class Advance_payment_model extends CI_Model {
         }
         return FALSE;
     }
+    
+    function cutomer_details($id_customer){
+        return $this->db->get_where('customer',array('id_customer'=>$id_customer))->row();
+    }
 
 }

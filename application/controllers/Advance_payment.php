@@ -65,6 +65,9 @@ class Advance_payment extends CI_Controller {
         }
 
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
+        
+        $data['customer'] = $this->input->post('id_customer');
+        $data['customer_details'] = $this->Advance_payment_model->cutomer_details($data['customer']);
 
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance')
