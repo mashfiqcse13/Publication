@@ -61,14 +61,30 @@ class Advance_payment extends CI_Controller {
                     redirect("advance_payment/add_advance_payment/" . $id);
                     die();
                 }
+//                redirect("advance_payment/advance_balance");
             }
+            
         }
 
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
-        
+
         $data['customer'] = $this->input->post('id_customer');
         $data['customer_details'] = $this->Advance_payment_model->cutomer_details($data['customer']);
+        $this->load->model('misc/Customer_due');
+        if (!empty($data['customer'])) {
+            $data['customer_due'] = $this->Customer_due->current_total_due($data['customer']);
+            $data['advance_balance'] = $this->Advance_payment_model->total_party_advance($data['customer']);
+        }
+//        print_r($data['advance_balance']);exit();
 
+        $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Advance Payment';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/dashboard', $data);
+    }
+
+    function advance_balance() {
         $crud = new grocery_CRUD();
         $crud->set_table('party_advance')
                 ->set_subject('Party Advance')->display_as('id_customer', 'Customer name')
@@ -82,8 +98,8 @@ class Advance_payment extends CI_Controller {
         $data['bank_account_dropdown'] = $this->Bank_model->get_account_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Advance Payment';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/dashboard', $data);
+        $data['Title'] = 'Advance Balance';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'advance_payment/advance_balance', $data);
     }
 
     function add_advance_payment($id) {

@@ -89,6 +89,21 @@
                                                 <p><?= $customer_details->address ?></p>
                                             </div>
                                         </div>
+                                        <?php if ($advance_balance != 0) { ?>
+                                        <div class="form-group  col-md-12">
+                                            <label class="col-md-4 control-label" for="inputEmail3">Advance Balance :</label>
+                                            <div class="col-md-8">
+                                                <p><?= $advance_balance ?></p>
+                                            </div>
+                                        </div>
+                                        <?php }if ($customer_due != 0) { ?>
+                                            <div class="form-group  col-md-12">
+                                                <label class="col-md-4 control-label" for="inputEmail3">Due Balance :</label>
+                                                <div class="col-md-8">
+                                                    <p><?= $customer_due ?></p>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
 
                                     </div>
                                 </div>
@@ -188,17 +203,17 @@
                     <?php } ?>
                 </div>
             </div>
-            <div class="col-md-12">
-
-                <div class="box">
-
-                    <?php
-                    echo $glosary->output;
-                    ?>
-
-                </div>
-
-            </div>
+            <!--            <div class="col-md-12">
+            
+                            <div class="box">
+            
+            <?php
+//                    echo $glosary->output;
+            ?>
+            
+                            </div>
+            
+                        </div>-->
         </div>
 
 

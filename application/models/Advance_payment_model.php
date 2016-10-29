@@ -265,5 +265,15 @@ class Advance_payment_model extends CI_Model {
     function cutomer_details($id_customer){
         return $this->db->get_where('customer',array('id_customer'=>$id_customer))->row();
     }
+    
+    function total_party_advance($id_customer){
+        $sql = "SELECT balance  FROM `party_advance` WHERE `id_customer`=$id_customer";
+        $result = $this->db->query($sql)->row();
+        if (empty($result->balance)) {
+            return 0;
+        } else {
+            return $result->balance;
+        }
+    }
 
 }
