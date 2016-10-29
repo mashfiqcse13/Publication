@@ -28,7 +28,7 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" class="form-horizontal cusotmer_form" action="<?php echo current_url(); ?>" method="post">
+                    <form role="form" class="form-horizontal cusotmer_form" action="<?php echo current_url(); ?>" method="get">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="box-body">
@@ -49,67 +49,67 @@
                                                         </div>-->
                             <h4>Customer Details</h4>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     <div class="box-body">
-                                        <div class="form-group col-md-12">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Name :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">Name :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->name ?></p>
                                                 <input type="hidden" value="<?= $customer_details->id_customer ?>"/>
                                             </div>
                                         </div>                                        
 
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Division :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">Division :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->division ?></p>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-4 control-label" for="inputEmail3">District :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">District :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->district ?></p>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Upazila :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">Upazila :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->upazila ?></p>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Phone :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">Phone :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->phone ?></p>
                                             </div>
                                         </div>
-                                        <div class="form-group  col-md-12">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Address :</label>
-                                            <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputEmail3">Address :</label>
+                                            <div class="col-md-9">
                                                 <p><?= $customer_details->address ?></p>
                                             </div>
-                                        </div>
+                                        </div>                                       
+
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="box-body">
+
                                         <?php if ($advance_balance != 0) { ?>
-                                        <div class="form-group  col-md-12">
-                                            <label class="col-md-4 control-label" for="inputEmail3">Advance Balance :</label>
-                                            <div class="col-md-8">
-                                                <p><?= $advance_balance ?></p>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="inputEmail3">Advance Balance :</label>
+                                                <div class="col-md-8">
+                                                    <p><?= $advance_balance ?></p>
+                                                </div>
                                             </div>
-                                        </div>
                                         <?php }if ($customer_due != 0) { ?>
-                                            <div class="form-group  col-md-12">
+                                            <div class="form-group">
                                                 <label class="col-md-4 control-label" for="inputEmail3">Due Balance :</label>
                                                 <div class="col-md-8">
                                                     <p><?= $customer_due ?></p>
                                                 </div>
                                             </div>
                                         <?php } ?>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="box-body">
-
 
                                         <div class="form-group">
                                             <label class="col-md-4 control-label" for="inputEmail3">Cash :</label>
@@ -136,45 +136,46 @@
 
 
                                     </div>
-                                </div>
-                                <!--                                <div class="col-md-4">
-                                                                    <div class="box-body">
-                                
-                                
-                                                                        
-                                
-                                
-                                
-                                                                    </div>
-                                                                </div>-->
+                                    <!--                                <div class="col-md-4">
+                                                                        <div class="box-body">
+                                    
+                                    
+                                                                            
+                                    
+                                    
+                                    
+                                                                        </div>
+                                                                    </div>-->
 
-                            </div>
-                            <div class="row bank_hide" style="display:none">
-                                <hr>
-                                <div class="col-md-12" style="padding:0 30px;">
-                                    <p  class="alert alert-info"><strong>Note :</strong> If you use this form , this balance will be added to the account balance automatically as an approved transaction .</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group" style="padding: 15px">
-                                        <label for="bank_account" class="col-md-4 control-label">Receiving Account</label>
-                                        <div class="col-md-8">
-                                            <?php echo $bank_account_dropdown ?>
+
+                                    <div class="row bank_hide" style="display:none">
+                                        <hr>
+                                        <div class="col-md-12" style="padding:0 30px;">
+                                            <p  class="alert alert-info"><strong>Note :</strong> If you use this form , this balance will be added to the account balance automatically as an approved transaction .</p>
                                         </div>
-                                    </div> 
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group"style="padding: 15px">
-                                        <label for="bank_payment" class="col-md-4 control-label">Amount</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="bank_payment" name="bank_payment" placeholder="Amount" ">
+                                        <div class="col-md-4">
+                                            <div class="form-group" style="padding: 15px">
+                                                <label for="bank_account" class="col-md-4 control-label">Receiving Account</label>
+                                                <div class="col-md-8">
+                                                    <?php echo $bank_account_dropdown ?>
+                                                </div>
+                                            </div> 
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group"style="padding: 15px">
-                                        <label for="check_no" class="col-md-6 control-label">Check/DD/TT No</label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" id="check_no" name="check_no" placeholder="Check/DD/TT No">
+                                        <div class="col-md-4">
+                                            <div class="form-group"style="padding: 15px">
+                                                <label for="bank_payment" class="col-md-4 control-label">Amount</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" id="bank_payment" name="bank_payment" placeholder="Amount" ">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group"style="padding: 15px">
+                                                <label for="check_no" class="col-md-6 control-label">Check/DD/TT No</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="check_no" name="check_no" placeholder="Check/DD/TT No">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
