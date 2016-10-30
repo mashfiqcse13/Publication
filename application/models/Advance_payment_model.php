@@ -10,6 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Advance_payment_model extends CI_Model {
 
     function payment_add($id_customer, $amount, $id_payment_method) {
+        
+                    
         // If this user have previous due
         $this->load->model('misc/Customer_due');
         $this->load->model('misc/Customer_payment');
@@ -29,7 +31,7 @@ class Advance_payment_model extends CI_Model {
 //                $this->session->set_userdata('advanced_due_pay_last_id', $id);
 //            }
         }
-
+//        die($id_customer);
         // cheching if there is a row , otherwise creating it
         $this->db->select('*')
                         ->from('party_advance')
