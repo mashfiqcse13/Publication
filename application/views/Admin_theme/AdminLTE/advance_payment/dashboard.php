@@ -129,7 +129,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="input-group input-group-sm ">
-                                                    <button class="btn btn-info bank_add pull-left">Bank Pay</button>
+                                                    <p class="btn btn-info bank_add pull-left">Bank Pay</p>
                                                 </div>
                                             </div>
                                         </div>
