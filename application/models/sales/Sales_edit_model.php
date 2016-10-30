@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Sales_edit_model extends CI_Model {
 
-    private $existing_date;     // this will be grabbed from the database
+    private $existing_data;     // this will be grabbed from the database
     private $changed_data;      // This will be grabbed from the edit from
 
     /*
@@ -23,7 +23,7 @@ class Sales_edit_model extends CI_Model {
 
     function test_data() {
 
-        $this->existing_date = array(
+        $this->existing_data = array(
             'id_sales_total_sales' => 234,
             "id_customer" => "60",
             'item_selection' => array(
