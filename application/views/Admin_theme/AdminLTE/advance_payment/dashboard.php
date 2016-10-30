@@ -57,7 +57,7 @@
                                             <label class="col-md-3 control-label" for="inputEmail3">Name :</label>
                                             <div class="col-md-9">
                                                 <p style="margin-top: 8px;"><?= $customer_details->name ?></p>
-                                                <input type="hidden" value="<?= $customer_details->id_customer ?>"/>
+                                                <input type="hidden" name="id_customer" value="<?= $customer_details->id_customer ?>"/>
                                             </div>
                                         </div>                                        
 

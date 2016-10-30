@@ -41,7 +41,7 @@ class Advance_payment extends CI_Controller {
 //       exit();
             if (!empty($amount) && !empty($bank_account_id)) {
                 $data['report_message'] = '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
-            } else {
+            } else {                
                 if (!empty($id_customer) && !empty($amount)) {
                     $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
                 } else {
