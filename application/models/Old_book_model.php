@@ -34,6 +34,7 @@ class Old_book_model extends CI_Model {
         }
         return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
     }
+
     function get_party_dropdown_search() {
         $customers = $this->db->get('customer')->result();
 
@@ -107,7 +108,7 @@ class Old_book_model extends CI_Model {
         $dues_unpaid = $this->input->post('dues_unpaid');
         //$cash_payment = $this->input->post('cash_payment');
         //$bank_payment = $this->input->post('bank_payment');
-        $cost=$this->input->post('cost');
+        $cost = $this->input->post('cost');
 
         $payment_type = $this->input->post('payment');
 
@@ -117,43 +118,40 @@ class Old_book_model extends CI_Model {
 //        }else{
 //            $total_amount = 0;
 //        }
-        $total_amount = $sub_total-$cost;
-        
-        
-         if($cost>0){
+        $total_amount = $sub_total - $cost;
+
+
+        if ($cost > 0) {
             $this->load->model('expense_model');
-            $id_name_expense=5;
-            $amount_expense=$cost;
+            $id_name_expense = 5;
+            $amount_expense = $cost;
             $this->expense_model->expense_register($id_name_expense, $amount_expense, $description_expense = "Customer Send book without transport fees. so we deduct cost from advanced");
         }
-        
-        if($dues_unpaid>0){
-            if($total_amount <= $dues_unpaid ){
-                
-                 $id_duepayment = $this->Customer_payment->due_payment($id_customer, $total_amount, 4);
-                 $total_amount = 0;
-            }
-            if($total_amount > $dues_unpaid){
-                $id_duepayment = $this->Customer_payment->due_payment($id_customer, $dues_unpaid, 4);
-                
-                $total_amount = $total_amount - $dues_unpaid;
-                
-            }
 
+        if ($dues_unpaid > 0) {
+            if ($total_amount <= $dues_unpaid) {
+
+                $id_duepayment = $this->Customer_payment->due_payment($id_customer, $total_amount, 4);
+                $total_amount = 0;
+            }
+            if ($total_amount > $dues_unpaid) {
+                $id_duepayment = $this->Customer_payment->due_payment($id_customer, $dues_unpaid, 4);
+
+                $total_amount = $total_amount - $dues_unpaid;
+            }
         }
-        
-        if(isset($id_duepayment)){
-            $this->session->set_userdata('due_payment',$id_duepayment);
+
+        if (isset($id_duepayment)) {
+            $this->session->set_userdata('due_payment', $id_duepayment);
         }
-        
+
         $total_paid = $total_amount;
-        
+
 
 
         if ($payment_type == 2 && $total_paid > 0) {
             $this->load->model('advance_payment_model');
             $this->advance_payment_model->payment_add($id_customer, $total_paid, 4);
-
         }
 
         $data = array(
@@ -330,25 +328,25 @@ class Old_book_model extends CI_Model {
         foreach ($balance->result_array() as $row) {
             $advanced_balance = $row['balance'];
         }
-        
-        if(isset($advanced_balance)){
+
+        if (isset($advanced_balance)) {
             return $advanced_balance;
-        }else{
+        } else {
             return 0;
         }
-        
     }
+
 //    
 //    function due_payment_report_for_old_book($id){
 //        $sql="SELECT * FROM `customer_due_payment_register` WHERE `id_customer_due_payment_register`=$id";
 //        return $this->db->get($sql)->result();
 //    }
-    
-    
+
+
     function memo_body_table($total_sales_id) {
-        
-        
-        
+
+
+
         $this->load->library('table');
         // setting up the table design
         $tmpl = array(
@@ -390,24 +388,24 @@ class Old_book_model extends CI_Model {
         // setting up the footer options of the memo
         $sql = "SELECT * FROM `old_book_return_total` WHERE `id_old_book_return_total` = $total_sales_id";
         $total_sales_details = $this->db->query($sql)->result();
-         $return_total=0;
-          foreach($total_sales_details as $return){
-            $return_total=$return->total_amount;
-            $quriar_cost=$return->discount_amount;
+        $return_total = 0;
+        foreach ($total_sales_details as $return) {
+            $return_total = $return->total_amount;
+            $quriar_cost = $return->discount_amount;
             $total_amount = $return->total_amount;
             $sub_total = $return->sub_total;
         }
-        
-        if($total_amount == 0 && $sub_total>0){
+
+        if ($total_amount == 0 && $sub_total > 0) {
             $due_payment = $sub_total - $quriar_cost + $total_amount;
         }
-        if($total_amount > 0  ){
+        if ($total_amount > 0) {
             $due_payment = $sub_total - $quriar_cost - $total_amount;
         }
-        
+
         $total_sales_details = $total_sales_details[0];
-       
-      
+
+
 
 
 
@@ -417,7 +415,7 @@ class Old_book_model extends CI_Model {
             'class' => 'left_separator',
             'colspan' => 1
                 ), $this->Common->taka_format($total_price));
-        
+
 
         $this->table->add_row(array(
             'data' => 'ফেরত বই এর মূল্য',
@@ -435,21 +433,21 @@ class Old_book_model extends CI_Model {
             'colspan' => 2,
             'class' => 'taka_formate text-right'
         ));
-        if(isset($due_payment)){
+        if (isset($due_payment)) {
+            $this->table->add_row(array(
+                'data' => 'পূর্বের বাকি পরিশোধ',
+                'colspan' => 2,
+                'class' => 'text-bold'
+                    ), array(
+                'data' => $due_payment,
+                'colspan' => 2,
+                'class' => 'text-right text-bold taka_formate'
+            ));
+        }
         $this->table->add_row(array(
-            'data' => 'পূর্বের বাকি পরিশোধ',
+            'data' => 'অবশিষ্ট জমা',
             'colspan' => 2,
-              'class' => 'text-bold'
-                ), array(
-            'data' => $due_payment,
-            'colspan' => 2,
-            'class' => 'text-right text-bold taka_formate'
-        ));
-          }
-          $this->table->add_row(array(
-            'data' => 'অবশিষ্ট জমা' ,
-            'colspan' => 2,
-              'class' => 'text-bold'
+            'class' => 'text-bold'
                 ), array(
             'data' => $return_total,
             'colspan' => 2,
@@ -589,7 +587,7 @@ class Old_book_model extends CI_Model {
                     join items on items.id_item = old_book_transfer_items.id_item
                     join old_book_transfer_total on old_book_transfer_total.id_old_book_transfer_total = old_book_transfer_items.id_old_book_transfer_total
                     where old_book_transfer_total.id_old_book_transfer_total = $id_old_book_transfer_total";
-        
+
         $results = $this->db->query($sql)->result();
         if (empty($results)) {
             die("No match found");
@@ -597,10 +595,10 @@ class Old_book_model extends CI_Model {
         $this->table->add_row("Slip Number ", $results[0]->id_old_book_transfer_total, "Date", date('d-M-Y H:i:s', strtotime($results[0]->date_transfer)));
         $output = $this->table->generate();
         $total_quantity = 0;
-        $this->table->set_heading( "Book ID", 'Book Name', 'Quantity');
+        $this->table->set_heading("Book ID", 'Book Name', 'Quantity');
         $counter = 1;
         foreach ($results as $row) {
-            $this->table->add_row( $row->id_item, $row->name, $row->quantity_item);
+            $this->table->add_row($row->id_item, $row->name, $row->quantity_item);
             $total_quantity+=$row->quantity_item;
         }
 
@@ -608,7 +606,7 @@ class Old_book_model extends CI_Model {
         $separator_row = array(
             'class' => 'separator'
         );
-        
+
         $output .= $this->table->generate();
         $this->table->add_row(array(
             'data' => 'Total Book',
@@ -632,143 +630,215 @@ class Old_book_model extends CI_Model {
         $output .= $this->table->generate();
         return $output;
     }
+
     //SELECT name,sum(quantity),sum(old_book_return_total.total_amount) FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
 //LEFT JOIN items ON items.id_item=old_book_return_items.id_item GROUP BY name
-    function get_date_range($date_range,$column){
-         if($date_range==''){
-            return $date_range='';
-        }else{
+    function get_date_range($date_range, $column) {
+        if ($date_range == '') {
+            return $date_range = '';
+        } else {
             $this->load->model('Common');
             $date = explode('-', $date_range);
             $from = date('Y-m-d', strtotime($date[0]));
             $to = date('Y-m-d', strtotime($date[1]));
-            $date_range=" DATE(".$column.") BETWEEN '$from' AND '$to'";
+            $date_range = " DATE(" . $column . ") BETWEEN '$from' AND '$to'";
             return $date_range;
         }
     }
-    
-    function get_total_return_info( $id_customer='' , $date_range='') {
+
+    function get_total_return_info($id_customer = '', $date_range = '') {
         $column = 'old_book_return_total.issue_date';
-        
-        $date_range = $this->get_date_range($date_range,$column);
-        
-        if($id_customer == '' && $date_range == ''){
-            
+
+        $date_range = $this->get_date_range($date_range, $column);
+
+        if ($id_customer == '' && $date_range == '') {
+
             $con = ' ';
         }
-        
-        if ($id_customer !='') {
-            
-            $con=" where old_book_return_total.id_customer = $id_customer ";    
-            
+
+        if ($id_customer != '') {
+
+            $con = " where old_book_return_total.id_customer = $id_customer ";
         }
-        if ($date_range != '') {            
-            
+        if ($date_range != '') {
+
             $con = " where  $date_range";
-            
         }
-        
-        if ($date_range != '' && $id_customer !='') {
+
+        if ($date_range != '' && $id_customer != '') {
             $con = " where old_book_return_total.id_customer = $id_customer AND $date_range";
-            
-        }       
-        
-        $query=$this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+        }
+
+        $query = $this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
 LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc");
         return $query->result();
     }
-    
-    
-    function get_all_item(){
+
+    function get_all_item() {
         return $this->db->get("items")->result_array();
     }
-     function get_total_info( $date_range='') {
-        $column = 'old_book_return_total.issue_date';
-        $rebind_date = 'old_book_transfer_total.date_transfer';
-        
-        $date_receive = $this->get_date_range($date_range,$column);
-        $date_rebind = $this->get_date_range($date_range,$rebind_date);
-        
-        if( $date_receive == ''){            
-            $con = ' 1=1 ';
-        }
-        
-        if($date_rebind==''){
-            $con1 = ' 1=1 ';
-        }
-        
-        if($date_rebind !=''){
-            $con1 = "  $date_rebind";
-        }
-        
-        if ($date_receive != '') {            
-            
-            $con = "  $date_receive";
-            
-        }
-        
-        $data['rebind'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
-                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-                                                where type_transfer=2 AND $con1
-                                                group by id_item")->result_array();
-        
-        $data['sale'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
-                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-                                                where type_transfer=1 AND $con1 
-                                                group by id_item")->result_array();
-        
-        
-        $data['receive'] = $this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
-LEFT JOIN items ON items.id_item=old_book_return_items.id_item WHERE $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc")->result_array();
+
+    function get_total_info($from, $to) {
+
+
+        $sql = "SELECT
+old_total_report.id_item,
+name,
+opening,
+received_amount,
+send_to_rebind,
+sale_amount,
+remaining
+FROM
+(	
+	SELECT
+	id_item,
+	sum(opening) as opening,
+	sum(received_amount) as received_amount,
+	sum(send_to_rebind) as send_to_rebind,
+	sum(sale_amount) as sale_amount,
+	(sum(opening)+sum(received_amount)-sum(send_to_rebind)-sum(sale_amount)) as remaining
+	FROM
+	(
+		(
+			SELECT
+			id_item,
+			(sum(received_amount)-sum(send_to_rebind)-sum(sale_amount)) as opening,
+			0 as received_amount,
+			0 as send_to_rebind,
+			0 as sale_amount
+			FROM(
+			/*receive*/
+				(
+					SELECT
+					old_book_return_items.id_item,
+					sum(quantity) as received_amount,
+					0 as send_to_rebind,
+					0 as sale_amount
+					FROM `old_book_return_items` 
+					left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+					WHERE DATE(old_book_return_total.issue_date) BETWEEN '1800-10-01' AND '$from'  
+					GROUP BY old_book_return_items.id_item 
+				)
+				UNION(
+				/*Rebined*/
+
+					SELECT id_item,
+					0 as received_amount,
+					sum(old_book_transfer_items.quantity_item) as send_to_rebind,
+					0 as sale_amount
+					FROM `old_book_transfer_total` 
+					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+					where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from'
+					group by id_item
+				)
+				UNION(
+					/*sale*/
+					SELECT id_item,
+					0 as received_amount,
+					0 as send_to_rebind,
+					sum(old_book_transfer_items.quantity_item) as sale_amount 
+					FROM `old_book_transfer_total` 
+					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+					where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from'
+					group by id_item
+				)
+			) AS tbl_opening
+			group by id_item
+		)	
+		union(
+			SELECT
+			id_item,
+			0 as opening,
+			sum(received_amount) as received_amount,
+			sum(send_to_rebind) as send_to_rebind,
+			sum(sale_amount) as sale_amount
+			FROM(
+			/*receive*/
+				(
+					SELECT
+					old_book_return_items.id_item,
+					sum(quantity) as received_amount,
+					0 as send_to_rebind,
+					0 as sale_amount
+					FROM `old_book_return_items` 
+					left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+					WHERE DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'
+					GROUP BY old_book_return_items.id_item 
+				)
+				UNION(
+				/*Rebined*/
+
+					SELECT id_item,
+					0 as received_amount,
+					sum(old_book_transfer_items.quantity_item) as send_to_rebind,
+					0 as sale_amount
+					FROM `old_book_transfer_total` 
+					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+					where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '$from' AND '$to'
+					group by id_item
+				)
+				UNION(
+					/*sale*/
+					SELECT id_item,
+					0 as received_amount,
+					0 as send_to_rebind,
+					sum(old_book_transfer_items.quantity_item) as sale_amount 
+					FROM `old_book_transfer_total` 
+					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+					where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '$from' AND '$to'
+					group by id_item
+				)
+			) AS tbl_closing
+			group by id_item
+		)
+	) as old_total_report_ungrouped
+	group by id_item
+) as old_total_report
+LEFT JOIN items ON items.id_item=old_total_report.id_item";
+        $data = $this->db->query($sql)->result();
         return $data;
     }
-    
+
 //    function call_rebind_report($con){
 //        
 //    }
-    
-     //SELECT sum(quantity_item),date_transfer,sum(price) FROM `old_book_transfer_total` 
-     //left JOIN old_book_transfer_items ON 
-     //old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total
-     // where type_transfer=2 GROUP BY id_item
-    
-    function get_sale_rebind( $id_type='' , $date_range='') {
-        
-       $column = 'old_book_transfer_total.date_transfer';
-       
-       $date_range = $this->get_date_range($date_range,$column);
-        
-        if($id_type == '' && $date_range == ''){
-            
+    //SELECT sum(quantity_item),date_transfer,sum(price) FROM `old_book_transfer_total` 
+    //left JOIN old_book_transfer_items ON 
+    //old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total
+    // where type_transfer=2 GROUP BY id_item
+
+    function get_sale_rebind($id_type = '', $date_range = '') {
+
+        $column = 'old_book_transfer_total.date_transfer';
+
+        $date_range = $this->get_date_range($date_range, $column);
+
+        if ($id_type == '' && $date_range == '') {
+
             $con = ' ';
         }
-        
-        if ($id_type !='') {
-            
-            $con=" where type_transfer = $id_type ";    
-            
+
+        if ($id_type != '') {
+
+            $con = " where type_transfer = $id_type ";
         }
-        if ($date_range != '') {            
-            
+        if ($date_range != '') {
+
             $con = " where  $date_range";
-            
         }
-        
-        if ($date_range != '' && $id_type !='') {
+
+        if ($date_range != '' && $id_type != '') {
             $con = " where type_transfer = $id_type AND $date_range";
-            
-        }       
-        
-        $query=$this->db->query("SELECT old_book_transfer_items.id_item as book_id,name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
+        }
+
+        $query = $this->db->query("SELECT old_book_transfer_items.id_item as book_id,name, sum(quantity_item) as quantity,date_transfer,sum(price) as price
             FROM `old_book_transfer_total` left JOIN old_book_transfer_items ON 
             old_book_transfer_total.id_old_book_transfer_total=old_book_transfer_items.id_old_book_transfer_total 
             left JOIN items ON items.id_item=old_book_transfer_items.id_item 
             $con GROUP BY old_book_transfer_items.id_item");
-        
+
         return $query->result();
     }
-    
-
-        
 
 }

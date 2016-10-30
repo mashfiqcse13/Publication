@@ -28,7 +28,7 @@
 
                         <form action="" method="post">
                             <div class="row">
-                              
+
                                 <div class="col-md-12">
                                     <div class="form-group col-md-3 text-left">
                                         <label>Search with Date Range:</label>
@@ -58,12 +58,12 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                 if (isset($report)) {
+                    if (isset($report)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Old Book Total Report</strong></p>
 
-                            
+
                             <?php
                             if (!empty($date_range)) {
                                 echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";
@@ -80,6 +80,7 @@
                                     <tr>
                                         <th>Item Id</th>
                                         <th>Book Name</th>
+                                        <th>Opening</th>
                                         <th>Received Amount</th>
                                         <th>Send to Rebind</th>
                                         <th>Sale Amount</th>
@@ -88,85 +89,42 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sum_total_quantity = 0;
-                                    $sum_total_amount = 0;
-                                   
-                                    $sum_total_rebind= 0;
-                                    $sum_total_sale= 0;
-                                    
-                                    foreach($items as $item){
-                                         $rebind_quantity = '';
-                                        $sale_quantity = '';
-                                        $receive_amount='';
-                                    
-                                        
-//                                        $sum_total_quantity += $return->total_quantity;
-//                                        $sum_total_amount += $return->total_ammount;
-//                                        $curier += $return->curier;
+                                    $sum_opening = 0;
+                                    $sum_received_amount = 0;
+                                    $sum_send_to_rebind = 0;
+                                    $sum_sale_amount = 0;
+                                    $sum_remaining = 0;
+
+                                    foreach ($report as $item) {
+                                        $sum_opening += $item->opening;
+                                        $sum_received_amount += $item->received_amount;
+                                        $sum_send_to_rebind += $item->send_to_rebind;
+                                        $sum_sale_amount += $item->sale_amount;
+                                        $sum_remaining += $item->remaining;
                                         ?>
                                         <tr>
-                                            <td><?= $item['id_item']; ?></td>
-                                            <td><?= $item['name']; ?></td>
-                                            <td ><?php
-                                            foreach ($report['receive'] as $receive) {
-                                                if($item['id_item']==$receive['book_id']){
-                                                    echo $receive_amount = $receive['total_quantity']; 
-                                                    $sum_total_quantity += $receive['total_quantity'];
-                                                }
-                                            }
-                                            
-                                            
-                                            
-                                            ?></td>
-                                            <td>
-                                                <?php
-                                                foreach($report['rebind'] as $rebind){
-                                                    
-                                                    if($item['id_item']==$rebind['id_item']){
-                                                       $rebind_quantity = $rebind['quantity'];
-                                                       echo $rebind_quantity;
-                                                       $sum_total_rebind+=$rebind['quantity'];
-                                                    }                       
-                                                
-                                                }
-                                                
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                foreach($report['sale'] as $sale){
-                                                    
-                                                    if($item['id_item']==$sale['id_item']){
-                                                       echo $sale_quantity = $sale['quantity'];
-                                                       $sum_total_sale+=$sale['quantity'];
-                                                    }                    
-                                                
-                                                }
-                                                
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php                                                
-                                                $remaining= $receive_amount - $rebind_quantity -  $sale_quantity ;
-                                                if(!empty($remaining)){
-                                                    echo $remaining;
-                                                }
-                                                ?>
-                                                
-                                            </td>
+                                            <td><?php echo $item->id_item ?></td>
+                                            <td><?php echo $item->name ?></td>
+                                            <td><?php echo $item->opening ?></td>
+                                            <td><?php echo $item->received_amount ?></td>
+                                            <td><?php echo $item->send_to_rebind ?></td>
+                                            <td><?php echo $item->sale_amount ?></td>
+                                            <td><?php echo $item->remaining ?></td>
                                         </tr>
+
+
                                         <?php
                                     }
                                     ?>
-
                                     <tr style="font-weight: bold"> 
 
                                         <td colspan="2" class="text-right">Total : </td>
-                                        <td > <?=$sum_total_quantity ?></td>
-                                        <td><?=$sum_total_rebind?></td>
-                                        <td><?= $sum_total_sale ?></td>
-                                        <td><?=$sum_total_quantity-($sum_total_rebind+$sum_total_sale) ?></td>
-                                        
+                                            <td><?php echo $sum_opening ?></td>
+                                            <td><?php echo $sum_received_amount ?></td>
+                                            <td><?php echo $sum_send_to_rebind ?></td>
+                                            <td><?php echo $sum_sale_amount ?></td>
+                                            <td><?php echo $sum_remaining ?></td>
+
                                     </tr>
 
 
@@ -176,7 +134,7 @@
 
                         </div>
                         <?php
-                 }
+                    }
                     ?>
 
                 </div>

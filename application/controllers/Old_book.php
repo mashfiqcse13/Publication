@@ -28,18 +28,17 @@ class Old_book extends CI_Controller {
     function index() {
         $this->return_book();
     }
-    
-    
-    function old_book_dashboard(){
+
+    function old_book_dashboard() {
         $this->tolal_return_book();
     }
-    
+
     function tolal_return_book() {
         $crud = new grocery_CRUD();
         $crud->set_table('old_book_return_total')
-                ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total','discount_percentage','discount_amount', 'total_amount', 'payment_type')
+                ->columns('id_old_book_return_total', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'payment_type')
                 ->display_as('id_old_book_return_total', 'Memo No')
-                ->display_as('discount_amount','Courier Cost Deduction')
+                ->display_as('discount_amount', 'Courier Cost Deduction')
                 ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Return Price')
                 ->set_subject('Old Book Return')
                 ->set_relation('id_customer', 'customer', 'name')
@@ -50,30 +49,28 @@ class Old_book extends CI_Controller {
                 ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
                     return site_url('old_book/memo/' . $primary_key);
                 });
-                $crud->callback_column('payment_type', function($value){
-                    if($value == 1){
-                        return 'cash';
-                    }elseif($value == 2){
-                       return 'Advanced';
-                    }
-                    
-                });
-        $date_range = $this->input->post('date_range');         
-        
-        
-        
-        $btn=$this->input->post('btn_submit');
-        
-        $id_customer=$this->input->post('id_customer');
-        
+        $crud->callback_column('payment_type', function($value) {
+            if ($value == 1) {
+                return 'cash';
+            } elseif ($value == 2) {
+                return 'Advanced';
+            }
+        });
+        $date_range = $this->input->post('date_range');
+
+
+
+        $btn = $this->input->post('btn_submit');
+
+        $id_customer = $this->input->post('id_customer');
+
         if (isset($btn)) {
-            $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer,$date_range);
-           // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
+            $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer, $date_range);
+            // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
 //            echo '<pre>';
 //            print_r($data['return_book']);
-            
-            $data['date_range']=$date_range;
-            
+
+            $data['date_range'] = $date_range;
         }
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
 
@@ -85,31 +82,32 @@ class Old_book extends CI_Controller {
         $data['Title'] = 'Old Book Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_return', $data);
     }
-    
-    
-        function total_report() {
-            
-        $date_range = $this->input->post('date_range'); 
-        
-        $btn=$this->input->post('btn_submit');
-        
-        $id_customer=$this->input->post('id_customer');
-        
+
+    function total_report() {
+
+        $date_range = $this->input->post('date_range');
+
+        $btn = $this->input->post('btn_submit');
+
+        $id_customer = $this->input->post('id_customer');
+
         if (isset($btn)) {
-            
-            $data['report'] = $this->Old_book_model->get_total_info($date_range);
+
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $data['report'] = $this->Old_book_model->get_total_info($from,$to);
             $data['items'] = $this->Old_book_model->get_all_item();
-           // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
+            // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
 //            echo '<pre>';
 //            print_r($data['report']);
 //            exit();
-            
-            $data['date_range']=$date_range;
-            
+
+            $data['date_range'] = $date_range;
         }
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
 
-        
+
         $data['memo_list'] = $this->memo_list();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
@@ -121,18 +119,16 @@ class Old_book extends CI_Controller {
 //        echo json_encode($_POST);
         $this->Old_book_model->processing_return_oldbook();
     }
-    
-    function old_book_sale_or_rebind(){
+
+    function old_book_sale_or_rebind() {
         $this->Old_book_model->old_book_sale_or_rebind();
     }
-
-
 
     function return_book() {
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
         $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Old_book_model->get_party_due();
-           
+
         $data['item_details'] = $this->Old_book_model->get_item_details();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -140,8 +136,8 @@ class Old_book extends CI_Controller {
         $data['Title'] = 'New Entry Of Old Book ';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_form', $data);
     }
-    
-    function return_book_sale(){
+
+    function return_book_sale() {
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
         $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Old_book_model->get_party_due();
@@ -150,53 +146,51 @@ class Old_book extends CI_Controller {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'New Entry of Rebined/Sale';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_book_sale', $data);  
+        $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/old_return_book_sale', $data);
     }
-    
-    function return_book_sale_list(){
+
+    function return_book_sale_list() {
         $crud = new grocery_CRUD();
         $crud->set_table('old_book_transfer_total')
                 ->set_subject('Old Book Sales or Rebind')
                 ->display_as('type_transfer', 'Transfer Type')
-                ->display_as('id_old_book_transfer_total','Id')
+                ->display_as('id_old_book_transfer_total', 'Id')
                 ->order_by('id_old_book_transfer_total', 'desc')
-                ->columns('id_old_book_transfer_total','type_transfer','date_transfer','price')
+                ->columns('id_old_book_transfer_total', 'type_transfer', 'date_transfer', 'price')
                 ->unset_edit()
                 ->unset_delete()
                 ->unset_add()
                 ->add_action('Print Memo', '', '', 'fa fa-print', function ($primary_key, $row) {
                     return site_url('old_book/rebind_transfer_slip/' . $primary_key);
                 });
-        
-                
-                $crud->callback_column('type_transfer', function($value){
-                    if($value == 1){
-                        return 'Old Book Sale';
-                    }elseif($value == 2){
-                       return 'Send To Rebind';
-                    }else{
-                        return 'Throw Away';                        
-                    }
-        
-                });   
-                
-        $date_range = $this->input->post('date_range');  
-        $btn=$this->input->post('btn_submit');
-        
-      $id_type=$this->input->post('process');
-        
-        
+
+
+        $crud->callback_column('type_transfer', function($value) {
+            if ($value == 1) {
+                return 'Old Book Sale';
+            } elseif ($value == 2) {
+                return 'Send To Rebind';
+            } else {
+                return 'Throw Away';
+            }
+        });
+
+        $date_range = $this->input->post('date_range');
+        $btn = $this->input->post('btn_submit');
+
+        $id_type = $this->input->post('process');
+
+
         if (isset($btn)) {
-            $data['return_list'] = $this->Old_book_model->get_sale_rebind($id_type,$date_range);
+            $data['return_list'] = $this->Old_book_model->get_sale_rebind($id_type, $date_range);
 //            echo '<pre>';
 //            print_r($data['return_list']);
-            if($id_type!=''){
-                $data['id_type']=$id_type;
+            if ($id_type != '') {
+                $data['id_type'] = $id_type;
             }
-            $data['date_range']=$date_range;
-            
+            $data['date_range'] = $date_range;
         }
-        
+
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -205,15 +199,12 @@ class Old_book extends CI_Controller {
         $data['Title'] = 'Rebine/Sale Dashboard';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/list_old_book_sale_rebind', $data);
     }
-    
-    
-    
 
     function memo($total_sales_id) {
-        
 
-        
-        
+
+
+
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
         $data['base_url'] = base_url();
@@ -222,10 +213,10 @@ class Old_book extends CI_Controller {
 //        print_r($data['memo_header_details']);
 //        $data['Book_selection_table'] = $this->Memo->memogenerat($memo_id);
         $customer_id = $data['memo_header_details']['code'];
-        $data['balance']=$this->Old_book_model->current_advanced_balance($customer_id);
-       
-        
-        
+        $data['balance'] = $this->Old_book_model->current_advanced_balance($customer_id);
+
+
+
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/memo', $data);
     }
 
@@ -312,8 +303,8 @@ class Old_book extends CI_Controller {
 
         return $data;
     }
-    
-    function rebind_transfer_slip($id_old_book_transfer_total){
+
+    function rebind_transfer_slip($id_old_book_transfer_total) {
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Memo Generation';
         $data['base_url'] = base_url();
