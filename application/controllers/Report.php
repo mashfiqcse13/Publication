@@ -185,9 +185,10 @@ class Report extends CI_Controller {
             $data['previous_due_collection_by_bank'] = $this->Report_model->previous_due_collection_by_bank($from, $to);
             $data['previous_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from, $to);
 
-            $data['total_advance_collection_without_book_sale'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
-            $data['total_advance_collection_without_book_sale_cash'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Cash');
-            $data['total_advance_collection_without_book_sale_bank'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Bank');
+            $data['total_advance_collection'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
+            $data['total_advance_collection_cash'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Cash');
+            $data['total_advance_collection_bank'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Bank');
+            $data['total_advance_collection_old_book_sell'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Old Book Sell');
 
             $data['total_cash_collection_from_customer_payment'] = $this->Report_model->total_cash_collection_from_customer_payment($from, $to);
             $data['total_bank_collection_from_customer_payment'] = $this->Report_model->total_bank_collection_from_customer_payment($from, $to);

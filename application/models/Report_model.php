@@ -208,8 +208,8 @@ class Report_model extends CI_Model {
             $this->db->where('id_payment_method', 1);
         } else if (!empty($payment_methode) && $payment_methode == "Bank") {
             $this->db->where('id_payment_method', 3);
-        } else {
-            $this->db->where('id_payment_method !=', 4);
+        } else if (!empty($payment_methode) && $payment_methode == "Old Book Sell") {
+            $this->db->where('id_payment_method', 4);
         }
         if ($from != '') {
             $condition = "DATE(date_payment) BETWEEN '$from' AND '$to'";
