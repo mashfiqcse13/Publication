@@ -673,6 +673,22 @@ class Old_book_model extends CI_Model {
 LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc");
         return $query->result();
     }
+    
+    function get_curier_cost($date_range=''){
+        $date_range = $this->get_date_range($date_range,'issue_date');
+        if ($date_range != '') {            
+            
+            $con = " where  $date_range";
+            
+        }else{
+            $con = ' ';
+        }
+        $sql = "SELECT sum(`discount_amount`) as total FROM `old_book_return_total` $con ";
+       $result =  $this->db->query($sql)->result();
+        foreach($result as $row){
+            return $row->total;
+        }
+    }
 
     function get_all_item() {
         return $this->db->get("items")->result_array();

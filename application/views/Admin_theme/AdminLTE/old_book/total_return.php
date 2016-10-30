@@ -108,11 +108,11 @@
                                     <?php
                                     $sum_total_quantity = 0;
                                     $sum_total_amount = 0;
-                                    $curier = 0;
+                                    //$curier = 0;
                                     foreach ($return_book as $return) {
                                         $sum_total_quantity += $return->total_quantity;
                                         $sum_total_amount += $return->total_ammount;
-                                        $curier += $return->curier;
+                                        //$curier += $return->curier;
                                         ?>
                                         <tr>
                                             <td><?= $return->book_id; ?></td>
@@ -137,12 +137,12 @@
                                     <tr style="font-weight: bold"> 
                                         <td colspan="2" rowspan="2"></td>
                                         <td >Courier Cost</td>                                        
-                                        <td class="text-right taka_formate"> - TK  <?php echo $curier; ?></td>
+                                        <td class="text-right taka_formate"> - TK  <?php echo $get_curier; ?></td>
 
                                     </tr>
                                     <tr style="font-weight: bold"> 
                                         <td >Total</td>                                        
-                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount - $curier; ?></td>
+                                        <td class="text-right taka_formate">TK <?php echo $sum_total_amount - $get_curier; ?></td>
                                     </tr>
                                 </tbody>
                             </table>

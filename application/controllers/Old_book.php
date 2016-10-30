@@ -65,8 +65,9 @@ class Old_book extends CI_Controller {
         $id_customer = $this->input->post('id_customer');
 
         if (isset($btn)) {
-            $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer, $date_range);
-            // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
+            $data['return_book'] = $this->Old_book_model->get_total_return_info($id_customer,$date_range);
+            $data['get_curier'] = $this->Old_book_model->get_curier_cost($date_range);
+           // $data['curuer'] = $this->Old_book_model->get_total_courier($id_customer,$date_range);
 //            echo '<pre>';
 //            print_r($data['return_book']);
 
