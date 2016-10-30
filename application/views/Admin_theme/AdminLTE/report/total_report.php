@@ -122,11 +122,11 @@
                                         <th class="taka_formate"><?php echo $previous_due_collection; ?></th>
                                     </tr>
                                     <tr>
-                                        <td width="50%">Total Advance Collection ( Without returned book value )</td>
-                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_cash; ?></th>
-                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale_bank; ?></th>
-                                        <td>Not Applicable</td>
-                                        <th class="taka_formate"><?php echo $total_advance_collection_without_book_sale; ?></th>
+                                        <td width="50%">Total Advance Collection</td>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_cash; ?></th>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_bank; ?></th>
+                                        <th class="taka_formate"><?php echo $total_advance_collection_old_book_sell; ?></th>
+                                        <th class="taka_formate"><?php echo $total_advance_collection; ?></th>
                                     </tr>
                                 </tbody>
                             </table>
