@@ -226,7 +226,7 @@
                     display: block;
                 }
                 aside.main-sidebar.only_print {
-                    display: none;
+                    display:none;
                 }
                 .table>tbody>tr>td{padding-bottom: 9px}
                 footer.main-footer {
@@ -292,7 +292,8 @@
             }
             
             @page {       
-                margin: 30mm 25mm 15mm 25mm;  
+                margin: 30mm 25mm 15mm 20mm;  
+                size: A4;
             }
             
   

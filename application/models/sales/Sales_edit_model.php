@@ -70,13 +70,13 @@ class Sales_edit_model extends CI_Model {
             "dues_unpaid" => 0,
             "id_customer" => "60",
             'item_selection' => array(
-                array(
+                array( 
                     "item_id" => 1,
                     "item_quantity" => 2,
                     "name" => "ব্যবসায় সংগঠন ও ব্যবস্হাপনা - প্রথম পত্র",
                     "regular_price" => "205",
                     "sale_price" => "140",
-                    "total" => 280 // should be calculated
+                    "total" => 280 // should be calculated 'ffff
                 ), // should be calculated
                 array(
                     "item_id" => 3,
@@ -108,7 +108,7 @@ class Sales_edit_model extends CI_Model {
      * This function will update the test sales table in the database
      */
 
-    function sales_update() {
+    function sales_update( ) {
         
     }
 

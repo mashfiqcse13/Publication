@@ -683,6 +683,7 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
         return $this->db->get("items")->result_array();
     }
      function get_total_info( $date_range='') {
+         
         $column = 'old_book_return_total.issue_date';
         $rebind_date = 'old_book_transfer_total.date_transfer';
         
@@ -707,21 +708,147 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
             
         }
         
-        $data['rebind'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
-                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-                                                where type_transfer=2 AND $con1
-                                                group by id_item")->result_array();
+                                $sql = "SELECT
+                        old_total_report.id_item,
+                        name,
+                        opening,
+                        received_amount,
+                        send_to_rebind,
+                        sale_amount,
+                        remaining
+                        FROM
+                        (	
+                                SELECT
+                                id_item,
+                                sum(opening) as opening,
+                                sum(received_amount) as received_amount,
+                                sum(send_to_rebind) as send_to_rebind,
+                                sum(sale_amount) as sale_amount,
+                                (sum(opening)+sum(received_amount)-sum(send_to_rebind)-sum(sale_amount)) as remaining
+                                FROM
+                                (
+                                        (
+                                                SELECT
+                                                id_item,
+                                                (sum(received_amount)-sum(send_to_rebind)-sum(sale_amount)) as opening,
+                                                0 as received_amount,
+                                                0 as send_to_rebind,
+                                                0 as sale_amount
+                                                FROM(
+                                                /*receive*/
+                                                        (
+                                                                SELECT
+                                                                old_book_return_items.id_item,
+                                                                sum(quantity) as received_amount,
+                                                                0 as send_to_rebind,
+                                                                0 as sale_amount
+                                                                FROM `old_book_return_items` 
+                                                                left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+                                                                WHERE DATE(old_book_return_total.issue_date) BETWEEN '1800-10-01' AND '2016-10-01'  
+                                                                GROUP BY old_book_return_items.id_item 
+                                                        )
+                                                        UNION(
+                                                        /*Rebined*/
+
+                                                                SELECT id_item,
+                                                                0 as received_amount,
+                                                                sum(old_book_transfer_items.quantity_item) as send_to_rebind,
+                                                                0 as sale_amount
+                                                                FROM `old_book_transfer_total` 
+                                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                                where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '2016-10-01'  
+                                                                group by id_item
+                                                        )
+                                                        UNION(
+                                                                /*sale*/
+                                                                SELECT id_item,
+                                                                0 as received_amount,
+                                                                0 as send_to_rebind,
+                                                                sum(old_book_transfer_items.quantity_item) as sale_amount 
+                                                                FROM `old_book_transfer_total` 
+                                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                                where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '2016-10-01'
+                                                                group by id_item
+                                                        )
+                                                ) AS tbl_opening
+                                                group by id_item
+                                        )	
+                                        union(
+                                                SELECT
+                                                id_item,
+                                                0 as opening,
+                                                sum(received_amount) as received_amount,
+                                                sum(send_to_rebind) as send_to_rebind,
+                                                sum(sale_amount) as sale_amount
+                                                FROM(
+                                                /*receive*/
+                                                        (
+                                                                SELECT
+                                                                old_book_return_items.id_item,
+                                                                sum(quantity) as received_amount,
+                                                                0 as send_to_rebind,
+                                                                0 as sale_amount
+                                                                FROM `old_book_return_items` 
+                                                                left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+                                                                WHERE DATE(old_book_return_total.issue_date) BETWEEN '2016-10-01' AND '2016-10-31'
+                                                                GROUP BY old_book_return_items.id_item 
+                                                        )
+                                                        UNION(
+                                                        /*Rebined*/
+
+                                                                SELECT id_item,
+                                                                0 as received_amount,
+                                                                sum(old_book_transfer_items.quantity_item) as send_to_rebind,
+                                                                0 as sale_amount
+                                                                FROM `old_book_transfer_total` 
+                                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                                where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '2016-10-01' AND '2016-10-31'
+                                                                group by id_item
+                                                        )
+                                                        UNION(
+                                                                /*sale*/
+                                                                SELECT id_item,
+                                                                0 as received_amount,
+                                                                0 as send_to_rebind,
+                                                                sum(old_book_transfer_items.quantity_item) as sale_amount 
+                                                                FROM `old_book_transfer_total` 
+                                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+                                                                where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '2016-10-01' AND '2016-10-31'
+                                                                group by id_item
+                                                        )
+                                                ) AS tbl_closing
+                                                group by id_item
+                                        )
+                                ) as old_total_report_ungrouped
+                                group by id_item
+                        ) as old_total_report
+                        LEFT JOIN items ON items.id_item=old_total_report.id_item
+                    ";
+                
         
-        $data['sale'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
-                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-                                                where type_transfer=1 AND $con1 
-                                                group by id_item")->result_array();
         
         
-        $data['receive'] = $this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
-LEFT JOIN items ON items.id_item=old_book_return_items.id_item WHERE $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc")->result_array();
         return $data;
     }
+    
+    
+    
+//            $data['rebind'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
+//                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+//                                                where type_transfer=2 AND $con1
+//                                                group by id_item")->result_array();
+//        
+//        $data['sale'] = $this->db->query("SELECT id_item,sum(old_book_transfer_items.quantity_item) as quantity FROM `old_book_transfer_total` 
+//                                                left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
+//                                                where type_transfer=1 AND $con1 
+//                                                group by id_item")->result_array();
+//        
+//        
+//        $data['receive'] = $this->db->query("SELECT old_book_return_total.discount_amount as curier,old_book_return_items.id_item as book_id,name,sum(quantity) as total_quantity,sum(total_cost)  as total_ammount FROM `old_book_return_items` left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
+//LEFT JOIN items ON items.id_item=old_book_return_items.id_item WHERE $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc")->result_array();
+//        
+    
+    
     
 //    function call_rebind_report($con){
 //        
