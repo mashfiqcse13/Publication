@@ -120,10 +120,10 @@ class Sales_edit_model extends CI_Model {
         
     }
 
-
     /*
      * If user increase or decrease the slip expense or bill payment option then it will be used to add row in expense table
      */
+
     function expense_update() {
         
     }
@@ -132,7 +132,6 @@ class Sales_edit_model extends CI_Model {
      * 1. insert a row to payment log and the amount will be negetive
      * 2. new status colum need to be added to identify to row as edited adjust ment .
      * 3. Reduce from the cash balance
-     * 4. also use $this->Master_reconcillation_model->reduce_cash($amount)
      */
 
     function reduce_cash() {
@@ -152,6 +151,66 @@ class Sales_edit_model extends CI_Model {
      */
 
     function increase_advance_balence($id_customer, $amount, $method = "as bank") {
+        
+    }
+
+    function situation_selector() {
+        
+    }
+
+    function situation_1_case_1() {
+        
+    }
+
+    function situation_2_case_1() {
+        
+    }
+
+    function situation_3_case_1() {
+        
+    }
+
+    function situation_4_case_1() {
+        
+    }
+
+    function situation_5_case_1() {
+        
+    }
+
+    function situation_6_case_1() {
+        
+    }
+
+    function situation_7_case_1() {
+        
+    }
+
+    function situation_1_case_2() {
+        
+    }
+
+    function situation_2_case_2() {
+        
+    }
+
+    function situation_3_case_2() {
+        
+    }
+
+    function situation_4_case_2() {
+        
+    }
+
+    function situation_5_case_2() {
+        
+    }
+
+    function situation_6_case_2() {
+        
+    }
+
+    function situation_7_case_2() {
         
     }
 
