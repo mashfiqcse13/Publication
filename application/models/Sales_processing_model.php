@@ -101,7 +101,9 @@ class Sales_processing_model extends CI_Model {
     function ExecuteCaseType1() {
         $this->load->model('Bank_model');
         $this->Customer_payment->set_combine_due_payment_register();
-        $this->Bank_model->bank_transection($this->bank_account_id, 1, $this->bank_payment, $this->bank_check_no, 1);       //accepting bank payment
+        if ($this->bank_account_id > 0 && $this->bank_payment > 0) {
+            $this->Bank_model->bank_transection($this->bank_account_id, 1, $this->bank_payment, $this->bank_check_no, 1);       //accepting bank payment
+        }
         if ($this->dues_unpaid > 0 && $this->bank_payment > 0) {
             if ($this->bank_payment >= $this->dues_unpaid) {
                 $this->Customer_payment->due_payment($this->id_customer, $this->dues_unpaid, 3);
@@ -217,7 +219,7 @@ class Sales_processing_model extends CI_Model {
             $this->Cash->add($cash_payment) or $this->exception_handler('Failed to put cash in cash box');
             $this->Customer_payment->payment_register($id_customer, $cash_payment, $id_total_sales, 1);
         }
-        if ($bank_payment > 0) {
+        if ($bank_payment > 0 && $bank_account_id > 0 && !empty($bank_check_no)) {
             $this->load->model('Bank_model');
             $this->Bank_model->bank_transection($bank_account_id, 1, $bank_payment, $bank_check_no, 1);
             $this->Customer_payment->payment_register($id_customer, $bank_payment, $id_total_sales, 3);
