@@ -141,7 +141,7 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
       
       <style type="text/css">
-          div#id_account_input_box {
+/*          div#id_account_input_box {
             width: 300px;
         }
         input#reservation {
@@ -149,7 +149,7 @@
         }
         input {
             width: 300px!important;
-        }
+        }*/
       </style>
 
       <script>     

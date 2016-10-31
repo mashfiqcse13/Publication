@@ -57,6 +57,7 @@ class Bank extends CI_Controller {
         //$crud->set_relation('id_account', 'bank_account', 'id_bank_account');
         $crud->set_relation('id_user', 'users', 'username');
         $crud->required_fields('id_account', 'amount_transaction');
+        $crud->required_fields('id_transaction_type', 'Transaction type');
         $crud->order_by('id_bank_management', 'desc');
 
 
@@ -80,8 +81,9 @@ class Bank extends CI_Controller {
 
 //        $crud->callback_after_insert(array($this, 'balance_add'));
 //        $crud->callback_before_delete(array($this,'balance_delete'));
-        //$crud->unset_edit();
-        $crud->unset_delete();
+        $crud->unset_edit();
+        $crud->unset_delete()->unset_read();
+        
 
         $this->load->model('misc/bank_balance');
 
