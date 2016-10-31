@@ -114,5 +114,23 @@
             window.location = '<?php echo site_url('production_process'); ?>';
         }
     });
+    function string_to_int(input_field_value) {
+        var integer_val = parseInt(input_field_value);
+        return (isNaN(integer_val)) ? 0 : integer_val;
+    }
+    $('#form').submit(function () {
+        var id_item = $('[name="id_item"]').val();
+        var id_vendor = $('[name="id_vendor"]').val();
+        if (string_to_int(id_item) < 1) {
+            alert("Select Item");
+            return false;
+        }
+        if (string_to_int(id_vendor) < 1) {
+            alert("Select Vendor");
+            return false;
+        }
+        return true;
+
+    });
 
 </script>

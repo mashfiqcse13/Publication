@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Description of Production_process_model
  *
  * @author MD. Mashfiq
- */ 
+ */
 class Production_process_model extends CI_Model {
 
     private $callback_process_buffer_id_vendor;
@@ -674,6 +674,9 @@ FROM view_process_step_transfer_log_with_details;')->result();
     }
 
     function save_processes($data) {
+        if ($data['id_item'] < 1 || $data['id_vendor'] < 1 || $data['order_quantity'] < 1) {
+            return FALSE;
+        }
         $process['id_item'] = $data['id_item'];
         $this->callback_process_buffer_id_vendor = $data['id_vendor'];
         $process['date_created'] = date('Y-m-d H:i:s');
