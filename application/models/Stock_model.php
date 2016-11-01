@@ -103,15 +103,52 @@ class Stock_model extends CI_Model {
 //                
 //    get perpatual search info
     function get_perpetual_info($from, $to) {
-        $query = $this->db->select('stock_perpetual_stock_register.id_item as id_item,name,opening_amount,
-                sum(receive_amount) as receive_amount,
-                sum(sales_amount) sales_amount,sum(specimen) as specimen,sum(return_amountreject) as return_amountreject')
-                        ->from('stock_perpetual_stock_register')
-                        ->join('items', 'stock_perpetual_stock_register.id_item = items.id_item', 'left')
-                        ->where('stock_perpetual_stock_register.date >= ', date('Y-m-d', strtotime($from)))
-                        ->where('stock_perpetual_stock_register.date <= ', date('Y-m-d', strtotime($to)))
-                        ->group_by('id_item')->order_by('id_item', "asc")
-                        ->get()->result();
+        $from_minus_1 = date('Y-m-d', strtotime('-1 day', strtotime($from)));
+        $from = date('Y-m-d', strtotime($from));
+        $to = date('Y-m-d', strtotime($to));
+        $sql = "SELECT total_stock_perpetual.id_item as id_item,name,
+sum(opening_amount) as opening_amount,
+sum(receive_amount) as receive_amount,
+sum(sales_amount) sales_amount,
+sum(specimen) as specimen,
+sum(return_amountreject) as return_amountreject
+FROM (
+	(
+		SELECT stock_perpetual_stock_register.id_item as id_item,
+		0 as opening_amount,
+		sum(receive_amount) as receive_amount,
+		sum(sales_amount) sales_amount,
+		sum(specimen) as specimen,
+		sum(return_amountreject) as return_amountreject
+		FROM stock_perpetual_stock_register
+		WHERE DATE(stock_perpetual_stock_register.date) 
+			BETWEEN '$from' AND '$to'
+		GROUP BY stock_perpetual_stock_register.id_item
+		ORDER BY stock_perpetual_stock_register.id_item ASC
+	)union(
+		SELECT id_item as id_item,
+		0 as opening_amount,
+		0 as receive_amount,
+		0 as sales_amount,
+		0 as specimen,
+		0 as return_amountreject
+		FROM items
+	)union(
+		SELECT id_item as id_item,
+		sum(closing_stock) as opening_amount,
+		0 as receive_amount,
+		0 as sales_amount,
+		0 as specimen,
+		0 as return_amountreject
+		FROM stock_perpetual_stock_register
+		WHERE DATE(stock_perpetual_stock_register.date) = '$from_minus_1'
+		GROUP BY id_item
+	)
+) as total_stock_perpetual
+LEFT JOIN items ON total_stock_perpetual.id_item = items.id_item
+GROUP BY total_stock_perpetual.id_item
+ORDER BY total_stock_perpetual.id_item ASC";
+        $query = $this->db->query($sql)->result();
 
         return $query;
     }
