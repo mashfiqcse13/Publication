@@ -23,7 +23,7 @@ class Sales_edit_model extends CI_Model {
 
     function test_data() {
 
-        $this->existing_data = array(
+       $data['existing_data'] =  $this->existing_data = array(
             'id_sales_total_sales' => 234,
             "id_customer" => "60",
             'item_selection' => array(
@@ -58,7 +58,7 @@ class Sales_edit_model extends CI_Model {
             'bill_for_packeting' => 30,
             'slip_expense_amount' => 40
         );
-        $this->changed_data = array(
+        $data['changed_data'] =  $this->changed_data = array(
             'bank_account_id' => 1,
             'bank_check_no' => "This is account number",
             'bank_payment' => 200,
@@ -94,6 +94,8 @@ class Sales_edit_model extends CI_Model {
             'total_due' => 100,
             'total_paid' => 460
         );
+        
+        return $data;
     }
 
     /*
@@ -108,8 +110,32 @@ class Sales_edit_model extends CI_Model {
      * This function will update the test sales table in the database
      */
 
-    function sales_update( ) {
+    function sales_update( $grab_data ) {
+        foreach ($grab_data['existing_data'] as $key => $value){
+           
+           
+        }
+//        echo $grab_data['existing_data']['id_customer'];
+//       print_r($grab_data);
         
+    }
+    
+    function update_sales_total_sales($data,$id){
+        $data = array(
+            'id_customer' => '',
+            'discount_percentage' => '',
+            'discount_amount' => '',
+            'sub_total' => '',
+            'total_amount' => '',
+            'total_paid' => '',
+            'total_due' => '',
+            'issue_date' => '',
+            'number_of_packet' => '',
+            'bill_for_packeting' => '',
+            'slip_expense_amount' => '',
+        );
+        $this->db->where('id_total_sales',$id);
+        $this->db->update('sales_total_sales',$data);
     }
 
     /*
