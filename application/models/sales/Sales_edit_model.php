@@ -102,8 +102,35 @@ class Sales_edit_model extends CI_Model {
      * This function will grabb data from the database+edit from and initialize to the respective variable
      */
 
-    function grab_data($id_sales_total_sales) {
-        $this->test_data();
+    function grab_data($id_sales_total_sales = null) {
+//         return $this->test_data();
+        $sales_results = $this->db->select('*')
+                        ->from('sales_total_sales')->get()->result();
+        $sales = $this->db->select('*')
+                ->from('view_customer_paid_unmarged')->get()->result();
+        $items = $this->db->get('items')->result_array();
+        foreach ($sales_results as $result) {
+            $sales = $this->db->select('*')
+                ->from('view_customer_paid_unmarged')->where('id_total_sales',$result->id_total_sales)->get()->row();
+            $this->existing_data = array('id_sales_total_sales' => $result->id_total_sales,
+            'id_customer' => $result->id_customer,
+            'item_selection' => $items,
+            'sub_total' => $result->sub_total,
+            "discount_amount" => $result->discount_amount,
+            "discount_percentage" => $result->discount_percentage,
+            'total_amount' => $result->total_amount,
+            "dues_unpaid" => $result->total_due,
+            'payment_info_cash' => $sales->cash_paid,
+            'payment_info_bank' => $sales->bank_paid,
+            'payment_info_customer_balance_reduction' => $result->id_customer,
+            'total_paid' => $result->total_paid,
+            'total_due' => $result->total_due,
+            "number_of_packet" => $result->number_of_packet,
+            'bill_for_packeting' => $result->bill_for_packeting,
+            'slip_expense_amount' => $result->slip_expense_amount);
+        }
+//        $bank = $this->db->select('*')->from;
+        return $this->existing_data;
     }
 
     /*
