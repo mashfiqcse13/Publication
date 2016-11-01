@@ -85,12 +85,12 @@ class Income extends CI_Controller {
     }
 
     function cash_add($post_array) {
-
+        $post_array['date_income'] = date('Y-m-d h:i:u');
         $this->load->model('misc/cash');
         $values = $this->input->post('amount_income');
 
         $this->cash->add($values);
-        return true;
+        return $post_array;
     }
 
 //        

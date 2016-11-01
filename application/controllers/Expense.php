@@ -53,12 +53,7 @@ class Expense extends CI_Controller {
                     . '<style>div#date_expense_field_box {display: none;}</style>';
         });
          $crud->set_field_upload('expense_file', 'assets/uploads/files');
-
         $crud->unset_edit();
-        //$crud->unset_delete();
-        //$crud->callback_after_insert(array($this, 'cash_delete'));
-        //$crud->callback_before_delete(array($this, 'cash_add'));
-        //$crud->callback_before_update(array($this,'cash_update'));
 
 
         $crud->order_by('id_expense', 'desc');
@@ -89,10 +84,11 @@ class Expense extends CI_Controller {
         $data['Title'] = 'Expense';
         $this->load->view($this->config->item('ADMIN_THEME') . 'expense/expense', $data);
     }
+    
 
     function callback_before_insert_or_update_extra_field($post_array, $primary_key = null) {
         $this->load->model('misc/stationary_stock');
-
+        $post_array['date_expense'] = date('Y-m-d h:i:u');
         $id_name_expense = $post_array['id_name_expense'];
         $amount = $post_array['amount_expense'];
         $memo = $post_array['stock_memo'];

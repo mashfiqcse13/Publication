@@ -61,7 +61,11 @@ class Bank extends CI_Controller {
         $crud->order_by('id_bank_management', 'desc');
 
 
-
+      $crud->callback_add_field('transaction_date', function() {
+            return '<input id="field-transaction_date" name="transaction_date" type="text" value="' . date('Y-m-d h:i:u') . '" >'
+                    . '<style>div#transaction_date_field_box {display: none;}</style>';
+        });
+        
         $crud->callback_add_field('id_user', function() {
             $userid = $_SESSION['user_id'];
             //$userid=$this->session->userdata('id');
@@ -79,7 +83,7 @@ class Bank extends CI_Controller {
 
         $crud->callback_after_insert(array($this, 'add_status'));
 
-//        $crud->callback_after_insert(array($this, 'balance_add'));
+        $crud->callback_before_insert(array($this, 'current_date_update'));
 //        $crud->callback_before_delete(array($this,'balance_delete'));
         $crud->unset_edit();
         $crud->unset_delete()->unset_read();
@@ -117,7 +121,11 @@ class Bank extends CI_Controller {
         $data['Title'] = 'Bank Management';
         $this->load->view($this->config->item('ADMIN_THEME') . 'bank/bank_management', $data);
     }
-
+    function current_date_update($post_array){
+        $post_array['transaction_date'] = date('Y-m-d h:i:u');
+        return $post_array;
+    }
+    
     function bank_balance() {
         $crud = new grocery_CRUD();
         $crud->set_table('bank_balance');
