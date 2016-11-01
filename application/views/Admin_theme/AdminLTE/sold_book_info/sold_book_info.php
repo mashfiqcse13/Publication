@@ -77,48 +77,7 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                    if (isset($table_today)) {
-                        ?> 
-
-                        <div class="box-header">
-                            <p class="text-center"><strong>আজকের বিক্রীত বইসমূহ</strong></p>
-                            <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                            <div class="pull-right" id="test">Report Date: <?php echo date('d/m/Y', now()); ?></div>
-                        </div>
-                        <div class="box-body">
-                            <table  class ="table table-bordered table-hover" style="background: #fff;">
-                                <thead style="background: #DFF0D8;">
-                                    <tr>
-                                        <th>Book Name</th>
-                                        <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
-                                        <th>Old Book Return</th>
-                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return ) </span></th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($table_today as $key => $return) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $return['name'] ?></td>
-                                            <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
-                                            <td><?php echo $return['old_quantity']; ?></td> 
-                                            <td><?php echo $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'] ?></td>
-
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <?php
-                    }if (isset($table)) {
+                    if (isset($sold_book_info)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
@@ -158,7 +117,7 @@
                                     $total_accurate_sale = 0;
                                     $total_old_book_return = 0;
                                     $total_actual_return = 0;
-                                    foreach ($table as $key => $return) {
+                                    foreach ($sold_book_info as $key => $return) {
                                         $total_accurate_sale += ($return['sale_quantity'] - $return['return_quantity']);
                                         $total_old_book_return+= $return['old_quantity'];
                                         $total_actual_return += ($return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity']);

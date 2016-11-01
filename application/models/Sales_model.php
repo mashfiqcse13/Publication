@@ -203,7 +203,7 @@ class Sales_model extends CI_Model {
         $total_sales_details = $total_sales_details[0];
 
         $generate_due_report_by_memo = $this->generate_due_report_by_memo($total_sales_id);
-        
+
         $current_due_amount = 0;
         foreach ($generate_due_report_by_memo as $due) {
             $current_due_amount+=$due['paid_amount'];
@@ -244,7 +244,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), $this->Common->taka_format($total_price));
 
-        $this->table->add_row( '<strong>'.$total_quantity.'</strong>', ' <strong>(মোট বই )</strong> ', array(
+        $this->table->add_row('<strong>' . $total_quantity . '</strong>', ' <strong>(মোট বই )</strong> ', array(
             'data' => 'ছাড় : ',
             'class' => ' taka_formate',
             'colspan' => 2
@@ -301,17 +301,17 @@ class Sales_model extends CI_Model {
             'data' => $total_pay,
             'class' => 'text-right taka_formate'
         ));
-        
-         $this->table->add_row(array(
+
+        $this->table->add_row(array(
             'data' => ' পূর্বের বকেয়া পরিশোধ  :',
             'class' => '',
             'colspan' => 2
                 ), array(
-            'data' => $current_due_amount ,
+            'data' => $current_due_amount,
             'class' => 'text-right taka_formate'
         ));
-        
-         $last_due = $this->Customer_due->current_total_due($total_sales_details->id_customer) - $this->get_party_advanced_balance($total_sales_details->id_customer);
+
+        $last_due = $this->Customer_due->current_total_due($total_sales_details->id_customer) - $this->get_party_advanced_balance($total_sales_details->id_customer);
 
         $this->table->add_row(array(
             'data' => 'সর্বশেষ বাকি : ' . $this->Common->taka_format($last_due),
@@ -323,7 +323,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
                 ), $this->Common->taka_format($current_due));
 
-  
+
 
         $this->table->add_row(array(
             'data' => 'প্যাকেটিং খরচ বাকি: ',
@@ -354,9 +354,9 @@ class Sales_model extends CI_Model {
             'class' => 'text-right taka_formate text-bold',
             'colspan' => 3
         ));
-        
 
-                
+
+
         $data['memo'] = $this->table->generate();
 
 
@@ -376,10 +376,10 @@ class Sales_model extends CI_Model {
         }
         return $name;
     }
-    
-    function get_party_advanced_balance($id){
-        $sql = $this->db->get_where('party_advance','id_customer='.$id)->result();
-        foreach($sql as $row){
+
+    function get_party_advanced_balance($id) {
+        $sql = $this->db->get_where('party_advance', 'id_customer=' . $id)->result();
+        foreach ($sql as $row) {
             return $row->balance;
         }
     }
@@ -408,7 +408,7 @@ class Sales_model extends CI_Model {
         return $query->result();
     }
 
-    function accurate_sale($id_customer = '', $date_range = '', $party_district = '') {
+    function sold_book_info($id_customer = '', $date_range = '', $party_district = '') {
 
         $conditions = array();
 
@@ -426,99 +426,37 @@ class Sales_model extends CI_Model {
             $date_range = "DATE(issue_date) BETWEEN DATE('$from') AND  DATE('$to')";
             array_push($conditions, "$date_range");
         }
-        $condition = (empty($id_customer) && empty($date_range)) ? "" : "WHERE " . implode(' AND ', $conditions);
-        $sql = "SELECT  `id_item` ,  `item_name` , SUM( quantity ) AS sales_quantity,  `issue_date` 
-                FROM  `view_sales_with_party_district` 
-                $condition
-                GROUP BY id_item";
+        $condition = empty($conditions) ? "" : "WHERE " . implode(' AND ', $conditions);
+        $sql = "SELECT sold_book_info.id_item as id_item,name,
+sum(sale_quantity) as sale_quantity,
+0 as return_quantity,
+sum(old_quantity) as old_quantity
+FROM (
+	(
+		SELECT  `id_item` ,
+		SUM( quantity ) AS sale_quantity,
+		0 as return_quantity,
+		0 as old_quantity
+		FROM  `view_sales_with_party_district` 
+		$condition
+		GROUP BY id_item
+	)union(
+		SELECT `id_item`, 
+		0 as sale_quantity,
+		0 as return_quantity,
+		sum(quantity) as old_quantity 
+		FROM `view_old_book_return_items_with_party_district` 
+		$condition
+		GROUP BY `id_item` 
+	)
+) as sold_book_info
+LEFT JOIN items ON sold_book_info.id_item = items.id_item
+GROUP BY sold_book_info.id_item
+ORDER BY sold_book_info.id_item ASC";
 //        die($sql);
         $query = $this->db->query($sql);
 
-        return $query->result();
-    }
-
-    function return_book($id_customer = '', $date_range = '') {
-        if ($date_range == '') {
-            $date_range = '';
-        } else {
-            $this->load->model('Common');
-            $date = explode('-', $date_range);
-            $from = date('Y-m-d', strtotime($date[0]));
-            $to = date('Y-m-d', strtotime($date[1]));
-            $date_range = "  DATE(sales_current_sales_return.date_current_sales_return) BETWEEN '$from' AND '$to'";
-        }
-
-        if ($id_customer == '' && $date_range == '') {
-
-            $con = ' ';
-        }
-
-        if ($id_customer != '') {
-
-            $con = " where sales_total_sales.id_customer = $id_customer ";
-        }
-        if ($date_range != '') {
-
-            $con = " where  $date_range";
-        }
-
-        if ($date_range != '' && $id_customer != '') {
-            $con = " where sales_total_sales.id_customer = $id_customer AND $date_range";
-        }
-
-        $query = $this->db->query("SELECT items.id_item as id_item,items.name as name,
-            sum(sales_current_sales_return.quantity) as return_quantity
-            FROM 
-            sales_current_sales_return left JOIN items ON sales_current_sales_return.book_ID=items.id_item
-            LEFT JOIN sales_total_sales ON sales_total_sales.id_total_sales=sales_current_sales_return.memo_ID
-            $con
-            GROUP BY items.id_item
-                        ");
-
-        return $query->result();
-    }
-
-    function old_book_quantity($id_customer = '', $date_range = '') {
-
-        if ($date_range == '') {
-            $date_range = '';
-        } else {
-            $this->load->model('Common');
-            $date = explode('-', $date_range);
-            $from = date('Y-m-d', strtotime($date[0]));
-            $to = date('Y-m-d', strtotime($date[1]));
-            $date_range = "  DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
-        }
-
-        if ($id_customer == '' && $date_range == '') {
-
-            $con = ' ';
-        }
-
-        if ($id_customer != '') {
-
-            $con = " where old_book_return_total.id_customer = $id_customer ";
-        }
-        if ($date_range != '') {
-
-            $con = " where  $date_range";
-        }
-
-        if ($date_range != '' && $id_customer != '') {
-            $con = " where old_book_return_total.id_customer = $id_customer AND $date_range";
-        }
-
-
-        $query = $this->db->query("SELECT `id_item`, 
-                sum(old_book_return_items.quantity) as old_quantity 
-                FROM `old_book_return_items` 
-                LEFT JOIN `old_book_return_total` 
-                ON `old_book_return_total`.`id_old_book_return_total` = `old_book_return_items`.`id_old_book_return_total`
-                $con
-                GROUP BY `id_item` 
-                ");
-
-        return $query->result();
+        return $query->result_array();
     }
 
 }
