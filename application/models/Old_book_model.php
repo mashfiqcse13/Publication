@@ -79,7 +79,7 @@ class Old_book_model extends CI_Model {
     function get_old_item_details() {
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_balance` 
             FROM `items` natural join `old_book_stock`
-            WHERE `total_balance` > 0 ")->result();
+            WHERE `total_balance` > 0 order by id_item")->result();
 
         $data = array();
         foreach ($items as $item) {
