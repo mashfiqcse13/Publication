@@ -44,8 +44,10 @@ class Sold_book_info extends CI_Controller {
                 $data['name'] = $this->Sales_model->get_customer_name($id_customer);
             }
             $data['date_range'] = $date_range;
+            $data['report_title'] = "বিক্রিত বইসমুহ";
         } else {
             $date_range = date('m/d/Y') . ' - ' . date('m/d/Y');
+            $data['report_title'] = "আজকের বিক্রিত বইসমুহ";
 
             $data['sold_book_info'] = $this->Sales_model->sold_book_info($id_customer, $date_range);
         }

@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="col-md-3">
+                                    <div class="col-md-12">
                                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                                         <?php echo anchor(site_url('sold_book_info'), '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
                                     </div>
@@ -80,7 +80,7 @@
                     if (isset($sold_book_info)) {
                         ?>
                         <div class="box-header">
-                            <p class="text-center"><strong>বিক্রীত বইসমূহ</strong></p>
+                            <p class="text-center"><strong><?php echo $report_title; ?></strong></p>
                             <table style="margin: 0 auto">
                                 <?php
                                 if (isset($name)) {
