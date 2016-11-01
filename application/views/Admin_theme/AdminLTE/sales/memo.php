@@ -29,8 +29,7 @@
     if($link == 'http://advancedpublication.com/'){
         ?>
     @page {       
-                margin: 50mm 25mm 15mm 25mm;  
-                
+                margin: 47mm 25mm 15mm 25mm;                  
                
             }
     <?php
