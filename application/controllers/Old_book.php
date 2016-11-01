@@ -127,7 +127,7 @@ class Old_book extends CI_Controller {
 
     function return_book() {
         $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
-        $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
+        $data['item_dropdown'] = $this->Old_book_model->get_item_dropdown();
         $data['customer_due'] = $this->Old_book_model->get_party_due();
 
         $data['item_details'] = $this->Old_book_model->get_item_details();

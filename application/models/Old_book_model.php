@@ -10,11 +10,23 @@ if (!defined('BASEPATH'))
  */
 class Old_book_model extends CI_Model {
 
+    function get_item_dropdown() {
+
+        $items = $this->db->query("SELECT `id_item`, `name`
+            FROM `items` order by id_item")->result();
+
+        $data = array();
+        $data[''] = 'Select items by name or code';
+        foreach ($items as $item) {
+            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+        }
+        return form_dropdown('id_item', $data, '', ' class="select2" ');
+    }
     function get_available_item_dropdown() {
 
-        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
-            FROM `items` natural join `stock_final_stock`
-            WHERE `total_in_hand` > 0 ")->result();
+        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,total_balance as `total_in_hand` 
+            FROM `items` natural join `old_book_stock`
+            WHERE `total_balance` > 0 order by id_item")->result();
 
         $data = array();
         $data[''] = 'Select items by name or code';
@@ -59,18 +71,14 @@ class Old_book_model extends CI_Model {
     }
 
     function get_item_details() {
-        $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
-            FROM `items` natural join `stock_final_stock`
-            WHERE `total_in_hand` > 0 ")->result();
+        $items = $this->db->query("SELECT `id_item`, `name`
+            FROM `items`")->result();
 
         $data = array();
         foreach ($items as $item) {
             $data[$item->id_item] = array(
                 'id_item' => $item->id_item,
-                'name' => $item->name,
-                'regular_price' => $item->regular_price,
-                'sale_price' => $item->sale_price,
-                'total_in_hand' => $item->total_in_hand,
+                'name' => $item->name
             );
         }
         return $data;

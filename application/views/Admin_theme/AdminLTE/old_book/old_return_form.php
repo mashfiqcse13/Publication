@@ -267,7 +267,7 @@
             alert('Enter quantity');
             return;
         }
-        var this_item_details = item_details[item_id];
+//        var this_item_details = item_details[item_id];
 //        if (item_quantity > this_item_details.total_in_hand) {
 //            alert('Please don\'t select quantity bigger than '+this_item_details.total_in_hand);
 //            return;
