@@ -39,7 +39,7 @@ class Advance_payment extends CI_Controller {
 //       echo '<pre>';
 //       print_r($_POST);
 //       exit();
-            if (!empty($amount) && !empty($bank_account_id)) {
+            if (!empty($amount) && $amount > 0 && !empty($bank_amount) && $bank_amount > 0) {
                 $data['report_message'] = '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
             } else {                
                 if (!empty($id_customer) && !empty($amount)) {
@@ -69,6 +69,7 @@ class Advance_payment extends CI_Controller {
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
 
         $data['customer'] = $this->input->get('id_customer');
+        
         $data['customer_details'] = $this->Advance_payment_model->cutomer_details($data['customer']);
         $this->load->model('misc/Customer_due');
         if (!empty($data['customer'])) {
