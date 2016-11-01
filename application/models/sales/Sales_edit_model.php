@@ -70,7 +70,7 @@ class Sales_edit_model extends CI_Model {
             "dues_unpaid" => 0,
             "id_customer" => "60",
             'item_selection' => array(
-                array( 
+                array(
                     "item_id" => 1,
                     "item_quantity" => 2,
                     "name" => "ব্যবসায় সংগঠন ও ব্যবস্হাপনা - প্রথম পত্র",
@@ -108,7 +108,7 @@ class Sales_edit_model extends CI_Model {
      * This function will update the test sales table in the database
      */
 
-    function sales_update( ) {
+    function sales_update() {
         
     }
 
@@ -134,8 +134,30 @@ class Sales_edit_model extends CI_Model {
      * 3. Reduce from the cash balance
      */
 
-    function reduce_cash() {
-        
+    function reduce_cash($id_total_sales, $id_customer, $reduced_paid_amount) {
+        $this->load->model("misc/Cash");
+        if ($this->Cash->reduce($reduced_paid_amount) == FALSE) {
+            return FALSE;
+        }
+        $this->load->model("misc/Customer_payment");
+        $this->Customer_payment->payment_register($id_customer, -$reduced_paid_amount, $id_total_sales, 1,1);
+        return true;
+    }
+
+    /*
+     * 1. insert a row to payment log and the amount will be negetive
+     * 2. new status colum need to be added to identify to row as edited adjust ment .
+     * 3. Reduce from the cash balance
+     */
+
+    function increase_cash($id_total_sales, $id_customer, $increased_paid_amount) {
+        $this->load->model("misc/Cash");
+        if ($this->Cash->add($increased_paid_amount) == FALSE) {
+            return FALSE;
+        }
+        $this->load->model("misc/Customer_payment");
+        $this->Customer_payment->payment_register($id_customer, $increased_paid_amount, $id_total_sales, 1,1);
+        return true;
     }
 
     /*
