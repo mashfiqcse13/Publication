@@ -42,14 +42,30 @@
                             </div>
                         </div>
                     </form>
-                    <?php if (isset($customer)) { ?>
+                      <?php
+                            if (isset($report_message)) {
+                                echo $report_message;
+                            }
+                            if (isset($due_request)) {
+                                echo $due_request;
+                            }
+                            ?>
+                    <?php if (isset($customer)) { 
+                        
+                     if($customer_due>0){
+                         
+                         echo '<p class="alert alert-danger" >Please Pay Previous Due From Due Payment. Then Make Advanced Payment.</p>';
+                     }else{   
+                     ?>
+
+                    
                         <form role="form" class="form-horizontal" action="<?php echo current_url(); ?>" method="post">
                             <!--                            <div class="row">
                                                             
                              
                             </div>-->
                             <div class="box-body">
-                            <h4>Customer Details</h4>
+                            <h4>Customer Details </h4>
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="box-body">
@@ -184,14 +200,7 @@
                             </div>
                             </div>
                             <div class="row" style="padding:0 30px;padding-bottom: 15px;">
-                                <?php
-                                if (isset($report_message)) {
-                                    echo $report_message;
-                                }
-                                if (isset($due_request)) {
-                                    echo $due_request;
-                                }
-                                ?>
+                             
                                 <hr>
                                 <a href="<?= site_url('Advance_payment') ?>" class="btn btn-primary pull-right" style="margin-right:5px;margin-left: 5px;">Refresh</a>
                                 <input type="submit"  class="btn btn-primary pull-right" value="Add Payment" name="btn_submit"/>
@@ -204,7 +213,7 @@
 
 
                         </form>
-                    <?php } ?>
+                    <?php }} ?>
                 </div>
             </div>
             <!--            <div class="col-md-12">
