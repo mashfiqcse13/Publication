@@ -292,7 +292,7 @@
             }
             
             @page {       
-                margin: 30mm 25mm 15mm 20mm;  
+                margin: 30mm 20mm 15mm 20mm;  
                 size: A4;
             }
             

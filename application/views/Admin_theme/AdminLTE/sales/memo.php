@@ -23,12 +23,30 @@
         font-weight: normal;
         text-align: right;
     }
+    
+    <?php 
+    $link = $this->config->item('SITE')['website'];
+    if($link == 'http://advancedpublication.com/'){
+        ?>
+    @page {       
+                margin: 60mm 20mm 15mm 20mm;  
+                size: 5.10in 10.3in;
+               
+            }
+    <?php
+    }
+    
+    
+    ?>
+ 
+           
+
 </style>
 
-
+ 
 
     
-    <div class="container memo_print_option custom_memo"  >
+    <div class="container memo_print_option custom_memo memo"  >
         <div class="only_print padding10"></div>
 
         <div class="row" style="padding-top:0px"> 
@@ -180,6 +198,8 @@ thead {
         display: none;
         visibility: hidden;
     }
+    
+
     
 }
 
