@@ -95,13 +95,14 @@ class Customer_payment extends CI_Model {
         return $query;
     }
 
-    function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method) {
+    function payment_register($id_customer, $amount, $id_total_sales, $id_payment_method, $payment_status = '') {
         $data_to_insert = array(
             'id_customer' => $id_customer,
             'paid_amount' => $amount,
             'id_total_sales' => $id_total_sales,
             'payment_date' => date('Y-m-d h:i:u'),
-            'id_payment_method' => $id_payment_method
+            'id_payment_method' => $id_payment_method,
+            'payment_status' => $payment_status
         );
         $this->db->insert('customer_payment', $data_to_insert);
     }

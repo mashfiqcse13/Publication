@@ -27,9 +27,7 @@ class Test extends CI_Controller {
 //        $this->Cash->reduce(3000) or die("Not enough balance");
         $this->load->model('misc/Customer_due');
         $this->load->model('sales/Sales_edit_model');
-        $results = $this->Sales_edit_model->grab_data();
-        echo '<pre>';print_r($results);exit();
-        return $results;
+      
         
 //        $this->Customer_due->add(4, 1000);
 //        $this->Customer_due->reduce(4, 1000) or die("Not enough due");
@@ -43,11 +41,15 @@ class Test extends CI_Controller {
         
 //        
         $grab_data = $this->Sales_edit_model->test_data();
-        $sales_update = $this->Sales_edit_model->sales_update($grab_data);
+//        $sales_update = $this->Sales_edit_model->sales_update($grab_data);
+        $result = array_diff($array1, $array2);
+
+        print_r($result);   
         
         echo '<pre>';
-        print_r($grab_data);
-        echo '</pre>';
+        print_r($grab_data); 
+//        echo '</pre>';
+
         
         
     }
