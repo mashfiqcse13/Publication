@@ -51,7 +51,7 @@ class Expense extends CI_Controller {
         $crud->callback_add_field('date_expense', function() {
             return '<input id="field-date_expense" name="date_expense" type="text" value="' . date('Y-m-d h:i:u') . '" >'
                     . '<style>div#date_expense_field_box {display: none;}</style>';
-        });
+        }); 
          $crud->set_field_upload('expense_file', 'assets/uploads/files');
         $crud->unset_edit();
 

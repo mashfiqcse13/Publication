@@ -111,7 +111,7 @@ class Bank extends CI_Controller {
             $data['glosary'] = $output;
         }
 
-
+ 
 
 
 

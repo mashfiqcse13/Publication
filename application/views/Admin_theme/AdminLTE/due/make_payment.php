@@ -1,6 +1,8 @@
 <!--add header -->
 <?php include_once __DIR__ . '/../header.php'; ?>
 
+
+
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
 <!-- Content Wrapper. Contains page content -->
@@ -102,7 +104,7 @@
         <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">
         
                 <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
-                    <div style="margin:0 7mm">
+                    <div style="margin-top:17mm">
                         
 
                         <p class="text-center"> Due Payment Slip</p>        
@@ -180,11 +182,7 @@
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
-<style type="text/css">
-                @page {       
-                margin: 45mm 25mm 15mm 25mm!important;  
-            }
-</style>
+
 <script>
     $('.first_table .table tbody').append('<tr style="border-top: 3px solid #d5d5d5;"><td colspan="6" class="text-center">Total Due =</td><td><?php echo $customer_total_due ?></td></tr>');
     $('.bank_hide').hide();

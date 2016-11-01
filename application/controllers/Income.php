@@ -84,7 +84,7 @@ class Income extends CI_Controller {
         $this->load->view($this->config->item('ADMIN_THEME') . 'income/income', $data);
     }
 
-    function cash_add($post_array) {
+    function cash_add($post_array) { 
         $post_array['date_income'] = date('Y-m-d h:i:u');
         $this->load->model('misc/cash');
         $values = $this->input->post('amount_income');

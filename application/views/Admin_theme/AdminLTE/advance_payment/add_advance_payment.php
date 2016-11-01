@@ -23,7 +23,7 @@
 
         <div id="block">
 
-            <div class="row" style="padding-top:0px">
+            <div class="row" style="padding-top:0px;margin-top:14mm">
 
 
                 <?php
