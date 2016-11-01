@@ -29,8 +29,8 @@
     if($link == 'http://advancedpublication.com/'){
         ?>
     @page {       
-                margin: 60mm 20mm 15mm 20mm;  
-                size: 5.10in 10.3in;
+                margin: 50mm 25mm 15mm 25mm;  
+                
                
             }
     <?php
