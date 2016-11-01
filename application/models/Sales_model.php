@@ -14,7 +14,7 @@ class Sales_model extends CI_Model {
 
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,`total_in_hand` 
             FROM `items` natural join `stock_final_stock`
-            WHERE `total_in_hand` > 0 ")->result();
+            WHERE `total_in_hand` > 0 order by `id_item`")->result();
 
         $data = array();
         $data[''] = 'Select items by name or code';
