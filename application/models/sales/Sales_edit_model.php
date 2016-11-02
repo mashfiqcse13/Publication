@@ -180,7 +180,23 @@ class Sales_edit_model extends CI_Model {
      */
 
     function expense_update() {
-        
+        $id = $this->input->post('id_total_sales');
+        $slip['amount_expense'] = $this->input->post('slip_expense_amount');
+        $slip['date_expense'] = Date('Y-m-d H:i:s');
+        $slip['id_name_expense'] = '4';
+        $bill['amount_expense'] = $this->input->post('bill_for_packeting');
+        $bill['date_expense'] = Date('Y-m-d H:i:s');
+        $bill['id_name_expense'] = '3';
+        $result = $this->db->get_where('sales_total_sales',array('id_total_sales' => $id))->row();
+        if($slip['amount_expense'] < $result->slip_expense_amount || $slip['amount_expense'] > $result->slip_expense_amount ){
+            $this->db->insert('expense',$slip);
+            return true;
+        }
+        if($bill['amount_expense'] < $result->bill_for_packeting || $bill['amount_expense'] > $result->bill_for_packeting){
+            $this->db->insert('expense',$bill);
+            return true;
+        }
+        return false;
     }
 
     /*
