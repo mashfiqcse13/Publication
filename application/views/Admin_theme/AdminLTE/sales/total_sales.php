@@ -218,7 +218,6 @@
                                         <td class="text-right taka_formate"><?php echo $sum_customer_advance_paid; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_customer_old_book_sell; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_total_paid; ?></td>
-                                        <td class="text-right taka_formate"><?php echo $sum_customer_advance_paid; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_total_due; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting; ?></td>
                                         <td class="text-right taka_formate"><?php echo $sum_bill_for_packeting + $sum_total_due; ?></td>
