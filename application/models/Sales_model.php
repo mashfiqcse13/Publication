@@ -451,6 +451,7 @@ FROM (
 	)
 ) as sold_book_info
 LEFT JOIN items ON sold_book_info.id_item = items.id_item
+WHERE sale_quantity > old_quantity
 GROUP BY sold_book_info.id_item
 ORDER BY sold_book_info.id_item ASC";
 //        die($sql);
