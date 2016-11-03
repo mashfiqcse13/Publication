@@ -127,7 +127,10 @@
                                             <td><?php echo $return['name'] ?></td>
                                             <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
                                             <td><?php echo $return['old_quantity']; ?></td> 
-                                            <td><?php echo $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'] ?></td>
+                                            <td><?php
+                                                $ActualSale = $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'];
+                                                echo ($ActualSale < 0) ? "" : $ActualSale
+                                                ?></td>
 
                                         </tr>
                                         <?php
