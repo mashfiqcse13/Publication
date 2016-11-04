@@ -255,10 +255,17 @@
 
 
 
-
 </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
 <!-- insert book -->
 
 <?php include_once __DIR__ . '/../footer.php'; ?>
+
+<script>
+    
+        $('tbody tr').each(function() {
+            if ($(this).find('td:nth-child(3)').text()=='' && $(this).find('td:nth-child(4)').text()=='' && $(this).find('td:nth-child(5)').text()=='' && $(this).find('td:nth-child(6)').text()=='' && $(this).find('td:nth-child(7)').text()=='' && $(this).find('td:nth-child(8)').text()=='' && $(this).find('td:nth-child(11)').text()=='' ) $(this).remove();
+        });
+   
+    </script>
