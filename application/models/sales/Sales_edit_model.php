@@ -171,10 +171,20 @@ class Sales_edit_model extends CI_Model {
      * This function will update the test sales table in the database
      */
     function existing_memo_data($id){
-        return $this->db->get_where( ' sales_total_sales ' , '`id_total_sales`= '.$id )->row_array();
+        return $this->db->select('*')
+                ->from('sales_total_sales')
+                ->join('view_customer_paid_marged','sales_total_sales.id_total_sales = view_customer_paid_marged.id_total_sales','left')
+                ->where('sales_total_sales.id_total_sales',$id)
+                ->get()->row_array();
+//        return $this->db->get_where( ' sales_total_sales ' , '`id_total_sales`= '.$id )->row_array();
     }
      function existing_memo_items($id){
-        return $this->db->get_where( ' sales ' , '`id_total_sales`= '.$id )->result_array();
+         return $this->db->select('*')
+                ->from('sales')
+                ->join('items','sales.id_item = items.id_item','left')
+                ->where('sales.id_total_sales',$id)
+                ->get()->result_array();
+//        return $this->db->get_where( ' sales ' , '`id_total_sales`= '.$id )->result_array();
     }
     
     function sales_update( $memo_id,$modified_data ) {
