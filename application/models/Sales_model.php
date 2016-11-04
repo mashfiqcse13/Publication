@@ -270,7 +270,10 @@ class Sales_model extends CI_Model {
             'data' => 'সর্বমোট : ',
             'class' => 'noborder',
             'colspan' => 2
-                ), $this->Common->taka_format($total_sales_details->total_amount));
+                ),array(
+                'data' => $this->Common->taka_format($total_sales_details->total_amount),
+                'class' => 'noborder text-right taka_formate'
+            ) );
 
 
         $this->table->add_row(array(
@@ -282,7 +285,10 @@ class Sales_model extends CI_Model {
             'data' => 'নগদ জমা : ',
             'class' => 'noborder',
             'colspan' => 2
-                ), $cash_pay);
+                ), array(
+                'data' => $cash_pay,
+                'class' => 'noborder text-right taka_formate'
+            ));
 
         $this->table->add_row(array(
             'data' => 'ব্যাংক জমা : ',
@@ -331,19 +337,17 @@ class Sales_model extends CI_Model {
             'colspan' =>2
                 ),array(
             'data' => $this->Common->taka_format($current_due),
-            'class' => 'noborder text-right taka_formate',
-            'colspan' => 2
+            'class' => 'noborder text-right taka_formate'
         ));
         
-        if(!$hide_advanced){
+        if($hide_advanced == false){
             $this->table->add_row(array(
                 'data' => 'সর্বশেষ বাকি : ' ,
-                'class' => 'noborder text-bold hide_advanced',
+                'class' => 'noborder text-bold',
                 'colspan' => 2
                     ),array(
                 'data' => $this->Common->taka_format($last_due) ,
-                'class' => 'noborder text-bold hide_advanced',
-                'colspan' => 2
+                'class' => 'noborder text-bold text-right'
                     ));
         }
         
@@ -355,8 +359,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
         ),array(
             'data' => $total_sales_details->bill_for_packeting,
-            'class' => 'noborder text-right taka_formate',
-            'colspan' => 2
+            'class' => 'noborder text-right taka_formate'
         ));
 
         $this->table->add_row( array(
@@ -365,8 +368,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
         ),array(
             'data' => $total_sales_details->slip_expense_amount,
-            'class' => 'noborder text-right taka_formate',
-            'colspan' => 2
+            'class' => 'noborder text-right taka_formate'
         ));
 
         $this->table->add_row(array(

@@ -15,15 +15,6 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
 
 ?>
 
-
-<!-- Left side column. contains the logo and sidebar -->
-
-
-
-<!-- Content Wrapper. Contains page content -->
-
-
-
 <style>
     #table_custom .table td.separator {
         background: black none repeat scroll 0 0;
@@ -35,7 +26,17 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
         font-weight: normal;
         text-align: right;
     }
-    
+    td.noborder {
+        border: 1px solid #ddd!important;
+    }
+     .memo table.table>tr>td.noborder {
+              border: 1px solid #ddd!important;
+        }
+    @media only print{
+          td.noborder {
+            border: 1px solid #ddd!important;
+        }
+    }
     <?php 
    
     if($sitelink == 'http://advancedpublication.com/'){  
@@ -62,7 +63,7 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
 
         <div class="row" style="padding-top:0px"> 
 
-            <table class="font_12 table table_custom text-bold" style="font-size:11px;margin-bottom: 0px;">
+            <table class="font_12 table  table_custom text-bold" style="font-size:11px;margin-bottom: 0px;">
 
                 <tr>
                     
@@ -199,7 +200,32 @@ thead {
 td.hide_advanced {
     opacity: 0;
 }
+@media only print{
+      body td.noborder {
+            border: 0px solid #ddd!important;
+        }
+        
+                #table_custom .table > tbody > tr > td.noborder, .table > tbody > tr > th, .table > tfoot > tr > td.noborder, .table > tfoot > tr > th, .table > thead > tr > td.noborder, .table > thead > tr > th {
+                    border: 0px solid #222!important;
+                }
+                .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td.noborder, .table-bordered>tbody>tr>td.noborder, .table-bordered>tfoot>tr>td.noborder{
 
+                    border:0px solid #222!important;
+                }
+                body table,body tr,body td.noborder,body th,body tbody,body thead,.table,.table-bordered td.noborder{
+                    border: 0px solid #222!important;
+                }
+                body .table-bordered td.noborder{
+                    border:0px solid #222!important;
+                }
+                
+                .top_margin_remover{
+                    margin-top: 0px!important;
+                }
+             
 
+}
+
+                
 
     </style>

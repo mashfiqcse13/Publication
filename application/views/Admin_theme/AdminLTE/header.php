@@ -244,15 +244,8 @@
                 body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
                     border: 1px solid #222!important;
                 }
-                body table.memo_body,body tr,body table.memo_body td.noborder,body th,body tbody,body thead,.table,.table-bordered {
-                    border: 0px solid #222!important;
-                }
                 body .table-bordered{
                     border:1px solid #222!important;
-                }
-                
-                body .table-bordered td.noborder{
-                    border:0px solid #000!important;
                 }
                 .top_margin_remover{
                     margin-top: 0px!important;
@@ -301,7 +294,7 @@
                 }
 
             }
-            
+             
             .noborder{
                 border:none!important;
             }
