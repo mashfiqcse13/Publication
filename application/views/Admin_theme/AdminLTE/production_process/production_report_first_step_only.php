@@ -179,7 +179,7 @@
                                         <td  class="taka_formate"><?php echo $first_step_details->reject_amount; ?></td>
                                         <td  class="taka_formate"><?php echo $first_step_details->damaged_amount; ?></td>
                                         <td  class="taka_formate"><?php echo $first_step_details->missing_amount; ?></td>
-                                        <td><?php echo date('d-M-Y', strtotime( $first_step_details->date_created)); ?></td>
+                                        <td><?php echo date('d-M-Y', strtotime($first_step_details->date_created)); ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -191,55 +191,78 @@
                         ?>
                         <div id="block">
                             <div style="margin:0 10mm">
-                            <div class="box-header" >
-                                <p class="text-center"><strong>Production Process Report</strong></p>
-                                <p class="pull-left" style="margin-left:0px"> <?php echo $this->Common->date_range_formater_for_report($date_range); ?></p>
+                                <div class="box-header" >
+                                    <p class="text-center"><strong>Production Process Report</strong></p>
+                                    <p class="pull-left" style="margin-left:0px"> <?php echo $this->Common->date_range_formater_for_report($date_range); ?></p>
 
-                                <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
-                                <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
-                            </div>
-                            <table  class ="table table-bordered table-hover" style="background: #fff;">
-                                <thead style="background: #DFF0D8;">
-                                    <tr>
-                                        <th>Step ID</th>
-                                        <th>Order ID</th>
-                                        <th>Process Type</th>
-                                        <th>Item Name</th>
-                                        <th>Vendor Name</th>
-                                        <th>Order Amount</th>
-                                        <th>Transferred</th>
-                                        <th>Rejected</th>
-                                        <th>Damaged</th>
-                                        <th>Missing</th>
-                                        <th>Date Created</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    foreach ($all_production_process_first_step_info_by_search as $first_step_details) {
-                                        ?>
+                                    <input style="margin-bottom: 10px;" class="only_print pull-right btn btn-primary" type="button" id="print"  onClick="printDiv('block')"  value="Print Report"/>
+                                    <div class="pull-right" id="test">Report Date: <?php echo date('d-M-Y', now()); ?></div>
+                                </div>
+                                <table  class ="table table-bordered table-hover" style="background: #fff;">
+                                    <thead style="background: #DFF0D8;">
                                         <tr>
-                                            <td><?php echo $first_step_details->id_process_steps; ?></td>
-                                            <td><?php echo $first_step_details->id_processes; ?></td>
-                                            <td><?php echo $first_step_details->name_process_type; ?></td>
-                                            <td><?php
-                                                $item_name = ($first_step_details->item_type == 2) ? $first_step_details->item_name . " (Cover)" : $first_step_details->item_name;
-                                                echo $item_name;
-                                                ?></td>
-                                            <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
-                                            <td class="taka_formate"><?php echo $first_step_details->order_amount; ?></td>
-                                            <td class="taka_formate"><?php echo $first_step_details->transfered_amount; ?></td>
-                                            <td class="taka_formate"><?php echo $first_step_details->reject_amount; ?></td>
-                                            <td class="taka_formate"><?php echo $first_step_details->damaged_amount; ?></td>
-                                            <td class="taka_formate"><?php echo $first_step_details->missing_amount; ?></td>
-                                            <td><?php echo date('d-M-Y', strtotime( $first_step_details->date_created)); ?></td>
+                                            <th>Step ID</th>
+                                            <th>Order ID</th>
+                                            <th>Process Type</th>
+                                            <th>Item Name</th>
+                                            <th>Vendor Name</th>
+                                            <th>Order Amount</th>
+                                            <th>Transferred</th>
+                                            <th>Rejected</th>
+                                            <th>Damaged</th>
+                                            <th>Missing</th>
+                                            <th>Date Created</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+
+                                        class sum {
+
+                                            public $order_amount = 0, $transfered_amount = 0, $reject_amount = 0, $damaged_amount = 0, $missing_amount = 0;
+
+                                        }
+
+                                        $sum = new sum();
+                                        foreach ($all_production_process_first_step_info_by_search as $first_step_details) {
+
+                                            $sum->order_amount = $sum->order_amount + $first_step_details->order_amount;
+                                            $sum->transfered_amount = $sum->transfered_amount + $first_step_details->transfered_amount;
+                                            $sum->reject_amount = $sum->reject_amount + $first_step_details->reject_amount;
+                                            $sum->damaged_amount = $sum->damaged_amount + $first_step_details->damaged_amount;
+                                            $sum->missing_amount = $sum->missing_amount + $first_step_details->missing_amount;
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $first_step_details->id_process_steps; ?></td>
+                                                <td><?php echo $first_step_details->id_processes; ?></td>
+                                                <td><?php echo $first_step_details->name_process_type; ?></td>
+                                                <td><?php
+                                                    $item_name = ($first_step_details->item_type == 2) ? $first_step_details->item_name . " (Cover)" : $first_step_details->item_name;
+                                                    echo $item_name;
+                                                    ?></td>
+                                                <td><?php echo $first_step_details->vendor_name . '(' . $first_step_details->vendor_type . ')'; ?></td>
+                                                <td class="taka_formate"><?php echo $first_step_details->order_amount; ?></td>
+                                                <td class="taka_formate"><?php echo $first_step_details->transfered_amount; ?></td>
+                                                <td class="taka_formate"><?php echo $first_step_details->reject_amount; ?></td>
+                                                <td class="taka_formate"><?php echo $first_step_details->damaged_amount; ?></td>
+                                                <td class="taka_formate"><?php echo $first_step_details->missing_amount; ?></td>
+                                                <td><?php echo date('d-M-Y', strtotime($first_step_details->date_created)); ?></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        <tr style="font-weight: bold">
+                                            <td colspan="5" class="text-left">Total :</td>
+                                            <td  class="taka_formate"><?php echo $sum->order_amount; ?></td>
+                                            <td  class="taka_formate"><?php echo $sum->transfered_amount; ?></td>
+                                            <td  class="taka_formate"><?php echo $sum->reject_amount; ?></td>
+                                            <td  class="taka_formate"><?php echo $sum->damaged_amount; ?></td>
+                                            <td  class="taka_formate"><?php echo $sum->missing_amount; ?></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <?php
                     }
