@@ -205,6 +205,8 @@ class Report extends CI_Controller {
 
             $data['opening'] = $this->Report_model->opening($from, $to);
             $data['closing'] = $this->Report_model->closing($from, $to);
+            
+            $data['total_others_income'] = $this->Report_model->total_others_income($from, $to);
 
 
             $data['total_cash_2_bank_trasfer'] = $this->Report_model->total_cash_2_bank_trasfer($from, $to);

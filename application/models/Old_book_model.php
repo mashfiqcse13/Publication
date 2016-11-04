@@ -694,7 +694,7 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
         $sql = "SELECT sum(`discount_amount`) as total FROM `old_book_return_total` $con ";
        $result =  $this->db->query($sql)->result();
         foreach($result as $row){
-            return $row->total;
+            return $row->total; 
         }
     }
 
@@ -703,6 +703,8 @@ LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY ol
     }
 
     function get_total_info($from, $to) {
+        
+        $from_one_day = date( 'Y-m-d', (strtotime('-1 day' , strtotime($from))) );
 
 
         $sql = "SELECT
@@ -741,7 +743,7 @@ FROM
 					0 as sale_amount
 					FROM `old_book_return_items` 
 					left JOIN old_book_return_total on old_book_return_items.id_old_book_return_total=old_book_return_total.id_old_book_return_total 
-					WHERE DATE(old_book_return_total.issue_date) BETWEEN '1800-10-01' AND '$from'  
+					WHERE DATE(old_book_return_total.issue_date) BETWEEN '1800-10-01' AND '$from_one_day'  
 					GROUP BY old_book_return_items.id_item 
 				)
 				UNION(
@@ -753,7 +755,7 @@ FROM
 					0 as sale_amount
 					FROM `old_book_transfer_total` 
 					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-					where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from'
+					where type_transfer=2 AND DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from_one_day'
 					group by id_item
 				)
 				UNION(
@@ -764,7 +766,7 @@ FROM
 					sum(old_book_transfer_items.quantity_item) as sale_amount 
 					FROM `old_book_transfer_total` 
 					left join old_book_transfer_items on old_book_transfer_items.id_old_book_transfer_total=old_book_transfer_total.id_old_book_transfer_total 
-					where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from'
+					where type_transfer=1 AND    DATE(old_book_transfer_total.date_transfer) BETWEEN '1800-10-01' AND '$from_one_day'
 					group by id_item
 				)
 			) AS tbl_opening

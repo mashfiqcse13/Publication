@@ -122,7 +122,7 @@
                         }if (isset($short_form)) {
                             ?>
                             <div class="box-header">
-                                <p class="text-center"><strong>Income Report</strong></p>
+                                <p class="text-center"><strong>Expense Report</strong></p>
                                 <?php
                                 if (!empty($date_range)) {
                                     echo '<p class="pull-left" style="margin-left:20px"> ' . $this->Common->date_range_formater_for_report($date_range) . "</p>";

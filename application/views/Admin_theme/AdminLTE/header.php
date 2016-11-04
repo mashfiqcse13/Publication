@@ -244,6 +244,9 @@
                 body table,body tr,body td,body th,body tbody,body thead,.table,.table-bordered {
                     border: 1px solid #222!important;
                 }
+                body table.memo_body,body tr,body table.memo_body td.noborder,body th,body tbody,body thead,.table,.table-bordered {
+                    border: 0px solid #222!important;
+                }
                 body .table-bordered{
                     border:1px solid #222!important;
                 }
@@ -286,14 +289,22 @@
                     font-size:11px!important;
                     padding:5px!important;
                 }
+                .page-break-master{ page-break-before: always; }
                 
-
+                
+                .noborder{
+                    border:none!important;
+                }
 
             }
             
+            .noborder{
+                border:none!important;
+            }
             @page {       
                 margin: 30mm 20mm 15mm 20mm;  
-                size: A4;
+                /*size: A4;*/
+                
             }
             
   

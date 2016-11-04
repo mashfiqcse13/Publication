@@ -143,12 +143,24 @@
                                                 <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash; ?></th>
                                             </tr>
                                             <tr>
-                                                <td>Cash Collection</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_collection ?></th>
+                                                <td>Sale Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $sale_info->sale_against_cash_collection;  ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Previous Due Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $previous_due_collection_by_cash; ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Advance Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_advance_collection_cash; ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Others Income</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_others_income ?></th>
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Total</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_cash + $total_cash_collection ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_calculation = $opening->opening_cash + $sale_info->sale_against_cash_collection + $previous_due_collection_by_cash + $total_advance_collection_cash +$total_others_income ; ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Cash to Bank</td>
@@ -164,7 +176,7 @@
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Cash Closing</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_cash + $total_cash_collection - ($total_cash_2_bank_trasfer + $total_cash_2_owner + $total_cash_2_expense_adjustment)); ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo ( $total_cash_calculation - ($total_cash_2_bank_trasfer + $total_cash_2_owner + $total_cash_2_expense_adjustment)); ?></th>
                                             </tr>
                                         </table>
                                     </td>
@@ -175,16 +187,25 @@
                                                 <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance; ?></th>
                                             </tr>
                                             <tr>
-                                                <td>Bank Collection</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $total_bank_collection ?></th>
+                                                <td>Sale Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo  $sale_info->sale_against_bank_collection;  ?></th>
                                             </tr>
+                                            <tr>
+                                                <td>Previous Due Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $previous_due_collection_by_bank; ?></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Advance Collection</td>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_advance_collection_bank; ?></th>
+                                            </tr>
+                                           
                                             <tr>
                                                 <td>Cash to Bank</td>
                                                 <th class="taka_formate" style="text-align: center"><?php echo $total_cash_2_bank_trasfer ?></th>
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Total</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $opening->opening_bank_balance + $total_bank_collection + $total_cash_2_bank_trasfer ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_bank_calculation = $opening->opening_bank_balance + $sale_info->sale_against_bank_collection + $previous_due_collection_by_bank + $total_advance_collection_bank + $total_cash_2_bank_trasfer ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Bank withdraw</td>
@@ -192,21 +213,23 @@
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Bank Closing</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo ($opening->opening_bank_balance + $total_bank_collection + $total_cash_2_bank_trasfer - $total_bank_withdraw); ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo ( $total_bank_calculation - $total_bank_withdraw ); ?></th>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
-                            <table width="100%">
+                            
+                            <table width="100%" >
                                 <tr>
                                     <td>Total Expence</td>
-                                    <th class="taka_formate" style="text-align: center"><?php echo $total_expence ?></th>
+                                    <th class="taka_formate" style="text-align: center;min-width:100px"><?php echo $total_expence ?></th>
                                     <td style="text-align: center">
                                         ( <strong>Notes :</strong>Total expense adjustment amount should not be greater than total expense amount )
                                     </td>
                                 </tr>
                             </table>
+                            <div class="page-break" style=" page-break-before: always;padding-top:0px"></div>
                             <div style="overflow: auto">
                                 <table class="table table-bordered new table-hover" style="margin-top: 10px;">
 
@@ -271,6 +294,10 @@
     .table_title{text-align: center; margin-top: 20px}
     @media print{
         .table_title{text-align: center; margin-top: 20px}
+        
+    }
+    @page{
+        page:A4;
     }
     @media only print{
         #page_break_after{page-break-after: always;color: red}

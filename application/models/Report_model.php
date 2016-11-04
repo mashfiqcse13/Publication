@@ -219,6 +219,8 @@ class Report_model extends CI_Model {
         $result = $this->db->get()->row();
         return empty($result->amount_paid) ? 0 : $result->amount_paid;
     }
+    
+    
 
     function total_cash_2_bank_trasfer($from, $to) {
         $this->db->select_sum('transfered_amount');
@@ -332,6 +334,13 @@ class Report_model extends CI_Model {
             )";
         $result = $this->db->query($sql)->row();
         return empty($result->previous_due_collection_by_old_book_sell) ? 0 : $result->previous_due_collection_by_old_book_sell;
+    }
+    
+    function total_others_income($from, $to){
+        $sql ="SELECT sum(amount_income) as income FROM `income` WHERE DATE(date_income) BETWEEN '$from' AND '$to' ";
+        $result = $this->db->query($sql)->row();
+        return empty($result->income) ? 0 : $result->income;
+       
     }
 
     function sale_info($from, $to) {

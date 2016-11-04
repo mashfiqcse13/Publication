@@ -150,10 +150,19 @@ class Sales_model extends CI_Model {
     }
 
     function memo_body_table($total_sales_id) {
+        
+        $siteUrlForMemo = $this->config->item('SITE')['website'];        
+        
+        if($siteUrlForMemo == 'http://advancedpublication.com/'){
+            $hide_advanced = true;
+        }else{
+            $hide_advanced =  false;
+        }
+        
         $this->load->library('table');
         // setting up the table design
         $tmpl = array(
-            'table_open' => '<table class="table table-bordered table-striped text-right-for-money">',
+            'table_open' => '<table class="table table-bordered text-right-for-money memo_body">',
             'heading_row_start' => '<tr class="success">',
             'heading_row_end' => '</tr>',
             'heading_cell_start' => '<th>',
@@ -235,7 +244,9 @@ class Sales_model extends CI_Model {
         } else {
             $current_due_status = '<div class="text-memo-special-formate text-success">PAID</div>';
         }
-
+         if($hide_advanced){
+             $current_due_status = ' ';
+         }
 
 //        $this->table->add_row($separator_row, $separator_row, $separator_row, $separator_row, $separator_row);
         $this->table->add_row('', ' ', array(
@@ -253,41 +264,42 @@ class Sales_model extends CI_Model {
 
         $this->table->add_row(array(
             'data' => '<strong>কথায় : </strong><span style="font-size:12px">' . $this->Common->convert_number($total_sales_details->total_amount) . '</span>',
-            'colspan' => 2
+            'colspan' => 2,
+            'class' => 'noborder'
                 ), array(
             'data' => 'সর্বমোট : ',
-            'class' => '',
+            'class' => 'noborder',
             'colspan' => 2
                 ), $this->Common->taka_format($total_sales_details->total_amount));
 
 
         $this->table->add_row(array(
             'data' => $current_due_status,
-            'class' => ' ',
+            'class' => 'noborder ',
             'colspan' => 2,
-            'rowspan' => 5
+            'rowspan' => 10
                 ), array(
             'data' => 'নগদ জমা : ',
-            'class' => '',
+            'class' => 'noborder',
             'colspan' => 2
                 ), $cash_pay);
 
         $this->table->add_row(array(
             'data' => 'ব্যাংক জমা : ',
-            'class' => '',
+            'class' => 'noborder',
             'colspan' => 2
                 ), array(
             'data' => $bank_pay,
-            'class' => 'text-right taka_formate'
+            'class' => 'noborder text-right taka_formate'
         ));
-
+        
         $this->table->add_row(array(
             'data' => 'পূর্বের জমা কর্তন : ',
-            'class' => '',
+            'class' => 'noborder',
             'colspan' => 2
                 ), array(
             'data' => $pay_from_advanced,
-            'class' => 'text-right taka_formate'
+            'class' => 'noborder text-right taka_formate'
         ));
 
 
@@ -295,64 +307,75 @@ class Sales_model extends CI_Model {
         $this->load->model('misc/Customer_due');
         $this->table->add_row(array(
             'data' => ' মোট জমা :',
-            'class' => '',
+            'class' => 'noborder ',
             'colspan' => 2
                 ), array(
             'data' => $total_pay,
-            'class' => 'text-right taka_formate'
+            'class' => 'noborder text-right taka_formate'
         ));
 
         $this->table->add_row(array(
             'data' => ' পূর্বের বকেয়া পরিশোধ  :',
-            'class' => '',
+            'class' => 'noborder ',
             'colspan' => 2
                 ), array(
             'data' => $current_due_amount,
-            'class' => 'text-right taka_formate'
+            'class' => 'noborder text-right taka_formate'
         ));
 
         $last_due = $this->Customer_due->current_total_due($total_sales_details->id_customer) - $this->get_party_advanced_balance($total_sales_details->id_customer);
-
+        
         $this->table->add_row(array(
-            'data' => 'সর্বশেষ বাকি : ' . $this->Common->taka_format($last_due),
-            'class' => 'text-bold',
-            'colspan' => 2
-                ), array(
             'data' => 'বাকি : ',
-            'class' => '  text-bold ',
+            'class' => ' noborder  text-bold ',
+            'colspan' =>2
+                ),array(
+            'data' => $this->Common->taka_format($current_due),
+            'class' => 'noborder text-right taka_formate',
             'colspan' => 2
-                ), $this->Common->taka_format($current_due));
-
-
+        ));
+        
+        if(!$hide_advanced){
+            $this->table->add_row(array(
+                'data' => 'সর্বশেষ বাকি : ' ,
+                'class' => 'noborder text-bold hide_advanced',
+                'colspan' => 2
+                    ),array(
+                'data' => $this->Common->taka_format($last_due) ,
+                'class' => 'noborder text-bold hide_advanced',
+                'colspan' => 2
+                    ));
+        }
+        
+        
 
         $this->table->add_row(array(
-            'data' => 'প্যাকেটিং খরচ বাকি: ',
-            'class' => '',
+            'data' =>'প্যাকেটিং খরচ বাকি: ',
+            'class' => 'noborder text-left',
             'colspan' => 2
-                ), array(
+        ),array(
             'data' => $total_sales_details->bill_for_packeting,
-            'class' => 'text-right taka_formate',
-            'colspan' => 3
+            'class' => 'noborder text-right taka_formate',
+            'colspan' => 2
         ));
 
-        $this->table->add_row(array(
-            'data' => ' স্লিপ খরচ : ',
-            'class' => '',
+        $this->table->add_row( array(
+            'data' => ' স্লিপ খরচ :',
+            'class' => 'noborder text-left',
             'colspan' => 2
-                ), array(
+        ),array(
             'data' => $total_sales_details->slip_expense_amount,
-            'class' => 'text-right taka_formate',
-            'colspan' => 3
+            'class' => 'noborder text-right taka_formate',
+            'colspan' => 2
         ));
 
         $this->table->add_row(array(
             'data' => 'সর্বমোট  গ্রহন  : ',
-            'class' => 'text-bold',
+            'class' => 'noborder text-left  text-bold',
             'colspan' => 2
-                ), array(
-            'data' => /* $total_sales_details->bill_for_packeting + */ $bank_pay + $cash_pay + $current_due_amount,
-            'class' => 'text-right taka_formate text-bold',
-            'colspan' => 3
+        ),array(
+            'data' => $bank_pay + $cash_pay + $current_due_amount,
+            'class' => 'noborder text-right  taka_formate'
         ));
 
 

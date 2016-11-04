@@ -1,7 +1,19 @@
 <!--add header -->
 
-<?php include_once __DIR__ . '/../header.php'; ?>
+<?php include_once __DIR__ . '/../header.php'; 
 
+
+$sitelink = $this->config->item('SITE')['website'];
+
+
+if($sitelink == 'http://thejamunapub.com/' || 'http://advancedpublication.com/' ){
+    $hide_due_part = 'hide';
+}else{
+    $hide_due_part = 'show';
+}
+print_r($hide_due_part);exit(); 
+
+?>
 
 
 <!-- Left side column. contains the logo and sidebar -->
@@ -25,8 +37,8 @@
     }
     
     <?php 
-    $link = $this->config->item('SITE')['website'];
-    if($link == 'http://advancedpublication.com/'){
+   
+    if($sitelink == 'http://advancedpublication.com/'){ 
         ?>
     @page {       
                 margin: 47mm 25mm 15mm 25mm;                  
@@ -50,25 +62,18 @@
 
         <div class="row" style="padding-top:0px"> 
 
-            <table class="font_12 table table_custom text-bold" style="font-size:12px">
+            <table class="font_12 table table_custom text-bold" style="font-size:11px;margin-bottom: 0px;">
 
                 <tr>
                     
                     <td><strong>Memo No:</strong></td>
-
-                    <td><?= $memo_header_details['memoid'] ?></td>
+                    <td><?= $memo_header_details['memoid'] ?></td> 
                     
-                    
-
                     <td><strong>Name:</strong></td>
-
                     <td><?= $memo_header_details['party_name'] ?></td>
 
-
-
                     <td><strong>Code No:</strong></td>
-
-                    <td><?= $memo_header_details['code'] ?></td>                    
+                    <td><?= $memo_header_details['code'] ?></td>                   
 
                 </tr>
 
@@ -97,7 +102,7 @@
 
         </div>
 
-        <div class="row" style="font-size:16px;">
+        <div class="row" style="font-size:12px;">
             <?php echo $memo_body_table['memo']; ?>
         </div>
         
@@ -105,8 +110,8 @@
         <div class="due_payment_section">
             <div class="only_print padding10"></div>
             <?php 
-            
-            echo '<div class="hide_for_jamuna">';
+            if($hide_due_part == 'show'){  
+            echo '<div class="hide_for_jamuna hide_for_advanced">';
             if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
                
                 echo '<div  class="due_memo_part" style=" page-break-before: always;padding-top:0px">';
@@ -150,6 +155,7 @@
                 echo '</div>';
             }
             echo '</div>';
+            }
             ?>
 
 
@@ -178,11 +184,9 @@
 
 <style>
     
-    table,tr,td{
-        border:1px solid #ddd!important;
-    }
+     
     table td{
-        font-size: 14px;
+        font-size: 12px;
     }
     .font_12 tr td{
         font-size:12px!important;
@@ -190,36 +194,10 @@
 thead {
     display: table-row-group;
 }
-
-@media only print{
-
-    .hideDueReport{
-        display: none;
-        visibility: hidden;
-    }
-    
-
-    
+td.hide_advanced {
+    opacity: 0;
 }
 
 
+
     </style>
-    
-    <script>
-        
-        var siteUrlForMemo = "<?= $this->config->item('SITE')['website'] ?>";
-        
- 
-
-        if(siteUrlForMemo=='http://thejamunapub.com/'){
-                        $('.due_payment_section').addClass('hideDueReport');
-                        //$('.due_memo_part').removeAttr('style');
-                    }
-
-
-                    
- 
-
-      
-        
-   </script>

@@ -36,6 +36,7 @@ class Items extends CI_Controller {
         $crud->callback_add_field('storing_place', function () {
             return form_dropdown('storing_place', $this->config->item('storing_place'));
         });
+        $crud->unset_delete();
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -47,7 +48,10 @@ class Items extends CI_Controller {
     function category() {
         $crud = new grocery_CRUD();
         $crud->set_table('items_category')->set_subject('Items Category');
-        
+         if ($this->uri->segment(4) == 1 ) {
+            $crud->unset_edit();
+        }
+        $crud->unset_delete();
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
