@@ -280,7 +280,7 @@ class Sales_model extends CI_Model {
             'data' => $current_due_status,
             'class' => 'noborder ',
             'colspan' => 2,
-            'rowspan' => 10
+            'rowspan' => $current_due_status==''? 9 : 10
                 ), array(
             'data' => 'নগদ জমা : ',
             'class' => 'noborder',
