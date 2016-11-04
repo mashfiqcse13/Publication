@@ -667,35 +667,30 @@ FROM view_process_step_transfer_log_with_details;')->result();
         return form_dropdown('id_step_name', $data, '', ' class="select2" ');
     }
 
-    function callback_process_before_process_insert($post_array) {
-        $this->callback_process_buffer_id_vendor = $post_array['id_vendor'];
-        unset($post_array['id_vendor']);
-        return $post_array;
-    }
 
-    function save_processes($data) {
-        if ($data['id_item'] < 1 || $data['id_vendor'] < 1 || $data['order_quantity'] < 1) {
+    function add_process($id_item, $order_quantity, $item_type = 1, $id_vendor = false, $id_process_type = 2, $print_first_order_slip = false) {
+        if ($id_item < 1 || $order_quantity < 1 || $id_process_type < 1) {
             return FALSE;
         }
-        $process['id_item'] = $data['id_item'];
-        $this->callback_process_buffer_id_vendor = $data['id_vendor'];
-        $process['date_created'] = date('Y-m-d H:i:s');
-        $process['order_quantity'] = $data['order_quantity'];
-        $process['item_type'] = $data['item_type'];
-        $process['process_status'] = 1;
-        $this->db->insert('processes', $process);
-        $id = $this->db->insert_id();
-        $this->callback_process_after_process_insert('', $id);
-        if (!empty($data['print'])) {
-            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($id));
+
+        $data_to_insert_in_processes_table = array(
+            'id_item' => $id_item,
+            'id_process_type' => $id_process_type,
+            'date_created' => date('Y-m-d H:i:s'),
+            'order_quantity' => $order_quantity,
+            'item_type' => $item_type,
+            'process_status' => 1,
+        );
+
+        $this->db->insert('processes', $data_to_insert_in_processes_table);
+        $id_processes = $this->db->insert_id();
+        if ($id_vendor > 0) {
+            $this->add_process_step($id_processes, $id_vendor, 1);
+        }
+        if ($print_first_order_slip) {
+            redirect("Production_process/first_step_slip/" . $this->get_first_step_id_by($id_processes));
         }
         return true;
-    }
-
-    function callback_process_after_process_insert($post_array, $primary_key) {
-        $date_created = date('Y-m-d h:i:u');
-        $this->db->query("UPDATE `processes` SET id_process_type = 2 , `date_created` = '$date_created' WHERE `processes`.`id_processes` = $primary_key;");
-        $this->add_process_step($primary_key, $this->callback_process_buffer_id_vendor, 1);
     }
 
     function production_report() {

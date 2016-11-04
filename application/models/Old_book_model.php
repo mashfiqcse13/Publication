@@ -22,6 +22,7 @@ class Old_book_model extends CI_Model {
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
+
     function get_available_item_dropdown() {
 
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,total_balance as `total_in_hand` 
@@ -498,23 +499,13 @@ class Old_book_model extends CI_Model {
         if ($transfer_type == 2) {
 
             $data_return = array();
+            $this->load->model("Production_process_model");
             foreach ($item_selection as $value) {
                 if (empty($value)) {
                     continue;
                 }
-                $tmp_return_book = array(
-                    'id_item' => $value['item_id'],
-                    'id_process_type' => 1,
-                    'order_quantity' => $value['item_quantity'],
-                    'date_created' => date('Y-m-d h:i:u')
-                );
-                array_push($data_return, $tmp_return_book);
-                //$this->Stock_perpetual->Stock_perpetual_register($value['item_id'], $value['item_quantity']);
-                //$this->old_book_stock_register($value['item_id'], $value['item_quantity']);
-//                $this->old_book_stock_reduce($value['item_id'], $value['item_quantity']);
+                $this->Production_process_model->add_process($value['item_id'], $value['item_quantity'], 1, false, 1);
             }
-
-            $this->db->insert_batch('processes', $data_return) or die('failed to insert data on processes');
         }
 
 //        old book transfer total              
@@ -681,19 +672,18 @@ class Old_book_model extends CI_Model {
 LEFT JOIN items ON items.id_item=old_book_return_items.id_item $con  GROUP BY old_book_return_items.id_item ORDER BY book_id asc");
         return $query->result();
     }
-    
-    function get_curier_cost($date_range=''){
-        $date_range = $this->get_date_range($date_range,'issue_date');
-        if ($date_range != '') {            
-            
+
+    function get_curier_cost($date_range = '') {
+        $date_range = $this->get_date_range($date_range, 'issue_date');
+        if ($date_range != '') {
+
             $con = " where  $date_range";
-            
-        }else{
+        } else {
             $con = ' ';
         }
         $sql = "SELECT sum(`discount_amount`) as total FROM `old_book_return_total` $con ";
-       $result =  $this->db->query($sql)->result();
-        foreach($result as $row){
+        $result = $this->db->query($sql)->result();
+        foreach ($result as $row) {
             return $row->total;
         }
     }
