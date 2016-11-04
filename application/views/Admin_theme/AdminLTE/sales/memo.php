@@ -6,12 +6,12 @@
 $sitelink = $this->config->item('SITE')['website'];
 
 
-if($sitelink == 'http://thejamunapub.com/' || 'http://advancedpublication.com/' ){
+if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpublication.com/' ){
     $hide_due_part = 'hide';
 }else{
-    $hide_due_part = 'show';
+    $hide_due_part = 'show'; 
 }
-print_r($hide_due_part);exit(); 
+
 
 ?>
 
@@ -38,7 +38,7 @@ print_r($hide_due_part);exit();
     
     <?php 
    
-    if($sitelink == 'http://advancedpublication.com/'){ 
+    if($sitelink == 'http://advancedpublication.com/'){  
         ?>
     @page {       
                 margin: 47mm 25mm 15mm 25mm;                  
@@ -110,8 +110,10 @@ print_r($hide_due_part);exit();
         <div class="due_payment_section">
             <div class="only_print padding10"></div>
             <?php 
+            
             if($hide_due_part == 'show'){  
-            echo '<div class="hide_for_jamuna hide_for_advanced">';
+                
+            echo '<div class="">'; 
             if(isset($memo_body_table['due_report']) && !empty($memo_body_table['due_report'])){
                
                 echo '<div  class="due_memo_part" style=" page-break-before: always;padding-top:0px">';
