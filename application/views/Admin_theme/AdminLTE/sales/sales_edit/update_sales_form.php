@@ -147,17 +147,17 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Cash payment :</label>
                                 <div class="input-group">
-                                    <input type="number" min="0" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount">
+                                    <input type="number" min="0" name="cash_payment" class="form-control" id="cash_payment" placeholder="Cash amount" value="<?= $grab_data['existing_memo_data']['cash_paid']?>">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
 
                             <div class="form-group col-lg-6">
                                 <div id="bank_payment">
-                                    <label for="discount_percentage">Bank payment :</label> <span>0</span> Tk <br>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#bankTransactionForm">
+                                    <label for="discount_percentage">Bank payment :</label> <span><?= $grab_data['existing_memo_data']['bank_paid']?></span> Tk <br>
+<!--                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#bankTransactionForm">
                                         <i class="fa fa-plus"></i> Add
-                                    </button>
+                                    </button>-->
                                     <!-- Modal -->
                                     <div class="modal modal-primary fade" id="bankTransactionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog" role="document">
@@ -306,12 +306,22 @@
 <script type="text/javascript">
     
     $('select[name="id_customer"]').val(<?= $grab_data['existing_memo_data']['id_customer']?>);
-    
-    
-    
     $('#massage_box').hide();
     $('#customer_current_balance').hide();
-
+    <?php foreach ($grab_data['existing_memo_items'] as $item){?>
+        $('select[name="id_item"]').val(<?= $item['id_item']?>);
+        $('#item_quantity').val(<?= $item['quantity']?>);
+    item_selection[<?= $item['id_item']?>] = { 
+            'item_id': '<?= $item['id_item']?>',
+            'item_quantity': '<?= $item['quantity']?>',
+            'name': '<?= $item['name']?>',
+            'regular_price': '<?= $item['regular_price']?>',
+            'sale_price': '<?= $item['sale_price']?>',
+            'total': <?= $item['sale_price'] * $item['quantity']?>
+        };
+        update_cart();
+    <?php }?>
+    
     function string_to_int(input_field_value) {
         var integer_val = parseInt(input_field_value);
         return (isNaN(integer_val)) ? 0 : integer_val;
