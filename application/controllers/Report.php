@@ -194,6 +194,9 @@ class Report extends CI_Controller {
             $data['total_bank_collection_from_customer_payment'] = $this->Report_model->total_bank_collection_from_customer_payment($from, $to);
             $data['total_cash_collection_from_advance_payment'] = $this->Report_model->total_cash_collection_from_advance_payment($from, $to);
             $data['total_bank_collection_from_advance_payment'] = $this->Report_model->total_bank_collection_from_advance_payment($from, $to);
+            
+            $data['SaleCollectionCash'] = $this->Report_model->total_sale_against_cash_collection($from, $to) + $data['total_due_collection_cash'] - $data['previous_due_collection_by_cash'];
+            $data['SaleCollectionBank'] = $this->Report_model->total_sale_against_bank_collection($from, $to) + $data['total_due_collection_bank'] - $data['previous_due_collection_by_bank'];
 
             $data['total_old_book_transfer'] = $this->Report_model->total_old_book_transfer($from, $to);
 

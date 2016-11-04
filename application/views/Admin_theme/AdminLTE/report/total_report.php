@@ -144,7 +144,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Sale Collection</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $sale_info->sale_against_cash_collection;  ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $SaleCollectionCash; ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Previous Due Collection</td>
@@ -160,7 +160,7 @@
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Total</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_calculation = $opening->opening_cash + $sale_info->sale_against_cash_collection + $previous_due_collection_by_cash + $total_advance_collection_cash +$total_others_income ; ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_cash_calculation = $opening->opening_cash + $SaleCollectionCash + $previous_due_collection_by_cash + $total_advance_collection_cash + $total_others_income; ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Cash to Bank</td>
@@ -188,7 +188,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Sale Collection</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo  $sale_info->sale_against_bank_collection;  ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $SaleCollectionBank; ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Previous Due Collection</td>
@@ -198,14 +198,14 @@
                                                 <td>Advance Collection</td>
                                                 <th class="taka_formate" style="text-align: center"><?php echo $total_advance_collection_bank; ?></th>
                                             </tr>
-                                           
+
                                             <tr>
                                                 <td>Cash to Bank</td>
                                                 <th class="taka_formate" style="text-align: center"><?php echo $total_cash_2_bank_trasfer ?></th>
                                             </tr>
                                             <tr style="border-top: 2px solid;">
                                                 <td>Total</td>
-                                                <th class="taka_formate" style="text-align: center"><?php echo $total_bank_calculation = $opening->opening_bank_balance + $sale_info->sale_against_bank_collection + $previous_due_collection_by_bank + $total_advance_collection_bank + $total_cash_2_bank_trasfer ?></th>
+                                                <th class="taka_formate" style="text-align: center"><?php echo $total_bank_calculation = $opening->opening_bank_balance + $SaleCollectionBank + $previous_due_collection_by_bank + $total_advance_collection_bank + $total_cash_2_bank_trasfer ?></th>
                                             </tr>
                                             <tr>
                                                 <td>Bank withdraw</td>
@@ -219,7 +219,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            
+
                             <table width="100%" >
                                 <tr>
                                     <td>Total Expence</td>
@@ -294,7 +294,7 @@
     .table_title{text-align: center; margin-top: 20px}
     @media print{
         .table_title{text-align: center; margin-top: 20px}
-        
+
     }
     @page{
         page:A4;
