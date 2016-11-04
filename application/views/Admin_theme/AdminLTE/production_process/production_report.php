@@ -292,13 +292,7 @@
                                         ?>
 
                                         <tr style="font-weight: bold">
-                                            <td>Total :</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="7">Total :</td>
                                             <td  class="taka_formate"><?php echo $sum_total_amount_transfered; ?></td>
                                             <td  class="taka_formate"><?php echo $sum_total_amount_billed; ?></td>
                                             <td  class="taka_formate"><?php echo $sum_total_amount_paid; ?></td>

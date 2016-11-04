@@ -106,7 +106,7 @@
                                     <tr>
                                         <th>Item ID</th>
                                         <th>Item Name</th>
-                                        <th>Accurate Sale <br><span style="font-size:10px"> (Accurate Sale = Sale - Sale Return ) </span> </th> 
+                                        <th>Accurate Sale</th> 
                                         <th>Old Book Return</th>
                                         <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
 
