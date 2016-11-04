@@ -184,6 +184,20 @@ class Report extends CI_Controller {
             $data['previous_due_collection_by_cash'] = $this->Report_model->previous_due_collection_by_cash($from, $to);
             $data['previous_due_collection_by_bank'] = $this->Report_model->previous_due_collection_by_bank($from, $to);
             $data['previous_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from, $to);
+            
+            
+            
+            $from_one_day = date( 'Y-m-d', (strtotime('-1 day' , strtotime($from))) );
+            $now= date('Y-m-d');
+            $data['remaining_due_collection'] = $this->Report_model->previous_due_collection($from_one_day, $now);
+            $data['remaining_due_collection_by_cash'] = $this->Report_model->previous_due_collection_by_cash($from_one_day, $now);
+            $data['remaining_due_collection_by_bank'] = $this->Report_model->previous_due_collection_by_bank($from_one_day, $now);
+            $data['remaining_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from_one_day, $now);
+            
+            
+            
+            
+            
 
             $data['total_advance_collection'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to);
             $data['total_advance_collection_cash'] = $this->Report_model->total_advance_collection_without_book_sale($from, $to, 'Cash');
