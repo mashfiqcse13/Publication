@@ -42,11 +42,11 @@ class Sale_edit extends CI_Controller {
         $data['customer_due'] = $this->Sales_model->get_party_due();
         $data['item_details'] = $this->Sales_model->get_item_details();
         $data['grab_data'] = $this->Sales_edit_model->grab_data($id_total_sales);
-//        echo '<pre>';print_r($data['grab_data']);exit();
+//        echo '<pre>';print_r($data['grab_data']['existing_memo_items']);exit();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'New sale';
+        $data['Title'] = 'Update sale';
         $this->load->view($this->config->item('ADMIN_THEME') . 'sales/sales_edit/update_sales_form', $data);
     }
 

@@ -75,7 +75,8 @@
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#AddCustomer">
                                         <i class="fa fa-plus"></i> Add New
                                     </button>
-                                <?php echo $customer_dropdown ?>
+                                <?php echo $customer_dropdown;                                       
+                                        ?>
                                 
                                 <div class="modal modal-primary fade" id="AddCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog" role="document">
@@ -96,7 +97,7 @@
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
-                                <input type="text" disabled="" value="<?php echo date("m/d/Y"); ?>" class="form-control" id="int_id_contact" placeholder="Password">
+                                <input type="text" disabled="" value="<?php echo date("m/d/Y",strtotime( $grab_data['existing_memo_data']['issue_date'])); ?>" class="form-control" id="int_id_contact" placeholder="Password">
                             </div>
 
                         </div>
@@ -114,27 +115,32 @@
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Discount percentage :</label>
                                 <div class="input-group">
-                                    <input type="number" name="discount_percentage" class="form-control" id="discount_percentage" value="0" min="0" max="100">
+                                    <input type="number" name="discount_percentage" class="form-control" id="discount_percentage" value="<?= $grab_data['existing_memo_data']['discount_percentage']?>" min="0" max="100">
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Discount amount :</label>
                                 <div class="input-group">
-                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="0" min="0">
+                                    <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="<?= $grab_data['existing_memo_data']['discount_amount']?>" min="0">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid">0</span> Tk
+                                <label for="discount_percentage">Dues Unpaid :</label> <span id="dues_unpaid"><?php
+                                $due = $grab_data['existing_memo_data']['total_due'];
+                                $paid = $grab_data['existing_memo_data']['total_paid'];
+                                $dues_unpaid = $due - $paid;
+                                echo ($dues_unpaid <= 0)?'0':$dues_unpaid;
+                                ?></span> Tk
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total amount :</label> <span id="total_amount">0</span> Tk
+                                <label for="discount_percentage">Total amount :</label> <span id="total_amount"><?= $grab_data['existing_memo_data']['total_amount']?></span> Tk
                             </div>
                             <div class="form-group col-lg-12" id="customer_current_balance">
-                                <label for="discount_percentage">Previously paid :</label> <span>0</span> Tk
+                                <label for="discount_percentage">Previously paid :</label> <span><?= $grab_data['existing_memo_data']['total_paid']?></span> Tk
                             </div>
                         </div>
                         <div class="row">
@@ -196,12 +202,12 @@
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Number of packet :</label>
-                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" placeholder="Number of packet" value="" min="0" max="100">
+                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" placeholder="Number of packet" value="<?= $grab_data['existing_memo_data']['number_of_packet']?>" min="0" max="100">
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_amount">Bill for packeting :</label>
                                 <div class="input-group">
-                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting" placeholder="Bill for packeting"  value="" min="0">
+                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting" placeholder="Bill for packeting"  value="<?= $grab_data['existing_memo_data']['bill_for_packeting']?>" min="0">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
@@ -209,10 +215,10 @@
 
                         <div class="row">
                             <div class="form-group col-lg-6" id="total_paid">
-                                <label for="discount_percentage">Total paid :</label> <span>0</span> Tk
+                                <label for="discount_percentage">Total paid :</label> <span><?= $grab_data['existing_memo_data']['total_paid']?></span> Tk
                             </div>
                             <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
+                                <label for="discount_percentage">Total Due :</label> <span id="total_due"><?= $grab_data['existing_memo_data']['total_due']?></span> Tk
                             </div>
                         </div>
 
@@ -222,7 +228,7 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
-                                    <input type="number" name="slip_expense_amount" class="form-control" id="slip_expense_amount" placeholder="Slip expense amount"  value="" min="0">
+                                    <input type="number" name="slip_expense_amount" class="form-control" id="slip_expense_amount" placeholder="Slip expense amount"  value="<?= $grab_data['existing_memo_data']['slip_expense_amount']?>" min="0">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
@@ -299,7 +305,7 @@
 
 <script type="text/javascript">
     
-//    $('select[name="id_customer"]').val(<?= $grab_data['id_customer']?>);
+    $('select[name="id_customer"]').val(<?= $grab_data['existing_memo_data']['id_customer']?>);
     
     
     
