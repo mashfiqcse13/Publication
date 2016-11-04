@@ -75,7 +75,7 @@
                 <h4 class="modal-title" id="myModalLabel">Add step</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="<?php echo site_url('production_process/add_step'); ?>" method="post">
+                <form id="add_step_from" class="form-horizontal" action="<?php echo site_url('production_process/add_step'); ?>" method="post">
                     <input type="hidden" name="id_processes" value="<?php echo $id_processes ?>">
                     <input type="hidden" name="id_process_step_from">
                     <div class="row">
@@ -266,12 +266,14 @@
             $('#id_process_step_to_box').hide();
             $('#modalStepToStepTransfer .modal-title').html("Finsih this process by inputing last transfer details");
             $('#modalStepToStepTransfer [type="submit"]').html("Transfer to the final stock");
+            $('#modalStepToStepTransfer [type="submit"]').attr('name', "Transfer_to_the_final_stock");
             $('#modalStepToStepTransfer').removeClass('modal-success');
             $('#modalStepToStepTransfer').addClass('modal-danger');
         } else {
             $('#add_step_box').show();
             $('#modalStepToStepTransfer .modal-title').html("Transfer");
             $('#modalStepToStepTransfer [type="submit"]').html("Transfer");
+            $('#modalStepToStepTransfer [type="submit"]').attr('name', "Transfer");
             $('#modalStepToStepTransfer').removeClass('modal-danger');
             $('#modalStepToStepTransfer').addClass('modal-success');
             if (vendor_dropdown_used_only_list[id_process_steps] != null) {
@@ -292,15 +294,17 @@
         $('[name="id_process_step_from"]').val(id_process_steps);
     });
 
-    $('input[type="number"]').change(function () {
+    $('#transfer_form').change(function () {
         amount_transfered = string_to_int($('[name="amount_transfered"]').val());
         rejected_amount = string_to_int($('[name="rejected_amount"]').val());
         damaged_amount = string_to_int($('[name="damaged_amount"]').val());
         missing_amount = string_to_int($('[name="missing_amount"]').val());
-        console.log(amount_transfered);
-        console.log(rejected_amount);
-        console.log(damaged_amount);
-        console.log(missing_amount);
+//        console.log("amount_transfered = " + amount_transfered);
+//        console.log("rejected_amount = " + rejected_amount);
+//        console.log("damaged_amount = " + damaged_amount);
+//        console.log("missing_amount = " + missing_amount);
+//        console.log("id_vendor = " + $('#transfer_form [name="id_vendor"]').val());
+//        console.log("id_step_name = " + $('#transfer_form [name="id_step_name"]').val());
     });
     $('#transfer_form').submit(function () {
         var selected_amount = (amount_transfered + rejected_amount + damaged_amount + missing_amount);
@@ -312,10 +316,34 @@
             alert("Selectable amount must greater than 0 .\n  Selected Total Amount : " + selected_amount);
             return false;
         }
+
+        var transfer_type = $('#modalStepToStepTransfer [type="submit"]').attr('name');
+        var id_process_step_to = string_to_int($('#transfer_form [name="id_process_step_to"]').val());
+        var id_vendor = string_to_int($('#transfer_form [name="id_vendor"]').val());
+        var id_step_name = string_to_int($('#transfer_form [name="id_step_name"]').val());
+        if (transfer_type === "Transfer") {
+            if (id_process_step_to <= 0) {
+                if (id_vendor <= 0 || id_step_name <= 0) {
+                    alert('Select vendor and step name. Otherwise select an existing transfer track.');
+                    return false;
+                }
+            } else if (id_vendor > 0 || id_step_name > 0) {
+                alert('Select vendor or an existing transfer track. Don\'t select both.');
+                return false;
+            }
+        }
+    });
+    $('#add_step_from').submit(function () {
+        var id_vendor = string_to_int($('#add_step_from [name="id_vendor"]').val());
+        var id_step_name = string_to_int($('#add_step_from [name="id_step_name"]').val());
+        if (id_vendor <= 0 || id_step_name <= 0) {
+            alert('Select vendor and step name.');
+            return false;
+        }
     });
 </script>
 <style>
     .box-body {
-                overflow-x: scroll;
-            }
-    </style>
+        overflow-x: scroll;
+    }
+</style>

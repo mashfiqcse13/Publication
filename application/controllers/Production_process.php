@@ -28,31 +28,6 @@ class Production_process extends CI_Controller {
         $this->process();
     }
 
-    function old_process() {
-        if ($this->uri->segment(3) == 'success') {
-            redirect("Production_process/first_step_slip/" . $this->Production_process_model->get_first_step_id_by($this->uri->segment(4)));
-        }
-        $crud = new grocery_CRUD();
-        $crud->set_table('processes')
-                ->set_subject('Production Process')->display_as('id_process_type', 'Process type')->display_as('id_processes', 'Order ID')
-                ->display_as('id_item', 'Item Name')->display_as('id_vendor', 'Vendor Name')->display_as('actual_quantity', 'Total Received By S. Store')
-                ->columns('id_processes', 'id_process_type', 'id_item', 'date_created', 'date_finished', 'order_quantity', 'actual_quantity', 'total_damaged_item', 'total_reject_item', 'total_missing_item', 'process_status')
-                ->set_relation('id_item', 'items', 'name')->set_relation('id_process_type', 'process_type', 'process_type')->order_by('id_processes', 'desc')
-                ->add_fields('id_item', 'order_quantity', "id_vendor")->required_fields('id_process_type', 'id_item', 'order_quantity')
-                ->field_type('id_vendor', 'dropdown', $this->Production_process_model->get_vendor_dropdown(true, "Printing Press"))
-                ->add_action('Steps', base_url() . "asset/img/button/steps btn.png", '#', '', function ($primary_key, $row) {
-                    return site_url('production_process/steps/' . $primary_key);
-                })->callback_before_insert(array($this->Production_process_model, 'callback_process_before_process_insert'))
-                ->callback_after_insert(array($this->Production_process_model, 'callback_process_after_process_insert'))
-                ->callback_column('process_status', array($this->Production_process_model, 'process_status_decoder'))->unset_edit()->unset_read()->unset_delete();
-        $output = $crud->render();
-        $data['glosary'] = $output;
-        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
-        $data['base_url'] = base_url();
-        $data['Title'] = 'Production process';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
-    }
-
     function process() {
         $data['production_process'] = $this->Production_process_model->get_all_production_process();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
@@ -66,13 +41,19 @@ class Production_process extends CI_Controller {
         $data['get_item'] = $this->Production_process_model->get_items();
         $data['get_vendor'] = $this->Production_process_model->get_vendor();
 
+        $id_item = $this->input->post('id_item');
+        $order_quantity = $this->input->post('order_quantity');
+        $item_type = $this->input->post('item_type');
+        $id_vendor = $this->input->post('id_vendor');
+
         $btn = $this->input->post('btn_submit');
         $list = $this->input->post('btn');
         $print = $this->input->post('print');
         if (!empty($print)) {
-            $this->Production_process_model->save_processes($_POST);
+            $id_process_type = 2;
+            $this->Production_process_model->add_process($id_item, $order_quantity, $item_type, $id_vendor, $id_process_type, TRUE);
         } else if (!empty($list)) {
-            $this->Production_process_model->save_processes($_POST);
+            $this->Production_process_model->add_process($id_item, $order_quantity, $item_type, $id_vendor);
             redirect('production_process');
         }
 //        if($btn){
@@ -200,7 +181,7 @@ class Production_process extends CI_Controller {
 
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item,$item_type, $to_id_vendor, $id_process_type, $data['date_range']);
+            $data['get_process_details_for_report_by_search'] = $this->Production_process_model->get_process_details_for_report_by_search($id_processes, $from_id_vendor, $id_item, $item_type, $to_id_vendor, $id_process_type, $data['date_range']);
 //            print_r($data);exit();
         } else {
             $data['get_all_production_process'] = $this->Production_process_model->get_process_details_for_report();
@@ -227,7 +208,7 @@ class Production_process extends CI_Controller {
 
         $btn = $this->input->get('btn');
         if (isset($btn)) {
-            $data['all_production_process_first_step_info_by_search'] = $this->Production_process_model->get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item,$item_type, $id_process_type, $data['date_range']);
+            $data['all_production_process_first_step_info_by_search'] = $this->Production_process_model->get_process_step_details_for_report_by_search_first_step_only($id_processes, $id_vendor, $id_item, $item_type, $id_process_type, $data['date_range']);
         } else {
             $data['all_production_process_first_step_info'] = $this->Production_process_model->get_process_details_for_report_first_step_only();
         }

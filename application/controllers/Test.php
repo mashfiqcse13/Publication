@@ -33,22 +33,25 @@ class Test extends CI_Controller {
 //        $this->Customer_due->reduce(4, 1000) or die("Not enough due");
         $this->load->model('sales/Sales_edit_model');
        
-//        $data['existing_memo'] = $this->db->get_where( ' sales_total_sales ' , '`id_total_sales`=70 ')->result();
+//        $data['existing_memo'] = $this->Sales_edit_model->existing_memo_data(70); 
+//        $data['existing_items'] = $this->Sales_edit_model->existing_memo_items(70); 
         
-//        SELECT * FROM `sales` WHERE `id_total_sales`=70
-                
-//        $data['existing_items'] =  $this->db->get_where('sales' , ' `id_total_sales`=70 ')->result();
+
         
 //        
-        $grab_data = $this->Sales_edit_model->test_data();
-//        $sales_update = $this->Sales_edit_model->sales_update($grab_data);
-        $result = array_diff($array1, $array2);
-
-        print_r($result);   
+        $grab_data = $this->Sales_edit_model->grab_data(150);
         
-        echo '<pre>';
-        print_r($grab_data); 
-//        echo '</pre>';
+//        $sales_update = $this->Sales_edit_model->sales_update($grab_data);
+//        $array1 = $this->Sales_edit_model->grab_data(150);
+//        $array1 = $grab_data['existing_data'];
+//        $array2 = $grab_data['changed_data'];
+        
+        
+        echo '<pre>'; 
+        print_r($grab_data);
+//        
+//        print_r($this->Sales_edit_model->existing_memo_data(70));
+//        print_r($this->Sales_edit_model->existing_memo_items(70) );
 
         
         
