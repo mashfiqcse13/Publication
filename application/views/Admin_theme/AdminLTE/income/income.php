@@ -55,7 +55,7 @@
 
                 <div class="box" id="block">
                     <?php
-                    if (isset($due)) {
+                    if (isset($income_report)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong>Income Report</strong></p>
@@ -72,46 +72,25 @@
                                 <thead style="background: #DFF0D8;">
                                     <tr>
     <!--                                        <th></th>-->
-                                        <th>Ledger Name</th>
-                                        <th>Cash</th>
-                                        <th>Bank</th>
-                                        <th>Advanced</th>
-                                        <th>Total</th>
+                                        <th>Name Of Income</th>                                        
+                                        <th>Date of Income</th>
+                                        <th>Amount of Income</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $total_income=0; foreach($income_report as $report){ $total_income+=$report->amount_income; ?>
+                                    
                                     <tr>
-                                        <td>Due Collection</td>
-                                        <td class="text-right taka_formate"><?= $due['due_cash']; ?></td>
-                                        <td class="text-right taka_formate"><?= $due['due_bank']; ?></td>
-                                        <td class="text-right taka_formate">0</td>
-                                        <td class="text-right taka_formate"><?= $due['due_total']; ?></td>
+                                        <td><?=$report->name_expense?></td>                                         
+                                        <td><?= date('d-M-Y',strtotime($report->date_income))?></td>
+                                        <td class="taka_formate text-right"><?=$report->amount_income?></td>
                                     </tr>
-
+                                        
+                                    <?php }        ?>
                                     <tr>
-                                        <td>Sell Collection</td>
-                                        <td class="text-right taka_formate"><?= $sale_report['cash'] ?></td>
-                                        <td class="text-right taka_formate"><?= $sale_report['bank'] ?></td>
-                                        <td class="text-right taka_formate"><?= $sale_report['advanced'] ?></td>
-                                        <td class="text-right taka_formate"><?= $sale_report['total'] ?></td> 
+                                        <td class="text-right text-bold" colspan="2">Total:</td>
+                                        <td class="taka_formate text-right text-bold"  ><?=$total_income?></td>
                                     </tr>
-
-                                    <tr>
-                                        <td>Old Book Sale</td>
-                                        <td class="text-right taka_formate"><?= $old_report['cash'] ?></td>
-                                        <td class="text-right taka_formate"><?= $old_report['bank'] ?></td>
-                                        <td class="text-right taka_formate">0</td>
-                                        <td class="text-right taka_formate"><?= $old_report['total'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-bold">Total</td>
-                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_cash'] + $sale_report['cash'] + $old_report['cash'] ?></td>
-                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_bank'] + $sale_report['bank'] + $old_report['bank'] ?></td>
-                                        <td class="text-right taka_formate text-bold">TK <?= $sale_report['advanced'] ?></td>
-                                        <td class="text-right taka_formate text-bold">TK <?= $due['due_total'] + $sale_report['total'] + $old_report['total'] ?></td>
-                                    </tr>
-
-
                                 </tbody>
                             </table>
 

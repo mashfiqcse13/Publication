@@ -63,14 +63,14 @@ class Income extends CI_Controller {
         $data['date_range'] = $date_range;
 
         if (isset($btn)) {
-           
+           $data['income_report'] = $this->income_model->income_report($date_range);
                 
-                $data['due']= $this->income_model->customer_due_report($date_range);
-                $data['sale_report'] = $this->income_model->sale_report($date_range);
-                $data['old_report'] = $this->income_model->old_report($date_range); 
+//                $data['due']= $this->income_model->customer_due_report($date_range);
+//                $data['sale_report'] = $this->income_model->sale_report($date_range);
+//                $data['old_report'] = $this->income_model->old_report($date_range); 
                 
                     
-            //echo '<pre>';print_r($due);
+//            echo '<pre>';print_r($data['income_report'] );
         }else{
            $output = $crud->render();
             $data['glosary'] = $output;

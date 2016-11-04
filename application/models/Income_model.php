@@ -14,7 +14,7 @@ class Income_model extends CI_Model {
         }
        
   
-        $range_query = $this->db->query("SELECT name_expense,amount_income,date_income,description_income FROM `income` 
+        $range_query = $this->db->query("SELECT name_expense,amount_income,date_income FROM `income` 
 LEFT JOIN income_name on income_name.id_name_income=income.id_name_income $con ");
         return $range_query->result();
         
