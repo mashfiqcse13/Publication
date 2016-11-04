@@ -160,10 +160,11 @@ class Advance_payment extends CI_Controller {
                 ->set_relation('id_customer', 'customer', 'name')
                 ->set_relation('id_payment_method', 'payment_method', 'name_payment_method')
                 ->order_by('id_party_advance_payment_register', 'desc')
+//                ->add_action('Sales Return', base_url() . 'asset/img/button/Revert.png', '', '', function ($primary_key, $row) {
+//                    return site_url("advance_payment/revert_payment_log/$primary_key");
+//                })
                 ->unset_edit()->unset_delete()->unset_add()->unset_read()
-                ->add_action('Sales Return', base_url() . 'asset/img/button/Revert.png', '', '', function ($primary_key, $row) {
-                    return site_url("advance_payment/revert_payment_log/$primary_key");
-                });
+                ;
         $output = $crud->render();
         $data['glosary'] = $output;
 
