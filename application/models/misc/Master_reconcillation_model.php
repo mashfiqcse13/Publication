@@ -33,20 +33,20 @@ class Master_reconcillation_model extends CI_Model {
     }
 
     function start_today_row() {
-        $this->load->model('misc/Cash');
-        $this->load->model('misc/Customer_due');
-        $this->load->model('misc/Bank_balance');
-        $cash_in_hand = $this->Cash->cash_in_hand();
-        $total_due = $this->Customer_due->total_due();
-        $total_bank_balance = $this->Bank_balance->total_bank_balance();
+        $date_yesterday = date('Y-m-d', strtotime('-1 day'));
+//        die($date_yesterday);
+        $yesterday_master_reconcillation = $this->db->where('date', $date_yesterday)->get('master_reconcillation')->result();
+        $yesterday['ending_cash'] = empty($yesterday_master_reconcillation[0]->ending_cash) ? 0 : $yesterday_master_reconcillation[0]->ending_cash;
+        $yesterday['ending_due'] = empty($yesterday_master_reconcillation[0]->ending_due) ? 0 : $yesterday_master_reconcillation[0]->ending_due;
+        $yesterday['closing_bank_balance'] = empty($yesterday_master_reconcillation[0]->closing_bank_balance) ? 0 : $yesterday_master_reconcillation[0]->closing_bank_balance;
         $data_to_insert = array(
             'total_sales' => 0,
-            'opening_cash' => $cash_in_hand,
-            'ending_cash' => $cash_in_hand,
-            'opening_due' => $total_due,
-            'ending_due' => $total_due,
-            'opening_bank_balance' => $total_bank_balance,
-            'closing_bank_balance' => $total_bank_balance,
+            'opening_cash' => $yesterday['ending_cash'],
+            'ending_cash' => $yesterday['ending_cash'],
+            'opening_due' => $yesterday['ending_due'],
+            'ending_due' => $yesterday['ending_due'],
+            'opening_bank_balance' => $yesterday['closing_bank_balance'],
+            'closing_bank_balance' => $yesterday['closing_bank_balance'],
             'date' => date('Y-m-d')
         );
 
@@ -66,7 +66,7 @@ class Master_reconcillation_model extends CI_Model {
         $sql = "UPDATE `master_reconcillation` SET `ending_cash`=`ending_cash`+ $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
         $this->db->query($sql);
     }
-    
+
     function reduce_cash($amount) {
         $id_master_reconcillation = $this->initialize();
         $sql = "UPDATE `master_reconcillation` SET `ending_cash`=`ending_cash`- $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
@@ -78,6 +78,7 @@ class Master_reconcillation_model extends CI_Model {
         $sql = "UPDATE `master_reconcillation` SET `ending_due`=`ending_due`+ $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
         $this->db->query($sql);
     }
+
     function reduce_due($amount) {
         $id_master_reconcillation = $this->initialize();
         $sql = "UPDATE `master_reconcillation` SET `ending_due`=`ending_due`- $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
@@ -89,7 +90,7 @@ class Master_reconcillation_model extends CI_Model {
         $sql = "UPDATE `master_reconcillation` SET `closing_bank_balance`=`closing_bank_balance`+ $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
         $this->db->query($sql);
     }
-    
+
     function reduce_bank_balance($amount) {
         $id_master_reconcillation = $this->initialize();
         $sql = "UPDATE `master_reconcillation` SET `closing_bank_balance`=`closing_bank_balance`- $amount  WHERE `id_master_reconcillation` = $id_master_reconcillation";
