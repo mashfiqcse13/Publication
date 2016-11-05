@@ -176,8 +176,8 @@ class Sales_processing_model extends CI_Model {
         $this->Master_reconcillation_model->add_total_sale($this->total_amount);
         $this->id_total_sales = $this->max_id_total_sales();
         if ($this->slip_expense_amount > 0) {
-            $this->load->model('Expense_model');
-            $this->Expense_model->expense_register(4, $this->slip_expense_amount, "Memo No : {$this->id_total_sales}");
+//            $this->load->model('Expense_model');
+//            $this->Expense_model->expense_register(4, $this->slip_expense_amount, "Memo No : {$this->id_total_sales}");
         }
         if ($this->bill_for_packeting > 0) {
 //            $this->load->model('Expense_model');
