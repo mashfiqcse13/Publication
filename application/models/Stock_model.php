@@ -113,37 +113,63 @@ sum(sales_amount) sales_amount,
 sum(specimen) as specimen,
 sum(return_amountreject) as return_amountreject
 FROM (
-	(
-		SELECT stock_perpetual_stock_register.id_item as id_item,
-		0 as opening_amount,
-		sum(receive_amount) as receive_amount,
-		sum(sales_amount) sales_amount,
-		sum(specimen) as specimen,
-		sum(return_amountreject) as return_amountreject
-		FROM stock_perpetual_stock_register
-		WHERE DATE(stock_perpetual_stock_register.date) 
-			BETWEEN '$from' AND '$to'
-		GROUP BY stock_perpetual_stock_register.id_item
-		ORDER BY stock_perpetual_stock_register.id_item ASC
-	)union(
-		SELECT id_item as id_item,
-		0 as opening_amount,
-		0 as receive_amount,
-		0 as sales_amount,
-		0 as specimen,
-		0 as return_amountreject
-		FROM items
-	)union(
-		SELECT id_item as id_item,
-		sum(closing_stock) as opening_amount,
-		0 as receive_amount,
-		0 as sales_amount,
-		0 as specimen,
-		0 as return_amountreject
-		FROM stock_perpetual_stock_register
-		WHERE DATE(stock_perpetual_stock_register.date) = '$from_minus_1'
-		GROUP BY id_item
-	)
+    (
+        SELECT stock_perpetual_stock_register.id_item as id_item,
+        0 as opening_amount,
+        sum(receive_amount) as receive_amount,
+        sum(sales_amount) sales_amount,
+        sum(specimen) as specimen,
+        sum(return_amountreject) as return_amountreject
+        FROM stock_perpetual_stock_register
+        WHERE DATE(stock_perpetual_stock_register.date) BETWEEN '$from' AND '$to'
+        GROUP BY stock_perpetual_stock_register.id_item
+        ORDER BY stock_perpetual_stock_register.id_item ASC
+    )union(
+        SELECT id_item as id_item,
+        0 as opening_amount,
+        0 as receive_amount,
+        0 as sales_amount,
+        0 as specimen,
+        0 as return_amountreject
+        FROM items
+    )union(
+SELECT id_item,
+        if(sum(opening_amount)= 0, sum(closing_stock),sum(opening_amount)) as opening_amount,
+        0 as receive_amount,
+        0 as sales_amount,
+        0 as specimen,
+        0 as return_amountreject
+        FROM (
+        (
+            /*opening_found*/
+            SELECT opening_row_pointer.id_item,
+            opening_amount,
+            0 as closing_stock
+            FROM (
+                            SELECT min(`id_perpetual_stock_register`) as id_perpetual_stock_register,  `id_item`
+                            FROM stock_perpetual_stock_register
+                            WHERE DATE(stock_perpetual_stock_register.date) BETWEEN '$from' AND '$to'
+                            GROUP BY id_item
+            ) as opening_row_pointer inner join
+            stock_perpetual_stock_register on opening_row_pointer.id_perpetual_stock_register = stock_perpetual_stock_register.id_perpetual_stock_register
+        )
+        union
+        (
+            /*closing_found*/
+            SELECT closing_row_pointer.id_item,
+            0 as opening_amount,
+            closing_stock
+            FROM (
+                                SELECT max(`id_perpetual_stock_register`) as id_perpetual_stock_register,  `id_item`
+                                        FROM stock_perpetual_stock_register
+                                        WHERE DATE(stock_perpetual_stock_register.date) BETWEEN '1800-01-01' AND '$from_minus_1'
+                                        GROUP BY id_item
+                        ) as closing_row_pointer inner join
+                        stock_perpetual_stock_register on closing_row_pointer.id_perpetual_stock_register = stock_perpetual_stock_register.id_perpetual_stock_register
+                )
+            ) as table_1
+            group by id_item
+    )
 ) as total_stock_perpetual
 LEFT JOIN items ON total_stock_perpetual.id_item = items.id_item
 GROUP BY total_stock_perpetual.id_item
