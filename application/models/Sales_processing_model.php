@@ -180,8 +180,8 @@ class Sales_processing_model extends CI_Model {
             $this->Expense_model->expense_register(4, $this->slip_expense_amount, "Memo No : {$this->id_total_sales}");
         }
         if ($this->bill_for_packeting > 0) {
-            $this->load->model('Expense_model');
-            $this->Expense_model->expense_register(6, $this->bill_for_packeting, "Memo No : {$this->id_total_sales}");
+//            $this->load->model('Expense_model');
+//            $this->Expense_model->expense_register(6, $this->bill_for_packeting, "Memo No : {$this->id_total_sales}");
         }
         return $this->id_total_sales;
     }
