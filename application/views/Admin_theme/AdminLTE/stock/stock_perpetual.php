@@ -1,6 +1,13 @@
 
 <!--add header -->
 <?php include_once __DIR__ . '/../header.php'; ?>
+<style>
+    @media only print{
+        body,table,tr,td,tbody,th,thead{
+            font-size:11px!important;
+        }
+    }
+</style>
 
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->

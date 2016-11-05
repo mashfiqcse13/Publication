@@ -29,6 +29,11 @@ class Report extends CI_Controller {
     }
 
     function cash_box() {
+        
+                $from = date('Y-m-d', now());
+                $to = date('Y-m-d', now());
+        
+        
         $data['cash'] = $this->db->get('cash')->result();
         $data['cash'] = $data['cash'][0];
 //        die(print_r($data));
@@ -43,7 +48,10 @@ class Report extends CI_Controller {
         }
         $this->load->model('misc/Customer_payment');
         $this->load->model('Advance_payment_model');
-        $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection();
+        
+        
+        
+        $data['today_cash'] = $this->Customer_payment->today_collection() + $this->Advance_payment_model->today_collection() + $this->Report_model->total_others_income($from, $to);
         $data['today_bank'] = $this->Customer_payment->today_collection(3) + $this->Advance_payment_model->today_collection(3);
         $data['advance_payment_balance'] = $this->Advance_payment_model->total_advance_payment_balance();
 
@@ -53,9 +61,8 @@ class Report extends CI_Controller {
         $data['today_total_bank_paid_against_sale'] = $today_total_payment_against_sale['today_total_bank_paid_against_sale'];
         $data['today_total_advance_deduction_against_sale'] = $today_total_payment_against_sale['today_total_advance_deduction_against_sale'];
 
-        $from = date('Y-m-d', now());
-        $to = date('Y-m-d', now());
 
+        
 
         $data['sale_info'] = $this->Report_model->sale_info($from, $to);
 //        foreach($old_book_sale->result() as $row){
@@ -165,7 +172,12 @@ class Report extends CI_Controller {
             $to = date('Y-m-d', strtotime($date[1]));
 
             $data['sale_info'] = $this->Report_model->sale_info($from, $to);
-
+            
+           
+            
+            
+            $data['sale_against_due_deduction_by_old_book_sell'] = $this->Report_model->sale_against_due_deduction_by_old_book_sell($from,$to);
+            
             $this->load->model('misc/Customer_payment');
             $total_payments_against_sale = $this->Customer_payment->total_payments_against_sale($from, $to);
             $data['total_sale_against_cash_collection'] = $total_payments_against_sale['today_total_cash_paid_against_sale'];
@@ -186,16 +198,7 @@ class Report extends CI_Controller {
             $data['previous_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from, $to);
             
             
-            
-            $from_one_day = date( 'Y-m-d', (strtotime('-1 day' , strtotime($from))) );
-            $now= date('Y-m-d');
-            $data['remaining_due_collection'] = $this->Report_model->previous_due_collection($from_one_day, $now);
-            $data['remaining_due_collection_by_cash'] = $this->Report_model->previous_due_collection_by_cash($from_one_day, $now);
-            $data['remaining_due_collection_by_bank'] = $this->Report_model->previous_due_collection_by_bank($from_one_day, $now);
-            $data['remaining_due_collection_by_old_book_sell'] = $this->Report_model->previous_due_collection_by_old_book_sell($from_one_day, $now);
-            
-            
-            
+     
             
             
 
