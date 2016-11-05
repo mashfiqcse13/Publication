@@ -11,6 +11,9 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
 }else{
     $hide_due_part = 'show'; 
 }
+if($sitelink == 'http://thejamunapub.com/' ){
+    $font14 = '14px!important;';
+}
 
 
 ?>
@@ -203,6 +206,9 @@ td.hide_advanced {
 @media only print{
       body td.noborder {
             border: 0px solid #ddd!important;
+        }
+        table,tr,td,tbody,th,p{
+            font-size:<?=$font14;?>
         }
         
                 #table_custom .table > tbody > tr > td.noborder, .table > tbody > tr > th, .table > tfoot > tr > td.noborder, .table > tfoot > tr > th, .table > thead > tr > td.noborder, .table > thead > tr > th {
