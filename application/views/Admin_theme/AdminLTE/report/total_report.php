@@ -231,7 +231,7 @@
                             </table>
                             <div class="page-break" style=" page-break-before: always;padding-top:0px"></div>
                             <div style="overflow: auto">
-                                <table class="table table-bordered new table-hover" style="margin-top: 10px;">
+                                <table class="table table-bordered new table-hover" style="margin-top: 10px;display: none">
 
                                     <tr>
                                         <td width="34%"></td>
