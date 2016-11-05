@@ -369,7 +369,8 @@ class Report_model extends CI_Model {
                     LEFT JOIN sales_total_sales on sales_total_sales.id_total_sales=customer_payment.id_total_sales
                     where due_payment_status=1 and id_payment_method=4 and  DATE(payment_date) BETWEEN  '$from' AND '$to' and DATE(issue_date) BETWEEN  '$from' AND '$to' ";
             $result = $this->db->query($sql)->row();
-            return $result->total_amount;
+            $result_report = empty($result->total_amount) ? 0 : $result->total_amount;
+            return $result_report;
     }
 
 }

@@ -167,7 +167,7 @@
 
                                             echo $stock->return_amountreject == 0 ? '' : $stock->return_amountreject;
 
-                                            $total_Sale_Return +=$stock->return_amountreject
+//                                            $total_Sale_Return +=$stock->return_amountreject
                                             ?></td>
                                         <td><?php
                                             $acturatesale = $stock->sales_amount - $stock->return_amountreject;

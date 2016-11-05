@@ -106,12 +106,12 @@
                                     <tr>
                                         <th>Item ID</th>
                                         <th>Item Name</th>
-                                        <th>Accurate Sale</th> 
+                                        <th>Sale</th> 
                                         <th>Old Book Return</th>
                                         <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
 
                                     </tr> 
-                                </thead>
+                                </thead> 
                                 <tbody>
                                     <?php
                                     $total_accurate_sale = 0;
