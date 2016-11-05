@@ -226,7 +226,7 @@
                                 }
                                 ?>
 
-                                <tr>
+                                <tr id="total_row">
                                     <th colspan="2" class="text-center">Total</th>
                                     <th ><?php echo $total_Opening == 0 ? '' : $total_Opening; ?></th>
                                     <th><?php echo $total_Receive == 0 ? '' : $total_Receive; ?></th> 
@@ -263,9 +263,11 @@
 <?php include_once __DIR__ . '/../footer.php'; ?>
 
 <script>
-    
-        $('tbody tr').each(function() {
-            if ($(this).find('td:nth-child(3)').text()=='' && $(this).find('td:nth-child(4)').text()=='' && $(this).find('td:nth-child(5)').text()=='' && $(this).find('td:nth-child(6)').text()=='' && $(this).find('td:nth-child(7)').text()=='' && $(this).find('td:nth-child(8)').text()=='' && $(this).find('td:nth-child(11)').text()=='' ) $(this).remove();
-        });
-   
-    </script>
+
+    $('tbody tr').each(function () {
+        if ($(this).find('td:nth-child(3)').text() == '' && $(this).find('td:nth-child(4)').text() == '' && $(this).find('td:nth-child(5)').text() == '' && $(this).find('td:nth-child(6)').text() == '' && $(this).find('td:nth-child(7)').text() == '' && $(this).find('td:nth-child(8)').text() == '' && $(this).find('td:nth-child(11)').text() == '')
+            $(this).hide();
+    });
+    $("#total_row").show();
+
+</script>
