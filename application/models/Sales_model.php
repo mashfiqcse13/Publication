@@ -151,13 +151,18 @@ class Sales_model extends CI_Model {
 
     function memo_body_table($total_sales_id) {
         
-        $siteUrlForMemo = $this->config->item('SITE')['website'];        
+        $link = $this->config->item('SITE')['website'];
+        $link ==  'http://thejamunapub.com/' ? $jamuna_hide = true : $jamuna_hide = false ;
+        $link ==  'http://advancedpublication.com/' ? $hide_advanced = true : $hide_advanced = false ;
         
-        if($siteUrlForMemo == 'http://advancedpublication.com/'){
-            $hide_advanced = true;
-        }else{
-            $hide_advanced =  false;
-        }
+          if($jamuna_hide==true){
+              $rowspan = 8;
+          }elseif($hide_advanced==true){
+              $rowspan = 9;
+          }else{
+              $rowspan = 10;
+          }
+        
         
         $this->load->library('table');
         // setting up the table design
@@ -268,11 +273,11 @@ class Sales_model extends CI_Model {
             'class' => 'noborder'
                 ), array(
             'data' => 'সর্বমোট : ',
-            'class' => 'noborder',
+            'class' => ' text-bold  noborder',
             'colspan' => 2
                 ),array(
                 'data' => $this->Common->taka_format($total_sales_details->total_amount),
-                'class' => 'noborder text-right taka_formate'
+                'class' => ' text-bold noborder text-right taka_formate'
             ) );
 
 
@@ -280,7 +285,7 @@ class Sales_model extends CI_Model {
             'data' => $current_due_status,
             'class' => 'noborder ',
             'colspan' => 2,
-            'rowspan' => $current_due_status==''? 9 : 10
+            'rowspan' => $rowspan
                 ), array(
             'data' => 'নগদ জমা : ',
             'class' => 'noborder',
@@ -337,7 +342,7 @@ class Sales_model extends CI_Model {
             'colspan' =>2
                 ),array(
             'data' => $this->Common->taka_format($current_due),
-            'class' => 'noborder text-right taka_formate'
+            'class' => 'noborder  text-bold  text-right taka_formate'
         ));
         
         if($hide_advanced == false){
@@ -351,25 +356,26 @@ class Sales_model extends CI_Model {
                     ));
         }
         
-        
+        if($jamuna_hide == false){
 
-        $this->table->add_row(array(
-            'data' =>'প্যাকেটিং খরচ বাকি: ',
-            'class' => 'noborder text-left',
-            'colspan' => 2
-        ),array(
-            'data' => $total_sales_details->bill_for_packeting,
-            'class' => 'noborder text-right taka_formate'
-        ));
+                $this->table->add_row(array(
+                    'data' =>'প্যাকেটিং খরচ বাকি: ',
+                    'class' => 'noborder text-left',
+                    'colspan' => 2
+                ),array(
+                    'data' => $total_sales_details->bill_for_packeting,
+                    'class' => 'noborder text-right taka_formate'
+                ));
 
-        $this->table->add_row( array(
-            'data' => ' স্লিপ খরচ :',
-            'class' => 'noborder text-left',
-            'colspan' => 2
-        ),array(
-            'data' => $total_sales_details->slip_expense_amount,
-            'class' => 'noborder text-right taka_formate'
-        ));
+                $this->table->add_row( array(
+                    'data' => ' স্লিপ খরচ :',
+                    'class' => 'noborder text-left',
+                    'colspan' => 2
+                ),array(
+                    'data' => $total_sales_details->slip_expense_amount,
+                    'class' => 'noborder text-right taka_formate'
+                ));
+        }
 
         $this->table->add_row(array(
             'data' => 'সর্বমোট  গ্রহন  : ',
@@ -377,7 +383,7 @@ class Sales_model extends CI_Model {
             'colspan' => 2
         ),array(
             'data' => $bank_pay + $cash_pay + $current_due_amount,
-            'class' => 'noborder text-right  taka_formate'
+            'class' => ' text-bold noborder text-right  taka_formate'
         ));
 
 
