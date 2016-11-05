@@ -23,7 +23,7 @@
 
         <div id="block">
 
-            <div class="row" style="padding-top:0px;margin-top:14mm">
+            <div class="row" style="padding-top:0px;margin-top:14mm;margin-left:10mm;margin-right: 10mm;">
 
 
                 <?php
@@ -78,7 +78,7 @@
 
 
 
-                <div class="row" style="font-size:16px;">
+                <div class="row" style="font-size:16px;margin-left:10mm;margin-right: 10mm;">
 
 
 
