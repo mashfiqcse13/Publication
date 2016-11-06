@@ -89,7 +89,7 @@
                                     <tr>
                                         <td width="50%">Due Paid By Old Book Sale</td>
                                         <th></th>
-                                        <th class="taka_formate"><?php echo $sale_info->sale_against_due_deduction_by_old_book_sell; ?></th>  
+                                        <th class="taka_formate"><?php echo $sale_against_due_deduction_by_old_book_sell; //$sale_info->sale_against_due_deduction_by_old_book_sell; ?></th>  
                                     </tr>
                                     <tr>                     
                                         <td width="50%">Due</td>
@@ -231,7 +231,7 @@
                             </table>
                             <div class="page-break" style=" page-break-before: always;padding-top:0px"></div>
                             <div style="overflow: auto">
-                                <table class="table table-bordered new table-hover" style="margin-top: 10px;">
+                                <table class="table table-bordered new table-hover" style="margin-top: 10px;display: none">
 
                                     <tr>
                                         <td width="34%"></td>

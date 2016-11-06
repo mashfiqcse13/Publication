@@ -17,13 +17,9 @@
 
 
 
-    <div class="container memo_print_option custom_memo"  >
-
-
-
-        <div id="block">
-
-            <div class="row" style="padding-top:0px;margin-top:14mm">
+        <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">        
+                <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
+                    <div style="margin-top:14mm;margin-left: 5mm;margin-right: 5mm;">
 
 
                 <?php
@@ -73,15 +69,7 @@
                         </tr>
 
                     </table>
-
-                </div>
-
-
-
-                <div class="row" style="font-size:16px;">
-
-
-
+                    
                     <table class="table table-border table_custom">
                         <tr>
                             <th>Payment Method</th>
@@ -100,55 +88,12 @@
                     </table>
 
 
-                    <?php
-                }
-                ?>
-
-                <?php if (isset($due_report_list)) { ?>                        
-                    <h4 class="text-center">Due Payment Report</h4>
-                    <table  class ="table table-bordered table-striped" border="0" cellpadding="4" cellspacing="0" style="background: #fff;">
-                        <tr>
-                            <th>Memo No:</th>
-
-                            <th>Payment Method</th>
-                            <th>Payment Date</th>
-                            <th>Paid Amount</th>
-                        </tr>
-
-                        <?php
-                        $total_amount = 0;
-                        foreach ($due_report_list as $row) {
-                            if ($row->paid_amount < 1) {
-                                $paid = 0;
-                            } else {
-                                $paid = $row->paid_amount;
-                            }
-
-                            $total_amount+=$paid;
-                            ?>
-                            <tr>
-                                <td><?= $row->id_total_sales; ?></td>
-                                <td><?= $row->name_payment_method; ?></td>
-                                <td><?= $row->payment_date; ?></td>
-                                <td class="text-right taka_formate">TK <?= $paid ?></td>
-
-                            </tr>
-                        <?php } ?> 
-
-
-                        <tr>
-                            <td colspan="3" class="text-center">Total Paid Amount = </td>
-                            <td class="text-right taka_formate">TK <?= $total_amount; ?></td>
-                        </tr>
-                    </table>
-
-                <?php }
-                ?> 
+                    <?php    }     ?>
             </div>
-
+                
         </div>
 
-        <div class="margin-top-10 only_print">
+            <div class="margin-top-10 only_print" style="padding:20px;">
 
             <a href="<?= site_url('advance_payment') ?> " class="only_print btn btn-primary "><i class="fa fa-pencil"></i> Return To Advance Payment Dashboard</a>
 

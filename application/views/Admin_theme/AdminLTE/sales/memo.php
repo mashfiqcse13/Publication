@@ -13,6 +13,7 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
 }
 
 
+
 ?>
 
 <style>
@@ -60,7 +61,6 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
     
     <div class="container memo_print_option custom_memo memo"  >
         <div class="only_print padding10"></div>
-
         <div class="row" style="padding-top:0px"> 
 
             <table class="font_12 table  table_custom text-bold" style="font-size:11px;margin-bottom: 0px;">
@@ -194,15 +194,21 @@ if($sitelink == 'http://thejamunapub.com/' || $sitelink == 'http://advancedpubli
     .font_12 tr td{
         font-size:12px!important;
     }
-thead {
-    display: table-row-group;
-}
-td.hide_advanced {
-    opacity: 0;
-}
+        thead {
+            display: table-row-group;
+        }
+        td.hide_advanced {
+            opacity: 0;
+        }
+        table,tr,td,tbody,th,p{
+                font-size:14px!important;
+            }
 @media only print{
       body td.noborder {
             border: 0px solid #ddd!important;
+        }
+        table,tr,td,tbody,th,p{
+            font-size:14px!important;
         }
         
                 #table_custom .table > tbody > tr > td.noborder, .table > tbody > tr > th, .table > tfoot > tr > td.noborder, .table > tfoot > tr > th, .table > thead > tr > td.noborder, .table > thead > tr > th {

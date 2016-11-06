@@ -1,6 +1,13 @@
 
 <!--add header -->
 <?php include_once __DIR__ . '/../header.php'; ?>
+<style>
+    @media only print{
+        body,table,tr,td,tbody,th,thead{
+            font-size:11px!important;
+        }
+    }
+</style>
 
 <!-- Left side column. contains the logo and sidebar -->
 <?php include_once 'main_sidebar.php'; ?> <!-- main sidebar area -->
@@ -160,7 +167,7 @@
 
                                             echo $stock->return_amountreject == 0 ? '' : $stock->return_amountreject;
 
-                                            $total_Sale_Return +=$stock->return_amountreject
+//                                            $total_Sale_Return +=$stock->return_amountreject
                                             ?></td>
                                         <td><?php
                                             $acturatesale = $stock->sales_amount - $stock->return_amountreject;

@@ -108,7 +108,7 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3 class="text-right faka_formate"><?php echo $today_due; ?> TK</h3>
-                        <p> Total Due </p>
+                        <p> Due </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-pricetag-outline"></i>
