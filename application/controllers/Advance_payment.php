@@ -41,7 +41,7 @@ class Advance_payment extends CI_Controller {
 //       exit();
             if (!empty($amount) && $amount > 0 && !empty($bank_amount) && $bank_amount > 0) {
                 $data['report_message'] = '<p class="alert alert-danger">Please Select only Cash or Bank option</p>';
-            } else {                
+            } else {
                 if (!empty($id_customer) && !empty($amount)) {
                     $id = $this->Advance_payment_model->payment_add($id_customer, $amount, 1) or die('failed');
                 } else {
@@ -63,13 +63,12 @@ class Advance_payment extends CI_Controller {
                 }
 //                redirect("advance_payment/advance_balance");
             }
-            
         }
 
         $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
 
         $data['customer'] = $this->input->get('id_customer');
-        
+
         $data['customer_details'] = $this->Advance_payment_model->cutomer_details($data['customer']);
         $this->load->model('misc/Customer_due');
         if (!empty($data['customer'])) {
@@ -163,8 +162,11 @@ class Advance_payment extends CI_Controller {
 //                ->add_action('Sales Return', base_url() . 'asset/img/button/Revert.png', '', '', function ($primary_key, $row) {
 //                    return site_url("advance_payment/revert_payment_log/$primary_key");
 //                })
+                ->add_action('Print Memo', base_url() . 'asset/img/button/Print.png', '', '', function ($primary_key, $row) {
+                    return site_url("advance_payment/add_advance_payment/$primary_key");
+                })
                 ->unset_edit()->unset_delete()->unset_add()->unset_read()
-                ;
+        ;
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -189,6 +191,7 @@ class Advance_payment extends CI_Controller {
     }
 
     function revert_payment_log($id_party_advance_payment_register) {
+        die("Do not try.");
         $this->Advance_payment_model->discard_advance_payment($id_party_advance_payment_register) or die('failed');
         echo "successfull";
     }
