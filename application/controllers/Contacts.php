@@ -49,7 +49,7 @@ class Contacts extends CI_Controller {
     function customer() {
         $this->User_access_model->check_user_access(29, 'contacts');
         $crud = new grocery_CRUD();
-        $crud->set_table('customer')->columns('id_customer', 'name', 'division', 'district', 'upazila', 'address', 'phone')
+        $crud->set_table('customer')->columns('id_customer', 'name', 'division', 'district', 'upazila', 'address', 'phone')->unset_delete()
                 ->display_as('id_customer', 'ID')->order_by('id_customer', 'desc')->display_as('name', 'Customer Name')->set_subject('Customer');
 
         $crud->callback_add_field('division', function () {
@@ -86,7 +86,7 @@ class Contacts extends CI_Controller {
         $this->User_access_model->check_user_access(28, 'contacts');
         $crud = new grocery_CRUD();
         $crud->set_table('contact_teacher')->columns('id_contact_teacher', 'name', 'division', 'district', 'upazila', 'address', 'designation', 'institute_name', 'id_contact_teacher_sucject', 'phone')
-                ->set_relation('id_contact_teacher_sucject', 'contact_teacher_sucject', 'subject_name')
+                ->set_relation('id_contact_teacher_sucject', 'contact_teacher_sucject', 'subject_name')->unset_delete()
                 ->display_as('id_contact_teacher', 'ID')->display_as('id_contact_teacher_sucject', 'Subject')->order_by('id_contact_teacher', 'desc')->set_subject('Teachers');
 
         $crud->callback_add_field('division', function () {
@@ -120,7 +120,7 @@ class Contacts extends CI_Controller {
     function teacher_sucject() {
         $this->User_access_model->check_user_access(28, 'contacts');
         $crud = new grocery_CRUD();
-        $crud->set_table('contact_teacher_sucject')->set_subject('Teacher Subject');
+        $crud->set_table('contact_teacher_sucject')->unset_delete()->set_subject('Teacher Subject');
 
 
         $output = $crud->render();
@@ -136,7 +136,7 @@ class Contacts extends CI_Controller {
         $this->User_access_model->check_user_access(30, 'contacts');
         $crud = new grocery_CRUD();
         $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type', 'Agent')
-                ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Agents')->order_by('id_agent', 'desc')
+                ->display_as('id_agent', 'ID')->display_as('name', 'Agent Name')->set_subject('Agents')->order_by('id_agent', 'desc')->unset_delete()
                 ->callback_before_insert(array($this->Contacts_model, 'agent_type_setter_post_array'))
                 ->callback_before_update(array($this->Contacts_model, 'agent_type_setter_post_array'));
 
@@ -175,7 +175,7 @@ class Contacts extends CI_Controller {
         $this->User_access_model->check_user_access(31, 'contacts');
         $crud = new grocery_CRUD();
         $crud->set_table('specimen_agent')->columns('id_agent', 'name', 'division', 'district', 'upazila', 'address', 'phone')->where('type', 'Marketing Officer')
-                ->display_as('id_agent', 'ID')->display_as('name', 'Officer Name')->set_subject('Officer')->order_by('id_agent', 'desc')
+                ->display_as('id_agent', 'ID')->display_as('name', 'Officer Name')->set_subject('Officer')->order_by('id_agent', 'desc')->unset_delete()
                 ->callback_before_insert(array($this->Contacts_model, 'marketing_officer_type_setter_post_array'))
                 ->callback_before_update(array($this->Contacts_model, 'marketing_officer_type_setter_post_array'));
 
