@@ -19,7 +19,7 @@
 
         <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">        
                 <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
-                    <div style="margin-top:14mm;margin-left: 5mm;margin-right: 5mm;">
+                    <div style="margin-top:14mm;margin-left: 10mm;margin-right: 10mm;">
 
 
                 <?php
