@@ -26,11 +26,13 @@ class Old_book extends CI_Controller {
     }
 
     function index() {
-        $this->return_book();
+        redirect('old_book/return_book');
+//        $this->return_book();
     }
 
     function old_book_dashboard() {
-        $this->tolal_return_book();
+        redirect('old_book/tolal_return_book');
+//        $this->tolal_return_book();
     }
 
     function tolal_return_book() {
@@ -118,11 +120,13 @@ class Old_book extends CI_Controller {
 
     function ajax_url() {
 //        echo json_encode($_POST);
+        
         $this->Old_book_model->processing_return_oldbook();
     }
 
     function old_book_sale_or_rebind() {
-        $this->Old_book_model->old_book_sale_or_rebind();
+        redirect('old_book/old_book_sale_or_rebind');
+//        $this->Old_book_model->old_book_sale_or_rebind();
     }
 
     function return_book() {
