@@ -17,9 +17,9 @@
 
 
 
-        <div style="background:#fff;width:640px;margin:0 auto;min-height:500px;box-shadow:0px -1px 8px #000;padding:20px 0;">        
-                <div class="container memo_print_option" id="block" style="background:#fff;width:635px;min-height:493px;font-size:15px;" >
-                    <div style="margin-top:14mm;margin-left: 10mm;margin-right: 10mm;">
+    <div class="container memo_print_option custom_memo memo"  >
+        <div class="only_print padding10"></div>
+        <div class="row" style="padding-top:0px"> 
 
 
                 <?php
@@ -93,7 +93,7 @@
                 
         </div>
 
-            <div class="margin-top-10 only_print" style="padding:20px;">
+            <div class="margin-top-10 only_print" style="    width: 400px;    margin: 0 auto;    position: relative;    bottom: 200px;">
 
             <a href="<?= site_url('advance_payment') ?> " class="only_print btn btn-primary "><i class="fa fa-pencil"></i> Return To Advance Payment Dashboard</a>
 
