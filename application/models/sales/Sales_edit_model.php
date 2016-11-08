@@ -75,7 +75,7 @@ class Sales_edit_model extends CI_Model {
 
        
          $data['changed_memo_data'] =  $this->changed_memo_data =  array(
-                            "id_total_sales" => 70,
+                            "id_total_sales" => 50,
                             "id_customer" => 329,
                             "discount_percentage" => 0,
                             "discount_amount" => 0,
@@ -187,26 +187,26 @@ class Sales_edit_model extends CI_Model {
 //        return $this->db->get_where( ' sales ' , '`id_total_sales`= '.$id )->result_array();
     }
     
-    function sales_update( $memo_id,$modified_data ) {
+    function sales_update( $memo_id,$changed_memo_data,$changed_memo_items ) {
         
         $array1 = $this->existing_memo_data($memo_id);
-        $array2 = $modified_data;
+        $array2 = $changed_memo_data;
         
         
         $existing_items= $this->existing_memo_items($memo_id);
-        $changed_items=$array2['item_selection'];
+        $changed_items=$changed_memo_items;
         
         $update_sales = array();
         $items = array();
         
 
 //        unset($array1['item_selection']);
-        unset($array2['item_selection']);
+//        unset($array2['item_selection']);
         
         echo '<pre>';
-        print_r($existing_items);
-        print_r($changed_items);
-        exit();
+//        print_r($existing_items);
+//        print_r($changed_items);
+//        exit();
         
                 foreach($array1 as $key1 => $value1){
                     foreach($array2 as $key2 => $value2){
@@ -248,8 +248,8 @@ class Sales_edit_model extends CI_Model {
                     
 
                 }
-                
-                print_r($existing_items);
+                $data['delete_item'] = $existing_items;
+               
                 
                 //seles_tota_sales memo update
                 $sales_memo = "UPDATE sales_total_sales SET  ";
@@ -262,12 +262,15 @@ class Sales_edit_model extends CI_Model {
                 echo $sales_memo;
    
 
-//        print_r($result);   
+//        print_r($result);  
+                
+          $data['update_item'][] = $update_item;
+          $data['changed_items'][] = $changed_items;
         
         echo '<pre>';
 //        print_r($update_sales); 
-        print_r($update_item);
-        print_r($changed_items);
+        print_r($data);
+//        print_r($changed_items);
     
     }
     
