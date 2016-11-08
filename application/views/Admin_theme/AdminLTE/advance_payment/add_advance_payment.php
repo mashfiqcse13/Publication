@@ -19,7 +19,7 @@
 
     <div class="container memo_print_option custom_memo memo"  >
         <div class="only_print padding10"></div>
-        <div class="row" style="margin: 10mm 5mm 5mm 5mm;padding-top:0px"> 
+        <div class="row" style="margin: 13mm 5mm 5mm 5mm;padding-top:0px"> 
 
 
                 <?php
