@@ -28,6 +28,25 @@ class Stock_perpetual extends CI_Model {
         $this->db->query($sql);
         return TRUE;
     }
+    
+    function Stock_perpetual_register_reverse($id_item, $amount, $type_code = 1) {
+        $types = array('receive_amount', 'sales_amount', 'specimen', 'return_amountreject', 'reject_amount','specimen_returned');
+        $types_opetator = array('+', '-', '-', '+', '-','+');
+        if (empty($types[$type_code]) or empty($amount)) {
+            return false;
+        }
+        $current_id_perpetual_stock_register = $this->id_today_row($id_item) or
+                $current_id_perpetual_stock_register = $this->start_today_row($id_item);
+
+        $type_of_data = $types[$type_code];
+        $closing_operator = $types_opetator[$type_code];
+        $sql = "UPDATE  `stock_perpetual_stock_register`
+            SET  `$type_of_data` =  `$type_of_data`- ($amount) , `closing_stock` =  `closing_stock` + ($amount)
+            WHERE `id_perpetual_stock_register` =$current_id_perpetual_stock_register;";
+
+        $this->db->query($sql);
+        return TRUE;
+    }
 
     function id_today_row($id_item) {
         $where = array(

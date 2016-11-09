@@ -23,6 +23,10 @@ class Sales_edit_model extends CI_Model {
      * This is test data section
      * Here dummy data will be added for testing purpose
      */
+    function __construct() {
+        $this->load->model('misc/Stock_perpetual');
+        $this->load->model('Stock_model');
+    }
 
     function test_data() {
 
@@ -56,7 +60,7 @@ class Sales_edit_model extends CI_Model {
                                "id_total_sales"  => 70,
                               "id_item" => 52,
                                "quantity" => 5,
-                               "price" => 180,
+                               "price" => 120,
                                "total_cost" => 900,
                                "discount" => 0,
                                "sub_total" => 900
@@ -75,13 +79,13 @@ class Sales_edit_model extends CI_Model {
 
        
          $data['changed_memo_data'] =  $this->changed_memo_data =  array(
-                            "id_total_sales" => 50,
-                            "id_customer" => 329,
+                            "id_total_sales" => 96,
+                            "id_customer" => 739,
                             "discount_percentage" => 0,
                             "discount_amount" => 0,
-                            "sub_total" => 2950,
-                            "total_amount" => 2950,
-                            "total_paid" => 2950,
+                            "sub_total" => 5950,
+                            "total_amount" => 5950,
+                            "total_paid" => 4950,
                             "total_due" => 0,
                             "issue_date" => '2016-10-04 12:41:00',
                             "number_of_packet" => 0,
@@ -91,18 +95,18 @@ class Sales_edit_model extends CI_Model {
         
         $data['changed_memo_items'] =  $this->changed_memo_items  =   array(
                 array(
-                        "id_sales" => 110,
-                        "id_total_sales"  => 70,
+                        "id_sales" =>'' ,
+                        "id_total_sales"  => 52,
                        "id_item" => 53,
-                        "quantity" => 5,
+                        "quantity" => 55,
                         "price" => 180,
                         "total_cost" => 900,
                         "discount" => 0,
                         "sub_total" => 900
                     ),
                  array(
-                        "id_sales" => 110,
-                        "id_total_sales"  => 70,
+                        "id_sales" => '',
+                        "id_total_sales"  => 52,
                        "id_item" => 52,
                         "quantity" => 5,
                         "price" => 180,
@@ -111,8 +115,8 @@ class Sales_edit_model extends CI_Model {
                         "sub_total" => 900
                     ),
                  array(
-                        "id_sales" => 110,
-                        "id_total_sales"  => 70,
+                        "id_sales" => '',
+                        "id_total_sales"  => 52,
                         "id_item" => 51,
                         "quantity" => 5,
                         "price" => 180,
@@ -189,8 +193,9 @@ class Sales_edit_model extends CI_Model {
     
     function sales_update( $memo_id,$changed_memo_data,$changed_memo_items ) {
         
+        
         $array1 = $this->existing_memo_data($memo_id);
-        $array2 = $changed_memo_data;
+//        $array2 = $changed_memo_data;
         
         
         $existing_items= $this->existing_memo_items($memo_id);
@@ -199,106 +204,88 @@ class Sales_edit_model extends CI_Model {
         $update_sales = array();
         $items = array();
         
-
-//        unset($array1['item_selection']);
-//        unset($array2['item_selection']);
-        
-        echo '<pre>';
-//        print_r($existing_items);
-//        print_r($changed_items);
-//        exit();
-        
-                foreach($array1 as $key1 => $value1){
-                    foreach($array2 as $key2 => $value2){
-                        if($key1 == $key2){                            
-                            if( $value1 != $value2 ){
-                                $update_sales[$key1] = $value2; 
-                            }
-                        }
-                    }
-
-                }
-
-
-                $update_item=array();
-//                $array_index=array();
-                 foreach($changed_items as $key1 => $value1){                   
-                     
-                    foreach($existing_items as $key2 => $value2){
-                        
-                        if($value2['id_item'] == $value1['id_item']){
-                            foreach($value2 as $index1 => $val1){
-                                foreach ($value1 as $index2 => $val2 ){
-                                    if($index1 == $index2){
-                                        if($val1 != $val2){
-                                            $update_item[$value1['id_item']][$index1] = $val1;
-                                        }
-                                    }
-                                }
-                            }
-                             unset($existing_items[$key2]);
-                             unset($changed_items[$key2]);
-                        }                        
-
-                    }
-//                    print_r($array_index);
-//                     if(!empty($array_index)){
-//                        unset($existing_items[$array_index]);
+       
+      
+//        
+//                foreach($array1 as $key1 => $value1){
+//                    foreach($array2 as $key2 => $value2){
+//                        if($key1 == $key2){                            
+//                            if( $value1 != $value2 ){
+//                                $update_sales[$key1] = $value2; 
+//                            }
+//                        }
 //                    }
-                    
-
+//                }
+                
+                
+                if(!empty($changed_memo_data)){
+                     $this->sales_total_sales_update($changed_memo_data,$memo_id);                     
                 }
-                $data['delete_item'] = $existing_items;
-               
                 
-                //seles_tota_sales memo update
-                $sales_memo = "UPDATE sales_total_sales SET  ";
-                    foreach($update_sales as $key => $value){
-                        $sales_memo.=" $key = '$value',";
-                    }
-                    $sales_memo = rtrim($sales_memo,',');
-                    $sales_memo.=" WHERE id_total_sales = ".$array1['id_total_sales'];
-                    
-                echo $sales_memo;
-   
-
-//        print_r($result);  
                 
-          $data['update_item'][] = $update_item;
-          $data['changed_items'][] = $changed_items;
-        
-        echo '<pre>';
-//        print_r($update_sales); 
-        print_r($data);
-//        print_r($changed_items);
-    
+                if(!empty($existing_items)){ 
+                     $this->delete_sale_row($existing_items);
+                }
+                if(!empty($changed_items)){                    
+                     $this->insert_sale_row($changed_items);
+                }
+                return true;
     }
     
-    function update_sales_total_sales($data,$id){
-        $data = array(
-            'id_customer' => '',
-            'discount_percentage' => '',
-            'discount_amount' => '',
-            'sub_total' => '',
-            'total_amount' => '',
-            'total_paid' => '',
-            'total_due' => '',
-            'issue_date' => '',
-            'number_of_packet' => '',
-            'bill_for_packeting' => '',
-            'slip_expense_amount' => '',
-        );
-        $this->db->where('id_total_sales',$id);
-        $this->db->update('sales_total_sales',$data);
-    }
-
-    /*
-     * This function will update the final stock
+    
+      /*
+     * This function will update sales_total_sales table row
      */
 
-    function stock_update() {
+
+   function insert_sale_row($array){
+      $this->db->insert_batch('sales', $array);      
+      foreach($array as  $value){
+          $this->Stock_perpetual->Stock_perpetual_register($value['id_item'], $value['quantity']);
+          $this->Stock_model->stock_reduce($value['id_item'], $value['quantity']);
+      }
+   }
+   
+   
+   function delete_sale_row($existing_items){ 
+           foreach($existing_items as $value){  
+                $this->db->where('id_sales',$value['id_sales'])->delete('sales');
+                $this->Stock_perpetual->Stock_perpetual_register_reverse($value['id_item'], $value['quantity']);
+                $this->Stock_model->stock_reduce_revert($value['id_item'], $value['quantity']);                                    
+            }            
+   }
+    
+    function sales_total_sales_update($array,$memo_id){
+          
+             $sql = "UPDATE `sales_total_sales` SET 
+                `id_customer`= '".$array["id_customer"]."',
+                `discount_percentage`= '".$array['discount_percentage']."' ,
+                `discount_amount`='".$array['discount_amount']."',
+                `sub_total`= '".$array['sub_total']."',
+                `total_amount`= '".$array['total_amount']."',
+                `total_paid`= '".$array['total_paid']."',
+                `total_due`='".$array['total_due']."',
+                `number_of_packet`='".$array['number_of_packet']."' ,
+                `bill_for_packeting`='".$array['bill_for_packeting']."' ,
+                `slip_expense_amount`='".$array['slip_expense_amount']."'  WHERE id_total_sales=$memo_id ";        
+         
+//        $sales_memo = array();
+//         $sales_memo = "UPDATE $table_name SET  ";
+//            foreach($array as $key => $value){
+//                $sales_memo.=" $key = '$value',";
+//            }
+//            $sales_memo = rtrim($sales_memo,',');
+//            $sales_memo.=" WHERE id_total_sales = ".$memo_id;
+        
+        if($this->db->query($sql)){
+            return true;
+        }else{
+            return false;
+        }
         
     }
+    
+
 
     /*
      * If user increase or decrease the slip expense or bill payment option then it will be used to add row in expense table
