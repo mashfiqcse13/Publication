@@ -148,7 +148,7 @@ class Specimen extends CI_Controller {
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'New specimen entry';
+        $data['Title'] = 'New specimen Return';
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/specimen_return', $data);
         
     }

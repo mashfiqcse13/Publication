@@ -46,7 +46,10 @@ class Income extends CI_Controller {
             return '<input id="field-date_income" name="date_income" type="text" value="' . date('Y-m-d h:i:u') . '" >'
                     . '<style>div#date_income_field_box{display: none;}</style>';
         });
-        
+        $crud->callback_add_field('amount_income', function () {
+            return '<input id="field-amount_income" name="amount_income" type="text" value="" >'
+                    . '<style>div#amount_income_field_box</style>';
+        });
         $crud->order_by('id_income','desc');
         
         $crud->order_by('id_income','desc');
@@ -85,11 +88,15 @@ class Income extends CI_Controller {
     }
 
     function cash_add($post_array) { 
+        
         $post_array['date_income'] = date('Y-m-d h:i:u');
         $this->load->model('misc/cash');
-        $values = $this->input->post('amount_income');
-
+        $values = $this->input->post('amount_income');        
+        $values = $this->Common->bn2enNumber ($values);
+        $post_array['amount_income'] =  $values ;
+        
         $this->cash->add($values);
+//        print_r($post_array);exit();
         return $post_array;
     }
 

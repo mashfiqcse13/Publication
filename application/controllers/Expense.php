@@ -91,6 +91,8 @@ class Expense extends CI_Controller {
         $post_array['date_expense'] = date('Y-m-d h:i:u');
         $id_name_expense = $post_array['id_name_expense'];
         $amount = $post_array['amount_expense'];
+        $values = $this->Common->bn2enNumber ($amount);
+        $post_array['amount_expense']=$values;
         $memo = $post_array['stock_memo'];
         $quantity = $post_array['stock_quantity'];
 
