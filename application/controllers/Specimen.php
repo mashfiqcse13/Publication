@@ -27,15 +27,20 @@ class Specimen extends CI_Controller {
     }
 
     function index() {
-        $this->new_entry();
+        $access_group = $this->db->get_where('user_access_area_permission', array('user_id'=> $_SESSION['user_id']))->row();
+        if ($access_group->id_user_access_group == '3' && $this->config->item('custom_user_menu') == 1) {
+            redirect('old_book');
+        } else {
+            $this->new_entry();
+        }
     }
 
     function ajax_url() {
 //        echo json_encode($_POST);
         $this->Specimen_model->processing_new_specimen();
     }
-    
-     function specimen_return_ajax_url() {
+
+    function specimen_return_ajax_url() {
 //        echo json_encode($_POST);
         $this->Specimen_model->processing_return_specimen();
     }
@@ -113,7 +118,7 @@ class Specimen extends CI_Controller {
         if (!empty($data['report_asked'])) {
             $data['report1'] = $this->Specimen_model->get_report_table_issue($data['id_agent'], $data['id_item'], $data['date_range']);
             $data['report2'] = $this->Specimen_model->get_report_table_return($data['id_agent'], $data['id_item'], $data['date_range']);
-            
+
             $data['agent_name'] = $this->Specimen_model->get_agent_name_by($data['id_agent']) or
                     $data['agent_name'] = 'Any';
             $data['item_name'] = $this->Common->get_item_name_by($data['id_item']) or
@@ -123,34 +128,32 @@ class Specimen extends CI_Controller {
             $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
         } else {
             $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/report_filter', $data);
-            
         }
     }
-    
-    function specimen_return(){ 
-        
-        
-        
+
+    function specimen_return() {
+
+
+
         $data['get_specimen_dropdown'] = $this->Specimen_model->get_specimen_dropdown();
-        
-        $search_memo=$this->input->post('memo_search');
-        $memo_id=$this->input->post('id_specimen_total');
-        
-        if(isset($search_memo)){        
+
+        $search_memo = $this->input->post('memo_search');
+        $memo_id = $this->input->post('id_specimen_total');
+
+        if (isset($search_memo)) {
             $data['item_details'] = $this->Specimen_model->get_item_details_from_specimen_items($memo_id);
-            $id='';
-            foreach($data['item_details'] as $row){
-                $id=$row['id_agent'];
+            $id = '';
+            foreach ($data['item_details'] as $row) {
+                $id = $row['id_agent'];
             }
-             $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_by_id($id);
-             $data['item_dropdown'] = $this->Specimen_model->get_available_specimen_item_dropdown($memo_id);
-             $data['memo_id']=$memo_id;
+            $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_by_id($id);
+            $data['item_dropdown'] = $this->Specimen_model->get_available_specimen_item_dropdown($memo_id);
+            $data['memo_id'] = $memo_id;
         }
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'New specimen Return';
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/specimen_return', $data);
-        
     }
 
     function memo($id_specimen_total) {
@@ -163,8 +166,8 @@ class Specimen extends CI_Controller {
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/memo', $data);
     }
-    
-     function return_memo($id_specimen_total) {
+
+    function return_memo($id_specimen_total) {
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['Title'] = 'Specimen Return Memo Generation';
@@ -174,9 +177,8 @@ class Specimen extends CI_Controller {
 
         $this->load->view($this->config->item('ADMIN_THEME') . 'specimen/return_memo', $data);
     }
-    
-    
-    function specimen_return_list(){
+
+    function specimen_return_list() {
         $crud = new grocery_CRUD();
         $crud->set_table('specimen_return_total')
                 ->display_as('id_specimen_total', 'Specimen Return ID')
@@ -190,7 +192,7 @@ class Specimen extends CI_Controller {
                 ->unset_edit()->unset_delete()->unset_add()->unset_read()
                 ->add_action(' ', '', '', 'fa fa-print', function ($primary_key, $row) {
                     return site_url('specimen/return_memo/' . $primary_key);
-                }); 
+                });
         $output = $crud->render();
         $data['glosary'] = $output;
 

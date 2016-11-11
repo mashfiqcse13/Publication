@@ -53,7 +53,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-lg-8">
-                                <label for="id_contact">Select Agent/Marketing Officer Name</label> 
+                                <label for="id_contact">Select Agent/Marketing Officer Name</label>
 <!--                                <a href="<?php echo site_url('contacts/agents/add') ?>" class="btn btn-xs btn-default">Add New Agent</a> -->
                                 <button class="btn btn-xs btn-default" data-toggle="modal" data-target="#AddAgent">Add New Agent</button>
                                 

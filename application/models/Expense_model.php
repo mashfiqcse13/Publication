@@ -63,7 +63,7 @@ class Expense_model extends CI_Model {
         }
 
 
-        $this->db->select('expense.id_name_expense ,expense.id_expense, name_expense,amount_expense,date_expense,description_expense');
+        $this->db->select('name_expense,expense.id_name_expense ,expense.id_expense, name_expense,amount_expense,date_expense,description_expense');
         $this->db->from('expense');
         $this->db->join('expense_name', 'expense_name.id_name_expense=expense.id_name_expense', 'left');
         $this->db->order_by('expense.id_expense', 'desc');
@@ -71,17 +71,24 @@ class Expense_model extends CI_Model {
             $condition = "DATE(date_expense) BETWEEN $date";
             $this->db->where($condition);
         }
-        $results = $this->db->get()->result();
+         $results = $this->db->get()->result();
+//         echo '<pre>';print_r($results);exit();
+//         $test = $this->db->last_query();
+//            die($test);
 //        $range_query=$this->db->query("SELECT expense_name.id_name_expense as id_name,expense.id_name_expense as name_id, name_expense,amount_expense,date_expense,description_expense FROM expense
 //LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense 
 //WHERE DATE(date_expense) BETWEEN $date And expense_name.id_name_expense = expense.id_name_expense");
 //        $result =  $range_query->result();
+        
         $data = array();
         foreach ($results as $result) {
-            $report = $this->db->query('SELECT *,SUM(amount_expense) AS amount_expense,name_expense FROM expense LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense WHERE expense.id_name_expense =' . $result->id_name_expense)->result();
+            $date_final = Date('Y-m-d',strtotime($result->date_expense));
+            $report = $this->db->query('SELECT *,SUM(amount_expense) AS amount_expense,name_expense FROM expense LEFT JOIN expense_name ON expense_name.id_name_expense=expense.id_name_expense WHERE expense.id_name_expense =' . $result->id_name_expense.' AND DATE(date_expense) BETWEEN "'.$date_final.'" AND "'.$date_final.'"')->result();
+//            $test = $this->db->last_query();
+//            die($test);
             $data[$result->id_name_expense] = $report;
         }
-//        echo '<pre>';print_r($results);exit();
+//        
         return $data;
     }
 

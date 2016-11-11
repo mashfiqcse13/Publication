@@ -36,9 +36,9 @@ class Report_model extends CI_Model {
         if (empty($opening)) {
             $opening = new stdClass();
         }
-        $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : $this->get_previous_closing($from,'opening_cash');
-        $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance :  $this->get_previous_closing($from,'opening_bank_balance');
-        $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : $this->get_previous_closing($from,'opening_due');
+        $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : $this->get_previous_closing($from,'ending_cash');
+        $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance :  $this->get_previous_closing($from,'ending_bank_balance');
+        $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : $this->get_previous_closing($from,'ending_due');
         
         
         
@@ -73,9 +73,9 @@ class Report_model extends CI_Model {
         if (empty($closing)) {
             $closing = new stdClass();
         }
-        $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : $this->get_previous_closing($from,'opening_cash');
-        $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : $this->get_previous_closing($from,'opening_bank_balance');
-        $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : $this->get_previous_closing($from,'opening_due');
+        $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : $this->get_previous_closing($from,'ending_cash');
+        $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : $this->get_previous_closing($from,'ending_bank_balance');
+        $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : $this->get_previous_closing($from,'ending_due');
         return $closing;
     }
 

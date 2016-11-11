@@ -252,9 +252,11 @@ class Advance_payment_model extends CI_Model {
 
     function discard_advance_payment($id_party_advance_payment_register) {
         $party_advance_payment_register_info = $this->get_party_advance_payment_register_info($id_party_advance_payment_register);
+//        echo '<pre>';print_r($party_advance_payment_register_info);exit();
         if ($party_advance_payment_register_info != FALSE) {
             if ($this->payment_revert($party_advance_payment_register_info->id_customer, $party_advance_payment_register_info->amount_paid)) {
-                $query = "UPDATE `party_advance_payment_register` SET `amount_paid` = '0  WHERE `id_party_advance_payment_register`= $id_party_advance_payment_register '";
+                $query = "UPDATE `party_advance_payment_register` SET `amount_paid` = '0'  WHERE `id_party_advance_payment_register`= '$id_party_advance_payment_register '";
+//                die($query);
                 $this->db->query($query);
                 $this->load->model("misc/Master_reconcillation_model");
                 $this->Master_reconcillation_model->reduce_cash($party_advance_payment_register_info->amount_paid);

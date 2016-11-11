@@ -159,9 +159,9 @@ class Advance_payment extends CI_Controller {
                 ->set_relation('id_customer', 'customer', 'name')
                 ->set_relation('id_payment_method', 'payment_method', 'name_payment_method')
                 ->order_by('id_party_advance_payment_register', 'desc')
-//                ->add_action('Sales Return', base_url() . 'asset/img/button/Revert.png', '', '', function ($primary_key, $row) {
-//                    return site_url("advance_payment/revert_payment_log/$primary_key");
-//                })
+                ->add_action('Sales Return', base_url() . 'asset/img/button/Revert.png', '', '', function ($primary_key, $row) {
+                    return site_url("advance_payment/revert_payment_log/$primary_key");
+                })
                 ->add_action('Print Memo', base_url() . 'asset/img/button/Print.png', '', '', function ($primary_key, $row) {
                     return site_url("advance_payment/add_advance_payment/$primary_key");
                 })
@@ -191,7 +191,7 @@ class Advance_payment extends CI_Controller {
     }
 
     function revert_payment_log($id_party_advance_payment_register) {
-        die("Do not try.");
+//        die("Do not try.");
         $this->Advance_payment_model->discard_advance_payment($id_party_advance_payment_register) or die('failed');
         echo "successfull";
     }

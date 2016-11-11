@@ -39,16 +39,19 @@ class Test extends CI_Controller {
 
         
 //        
-        $grab_data = $this->Sales_edit_model->grab_data(150);
+//        $grab_data = $this->Sales_edit_model->grab_data(50);
+        $grab_data = $this->Sales_edit_model->test_data();
         
-//        $sales_update = $this->Sales_edit_model->sales_update($grab_data);
 //        $array1 = $this->Sales_edit_model->grab_data(150);
 //        $array1 = $grab_data['existing_data'];
-//        $array2 = $grab_data['changed_data'];
+        $changed_memo_data = $grab_data['changed_memo_data'];
+        $changed_memo_items =  $grab_data['changed_memo_items'];
+        $sales_update = $this->Sales_edit_model->sales_update(96,$changed_memo_data,$changed_memo_items);
+
         
         
-        echo '<pre>'; 
-        print_r($grab_data);
+//        echo '<pre>'; 
+//        print_r($sales_update);
 //        
 //        print_r($this->Sales_edit_model->existing_memo_data(70));
 //        print_r($this->Sales_edit_model->existing_memo_items(70) );

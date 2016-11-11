@@ -124,9 +124,9 @@ class Old_book extends CI_Controller {
         $this->Old_book_model->processing_return_oldbook();
     }
 
-    function old_book_sale_or_rebind() {
-        redirect('old_book/old_book_sale_or_rebind');
-//        $this->Old_book_model->old_book_sale_or_rebind();
+    function old_book_sale_or_rebind() {        
+        $this->Old_book_model->old_book_sale_or_rebind();
+//        redirect('old_book/return_book_sale_list');
     }
 
     function return_book() {
