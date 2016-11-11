@@ -155,6 +155,18 @@
                                                 <?php
                                             }
                                         }
+//                                            $sum_total_amount = 0;
+//                                            foreach ($report as $res){
+//                                                if (!empty($res)) {
+//                                                $sum_total_amount += $res->amount_expense;
+//                                                $total = $res->amount_expense;
+//                                                  ?>
+<!--                                                <tr>
+                                                    <td>//<?php echo $res->name_expense; ?></td>
+                                                    <td class="taka_formate">//<?php echo 'TK ' . $total; ?></td>
+                                                </tr>-->
+                                                <?php
+//                        }}
                                         ?>
 
                                         <tr style="font-weight: bold">
