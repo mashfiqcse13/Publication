@@ -19,8 +19,11 @@
 
     <div class="container memo_print_option custom_memo memo"  >
         <div class="only_print padding10"></div>
+        <?php if($this->config->item('ADTOADVANCED')){
+            echo $this->config->item('ADTOADVANCED');
+        }else{ ?>
         <div class="row" style="margin: 13mm 5mm 5mm 5mm;padding-top:0px"> 
-
+        <?php } ?>
 
                 <?php
                 foreach ($party_advance as $party) {

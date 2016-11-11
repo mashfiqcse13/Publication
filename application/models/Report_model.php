@@ -36,10 +36,30 @@ class Report_model extends CI_Model {
         if (empty($opening)) {
             $opening = new stdClass();
         }
-        $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : 0;
-        $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance : 0;
-        $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : 0;
+        $opening->opening_cash = (!empty($opening->opening_cash)) ? $opening->opening_cash : $this->get_previous_closing($from,'opening_cash');
+        $opening->opening_bank_balance = (!empty($opening->opening_bank_balance)) ? $opening->opening_bank_balance :  $this->get_previous_closing($from,'opening_bank_balance');
+        $opening->opening_due = (!empty($opening->opening_due)) ? $opening->opening_due : $this->get_previous_closing($from,'opening_due');
+        
+        
+        
+//        echo '<pre>';
+//        print_r($opening);exit();
         return $opening;
+    } 
+    
+    function get_previous_closing($from,$column){
+        for($i=1;$i<365*100;$i++){
+            $day = date('Y-m-d',strtotime('-'.$i.' day' ,  strtotime ( $from )));
+            $data = $this->db->get_where('master_reconcillation' , "DATE(date) BETWEEN '$day' AND '$day'")->row();
+            
+            if(!empty($data) && $data->$column!=0){
+                 return $data->$column;
+            }
+            if($i==365){
+                return 0;
+            }
+        }       
+        
     }
 
     function closing($from, $to) {
@@ -53,9 +73,9 @@ class Report_model extends CI_Model {
         if (empty($closing)) {
             $closing = new stdClass();
         }
-        $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : 0;
-        $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : 0;
-        $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : 0;
+        $closing->ending_cash = (!empty($closing->ending_cash)) ? $closing->ending_cash : $this->get_previous_closing($from,'opening_cash');
+        $closing->closing_bank_balance = (!empty($closing->closing_bank_balance)) ? $closing->closing_bank_balance : $this->get_previous_closing($from,'opening_bank_balance');
+        $closing->ending_due = (!empty($closing->ending_due)) ? $closing->ending_due : $this->get_previous_closing($from,'opening_due');
         return $closing;
     }
 
