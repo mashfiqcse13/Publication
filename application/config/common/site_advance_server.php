@@ -657,3 +657,4 @@ $config['book_categories'] = make_index_same_as_value($config['book_categories']
 //$config['districts_bangla'] = make_index_same_as_value($config['districts_bangla']);
 
 $config['super_user_id'] ='2';
+$config['custom_user_menu'] ='1';
