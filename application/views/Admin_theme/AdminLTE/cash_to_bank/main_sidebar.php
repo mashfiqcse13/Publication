@@ -22,8 +22,8 @@
             $super_user_id = $this->config->item('super_user_id');
             if ($super_user_id == $_SESSION['user_id']) {
                 echo "<li>" . anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash to Bank</span>') . "</li>";
+                echo "<li>" . anchor('cash_to_owner', '<i class="fa fa-plus-circle"></i>  <span>Cash to Owner</span>') . "</li>";                
                 echo "<li>" . anchor('cash_to_bank/expense_adjustment', '<i class="fa fa-plus-circle"></i>  <span>Cash to Expense Adjustment</span>') . "</li>";
-                echo "<li>" . anchor('cash_to_owner', '<i class="fa fa-plus-circle"></i>  <span>Cash to Owner</span>') . "</li>";
             } else {
                 if ($this->User_access_model->if_user_has_permission(32)) {
                     echo "<li>" . anchor('cash_to_bank', '<i class="fa fa-plus-circle"></i>  <span>Cash to Bank</span>') . "</li>";

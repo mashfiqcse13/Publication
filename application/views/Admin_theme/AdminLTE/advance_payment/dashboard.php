@@ -30,7 +30,7 @@
                     <!-- form start -->
                     <form role="form" class="form-horizontal cusotmer_form" action="<?php echo current_url(); ?>" method="get">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-md-4 control-label">Customer :</label>

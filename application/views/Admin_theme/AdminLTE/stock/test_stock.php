@@ -12,12 +12,13 @@
         $now = date('Y-m-d');
         $start = date('2016-9-4');
         
-        for($i=1;$i<60;$i++){ ?>
-       
-            <th width="100"><?= $date = date('Y-m-d',strtotime('+'.$i.' day' ,  strtotime ( $start )));  ?> </th>
-        
-              
-        <?php }         ?>
+        for($i=1;$i<60;$i++){
+            echo  $date = date('Y-m-d',strtotime('+'.$i.' day' ,  strtotime ( $start )));
+            echo "  ";
+            
+            
+            
+        }         ?>
             </tr>
         
     </thead>
