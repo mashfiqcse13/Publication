@@ -264,14 +264,17 @@ bank.id_bank=bank_account.id_bank where id_bank_account=$row->id_account");
         $data['transaction_type_dropdown'] = $this->bank_balance->transaction_type_dropdown();
         $data['account_dropdown'] = $this->bank_balance->account_dropdown();
         $data['user_dropdown'] = $this->bank_balance->user_dropdown();
+        $data['bank'] = $this->bank_balance->bank_dropdown();
         // $data['main_content'] = $this->bank_balance->list_bank_status();       
 
         $date_range = $this->input->post('date_range');
         $user_id = $this->input->post('id');
+        $bank = $this->input->post('id_bank');
         $status_type = $this->input->post('status_type');
         $btn = $this->input->post('btn_submit');
         if (isset($btn)) {
-            $data['report'] = $this->bank_balance->bank_status_report($date_range, $user_id, $status_type);
+            
+            $data['report'] = $this->bank_balance->bank_status_report($date_range, $user_id, $status_type,$bank);
         } else {
             $this->pagination->initialize($config);
 

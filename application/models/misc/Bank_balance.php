@@ -279,7 +279,7 @@ WHERE $condition");
         return $this->table->generate($range_query);
     }
 
-    function bank_status_report($date = '', $user_id = '', $status_type = '') {
+    function bank_status_report($date = '', $user_id = '', $status_type = '',$bank='') {
         $data_picker_date_range = $date;
         $date = $date;
         if ($date == '') {
@@ -304,6 +304,10 @@ WHERE $condition");
 
             $condition = "bank_management_status.approval_status=$status_type";
         }
+         if (!empty($bank)) {
+            $condition = "bank.id_bank=$bank";
+        }
+        
         if (!empty($user_id) && !empty($date)) {
             $condition = "date(action_date) BETWEEN $date and bank_management.id_user=$user_id";
         }
@@ -311,15 +315,44 @@ WHERE $condition");
 
             $condition = "bank_management.id_user=$user_id and bank_management_status.approval_status=$status_type";
         }
+         if (!empty($user_id) && !empty($bank)) {
+
+            $condition = "bank_management.id_user=$user_id and bank.id_bank=$bank";
+        }
         if (!empty($date) && !empty($status_type)) {
 
             $condition = " bank_management_status.approval_status=$status_type and  date(action_date) BETWEEN $date";
+        }
+         if (!empty($date) && !empty($bank)) {
+
+            $condition = " bank.id_bank=$bank and  date(action_date) BETWEEN $date";
+        }
+         if (!empty($status_type) && !empty($bank)) {
+
+            $condition = " bank.id_bank=$bank and   bank_management_status.approval_status=$status_type";
         }
         if (!empty($date) && !empty($status_type) && !empty($user_id)) {
 
             $condition = "date(action_date) BETWEEN $date and bank_management_status.approval_status=$status_type and bank_management.id_user=$user_id";
         }
-        if (empty($date) && empty($user_id) && empty($status_type)) {
+         if (!empty($date) && !empty($user_id) && !empty($bank)) {
+
+            $condition = "date(action_date) BETWEEN $date  and bank_management.id_user=$user_id and bank.id_bank=$bank";
+        }
+         if (!empty($status_type) && !empty($user_id) && !empty($bank)) {
+
+            $condition = " bank_management_status.approval_status=$status_type  and bank_management.id_user=$user_id and bank.id_bank=$bank";
+        }
+        
+         if (!empty($date) && !empty($status_type) && !empty($bank)) {
+
+            $condition = "date(action_date) BETWEEN $date and bank_management_status.approval_status=$status_type and bank.id_bank=$bank";
+        }
+        if (!empty($date) && !empty($status_type) && !empty($user_id) && !empty($bank)) {
+
+            $condition = "date(action_date) BETWEEN $date and bank_management.id_user=$user_id and bank_management_status.approval_status=$status_type and bank.id_bank=$bank";
+        }
+        if (empty($date) && empty($user_id) && empty($status_type) && empty($bank)) {
 
             $condition = " 1=1";
         }
@@ -482,6 +515,24 @@ WHERE $condition");
         }
 
         return form_dropdown('id', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1"  aria-hidden="true"');
+    }
+    
+        function bank_dropdown() {
+
+        $this->db->select('*');
+        $this->db->from('bank');
+        $query = $this->db->get();
+        $db_rows = $query->result_array();
+
+        $options[''] = "All Selected ";
+        foreach ($db_rows as $index => $row) {
+            $options[$row['id_bank']] = $row['name_bank'];
+        }
+        if (!isset($options)) {
+            $options[''] = "";
+        }
+
+        return form_dropdown('id_bank', $options, '', 'class="form-control select2 select2-hidden-accessible" tabindex="-1"  aria-hidden="true"');
     }
 
     function datereport($date) {

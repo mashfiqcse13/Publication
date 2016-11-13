@@ -31,60 +31,73 @@
                             //echo form_open(base_url() . "index.php/bank/management_report", $attributes)
                     ?>
                     <div class="row" >
-
-                        <div class="col-md-6">
+                        
+                         <div class="col-md-6">
                             <div class="form-group col-md-4 text-left">
-                                <label>Status Type:</label>                        
+                                <label>Bank Name:</label>                        
                             </div>
                             <div class="form-group col-md-6">
                                 <div class="input-group">
-                                    <select name="status_type" class="form-control">
-                                        <option value="">All Selected </option>
-                                        <option value="1">Approve</option>
-                                        <option value="2">Cancel</option>
-                                        <option value="3">Pending</option>
-                                    </select>
-
-                                    </select>
+                                    <?php echo $bank; ?>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                         </div>
+
+                      
+                        
                         <div class="col-md-6">
-                            <div class="form-group col-md-4 text-left">
+                            <div class="form-group col-md-3 text-left">
                                 <label>User:</label>                        
                             </div>
                             <div class="form-group col-md-6">
                                 <div class="input-group">
                                     <?php echo $user_dropdown; ?>
-
-                                    </select>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                         </div>
+                        
+                        
                     
                         
                     </div>
                     
                     <div class="row">
+                        
+                        <div class="col-md-6">
+                          <div class="form-group col-md-4 text-left">
+                              <label>Status Type:</label>                        
+                          </div>
+                          <div class="form-group col-md-6">
+                               <div class="input-group">
+                                  <select name="status_type" class="form-control select2 select2-hidden-accessible">
+                                      <option value="">All Selected </option>
+                                      <option value="1">Approve</option>
+                                      <option value="2">Cancel</option>
+                                      <option value="3">Pending</option>
+                                  </select>
+                          </div> </div><!-- /.form group -->
+                      </div>
 
-                    <div class="col-md-12">
-                    <div class="form-group col-offset-2 col-md-4 text-left">
+                        <div class="col-md-6">
+                        <div class="form-group col-offset-2 col-md-3 text-left">
 
-                        <label>Search Report With Date Range:</label>
+                            <label>Search  Date Range:</label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
+                                <br>
+                            </div><!-- /.input group -->
+                        </div><!-- /.form group -->
+                        <div class="form-group col-md-3">
+                        <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <?= anchor(current_url() . '/', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
+                        </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" name="date_range" value="<?= isset($date_range) ? $date_range : ''; ?>" class="form-control pull-right" id="reservation"  title="This is not a date"/>
-                            <br>
-                        </div><!-- /.input group -->
-                    </div><!-- /.form group -->
-                    <div class="form-group col-md-2">
-                    <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    <?= anchor(current_url() . '/', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>
-                    </div></div></div>
                     <?= form_close(); ?>
                     <?php ?>
                 </div>
