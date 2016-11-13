@@ -21,43 +21,12 @@ class Test extends CI_Controller {
         $this->load->model('Common');
     }
 
+    /*
+     * Do not push this file by keeping your test code, you will use this file for your personal testing .
+     */
     function index() {
-        $this->load->model('misc/Cash');
-//        $this->Cash->add(1000);
-//        $this->Cash->reduce(3000) or die("Not enough balance");
-        $this->load->model('misc/Customer_due');
-        $this->load->model('sales/Sales_edit_model');
-      
-        
-//        $this->Customer_due->add(4, 1000);
-//        $this->Customer_due->reduce(4, 1000) or die("Not enough due");
-        $this->load->model('sales/Sales_edit_model');
-       
-//        $data['existing_memo'] = $this->Sales_edit_model->existing_memo_data(70); 
-//        $data['existing_items'] = $this->Sales_edit_model->existing_memo_items(70); 
-        
-
-        
-//        
-//        $grab_data = $this->Sales_edit_model->grab_data(50);
-        $grab_data = $this->Sales_edit_model->test_data();
-        
-//        $array1 = $this->Sales_edit_model->grab_data(150);
-//        $array1 = $grab_data['existing_data'];
-        $changed_memo_data = $grab_data['changed_memo_data'];
-        $changed_memo_items =  $grab_data['changed_memo_items'];
-        $sales_update = $this->Sales_edit_model->sales_update(96,$changed_memo_data,$changed_memo_items);
-
-        
-        
-//        echo '<pre>'; 
-//        print_r($sales_update);
-//        
-//        print_r($this->Sales_edit_model->existing_memo_data(70));
-//        print_r($this->Sales_edit_model->existing_memo_items(70) );
-
-        
-        
+        $this->load->model('Regenerate_model');
+        echo $this->Regenerate_model->master_reconcilation_as_table();
     }
 
 }
