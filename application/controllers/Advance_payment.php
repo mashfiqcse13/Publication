@@ -192,8 +192,8 @@ class Advance_payment extends CI_Controller {
 
     function revert_payment_log($id_party_advance_payment_register) {
 //        die("Do not try.");
-        $this->Advance_payment_model->discard_advance_payment($id_party_advance_payment_register) or die('failed');
-        echo "successfull";
+        $report = $this->Advance_payment_model->discard_advance_payment($id_party_advance_payment_register);
+        redirect('advance_payment/payment_log');
     }
 
 }

@@ -62,6 +62,14 @@
                 <div class="box" id="block">
                     <?php
                     if (!isset($search_report)) {
+                        if($this->session->userdata('advanced_revert_message')){
+                            echo '<h2 class="alert alert-danger text-center">'. $this->session->userdata('advanced_revert_message').'</h2>';
+                            $this->session->unset_userdata('advanced_revert_message');
+                        }
+                         if($this->session->userdata('advanced_revert_success')){
+                            echo '<h2 class="alert alert-info text-center">'. $this->session->userdata('advanced_revert_success').'</h2>';
+                            $this->session->unset_userdata('advanced_revert_success');
+                        }
                         ?>
                         <div class="box-body">
                             <?php
