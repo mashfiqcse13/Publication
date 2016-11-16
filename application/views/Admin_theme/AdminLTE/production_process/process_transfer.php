@@ -44,7 +44,7 @@
                                             foreach ($get_id_process_step_from as $item) {
 //                                                
                                                 ?>
-                                                <option value="<?php echo $item->id_process_step_from; ?>"><?php echo $item->id_process_step_from; ?></option>
+                                                <option value="<?php echo $item->id_process_step_from; ?>"><?php echo $item->id_process_step_from  ?></option>
                                                 <?php
                                             }
                                             ?>

@@ -26,6 +26,7 @@ class Contacts extends CI_Controller {
         $this->load->model('misc/Cash', 'cash_model');
         $this->load->model('Contacts_model');
         $this->load->model('User_access_model');
+        $this->load->model('Common');
         $this->User_access_model->check_user_access(4);
     }
 
@@ -68,7 +69,8 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width upazila" ');
         });
-
+         $crud->callback_before_insert(array($this, 'update_contact_number'));
+         
         //$crud->unset_add_fields('upazila');
         // $crud->unset_edit_fields('upazila');
 //        $crud->unset_columns('upazila');
@@ -80,6 +82,14 @@ class Contacts extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Customer';
         $this->load->view($this->config->item('ADMIN_THEME') . 'contacts/manage_list', $data);
+    }
+    
+     function update_contact_number($post_array){ 
+        $value = $this->input->post('phone');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['phone'] =  $values ;
+//        print_r($post_array);exit();
+        return $post_array;
     }
 
     function teacher() {
@@ -105,7 +115,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('upazila', function ($value, $primary_key) {
             return form_dropdown('upazila', $this->config->item('upazila_english'), $value, 'class="form-control select2 dropdown-width upazila" ');
         });
-
+        $crud->callback_before_insert(array($this, 'update_contact_number'));
         $crud = $this->Contacts_model->set_filter($crud);
         $data['filter_elements'] = $this->Contacts_model->filter_elements();
 
@@ -151,7 +161,7 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('district', function ($value, $primary_key) {
             return form_dropdown('district', $this->config->item('districts_english'), $value, 'class="form-control select2 dropdown-width district" ', 'equip_status_id');
         });
-
+        
         $crud->callback_add_field('upazila', function () {
             return form_dropdown('upazila', $this->config->item('upazila_english'), '', 'class="form-control select2 dropdown-width upazila" ');
         })->callback_edit_field('upazila', function ($value, $primary_key) {
@@ -161,7 +171,8 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Agent";
         });
-
+//        $this->session->set_userdata('Agent','Agent');
+//        $crud->callback_before_insert(array($this, 'update_contact_number'));
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -199,7 +210,8 @@ class Contacts extends CI_Controller {
         })->callback_edit_field('type', function ($value, $primary_key) {
             return "Marketing Office";
         });
-
+//        $this->session->set_userdata('Marketing','Marketing');
+//        $crud->callback_before_insert(array($this, 'update_contact_number'));
 
         $output = $crud->render();
         $data['glosary'] = $output;

@@ -43,6 +43,7 @@ class Production_process extends CI_Controller {
 
         $id_item = $this->input->post('id_item');
         $order_quantity = $this->input->post('order_quantity');
+        $order_quantity = $this->Common->bn2enNumber ($order_quantity);
         $item_type = $this->input->post('item_type');
         $id_vendor = $this->input->post('id_vendor');
 
@@ -88,6 +89,7 @@ class Production_process extends CI_Controller {
                 ->callback_edit_field('district', array($this->Common, 'dropdown_district'))
                 ->callback_add_field('upazila', array($this->Common, 'dropdown_upazila'))
                 ->callback_edit_field('upazila', array($this->Common, 'dropdown_upazila'));
+        $crud->callback_before_insert(array($this, 'update_contact_number'));
         $output = $crud->render();
         $data['glosary'] = $output;
 
@@ -95,6 +97,13 @@ class Production_process extends CI_Controller {
         $data['base_url'] = base_url();
         $data['Title'] = 'Vendor';
         $this->load->view($this->config->item('ADMIN_THEME') . 'production_process/manage_list', $data);
+    }
+    function update_contact_number($post_array){ 
+        $value = $this->input->post('phone');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['phone'] =  $values ;
+//        print_r($post_array);exit();
+        return $post_array;
     }
 
     function steps($id_processes) {

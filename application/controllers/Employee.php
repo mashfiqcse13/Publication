@@ -41,13 +41,22 @@ class Employee extends CI_Controller {
         $crud = new grocery_CRUD();
         $crud->set_table('employee')
                 ->set_subject('Employee')
+                ->display_as('driving_license','Phone')
                 ->order_by('id_employee','desc');
+       $crud->callback_before_insert(array($this, 'update_contact_number'));
         $output = $crud->render();
         $data['glosary'] = $output;
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Manage Employee';
         $this->load->view($this->config->item('ADMIN_THEME') . 'employee/manage_employee', $data);
+    }
+         function update_contact_number($post_array){ 
+        $value = $this->input->post('driving_license');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['driving_license'] =  $values ;
+//        print_r($post_array);exit();
+        return $post_array;
     }
 
     function manage_professtional_info() {

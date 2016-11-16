@@ -8,6 +8,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author MD. Mashfiq
  */
 class Specimen_model extends CI_Model {
+     function __construct() {
+        parent::__construct();
+         $this->load->model('Common');
+    }
 
     function get_agent_dropdown() {
         $customers = $this->db->get('specimen_agent')->result();
@@ -15,7 +19,7 @@ class Specimen_model extends CI_Model {
         $data = array();
         $data[''] = 'Select Agent/Marketing Officer by name or code';
         foreach ($customers as $customer) {
-            $data[$customer->id_agent] = $customer->id_agent . " - " . $customer->name;
+            $data[$customer->id_agent] = $customer->id_agent . " ( ". $this->Common->en2bn($customer->id_agent) . ") - " . $customer->name;
         }
         return form_dropdown('id_agent', $data, NULL, ' class="select2" required');
     }
@@ -256,7 +260,7 @@ LEFT JOIN items ON items.id_item=specimen_items.id_item WHERE specimen_items.id_
         $data = array();
         $data[''] = 'Select Specimen Memo Number';
         foreach ($specimens as $specimen) {
-            $data[$specimen->id_specimen_total] = $specimen->id_specimen_total;
+            $data[$specimen->id_specimen_total] = $specimen->id_specimen_total  ." ( ". $this->Common->en2bn($specimen->id_specimen_total) . ") ";
         }
         return form_dropdown('id_specimen_total', $data, NULL, ' class="select2" required');
     }

@@ -34,7 +34,8 @@
                     <div class="form-group ">
                         <label class="col-md-3">Customer</label>
                         <div class="col-md-7">
-                            <select class="form-control select2"style="width:100%;"  name="customer">
+                            <?=$customers_dropdown;?>
+<!--                            <select class="form-control select2"style="width:100%;"  name="customer">
                                 <option>Select Customer by Name or Code</option>
                                 <?php
                                 foreach ($customers as $customer) {
@@ -43,7 +44,7 @@
                                     <?php
                                 }
                                 ?>
-                            </select>
+                            </select>-->
                         </div>
                         <button type="submit" name="btn_submit" value="true" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <?= anchor(current_url() . '/due/customer_due', '<i class="fa fa-refresh"></i>', ' class="btn btn-success"') ?>

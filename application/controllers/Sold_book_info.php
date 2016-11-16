@@ -51,7 +51,8 @@ class Sold_book_info extends CI_Controller {
 
             $data['sold_book_info'] = $this->Sales_model->sold_book_info($id_customer, $date_range);
         }
-        $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown_as_customer();
+//        $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown_as_customer();
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
         
         
         $districts = $this->config->item('districts_english');

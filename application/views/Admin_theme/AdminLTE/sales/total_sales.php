@@ -226,6 +226,18 @@
 
 
                                     </tr>
+                                    <?php if(isset($returned_old_book)){ ?>
+                                    <tr class="text-bold">
+                                        <td colspan="4">Return Old Book Value :</td>
+                                        <td  class="text-right taka_formate"><?=$returned_old_book;?></td>
+                                        <td colspan="11"></td>
+                                    </tr>
+                                    <tr class="text-bold">
+                                        <td colspan="4">Actual total :</td>
+                                        <td  class="text-right taka_formate"><?php echo $sum_total_amount-$returned_old_book ?></td>
+                                        <td colspan="11"></td>
+                                    </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
 

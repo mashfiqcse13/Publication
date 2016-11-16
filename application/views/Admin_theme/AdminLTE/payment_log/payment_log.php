@@ -39,7 +39,8 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                <select class="form-control select2" style="width:100%;"  name="customer">
+                                     <?=$customer_dropdown;?>
+<!--                                <select class="form-control select2" style="width:100%;"  name="customer">
                                     <option value="">Select Party Name Or Code</option>
                                     <?php
                                     foreach ($customers as $customer) {
@@ -48,7 +49,7 @@
                                         <?php
                                     }
                                     ?>
-                                </select>
+                                </select>-->
                             </div>
                             </div>
                             <div class="col-md-3">

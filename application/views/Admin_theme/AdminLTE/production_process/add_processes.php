@@ -43,7 +43,7 @@
                                         $data[] = "Select Items By Name Or Code";
                                         foreach ($get_item as $item) {
 
-                                            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+                                            $data[$item->id_item] = $item->id_item . " ( ". $this->Common->en2bn($item->id_item) . ")  - " . $item->name;
                                         }
                                         echo form_dropdown('id_item', $data, '', ' class="form-control select2" ', 'required');
                                         ?>
@@ -76,7 +76,7 @@
                                         <?php
                                         $datas[''] = 'Select vendor by name or code';
                                         foreach ($get_vendor as $vendor) {
-                                            $datas[$vendor->id_vendor] = $vendor->id_vendor . " - " . $vendor->name . " ( {$vendor->type} ) ";
+                                            $datas[$vendor->id_vendor] = $vendor->id_vendor . " ( ". $this->Common->en2bn($vendor->id_vendor) . ")  - " . $vendor->name . " ( {$vendor->type} ) ";
                                             //$datas[$vendor->child_id_process_steps] = $vendor->child_id_vendor . " - " . $vendor->child_vendor_name . " ( {$vendor->child_vendor_type} ) ";
                                         }
                                         echo form_dropdown('id_vendor', $datas, '', ' class="form-control select2" ', 'required');

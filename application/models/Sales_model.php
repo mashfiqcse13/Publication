@@ -9,6 +9,10 @@ if (!defined('BASEPATH'))
  * @author MD. Mashfiq
  */
 class Sales_model extends CI_Model {
+    function __construct() {
+        parent::__construct();
+         $this->load->model('Common');
+    }
 
     function get_available_item_dropdown() {
 
@@ -19,18 +23,18 @@ class Sales_model extends CI_Model {
         $data = array();
         $data[''] = 'Select items by name or code';
         foreach ($items as $item) {
-            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+            $data[$item->id_item] = $item->id_item . " ( ". $this->Common->en2bn($item->id_item) . ") - " . $item->name;
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
 
     function get_party_dropdown() {
         $customers = $this->db->get('customer')->result();
-
+       
         $data = array();
         $data[''] = 'Select party by name or code';
         foreach ($customers as $customer) {
-            $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
+            $data[$customer->id_customer] = $customer->id_customer . " ( ". $this->Common->en2bn($customer->id_customer) .") - " . $customer->name;
         }
         return form_dropdown('id_customer', $data, NULL, ' class="select2" required');
     }
@@ -41,7 +45,7 @@ class Sales_model extends CI_Model {
         $data = array();
         $data[''] = 'Select party by name or code';
         foreach ($customers as $customer) {
-            $data[$customer->id_customer] = $customer->id_customer . " - " . $customer->name;
+            $data[$customer->id_customer] = $customer->id_customer . " ( ". $this->Common->en2bn($customer->id_customer) .") - " .  $customer->name;
         }
         return form_dropdown('id_customer', $data, NULL, ' class="select2"');
     }
@@ -413,6 +417,25 @@ class Sales_model extends CI_Model {
         foreach ($sql as $row) {
             return $row->balance;
         }
+    }
+    
+    function returned_old_book($from, $to, $id_customer){
+        $from = date('Y-m-d', strtotime($from));
+        $to = date('Y-m-d', strtotime($to));
+        $sql = "SELECT sum(old_book_return_total.sub_total) as amount FROM `old_book_return_items` 
+                LEFT JOIN old_book_return_total ON 
+                old_book_return_total.id_old_book_return_total=old_book_return_items.id_old_book_return_total
+                LEFT JOIN items ON items.id_item=old_book_return_items.id_item
+                LEFT JOIN items_category ON items_category.id_items_category=items.id_items_category
+                WHERE items_category.id_items_category != 1 and old_book_return_total.id_customer = $id_customer and DATE(old_book_return_total.issue_date) BETWEEN '$from' AND '$to'";
+        $result = $this->db->query($sql)->row();
+        if(!empty($result->amount)){
+             return $result->amount;
+        }else{
+            return 0;
+        }
+       
+        
     }
 
     function get_total_sales_info($from, $to, $id_customer, $filter_district) {

@@ -79,7 +79,7 @@
 //                                            print_r($all_production_process_first_step_info);exit();
                                             foreach ($get_order_id as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes; ?></option>
+                                                <option value="<?php echo $item->id_processes ?>"><?php echo $item->id_processes . " ( ". $this->Common->en2bn($item->id_processes) . ") "  ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -96,7 +96,7 @@
 //                                            print_r($all_production_process_first_step_info);exit();
                                             foreach ($get_vendor as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->id_vendor . " - " . $item->vendor_name . ' - ' . $item->vendor_type; ?></option>
+                                                <option value="<?php echo $item->id_vendor; ?>"><?php echo $item->id_vendor. " ( ". $this->Common->en2bn($item->id_vendor) . ")  - " .$item->vendor_name . ' - ' . $item->vendor_type; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -125,7 +125,7 @@
                                             <?php
                                             foreach ($get_item as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . " ( ". $this->Common->en2bn($item->id_item) . ")  - " . $item->item_name; ?></option>
                                                 <?php
                                             }
                                             ?>
