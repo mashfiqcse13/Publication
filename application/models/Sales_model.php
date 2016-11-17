@@ -512,5 +512,27 @@ ORDER BY sold_book_info.id_item ASC";
 
         return $query->result_array();
     }
+    function sold_book_info_party_wise($id_item = '', $date_range = '') {
+
+        $conditions = array();
+
+        if (!empty($id_item)) {
+            array_push($conditions, "id_item = $id_item");
+        }
+        if (!empty($date_range)) {
+            $this->load->model('Common');
+            $date = explode('-', $date_range);
+            $from = date('Y-m-d', strtotime($date[0]));
+            $to = date('Y-m-d', strtotime($date[1]));
+            $date_range = "DATE(issue_date) BETWEEN DATE('$from') AND  DATE('$to')";
+            array_push($conditions, "$date_range");
+        }
+        $condition = empty($conditions) ? "" : "WHERE " . implode(' AND ', $conditions);
+        $sql = "SELECT  `id_customer` ,  `party_name` , SUM(  `quantity` ) AS  `quantity` FROM  `view_sales_with_party_district` $condition GROUP BY  `id_customer` ORDER BY  `id_customer` ASC ";
+//        die($sql);
+        $result = $this->db->query($sql)->result();
+
+        return $result;
+    }
 
 }

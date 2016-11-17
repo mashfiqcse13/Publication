@@ -25,7 +25,6 @@
                 <div class="box only_print">
                     <div class="box-body">
 
-
                         <form action="<?php echo site_url('sold_book_info') ?>" method="post">
                             <div class="row">
                                 <div class="col-md-6">
@@ -113,17 +112,14 @@
 
                 <div class="box" id="block" style="min-height:900px">
                     <?php
-                    if (isset($sold_book_info)) {
+                    if (isset($sold_book_info_party_wise)) {
                         ?>
                         <div class="box-header">
                             <p class="text-center"><strong><?php echo $report_title; ?></strong></p>
                             <table style="margin: 0 auto">
                                 <?php
-                                if (isset($name)) {
-                                    echo '<tr><td><strong>Customer Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $name . '</td></tr>';
-                                }
-                                if (!empty($this->input->post('filter_district'))) {
-                                    echo '<tr><td><strong>District Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $this->input->post('filter_district') . '</td></tr>';
+                                if (isset($item_name)) {
+                                    echo '<tr><td><strong>Item Name </strong><td> &nbsp; : &nbsp; </td><td> ' . $item_name . '</td></tr>';
                                 }
                                 ?>
                             </table>
@@ -140,33 +136,22 @@
                             <table  class ="table table-bordered table-hover" style="background: #fff;">
                                 <thead style="background: #DFF0D8;">
                                     <tr>
-                                        <th>Item ID</th>
-                                        <th>Item Name</th>
-                                        <th>Sale</th> 
-                                        <th>Old Book Return</th>
-                                        <th>Actual Sale <br><span style="font-size:10px"> ( Actual Sale = Accurate Sale - Old Book Return) </span></th>
+                                        <th>Cutomer ID</th>
+                                        <th>Cutomer Name</th>
+                                        <th>Quantity</th> 
 
                                     </tr> 
                                 </thead> 
                                 <tbody>
                                     <?php
-                                    $total_accurate_sale = 0;
-                                    $total_old_book_return = 0;
-                                    $total_actual_return = 0;
-                                    foreach ($sold_book_info as $key => $return) {
-                                        $total_accurate_sale += ($return['sale_quantity'] - $return['return_quantity']);
-                                        $total_old_book_return+= $return['old_quantity'];
-                                        $total_actual_return += ($return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity']);
+                                    $total_quantity = 0;
+                                    foreach ($sold_book_info_party_wise as $item) {
+                                        $total_quantity = $total_quantity + $item->quantity;
                                         ?>
                                         <tr>
-                                            <td><?php echo $return['id_item'] ?></td>
-                                            <td><?php echo $return['name'] ?></td>
-                                            <td ><?php echo $return['sale_quantity'] - $return['return_quantity']; ?></td>
-                                            <td><?php echo $return['old_quantity']; ?></td> 
-                                            <td><?php
-                                                $ActualSale = $return['sale_quantity'] - $return['return_quantity'] - $return['old_quantity'];
-                                                echo ($ActualSale < 0) ? "" : $ActualSale
-                                                ?></td>
+                                            <td><?php echo $item->id_customer ?></td>
+                                            <td><?php echo $item->party_name ?></td>
+                                            <td><?php echo $item->quantity ?></td>
 
                                         </tr>
                                         <?php
@@ -175,9 +160,7 @@
 
                                     <tr>
                                         <th colspan="2" class="text-center">Total</th>
-                                        <th ><?php echo $total_accurate_sale; ?></th>
-                                        <th><?php echo $total_old_book_return; ?></th> 
-                                        <th><?php echo $total_actual_return ?></th>
+                                        <th><?php echo $total_quantity ?></th>
                                     </tr>
 
                                 </tbody>
