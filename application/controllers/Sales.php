@@ -244,12 +244,18 @@ class Sales extends CI_Controller {
         function slip() {
         $crud = new grocery_CRUD();
         $crud->set_table('memo_slip')
-                ->display_as('id_customer','Customer Id') 
-//                ->set_relation('id_customer', 'customer', '{id_customer}- {name}')
-                ->set_subject('Memo Slip')
+                ->columns('id_customer','date','slip_amount','description')
+                ->display_as('id_customer','Customer Name') 
+                ->set_relation('id_customer', 'customer', '{name}')
+                ->set_subject('Slip Expense')
                 ->order_by('id_slip', 'desc')
                 ->unset_edit()
-                ->unset_delete();
+                ->unset_add()
+                ->add_action('Print Memo', base_url() . 'asset/img/button/Print Memo.png', '', '', function ($primary_key, $row) {
+                    return site_url('sales/slip_memo?id=' . $primary_key);
+                });
+//                ->unset_delete();
+        
         
         $crud->callback_add_field('id_customer',function () {
             return $this->Sales_model->get_party_dropdown();
@@ -258,22 +264,50 @@ class Sales extends CI_Controller {
             return '<input id="field-date" name="date" type="text" value="' . date('Y-m-d h:i:u') . '" >'
                     . '<style>div#date_field_box{display: none;}</style>';
         });
+        $crud->callback_add_field('slip_number', function () {
+            return '<input id="field-slip_number" name="slip_number" type="text">'
+                    . '<style>div#slip_number_field_box{display: none;}</style>';
+        });
         $crud->callback_before_insert(array($this, 'slip_date_update'));
 
-        $output = $crud->render();
+        $output = $crud->render(); 
         $data['glosary'] = $output;
-
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Memo Slip';
-        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/sales', $data);
+        $data['Title'] = 'Slip Expense';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/slip', $data);
     }
+    
+    function add_slip(){
+        $submit=$this->input->post('submit');
+        if(isset($submit)){            
+         $data['slip_info'] = $this->Sales_model->insert_slip($_POST);
+         redirect('sales/slip_memo?id='.$data['slip_info']); 
+        }
+        $data['customer'] = $this->Sales_model->get_party_dropdown();
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Slip Expense';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/slip', $data);
+    }
+    function slip_memo(){
+        $id = $this->input->get('id');
+        if(isset($id)){
+            $data['slip_info'] = $this->Sales_model->slip_memo($id);
+        }
+        $data['Title']='স্লিপ খরচ নিবন্ধন ';
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/slip_memo', $data);
+    }
+    
     function slip_date_update($post_array){
-        $post_array['date'] = date('Y-m-d h:i:u');        
+        $post_array['date'] = date('Y-M-d');        
         $values = $this->input->post('slip_amount');        
         $values = $this->Common->bn2enNumber ($values);
         $post_array['slip_amount'] =  $values ;
         return $post_array;
     }
+
 
 }

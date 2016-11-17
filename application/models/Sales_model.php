@@ -512,5 +512,32 @@ ORDER BY sold_book_info.id_item ASC";
 
         return $query->result_array();
     }
+    
+    
+    
+    function insert_slip($post){
+        if(isset($post['description'])){
+            $description = $post['description'];
+        }else{
+            $description = '';
+        }
+        $amount =$this->Common->bn2enNumber($post['slip_amount']);
+        
+         $data = array(
+            'id_customer' => $post['id_customer'],
+            'date' => date('Y-m-d h:i:u'),
+            'slip_amount' => $amount,
+            'description' => $description
+        );
+//         print_r($data);exit();
+        $this->db->insert('memo_slip', $data);
+        return $this->db->insert_id();
+    }
+     
+    function slip_memo($id){
+        $sql = "SELECT * FROM `memo_slip` left join customer on customer.id_customer=memo_slip.id_customer
+where id_slip=$id";
+       return  $this->db->query($sql)->result(); 
+    }
 
 }
