@@ -69,6 +69,11 @@ class Sales extends CI_Controller {
 //            $get_where_clause = $this->Stock_model->get_where_clause($date[0], $date[1]);
 //            $crud->where($get_where_clause);
             $data['total_sales'] = $this->Sales_model->get_total_sales_info($from, $to, $id_customer, $filter_district);
+            
+            if(!empty($id_customer) && empty($filter_district)){
+                $data['returned_old_book'] = $this->Sales_model->returned_old_book($from, $to, $id_customer);
+            }
+            
 //             print_r($data['total_sales']);exit();
         }
 
@@ -80,6 +85,7 @@ class Sales extends CI_Controller {
         $data['glosary'] = $output;
         $data['memo_list'] = $this->memo_list();
         $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown_as_customer();
+//          $data['customer_dropdown'] = $this->Sales_model->get_party_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Total sales';
@@ -233,6 +239,41 @@ class Sales extends CI_Controller {
         $data['table2'] = $this->table->generate();
 
         return $data;
+    }
+    
+        function slip() {
+        $crud = new grocery_CRUD();
+        $crud->set_table('memo_slip')
+                ->display_as('id_customer','Customer Id') 
+//                ->set_relation('id_customer', 'customer', '{id_customer}- {name}')
+                ->set_subject('Memo Slip')
+                ->order_by('id_slip', 'desc')
+                ->unset_edit()
+                ->unset_delete();
+        
+        $crud->callback_add_field('id_customer',function () {
+            return $this->Sales_model->get_party_dropdown();
+        });
+        $crud->callback_add_field('date', function () {
+            return '<input id="field-date" name="date" type="text" value="' . date('Y-m-d h:i:u') . '" >'
+                    . '<style>div#date_field_box{display: none;}</style>';
+        });
+        $crud->callback_before_insert(array($this, 'slip_date_update'));
+
+        $output = $crud->render();
+        $data['glosary'] = $output;
+
+        $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
+        $data['base_url'] = base_url();
+        $data['Title'] = 'Memo Slip';
+        $this->load->view($this->config->item('ADMIN_THEME') . 'sales/sales', $data);
+    }
+    function slip_date_update($post_array){
+        $post_array['date'] = date('Y-m-d h:i:u');        
+        $values = $this->input->post('slip_amount');        
+        $values = $this->Common->bn2enNumber ($values);
+        $post_array['slip_amount'] =  $values ;
+        return $post_array;
     }
 
 }

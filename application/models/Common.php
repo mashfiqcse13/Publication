@@ -137,7 +137,7 @@ class Common extends CI_Model {
         $data = array();
         $data[''] = 'Select items by name or code';
         foreach ($items as $item) {
-            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+            $data[$item->id_item] = $item->id_item . " ( ". $this->Common->en2bn($item->id_item) . ")  - " .$item->name;
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }
@@ -148,7 +148,7 @@ class Common extends CI_Model {
         $data = array();
         $data[''] = 'Select customer by name or code';
         foreach ($items as $item) {
-            $data[$item->id_customer] = $item->id_customer . " - " . $item->name;
+            $data[$item->id_customer] = $item->id_customer  . " ( ". $this->Common->en2bn($item->id_customer) . ")  - " . $item->name;
         }
         return form_dropdown('id_customer', $data, '', ' class="select2" ');
     }
@@ -193,6 +193,12 @@ class Common extends CI_Model {
     function bn2enNumber ($number){
         $search_array= array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
         $replace_array= array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+        $en_number = str_replace($search_array, $replace_array, $number);
+        return $en_number;
+    }
+    function en2bn ($number){
+        $replace_array= array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
+        $search_array = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
         $en_number = str_replace($search_array, $replace_array, $number);
         return $en_number;
     }

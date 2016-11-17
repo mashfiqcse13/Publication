@@ -34,16 +34,7 @@
                             <div class="form-group col-md-5">
                                 <label>Customer Name or Code</label>
                                 <div class="input-group">
-                                    <select class="form-control select2" style="width:100%;"  name="customer">
-                                        <option value="">Select Customer Name Or Code</option>
-                                        <?php
-                                        foreach ($customers as $customer) {
-                                            ?>
-                                            <option value="<?php echo $customer->id_customer; ?>"><?php echo $customer->id_customer . ' - ' . $customer->name; ?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </select>
+                                   <?=$customers_dropdown;?>
                                 </div>
 
                             </div>

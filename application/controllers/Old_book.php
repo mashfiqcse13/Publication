@@ -75,7 +75,9 @@ class Old_book extends CI_Controller {
 
             $data['date_range'] = $date_range;
         }
-        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
+//        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
+        
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
 
         $output = $crud->render();
         $data['glosary'] = $output;
@@ -108,13 +110,14 @@ class Old_book extends CI_Controller {
 
             $data['date_range'] = $date_range;
         }
-        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
+//        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown_search();
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
 
 
         $data['memo_list'] = $this->memo_list();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
-        $data['Title'] = 'Old Book Dashboard';
+        $data['Title'] = 'Old Book Total Report';
         $this->load->view($this->config->item('ADMIN_THEME') . 'old_book/total_report', $data);
     }
 
@@ -130,8 +133,11 @@ class Old_book extends CI_Controller {
     }
 
     function return_book() {
-        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
-        $data['item_dropdown'] = $this->Old_book_model->get_item_dropdown();
+        $this->load->model('sales_model');
+//        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
+//        $data['item_dropdown'] = $this->Old_book_model->get_item_dropdown();
+        $data['item_dropdown'] = $this->Sales_model->get_available_item_dropdown();
         $data['customer_due'] = $this->Old_book_model->get_party_due();
 
         $data['item_details'] = $this->Old_book_model->get_item_details();
@@ -143,8 +149,10 @@ class Old_book extends CI_Controller {
     }
 
     function return_book_sale() {
-        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
+//        $data['customer_dropdown'] = $this->Old_book_model->get_party_dropdown();
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
         $data['item_dropdown'] = $this->Old_book_model->get_available_item_dropdown();
+        
         $data['customer_due'] = $this->Old_book_model->get_party_due();
         $data['item_details'] = $this->Old_book_model->get_old_item_details();
 

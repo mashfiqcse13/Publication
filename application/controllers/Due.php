@@ -54,7 +54,8 @@ class Due extends CI_Controller {
         }
 
 
-        $data['customers'] = $this->Due_model->get_all_customers();
+//        $data['customers'] = $this->Due_model->get_all_customers();
+        $data['customers_dropdown'] = $this->Due_model->due_customer_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Due';
@@ -92,7 +93,8 @@ class Due extends CI_Controller {
         $output = $crud->render();
         $data['glosary'] = $output;
 
-        $data['customers'] = $this->Due_model->get_all_customers();
+//        $data['customers'] = $this->Due_model->get_all_customers();
+        $data['customers_dropdown'] = $this->Due_model->due_customer_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Customer Due Payment';

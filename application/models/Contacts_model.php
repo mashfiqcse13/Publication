@@ -127,11 +127,18 @@ class Contacts_model extends CI_Model {
 
     function agent_type_setter_post_array($post_array) {
         $post_array['type'] = 'Agent';
+        $value = $this->input->post('phone');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['phone'] =  $values ;
+
         return $post_array;
     }
 
     function marketing_officer_type_setter_post_array($post_array) {
         $post_array['type'] = 'Marketing Officer';
+        $value = $this->input->post('phone');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['phone'] =  $values ;
         return $post_array;
     }
 

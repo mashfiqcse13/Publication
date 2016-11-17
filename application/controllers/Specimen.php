@@ -103,8 +103,10 @@ class Specimen extends CI_Controller {
     }
 
     function report() {
-        $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_who_have_taken_specimen();
-        $data['item_dropdown'] = $this->Specimen_model->get_item_dropdown_who_are_given_as_specimen();
+//        $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown_who_have_taken_specimen();
+//        $data['item_dropdown'] = $this->Specimen_model->get_item_dropdown_who_are_given_as_specimen();
+         $data['agent_dropdown'] = $this->Specimen_model->get_agent_dropdown();
+         $data['item_dropdown'] = $this->Sales_model->get_available_item_dropdown();
 
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();

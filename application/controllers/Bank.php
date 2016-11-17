@@ -123,6 +123,10 @@ class Bank extends CI_Controller {
     }
     function current_date_update($post_array){
         $post_array['transaction_date'] = date('Y-m-d h:i:u');
+        $value = $this->input->post('amount_transaction');
+        $values = $this->Common->bn2enNumber ($value);
+        $post_array['amount_transaction'] =  $values ;
+        
         return $post_array;
     }
     

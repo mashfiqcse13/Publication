@@ -59,7 +59,8 @@ class Payment_log extends CI_Controller {
             $data['get_customer_payment_info'] = $this->Payment_log_model->get_customer_payment_info($id_customer, $payment_method, $data['date_range']);
         }
 
-        $data['customers'] = $this->db->get('customer')->result();
+//        $data['customers'] = $this->db->get('customer')->result();
+        $data['customer_dropdown'] = $this->Common->get_customer_dropdown();
         $data['theme_asset_url'] = base_url() . $this->config->item('THEME_ASSET');
         $data['base_url'] = base_url();
         $data['Title'] = 'Payment Log';

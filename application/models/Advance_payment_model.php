@@ -253,15 +253,21 @@ class Advance_payment_model extends CI_Model {
     function discard_advance_payment($id_party_advance_payment_register) {
         $party_advance_payment_register_info = $this->get_party_advance_payment_register_info($id_party_advance_payment_register);
 //        echo '<pre>';print_r($party_advance_payment_register_info);exit();
+        if($party_advance_payment_register_info->id_payment_method==1){
         if ($party_advance_payment_register_info != FALSE) {
             if ($this->payment_revert($party_advance_payment_register_info->id_customer, $party_advance_payment_register_info->amount_paid)) {
                 $query = "UPDATE `party_advance_payment_register` SET `amount_paid` = '0'  WHERE `id_party_advance_payment_register`= '$id_party_advance_payment_register '";
 //                die($query);
                 $this->db->query($query);
                 $this->load->model("misc/Master_reconcillation_model");
+                $this->load->model("misc/Cash");
                 $this->Master_reconcillation_model->reduce_cash($party_advance_payment_register_info->amount_paid);
+                $this->Cash->add_revert($party_advance_payment_register_info->amount_paid);
+                $this->session->set_userdata('advanced_revert_success','Your advance balance revert successfull');
                 return true;
             }
+        }}else{
+            $this->session->set_userdata('advanced_revert_message','You can\'t revert this transaction');
         }
         return FALSE;
     }

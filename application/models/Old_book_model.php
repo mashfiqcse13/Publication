@@ -24,6 +24,7 @@ class Old_book_model extends CI_Model {
     }
 
     function get_available_item_dropdown() {
+        $this->load->model('Common');
 
         $items = $this->db->query("SELECT `id_item`, `name`, `regular_price`, `sale_price`,total_balance as `total_in_hand` 
             FROM `items` natural join `old_book_stock`
@@ -32,7 +33,7 @@ class Old_book_model extends CI_Model {
         $data = array();
         $data[''] = 'Select items by name or code';
         foreach ($items as $item) {
-            $data[$item->id_item] = $item->id_item . " - " . $item->name;
+            $data[$item->id_item] = $item->id_item . "( ".$this->Common->en2bn($item->id_item) .") - " . $item->name;
         }
         return form_dropdown('id_item', $data, '', ' class="select2" ');
     }

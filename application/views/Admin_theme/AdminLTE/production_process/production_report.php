@@ -58,7 +58,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_process_type as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_process_type; ?>"><?php echo $item->name_process_type; ?></option>
+                                                <option value="<?php echo $item->id_process_type; ?>"><?php echo $item->name_process_type ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -79,7 +79,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_vendor_from as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_id_vendor . ' - ' . $item->from_name . '(' . $item->from_type . ')'; ?></option>
+                                                <option value="<?php echo $item->from_id_vendor; ?>"><?php echo $item->from_id_vendor. " ( ". $this->Common->en2bn( $item->from_id_vendor) . ")  - " . $item->from_name . '(' . $item->from_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -98,7 +98,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_vendor_to as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor . ' - ' . $item->to_name . '(' . $item->to_type . ')'; ?></option>
+                                                <option value="<?php echo $item->to_id_vendor; ?>"><?php echo $item->to_id_vendor . " ( ". $this->Common->en2bn($item->to_id_vendor) . ")  " . $item->to_name . '(' . $item->to_type . ')'; ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -120,7 +120,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_order_id as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes; ?></option>
+                                                <option value="<?php echo $item->id_processes; ?>"><?php echo $item->id_processes . " ( ". $this->Common->en2bn($item->id_processes) . ")  " ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -139,7 +139,7 @@
 //                                            print_r($get_all_production_process);exit();
                                             foreach ($get_item as $item) {
                                                 ?>
-                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . ' - ' . $item->item_name; ?></option>
+                                                <option value="<?php echo $item->id_item; ?>"><?php echo $item->id_item . " ( ". $this->Common->en2bn($item->id_item) . ")  " . $item->item_name; ?></option>
                                                 <?php
                                             }
                                             ?>

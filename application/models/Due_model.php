@@ -42,6 +42,18 @@ class Due_model extends CI_Model {
         $this->db->where('momo_ID', $memo_ID);
         $this->db->update($db_tables['pub_due_payment_ledger'], $data);
     }
+    
+    function due_customer_dropdown() {
+        $customers = $this->get_all_customers();
+        
+
+        $data = array();
+        $data[''] = 'Select Customer by Name or Code';
+        foreach ($customers as $customer) {
+            $data[$customer->id_customer] = $customer->id_customer . " ( ". $this->Common->en2bn($customer->id_customer) . ") - " . $customer->name;
+        }
+        return form_dropdown('customer', $data, NULL, ' class="select2" required');
+    }
 
     function get_all_customers() {
         $this->db->select('*');
