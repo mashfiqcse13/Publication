@@ -151,7 +151,9 @@ class Regenerate_model extends CI_Model {
                 'opening_due' => $calculated_opening['due'],
                 'ending_due' => $today_calculated_closing['due'],
                 'opening_bank_balance' => $calculated_opening['bank'],
-                'closing_bank_balance' => $today_calculated_closing['bank']
+                'closing_bank_balance' => $today_calculated_closing['bank'],
+                'opening_advance_balance' => $calculated_opening['advance_balance'],
+                'closing_advance_balance' => $today_calculated_closing['advance_balance']
             );
             $this->db->where('id_master_reconcillation', $row->id_master_reconcillation)->update('master_reconcillation', $data_to_update);
             $calculated_opening['cash'] = $today_calculated_closing['cash'];

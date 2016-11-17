@@ -164,6 +164,8 @@ class Report extends CI_Controller {
     }
 
     function total_report() {
+        $this->load->model('Regenerate_model');
+        $this->Regenerate_model->master_reconcilation_update();
         $btn = $this->input->get('btn_submit');
         $data['date_range'] = $this->input->get('date_range');
         $date = explode('-', $data['date_range']);
