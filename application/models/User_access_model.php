@@ -197,6 +197,10 @@ class User_access_model extends ci_model {
         } else if ($this->User_access_model->if_user_has_permission($id_user_access_area)) {
             //Let it go
         } else {
+            $access_group = $this->db->get_where('user_access_area_permission', array('user_id' => $_SESSION['user_id']))->row();
+            if ($access_group->id_user_access_group == '3' && $this->config->item('custom_user_menu') == 1) {
+                redirect('old_book');
+            }
             if ($redirection_url) {
                 redirect($redirection_url);
             } else {
