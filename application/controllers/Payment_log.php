@@ -52,7 +52,7 @@ class Payment_log extends CI_Controller {
 
 
         $btn = $this->input->get('btn_submit');
-        $id_customer = $this->input->get('customer');
+        $id_customer = $this->input->get('id_customer');
         $payment_method = $this->input->get('payment_method');
         $data['date_range'] = $this->input->get('date_range');
         if (isset($btn)) {
