@@ -13,14 +13,16 @@ class Regenerate_model extends CI_Model {
         $this->load->model('Report_model');
         $output = '<table border="1"><tr><th>id_master_reconcillation</th><th>date</th><th>total_sales</th><th>opening_cash<br>(From DB / Calculated)</th><th>ending_cash<br>(From DB / Calculated)'
                 . '</th><th>opening_due<br>(From DB / Calculated)</th><th>ending_due<br>(From DB / Calculated)</th>'
-                . '<th>opening_bank_balance<br>(From DB / Calculated)</th></th><th>closing_bank_balance<br>(From DB / Calculated)</th></th></tr>';
+                . '<th>opening_bank_balance<br>(From DB / Calculated)</th></th><th>closing_bank_balance<br>(From DB / Calculated)</th>'
+                . '<th>Opening Advance Balance</th><th>Closing Advance Balance</th></tr>';
         $master_reconcillation_rows = $this->db->get('master_reconcillation')->result();
         $calculated_opening = array(
             'cash' => $master_reconcillation_rows[0]->opening_cash,
             'bank' => $master_reconcillation_rows[0]->opening_bank_balance,
-            'due' => $master_reconcillation_rows[0]->opening_due
+            'due' => $master_reconcillation_rows[0]->opening_due,
+            'advance_balance' => 0
         );
-        $today_calculated_closing = array('cash' => 0, 'bank' => 0, 'due' => 0);
+        $today_calculated_closing = array('cash' => 0, 'bank' => 0, 'due' => 0, 'advance_balance' => 0);
         foreach ($master_reconcillation_rows as $row) {
             $from = $to = $row->date;
 //            Calculating Cash
@@ -56,6 +58,10 @@ class Regenerate_model extends CI_Model {
             $sale_info_due = $sale_info->total_sale - ($SaleCollectionBank + $SaleCollectionCash + $sale_info->sale_against_advance_deduction + $sale_info->sale_against_due_deduction_by_old_book_sell );
             $today_calculated_closing['due'] = $calculated_opening['due'] + $sale_info_due - $data['previous_due_collection_by_cash'] - $data['previous_due_collection_by_bank'];
 
+            
+//            Calculating advance_balance
+            $today_calculated_closing['advance_balance'] = $calculated_opening['advance_balance'] +$this->Report_model->total_advance_collection_without_book_sale($from, $to) - $this->Report_model->total_sale_against_advance_deduction($from, $to);
+            
             $output .= "\n<tr>\n\t<td>{$row->id_master_reconcillation}</td><td>{$row->date}</td><td>{$row->total_sales}</td>";
 
             //Showing Cash
@@ -74,11 +80,16 @@ class Regenerate_model extends CI_Model {
 //            $output .= "<td>{$row->opening_bank_balance}</td><td>{$row->closing_bank_balance}</td>\n</tr>\n";
             $opening_bank_color = ($row->opening_bank_balance != $calculated_opening['bank']) ? ' style="color:red"' : "";
             $closing_bank_color = ($row->closing_bank_balance != $today_calculated_closing['bank']) ? ' style="color:red"' : "";
-            $output .= "<td$opening_bank_color>{$row->opening_bank_balance} / {$calculated_opening['bank']}</td><td$closing_bank_color>{$row->closing_bank_balance} / {$today_calculated_closing['bank']}</td>\n</tr>\n";
+            $output .= "<td$opening_bank_color>{$row->opening_bank_balance} / {$calculated_opening['bank']}</td><td$closing_bank_color>{$row->closing_bank_balance} / {$today_calculated_closing['bank']}</td>\n";
 
+            
+            //Showing Bank
+            $output .= "<td>{$calculated_opening['advance_balance'] }</td><td>{$today_calculated_closing['advance_balance'] }</td>\n</tr>\n";
+            
             $calculated_opening['cash'] = $today_calculated_closing['cash'];
             $calculated_opening['bank'] = $today_calculated_closing['bank'];
             $calculated_opening['due'] = $today_calculated_closing['due'];
+            $calculated_opening['advance_balance'] = $today_calculated_closing['advance_balance'];
         }
         return $output . '</table>';
     }
