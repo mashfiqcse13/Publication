@@ -30,7 +30,6 @@ class Sales_processing_model extends CI_Model {
     private $id_total_sales;
     private $number_of_packet;
     private $bill_for_packeting;
-    private $slip_expense_amount;
 
     function initiate() {
         $this->loading_models_and_response_values();
@@ -72,9 +71,8 @@ class Sales_processing_model extends CI_Model {
         $this->item_selection = $this->input->post('item_selection');
         $this->number_of_packet = $this->input->post('number_of_packet');
         $this->bill_for_packeting = $this->input->post('bill_for_packeting');
-        $this->slip_expense_amount = $this->input->post('slip_expense_amount');
         $this->advance_payment_balance = $this->Advance_payment_model->get_advance_payment_balance_by($this->id_customer);
-        $this->total_amount = $this->sub_total - $this->discount_amount;
+        $this->total_amount = $this->sub_total - $this->discount_amount + $this->bill_for_packeting;
     }
 
     function total_paid() {
@@ -169,20 +167,11 @@ class Sales_processing_model extends CI_Model {
             'total_paid' => $total_paid,
             'total_due' => $total_due,
             'number_of_packet' => $this->number_of_packet,
-            'bill_for_packeting' => $this->bill_for_packeting,
-            'slip_expense_amount' => $this->slip_expense_amount
+            'bill_for_packeting' => $this->bill_for_packeting
         );
         $this->db->insert('sales_total_sales', $data) or $this->exception_handler('failed to insert data on sales_total_sales');
         $this->Master_reconcillation_model->add_total_sale($this->total_amount);
         $this->id_total_sales = $this->max_id_total_sales();
-        if ($this->slip_expense_amount > 0) {
-//            $this->load->model('Expense_model');
-//            $this->Expense_model->expense_register(4, $this->slip_expense_amount, "Memo No : {$this->id_total_sales}");
-        }
-        if ($this->bill_for_packeting > 0) {
-//            $this->load->model('Expense_model');
-//            $this->Expense_model->expense_register(6, $this->bill_for_packeting, "Memo No : {$this->id_total_sales}");
-        }
         return $this->id_total_sales;
     }
 
@@ -241,13 +230,13 @@ class Sales_processing_model extends CI_Model {
 
     function show_response($action, $id_total_sales) {
         if ($action == 'save_and_reset') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
+//            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
             $response['next_url'] = site_url('sales/new_sale');
         } else if ($action == 'save_and_back_to_list') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
+//            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
             $response['next_url'] = site_url('sales/tolal_sales');
         } else if ($action == 'save_and_print') {
-            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
+//            $response['msg'] = "The sales is successfully done . \n Memo No: $id_total_sales";
             $response['next_url'] = site_url('sales/memo/' . $id_total_sales);
         }
         die(json_encode($response));

@@ -32,9 +32,9 @@ class Sales extends CI_Controller {
     function tolal_sales() {
         $crud = new grocery_CRUD();
         $crud->set_table('sales_total_sales')
-                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'total_amount', 'total_paid', 'total_due', 'number_of_packet', 'bill_for_packeting', 'slip_expense_amount')
+                ->columns('id_total_sales', 'id_customer', 'issue_date', 'sub_total', 'discount_percentage', 'discount_amount', 'number_of_packet', 'bill_for_packeting', 'total_amount', 'total_paid', 'total_due')
                 ->display_as('id_total_sales', 'Memo No')->display_as('issue_date', 'Issue Date (M/D/Y)')
-                ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')->display_as('bill_for_packeting', 'Bill For Packeting On Due')
+                ->display_as('id_customer', 'Customer Name')->display_as('total_amount', 'Total Sale Amout')->display_as('bill_for_packeting', 'Bill For Packeting')
                 ->set_subject('Total sales')
                 ->set_relation('id_customer', 'customer', 'name')
                 ->order_by('id_total_sales', 'desc')

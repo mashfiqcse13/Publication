@@ -22,8 +22,7 @@
         'total_due': 0,
         'item_selection': '',
         'number_of_packet': 0,
-        'bill_for_packeting': 0,
-        'slip_expense_amount': 0
+        'bill_for_packeting': 0
     };
     var ajax_url = '<?php echo site_url('sales/ajax_url') ?>';
 </script>
@@ -72,27 +71,27 @@
                         <div class="row">
                             <div class="form-group col-lg-8">
                                 <label for="id_contact">Party name</label> 
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#AddCustomer">
-                                        <i class="fa fa-plus"></i> Add New
-                                    </button>
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#AddCustomer">
+                                    <i class="fa fa-plus"></i> Add New
+                                </button>
                                 <?php echo $customer_dropdown ?>
-                                
+
                                 <div class="modal modal-primary fade" id="AddCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">Add New Customer</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <iframe src="<?php echo site_url('contacts/customer/add')?>" frameborder="0" width="100%" height="500"></iframe>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="" class="btn btn-outline pull-left">Close and Reload</a>
-                                                </div>
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Add New Customer</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe src="<?php echo site_url('contacts/customer/add') ?>" frameborder="0" width="100%" height="500"></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="" class="btn btn-outline pull-left">Close and Reload</a>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="int_id_contact">Issue Date</label>
@@ -122,6 +121,19 @@
                                 <label for="discount_amount">Discount amount :</label>
                                 <div class="input-group">
                                     <input type="number" name="discount_amount" class="form-control" id="discount_amount"  value="0" min="0">
+                                    <span class="input-group-addon">Tk</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="discount_percentage">Number of packet :</label>
+                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" placeholder="Number of packet" value="" min="0" max="100">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="discount_amount">Bill for packeting :</label>
+                                <div class="input-group">
+                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting" placeholder="Bill for packeting"  value="" min="0">
                                     <span class="input-group-addon">Tk</span>
                                 </div>
                             </div>
@@ -193,19 +205,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="discount_percentage">Number of packet :</label>
-                                <input type="number" name="number_of_packet" class="form-control" id="number_of_packet" placeholder="Number of packet" value="" min="0" max="100">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="discount_amount">Bill for packeting :</label>
-                                <div class="input-group">
-                                    <input type="number" name="bill_for_packeting" class="form-control" id="bill_for_packeting" placeholder="Bill for packeting"  value="" min="0">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <div class="form-group col-lg-6" id="total_paid">
@@ -213,18 +212,6 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="discount_percentage">Total Due :</label> <span id="total_due">0</span> Tk
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="slip_expense_amount">Slip expense amount:</label>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <div class="input-group">
-                                    <input type="number" name="slip_expense_amount" class="form-control" id="slip_expense_amount" placeholder="Slip expense amount"  value="" min="0">
-                                    <span class="input-group-addon">Tk</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -369,11 +356,9 @@
         };
         update_cart();
     });
-    $('[name="slip_expense_amount"]').change(function () {
-        data_to_post.slip_expense_amount = string_to_int($('[name="slip_expense_amount"]').val());
-    });
     $('[name="number_of_packet"]').change(function () {
         data_to_post.number_of_packet = string_to_int($('[name="number_of_packet"]').val());
+        update_total_amount_and_total_due();
     });
     $('[name="bill_for_packeting"]').change(function () {
         data_to_post.bill_for_packeting = string_to_int($('[name="bill_for_packeting"]').val());
@@ -445,7 +430,7 @@
     function update_total_amount_and_total_due() {
         data_to_post.total_amount = string_to_int(data_to_post.dues_unpaid)
                 + string_to_int(data_to_post.sub_total)
-                - string_to_int(data_to_post.discount_amount);
+                - string_to_int(data_to_post.discount_amount) + string_to_int(data_to_post.bill_for_packeting);
         data_to_post.total_paid = string_to_int(data_to_post.cash_payment) + string_to_int(data_to_post.bank_payment) + previously_paid;
         data_to_post.total_due = string_to_int(data_to_post.total_amount) - data_to_post.total_paid;
         $('#total_amount').html(data_to_post.total_amount);
@@ -483,7 +468,9 @@
         data_to_post.action = $(this).data('action');
         $.post(ajax_url, data_to_post, function (data) {
             $(' #massage_box').fadeOut();
-//            alert(data.msg);
+            if (data.msg !== undefined) {
+                alert(data.msg);
+            }
             window.location = data.next_url;
         }, 'json');
     });
